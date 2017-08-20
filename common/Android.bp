@@ -32,9 +32,13 @@ cc_library_static {
         "OperationsUtils.cpp",
         "Utils.cpp",
         "operations/Activation.cpp",
+        "operations/Concatenation.cpp",
         "operations/Conv2D.cpp",
         "operations/DepthwiseConv2D.cpp",
+        "operations/FullyConnected.cpp",
+        "operations/Normalization.cpp",
         "operations/Pooling.cpp",
+        "operations/Reshape.cpp",
         "operations/SimpleMath.cpp",
     ],
     shared_libs: [
