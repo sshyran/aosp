@@ -33,20 +33,16 @@
 
 // Make sure the constants defined in the header file have not changed values.
 // IMPORTANT: When adding new values, update kNumberOfDataTypes in Utils.h.
-static_assert(ANEURALNETWORKS_FLOAT16 == 0, "ANEURALNETWORKS_FLOAT16 may have changed");
+static_assert(ANEURALNETWORKS_OEM == 0, "ANEURALNETWORKS_OEM may have changed");
 static_assert(ANEURALNETWORKS_FLOAT32 == 1, "ANEURALNETWORKS_FLOAT32 may have changed");
-static_assert(ANEURALNETWORKS_INT8 == 2, "ANEURALNETWORKS_INT8 may have changed");
-static_assert(ANEURALNETWORKS_UINT8 == 3, "ANEURALNETWORKS_UINT8 may have changed");
-static_assert(ANEURALNETWORKS_INT16 == 4, "ANEURALNETWORKS_INT16 may have changed");
-static_assert(ANEURALNETWORKS_UINT16 == 5, "ANEURALNETWORKS_UINT16 may have changed");
-static_assert(ANEURALNETWORKS_INT32 == 6, "ANEURALNETWORKS_INT32 may have changed");
-static_assert(ANEURALNETWORKS_UINT32 == 7, "ANEURALNETWORKS_UINT32 may have changed");
-static_assert(ANEURALNETWORKS_TENSOR_FLOAT16 == 8,
-              "ANEURALNETWORKS_TENSOR_FLOAT16 may have changed");
-static_assert(ANEURALNETWORKS_TENSOR_FLOAT32 == 9,
+static_assert(ANEURALNETWORKS_INT32 == 2, "ANEURALNETWORKS_INT32 may have changed");
+static_assert(ANEURALNETWORKS_UINT32 == 3, "ANEURALNETWORKS_UINT32 may have changed");
+static_assert(ANEURALNETWORKS_TENSOR_OEM_BYTE == 4,
+              "ANEURALNETWORKS_TENSOR_OEM_BYTE may have changed");
+static_assert(ANEURALNETWORKS_TENSOR_FLOAT32 == 5,
               "ANEURALNETWORKS_TENSOR_FLOAT32 may have changed");
-static_assert(ANEURALNETWORKS_TENSOR_INT32 == 10, "ANEURALNETWORKS_TENSOR_INT32 may have changed");
-static_assert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM == 11,
+static_assert(ANEURALNETWORKS_TENSOR_INT32 == 6, "ANEURALNETWORKS_TENSOR_INT32 may have changed");
+static_assert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM == 7,
               "ANEURALNETWORKS_TENSOR_QUANT8_ASYMM may have changed");
 
 // IMPORTANT: When adding new values, update kNumberOfOperationTypes in Utils.h.
@@ -116,24 +112,16 @@ static_assert(ANEURALNETWORKS_BAD_STATE == 6, "ANEURALNETWORKS_BAD_STATE may hav
 
 // Make sure that the constants are compatible with the values defined in
 // hardware/interfaces/neuralnetworks/1.0/types.hal.
-static_assert(static_cast<uint32_t>(OperandType::FLOAT16) == ANEURALNETWORKS_FLOAT16,
-              "FLOAT16 != ANEURALNETWORKS_FLOAT16");
+static_assert(static_cast<uint32_t>(OperandType::OEM) == ANEURALNETWORKS_OEM,
+              "OEM != ANEURALNETWORKS_OEM");
 static_assert(static_cast<uint32_t>(OperandType::FLOAT32) == ANEURALNETWORKS_FLOAT32,
               "FLOAT32 != ANEURALNETWORKS_FLOAT32");
-static_assert(static_cast<uint32_t>(OperandType::INT8) == ANEURALNETWORKS_INT8,
-              "INT8 != ANEURALNETWORKS_INT8");
-static_assert(static_cast<uint32_t>(OperandType::UINT8) == ANEURALNETWORKS_UINT8,
-              "UINT8 != ANEURALNETWORKS_UINT8");
-static_assert(static_cast<uint32_t>(OperandType::INT16) == ANEURALNETWORKS_INT16,
-              "INT16 != ANEURALNETWORKS_INT16");
-static_assert(static_cast<uint32_t>(OperandType::UINT16) == ANEURALNETWORKS_UINT16,
-              "UINT16 != ANEURALNETWORKS_UINT16");
 static_assert(static_cast<uint32_t>(OperandType::INT32) == ANEURALNETWORKS_INT32,
               "INT32 != ANEURALNETWORKS_INT32");
 static_assert(static_cast<uint32_t>(OperandType::UINT32) == ANEURALNETWORKS_UINT32,
               "UINT32 != ANEURALNETWORKS_UINT32");
-static_assert(static_cast<uint32_t>(OperandType::TENSOR_FLOAT16) == ANEURALNETWORKS_TENSOR_FLOAT16,
-              "TENSOR_FLOAT16 != ANEURALNETWORKS_TENSOR_FLOAT16");
+static_assert(static_cast<uint32_t>(OperandType::TENSOR_OEM_BYTE) == ANEURALNETWORKS_TENSOR_OEM_BYTE,
+              "TENSOR_OEM_BYTE != ANEURALNETWORKS_TENSOR_OEM_BYTE");
 static_assert(static_cast<uint32_t>(OperandType::TENSOR_FLOAT32) == ANEURALNETWORKS_TENSOR_FLOAT32,
               "TENSOR_FLOAT32 != ANEURALNETWORKS_TENSOR_FLOAT32");
 static_assert(static_cast<uint32_t>(OperandType::TENSOR_QUANT8_ASYMM) ==
@@ -244,8 +232,7 @@ static int ValidateOperandType(const ANeuralNetworksOperandType& type, const cha
     type.scale); return ANEURALNETWORKS_BAD_DATA;
     }
     if (type.scale != 0.f &&
-        (type.type == ANEURALNETWORKS_FLOAT16 ||
-         type.type != ANEURALNETWORKS_FLOAT32)) {
+        (type.type != ANEURALNETWORKS_FLOAT32)) {
             LOG(ERROR) << ("%s OperandType scale %f with float type %u", tag, type.scale,
     type.type); return ANEURALNETWORKS_BAD_DATA;
         }
@@ -274,30 +261,7 @@ void ANeuralNetworksShutdown() {
     DeviceManager::get()->shutdown();
 }
 
-int ANeuralNetworksMemory_createShared(size_t size, ANeuralNetworksMemory** memory) {
-    if (!memory) {
-        LOG(ERROR) << "ANeuralNetworksMemory_createShared passed a nullptr";
-        return ANEURALNETWORKS_UNEXPECTED_NULL;
-    }
-    if (size > std::numeric_limits<uint32_t>::max()) {
-        LOG(ERROR) << "ANeuralNetworksMemory_createShared size exceeds max " << size;
-        return ANEURALNETWORKS_BAD_DATA;
-    }
-    uint32_t size32 = static_cast<uint32_t>(size);
-    *memory = nullptr;
-    std::unique_ptr<Memory> m = std::make_unique<Memory>();
-    if (m == nullptr) {
-        return ANEURALNETWORKS_OUT_OF_MEMORY;
-    }
-    int n = m->create(size32);
-    if (n != ANEURALNETWORKS_NO_ERROR) {
-        return n;
-    }
-    *memory = reinterpret_cast<ANeuralNetworksMemory*>(m.release());
-    return ANEURALNETWORKS_NO_ERROR;
-}
-
-int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd,
+int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd, size_t offset,
                                        ANeuralNetworksMemory** memory) {
     if (fd < 0) {
         LOG(ERROR) << "ANeuralNetworksMemory_createFromFd invalid fd " << fd;
@@ -308,21 +272,12 @@ int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd,
     if (m == nullptr) {
         return ANEURALNETWORKS_OUT_OF_MEMORY;
     }
-    int n = m->set(size, prot, fd);
+    int n = m->set(size, prot, fd, offset);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return n;
     }
     *memory = reinterpret_cast<ANeuralNetworksMemory*>(m.release());
     return ANEURALNETWORKS_NO_ERROR;
-}
-
-int ANeuralNetworksMemory_getPointer(ANeuralNetworksMemory* memory, uint8_t** buffer) {
-    if (!memory || !buffer) {
-        LOG(ERROR) << "ANeuralNetworksMemory_getPointer passed a nullptr";
-        return ANEURALNETWORKS_UNEXPECTED_NULL;
-    }
-    Memory* m = reinterpret_cast<Memory*>(memory);
-    return m->getPointer(buffer);
 }
 
 void ANeuralNetworksMemory_free(ANeuralNetworksMemory* memory) {
@@ -520,7 +475,10 @@ void ANeuralNetworksRequest_free(ANeuralNetworksRequest* request) {
     // TODO specification says that a request-in-flight can be deleted
     // No validation.  Free of nullptr is valid.
     RequestBuilder* r = reinterpret_cast<RequestBuilder*>(request);
-    delete r;
+    if (r) {
+        r->wait();
+        delete r;
+    }
 }
 
 int ANeuralNetworksRequest_setInput(ANeuralNetworksRequest* request, int32_t index,
@@ -599,45 +557,23 @@ int ANeuralNetworksRequest_setOutputFromMemory(ANeuralNetworksRequest* request, 
     return r->setOutputFromMemory(index, type, m, offset, length);
 }
 
-int ANeuralNetworksRequest_startCompute(ANeuralNetworksRequest* request,
-                                        ANeuralNetworksEvent** event) {
-    if (!request || !event) {
+int ANeuralNetworksRequest_startCompute(ANeuralNetworksRequest* request) {
+    if (!request) {
         LOG(ERROR) << "ANeuralNetworksRequest_startCompute passed a nullptr";
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
     // TODO validate the rest
 
     RequestBuilder* r = reinterpret_cast<RequestBuilder*>(request);
-
-    // Dynamically allocate an sp to wrap an event. The sp<Event> object is
-    // returned when the request has been successfully launched, otherwise a
-    // nullptr is returned. The sp is used for ref-counting purposes. Without
-    // it, the HIDL service could attempt to communicate with a dead event
-    // object.
-    std::unique_ptr<sp<Event>> e = std::make_unique<sp<Event>>();
-    *event = nullptr;
-
-    int n = r->startCompute(e.get());
-    if (n != ANEURALNETWORKS_NO_ERROR) {
-        return n;
-    }
-    *event = reinterpret_cast<ANeuralNetworksEvent*>(e.release());
-    return ANEURALNETWORKS_NO_ERROR;
+    return r->startCompute();
 }
 
-int ANeuralNetworksEvent_wait(ANeuralNetworksEvent* event) {
-    if (event == nullptr) {
-        LOG(ERROR) << "ANeuralNetworksEvent_wait passed a nullptr";
+int ANeuralNetworksRequest_wait(ANeuralNetworksRequest* request) {
+    if (!request) {
+        LOG(ERROR) << "ANeuralNetworksRequest_wait passed a nullptr";
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
 
-    sp<Event>* e = reinterpret_cast<sp<Event>*>(event);
-    (*e)->wait();
-    return ANEURALNETWORKS_NO_ERROR;
-}
-
-void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) {
-    // No validation.  Free of nullptr is valid.
-    sp<Event>* e = reinterpret_cast<sp<Event>*>(event);
-    delete e;
+    RequestBuilder* r = reinterpret_cast<RequestBuilder*>(request);
+    return r->wait();
 }

@@ -141,9 +141,7 @@ int RequestBuilder::setOutputFromMemory(uint32_t index, const ANeuralNetworksOpe
                                          length);
 }
 
-int RequestBuilder::startCompute(sp<Event>* event) {
-    *event = nullptr;
-
+int RequestBuilder::startCompute() {
     // TODO validate that we have full types for all inputs and outputs,
     // that the graph is not cyclic,
     /*
@@ -168,8 +166,17 @@ int RequestBuilder::startCompute(sp<Event>* event) {
     Model model;
     mModel->setHidlModel(&model);
 
-    return device == nullptr ? startComputeOnCpu(model, event)
-                             : startComputeOnDevice(device->getInterface(), model, event);
+    return device == nullptr ? startComputeOnCpu(model)
+                             : startComputeOnDevice(device->getInterface(), model);
+}
+
+int RequestBuilder::wait() {
+    if (mEvent == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksRequest_wait without request in flight";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    mEvent->wait();
+    return ANEURALNETWORKS_NO_ERROR;  // TODO shouldn't we look at wait()'s return value?
 }
 
 // Figures out how to place each of the input or outputs in a buffer. This just does the layout,
@@ -210,13 +217,25 @@ static void copyLocationAndDimension(const std::vector<ModelArgumentInfo>& argum
     }
 }
 
-int RequestBuilder::startComputeOnDevice(sp<IDevice> driver, const Model& model, sp<Event>* event) {
-    *event = nullptr;
-
-    LOG(DEBUG) << "RequestBuilder::startComputeOnDevice1";
+int RequestBuilder::startComputeOnDevice(sp<IDevice> driver, const Model& model) {
+    LOG(DEBUG) << "RequestBuilder::startComputeOnDevice";
     // TODO Dangerous!  In async, the model will outlive it here. Safe for now
-    sp<IPreparedModel> preparedModel = driver->prepareModel(model);
-    if (preparedModel == nullptr) {
+    sp<Event> preparationEvent = new Event();
+    ErrorStatus prepareStatus = ErrorStatus::GENERAL_FAILURE;
+    sp<IPreparedModel> preparedModel;
+
+    driver->prepareModel(model, preparationEvent,
+                         [&](ErrorStatus status, const sp<IPreparedModel>& prepared) {
+                             prepareStatus = status;
+                             preparedModel = prepared;
+                         });
+
+    // Immediately synchronize with event for now
+    // TODO: change to asynchronous later
+    Event::Status eventStatus = preparationEvent->wait();
+
+    if (prepareStatus != ErrorStatus::NONE || preparedModel == nullptr ||
+            eventStatus != Event::Status::SUCCESS) {
         return ANEURALNETWORKS_OP_FAILED;
     }
 
@@ -254,11 +273,11 @@ int RequestBuilder::startComputeOnDevice(sp<IDevice> driver, const Model& model,
         request.pools[i] = mMemories[i]->getHidlMemory();
     }
 
-    // Prepare the event for asynchronous execution. The sp<Event> object is
-    // returned when the request has been successfully launched, otherwise a
-    // nullptr is returned. The sp is used for ref-counting purposes. Without
-    // it, the HIDL service could attempt to communicate with a dead event
-    // object.
+    // Prepare the event for asynchronous execution. The sp<Event>
+    // object is recorded if the request has been successfully
+    // launched.  The sp is used for ref-counting purposes. Without
+    // it, the HIDL service could attempt to communicate with a dead
+    // event object.
     //
     // TODO: Explain the "dead event" problem further, either here or
     // in the design document.
@@ -272,7 +291,7 @@ int RequestBuilder::startComputeOnDevice(sp<IDevice> driver, const Model& model,
     // maybe the HIDL infrastructure handles this magically? At worst,
     // it seems like this is a small memory leak, if the Event stays
     // alive forever.
-    if (!preparedModel->execute(request, eventSp)) {
+    if (preparedModel->execute(request, eventSp) != ErrorStatus::NONE) {
         LOG(DEBUG) << "**Execute failed**";
         return ANEURALNETWORKS_OP_FAILED;
     }
@@ -302,7 +321,7 @@ int RequestBuilder::startComputeOnDevice(sp<IDevice> driver, const Model& model,
     }
     LOG(DEBUG) << "RequestBuilder::startComputeOnDevice completed";
 
-    *event = eventSp;
+    mEvent = eventSp;
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -311,18 +330,17 @@ static void asyncStartComputeOnCpu(const Model& model, const Request& request,
                                    const sp<IEvent>& event) {
     CpuExecutor executor;
     int err = executor.run(model, request, runTimePoolInfos);
-    Status executionStatus = err == ANEURALNETWORKS_NO_ERROR ? Status::SUCCESS : Status::ERROR;
-    event->notify(executionStatus);
+    ErrorStatus status = err == ANEURALNETWORKS_NO_ERROR ?
+            ErrorStatus::NONE : ErrorStatus::GENERAL_FAILURE;
+    event->notify(status);
 }
 
-int RequestBuilder::startComputeOnCpu(const Model& model, sp<Event>* event) {
+int RequestBuilder::startComputeOnCpu(const Model& model) {
     // TODO: use a thread pool
 
     // Prepare the event for asynchronous execution. The sp<Event> object is
-    // returned when the request has been successfully launched, otherwise a
-    // nullptr is returned.
+    // recorded if the request has been successfully launched.
     sp<Event> eventSp = new Event();
-    *event = nullptr;
 
     std::vector<RunTimePoolInfo> runTimePoolInfos;
     uint32_t count = mMemories.size();
@@ -356,7 +374,7 @@ int RequestBuilder::startComputeOnCpu(const Model& model, sp<Event>* event) {
                        std::move(runTimePoolInfos), eventSp);
     eventSp->bind_thread(std::move(thread));
 
-    *event = eventSp;
+    mEvent = eventSp;
     return ANEURALNETWORKS_NO_ERROR;
 }
 
