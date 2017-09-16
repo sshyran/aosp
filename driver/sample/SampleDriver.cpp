@@ -21,6 +21,8 @@
 #include "CpuExecutor.h"
 #include "HalInterfaces.h"
 
+#include <android-base/logging.h>
+#include <hidl/LegacySupport.h>
 #include <thread>
 
 namespace android {
@@ -43,7 +45,6 @@ Return<void> SampleDriver::getCapabilities(getCapabilities_cb cb) {
             {OperationType::DEPTH_TO_SPACE, OperandType::TENSOR_FLOAT32},
             {OperationType::DEQUANTIZE, OperandType::TENSOR_FLOAT32},
             {OperationType::EMBEDDING_LOOKUP, OperandType::TENSOR_FLOAT32},
-            {OperationType::FAKE_QUANT, OperandType::TENSOR_FLOAT32},
             {OperationType::FLOOR, OperandType::TENSOR_FLOAT32},
             {OperationType::FULLY_CONNECTED, OperandType::TENSOR_FLOAT32},
             {OperationType::HASHTABLE_LOOKUP, OperandType::TENSOR_FLOAT32},
@@ -74,7 +75,6 @@ Return<void> SampleDriver::getCapabilities(getCapabilities_cb cb) {
             {OperationType::DEPTH_TO_SPACE, OperandType::TENSOR_QUANT8_ASYMM},
             {OperationType::DEQUANTIZE, OperandType::TENSOR_QUANT8_ASYMM},
             {OperationType::EMBEDDING_LOOKUP, OperandType::TENSOR_QUANT8_ASYMM},
-            {OperationType::FAKE_QUANT, OperandType::TENSOR_QUANT8_ASYMM},
             {OperationType::FLOOR, OperandType::TENSOR_QUANT8_ASYMM},
             {OperationType::FULLY_CONNECTED, OperandType::TENSOR_QUANT8_ASYMM},
             {OperationType::HASHTABLE_LOOKUP, OperandType::TENSOR_QUANT8_ASYMM},
@@ -99,11 +99,6 @@ Return<void> SampleDriver::getCapabilities(getCapabilities_cb cb) {
     };
 
     // TODO: These numbers are completely arbitrary.  To be revised.
-    PerformanceInfo float16Performance = {
-            .execTime = 116.0f, // nanoseconds?
-            .powerUsage = 1.0f, // picoJoules
-    };
-
     PerformanceInfo float32Performance = {
             .execTime = 132.0f, // nanoseconds?
             .powerUsage = 1.0f, // picoJoules
@@ -117,8 +112,6 @@ Return<void> SampleDriver::getCapabilities(getCapabilities_cb cb) {
     Capabilities capabilities = {
             .supportedOperationTuples = supportedOperationTuples,
             .cachesCompilation = false,
-            .bootupTime = 1e-3f,
-            .float16Performance = float16Performance,
             .float32Performance = float32Performance,
             .quantized8Performance = quantized8Performance,
     };
@@ -220,3 +213,17 @@ Return<ErrorStatus> SamplePreparedModel::execute(const Request& request, const s
 } // namespace sample_driver
 } // namespace nn
 } // namespace android
+
+using android::nn::sample_driver::SampleDriver;
+
+int main() {
+    android::sp<SampleDriver> driver = new SampleDriver();
+    android::hardware::configureRpcThreadpool(4, true /* will join */);
+    if (driver->registerAsService("sample") != android::OK) {
+        ALOGE("Could not register service");
+        return 1;
+    }
+    android::hardware::joinRpcThreadpool();
+    ALOGE("Service exited!");
+    return 1;
+}

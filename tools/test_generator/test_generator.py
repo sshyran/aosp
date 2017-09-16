@@ -275,6 +275,20 @@ class Output(Operand, Uses, Nontraversable):
   def get_outputs():
     return Output.__outputs
 
+# An output that we don't want to compare the results
+class IgnoredOutput(Output):
+  __ignored = set()
+  def __init__(self, name, vt, shape):
+    Output.__init__(self, name, vt, shape)
+    IgnoredOutput.__ignored.add(self)
+  def gen_ignored():
+    ignored_func = """
+bool is_ignored(int i) {
+  static std::set<int> ignore = {%s};
+  return ignore.find(i) != ignore.end();
+}""" % ", ".join([str(x.number) for x in IgnoredOutput.__ignored])
+    return ignored_func
+
 class ModelArgument:
   __arguments = []
 
@@ -672,8 +686,8 @@ def generate_vts_operand_values():
     ty = w.type.get_element_type()
     if ty == "TENSOR_QUANT8_ASYMM":
       binit += w.initializer
-    elif ty in {"TENSOR_FLOAT32", "TENSOR_INT32", "INT32"}:
-      fmt = "f" if ty == "TENSOR_FLOAT32" else "i"
+    elif ty in {"TENSOR_FLOAT32", "FLOAT32", "TENSOR_INT32", "INT32"}:
+      fmt = "f" if (ty == "TENSOR_FLOAT32" or ty == "FLOAT32") else "i"
       for f in w.initializer:
         binit += [int(x) for x in struct.pack(fmt, f)]
     else:
@@ -747,9 +761,9 @@ Model createTestModel() {{
   }
   print(model_fmt.format(**model), file = model_file)
 
-
 def generate_vts(model_file):
   generate_vts_model(model_file)
+  print (IgnoredOutput.gen_ignored(), file=model_file)
 
 def print_cts_op(model_file, op):
   fmt = op.Definition()
@@ -798,6 +812,7 @@ if __name__ == '__main__':
       # Boilerplate
       print ("  assert(model->isValid());", file=model_file);
       print ("}", file=model_file)
+      print (IgnoredOutput.gen_ignored(), file=model_file)
 
   with smart_open(example) as example_file:
     Example.dump(example_file)
