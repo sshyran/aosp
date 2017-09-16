@@ -17,6 +17,7 @@
 #include "NeuralNetworksWrapper.h"
 
 #include <android/sharedmem.h>
+//#include <android-base/logging.h>
 #include <gtest/gtest.h>
 #include <sys/mman.h>
 #include <sys/types.h>
@@ -31,8 +32,10 @@ typedef float Matrix3x4[3][4];
 // Tests the various ways to pass weights and input/output data.
 class MemoryTest : public ::testing::Test {
 protected:
-    virtual void SetUp() { ASSERT_EQ(Initialize(), Result::NO_ERROR); }
-    virtual void TearDown() { Shutdown(); }
+    virtual void SetUp() {
+        // For detailed logs, uncomment this line:
+        // SetMinimumLogSeverity(android::base::VERBOSE);
+    }
 
     const Matrix3x4 matrix1 = {{1.f, 2.f, 3.f, 4.f}, {5.f, 6.f, 7.f, 8.f}, {9.f, 10.f, 11.f, 12.f}};
     const Matrix3x4 matrix2 = {{100.f, 200.f, 300.f, 400.f},
@@ -125,14 +128,14 @@ TEST_F(MemoryTest, TestASharedMemory) {
     ASSERT_TRUE(actual.isValid());
 
     Compilation compilation2(&model);
-    ASSERT_EQ(compilation2.compile(), Result::NO_ERROR);
+    ASSERT_EQ(compilation2.finish(), Result::NO_ERROR);
 
-    Request request2(&compilation2);
-    ASSERT_EQ(request2.setInputFromMemory(0, &input, offsetForMatrix1, sizeof(Matrix3x4)),
+    Execution execution2(&compilation2);
+    ASSERT_EQ(execution2.setInputFromMemory(0, &input, offsetForMatrix1, sizeof(Matrix3x4)),
               Result::NO_ERROR);
-    ASSERT_EQ(request2.setOutputFromMemory(0, &actual, offsetForActual, sizeof(Matrix3x4)),
+    ASSERT_EQ(execution2.setOutputFromMemory(0, &actual, offsetForActual, sizeof(Matrix3x4)),
               Result::NO_ERROR);
-    ASSERT_EQ(request2.compute(), Result::NO_ERROR);
+    ASSERT_EQ(execution2.compute(), Result::NO_ERROR);
     ASSERT_EQ(CompareMatrices(expected3, *reinterpret_cast<Matrix3x4*>(outputData + offsetForActual)), 0);
 }
 
@@ -176,11 +179,11 @@ TEST_F(MemoryTest, TestFd) {
     Matrix3x4 actual;
     memset(&actual, 0, sizeof(actual));
     Compilation compilation2(&model);
-    ASSERT_EQ(compilation2.compile(), Result::NO_ERROR);
-    Request request2(&compilation2);
-    ASSERT_EQ(request2.setInput(0, matrix1, sizeof(Matrix3x4)), Result::NO_ERROR);
-    ASSERT_EQ(request2.setOutput(0, actual, sizeof(Matrix3x4)), Result::NO_ERROR);
-    ASSERT_EQ(request2.compute(), Result::NO_ERROR);
+    ASSERT_EQ(compilation2.finish(), Result::NO_ERROR);
+    Execution execution2(&compilation2);
+    ASSERT_EQ(execution2.setInput(0, matrix1, sizeof(Matrix3x4)), Result::NO_ERROR);
+    ASSERT_EQ(execution2.setOutput(0, actual, sizeof(Matrix3x4)), Result::NO_ERROR);
+    ASSERT_EQ(execution2.compute(), Result::NO_ERROR);
     ASSERT_EQ(CompareMatrices(expected3, actual), 0);
 
     close(fd);
