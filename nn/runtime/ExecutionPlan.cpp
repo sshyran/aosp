@@ -189,8 +189,9 @@ int ModelBuilder::partitionTheWork(uint32_t preference, ExecutionPlan* plan) {
     const size_t deviceCount = devices.size() + 1;
     const size_t operationCount = mOperations.size();
 
-    // If we only have the CPU, no need to try to partition.
-    if (deviceCount == 1) {
+    // If we only have the CPU, or if the graph has no operations, no
+    // need to try to partition.
+    if (deviceCount == 1 || operationCount == 0) {
         // TODO plan->addStep(new ExecutionStep(this));
         return ANEURALNETWORKS_NO_ERROR;
     }
@@ -273,23 +274,71 @@ static PerformanceInfo getPerformanceInfo(const std::shared_ptr<Device> device, 
     }
 }
 
+namespace {
+// This class determines whether a given device can execute a given operation
+class CanDo {
+public:
+    CanDo() {}
+
+    void initialize(const ModelBuilder* model, std::shared_ptr<Device> device) {
+        mModel = model;
+        mDevice = device;
+
+        if (device->hasSupportedOperationTuples()) {
+            return;
+        }
+
+        Model hidlModel;
+        model->setHidlModel(&hidlModel);
+        device->getSupportedOperations(hidlModel, &mSupportsOperationByIndex);
+    }
+
+    bool check(size_t operationIndex) {
+        if (mDevice->hasSupportedOperationTuples()) {
+            return mDevice->canDo(mModel->getOperation(operationIndex).opTuple);
+        }
+        return mSupportsOperationByIndex[operationIndex];
+    }
+private:
+    const ModelBuilder *mModel;
+    std::shared_ptr<Device> mDevice;
+    hidl_vec<bool> mSupportsOperationByIndex;
+};
+};  // anonymous namespace
+
 int ModelBuilder::findBestDeviceForEachOperation(
         [[maybe_unused]] uint32_t preference,
         [[maybe_unused]] const std::vector<std::shared_ptr<Device>>& devices,
         [[maybe_unused]] const size_t operationCount, [[maybe_unused]] const size_t deviceCount,
         [[maybe_unused]] std::vector<int>* bestDeviceForOperation) {
-    // TODO query the capabilities of each driver
-    // TODO Send model if needed,
+
+    // Note that deviceCount includes CPU, which has no entry in devices[]
+    const size_t nonCpuDeviceCount = deviceCount - 1;
+
+    std::vector<CanDo> canDo(nonCpuDeviceCount);
+    for (size_t deviceIndex = 0; deviceIndex < nonCpuDeviceCount; deviceIndex++) {
+        canDo[deviceIndex].initialize(this, devices[deviceIndex]);
+    }
+
     // Figure out the best driver for each operation.
+    //
+    // TODO: If the best driver is inferior (higher-power or
+    // longer-running, depending on preference) than the CPU, then we
+    // should use the CPU.  We could do this by setting bestChoice
+    // initially to the number representing the CPU
+    // (nonCpuDeviceCount) and bestPerfVal to the CPU value.  Problem
+    // is, we have no such number now, so that will have to be for
+    // release P or later.  One option is that the float performance
+    // is a ratio of device/cpu rather than a number in joules or
+    // microseconds.
     for (size_t operationIndex = 0; operationIndex < operationCount; operationIndex++) {
         int bestChoice = -1;
         float bestPerfVal = 0.0;  // do not check bestPerfVal unless we have bestChoice >= 0
-        const OperationTuple tuple = mOperations[operationIndex].opTuple;
-        // note that deviceCount includes CPU, which has no entry in devices[]
-        for (size_t deviceIndex = 0; deviceIndex < deviceCount-1; deviceIndex++) {
-            const auto& device = devices[deviceIndex];
-            if (device->canDo(tuple)) {
-                const PerformanceInfo perf = getPerformanceInfo(device, tuple.operandType);
+        for (size_t deviceIndex = 0; deviceIndex < nonCpuDeviceCount; deviceIndex++) {
+            if (canDo[deviceIndex].check(operationIndex)) {
+                const auto& device = devices[deviceIndex];
+                const PerformanceInfo perf =
+                    getPerformanceInfo(device, getOperation(operationIndex).opTuple.operandType);
                 const float perfVal =
                         (preference == ANEURALNETWORKS_PREFER_LOW_POWER
                          ? perf.powerUsage : perf.execTime);
@@ -300,8 +349,9 @@ int ModelBuilder::findBestDeviceForEachOperation(
                 bestPerfVal = perfVal;
             }
         }
+        // No drivers are available for this operation, so choose the CPU.
         (*bestDeviceForOperation)[operationIndex] =
-                bestChoice >= 0 ? bestChoice : (int)deviceCount;
+                bestChoice >= 0 ? bestChoice : static_cast<int>(nonCpuDeviceCount);
     }
     return ANEURALNETWORKS_NO_ERROR;
 }
