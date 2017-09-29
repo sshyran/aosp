@@ -128,6 +128,7 @@ typedef enum {
      * * 0: The sum, a tensor of the same type as input0.
      */
     ANEURALNETWORKS_ADD = 0,
+
     /** Performs a 2-D average pooling operation.
      *
      * The output dimensions are functions of the filter dimensions, stride, and padding.
@@ -160,6 +161,7 @@ typedef enum {
      * * 0: The output 4-D tensor, of shape [batches, out_height, out_width, depth].
      */
     ANEURALNETWORKS_AVERAGE_POOL_2D = 1,
+
     /** Concatenates the input tensors along the given dimension.
      *
      * The input tensors must have identical type and the same dimensions except the
@@ -184,6 +186,7 @@ typedef enum {
      *      The output shape is [D0, D1, ..., sum(Daxis(i)), ..., Dm].
      */
     ANEURALNETWORKS_CONCATENATION = 2,
+
     /** Performs an 2-D convolution operation.
      *
      * The CONV_2D op sweeps a 2-D filter that can mix channels together over a batch of
@@ -214,7 +217,8 @@ typedef enum {
      *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32} type, the bias should
      *      also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}.
      *      For input tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} type, the bias
-     *      should be of {@link ANEURALNETWORKS_TENSOR_INT32}.
+     *      should be of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of 0 and
+     *      bias_scale == input_scale * filter_scale.
      * * 3: An INT32 value, specifying the padding on the left, in the ‘width’ dimension.
      * * 4: An INT32 value, specifying the padding on the right,in the ‘width’ dimension.
      * * 5: An INT32 value, specifying the padding on the top, in the ‘height’ dimension.
@@ -226,13 +230,16 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batches, out_height, out_width, depth_out].
+     *      For output tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} type, the following
+     *      condition must be satisfied: output_scale > input_scale * filter_scale.
      */
     ANEURALNETWORKS_CONV_2D = 3,
+
     /** Performs a depthwise 2-D convolution operation.
      *
      * Given an input tensor of shape [batches, height, width, depth_in] and a filter
-     * tensor of shape [depth_out, filter_height, filter_width, depth_in] containing
-     * in_channels convolutional filters of depth 1, DEPTHWISE_CONV applies a different
+     * tensor of shape [1, filter_height, filter_width, depth_out] containing
+     * depth_out convolutional filters of depth 1, DEPTHWISE_CONV applies a different
      * filter to each input channel (expanding from 1 channel to channel_multiplier channels
      * for each), then concatenates the results together.
      *
@@ -244,7 +251,7 @@ typedef enum {
      *     output[b, i, j, k * channel_multiplier + q] =
      *         sum_{di, dj} (
      *             input[b, strides[1] * i + di, strides[2] * j + dj, k] *
-     *             filter[di, dj, k, q]
+     *             filter[1, di, dj, k * channel_multiplier + q]
      *         )
      *
      * Supported tensor types:
@@ -261,7 +268,8 @@ typedef enum {
      *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32} type, the bias should
      *      also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}.
      *      For input tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} type, the bias
-     *      should be of {@link ANEURALNETWORKS_TENSOR_INT32}.
+     *      should be of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of 0 and
+     *      bias_scale == input_scale * filter_scale.
      * * 3: An INT32 value, specifying the padding on the left, in the ‘width’ dimension.
      * * 4: An INT32 value, specifying the padding on the right,in the ‘width’ dimension.
      * * 5: An INT32 value, specifying the padding on the top, in the ‘height’ dimension.
@@ -274,8 +282,11 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batches, out_height, out_width, depth_out].
+     *      For output tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} type, the following
+     *      condition must be satisfied: output_scale > input_scale * filter_scale.
      */
     ANEURALNETWORKS_DEPTHWISE_CONV_2D = 4,
+
     /** Rearranges data from depth into blocks of spatial data.
      *
      * More specifically, this op outputs a copy of the input tensor where values from
@@ -305,6 +316,7 @@ typedef enum {
      *      depth/(block_size*block_size)].
      */
     ANEURALNETWORKS_DEPTH_TO_SPACE = 5,
+
     /** Dequantizes the input tensor.
      *
      * The formula is:
@@ -361,6 +373,7 @@ typedef enum {
      * * 0: The output, a tensor of the same type and dimensions as input0.
      */
     ANEURALNETWORKS_FLOOR = 8,
+
     /** Denotes a fully (densely) connected layer, which connects all elements in the input
      * tensor with each element in the output tensor.
      *
@@ -381,16 +394,19 @@ typedef enum {
      *      and “input_size” is the size of the input.
      * * 1: A 2-D tensor, specifying the weights, of shape [num_units, input_size], where
      *      "num_units" corresponds to the number of output nodes.
-     * * 2: A 1-D tensor, of shape [num_units], specifying the bias.
+     * * 2: A 1-D tensor, of shape [depth_out], specifying the bias.
      *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32} type, the bias should
      *      also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}.
      *      For input tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} type, the bias
-     *      should be of {@link ANEURALNETWORKS_TENSOR_INT32}.
+     *      should be of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of 0 and
+     *      bias_scale == input_scale * filter_scale.
      * * 3: An INT32 value, and has to be one of the {@link FuseCode} values.
      *      Specifies the activation to invoke on the result of each addition.
      *
      * Outputs:
      * * 0: The output tensor, of shape [batch_size, num_units].
+     *      For output tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} type, the following
+     *      condition must be satisfied: output_scale > input_scale * filter_scale.
      */
     ANEURALNETWORKS_FULLY_CONNECTED = 9,
 
@@ -464,6 +480,7 @@ typedef enum {
      * * 0: The output 4-D tensor, of shape [batches, out_height, out_width, depth].
      */
     ANEURALNETWORKS_L2_POOL_2D = 12,
+
     /** Applies Local Response Normalization along the depth dimension.
      *
      * The 4-D input tensor is treated as a 3-D array of 1-D vectors (along the last
@@ -492,6 +509,7 @@ typedef enum {
      * * 0: The output tensor of same shape as input0.
      */
     ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION = 13,
+
     /** Computes sigmoid activation on the input tensor element-wise.
      *
      * The output is calculated using this formula:
@@ -708,6 +726,7 @@ typedef enum {
      * * 0: The product, a tensor of the same type as input0.
      */
     ANEURALNETWORKS_MUL = 18,
+
     /** Computes rectified linear activation on the input tensor element-wise.
      *
      * The output is calculated using this formula:
@@ -727,6 +746,7 @@ typedef enum {
      * * 0: The output tensor of same shape as input0.
      */
     ANEURALNETWORKS_RELU = 19,
+
     /** Computes rectified linear 1 activation on the input tensor element-wise.
      *
      * The output is calculated using this formula:
@@ -746,6 +766,7 @@ typedef enum {
      * * 0: The output tensor of same shape as input0.
      */
     ANEURALNETWORKS_RELU1 = 20,
+
     /** Computes rectified linear 6 activation on the input tensor element-wise.
      *
      * The output is calculated using this formula:
@@ -765,6 +786,7 @@ typedef enum {
      * * 0: The output tensor of same shape as input0.
      */
     ANEURALNETWORKS_RELU6 = 21,
+
     /** Reshapes a tensor.
      *
      * Given tensor, this operation returns a tensor that has the same values as tensor,
@@ -786,6 +808,7 @@ typedef enum {
      * * 0: The output tensor, of shape specified by the input shape.
      */
     ANEURALNETWORKS_RESHAPE = 22,
+
     /** Resizes images to given size using the bilinear interpretation.
      *
      * Resized images will be distorted if their original aspect ratio is not the same as input.
