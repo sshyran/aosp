@@ -17,7 +17,7 @@
 #ifndef ANDROID_ML_NN_RUNTIME_EXECUTION_BUILDER_H
 #define ANDROID_ML_NN_RUNTIME_EXECUTION_BUILDER_H
 
-#include "Event.h"
+#include "Callbacks.h"
 #include "HalInterfaces.h"
 #include "Memory.h"
 #include "NeuralNetworks.h"
@@ -25,7 +25,8 @@
 #include <unordered_map>
 #include <vector>
 
-using ::android::hardware::neuralnetworks::V1_0::implementation::Event;
+using ::android::hardware::neuralnetworks::V1_0::implementation::ExecutionCallback;
+using ::android::hardware::neuralnetworks::V1_0::implementation::PreparedModelCallback;
 
 namespace android {
 namespace nn {
@@ -38,17 +39,18 @@ class StepExecutor;
 
 // TODO move length out of DataLocation
 struct ModelArgumentInfo {
-    // Whether the arguement was specified as being in a Memory, as a pointer,
-    // or has not been specified.
+    // Whether the argument was specified as being in a Memory, as a pointer,
+    // has no value, or has not been specified.
     // If POINTER then:
-    //   locationAndDimension.location.length is valid.
-    //   locationAndDimension.dimension is valid.
+    //   locationAndLength.length is valid.
+    //   dimensions is valid.
     //   buffer is valid
     // If MEMORY then:
-    //   locationAndDimension.location.{poolIndex, offset, length} is valid.
-    //   locationAndDimension.dimension is valid.
-    enum { POINTER, MEMORY, UNSPECIFIED } state = UNSPECIFIED;
-    RequestArgument locationAndDimension;
+    //   locationAndLength.location.{poolIndex, offset, length} is valid.
+    //   dimensions is valid.
+    enum { POINTER, MEMORY, HAS_NO_VALUE, UNSPECIFIED } state = UNSPECIFIED;
+    DataLocation locationAndLength;
+    std::vector<uint32_t> dimensions;
     void* buffer;
 
     int setFromPointer(const Operand& operand, const ANeuralNetworksOperandType* type, void* buffer,
@@ -71,7 +73,7 @@ public:
                   size_t length);
     int setOutputFromMemory(uint32_t index, const ANeuralNetworksOperandType* type,
                             const Memory* memory, size_t offset, size_t length);
-    int startCompute(sp<Event>* event);
+    int startCompute(sp<ExecutionCallback>* synchronizationCallback);
 
 private:
     const ModelBuilder* mModel;
@@ -130,12 +132,12 @@ public:
 
     // TODO: inter-partition temporaries
 
-    int startCompute(sp<Event>* event);
+    int startCompute(sp<ExecutionCallback>* synchronizationCallback);
 
 private:
     int allocatePointerArgumentsToPool(std::vector<ModelArgumentInfo>* args, Memory* memory);
-    int startComputeOnDevice(sp<Event>* event);
-    int startComputeOnCpu(sp<Event>* event);
+    int startComputeOnDevice(sp<ExecutionCallback>* synchronizationCallback);
+    int startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallback);
 
     void mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
                           ModelArgumentInfo* executorInputOrOutput);
