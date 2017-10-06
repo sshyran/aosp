@@ -44,7 +44,30 @@ const int kNumberOfOperationTypesOEM = 1;
 // The lowest number assigned to any OEM Code in NeuralNetworksOEM.h.
 const int kOEMCodeBase = 10000;
 
-// TODO Remove all the LOG(DEBUG) statements in all the files.
+/* IMPORTANT: if you change the following list, don't
+ * forget to update the corresponding 'tags' table in
+ * the initVlogMask() function implemented in Utils.cpp.
+ */
+enum VLogFlags {
+    MODEL = 0,
+    COMPILATION,
+    EXECUTION,
+    CPUEXE,
+    MANAGER,
+    DRIVER
+};
+
+#define VLOG_IS_ON(TAG) \
+    ((vLogMask & (1 << (TAG))) != 0)
+
+#define VLOG(TAG)         \
+    if (LIKELY(!VLOG_IS_ON(TAG))) \
+        ;                 \
+    else                  \
+        LOG(INFO)
+
+extern int vLogMask;
+void initVLogMask();
 
 // Assert macro, as Android does not generally support assert.
 #define nnAssert(v)                                                                            \
@@ -56,9 +79,15 @@ const int kOEMCodeBase = 10000;
         }                                                                                      \
     } while (0)
 
-// Returns the the amount of space needed to store a tensor of the specified
+// Returns the amount of space needed to store a value of the specified
 // dimensions and type.
 uint32_t sizeOfData(OperandType type, const std::vector<uint32_t>& dimensions);
+
+// Returns the amount of space needed to store a value of the dimensions and
+// type of this operand.
+inline uint32_t sizeOfData(const Operand& operand) {
+    return sizeOfData(operand.type, operand.dimensions);
+}
 
 // Returns the name of the operation in ASCII.
 const char* getOperationName(OperationType opCode);
@@ -119,7 +148,7 @@ inline size_t getSizeFromInts(int lower, int higher) {
 }
 
 #ifdef NN_DEBUGGABLE
-uint32_t getProp(const char *str);
+uint32_t getProp(const char* str, uint32_t defaultValue = 0);
 #endif  // NN_DEBUGGABLE
 
 }  // namespace nn

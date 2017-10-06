@@ -20,6 +20,7 @@
 #include "Callbacks.h"
 #include "HalInterfaces.h"
 #include "Memory.h"
+#include "ModelBuilder.h"
 #include "NeuralNetworks.h"
 
 #include <unordered_map>
@@ -57,6 +58,7 @@ struct ModelArgumentInfo {
                        uint32_t length);
     int setFromMemory(const Operand& operand, const ANeuralNetworksOperandType* type,
                       uint32_t poolIndex, uint32_t offset, uint32_t length);
+    int setFromTemporaryMemory(const Operand& operand, uint32_t poolIndex, uint32_t offset);
     int updateDimensionInfo(const Operand& operand, const ANeuralNetworksOperandType* newType);
 };
 
@@ -75,9 +77,11 @@ public:
                             const Memory* memory, size_t offset, size_t length);
     int startCompute(sp<ExecutionCallback>* synchronizationCallback);
 
+    const ModelBuilder* getModel() const { return mModel; }
+
 private:
     const ModelBuilder* mModel;
-    [[maybe_unused]] const ExecutionPlan* mPlan;
+    const ExecutionPlan* mPlan;
 
     // The information we'll send to the driver about the inputs and outputs.
     // Note that we build this in two steps:
@@ -130,17 +134,38 @@ public:
                          &mOutputs[executorIndex]);
     }
 
-    // TODO: inter-partition temporaries
+    // The input or output is assumed to have the size of the
+    // corresponding operand.
+    int setInputFromTemporaryMemory(uint32_t inputIndex, const Memory* memory, uint32_t offset) {
+        return setInputOrOutputFromTemporaryMemory(mModel->getInputOperand(inputIndex),
+                                                   memory, offset,
+                                                   &mInputs.at(inputIndex));
+    }
+    int setOutputFromTemporaryMemory(uint32_t outputIndex, const Memory* memory, uint32_t offset) {
+        return setInputOrOutputFromTemporaryMemory(mModel->getOutputOperand(outputIndex),
+                                                   memory, offset,
+                                                   &mOutputs.at(outputIndex));
+    }
 
+    // Executes using the (driver, preparedModel) specified at construction time.
     int startCompute(sp<ExecutionCallback>* synchronizationCallback);
+
+    // Executes using the CPU, regardless of the (driver,
+    // preparedModel) specified at construction time.
+    int startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallback);
+
+    bool isCpu() const { return mDriver == nullptr; }
 
 private:
     int allocatePointerArgumentsToPool(std::vector<ModelArgumentInfo>* args, Memory* memory);
     int startComputeOnDevice(sp<ExecutionCallback>* synchronizationCallback);
-    int startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallback);
 
     void mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
                           ModelArgumentInfo* executorInputOrOutput);
+
+    int setInputOrOutputFromTemporaryMemory(const Operand& inputOrOutputOperand,
+                                            const Memory* memory, uint32_t offset,
+                                            ModelArgumentInfo* inputOrOutputInfo);
 
     // describes the full (possibly multiple-"step") execution
     const ExecutionBuilder* mExecutionBuilder;
