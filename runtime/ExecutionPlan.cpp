@@ -259,10 +259,6 @@ int ExecutionStep::addOperation(int operationIndex, const ModelBuilder& fromMode
                                    outputCount, outputs.data());
 }
 
-size_t ExecutionStep::countSubModelOutputs() const {
-    return mSubModelOutputs.size();
-}
-
 void ExecutionStep::mapInputsAndOutputs(std::shared_ptr<StepExecutor> stepExecutor) const {
     for (uint32_t i = 0, e = mInputIndexSubModelToFromModel.size(); i < e; i++) {
         stepExecutor->mapInput(mInputIndexSubModelToFromModel[i], i);
@@ -283,13 +279,10 @@ void ExecutionPlan::CompoundBody::findSubModelOutputs() {
             mSteps[stepIndex]->recordSubModelOutput(fromModelIndex);
         }
     }
-    for (const auto& step : mSteps) {
-        mSubModelOutputCount += step->countSubModelOutputs();
-    }
 }
 
 int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutputOfUnknownSize) {
-    LOG(DEBUG) << "ExecutionStep::finishSubModel, step " << mIndex;
+    VLOG(COMPILATION) << "ExecutionStep::finishSubModel, step " << mIndex;
 
     auto convertModelInputsOrOutputs = [](
             // IN: mModel{Inputs|Outputs}
@@ -335,15 +328,16 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
         for (uint32_t dimension : operand.dimensions) {
             if (dimension == 0) {
                 *hasOutputOfUnknownSize = true;
-                LOG(DEBUG) << "SubModelOutput (operand#" << subModelOutput.first << " of original graph)"
-                           << " has unknown size: " << toString(operand);
+                VLOG(COMPILATION) << "SubModelOutput (operand#" << subModelOutput.first
+                                << " of original graph) has unknown size: "
+                                << toString(operand);
                 break;
             }
         }
     }
 
     {
-      int n = mSubModel->setInputsAndOutputs(inputs.size(), &inputs[0], outputs.size(), &outputs[0]);
+      int n = mSubModel->identifyInputsAndOutputs(inputs.size(), &inputs[0], outputs.size(), &outputs[0]);
       if (n != ANEURALNETWORKS_NO_ERROR) {
           return n;
       }
@@ -359,16 +353,16 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
         return ANEURALNETWORKS_NO_ERROR;
     }
 
-    LOG(DEBUG) << "ExecutionStep::finishSubModel, compilation";
+    VLOG(COMPILATION) << "ExecutionStep::finishSubModel, compilation";
     return compile(mDevice, mSubModel.get(), &mPreparedSubModel);
 }
 
 void ExecutionStep::dump() const {
     Model model;
     mSubModel->setHidlModel(&model);
-    LOG(DEBUG) << "ExecutionStep#" << mIndex
-               << " for " << (mDevice == nullptr ? "CPU" : mDevice->getName())
-               << " submodel: " << toString(model);
+    VLOG(COMPILATION) << "ExecutionStep#" << mIndex
+                      << " for " << (mDevice == nullptr ? "CPU" : mDevice->getName())
+                      << " submodel: " << toString(model);
 }
 
 int ExecutionPlan::CompoundBody::finish(const ModelBuilder* fromModel) {
@@ -376,12 +370,12 @@ int ExecutionPlan::CompoundBody::finish(const ModelBuilder* fromModel) {
     for (const auto& step : mSteps) {
         int n = step->finishSubModel(fromModel, &mHasSubModelOutputOfUnknownSize);
         if (n != ANEURALNETWORKS_NO_ERROR) {
-            LOG(DEBUG) << "ExecutionPlan::CompoundBody::finish -- finishSubModel failed";
+            VLOG(COMPILATION) << "ExecutionPlan::CompoundBody::finish -- finishSubModel failed";
             return n;
         }
     }
     if (mHasSubModelOutputOfUnknownSize) {
-        LOG(DEBUG) << "ExecutionPlan::CompoundBody::finish -- mHasSubModelOutputOfUnknownSize";
+        VLOG(COMPILATION) << "ExecutionPlan::CompoundBody::finish -- mHasSubModelOutputOfUnknownSize";
         return ANEURALNETWORKS_OP_FAILED;
     }
 
@@ -395,7 +389,7 @@ int ExecutionPlan::SimpleBody::finish([[maybe_unused]] const ModelBuilder* fromM
         return ANEURALNETWORKS_NO_ERROR;
     }
 
-    LOG(DEBUG) << "ExecutionPlan::SimpleBody::finish, compilation";
+    VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish, compilation";
     const int n = compile(mDevice, mModel, &mPreparedModel);
     mSuccessfulFinish = (n == ANEURALNETWORKS_NO_ERROR);
     return n;
@@ -406,24 +400,104 @@ int ExecutionPlan::finish(const ModelBuilder* fromModel) {
     return mBody->finish(fromModel);
 }
 
-bool ExecutionPlan::shouldBeExecutable() const {
-    return mState == SIMPLE;
+ExecutionPlan::Controller::Controller(
+    const ExecutionPlan* plan,
+    const ExecutionBuilder* executionBuilder,
+    std::shared_ptr<const SubModelInputsAndOutputsType> subModelInputsAndOutputs,
+    uint32_t totalSizeOfTemporaries) :
+        mPlan(plan), mExecutionBuilder(executionBuilder),
+        mSubModelInputsAndOutputs(subModelInputsAndOutputs), mNextStepIndex(0) {
+    if (totalSizeOfTemporaries) {
+        if (mTemporaries.create(totalSizeOfTemporaries) != ANEURALNETWORKS_NO_ERROR) {
+            LOG(ERROR) << "ExecutionPlan::Controller failed to allocate temporaries";
+            mNextStepIndex = kBadStepIndex;
+        }
+    }
 }
 
-ExecutionPlan::Controller ExecutionPlan::makeController(
+std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
     const ExecutionBuilder* executionBuilder) const {
     nnAssert((mState == EMPTY) == (mBody == nullptr));
     if (mBody && !mBody->mSuccessfulFinish) {
-        LOG(DEBUG) << "ExecutionPlan::makeController -- error";
-        return Controller();
+        VLOG(EXECUTION) << "ExecutionPlan::makeController -- unsuccessful finish";
+        return std::shared_ptr<Controller>(nullptr);
     }
-    return Controller(this, executionBuilder);
+
+    // Create the layout for a Memory object big enough for to hold
+    // every TEMPORARY in the original model that is live across
+    // partition boundaries.
+    //
+    // TODO: Rethink this approach for managing temporaries.  Some
+    // alternatives:
+    //
+    // 1) Adopt a memory layout scheme analogous to stack allocation,
+    // where objects of non-overlapping lifetime can occupy the same
+    // storage.  We would still have a single Memory object in this
+    // case.
+    //
+    // 2) Do something like what CpuExecutor does, and do allocations
+    // and deallocations on the fly (during execution) before first
+    // reference and after last reference, respectively.  This would
+    // mean having one Memory object per TEMPORARY; or, in a more
+    // complicated implementation, one Memory object per set of
+    // temporaries that have the same lifetime.  Note that the Android
+    // system limits the number of shared memory objects, which are
+    // what our Memory objects represent.
+    //
+    uint32_t totalSizeOfTemporaries = 0;
+    std::shared_ptr<Controller::SubModelInputsAndOutputsType> subModelInputsAndOutputs;
+    if (mState == COMPOUND) {
+        const ModelBuilder* fromModel = executionBuilder->getModel();
+        for (const auto& step : compound()->mSteps) {
+            for (const auto& output: step->getSubModelOutputs()) {
+                const uint32_t fromModelOperandIndex = output.first;
+                const Operand& fromModelOperand = fromModel->getOperand(fromModelOperandIndex);
+                if (subModelInputsAndOutputs == nullptr) {
+                    subModelInputsAndOutputs =
+                            std::make_shared<Controller::SubModelInputsAndOutputsType>();
+                }
+                const uint32_t size = sizeOfData(fromModelOperand);
+                totalSizeOfTemporaries += alignBytesNeeded(totalSizeOfTemporaries, size);
+                subModelInputsAndOutputs->insert(std::make_pair(fromModelOperandIndex, totalSizeOfTemporaries));
+                totalSizeOfTemporaries += size;
+            }
+        }
+    }
+
+    return std::shared_ptr<Controller>(new Controller(this, executionBuilder,
+                                                      subModelInputsAndOutputs,
+                                                      totalSizeOfTemporaries));
 }
 
-int ExecutionPlan::next(Controller* controller, std::shared_ptr<StepExecutor>* executor) const {
+
+// TODO: Find a better way to provide this functionality.
+int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
+                            std::shared_ptr<StepExecutor>* executor) const {
     *executor = nullptr;
 
-    LOG(DEBUG) << "ExecutionPlan::next(" << controller << ", " << executor << "): mNextStepIndex = " << controller->mNextStepIndex;
+    VLOG(EXECUTION) << "ExecutionPlan::fallback(" << controller << ", " << executor
+                    << "): mNextStepIndex = " << controller->mNextStepIndex;
+
+    if (controller->mNextStepIndex == 0) {
+        // We haven't called next().
+        return ANEURALNETWORKS_OP_FAILED;
+    }
+
+    if (controller->mNextStepIndex == Controller::kBadStepIndex) {
+        // The last call to next() did not produce an executor.
+        return ANEURALNETWORKS_OP_FAILED;
+    }
+
+    --controller->mNextStepIndex;
+    return next(controller, executor);
+}
+
+int ExecutionPlan::next(std::shared_ptr<Controller> controller,
+                        std::shared_ptr<StepExecutor>* executor) const {
+    *executor = nullptr;
+
+    VLOG(EXECUTION) << "ExecutionPlan::next(" << controller << ", " << executor
+                    << "): mNextStepIndex = " << controller->mNextStepIndex;
 
     if (controller->mNextStepIndex == Controller::kBadStepIndex) {
         return ANEURALNETWORKS_OP_FAILED;
@@ -454,8 +528,7 @@ int ExecutionPlan::next(Controller* controller, std::shared_ptr<StepExecutor>* e
         return ANEURALNETWORKS_NO_ERROR;
     }
 
-    nnAssert(mState == COMPOUND);
-    auto compoundBody = static_cast<const CompoundBody*>(mBody);
+    auto compoundBody = compound();
 
     if (controller->mNextStepIndex == compoundBody->mSteps.size()) {
         // end
@@ -470,7 +543,50 @@ int ExecutionPlan::next(Controller* controller, std::shared_ptr<StepExecutor>* e
         (step->getDevice() == nullptr ? sp<IDevice>() : step->getDevice()->getInterface()),
         step->getPreparedSubModel());
     step->mapInputsAndOutputs(*executor);
-    // TODO: submodel inputs and submodel outputs
+    if (controller->mSubModelInputsAndOutputs != nullptr) {
+        {
+            // Tell executor about submodel outputs.
+
+            const size_t firstSubModelOutputIndex = step->getModelOutputs().size();
+            const auto& subModelOutputs = step->getSubModelOutputs();
+
+            uint32_t idx = 0;
+            for (auto I = subModelOutputs.begin(), E = subModelOutputs.end(); I != E; I++, idx++) {
+                const uint32_t fromModelOperandIndex = I->first;
+                const uint32_t offsetOfTemporary =
+                    controller->mSubModelInputsAndOutputs->at(fromModelOperandIndex);
+                int n = (*executor)->setOutputFromTemporaryMemory(
+                    firstSubModelOutputIndex + idx,
+                    &controller->mTemporaries,
+                    offsetOfTemporary);
+                if (n != ANEURALNETWORKS_NO_ERROR) {
+                    controller->mNextStepIndex = Controller::kBadStepIndex;
+                    return n;
+                }
+            }
+        }
+        {
+            // Tell executor about submodel inputs.
+
+            const size_t firstSubModelInputIndex = step->getModelInputs().size();
+            const auto& subModelInputs = step->getSubModelInputs();
+
+            uint32_t idx = 0;
+            for (auto I = subModelInputs.begin(), E = subModelInputs.end(); I != E; I++, idx++) {
+                const uint32_t fromModelOperandIndex = I->first;
+                const uint32_t offsetOfTemporary =
+                    controller->mSubModelInputsAndOutputs->at(fromModelOperandIndex);
+                int n = (*executor)->setInputFromTemporaryMemory(
+                    firstSubModelInputIndex + idx,
+                    &controller->mTemporaries,
+                    offsetOfTemporary);
+                if (n != ANEURALNETWORKS_NO_ERROR) {
+                    controller->mNextStepIndex = Controller::kBadStepIndex;
+                    return n;
+                }
+            }
+        }
+    }
     controller->mNextStepIndex++;
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -499,12 +615,37 @@ void ExecutionPlan::dump() const {
     if (mBody) {
         mBody->dump();
     } else {
-        LOG(DEBUG) << "EMPTY";
+        VLOG(COMPILATION) << "EMPTY";
     }
 }
 
+ExecutionPlan::Kind ExecutionPlan::forTest_getKind() const {
+    switch (mState) {
+        case EMPTY:
+            return Kind::EMPTY;
+        case SIMPLE:
+            nnAssert(mBody);
+            return mBody->mSuccessfulFinish ? Kind::SIMPLE : Kind::ERROR;
+        case COMPOUND:
+            nnAssert(mBody);
+            return mBody->mSuccessfulFinish ? Kind::COMPOUND : Kind::ERROR;
+        default:
+            nnAssert(!"unexpected state");
+            return Kind::ERROR;
+    }
+}
+
+std::shared_ptr<const Device> ExecutionPlan::forTest_simpleGetDevice() const {
+    nnAssert(mState == SIMPLE);
+    return static_cast<const SimpleBody*>(mBody)->mDevice;
+}
+
+const std::vector<std::shared_ptr<ExecutionStep>>& ExecutionPlan::forTest_compoundGetSteps() const {
+    return compound()->mSteps;
+}
+
 void ExecutionPlan::SimpleBody::dump() const {
-    LOG(DEBUG) << "SIMPLE for " << (mDevice == nullptr ? "CPU" : mDevice->getName());
+    VLOG(COMPILATION) << "SIMPLE for " << (mDevice == nullptr ? "CPU" : mDevice->getName());
 }
 
 void ExecutionPlan::CompoundBody::dump() const {
@@ -513,12 +654,10 @@ void ExecutionPlan::CompoundBody::dump() const {
     }
 }
 
-int ModelBuilder::partitionTheWork(uint32_t preference, ExecutionPlan* plan) const {
+int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
+                                   uint32_t preference, ExecutionPlan* plan) const {
     // This function uses a heuristic approach to partitioning the graph.
     // It should be good enough for the first release.
-
-    // Get the list of HAL devices.
-    const std::vector<std::shared_ptr<Device>>& devices = DeviceManager::get()->getDrivers();
 
     const size_t nonCpuDeviceCount = devices.size();
     // The device count is the number of HAL devices + 1. The +1 is for the CPU.
@@ -526,8 +665,8 @@ int ModelBuilder::partitionTheWork(uint32_t preference, ExecutionPlan* plan) con
     const size_t deviceCount = nonCpuDeviceCount + 1;
     const size_t operationCount = mOperations.size();
 
-    LOG(DEBUG) << "ModelBuilder::partitionTheWork: deviceCount = " << deviceCount
-               << ", operationCount = " << operationCount;
+    VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: deviceCount = " << deviceCount
+                      << ", operationCount = " << operationCount;
 
     // If we only have the CPU, or if the graph has no operations, no
     // need to try to partition.
@@ -548,11 +687,9 @@ int ModelBuilder::partitionTheWork(uint32_t preference, ExecutionPlan* plan) con
                            std::not_equal_to<int>()) == bestDeviceForOperation.end()) {
         const int bestDeviceIndex = bestDeviceForOperation[0];
         const bool cpu = (size_t(bestDeviceIndex) == deviceCount - 1);
-        if (WOULD_LOG(DEBUG)) {
-            LOG(DEBUG) << "ModelBuilder::partitionTheWork: only one best device: "
-                       << bestDeviceIndex << " = "
-                       << (cpu ? "CPU" : devices[bestDeviceIndex]->getName());
-        }
+        VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: only one best device: "
+                          << bestDeviceIndex << " = "
+                          << (cpu ? "CPU" : devices[bestDeviceIndex]->getName());
         plan->becomeSingleStep(cpu ? nullptr : devices[bestDeviceIndex], this);
         return plan->finish(this);
     }
@@ -566,7 +703,8 @@ int ModelBuilder::partitionTheWork(uint32_t preference, ExecutionPlan* plan) con
     auto enqueueOnAppropriateDevice = [&](uint32_t operationIndex) {
         int deviceIndex = bestDeviceForOperation[operationIndex];
         perDeviceQueue[deviceIndex].push(operationIndex);
-        LOG(DEBUG) << "enqueueOnAppropriateDevice " << operationIndex << " onto " << deviceIndex;
+        VLOG(COMPILATION) << "enqueueOnAppropriateDevice " << operationIndex << " onto "
+                          << deviceIndex;
     };
 
     // This helper function finds a device that has operations ready to process.
@@ -588,7 +726,7 @@ int ModelBuilder::partitionTheWork(uint32_t preference, ExecutionPlan* plan) con
     while (true) {
         // Find the device we'll do this step for.
         int deviceIndex = findNextDeviceToProcess();
-        LOG(DEBUG) << "findNextDeviceToProcess: " << deviceIndex;
+        VLOG(COMPILATION) << "findNextDeviceToProcess: " << deviceIndex;
         if (deviceIndex < 0) {
             break;
         }
@@ -609,10 +747,11 @@ int ModelBuilder::partitionTheWork(uint32_t preference, ExecutionPlan* plan) con
     }
 
     int n = plan->finish(this);
-    if (WOULD_LOG(DEBUG)) {
+    if (VLOG_IS_ON(COMPILATION)) {
         Model model;
         setHidlModel(&model);
-        LOG(DEBUG) << "ModelBuilder::partitionTheWork: original model: " << toString(model);
+        VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: original model: "
+                          << toString(model);
         plan->dump();
     }
     return n;
@@ -708,10 +847,10 @@ int ModelBuilder::findBestDeviceForEachOperation(
         // TODO What if it is an OEM op?
         (*bestDeviceForOperation)[operationIndex] =
                 bestChoice >= 0 ? bestChoice : static_cast<int>(nonCpuDeviceCount);
-        LOG(VERBOSE) << "ModelBuilder::findBestDeviceForEachOperation("
-                     << toString(getOperation(operationIndex).type)
-                     << ") = "
-                     << (*bestDeviceForOperation)[operationIndex];
+        VLOG(COMPILATION) << "ModelBuilder::findBestDeviceForEachOperation("
+                          << toString(getOperation(operationIndex).type)
+                          << ") = "
+                          << (*bestDeviceForOperation)[operationIndex];
     }
     return ANEURALNETWORKS_NO_ERROR;
 }

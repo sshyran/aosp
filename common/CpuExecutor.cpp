@@ -100,9 +100,9 @@ static bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& sh
 // by the caller.
 int CpuExecutor::run(const Model& model, const Request& request,
                      const std::vector<RunTimePoolInfo>& runTimePoolInfos) {
-    LOG(DEBUG) << "CpuExecutor::run()";
-    LOG(DEBUG) << "model: " << toString(model);
-    LOG(DEBUG) << "request: " << toString(request);
+    VLOG(CPUEXE) << "CpuExecutor::run()";
+    // VLOG(CPUEXE) << "model: " << toString(model);
+    VLOG(CPUEXE) << "request: " << toString(request);
 
     mModel = &model;
     mRequest = &request; // TODO check if mRequest is needed
@@ -119,12 +119,12 @@ int CpuExecutor::run(const Model& model, const Request& request,
     }
     mModel = nullptr;
     mRequest = nullptr;
-    LOG(DEBUG) << "Completed run normally";
+    VLOG(CPUEXE) << "Completed run normally";
     return ANEURALNETWORKS_NO_ERROR;
 }
 
 bool CpuExecutor::initializeRunTimeInfo(const std::vector<RunTimePoolInfo>& runTimePoolInfos) {
-    LOG(DEBUG) << "CpuExecutor::initializeRunTimeInfo";
+    VLOG(CPUEXE) << "CpuExecutor::initializeRunTimeInfo";
     const size_t count = mModel->operands.size();
     mOperands.resize(count);
 
@@ -218,7 +218,7 @@ void CpuExecutor::freeNoLongerUsedOperands(const std::vector<uint32_t>& inputs) 
 }
 
 int CpuExecutor::executeOperation(const Operation& operation) {
-    LOG(DEBUG) << "CpuExecutor::executeOperation(" << toString(operation) << ")";
+    // VLOG(CPUEXE) << "CpuExecutor::executeOperation(" << toString(operation) << ")";
     const hidl_vec<uint32_t>& ins = operation.inputs;
     const hidl_vec<uint32_t>& outs = operation.outputs;
     bool success = false;
@@ -1157,10 +1157,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
         case OperationType::LSTM: {
             RunTimeOperandInfo &scratch =
                 mOperands[outs[LSTMCell::kScratchBufferTensor]];
-            RunTimeOperandInfo &outputState =
-                mOperands[outs[LSTMCell::kOutputStateTensor]];
-            RunTimeOperandInfo &cellState =
-                mOperands[outs[LSTMCell::kCellStateTensor]];
+            RunTimeOperandInfo &outputStateOut =
+                mOperands[outs[LSTMCell::kOutputStateOutTensor]];
+            RunTimeOperandInfo &cellStateOut =
+                mOperands[outs[LSTMCell::kCellStateOutTensor]];
             RunTimeOperandInfo &output =
                 mOperands[outs[LSTMCell::kOutputTensor]];
 
@@ -1171,14 +1171,14 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                         &scratchShape, &outputStateShape,
                                         &cellStateShape, &outputShape) &&
                 setInfoAndAllocateIfNeeded(&scratch, scratchShape) &&
-                setInfoAndAllocateIfNeeded(&outputState, outputStateShape) &&
-                setInfoAndAllocateIfNeeded(&cellState, cellStateShape) &&
+                setInfoAndAllocateIfNeeded(&outputStateOut, outputStateShape) &&
+                setInfoAndAllocateIfNeeded(&cellStateOut, cellStateShape) &&
                 setInfoAndAllocateIfNeeded(&output, outputShape) &&
                 lstm_cell.Eval();
         } break;
         case OperationType::RNN: {
-            RunTimeOperandInfo &hiddenState =
-                mOperands[outs[RNN::kHiddenStateTensor]];
+            RunTimeOperandInfo &hiddenStateOut =
+                mOperands[outs[RNN::kHiddenStateOutTensor]];
             RunTimeOperandInfo &output =
                 mOperands[outs[RNN::kOutputTensor]];
 
@@ -1187,13 +1187,13 @@ int CpuExecutor::executeOperation(const Operation& operation) {
 
             success = RNN::Prepare(operation, mOperands,
                                    &hiddenStateShape, &outputShape) &&
-                setInfoAndAllocateIfNeeded(&hiddenState, hiddenStateShape) &&
+                setInfoAndAllocateIfNeeded(&hiddenStateOut, hiddenStateShape) &&
                 setInfoAndAllocateIfNeeded(&output, outputShape) &&
                 rnn_cell.Eval();
         } break;
         case OperationType::SVDF: {
             RunTimeOperandInfo &state =
-                mOperands[outs[SVDF::kStateTensor]];
+                mOperands[outs[SVDF::kStateOutTensor]];
             RunTimeOperandInfo &output =
                 mOperands[outs[SVDF::kOutputTensor]];
 
