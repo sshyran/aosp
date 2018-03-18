@@ -20,6 +20,7 @@
 
 #include "CompilationBuilder.h"
 #include "Utils.h"
+#include "ValidateHal.h"
 
 #include <map>
 #include <utility>
@@ -34,7 +35,7 @@ const uint32_t MAX_NUMBER_OF_OPERATIONS = 0xFFFFFFFE;
 int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
     if (mCompletedModel) {
         LOG(ERROR) << "ANeuralNetworksModel_addOperand can't modify after model finished";
-        return ANEURALNETWORKS_BAD_DATA;
+        return ANEURALNETWORKS_BAD_STATE;
     }
     int n = validateOperandType(type, "ANeuralNetworksModel_addOperand", true);
     if (n != ANEURALNETWORKS_NO_ERROR) {
@@ -59,6 +60,11 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
 
 int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t length) {
     VLOG(MODEL) << __func__ << " for operand " << index << " size " << length;
+    if (mCompletedModel) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandValue can't modify after model finished";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+
     if (index >= operandCount()) {
         LOG(ERROR) << "ANeuralNetworksModel_setOperandValue setting operand " << index << " of "
                    << operandCount();
@@ -102,7 +108,10 @@ int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t len
             VLOG(MODEL) << "Saving large value";
             operand.lifetime = OperandLifeTime::CONSTANT_REFERENCE;
             // The values for poolIndex and offset will be set when the model is finished.
-            operand.location = {.poolIndex = 0, .offset = 0, .length = valueLength};
+            typedef decltype(operand.location.poolIndex) PoolIndexType;
+            typedef decltype(operand.location.offset) OffsetType;
+            operand.location = {.poolIndex = ~PoolIndexType(0), .offset = ~OffsetType(0),
+                                .length = valueLength};
             // We keep track of the buffers. We'll allocate the shared memory only
             // once we know the total size, to avoid needless copies.
             mLargeOperandValues.push_back(LargeValue{.operandIndex = index, .buffer = buffer});
@@ -152,6 +161,11 @@ int ModelBuilder::copyLargeValuesToSharedMemory() {
 int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory, uint32_t offset,
                                             size_t length) {
     VLOG(MODEL) << __func__ << " for operand " << index << " offset " << offset << " size " << length;
+    if (mCompletedModel) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory can't modify after model finished";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+
     if (index >= operandCount()) {
         LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory setting operand " << index
                    << " of " << operandCount();
@@ -164,7 +178,9 @@ int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory
                    << " bytes when needing " << neededLength;
         return ANEURALNETWORKS_BAD_DATA;
     }
-    // TODO validate does not exceed length of memory
+    if (!memory->validateSize(offset, length)) {
+        return ANEURALNETWORKS_BAD_DATA;
+    }
     operand.lifetime = OperandLifeTime::CONSTANT_REFERENCE;
     operand.location = {
                 .poolIndex = mMemories.add(memory), .offset = offset, .length = neededLength};
@@ -176,7 +192,7 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
                                const uint32_t* outputs) {
     if (mCompletedModel) {
         LOG(ERROR) << "ANeuralNetworksModel_addOperation can't modify after model finished";
-        return ANEURALNETWORKS_BAD_DATA;
+        return ANEURALNETWORKS_BAD_STATE;
     }
     if (!validCode(kNumberOfOperationTypes, kNumberOfOperationTypesOEM, type)) {
         LOG(ERROR) << "ANeuralNetworksModel_addOperation invalid operations type " << type;
@@ -215,7 +231,7 @@ int ModelBuilder::identifyInputsAndOutputs(uint32_t inputCount, const uint32_t* 
                                       uint32_t outputCount, const uint32_t* outputs) {
     if (mCompletedModel) {
         LOG(ERROR) << "ANeuralNetworksModel_identifyInputsAndOutputs can't modify after model finished";
-        return ANEURALNETWORKS_BAD_DATA;
+        return ANEURALNETWORKS_BAD_STATE;
     }
     int n = validateOperandList(inputCount, inputs, operandCount(),
                                 "ANeuralNetworksModel_identifyInputsAndOutputs inputs");
@@ -294,6 +310,17 @@ int ModelBuilder::finish() {
     int n = copyLargeValuesToSharedMemory();
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return n;
+    }
+
+    // TODO: Modify validation so that it can be called without creating a HAL Model.
+    // NOTE: Must copyLargeValuesToSharedMemory() before validation; otherwise,
+    //       a CONSTANT_REFERENCE operand will not have correct .poolIndex, and
+    //       validation will not work properly.
+    Model modelForValidation;
+    setHidlModel(&modelForValidation);
+    if (!validateModel(modelForValidation)) {
+        LOG(ERROR) << "ANeuralNetworksModel_finish called on invalid model";
+        return ANEURALNETWORKS_BAD_DATA;
     }
 
     // We sort the operations so that they will be in the appropriate
