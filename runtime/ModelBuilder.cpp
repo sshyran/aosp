@@ -32,11 +32,23 @@ namespace nn {
 const uint32_t MAX_NUMBER_OF_OPERANDS = 0xFFFFFFFE;
 const uint32_t MAX_NUMBER_OF_OPERATIONS = 0xFFFFFFFE;
 
-int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
+bool ModelBuilder::badState(const char* name) {
     if (mCompletedModel) {
-        LOG(ERROR) << "ANeuralNetworksModel_addOperand can't modify after model finished";
+        LOG(ERROR) << "ANeuralNetworksModel_" << name << " can't modify after model finished";
+        return true;
+    }
+    if (mInvalidModel) {
+        LOG(ERROR) << "ANeuralNetworksModel_" << name << " can't modify an invalid model";
+        return true;
+    }
+    return false;
+}
+
+int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
+    if (badState("addOperand")) {
         return ANEURALNETWORKS_BAD_STATE;
     }
+
     int n = validateOperandType(type, "ANeuralNetworksModel_addOperand", true);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return n;
@@ -46,22 +58,21 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
         LOG(ERROR) << "ANeuralNetworksModel_addOperand exceed max operands";
         return ANEURALNETWORKS_BAD_DATA;
     }
-    mOperands.resize(idx + 1);
-    auto& operand = mOperands[idx];
-    operand.type = static_cast<OperandType>(type.type);
-    setFromIntList(&operand.dimensions, type.dimensionCount, type.dimensions);
-    operand.numberOfConsumers = 0;
-    operand.scale = type.scale;
-    operand.zeroPoint = type.zeroPoint;
-    operand.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
-    operand.location = {.poolIndex = 0, .offset = 0, .length = 0};
+    mOperands.push_back({
+        .type = static_cast<OperandType>(type.type),
+        .dimensions = hidl_vec<uint32_t>(type.dimensions, type.dimensions + type.dimensionCount),
+        .numberOfConsumers = 0,
+        .scale = type.scale,
+        .zeroPoint = type.zeroPoint,
+        .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
+        .location = {.poolIndex = 0, .offset = 0, .length = 0},
+    });
     return ANEURALNETWORKS_NO_ERROR;
 }
 
 int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t length) {
     VLOG(MODEL) << __func__ << " for operand " << index << " size " << length;
-    if (mCompletedModel) {
-        LOG(ERROR) << "ANeuralNetworksModel_setOperandValue can't modify after model finished";
+    if (badState("setOperandValue")) {
         return ANEURALNETWORKS_BAD_STATE;
     }
 
@@ -161,8 +172,7 @@ int ModelBuilder::copyLargeValuesToSharedMemory() {
 int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory, uint32_t offset,
                                             size_t length) {
     VLOG(MODEL) << __func__ << " for operand " << index << " offset " << offset << " size " << length;
-    if (mCompletedModel) {
-        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory can't modify after model finished";
+    if (badState("setOperandValueFromMemory")) {
         return ANEURALNETWORKS_BAD_STATE;
     }
 
@@ -190,21 +200,16 @@ int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory
 int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t inputCount,
                                const uint32_t* inputs, uint32_t outputCount,
                                const uint32_t* outputs) {
-    if (mCompletedModel) {
-        LOG(ERROR) << "ANeuralNetworksModel_addOperation can't modify after model finished";
+    if (badState("addOperation")) {
         return ANEURALNETWORKS_BAD_STATE;
     }
+
     if (!validCode(kNumberOfOperationTypes, kNumberOfOperationTypesOEM, type)) {
         LOG(ERROR) << "ANeuralNetworksModel_addOperation invalid operations type " << type;
         return ANEURALNETWORKS_BAD_DATA;
     }
-    int n = validateOperandList(inputCount, inputs, operandCount(),
-                                "ANeuralNetworksModel_addOperation inputs");
-    if (n != ANEURALNETWORKS_NO_ERROR) {
-        return n;
-    }
-    n = validateOperandList(outputCount, outputs, operandCount(),
-                            "ANeuralNetworksModel_addOperation outputs");
+    int n = validateOperation(type, inputCount, inputs,
+                              outputCount, outputs, mOperands);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return n;
     }
@@ -214,25 +219,25 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
         LOG(ERROR) << "ANeuralNetworksModel_addOperation exceed max operations";
         return ANEURALNETWORKS_BAD_DATA;
     }
-    mOperations.resize(operationIndex + 1);
-    auto& entry = mOperations[operationIndex];
-    entry.type = static_cast<OperationType>(type);
 
-    setFromIntList(&entry.inputs, inputCount, inputs);
-    setFromIntList(&entry.outputs, outputCount, outputs);
-    for (uint32_t i : entry.inputs) {
+    mOperations.push_back({
+        .type = static_cast<OperationType>(type),
+        .inputs = hidl_vec<uint32_t>(inputs, inputs + inputCount),
+        .outputs = hidl_vec<uint32_t>(outputs, outputs + outputCount),
+    });
+    for (uint32_t i : mOperations.back().inputs) {
         mOperands[i].numberOfConsumers++;
-        // TODO mOperands[i].consumers.push_back(operationIndex);
     }
+
     return ANEURALNETWORKS_NO_ERROR;
 }
 
 int ModelBuilder::identifyInputsAndOutputs(uint32_t inputCount, const uint32_t* inputs,
                                       uint32_t outputCount, const uint32_t* outputs) {
-    if (mCompletedModel) {
-        LOG(ERROR) << "ANeuralNetworksModel_identifyInputsAndOutputs can't modify after model finished";
+    if (badState("identifyInputsAndOutputs")) {
         return ANEURALNETWORKS_BAD_STATE;
     }
+
     int n = validateOperandList(inputCount, inputs, operandCount(),
                                 "ANeuralNetworksModel_identifyInputsAndOutputs inputs");
     if (n != ANEURALNETWORKS_NO_ERROR) {
@@ -281,8 +286,7 @@ int ModelBuilder::identifyInputsAndOutputs(uint32_t inputCount, const uint32_t* 
 }
 
 int ModelBuilder::relaxComputationFloat32toFloat16(bool allow) {
-    if (mCompletedModel) {
-        LOG(ERROR) << "ANeuralNetworksModel_relaxComputationFloat32toFloat16 can't be set after model finished";
+    if (badState("relaxComputationFloat32toFloat16")) {
         return ANEURALNETWORKS_BAD_STATE;
     }
 
@@ -292,8 +296,8 @@ int ModelBuilder::relaxComputationFloat32toFloat16(bool allow) {
 }
 
 int ModelBuilder::createCompilation(CompilationBuilder** compilation) {
-    if (!mCompletedModel) {
-        LOG(ERROR) << "ANeuralNetworksCompilation_create passed an unfinished model";
+    if (!mCompletedModel || mInvalidModel) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_create passed an unfinished or invalid model";
         *compilation = nullptr;
         return ANEURALNETWORKS_BAD_STATE;
     }
@@ -304,6 +308,10 @@ int ModelBuilder::createCompilation(CompilationBuilder** compilation) {
 int ModelBuilder::finish() {
     if (mCompletedModel) {
         LOG(ERROR) << "ANeuralNetworksModel_finish called more than once";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (mInvalidModel) {
+        LOG(ERROR) << "ANeuralNetworksModel_finish called on an invalid model";
         return ANEURALNETWORKS_BAD_STATE;
     }
 
@@ -320,6 +328,7 @@ int ModelBuilder::finish() {
     setHidlModel(&modelForValidation);
     if (!validateModel(modelForValidation)) {
         LOG(ERROR) << "ANeuralNetworksModel_finish called on invalid model";
+        mInvalidModel = true;
         return ANEURALNETWORKS_BAD_DATA;
     }
 
