@@ -507,7 +507,18 @@ int ModelBuilder::finish() {
         return n;
     }
 
+    // We sort the operations so that they will be in the appropriate
+    // order for a single-threaded, op at a time execution.
+    // TODO: we don't need this if we always run the partitioner.
+    if (!sortIntoRunOrder()) {
+        // We expect sortIntoRunOrder() to have logged an appropriate error message.
+        mInvalidModel = true;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+
     // TODO: Modify validation so that it can be called without creating a HAL Model.
+    // NOTE: Must sortIntoRunOrder() before validation; validator expects operations
+    //       to have been sorted.
     // NOTE: Must copyLargeValuesToSharedMemory() before validation; otherwise,
     //       a CONSTANT_REFERENCE operand will not have correct .poolIndex, and
     //       validation will not work properly.
@@ -521,20 +532,23 @@ int ModelBuilder::finish() {
         graphDump("ModelBuilder::finish", modelForValidation, nullptr);
     }
 
-    // We sort the operations so that they will be in the appropriate
-    // order for a single-threaded, op at a time execution.
-    // TODO: we don't need this if we always run the partitioner.
-    sortIntoRunOrder();
     mCompletedModel = true;
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-void ModelBuilder::sortIntoRunOrder() {
+bool ModelBuilder::sortIntoRunOrder() {
+    // Note that this may be called before the model has been
+    // validated, so we must code defensively.  However, we can assume
+    // an Operation's inputs and outputs have legal indices -- this
+    // should have been checked in addOperation().
+
     if (!mSortedOperationIndexMap.empty()) {
-        LOG(ERROR) << "Operations already in run order.";
-        return;
+        LOG(ERROR) << "Operations were already sorted into run order.";
+        return true;
     }
+
     // Tracks the operations that can be executed.
+    std::vector<uint32_t> sortedOperationIndexMap;
     std::vector<uint32_t> opsReadyToRun;
     std::vector<Operation> runOrder;
 
@@ -565,7 +579,7 @@ void ModelBuilder::sortIntoRunOrder() {
         const Operation& operation = mOperations[opIndex];
 
         runOrder.push_back(mOperations[opIndex]);
-        mSortedOperationIndexMap.push_back(opIndex);
+        sortedOperationIndexMap.push_back(opIndex);
 
         // Mark all its outputs as known.
         for (uint32_t operandIndex : operation.outputs) {
@@ -578,7 +592,19 @@ void ModelBuilder::sortIntoRunOrder() {
             }
         }
     }
-    mOperations = runOrder;
+
+    if (runOrder.size() != mOperations.size()) {
+        nnAssert(runOrder.size() < mOperations.size());
+        // Graph must contain at least one cycle or one never-written
+        // operand, because there is at least one Operation that never
+        // became ready.
+        LOG(ERROR) << "Graph contains at least one cycle or one never-written operand";
+        return false;
+    }
+
+    mSortedOperationIndexMap = std::move(sortedOperationIndexMap);
+    mOperations = std::move(runOrder);
+    return true;
 }
 
 // A helper class to simplify state management when creating a HIDL model.
