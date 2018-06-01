@@ -280,6 +280,20 @@ uint32_t sizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) {
     return size;
 }
 
+bool hasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimCount) {
+    return (tableLookup(kScalarDataType, kScalarDataTypeOEM, type) == false) &&
+           (dimCount == 0 || std::find(dim, dim + dimCount, 0) != (dim + dimCount));
+}
+
+bool hasUnspecifiedDimensions(const ANeuralNetworksOperandType* type) {
+    return hasUnspecifiedDimensions(type->type, type->dimensions, type->dimensionCount);
+}
+
+bool hasUnspecifiedDimensions(const Operand& operand) {
+    return hasUnspecifiedDimensions(static_cast<int>(operand.type), operand.dimensions.data(),
+                                    operand.dimensions.size());
+}
+
 hidl_memory allocateSharedMemory(int64_t size) {
     static const std::string type = "ashmem";
     static sp<IAllocator> allocator = IAllocator::getService(type);
@@ -383,10 +397,10 @@ static bool validateNoQuantParams(const ANeuralNetworksOperandType& type, const 
 
 static bool validateTensorDimensions(const ANeuralNetworksOperandType& type, const char* tag,
                                      bool allowPartial) {
-    NN_RET_CHECK_GT(type.dimensionCount, 0u) << tag << " invalid operand dimensions";
     if (allowPartial) {
         return true;
     }
+    NN_RET_CHECK_GT(type.dimensionCount, 0u) << tag << " invalid operand dimensions";
     for (uint32_t i = 0; i < type.dimensionCount; i++) {
         NN_RET_CHECK_NE(type.dimensions[i], 0u) << tag << " invalid operand dimensions";
     }
