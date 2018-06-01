@@ -400,14 +400,19 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
     for (const auto& subModelOutput : mTempsAsSubModelOutputs) {
         outputs.push_back(subModelOutput.second);
         const Operand& operand = mSubModel.getOperand(subModelOutput.second);
-        for (uint32_t dimension : operand.dimensions) {
-            if (dimension == 0) {
-                *hasOutputOfUnknownSize = true;
-                VLOG(COMPILATION) << "SubModelOutput (operand#" << subModelOutput.first
-                                << " of original graph) has unknown size: "
-                                << toString(operand);
-                break;
+        if (operand.dimensions.size() == 0) {
+            *hasOutputOfUnknownSize = true;
+        } else {
+            for (uint32_t dimension : operand.dimensions) {
+                if (dimension == 0) {
+                    *hasOutputOfUnknownSize = true;
+                    break;
+                }
             }
+        }
+        if (*hasOutputOfUnknownSize) {
+            VLOG(COMPILATION) << "SubModelOutput (operand#" << subModelOutput.first
+                              << " of original graph) has unknown size: " << toString(operand);
         }
     }
 

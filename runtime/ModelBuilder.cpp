@@ -120,6 +120,11 @@ int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t len
         // The location is unused and is set to zeros.
         operand.location = {.poolIndex = 0, .offset = 0, .length = 0};
     } else {
+        if (hasUnspecifiedDimensions(operand)) {
+            LOG(ERROR) << "ANeuralNetworksModel_setOperandValue setting operand " << index
+                       << " which has operand type that is not fully specified";
+            return ANEURALNETWORKS_BAD_DATA;
+        }
         if (length > 0xFFFFFFFF) {
             LOG(ERROR) << "ANeuralNetworksModel_setOperandValue value length of " << length
                        << " exceeds max size";
@@ -286,6 +291,11 @@ int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory
         return ANEURALNETWORKS_BAD_DATA;
     }
     Operand& operand = mOperands[index];
+    if (hasUnspecifiedDimensions(operand)) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory setting operand " << index
+                   << " which has operand type that is not fully specified";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
     // Only BLOB format AHardwareBuffer can be used for constant data.
     if (memory->getHidlMemory().name() == "hardware_buffer") {
         LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory passed an AHardwareBuffer"

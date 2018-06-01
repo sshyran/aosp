@@ -40,6 +40,35 @@ static MeasureTiming measureTiming(const ExecutionBuilder* execution) {
     return execution->measureTiming() ? MeasureTiming::YES : MeasureTiming::NO;
 }
 
+static bool checkDimensionInfo(const Operand& operand, const ANeuralNetworksOperandType* newType,
+                               const char* tag, bool allowUnspecified) {
+    if (newType != nullptr) {
+        if (validateOperandType(*newType, tag, allowUnspecified) != ANEURALNETWORKS_NO_ERROR) {
+            LOG(ERROR) << tag << ": Invalid newType";
+            return false;
+        }
+        if (operand.dimensions.size() == 0) {
+            return true;
+        }
+        if (operand.dimensions.size() != newType->dimensionCount) {
+            LOG(ERROR) << tag << ": Setting with incompatible dimension count";
+            return false;
+        }
+        for (uint32_t i = 0; i < newType->dimensionCount; i++) {
+            if (operand.dimensions[i] != newType->dimensions[i] && operand.dimensions[i] != 0) {
+                LOG(ERROR) << tag << ": Overriding a fully specified dimension is disallowed";
+                return false;
+            }
+        }
+    } else {
+        if (!allowUnspecified && hasUnspecifiedDimensions(operand)) {
+            LOG(ERROR) << tag << ": Setting with operand type that is not fully specified";
+            return false;
+        }
+    }
+    return true;
+}
+
 int ModelArgumentInfo::setFromPointer(const Operand& operand,
                                       const ANeuralNetworksOperandType* type, void* data,
                                       uint32_t length) {
@@ -55,7 +84,7 @@ int ModelArgumentInfo::setFromPointer(const Operand& operand,
         NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
         if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM) {
             uint32_t neededLength = sizeOfData(operand.type, dimensions);
-            if (neededLength != length) {
+            if (neededLength != length && neededLength != 0) {
                 LOG(ERROR) << "Setting argument with invalid length: " << length
                            << ", expected length: " << neededLength;
                 return ANEURALNETWORKS_BAD_DATA;
@@ -73,7 +102,7 @@ int ModelArgumentInfo::setFromMemory(const Operand& operand, const ANeuralNetwor
     NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
     if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM) {
         uint32_t neededLength = sizeOfData(operand.type, dimensions);
-        if (neededLength != length) {
+        if (neededLength != length && neededLength != 0) {
             LOG(ERROR) << "Setting argument with invalid length: " << length
                        << ", expected length: " << neededLength;
             return ANEURALNETWORKS_BAD_DATA;
@@ -110,32 +139,12 @@ int ModelArgumentInfo::setFromTemporaryMemory(const Operand& operand, uint32_t p
 
 int ModelArgumentInfo::updateDimensionInfo(const Operand& operand,
                                            const ANeuralNetworksOperandType* newType) {
-    nnAssert(dimensions.empty());
     if (newType == nullptr) {
-        for (auto i : operand.dimensions) {
-            if (i == 0) {
-                LOG(ERROR) << "Setting input/output with unspecified dimensions";
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-        }
         dimensions = operand.dimensions;
     } else {
-        uint32_t count = newType->dimensionCount;
-        if (static_cast<OperandType>(newType->type) != operand.type ||
-            count != operand.dimensions.size()) {
-            LOG(ERROR) << "Setting input/output with incompatible types";
-            return ANEURALNETWORKS_BAD_DATA;
-        }
-
+        const uint32_t count = newType->dimensionCount;
         dimensions = hidl_vec<uint32_t>(count);
-        for (uint32_t i = 0; i < count; i++) {
-            if (operand.dimensions[i] != 0 && operand.dimensions[i] != newType->dimensions[i]) {
-                LOG(ERROR) << "Overriding a fully specified dimension is disallowed";
-                return ANEURALNETWORKS_BAD_DATA;
-            } else {
-                dimensions[i] = newType->dimensions[i];
-            }
-        }
+        std::copy(&newType->dimensions[0], &newType->dimensions[count], dimensions.begin());
     }
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -157,11 +166,9 @@ int ExecutionBuilder::setInput(uint32_t index, const ANeuralNetworksOperandType*
         LOG(ERROR) << "ANeuralNetworksExecution_setInput bad index " << index << " " << count;
         return ANEURALNETWORKS_BAD_DATA;
     }
-    if (type != nullptr) {
-        int n = validateOperandType(*type, "ANeuralNetworksExecution_setInput", false);
-        if (n != ANEURALNETWORKS_NO_ERROR) {
-            return n;
-        }
+    if (!checkDimensionInfo(mModel->getInputOperand(index), type,
+                            "ANeuralNetworksExecution_setInput", buffer == nullptr)) {
+        return ANEURALNETWORKS_BAD_DATA;
     }
     if (length > 0xFFFFFFFF) {
         LOG(ERROR) << "ANeuralNetworksExecution_setInput input exceeds max length " << length;
@@ -180,6 +187,10 @@ int ExecutionBuilder::setInputFromMemory(uint32_t index, const ANeuralNetworksOp
     if (index >= count) {
         LOG(ERROR) << "ANeuralNetworksExecution_setInputFromMemory bad index " << index << " "
                    << count;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (!checkDimensionInfo(mModel->getInputOperand(index), type,
+                            "ANeuralNetworksExecution_setInputFromMemory", false)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
     // Both offset & length must be zero for Non-BLOB format AHardwareBuffer.
@@ -203,11 +214,9 @@ int ExecutionBuilder::setOutput(uint32_t index, const ANeuralNetworksOperandType
         LOG(ERROR) << "ANeuralNetworksExecution_setOutput bad index " << index << " " << count;
         return ANEURALNETWORKS_BAD_DATA;
     }
-    if (type != nullptr) {
-        int n = validateOperandType(*type, "ANeuralNetworksExecution_setOutput", false);
-        if (n != ANEURALNETWORKS_NO_ERROR) {
-            return n;
-        }
+    if (!checkDimensionInfo(mModel->getOutputOperand(index), type,
+                            "ANeuralNetworksExecution_setOutput", true)) {
+        return ANEURALNETWORKS_BAD_DATA;
     }
     if (length > 0xFFFFFFFF) {
         LOG(ERROR) << "ANeuralNetworksExecution_setOutput input exceeds max length " << length;
@@ -225,6 +234,10 @@ int ExecutionBuilder::setOutputFromMemory(uint32_t index, const ANeuralNetworksO
     if (index >= count) {
         LOG(ERROR) << "ANeuralNetworksExecution_setOutputFromMemory bad index " << index << " "
                    << count;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (!checkDimensionInfo(mModel->getOutputOperand(index), type,
+                            "ANeuralNetworksExecution_setOutputFromMemory", true)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
     // Both offset & length must be zero for Non-BLOB format AHardwareBuffer.
@@ -652,6 +665,7 @@ void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutpu
         default:
             nnAssert(!"unexpected ModelArgumentInfo::state");
             break;
+        case ModelArgumentInfo::HAS_NO_VALUE:
         case ModelArgumentInfo::POINTER:
         case ModelArgumentInfo::UNSPECIFIED:
             break;
