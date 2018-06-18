@@ -2,9 +2,16 @@
 #
 # Build benchmark app and run it, mimicking a user-initiated run
 #
-# Output is logged to $HOME/nnapi-logs/perf-cpu.txt and can be
-# parsed by tools/parse_bm.py
+# Output is logged to a temporary folder and summarized in txt and JSON formats.
 #
+# Parameters
+# - number of runs
+
+NUMBER_RUNS=10
+
+if [ ! -z $1 ]; then
+  NUMBER_RUNS=$1
+fi
 
 if [[ -z "$ANDROID_BUILD_TOP" ]]; then
   echo ANDROID_BUILD_TOP not set, bailing out
@@ -17,7 +24,7 @@ cd $ANDROID_BUILD_TOP
 
 LOGDIR=$(mktemp -d)/nnapi-logs
 mkdir -p $LOGDIR
-echo creating logs in $LOGDIR
+echo Creating logs in $LOGDIR
 
 adb -d root
 
@@ -51,34 +58,17 @@ adb -d shell settings put system screen_off_timeout 86400000
 # Stop background apps, seem to take ~10% CPU otherwise
 set +e
 adb -d shell 'pm disable com.google.android.googlequicksearchbox'
-adb -d shell 'pm disable com.breel.wallpapers'
-adb -d shell 'pm disable com.breel.wallpapers18'
+adb shell 'pm list packages -f' | sed -e 's/.*=//' | sed 's/\r//g' | grep "com.breel.wallpapers" | while read pkg; do adb -d shell "pm disable $pkg"; done;
 set -e
 
-LOGFILE=$LOGDIR/perf-device.txt
-echo "Device" | tee $LOGFILE
-adb -d shell setprop debug.nn.cpuonly 0
-for i in $(seq 0 9); do
-  echo "Run $((i+1)) / 10" | tee -a $LOGFILE
-  # Menukey - make sure screen is on
-  adb shell "input keyevent 82"
-  # Set the shell pid as a top-app and run tests
-  adb shell 'echo $$ > /dev/stune/top-app/tasks; am instrument -w -e size large com.example.android.nn.benchmark/android.support.test.runner.AndroidJUnitRunner' | tee -a $LOGFILE
-  sleep 10  # let CPU cool down
-done
+echo running $NUMBER_RUNS times
 
-cd $ANDROID_BUILD_TOP/frameworks/ml/nn
-./tools/parse_benchmark.py $LOGFILE
-echo
-echo full log of Device execution in $LOGFILE
-echo
-
-
+# Run on CPU only
 LOGFILE=$LOGDIR/perf-cpu.txt
 echo "CPU only" | tee $LOGFILE
 adb -d shell setprop debug.nn.cpuonly 1
-for i in $(seq 0 9); do
-  echo "Run $((i+1)) / 10" | tee -a $LOGFILE
+for i in $(seq 1 $NUMBER_RUNS); do
+  echo "Run $i / $NUMBER_RUNS" | tee -a $LOGFILE
   # Menukey - make sure screen is on
   adb shell "input keyevent 82"
   # Set the shell pid as a top-app and run tests
@@ -86,8 +76,21 @@ for i in $(seq 0 9); do
   sleep 10  # let CPU cool down
 done
 
-cd $ANDROID_BUILD_TOP/frameworks/ml/nn
-./tools/parse_benchmark.py $LOGFILE
-echo
-echo full log of CPU execution in $LOGFILE
-echo
+$ANDROID_BUILD_TOP/frameworks/ml/nn/tools/parse_benchmark.py $LOGFILE
+echo "To output CPU run data, use 'parse_benchmark.py $LOGFILE'"
+
+# Run with driver
+LOGFILE=$LOGDIR/perf-driver.txt
+echo "Driver" | tee $LOGFILE
+adb -d shell setprop debug.nn.cpuonly 0
+for i in $(seq 1 $NUMBER_RUNS); do
+  echo "Run $i / $NUMBER_RUNS" | tee -a $LOGFILE
+  # Menukey - make sure screen is on
+  adb shell "input keyevent 82"
+  # Set the shell pid as a top-app and run tests
+  adb shell 'echo $$ > /dev/stune/top-app/tasks; am instrument -w -e size large com.example.android.nn.benchmark/android.support.test.runner.AndroidJUnitRunner' | tee -a $LOGFILE
+done
+
+$ANDROID_BUILD_TOP/frameworks/ml/nn/tools/parse_benchmark.py $LOGFILE
+echo "To output driver run data, use 'parse_benchmark.py $LOGFILE'"
+
