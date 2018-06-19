@@ -18,7 +18,8 @@ cc_defaults {
     name: "NeuralNetworksTest_default_libs",
     defaults: ["neuralnetworks_defaults"],
     host_supported: false,
-    openmp: true,
+    // b/109953668, disable OpenMP
+    // openmp: true,
     shared_libs: [
         "libandroid",
         "libbase",
@@ -84,7 +85,8 @@ cc_defaults {
         // not exported from libneuralnetworks.so).
         "TestExecution.cpp",
         "TestMemoryInternal.cpp",
-        "TestOpenmpSettings.cpp",
+        // b/109953668, disable OpenMP
+        // "TestOpenmpSettings.cpp",
         "TestPartitioning.cpp",
         "TestPartitioningRandom.cpp",
     ],
