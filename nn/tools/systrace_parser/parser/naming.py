@@ -1,7 +1,10 @@
 """ NNAPI systrace parser: naming conventions and translations """
 
 
+# Application phases
 PHASE_OVERALL = "PO"      # Overall program, e.g., one benchmark case
+PHASE_WARMUP = "PWU"      # Executions done for warmup
+PHASE_BENCHMARK = "PBM"   # Executions done to benchmark after warmup
 # Main phases
 PHASE_INITIALIZATION = "PI" # Initialization - not related to a model
 PHASE_PREPARATION = "PP"  # Model construction
@@ -29,12 +32,16 @@ MARKER_SUBTRACT = "[SUB]"
 
 layers = [LAYER_APPLICATION, LAYER_RUNTIME, LAYER_IPC, LAYER_DRIVER, LAYER_CPU]
 phases = [PHASE_INITIALIZATION, PHASE_PREPARATION, PHASE_COMPILATION,
-          PHASE_EXECUTION, PHASE_RESULTS, PHASE_TERMINATION]
+          PHASE_EXECUTION, PHASE_TERMINATION]
 subphases = dict(PE=[PHASE_INPUTS_AND_OUTPUTS, PHASE_TRANSFORMATION,
-                     PHASE_COMPUTATION, PHASE_RESULTS], PO=phases)
+                     PHASE_COMPUTATION, PHASE_RESULTS],
+                 PO=([PHASE_WARMUP, PHASE_BENCHMARK] + phases),
+                 PWU=[PHASE_EXECUTION],
+                 PBM=[PHASE_EXECUTION])
 names = { PHASE_INITIALIZATION : "Initialization", PHASE_PREPARATION : "Preparation",
           PHASE_COMPILATION : "Compilation", PHASE_INPUTS_AND_OUTPUTS: "I/O",
           PHASE_EXECUTION: "Execution", PHASE_RESULTS: "Results",
+          PHASE_WARMUP: "Warmup", PHASE_BENCHMARK: "Benchmark",
           PHASE_TERMINATION: "Termination",
           LAYER_APPLICATION : "Application", LAYER_RUNTIME: "Runtime",
           LAYER_IPC: "IPC", LAYER_DRIVER: "Driver", LAYER_CPU: "CPU",

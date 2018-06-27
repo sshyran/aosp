@@ -20,12 +20,12 @@ class SingleThreadCallTree(object):
   """
   # Creation of tree from trace data
   def __init__(self):
-    self.root = CallTreeNode(None, None, None, None, None)
+    self.root = CallTreeNode(None, None, None, None, None, None)
     self.current = self.root
     self.stack = []
 
-  def push(self, start_time_s, mark, layer, phase, subtract):
-    node = self.current.add(start_time_s, mark, layer, phase, subtract)
+  def push(self, start_time_s, mark, layer, phase, app_phase, subtract):
+    node = self.current.add(start_time_s, mark, layer, phase, app_phase, subtract)
     self.stack.append(self.current)
     self.current = node
 
@@ -99,7 +99,7 @@ class SingleThreadCallTree(object):
         new_parent = new_parent.parent
       added = new_parent.add(
           node.start_time_s, node.mark + "(copied " + explanation + ")",
-          node.layer, node.phase(), subtract=False)
+          node.layer, node.phase(), node.app_phase, subtract=False)
       added.end_time_s = node.end_time_s
       node.subtract = True
 
@@ -110,8 +110,10 @@ class SingleThreadCallTree(object):
     def recurse(node):
       if not node.is_added_detail() and not node.subtract:
         if (node.layer == LAYER_RUNTIME and
-            # Missing LA fully or missing phase from PO
-            (node.parent.layer != LAYER_APPLICATION or node.parent.phase() == PHASE_OVERALL) and
+            # Wrong LA node
+            (node.parent.layer == LAYER_APPLICATION and
+             node.parent.phase() != PHASE_OVERALL and
+             node.parent.phase() != node.phase()) and
             # LR_PE and subphases need to be special
             node.phase() != PHASE_EXECUTION and
             node.phase() not in subphases[PHASE_EXECUTION]):
@@ -120,7 +122,7 @@ class SingleThreadCallTree(object):
         recurse(c)
     recurse(self.root)
     for node in la_to_be_added:
-      node.add_intermediate_parent(LAYER_APPLICATION, node.phase())
+      node.add_intermediate_parent(LAYER_APPLICATION, node.phase(), node.app_phase)
 
   # Validation
   # SPEC: Local call to other layer
@@ -168,12 +170,13 @@ class SingleThreadCallTree(object):
 
 class CallTreeNode(object):
   """ Single scoped tracepoint. """
-  def __init__(self, start_time_s, mark, layer, phase, subtract):
+  def __init__(self, start_time_s, mark, layer, phase, app_phase, subtract):
     self.children = []
     self.start_time_s = start_time_s
     self.mark = mark
     self.layer = layer
     self.phase_ = phase
+    self.app_phase = app_phase
     self.subtract = subtract
     self.end_time_s = None
     self.parent = None
@@ -223,17 +226,17 @@ class CallTreeNode(object):
       subtract = self.elapsed_ms()
     return subtract
 
-  def add(self, start_time_s, mark, layer, phase, subtract):
-    node = CallTreeNode(start_time_s, mark, layer, phase, subtract)
+  def add(self, start_time_s, mark, layer, phase, app_phase, subtract):
+    node = CallTreeNode(start_time_s, mark, layer, phase, app_phase, subtract)
     node.parent = self
     self.children.append(node)
     return node
 
-  def add_intermediate_parent(self, layer, phase):
+  def add_intermediate_parent(self, layer, phase, app_phase):
     node = CallTreeNode(self.start_time_s,
                         " ".join([self.mark, "( added intermediate",
                                   layer, phase, ")"]),
-                        layer, phase, subtract=False)
+                        layer, phase, app_phase, subtract=False)
     node.end_time_s = float(self.start_time_s) + self.elapsed_less_subtracted_ms() / 1000.0
     node.parent = self.parent
     for i in range(0, len(self.parent.children)):
@@ -244,7 +247,7 @@ class CallTreeNode(object):
     node.children.append(self)
 
   def add_dummy(self, start_time_s):
-    node = CallTreeNode(start_time_s, None, None, None, None)
+    node = CallTreeNode(start_time_s, None, None, None, None, None)
     node.parent = self
     self.children.append(node)
     return node
@@ -258,7 +261,7 @@ class CallTreeNode(object):
 
   def to_str(self, indent=''):
     if not self.is_root():
-      ret = " ".join(map(str, [indent, self.mark,
+      ret = " ".join(map(str, [indent, self.app_phase, self.mark,
                                self.elapsed_less_subtracted_ms(),
                                "subtract: ", self.subtract, "\n"]))
     else:
