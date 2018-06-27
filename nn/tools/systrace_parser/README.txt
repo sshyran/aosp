@@ -7,7 +7,8 @@ Usage:
 parse_systrace.py <systrace html file>
 
 Limitations:
-- Output is only valid with one concurrent NNAPI client process
+- Output is only valid with one concurrent NNAPI client process (this could be
+  done by tracing the Binder transactions from client to server)
 
 See also:
 - contract-between-code-and-parser.txt
