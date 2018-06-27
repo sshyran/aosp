@@ -1,12 +1,13 @@
 import unittest
 
-from parser.tracker import Tracker
+from parser.tracker import Tracker, AppPhase
 from parser.aggregate import aggregate_times
 
 class TestStats(unittest.TestCase):
   def setUp(self):
-    self.tracker1 = Tracker(1, False)
-    self.tracker2 = Tracker(2, True)
+    self.app_phase = AppPhase()
+    self.tracker1 = Tracker(1, False, self.app_phase)
+    self.tracker2 = Tracker(2, True, self.app_phase)
     self.timevars = dict()
     for t in range(0, 20):
       name = "t" + str(t)
@@ -27,23 +28,26 @@ class TestStats(unittest.TestCase):
         self.tracker1.handle_mark(self.from_spectime(time), mark)
       else:
         self.tracker2.handle_mark(self.from_spectime(time), mark)
-    self.times, self.self_times = aggregate_times(
+    self.times, self.self_times, self.has_warmup_and_benchmark, _ = aggregate_times(
         dict(t1=self.tracker1, t2=self.tracker2),
         special_case_lr_pe=False)
 
-  def check_overall_time(self, tag, spec_interval):
+  def check_overall_time(self, tag, spec_interval, app_phase=None):
     expected = eval(spec_interval, {}, self.timevars) * 1000.0
     layer, phase = tag.split("_")
-    actual = self.times[layer][phase]
+    if not app_phase:
+      actual = self.times[phase][layer]
+    else:
+      actual = self.times[app_phase][phase][layer]
     self.assertAlmostEqual(expected, actual, places=1,
-                           msg=self.tracker1.debugstring)
+                           msg="\n".join([
+                               self.tracker1.debugstring,
+                               str(self.times)]))
 
   def check_self_time(self, tag, spec_interval):
-    times, self_times = aggregate_times(
-        dict(t1=self.tracker1, t2=self.tracker2))
     expected = eval(spec_interval, {}, self.timevars) * 1000.0
     layer, phase = tag.split("_")
-    actual = self.self_times[layer][phase]
+    actual = self.self_times[phase][layer]
     self.assertAlmostEqual(expected, actual, places=1,
                            msg=self.tracker1.debugstring)
 
@@ -99,6 +103,7 @@ class TestStats(unittest.TestCase):
     self.check_overall_time("LC_PCO", "(t2-t1)")
     self.check_overall_time("LC_PE", "(t2-t1)")
     self.check_overall_time("LR_PE", "(t3-t0)")
+    self.check_self_time("LC_PCO", "(t2-t1)")
     self.check_self_time("LR_PE", "(t3-t0)-(t2-t1)")
 
   def test_subphases_nested(self):
@@ -115,6 +120,19 @@ class TestStats(unittest.TestCase):
     self.check_overall_time("LC_PE", "(t4-t1)")
     self.check_overall_time("LR_PE", "(t5-t0)")
     self.check_self_time("LR_PE", "(t5-t0)-(t4-t1)")
+
+  def test_subphases_la_pr(self):
+    spec = """
+    t0: tracing_mark_write:B|<thread1>|[NN_LA_PE]lape
+    t1: tracing_mark_write:B|<thread1>|[NN_LA_PR]lapr
+    t2: tracing_mark_write:E|<thread1>
+    t3: tracing_mark_write:E|<thread1>
+    """
+    self.feed_spec_text(spec)
+    self.check_overall_time("LA_PE", "(t3-t0)")
+    self.check_overall_time("LA_PR", "(t2-t1)")
+    self.check_self_time("LA_PE", "(t3-t0)")
+    self.check_self_time("LA_PR", "(t2-t1)")
 
   def test_subphases_and_layers(self):
     spec = """
@@ -251,4 +269,19 @@ class TestStats(unittest.TestCase):
     self.check_overall_time("LA_PC", "(t5-t0)-(t4-t3)")
     self.check_overall_time("LR_PC", "(t2-t1)")
     self.check_overall_time("LR_PT", "(t4-t3)")
-    self.check_overall_time("LA_PT", "(t4-t3)")
+
+  def test_warmup_and_benchmark(self):
+    spec = """
+    t0: tracing_mark_write:B|<thread1>|[NN_LA_PWU]pwu
+    t1: tracing_mark_write:B|<thread1>|[NN_LR_PE]ANeuralNetworksExecution_create
+    t2: tracing_mark_write:E|<thread1>
+    t3: tracing_mark_write:E|<thread1>
+    t4: tracing_mark_write:B|<thread1>|[NN_LA_PBM]pbm
+    t5: tracing_mark_write:B|<thread1>|[NN_LR_PE]ANeuralNetworksExecution_create
+    t6: tracing_mark_write:E|<thread1>
+    t7: tracing_mark_write:E|<thread1>
+    """
+    self.feed_spec_text(spec)
+    self.check_overall_time("LR_PE", "(t2-t1)+(t6-t5)")
+    self.check_overall_time("LR_PE", "(t2-t1)", "PWU")
+    self.check_overall_time("LR_PE", "(t6-t5)", "PBM")
