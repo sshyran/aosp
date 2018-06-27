@@ -7,10 +7,33 @@
 import re
 from parser.naming import (subphases, translate_hidl_mark_to_nn_and_tag,
                            get_function_name_from_mark, make_tag)
-from parser.naming import LAYER_CPU, LAYER_DRIVER, LAYER_RUNTIME
+from parser.naming import LAYER_CPU, LAYER_DRIVER, LAYER_RUNTIME, LAYER_APPLICATION
 from parser.naming import MARKER_SWITCH, MARKER_SUBTRACT
-from parser.naming import PHASE_EXECUTION
+from parser.naming import PHASE_EXECUTION, PHASE_OVERALL, PHASE_WARMUP, PHASE_BENCHMARK
 from parser.tree import SingleThreadCallTree
+
+class AppPhase(object):
+  """ Class to track the overall phase of the program. Used to split up warmup and benchmark.
+
+      Needs to be separate from the call trees to propagate the difference to driver.
+  """
+  def __init__(self):
+    self.reset()
+
+  def current(self):
+    if self.stack:
+      return self.stack[-1]
+    else:
+      return PHASE_OVERALL
+
+  def push(self, phase):
+    self.stack.append(phase)
+
+  def pop(self):
+    self.stack.pop()
+
+  def reset(self):
+    self.stack = []
 
 class Tracker(object):
   """ Class to track the stack trace of a single thread and feed it into a SingleThreadCallTree
@@ -23,9 +46,10 @@ class Tracker(object):
 
       Subphases of Execution are aggregated towards the overall Execution phase as needed.
   """
-  def __init__(self, tgid, is_driver):
+  def __init__(self, tgid, is_driver, app_phase):
     self.tgid = tgid
     self.is_driver = is_driver
+    self.app_phase = app_phase
 
     # Match the trace string
     # "[NN_LA_PP]funcE1" in "B|<thread1>|[NN_LA_PP]funcE1"
@@ -56,6 +80,12 @@ class Tracker(object):
     if mark[0] == "B":
       switch = False
       subtract = False
+      # Workarounds for wrong tracepoints in early versions
+      # TODO(mikie): remove later
+      if ("ANeuralNetworksEvent_free" in mark) or ("ANeuralNetworksExecution_free" in mark):
+        mark = mark.replace("_PT", "_PE")
+      elif ("[SW][NN_LA_PR]executeWithCompilation" in mark):
+        mark = mark.replace("[SW]", "")
       if MARKER_SWITCH in mark:
         switch = True
       if MARKER_SUBTRACT in mark:
@@ -74,17 +104,21 @@ class Tracker(object):
       else:
         tag = m.group(1)
       [_, layer, phase] = tag.split("_")
+      if layer == LAYER_APPLICATION and phase in [PHASE_WARMUP, PHASE_BENCHMARK]:
+        self.app_phase.push(phase)
       if not self.is_driver:
         layer = layer.replace(LAYER_DRIVER, LAYER_CPU)
       else:
         layer = layer.replace(LAYER_CPU, LAYER_DRIVER)
-      self.mytree.push(time, mark, layer, phase, subtract)
+      self.mytree.push(time, mark, layer, phase, self.app_phase.current(), subtract)
     elif mark[0] == "E":
       node = self.mytree.pop(time)
       if node.is_dummy():  # Dummy item
         pass
       else:
-        function = get_function_name_from_mark(node.mark)
+        if node.layer == LAYER_APPLICATION and node.phase in [PHASE_WARMUP, PHASE_BENCHMARK]:
+          self.app_phase.pop()
+        function = node.app_phase + "::" + get_function_name_from_mark(node.mark)
         self.begins_and_ends_ms[function] = (self.begins_and_ends_ms.get(function, []) +
                                              [[float(node.start_time_s) * 1000.0,
                                                float(node.end_time_s) * 1000.0]])
@@ -103,14 +137,14 @@ class Tracker(object):
       elapsed0 = "DETAIL"
       elapsed1 = node.elapsed_less_subtracted_ms()
       if not node.is_added_detail() and not node.subtract:
-        tag = layer + "_" + phase
+        tag = node.app_phase + "_" + layer + "_" + phase
         elapsed0 = elapsed1
         self.stats[tag] = self.stats.get(tag, 0.0) + elapsed0
         self.items[tag] = self.items.get(tag, []) + [
             mark + " " + str(elapsed0) + " " + str(elapsed1) + " " +  tag]
         if phase in subphases[PHASE_EXECUTION]:
           if not in_pe_layers.get(layer):
-            pe_tag = make_tag(layer, PHASE_EXECUTION)
+            pe_tag = node.app_phase + "_" + make_tag(layer, PHASE_EXECUTION)
             self.stats[pe_tag] = self.stats.get(pe_tag, 0.0) + elapsed0
             self.items[pe_tag] = self.items.get(pe_tag, []) + [
                 mark + " " + str(elapsed0) + " " + str(elapsed1) + " " +  pe_tag]
@@ -127,29 +161,44 @@ class Tracker(object):
       recurse(top, None, None, "", {})
     self.debugstring = self.mytree.to_str()
 
-  def get_stat(self, tag, special_case_lr_pe=True):
+  def get_stat(self, tag, app_phase, special_case_lr_pe=True):
     if not self.stats and not self.mytree.is_empty():
       self.calculate_stats()
     if tag == make_tag(LAYER_RUNTIME, PHASE_EXECUTION) and special_case_lr_pe:
       # Execution is exposed as an asynchronous event from the runtime, we
       # calculate the runtime time as starting from when the async operation is
-      # kicked off until wait finishes. This has two limitations:
+      # kicked off until wait finishes + synchronous setup and teardown calls.
+      # This has two limitations:
       #   - multithreaded usage will not work correctly
       #   - should the application spend so much time before calling wait that
       #     execution has already finished, the time would get allocated to the
       #     runtime incorrectly
-      async_starts = self.get_begins("ANeuralNetworksExecution_startCompute")
-      async_ends = self.get_ends("ANeuralNetworksEvent_wait")
+      async_starts = self.get_begins(app_phase, "ANeuralNetworksExecution_startCompute")
+      async_ends = self.get_ends(app_phase, "ANeuralNetworksEvent_wait")
       elapsed = 0.0
       for i in range(0, len(async_starts)):
-        elapsed = elapsed + async_ends[i] - async_starts[i]
+        elapsed = elapsed + (async_ends[i] - async_starts[i])
+      for sync in ["ANeuralNetworksExecution_create", "ANeuralNetworksExecution_free",
+                   "ANeuralNetworksEvent_create", "ANeuralNetworksEvent_free",
+                   "ANeuralNetworksExecution_setInput", "ANeuralNetworksExecution_setOutput",
+                   "ANeuralNetworksExecution_setInputFromMemory",
+                   "ANeuralNetworksExecution_setOutputFromMemory"]:
+        sync_starts = self.get_begins(app_phase, sync)
+        sync_ends = self.get_ends(app_phase, sync)
+        for i in range(0, len(sync_starts)):
+          elapsed = elapsed + (sync_ends[i] - sync_starts[i])
       return elapsed
-    return self.stats.get(tag, 0.0)
+    return self.stats.get(app_phase + "_" + tag, 0.0)
 
-  def get_begins(self, function):
-    return [begin_and_end[0] for begin_and_end in self.begins_and_ends_ms.get(function, [])]
-  def get_ends(self, function):
-    return [begin_and_end[1] for begin_and_end in self.begins_and_ends_ms.get(function, [])]
+  def get_execution_count(self, app_phase):
+    return len(self.get_begins(app_phase, "ANeuralNetworksExecution_create"))
+
+  def get_begins(self, app_phase, function):
+    name = app_phase + "::" + function
+    return [begin_and_end[0] for begin_and_end in self.begins_and_ends_ms.get(name, [])]
+  def get_ends(self, app_phase, function):
+    name = app_phase + "::" + function
+    return [begin_and_end[1] for begin_and_end in self.begins_and_ends_ms.get(name, [])]
 
   def print_stats(self):
     if not self.stats:
