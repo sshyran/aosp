@@ -365,7 +365,7 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
 
 static bool validatePools(const hidl_vec<hidl_memory>& pools) {
     for (const hidl_memory& memory : pools) {
-        const auto name = memory.name();
+        const auto& name = memory.name();
         if (name != "ashmem" && name != "mmap_fd") {
             LOG(ERROR) << "Unsupported memory type " << name;
             return false;
