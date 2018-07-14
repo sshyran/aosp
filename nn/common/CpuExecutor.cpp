@@ -38,7 +38,7 @@ RunTimePoolInfo::RunTimePoolInfo(const hidl_memory& hidlMemory, bool* fail) {
     sp<IMemory> memory;
     uint8_t* buffer = nullptr;
 
-    auto memType = hidlMemory.name();
+    const auto& memType = hidlMemory.name();
     if (memType == "ashmem") {
         memory = mapMemory(hidlMemory);
         if (memory == nullptr) {
