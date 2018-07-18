@@ -25,7 +25,8 @@ namespace android {
 namespace nn {
 
 // Write a representation of the model in Graphviz (.dot) format to
-// the specified stream.  (See http://www.graphviz.org.)
+// the specified stream (if provided) or to the logcat (if no stream
+// is provided).  (See http://www.graphviz.org.)
 //
 // Operations are represented by boxes, and operands by ellipses.  The
 // number in a box/ellipse is the operation/operand index.  In the
@@ -45,7 +46,7 @@ namespace nn {
 // white text on a black background.
 //
 void graphDump(const char* name, const ::android::hardware::neuralnetworks::V1_1::Model& model,
-               std::ostream& outStream = std::cout);
+               std::ostream* outStream = nullptr);
 
 }  // namespace nn
 }  // namespace android
