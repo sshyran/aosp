@@ -25,11 +25,6 @@
 namespace android {
 namespace nn {
 
-// executionMutex is used to protect concurrent access of non-threadsafe resources
-// like gemmlowp::GemmContext.
-// std::mutex is safe for pthreads on Android.
-static std::mutex executionMutex;
-
 bool fullyConnectedFloat32(const float* inputData, const Shape& inputShape,
                            const float* weightsData, const Shape& weightsShape,
                            const float* biasData, const Shape& biasShape,
@@ -90,10 +85,7 @@ bool fullyConnectedQuant8(const uint8_t* inputData, const Shape& inputShape,
                                   &output_activation_min,
                                   &output_activation_max);
 
-    static gemmlowp::GemmContext gemm_context;
-
-    // Prevent concurrent executions that access gemm_context.
-    std::unique_lock<std::mutex> lock(executionMutex);
+    static thread_local gemmlowp::GemmContext gemm_context;
     // Alow gemmlowp automatically decide how many threads to use.
     gemm_context.set_max_num_threads(0);
 
