@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
-// Uncomment the following line to generate DOT graphs.
-//
-// #define GRAPH GRAPH
-
 #include "GeneratedUtils.h"
 
-#include "Bridge.h"
 #include "TestHarness.h"
 
 #include <gtest/gtest.h>
@@ -46,14 +41,6 @@ namespace generated_tests {
 using namespace android::nn::wrapper;
 using namespace test_helper;
 
-void graphDump([[maybe_unused]] const char* name, [[maybe_unused]] const Model& model) {
-#ifdef GRAPH
-    ::android::nn::bridge_tests::graphDump(
-         name,
-         reinterpret_cast<const ::android::nn::ModelBuilder*>(model.getHandle()));
-#endif
-}
-
 template <typename T>
 static void print(std::ostream& os, const MixedTyped& test) {
     // dump T-typed inputs
@@ -77,7 +64,6 @@ Compilation createAndCompileModel(Model* model, std::function<void(Model*)> crea
 
     createModel(model);
     model->finish();
-    graphDump("", *model);
 
     NNTRACE_APP_SWITCH(NNTRACE_PHASE_COMPILATION, "createAndCompileModel");
     Compilation compilation(model);
