@@ -19,6 +19,7 @@
 #include "ModelBuilder.h"
 
 #include "CompilationBuilder.h"
+#include "GraphDump.h"
 #include "Utils.h"
 #include "ValidateHal.h"
 
@@ -330,6 +331,9 @@ int ModelBuilder::finish() {
         LOG(ERROR) << "ANeuralNetworksModel_finish called on invalid model";
         mInvalidModel = true;
         return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (VLOG_IS_ON(MODEL)) {
+        graphDump("ModelBuilder::finish", modelForValidation, nullptr);
     }
 
     // We sort the operations so that they will be in the appropriate
