@@ -2125,6 +2125,7 @@ typedef int32_t ANeuralNetworksOperationType;
  */
 typedef struct ANeuralNetworksEvent ANeuralNetworksEvent;
 
+#if __ANDROID_API__ >= 27
 
 /**
  * Creates a shared memory object from a file descriptor.
@@ -2402,6 +2403,8 @@ int ANeuralNetworksModel_identifyInputsAndOutputs(ANeuralNetworksModel* model, u
                                                   const uint32_t* inputs, uint32_t outputCount,
                                                   const uint32_t* outputs) __INTRODUCED_IN(27);
 
+#if __ANDROID_API__ >= 28
+
 /**
  * Specifies whether {@link ANEURALNETWORKS_TENSOR_FLOAT32} is allowed to be
  * calculated with range and/or precision as low as that of the IEEE 754 16-bit
@@ -2425,6 +2428,8 @@ int ANeuralNetworksModel_identifyInputsAndOutputs(ANeuralNetworksModel* model, u
  * See {@link ANeuralNetworksModel} for information on multithreaded usage.
  */
 int ANeuralNetworksModel_relaxComputationFloat32toFloat16(ANeuralNetworksModel* model, bool allow) __INTRODUCED_IN(28);
+
+#endif  // __ANDROID_API__ >= 28
 
 /**
  * Create a {@link ANeuralNetworksCompilation} to compile the given model.
@@ -2759,6 +2764,8 @@ int ANeuralNetworksEvent_wait(ANeuralNetworksEvent* event) __INTRODUCED_IN(27);
  * Available since API level 27.
  */
 void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) __INTRODUCED_IN(27);
+
+#endif  // __ANDROID_API__ >= 27
 
 __END_DECLS
 
