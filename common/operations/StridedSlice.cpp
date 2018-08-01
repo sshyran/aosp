@@ -57,13 +57,14 @@ bool stridedSliceGeneric(const uint8_t* inputData, const Shape& inputShape,
 
     beginMask = ReverseMaskBits(beginMask, numInputDims);
     endMask = ReverseMaskBits(endMask, numInputDims);
+    shrinkAxisMask = ReverseMaskBits(shrinkAxisMask, numInputDims);
 
     if (inputShape.type == OperandType::TENSOR_FLOAT32) {
         NNTRACE_COMP_SWITCH("reference_ops::StridedSlice::float");
         tflite::reference_ops::StridedSlice(
                 reinterpret_cast<const float*>(inputData),
                 convertShapeToDims(inputShape),
-                beginMask, endMask,
+                beginMask, endMask, shrinkAxisMask,
                 starts, stops, strides,
                 reinterpret_cast<float*>(outputData),
                 convertShapeToDims(outputShape));
@@ -72,7 +73,7 @@ bool stridedSliceGeneric(const uint8_t* inputData, const Shape& inputShape,
         tflite::reference_ops::StridedSlice(
                 reinterpret_cast<const uint8_t*>(inputData),
                 convertShapeToDims(inputShape),
-                beginMask, endMask,
+                beginMask, endMask, shrinkAxisMask,
                 starts, stops, strides,
                 reinterpret_cast<uint8_t*>(outputData),
                 convertShapeToDims(outputShape));
