@@ -28,8 +28,8 @@ bool l2normFloat32(const float* inputData, const Shape& inputShape,
                    float* outputData, const Shape& outputShape) {
     NNTRACE_COMP("optimized_ops::L2Normalization::float");
     tflite::optimized_ops::L2Normalization<tflite::FusedActivationFunctionType::kNone>(
-            inputData, convertShapeToDims(inputShape),
-            outputData, convertShapeToDims(outputShape));
+            inputData, convertShapeToTflshape(inputShape),
+            outputData, convertShapeToTflshape(outputShape));
 
     return true;
 }
@@ -38,9 +38,9 @@ bool l2normQuant8(const uint8_t* inputData, const Shape& inputShape,
                   uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_COMP("optimized_ops::L2Normalization::uint8");
     tflite::optimized_ops::L2Normalization(
-            inputData, convertShapeToDims(inputShape),
+            inputData, convertShapeToTflshape(inputShape),
             inputShape.offset,
-            outputData, convertShapeToDims(outputShape));
+            outputData, convertShapeToTflshape(outputShape));
 
     return true;
 }
