@@ -24,14 +24,16 @@
 namespace android {
 namespace nn {
 
-#define ANDROID_NN_POOLING_PARAMETERS                                           \
-    uint32_t height       = getSizeOfDimension(inputShape, 1);                  \
-    uint32_t width        = getSizeOfDimension(inputShape, 2);                  \
-    uint32_t outHeight    = getSizeOfDimension(outputShape, 1);                 \
-    uint32_t outWidth     = getSizeOfDimension(outputShape, 2);                 \
-                                                                                \
-    uint32_t paddingHeight = (uint32_t)padding_top;                             \
-    uint32_t paddingWidth = (uint32_t)padding_left;
+#define ANDROID_NN_POOLING_PARAMETERS                                      \
+    tflite::PoolParams op_params;                                          \
+    op_params.stride_height = stride_height;                               \
+    op_params.stride_width = stride_width;                                 \
+    op_params.filter_height = filter_height;                               \
+    op_params.filter_width = filter_width;                                 \
+    op_params.padding_values.height = padding_top;                         \
+    op_params.padding_values.width = padding_left;
+
+
 
 bool averagePoolFloat32(const float* inputData, const Shape& inputShape,
                         int32_t padding_left, int32_t padding_right,
@@ -47,13 +49,14 @@ bool averagePoolFloat32(const float* inputData, const Shape& inputShape,
     CalculateActivationRangeFloat(activation, &output_activation_min,
                                   &output_activation_max);
 
+    op_params.float_activation_min = output_activation_min;
+    op_params.float_activation_max = output_activation_max;
+
     NNTRACE_COMP_SWITCH("optimized_ops::AveragePool");
     tflite::optimized_ops::AveragePool(
-            inputData, convertShapeToDims(inputShape),
-            stride_width, stride_height, paddingWidth, paddingHeight,
-            filter_width, filter_height,
-            output_activation_min, output_activation_max,
-            outputData, convertShapeToDims(outputShape));
+            op_params,
+            convertShapeToTflshape(inputShape), inputData,
+            convertShapeToTflshape(outputShape), outputData);
 
     return true;
 }
@@ -75,13 +78,14 @@ bool averagePoolQuant8(const uint8_t* inputData, const Shape& inputShape,
                                   &output_activation_min,
                                   &output_activation_max);
 
+    op_params.quantized_activation_min = output_activation_min;
+    op_params.quantized_activation_max = output_activation_max;
+
     NNTRACE_COMP_SWITCH("optimized_ops::AveragePool");
     tflite::optimized_ops::AveragePool(
-            inputData, convertShapeToDims(inputShape),
-            stride_width, stride_height, paddingWidth, paddingHeight,
-            filter_width, filter_height,
-            output_activation_min, output_activation_max,
-            outputData, convertShapeToDims(outputShape));
+            op_params,
+            convertShapeToTflshape(inputShape), inputData,
+            convertShapeToTflshape(outputShape), outputData);
 
     return true;
 }
@@ -100,13 +104,14 @@ bool l2PoolFloat32(const float* inputData, const Shape& inputShape,
     CalculateActivationRangeFloat(activation, &output_activation_min,
                                   &output_activation_max);
 
+    op_params.float_activation_min = output_activation_min;
+    op_params.float_activation_max = output_activation_max;
+
     NNTRACE_COMP_SWITCH("optimized_ops::L2Pool");
     tflite::optimized_ops::L2Pool(
-            inputData, convertShapeToDims(inputShape),
-            stride_width, stride_height, paddingWidth, paddingHeight,
-            filter_width, filter_height,
-            output_activation_min, output_activation_max,
-            outputData, convertShapeToDims(outputShape));
+            op_params,
+            convertShapeToTflshape(inputShape), inputData,
+            convertShapeToTflshape(outputShape), outputData);
 
     return true;
 }
@@ -125,13 +130,14 @@ bool maxPoolFloat32(const float* inputData, const Shape& inputShape,
     CalculateActivationRangeFloat(activation, &output_activation_min,
                                   &output_activation_max);
 
+    op_params.float_activation_min = output_activation_min;
+    op_params.float_activation_max = output_activation_max;
+
     NNTRACE_COMP_SWITCH("optimized_ops::MaxPool");
     tflite::optimized_ops::MaxPool(
-            inputData, convertShapeToDims(inputShape),
-            stride_width, stride_height, paddingWidth, paddingHeight,
-            filter_width, filter_height,
-            output_activation_min, output_activation_max,
-            outputData, convertShapeToDims(outputShape));
+            op_params,
+            convertShapeToTflshape(inputShape), inputData,
+            convertShapeToTflshape(outputShape), outputData);
 
     return true;
 }
@@ -153,13 +159,14 @@ bool maxPoolQuant8(const uint8_t* inputData, const Shape& inputShape,
                                   &output_activation_min,
                                   &output_activation_max);
 
+    op_params.quantized_activation_min = output_activation_min;
+    op_params.quantized_activation_max = output_activation_max;
+
     NNTRACE_COMP_SWITCH("optimized_ops::MaxPool");
     tflite::optimized_ops::MaxPool(
-            inputData, convertShapeToDims(inputShape),
-            stride_width, stride_height, paddingWidth, paddingHeight,
-            filter_width, filter_height,
-            output_activation_min, output_activation_max,
-            outputData, convertShapeToDims(outputShape));
+            op_params,
+            convertShapeToTflshape(inputShape), inputData,
+            convertShapeToTflshape(outputShape), outputData);
 
     return true;
 }
