@@ -62,6 +62,7 @@
 #include "../generated/tests/embedding_lookup.mod.py.cpp"
 #include "../generated/tests/floor.mod.py.cpp"
 #include "../generated/tests/fully_connected_float_2.mod.py.cpp"
+#include "../generated/tests/fully_connected_float_3.mod.py.cpp"
 #include "../generated/tests/fully_connected_float_large.mod.py.cpp"
 #include "../generated/tests/fully_connected_float_large_weights_as_inputs.mod.py.cpp"
 #include "../generated/tests/fully_connected_float.mod.py.cpp"
