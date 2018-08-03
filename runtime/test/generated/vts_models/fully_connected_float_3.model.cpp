@@ -4,7 +4,7 @@ Model createTestModel() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 5},
+            .dimensions = {2, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -13,12 +13,12 @@ Model createTestModel() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 5},
+            .dimensions = {1, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 20},
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -27,11 +27,11 @@ Model createTestModel() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 1},
+            .dimensions = {2, 1},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -45,7 +45,7 @@ Model createTestModel() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
         }
     };
 
@@ -60,7 +60,7 @@ Model createTestModel() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {3};
     std::vector<uint8_t> operandValues = {
-      0, 0, 0, 64, 0, 0, 64, 64, 0, 0, 128, 64, 0, 0, 160, 64, 0, 0, 192, 64, 0, 0, 97, 68, 0, 0, 0, 0
+      0, 0, 0, 64, 0, 0, 128, 64, 0, 0, 128, 63, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -71,7 +71,6 @@ Model createTestModel() {
         .outputIndexes = outputIndexes,
         .operandValues = operandValues,
         .pools = pools,
-        .relaxComputationFloat32toFloat16 = true,
     };
 }
 
