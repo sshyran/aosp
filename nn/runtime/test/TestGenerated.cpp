@@ -82,8 +82,11 @@ static void execute(std::function<void(Model*)> createModel,
     Compilation compilation(&model);
     compilation.finish();
 
-    // If in relaxed mode, set the error range to be 5ULP of FP16.
-    float fpRange = !model.isRelaxed() ? 1e-5f : 5.0f * 0.0009765625f;
+    // TODO: Adjust the error limit based on testing.
+    // If in relaxed mode, set the absolute tolerance to be 5ULP of FP16.
+    float fpAtol = !model.isRelaxed() ? 1e-5f : 5.0f * 0.0009765625f;
+    // Set the relative tolerance to be 5ULP of the corresponding FP precision.
+    float fpRtol = !model.isRelaxed() ? 5.0f * 1.1920928955078125e-7f : 5.0f * 0.0009765625f;
     for (auto& example : examples) {
         SCOPED_TRACE(exampleNo);
         // TODO: We leave it as a copy here.
@@ -123,7 +126,7 @@ static void execute(std::function<void(Model*)> createModel,
         MixedTyped filteredTest = filter(test, isIgnored);
         // We want "close-enough" results for float
 
-        compare(filteredGolden, filteredTest, fpRange);
+        compare(filteredGolden, filteredTest, fpAtol, fpRtol);
         exampleNo++;
     }
 }
