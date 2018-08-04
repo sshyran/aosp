@@ -1823,7 +1823,7 @@ typedef enum {
      * It could be computed as follows:
      *    out_size = (input + stride - 1) / stride;
      *    needed_input = (out_size - 1) * stride + filter_size
-     *    total_padding = max(0, needed_input - output_size)
+     *    total_padding = max(0, needed_input - input_size)
      *  The computation is the same for the horizontal and vertical directions.
      */
     ANEURALNETWORKS_PADDING_SAME = 1,
