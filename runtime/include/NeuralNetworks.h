@@ -1951,6 +1951,43 @@ typedef enum {
     ANEURALNETWORKS_QUANTIZED_16BIT_LSTM = 71,
     ANEURALNETWORKS_RANDOM_MULTINOMIAL = 72,
     ANEURALNETWORKS_REDUCE = 73,
+
+    /**
+     * Select and scale the feature map of each region of interest to a unified
+     * output size by average pooling sampling points from bilinear interpolation.
+     *
+     * The region of interest is represented by its upper-left corner coordinate
+     * (x1,y1) and lower-right corner coordinate (x2,y2) in the original image.
+     * A spatial scaling factor is applied to map into feature map coordinate.
+     * A valid region of interest should satisfy x1 < x2 and y1 < y2.
+     *
+     * No rounding is applied in this operation. The sampling points are unified
+     * distributed in the pooling bin and their values are calculated by bilinear
+     * interpolation.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Inputs:
+     * * 0: A 4-D tensor, specifying the feature map with "NHWC" data layout.
+     * * 1: A 2-D Tensor of shape [num_rois, 5 or 4], specifying the locations
+     *      of the regions of interest, each line with format
+     *      [<optional batch_id>, x1, y1, x2, y2]. The batch_id is optional if
+     *      there is only one batch.
+     * * 2: A 1-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32},
+     *      specifying the size of the output tensor [out_height, out_width].
+     * * 3: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the spatial
+     *      scaling factor from original image to feature map.
+     * * 4: An {@link ANEURALNETWORKS_INT32} scalar, specifying the number of
+     *      sampling points used to compute the output. Set to 0 for adaptive
+     *      value of ceil(roi_width/out_width) and ceil(roi_height/out_height).
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0. The output
+     *      shape is [num_rois, out_height, out_width, depth].
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_ROI_ALIGN = 74,
     ANEURALNETWORKS_RSQRT = 75,
     ANEURALNETWORKS_SELECT = 76,

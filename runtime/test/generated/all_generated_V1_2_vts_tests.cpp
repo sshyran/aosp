@@ -481,6 +481,56 @@ TEST_F(NeuralnetworksHidlTest, pad_v2_1_quant8) {
                            pad_v2_1_quant8::examples);
 }
 
+// Generated from: roi_align.mod.py.
+namespace roi_align {
+// Generated roi_align test
+#include "examples/roi_align.example.cpp"
+// Generated model constructor
+#include "vts_models/roi_align.model.cpp"
+} // namespace roi_align
+
+TEST_F(NeuralnetworksHidlTest, roi_align) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel,
+                           roi_align::is_ignored,
+                           roi_align::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_relaxed) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_relaxed,
+                           roi_align::is_ignored_relaxed,
+                           roi_align::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_2) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_2,
+                           roi_align::is_ignored_2,
+                           roi_align::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_relaxed_2) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_relaxed_2,
+                           roi_align::is_ignored_relaxed_2,
+                           roi_align::examples_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_3) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_3,
+                           roi_align::is_ignored_3,
+                           roi_align::examples_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_relaxed_3) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_relaxed_3,
+                           roi_align::is_ignored_relaxed_3,
+                           roi_align::examples_relaxed_3);
+}
+
 // Generated from: split_float_1.mod.py.
 namespace split_float_1 {
 // Generated split_float_1 test
