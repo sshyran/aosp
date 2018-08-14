@@ -1582,6 +1582,20 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
+        case ANEURALNETWORKS_ROI_ALIGN: {
+            if (inputCount != 5 || outputCount != 1) {
+                logInvalidInOutNumber(5, 1);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                               OperandType::TENSOR_INT32, OperandType::FLOAT32, OperandType::INT32};
+            outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
         default:
             return ANEURALNETWORKS_BAD_DATA;
     }
