@@ -36,6 +36,7 @@ if ! adb -d shell test -f /data/local.prop; then
   adb -d shell 'settings put secure user_setup_complete 1'
   adb -d disable-verity
   adb -d reboot
+  sleep 5
   adb wait-for-usb-device remount
 fi
 
@@ -60,37 +61,40 @@ set +e
 adb -d shell 'pm disable com.google.android.googlequicksearchbox'
 adb shell 'pm list packages -f' | sed -e 's/.*=//' | sed 's/\r//g' | grep "com.breel.wallpapers" | while read pkg; do adb -d shell "pm disable $pkg"; done;
 set -e
+adb -d shell setprop debug.nn.cpuonly 0
+adb -d shell setprop debug.nn.vlog 0
 
 echo running $NUMBER_RUNS times
 
 # Run on CPU only
 LOGFILE=$LOGDIR/perf-cpu.txt
-echo "CPU only" | tee $LOGFILE
-adb -d shell setprop debug.nn.cpuonly 1
+echo "TFLite" | tee $LOGFILE
 for i in $(seq 1 $NUMBER_RUNS); do
   echo "Run $i / $NUMBER_RUNS" | tee -a $LOGFILE
   # Menukey - make sure screen is on
   adb shell "input keyevent 82"
+  # Show homescreen
+  adb shell wm dismiss-keyguard
   # Set the shell pid as a top-app and run tests
-  adb shell 'echo $$ > /dev/stune/top-app/tasks; am instrument -w -e size large com.example.android.nn.benchmark/android.support.test.runner.AndroidJUnitRunner' | tee -a $LOGFILE
+  adb shell 'echo $$ > /dev/stune/top-app/tasks; am instrument -w -e size large -e class com.example.android.nn.benchmark.TFLiteTest com.example.android.nn.benchmark/android.support.test.runner.AndroidJUnitRunner' | tee -a $LOGFILE
   sleep 10  # let CPU cool down
 done
 
+echo "CPU run data from 'parse_benchmark.py $LOGFILE'"
 $ANDROID_BUILD_TOP/frameworks/ml/nn/tools/parse_benchmark.py $LOGFILE
-echo "To output CPU run data, use 'parse_benchmark.py $LOGFILE'"
 
 # Run with driver
 LOGFILE=$LOGDIR/perf-driver.txt
 echo "Driver" | tee $LOGFILE
-adb -d shell setprop debug.nn.cpuonly 0
 for i in $(seq 1 $NUMBER_RUNS); do
   echo "Run $i / $NUMBER_RUNS" | tee -a $LOGFILE
   # Menukey - make sure screen is on
   adb shell "input keyevent 82"
+  # Show homescreen
+  adb shell wm dismiss-keyguard
   # Set the shell pid as a top-app and run tests
-  adb shell 'echo $$ > /dev/stune/top-app/tasks; am instrument -w -e size large com.example.android.nn.benchmark/android.support.test.runner.AndroidJUnitRunner' | tee -a $LOGFILE
+  adb shell 'echo $$ > /dev/stune/top-app/tasks; am instrument -w -e size large -e class com.example.android.nn.benchmark.NNTest com.example.android.nn.benchmark/android.support.test.runner.AndroidJUnitRunner' | tee -a $LOGFILE
 done
 
+echo "Driver run data from 'parse_benchmark.py $LOGFILE'"
 $ANDROID_BUILD_TOP/frameworks/ml/nn/tools/parse_benchmark.py $LOGFILE
-echo "To output driver run data, use 'parse_benchmark.py $LOGFILE'"
-
