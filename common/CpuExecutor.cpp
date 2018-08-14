@@ -1505,6 +1505,31 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 default: { return ANEURALNETWORKS_BAD_DATA; }
             }
         } break;
+        case OperationType::ROI_ALIGN: {
+            if (!allParametersPresent(5, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            const RunTimeOperandInfo& roi = mOperands[ins[1]];
+            const RunTimeOperandInfo& outputShape = mOperands[ins[2]];
+            const float spatialScale = getScalarData<float>(mOperands[ins[3]]);
+            const int32_t samplingRatio = getScalarData<int32_t>(mOperands[ins[4]]);
+
+            RunTimeOperandInfo& out = mOperands[outs[0]];
+            Shape outShape = out.shape();
+
+            if (input.type == OperandType::TENSOR_FLOAT32) {
+                success = roiAlignPrepare(input.shape(), reinterpret_cast<const float*>(roi.buffer),
+                                          roi.shape(),
+                                          reinterpret_cast<const int32_t*>(outputShape.buffer),
+                                          outputShape.shape(), spatialScale, &outShape) &&
+                          setInfoAndAllocateIfNeeded(&out, outShape) &&
+                          roiAlign(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                   reinterpret_cast<const float*>(roi.buffer), roi.shape(),
+                                   spatialScale, samplingRatio,
+                                   reinterpret_cast<float*>(out.buffer), outShape);
+            }
+        } break;
         default:
             nnAssert(false);
             break;
