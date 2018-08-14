@@ -250,6 +250,10 @@ bool splitInt32(const int32_t* inputData, const Shape& inputShape, const int32_t
 bool splitQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_t axis,
                  const std::vector<uint8_t*>* outputDataPtrs,
                  const std::vector<Shape>& outputShapes);
+
+bool roiAlign(const float* inputData, const Shape& inputShape, const float* roiData,
+              const Shape& roiShape, float spatialScale, int32_t samplingRatio, float* outputData,
+              const Shape& outputShape);
 } // namespace nn
 } // namespace android
 #endif // ANDROID_ML_NN_COMMON_OPERATIONS_H
