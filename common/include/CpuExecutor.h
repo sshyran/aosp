@@ -161,6 +161,8 @@ private:
 // cores are the same. Decision to be based on benchmarking against a
 // representative set of workloads and devices. I'm keeping the code here for
 // reference.
+// b/109953668, disable OpenMP
+#ifdef NNAPI_OPENMP
 class ScopedOpenmpSettings {
 public:
     ScopedOpenmpSettings();
@@ -172,6 +174,7 @@ private:
     int mMaxThreadsInitial;
 #endif
 };
+#endif  // NNAPI_OPENMP
 
 
 namespace {
