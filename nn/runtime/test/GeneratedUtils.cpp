@@ -95,41 +95,44 @@ void executeWithCompilation(Model* model, Compilation* compilation,
         const MixedTyped& golden = example.second;
 
         Execution execution(compilation);
-
-        NNTRACE_APP_SWITCH(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "executeWithCompilation example");
-        // Set all inputs
-        for_all(inputs, [&execution](int idx, const void* p, size_t s) {
-            const void* buffer = s == 0 ? nullptr : p;
-            ASSERT_EQ(Result::NO_ERROR, execution.setInput(idx, buffer, s));
-        });
-
         MixedTyped test;
-        // Go through all typed outputs
-        resize_accordingly(golden, test);
-        for_all(test, [&execution](int idx, void* p, size_t s) {
-            void* buffer = s == 0 ? nullptr : p;
-            ASSERT_EQ(Result::NO_ERROR, execution.setOutput(idx, buffer, s));
-        });
 
-        NNTRACE_APP_SWITCH(NNTRACE_PHASE_EXECUTION, "executeWithCompilation example");
+        {
+            NNTRACE_APP(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "executeWithCompilation example");
+            // Set all inputs
+            for_all(inputs, [&execution](int idx, const void* p, size_t s) {
+                const void* buffer = s == 0 ? nullptr : p;
+                ASSERT_EQ(Result::NO_ERROR, execution.setInput(idx, buffer, s));
+            });
+
+            // Go through all typed outputs
+            resize_accordingly(golden, test);
+            for_all(test, [&execution](int idx, void* p, size_t s) {
+                void* buffer = s == 0 ? nullptr : p;
+                ASSERT_EQ(Result::NO_ERROR, execution.setOutput(idx, buffer, s));
+            });
+        }
+
         Result r = execution.compute();
         ASSERT_EQ(Result::NO_ERROR, r);
 
-        NNTRACE_APP_SWITCH(NNTRACE_PHASE_RESULTS, "executeWithCompilation example");
-        // Dump all outputs for the slicing tool
-        if (dumpToFile) {
-            s << "output" << exampleNo << " = {\n";
-            printAll(s, test);
-            // all outputs are done
-            s << "}\n";
+        {
+            NNTRACE_APP(NNTRACE_PHASE_RESULTS, "executeWithCompilation example");
+            // Dump all outputs for the slicing tool
+            if (dumpToFile) {
+                s << "output" << exampleNo << " = {\n";
+                printAll(s, test);
+                // all outputs are done
+                s << "}\n";
+            }
+
+            // Filter out don't cares
+            MixedTyped filteredGolden = filter(golden, isIgnored);
+            MixedTyped filteredTest = filter(test, isIgnored);
+            // We want "close-enough" results for float
+
+            compare(filteredGolden, filteredTest, fpRange);
         }
-
-        // Filter out don't cares
-        MixedTyped filteredGolden = filter(golden, isIgnored);
-        MixedTyped filteredTest = filter(test, isIgnored);
-        // We want "close-enough" results for float
-
-        compare(filteredGolden, filteredTest, fpRange);
         exampleNo++;
     }
 }

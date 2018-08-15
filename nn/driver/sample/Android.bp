@@ -18,7 +18,8 @@
 cc_defaults {
     name: "NeuralNetworksSampleDriver_defaults",
     defaults: ["neuralnetworks_defaults"],
-    openmp: true,
+    // b/109953668, disable OpenMP
+    // openmp: true,
     srcs: [
         "SampleDriver.cpp",
     ],
