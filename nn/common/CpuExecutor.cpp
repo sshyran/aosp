@@ -23,7 +23,10 @@
 #include "Tracing.h"
 
 #include "Eigen/Core"
+// b/109953668, disable OpenMP
+#ifdef NNAPI_OPENMP
 #include <omp.h>
+#endif  // NNAPI_OPENMP
 #include <sys/mman.h>
 
 namespace android {
@@ -201,7 +204,10 @@ int CpuExecutor::run(const V1_1::Model& model, const Request& request,
     VLOG(CPUEXE) << "CpuExecutor::run() with request("
                  << SHOW_IF_DEBUG(toString(request)) << ")";
 
+    // b/109953668, disable OpenMP
+#ifdef NNAPI_OPENMP
     ScopedOpenmpSettings openMpSettings;
+#endif  // NNAPI_OPENMP
 
     mModel = &model;
     mRequest = &request; // TODO check if mRequest is needed
@@ -1537,6 +1543,8 @@ int CpuExecutor::executeOperation(const Operation& operation) {
     return ANEURALNETWORKS_NO_ERROR;
 }
 
+// b/109953668, disable OpenMP
+#ifdef NNAPI_OPENMP
 ScopedOpenmpSettings::ScopedOpenmpSettings() {
     mBlocktimeInitial = kmp_get_blocktime();
     kmp_set_blocktime(1);  // ms
@@ -1562,7 +1570,6 @@ ScopedOpenmpSettings::~ScopedOpenmpSettings() {
     Eigen::setNbThreads(mMaxThreadsInitial);
 #endif
 }
-
-
+#endif  // NNAPI_OPENMP
 } // namespace nn
 } // namespace android

@@ -437,7 +437,7 @@ int ANeuralNetworksExecution_create(ANeuralNetworksCompilation* compilation,
 }
 
 void ANeuralNetworksExecution_free(ANeuralNetworksExecution* execution) {
-    NNTRACE_RT(NNTRACE_PHASE_TERMINATION, "ANeuralNetworksExecution_free");
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_free");
     // TODO specification says that an execution-in-flight can be deleted
     // No validation.  Free of nullptr is valid.
     ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
@@ -539,7 +539,7 @@ int ANeuralNetworksEvent_wait(ANeuralNetworksEvent* event) {
 }
 
 void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) {
-    NNTRACE_RT(NNTRACE_PHASE_TERMINATION, "ANeuralNetworksEvent_free");
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksEvent_free");
     // No validation.  Free of nullptr is valid.
     if (event) {
         sp<ExecutionCallback>* e = reinterpret_cast<sp<ExecutionCallback>*>(event);
