@@ -47,7 +47,8 @@ cc_library_static {
     defaults: ["neuralnetworks_defaults"],
     host_supported: false,
     vendor_available: true,
-    openmp: true,
+    // b/109953668, disable OpenMP
+    // openmp: true,
     export_include_dirs: ["include"],
 
     srcs: [
