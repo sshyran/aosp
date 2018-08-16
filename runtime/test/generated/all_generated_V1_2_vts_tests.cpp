@@ -391,6 +391,42 @@ TEST_F(NeuralnetworksHidlTest, expand_dims_int32_4) {
                            expand_dims::examples_int32_4);
 }
 
+// Generated from: heatmap_max_keypoint.mod.py.
+namespace heatmap_max_keypoint {
+// Generated heatmap_max_keypoint test
+#include "examples/heatmap_max_keypoint.example.cpp"
+// Generated model constructor
+#include "vts_models/heatmap_max_keypoint.model.cpp"
+} // namespace heatmap_max_keypoint
+
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel,
+                           heatmap_max_keypoint::is_ignored,
+                           heatmap_max_keypoint::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_relaxed) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_relaxed,
+                           heatmap_max_keypoint::is_ignored_relaxed,
+                           heatmap_max_keypoint::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_2) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_2,
+                           heatmap_max_keypoint::is_ignored_2,
+                           heatmap_max_keypoint::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_relaxed_2) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_relaxed_2,
+                           heatmap_max_keypoint::is_ignored_relaxed_2,
+                           heatmap_max_keypoint::examples_relaxed_2);
+}
+
 // Generated from: lsh_projection_3_relaxed.mod.py.
 namespace lsh_projection_3_relaxed {
 // Generated lsh_projection_3_relaxed test

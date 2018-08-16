@@ -1530,6 +1530,27 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                    reinterpret_cast<float*>(out.buffer), outShape);
             }
         } break;
+        case OperationType::HEATMAP_MAX_KEYPOINT: {
+            if (!allParametersPresent(2, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& heatmap = mOperands[ins[0]];
+            const RunTimeOperandInfo& boxes = mOperands[ins[1]];
+
+            RunTimeOperandInfo& out = mOperands[outs[0]];
+            Shape outShape = out.shape();
+
+            if (heatmap.type == OperandType::TENSOR_FLOAT32) {
+                success = heatmapMaxKeypointPrepare(heatmap.shape(),
+                                                    reinterpret_cast<const float*>(boxes.buffer),
+                                                    boxes.shape(), &outShape) &&
+                          setInfoAndAllocateIfNeeded(&out, outShape) &&
+                          heatmapMaxKeypoint(
+                                  reinterpret_cast<const float*>(heatmap.buffer), heatmap.shape(),
+                                  reinterpret_cast<const float*>(boxes.buffer), boxes.shape(),
+                                  reinterpret_cast<float*>(out.buffer), outShape);
+            }
+        } break;
         default:
             nnAssert(false);
             break;
