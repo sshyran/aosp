@@ -294,6 +294,9 @@ bool splitPrepare(const Shape& input, int32_t axis, int32_t numOutputs, std::vec
 bool roiAlignPrepare(const Shape& input, const float* roiData, const Shape& roiShape,
                      const int32_t* outputShapeData, const Shape& outputShapeShape,
                      const float spatialScale, Shape* output);
+
+bool heatmapMaxKeypointPrepare(const Shape& heatmapShape, const float* boxesData,
+                               const Shape& boxesShape, Shape* output);
 } // namespace nn
 } // namespace android
 
