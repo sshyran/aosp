@@ -1933,6 +1933,36 @@ typedef enum {
     ANEURALNETWORKS_GREATER = 53,
     ANEURALNETWORKS_GREATER_EQUAL = 54,
     ANEURALNETWORKS_GROUPED_CONV_2D = 55,
+
+    /**
+     * Localize the maximum keypoints from heatmaps.
+     *
+     * This operation approximates the accurate maximum keypoint scores and
+     * indices after bicubic upscaling by using Taylor expansion up to the
+     * quadratic term.
+     *
+     * The bounding box is represented by its upper-left corner coordinate
+     * (x1,y1) and lower-right corner coordinate (x2,y2) in the original image.
+     * A valid bounding box should satisfy x1 < x2 and y1 < y2.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Inputs:
+     * * 0: A 4-D Tensor of shape
+     *      [num_boxes, heatmap_size, heatmap_size, num_keypoints],
+     *      specifying the heatmaps, the height and width of heatmaps should
+     *      be the same, and must be greater than or equal to 2.
+     * * 1: A 2-D Tensor of shape [num_boxes, 4], specifying the bounding boxes,
+     *      each with format [x1, y1, x2, y2].
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0, with shape
+     *      [num_boxes, num_keypoints, 3], specifying the location and score of
+     *      the keypoints, each with format [keypoint_x, keypoint_y, score].
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT = 56,
     ANEURALNETWORKS_LESS = 57,
     ANEURALNETWORKS_LESS_EQUAL = 58,
