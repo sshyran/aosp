@@ -991,5 +991,34 @@ bool roiAlignPrepare(const Shape& input, const float* roiData, const Shape& roiS
     return true;
 }
 
+bool heatmapMaxKeypointPrepare(const Shape& heatmapShape, const float* boxesData,
+                               const Shape& boxesShape, Shape* output) {
+    uint32_t numBoxes = getSizeOfDimension(heatmapShape, 0);
+    uint32_t heatmapSize = getSizeOfDimension(heatmapShape, 1);
+    uint32_t numKeypoints = getSizeOfDimension(heatmapShape, 3);
+    uint32_t boxInfoLength = getSizeOfDimension(boxesShape, 1);
+
+    NN_OPS_CHECK(getNumberOfDimensions(heatmapShape) == 4);
+    NN_OPS_CHECK(getNumberOfDimensions(boxesShape) == 2);
+
+    NN_OPS_CHECK(getSizeOfDimension(heatmapShape, 2) == heatmapSize);
+    NN_OPS_CHECK(heatmapSize >= 2);
+
+    NN_OPS_CHECK(getSizeOfDimension(boxesShape, 0) == numBoxes);
+    NN_OPS_CHECK(boxInfoLength == 4);
+
+    const float* boxesDataEnd = boxesData + numBoxes * boxInfoLength;
+    for (const float* boxInfo = boxesData; boxInfo < boxesDataEnd; boxInfo += boxInfoLength) {
+        NN_OPS_CHECK(boxInfo[0] < boxInfo[2]);
+        NN_OPS_CHECK(boxInfo[1] < boxInfo[3]);
+    }
+
+    output->type = heatmapShape.type;
+    output->dimensions = {numBoxes, numKeypoints, 3};
+    output->offset = heatmapShape.offset;
+    output->scale = heatmapShape.scale;
+
+    return true;
+}
 } // namespace nn
 } // namespace android
