@@ -35,12 +35,15 @@
 //
 // For an overview and introduction, please refer to the "NNAPI Systrace design
 // and HOWTO" (internal Docs for now). This header doesn't try to replicate all
-// the information in that document.
+// the information in that document. For the contract between traces in code and
+// the statistics created by the systrace parser, see
+// tools/systrace-parser/contract-between-code-and-parser.txt.
 //
 // Glossary:
 // - Phase: stage in processing (e.g., Preparation, Compilation, Execution);
 //   Overall phase nests rest, Execution nests Input/Output, Transformation,
-//   Computation and Results - otherwise not nested (Initialization phase
+//   Computation and Results; optionally Executions can be nested in a
+//   Warmup and Benchmark - otherwise not nested (Initialization phase
 //   functions may occur inside other phases but will be counted out during
 //   analysis). Nested phases (other than Initialization) are analysed as a
 //   breakdown of the parent phase.
@@ -123,8 +126,11 @@
 
 // Tracing buckets - for calculating timing summaries over.
 //
-// Phases
-#define NNTRACE_PHASE_OVERALL "PO"      // Overall program, e.g., one benchmark case
+// Application-only phases
+#define NNTRACE_PHASE_OVERALL   "PO"    // Overall program, e.g., one benchmark case
+#define NNTRACE_PHASE_WARMUP    "PWU"   // Warmup (nesting multiple executions)
+#define NNTRACE_PHASE_BENCHMARK "PBM"   // Benchmark (nesting multiple executions)
+// Main phases, usable by all layers
 #define NNTRACE_PHASE_INITIALIZATION "PI" // Initialization - not related to a model
 #define NNTRACE_PHASE_PREPARATION "PP"  // Model construction
 #define NNTRACE_PHASE_COMPILATION "PC"  // Model compilation
