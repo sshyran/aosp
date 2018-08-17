@@ -1932,6 +1932,107 @@ typedef enum {
     ANEURALNETWORKS_GENERATE_PROPOSALS = 52,
     ANEURALNETWORKS_GREATER = 53,
     ANEURALNETWORKS_GREATER_EQUAL = 54,
+
+    /**
+     * Performs a grouped 2-D convolution operation.
+     *
+     * Given an input tensor of shape [batches, height, width, depth_in] and a
+     * filter tensor of shape [depth_out, filter_height, filter_width, depth_group]
+     * containing depth_out convolutional filters of depth depth_group, GROUPED_CONV
+     * applies a group of different filters to each input channel group, then
+     * concatenates the results together.
+     *
+     * Specifically, the input channels are divided into num_groups groups, each with
+     * depth depth_group, i.e. depth_in = num_groups * depth_group. The convolutional
+     * filters are also divided into num_groups groups, i.e. depth_out is divisible
+     * by num_groups. GROUPED_CONV applies each group of filters to the corresponding
+     * input channel group, and the result are concatenated together.
+     *
+     * The output dimensions are functions of the filter dimensions, stride, and
+     * padding.
+     *
+     * The values in the output tensor are computed as:
+     *
+     *     output[b, i, j, g * channel_multiplier + q] =
+     *         sum_{di, dj, dk} (
+     *             input[b, strides[1] * i + di, strides[2] * j + dj,
+     *                   g * depth_group + dk] *
+     *             filter[g * channel_multiplier + q, di, dj, dk]
+     *         ) + bias[channel]
+     *
+     * where channel_multiplier = depth_out / num_groups
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: 4, with "NHWC" data layout.
+     *
+     * Both explicit padding and implicit padding are supported.
+     *
+     * Inputs (explicit padding):
+     * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
+     *      specifying the input, where depth_in = num_groups * depth_group.
+     * * 1: A 4-D tensor, of shape
+     *      [depth_out, filter_height, filter_width, depth_group], specifying
+     *      the filter, where depth_out must be divisible by num_groups.
+     * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
+     *      tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the bias should
+     *      also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}. For input tensor
+     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias should be
+     *      of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of 0 and
+     *      bias_scale == input_scale * filter_scale.
+     * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
+     *      the left, in the ‘width’ dimension.
+     * * 4: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
+     *      the right, in the ‘width’ dimension.
+     * * 5: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
+     *      the top, in the ‘height’ dimension.
+     * * 6: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
+     *      the bottom, in the ‘height’ dimension.
+     * * 7: An {@link ANEURALNETWORKS_INT32} scalar, specifying the stride when
+     *      walking through input in the ‘width’ dimension.
+     * * 8: An {@link ANEURALNETWORKS_INT32} scalar, specifying the stride when
+     *      walking through input in the ‘height’ dimension.
+     * * 9: An {@link ANEURALNETWORKS_INT32} scalar, specifying the number of
+            groups.
+     * * 10: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
+     *       {@link FuseCode} values. Specifies the activation to
+     *       invoke on the result.
+     *
+     * Inputs (implicit padding):
+     * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
+     *      specifying the input, where depth_in = num_groups * depth_group.
+     * * 1: A 4-D tensor, of shape
+     *      [depth_out, filter_height, filter_width, depth_group], specifying
+     *      the filter, where depth_out must be divisible by num_groups.
+     * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
+     *      tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the bias should
+     *      also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}. For input tensor
+     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias should be
+     *      of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of 0 and
+     *      bias_scale == input_scale * filter_scale.
+     * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the implicit
+     *      padding scheme, has to be one of the
+     *      {@link PaddingCode} values.
+     * * 4: An {@link ANEURALNETWORKS_INT32} scalar, specifying the stride when
+     *      walking through input in the ‘width’ dimension.
+     * * 5: An {@link ANEURALNETWORKS_INT32} scalar, specifying the stride when
+     *      walking through input in the ‘height’ dimension.
+     * * 6: An {@link ANEURALNETWORKS_INT32} scalar, specifying the number of
+     *      groups.
+     * * 7: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
+     *      {@link FuseCode} values. Specifies the activation to
+     *      invoke on the result.
+     *
+     * Outputs:
+     * * 0: The output 4-D tensor, of shape
+     *      [batches, out_height, out_width, depth_out]. For output tensor of
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the following condition
+     *      must be satisfied: output_scale > input_scale * filter_scale.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_GROUPED_CONV_2D = 55,
 
     /**

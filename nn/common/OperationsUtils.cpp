@@ -1020,5 +1020,41 @@ bool heatmapMaxKeypointPrepare(const Shape& heatmapShape, const float* boxesData
 
     return true;
 }
+
+bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
+                        int32_t padding_left, int32_t padding_right, int32_t padding_top,
+                        int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                        int32_t numGroups, Shape* output) {
+    NN_OPS_CHECK(input.type == filter.type);
+    if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+        NN_OPS_CHECK(bias.type == OperandType::TENSOR_INT32);
+    } else {
+        NN_OPS_CHECK(input.type == bias.type);
+    }
+    NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
+    NN_OPS_CHECK(getNumberOfDimensions(filter) == 4);
+    NN_OPS_CHECK(getNumberOfDimensions(bias) == 1);
+
+    NN_OPS_CHECK(getSizeOfDimension(filter, 0) == getSizeOfDimension(bias, 0));
+
+    NN_OPS_CHECK(getSizeOfDimension(filter, 3) * numGroups == getSizeOfDimension(input, 3));
+    NN_OPS_CHECK(getSizeOfDimension(filter, 0) % numGroups == 0);
+
+    uint32_t channels_out = getSizeOfDimension(filter, 0);
+    uint32_t width = getSizeOfDimension(input, 2);
+    uint32_t height = getSizeOfDimension(input, 1);
+    uint32_t filterWidth = getSizeOfDimension(filter, 2);
+    uint32_t filterHeight = getSizeOfDimension(filter, 1);
+    uint32_t batches = getSizeOfDimension(input, 0);
+
+    uint32_t outWidth =
+            computeOutSize(width, filterWidth, stride_width, padding_left, padding_right);
+    uint32_t outHeight =
+            computeOutSize(height, filterHeight, stride_height, padding_top, padding_bottom);
+
+    output->type = input.type;
+    output->dimensions = {batches, outHeight, outWidth, channels_out};
+    return true;
+}
 } // namespace nn
 } // namespace android
