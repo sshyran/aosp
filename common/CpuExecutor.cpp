@@ -1551,6 +1551,80 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                   reinterpret_cast<float*>(out.buffer), outShape);
             }
         } break;
+        case OperationType::GROUPED_CONV_2D: {
+            const size_t inCount = ins.size();
+            if ((inCount != 11 && inCount != 8) || !allParametersPresent(inCount, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            const RunTimeOperandInfo& filter = mOperands[ins[1]];
+            const RunTimeOperandInfo& bias = mOperands[ins[2]];
+
+            int32_t padding_left, padding_right;
+            int32_t padding_top, padding_bottom;
+            int32_t stride_width, stride_height;
+            int32_t numGroups;
+            int32_t activation;
+
+            if (inCount == 11) {
+                padding_left = getScalarData<int32_t>(mOperands[ins[3]]);
+                padding_right = getScalarData<int32_t>(mOperands[ins[4]]);
+                padding_top = getScalarData<int32_t>(mOperands[ins[5]]);
+                padding_bottom = getScalarData<int32_t>(mOperands[ins[6]]);
+                stride_width = getScalarData<int32_t>(mOperands[ins[7]]);
+                stride_height = getScalarData<int32_t>(mOperands[ins[8]]);
+                numGroups = getScalarData<int32_t>(mOperands[ins[9]]);
+                activation = getScalarData<int32_t>(mOperands[ins[10]]);
+            } else {
+                int32_t padding_implicit = getScalarData<int32_t>(mOperands[ins[3]]);
+                stride_width = getScalarData<int32_t>(mOperands[ins[4]]);
+                stride_height = getScalarData<int32_t>(mOperands[ins[5]]);
+                numGroups = getScalarData<int32_t>(mOperands[ins[6]]);
+                activation = getScalarData<int32_t>(mOperands[ins[7]]);
+
+                Shape inputShape = input.shape();
+                Shape filterShape = filter.shape();
+                int32_t input_width = getSizeOfDimension(inputShape, 2);
+                int32_t input_height = getSizeOfDimension(inputShape, 1);
+                int32_t filter_width = getSizeOfDimension(filterShape, 2);
+                int32_t filter_height = getSizeOfDimension(filterShape, 1);
+                calculateExplicitPadding(input_width, stride_width, filter_width, padding_implicit,
+                                         &padding_left, &padding_right);
+                calculateExplicitPadding(input_height, stride_height, filter_height,
+                                         padding_implicit, &padding_top, &padding_bottom);
+            }
+
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outShape = output.shape();
+
+            if (input.type == OperandType::TENSOR_FLOAT32) {
+                success =
+                        groupedConvPrepare(input.shape(), filter.shape(), bias.shape(),
+                                           padding_left, padding_right, padding_top, padding_bottom,
+                                           stride_width, stride_height, numGroups, &outShape) &&
+                        setInfoAndAllocateIfNeeded(&output, outShape) &&
+                        groupedConvFloat32(
+                                reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                reinterpret_cast<const float*>(filter.buffer), filter.shape(),
+                                reinterpret_cast<const float*>(bias.buffer), bias.shape(),
+                                padding_left, padding_right, padding_top, padding_bottom,
+                                stride_width, stride_height, numGroups, activation,
+                                reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                success =
+                        groupedConvPrepare(input.shape(), filter.shape(), bias.shape(),
+                                           padding_left, padding_right, padding_top, padding_bottom,
+                                           stride_width, stride_height, numGroups, &outShape) &&
+                        setInfoAndAllocateIfNeeded(&output, outShape) &&
+                        groupedConvQuant8(
+                                reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
+                                reinterpret_cast<const uint8_t*>(filter.buffer), filter.shape(),
+                                reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
+                                padding_left, padding_right, padding_top, padding_bottom,
+                                stride_width, stride_height, numGroups, activation,
+                                reinterpret_cast<uint8_t*>(output.buffer), outShape);
+            }
+        } break;
         default:
             nnAssert(false);
             break;
