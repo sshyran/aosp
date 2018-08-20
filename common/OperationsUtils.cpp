@@ -1056,5 +1056,18 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
     output->dimensions = {batches, outHeight, outWidth, channels_out};
     return true;
 }
+
+bool channelShufflePrepare(const Shape& input, int32_t numGroups, Shape* output) {
+    uint32_t numDimensions = getNumberOfDimensions(input);
+
+    NN_OPS_CHECK(numGroups > 0);
+    NN_OPS_CHECK(getSizeOfDimension(input, numDimensions - 1) % numGroups == 0);
+
+    output->type = input.type;
+    output->dimensions = input.dimensions;
+    output->offset = input.offset;
+    output->scale = input.scale;
+    return true;
+}
 } // namespace nn
 } // namespace android
