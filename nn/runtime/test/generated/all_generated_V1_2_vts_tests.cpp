@@ -271,6 +271,56 @@ TEST_F(NeuralnetworksHidlTest, argmin_3_float) {
                            argmin_3_float::examples);
 }
 
+// Generated from: channel_shuffle.mod.py.
+namespace channel_shuffle {
+// Generated channel_shuffle test
+#include "examples/channel_shuffle.example.cpp"
+// Generated model constructor
+#include "vts_models/channel_shuffle.model.cpp"
+} // namespace channel_shuffle
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel,
+                           channel_shuffle::is_ignored,
+                           channel_shuffle::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed,
+                           channel_shuffle::is_ignored_relaxed,
+                           channel_shuffle::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8,
+                           channel_shuffle::is_ignored_quant8,
+                           channel_shuffle::examples_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_2) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_2,
+                           channel_shuffle::is_ignored_2,
+                           channel_shuffle::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_2) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_2,
+                           channel_shuffle::is_ignored_relaxed_2,
+                           channel_shuffle::examples_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_2) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_2,
+                           channel_shuffle::is_ignored_quant8_2,
+                           channel_shuffle::examples_quant8_2);
+}
+
 // Generated from: expand_dims.mod.py.
 namespace expand_dims {
 // Generated expand_dims test

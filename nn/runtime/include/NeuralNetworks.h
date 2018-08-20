@@ -1897,6 +1897,39 @@ typedef enum {
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_RNN = 43,
     ANEURALNETWORKS_BOX_WITH_NMS_LIMIT = 44,
     ANEURALNETWORKS_CAST = 45,
+
+    /**
+     * Shuffle the channels of the input tensor.
+     *
+     * Given an input tensor of shape [batches, height, width, num_channels]
+     * and a integer value of num_groups, CHANNEL_SHUFFLE divide the channels
+     * into num_groups groups, and reorganize the channels by grouping channels
+     * with the same index in each group.
+     *
+     * The output is calculated using this formula:
+     *
+     *     output[b, i, j, k * num_groups + g] = input[b, i, j, g * group_size + k]
+     *
+     * where group_size = num_channels / num_groups
+     *
+     * The number of channels must be divisible by num_groups.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: 4, with "NHWC" data layout
+     *
+     * Inputs:
+     * * 0: An 4-D tensor, specifying the tensor to be shuffled.
+     * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the number of
+     *      groups.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} and same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_CHANNEL_SHUFFLE = 46,
     ANEURALNETWORKS_DETECTION_OUTPUT = 47,
     ANEURALNETWORKS_EMBEDDING_LOOKUP_SPARSE = 48,

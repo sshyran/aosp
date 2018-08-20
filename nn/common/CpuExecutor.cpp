@@ -1625,6 +1625,21 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                 reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
+        case OperationType::CHANNEL_SHUFFLE: {
+            if (!allParametersPresent(2, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            const int32_t numGroups = getScalarData<int32_t>(mOperands[ins[1]]);
+
+            RunTimeOperandInfo& out = mOperands[outs[0]];
+            Shape outShape = out.shape();
+
+            success = channelShufflePrepare(input.shape(), numGroups, &outShape) &&
+                      setInfoAndAllocateIfNeeded(&out, outShape) &&
+                      channelShuffleGeneric(input.buffer, input.shape(), numGroups, out.buffer,
+                                            outShape);
+        } break;
         default:
             nnAssert(false);
             break;
