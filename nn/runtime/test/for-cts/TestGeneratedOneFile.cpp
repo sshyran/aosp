@@ -343,6 +343,7 @@
 #include "../generated/tests/argmin_2_int32.mod.py.cpp"
 #include "../generated/tests/argmin_2_quant8.mod.py.cpp"
 #include "../generated/tests/argmin_3_float.mod.py.cpp"
+#include "../generated/tests/channel_shuffle.mod.py.cpp"
 #include "../generated/tests/expand_dims.mod.py.cpp"
 #include "../generated/tests/grouped_conv2d.mod.py.cpp"
 #include "../generated/tests/heatmap_max_keypoint.mod.py.cpp"
