@@ -489,6 +489,56 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_quant8_5) {
                            avg_pool_v1_2::examples_nchw_quant8_5);
 }
 
+// Generated from: axis_aligned_bbox_transform.mod.py.
+namespace axis_aligned_bbox_transform {
+// Generated axis_aligned_bbox_transform test
+#include "examples/axis_aligned_bbox_transform.example.cpp"
+// Generated model constructor
+#include "vts_models/axis_aligned_bbox_transform.model.cpp"
+} // namespace axis_aligned_bbox_transform
+
+TEST_F(NeuralnetworksHidlTest, axis_aligned_bbox_transform) {
+  generated_tests::Execute(device,
+                           axis_aligned_bbox_transform::createTestModel,
+                           axis_aligned_bbox_transform::is_ignored,
+                           axis_aligned_bbox_transform::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, axis_aligned_bbox_transform_relaxed) {
+  generated_tests::Execute(device,
+                           axis_aligned_bbox_transform::createTestModel_relaxed,
+                           axis_aligned_bbox_transform::is_ignored_relaxed,
+                           axis_aligned_bbox_transform::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, axis_aligned_bbox_transform_2) {
+  generated_tests::Execute(device,
+                           axis_aligned_bbox_transform::createTestModel_2,
+                           axis_aligned_bbox_transform::is_ignored_2,
+                           axis_aligned_bbox_transform::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, axis_aligned_bbox_transform_relaxed_2) {
+  generated_tests::Execute(device,
+                           axis_aligned_bbox_transform::createTestModel_relaxed_2,
+                           axis_aligned_bbox_transform::is_ignored_relaxed_2,
+                           axis_aligned_bbox_transform::examples_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, axis_aligned_bbox_transform_single_batch) {
+  generated_tests::Execute(device,
+                           axis_aligned_bbox_transform::createTestModel_single_batch,
+                           axis_aligned_bbox_transform::is_ignored_single_batch,
+                           axis_aligned_bbox_transform::examples_single_batch);
+}
+
+TEST_F(NeuralnetworksHidlTest, axis_aligned_bbox_transform_single_batch_relaxed) {
+  generated_tests::Execute(device,
+                           axis_aligned_bbox_transform::createTestModel_single_batch_relaxed,
+                           axis_aligned_bbox_transform::is_ignored_single_batch_relaxed,
+                           axis_aligned_bbox_transform::examples_single_batch_relaxed);
+}
+
 // Generated from: batch_to_space_v1_2.mod.py.
 namespace batch_to_space_v1_2 {
 // Generated batch_to_space_v1_2 test
@@ -4831,6 +4881,70 @@ TEST_F(NeuralnetworksHidlTest, roi_align_nchw_relaxed_3) {
                            roi_align::createTestModel_nchw_relaxed_3,
                            roi_align::is_ignored_nchw_relaxed_3,
                            roi_align::examples_nchw_relaxed_3);
+}
+
+// Generated from: rotated_bbox_transform.mod.py.
+namespace rotated_bbox_transform {
+// Generated rotated_bbox_transform test
+#include "examples/rotated_bbox_transform.example.cpp"
+// Generated model constructor
+#include "vts_models/rotated_bbox_transform.model.cpp"
+} // namespace rotated_bbox_transform
+
+TEST_F(NeuralnetworksHidlTest, rotated_bbox_transform) {
+  generated_tests::Execute(device,
+                           rotated_bbox_transform::createTestModel,
+                           rotated_bbox_transform::is_ignored,
+                           rotated_bbox_transform::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, rotated_bbox_transform_relaxed) {
+  generated_tests::Execute(device,
+                           rotated_bbox_transform::createTestModel_relaxed,
+                           rotated_bbox_transform::is_ignored_relaxed,
+                           rotated_bbox_transform::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, rotated_bbox_transform_2) {
+  generated_tests::Execute(device,
+                           rotated_bbox_transform::createTestModel_2,
+                           rotated_bbox_transform::is_ignored_2,
+                           rotated_bbox_transform::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, rotated_bbox_transform_relaxed_2) {
+  generated_tests::Execute(device,
+                           rotated_bbox_transform::createTestModel_relaxed_2,
+                           rotated_bbox_transform::is_ignored_relaxed_2,
+                           rotated_bbox_transform::examples_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, rotated_bbox_transform_3) {
+  generated_tests::Execute(device,
+                           rotated_bbox_transform::createTestModel_3,
+                           rotated_bbox_transform::is_ignored_3,
+                           rotated_bbox_transform::examples_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, rotated_bbox_transform_relaxed_3) {
+  generated_tests::Execute(device,
+                           rotated_bbox_transform::createTestModel_relaxed_3,
+                           rotated_bbox_transform::is_ignored_relaxed_3,
+                           rotated_bbox_transform::examples_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, rotated_bbox_transform_single_batch) {
+  generated_tests::Execute(device,
+                           rotated_bbox_transform::createTestModel_single_batch,
+                           rotated_bbox_transform::is_ignored_single_batch,
+                           rotated_bbox_transform::examples_single_batch);
+}
+
+TEST_F(NeuralnetworksHidlTest, rotated_bbox_transform_single_batch_relaxed) {
+  generated_tests::Execute(device,
+                           rotated_bbox_transform::createTestModel_single_batch_relaxed,
+                           rotated_bbox_transform::is_ignored_single_batch_relaxed,
+                           rotated_bbox_transform::examples_single_batch_relaxed);
 }
 
 // Generated from: softmax_v1_2.mod.py.
