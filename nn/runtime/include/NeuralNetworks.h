@@ -144,8 +144,10 @@ typedef enum {
      *
      * The values in the output tensor are computed as:
      *
-     *     output[batch, row, col, channel] =
-     *         sum_{i, j}(input[batch, row + i, col + j, channel]) / sum(1)
+     *     output[b, i, j, channel] =
+     *         sum_{di, dj}(
+     *             input[b, strides[1] * i + di, strides[2] * j + dj, channel]
+     *         ) / sum(1)
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -245,12 +247,11 @@ typedef enum {
      *
      * The values in the output tensor are computed as:
      *
-     *     output[batch, row, col, channel] =
-     *         sum_{i, j} (
-     *             input[batch, row + i, col + j, k] *
-     *             filter[channel, row + i, col + j, k] +
-     *             bias[channel]
-     *         )
+     *     output[b, i, j, channel] =
+     *         sum_{di, dj, k} (
+     *             input[b, strides[1] * i + di, strides[2] * j + dj, k] *
+     *             filter[channel, di, dj, k]
+     *         ) + bias[channel]
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -341,7 +342,7 @@ typedef enum {
      *         sum_{di, dj} (
      *             input[b, strides[1] * i + di, strides[2] * j + dj, k] *
      *             filter[1, di, dj, k * channel_multiplier + q]
-     *         )
+     *         ) + bias[k * channel_multiplier + q]
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -659,8 +660,8 @@ typedef enum {
      *
      * The values in the output tensor are computed as:
      *
-     *     output[batch, row, col, channel] =
-     *         sqrt(sum_{i, j} pow(input[batch, row + i, col + j, channel], 2) /
+     *     output[b, i, j, c] =
+     *         sqrt(sum_{di, dj} pow(input[b, strides[1] * i + di, strides[2] * j + dj, c], 2) /
      *              sum(1))
      *
      * Supported tensor {@link OperandCode}:
@@ -1023,8 +1024,10 @@ typedef enum {
      *
      * The values in the output tensor are computed as:
      *
-     *     output[batch, row, col, channel] =
-     *         max_{i, j} (input[batch, row + i, col + j, channel])
+     *     output[b, i, j, channel] =
+     *         max_{di, dj} (
+     *             input[b, strides[1] * i + di, strides[2] * j + dj, channel]
+     *         )
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
