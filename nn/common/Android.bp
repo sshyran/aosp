@@ -69,6 +69,7 @@ cc_library_static {
         "operations/ExpandDims.cpp",
         "operations/FullyConnected.cpp",
         "operations/Gather.cpp",
+        "operations/GenerateProposals.cpp",
         "operations/GroupedConv2D.cpp",
         "operations/HashtableLookup.cpp",
         "operations/HeatmapMaxKeypoint.cpp",
