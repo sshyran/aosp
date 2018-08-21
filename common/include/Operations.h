@@ -296,6 +296,21 @@ bool transposeConvQuant8(const uint8_t* inputData, const Shape& inputShape,
 
 bool pReluGeneric(const uint8_t* inputData, const Shape& inputShape, const uint8_t* alphaData,
                   const Shape& alphaShape, uint8_t* outputData, const Shape& outputShape);
+
+bool axisAlignedBBoxTransform(const float* roiData, const Shape& roiShape,
+                              const float* bboxDeltasData, const Shape& bboxDeltasShape,
+                              const float* imageInfoData, const Shape& imageInfoDataShape,
+                              const float* weightsData, const Shape& weightsDataShape,
+                              bool applyScale, float* outputData, const Shape& outputShape,
+                              int32_t* batchSplitData, const Shape& batchSplitShape);
+
+bool rotatedBBoxTransform(const float* roiData, const Shape& roiShape, const float* bboxDeltasData,
+                          const Shape& bboxDeltasShape, const float* imageInfoData,
+                          const Shape& imageInfoDataShape, const float* weightsData,
+                          const Shape& weightsDataShape, bool applyScale, bool angleBoundOn,
+                          int32_t angleBoundLow, int32_t angleBoundHigh, float clipAngleThreshold,
+                          float* outputData, const Shape& outputShape, int32_t* batchSplitData,
+                          const Shape& batchSplitShape);
 } // namespace nn
 } // namespace android
 #endif // ANDROID_ML_NN_COMMON_OPERATIONS_H

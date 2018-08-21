@@ -2003,6 +2003,40 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
+        case ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM: {
+            if (inputCount != 5 || outputCount != 2) {
+                logInvalidInOutNumber(5, 2);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                               OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                               OperandType::BOOL};
+            outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_INT32};
+            *minSupportedHalVersion = HalVersion::V1_2;
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
+        case ANEURALNETWORKS_ROTATED_BBOX_TRANSFORM: {
+            if (inputCount != 9 || outputCount != 2) {
+                logInvalidInOutNumber(9, 2);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                               OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                               OperandType::BOOL,           OperandType::BOOL,
+                               OperandType::INT32,          OperandType::INT32,
+                               OperandType::FLOAT32};
+            outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_INT32};
+            *minSupportedHalVersion = HalVersion::V1_2;
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
         default:
             return ANEURALNETWORKS_BAD_DATA;
     }
