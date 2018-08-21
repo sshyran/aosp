@@ -150,7 +150,7 @@ class SingleThreadCallTree(object):
               (layer == LAYER_UTILITY) or
               (layer == prev_layer) or
               (layer == LAYER_IGNORE) or
-              (layer in layer_order[prev_layer]) or
+              (layer in layer_order.get(prev_layer, [])) or
               node.subtract), self.debugstring
       for c in node.children:
         recurse(c, indent + '  ')
