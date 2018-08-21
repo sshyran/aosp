@@ -19,6 +19,8 @@ def get_trace_part(filename):
       trace.append([line, lineno])
   return trace
 
+MATCHER = re.compile(r"^\s*([^ ].{1,15})-(\d+)\s+\(\s*([-0-9]+)\) .* (\d+\.\d+): tracing_mark_write: ([BE].*)$")
+
 def parse_trace_part(trace):
   """ Takes a string containing the text trace form systrace, parses the rows
       and selects which threads we are interested in.
@@ -38,17 +40,17 @@ def parse_trace_part(trace):
   #  <...>-756 ( 756) [000] ...1   143.140553: tracing_mark_write: B|756|HIDL::IDevice::prepa
   #  <...>-5149  (-----) [001] ...1   143.149856: tracing_mark_write: B|756|[NN_LCC_PE][optim
   #    HwBinder:784_1-5236  (  784) [001] ...1   397.528915: tracing_mark_write: B|784|HIDL::
+  #    GLThread 35-1739  ( 1500) [001] ...1   277.001798: tracing_mark_write: B|1500|HIDL::IMapper::importBuffer::passthrough
   # Notes:
   #    - systrace enter/exit marks are per PID, which is really a thread id on Linux
   #    - TGIDs identify processes
   #
-  matcher = re.compile(r"^\s*([^ ]+)-(\d+)\s+\(\s*([-0-9]+)\) .* (\d+\.\d+): tracing_mark_write: ([BE].*)$")
   mark_matcher = re.compile(r"([BE])\|(\d+).*")
   tracked_pids = {}
   driver_tgids = {}
   parsed = []
   for [line, lineno] in trace:
-    m = matcher.match(line)
+    m = MATCHER.match(line)
     if not m:
       # Check parsing doesn't discard interesting lines
       assert not "HIDL::IDevice" in line, line
