@@ -21,8 +21,8 @@
 #include "Operations.h"
 #include "CpuOperationUtils.h"
 
-#include "tensorflow/contrib/lite/kernels/internal/optimized/optimized_ops.h"
-#include "tensorflow/contrib/lite/kernels/internal/reference/reference_ops.h"
+#include "tensorflow/contrib/lite/kernels/internal/optimized/legacy_optimized_ops.h"
+#include "tensorflow/contrib/lite/kernels/internal/reference/legacy_reference_ops.h"
 
 #include "Tracing.h"
 
@@ -66,16 +66,15 @@ bool addFloat32(const float* in1, const Shape& shape1,
         ANDROID_NN_MACRO_DISPATCH(ANDROID_NN_BROADCAST_ADD)
         #undef ANDROID_NN_BROADCAST_ADD
     } else {
-        float output_activation_min, output_activation_max;
-        CalculateActivationRangeFloat(activation, &output_activation_min,
-                                      &output_activation_max);
-
         NNTRACE_COMP_SWITCH("optimized_ops::Add");
-        tflite::optimized_ops::Add(
-                in1, convertShapeToDims(shape1),
-                in2, convertShapeToDims(shape2),
-                output_activation_min, output_activation_max,
-                out, convertShapeToDims(shapeOut));
+        #define ANDROID_NN_ADD(activation)                                               \
+            tflite::optimized_ops::Add<tflite::FusedActivationFunctionType::activation>( \
+                    in1, convertShapeToDims(shape1),                                     \
+                    in2, convertShapeToDims(shape2),                                     \
+                    out, convertShapeToDims(shapeOut))
+
+        ANDROID_NN_MACRO_DISPATCH(ANDROID_NN_ADD)
+        #undef ANDROID_NN_ADD
     }
 
     return true;
@@ -125,15 +124,19 @@ bool addQuant8(const uint8_t* in1, const Shape& shape1,
 
     if (needBroadcast) {
         NNTRACE_COMP_SWITCH("optimized_ops::BroadcastAdd");
-        tflite::optimized_ops::BroadcastAdd(
-                left_shift,
-                in1, convertShapeToDims(shape1),
-                input1_offset, input1_multiplier, input1_shift,
-                in2, convertShapeToDims(shape2),
-                input2_offset, input2_multiplier, input2_shift,
-                output_offset, output_multiplier, output_shift,
-                output_activation_min, output_activation_max,
-                out, convertShapeToDims(shapeOut));
+        #define ANDROID_NN_BROADCAST_ADD(activation)                                              \
+            tflite::optimized_ops::BroadcastAdd<tflite::FusedActivationFunctionType::activation>( \
+                    left_shift,                                                                   \
+                    in1, convertShapeToDims(shape1),                                              \
+                    input1_offset, input1_multiplier, input1_shift,                               \
+                    in2, convertShapeToDims(shape2),                                              \
+                    input2_offset, input2_multiplier, input2_shift,                               \
+                    output_offset, output_multiplier, output_shift,                               \
+                    output_activation_min, output_activation_max,                                 \
+                    out, convertShapeToDims(shapeOut))
+
+        ANDROID_NN_MACRO_DISPATCH(ANDROID_NN_BROADCAST_ADD)
+        #undef ANDROID_NN_BROADCAST_ADD
     } else {
         NNTRACE_COMP_SWITCH("optimized_ops::Add");
         #define ANDROID_NN_NORMAL_ADD(activation)                                        \
@@ -248,26 +251,11 @@ bool subFloat32(const float* in1, const Shape& shape1,
                 int32_t activation,
                 float* out, const Shape& shapeOut) {
     NNTRACE_TRANS("subFloat32");
-    float output_activation_min, output_activation_max;
-    CalculateActivationRangeFloat(activation, &output_activation_min,
-                                  &output_activation_max);
-
-    bool needBroadcast = !SameShape(shape1, shape2);
-    if (needBroadcast) {
-        NNTRACE_COMP_SWITCH("optimized_ops::BroadcastSub");
-        tflite::optimized_ops::BroadcastSub(
-                in1, convertShapeToDims(shape1),
-                in2, convertShapeToDims(shape2),
-                output_activation_min, output_activation_max,
-                out, convertShapeToDims(shapeOut));
-    } else {
-        NNTRACE_COMP_SWITCH("optimized_ops::Sub");
-        tflite::optimized_ops::Sub(
-                in1, convertShapeToDims(shape1),
-                in2, convertShapeToDims(shape2),
-                output_activation_min, output_activation_max,
-                out, convertShapeToDims(shapeOut));
-    }
+    NNTRACE_COMP_SWITCH("optimized_ops::Sub");
+    tflite::optimized_ops::Sub(
+            in1, convertShapeToDims(shape1),
+            in2, convertShapeToDims(shape2),
+            out, convertShapeToDims(shapeOut));
     return true;
 }
 
