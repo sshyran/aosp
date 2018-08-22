@@ -17,7 +17,7 @@
 #include "Operations.h"
 #include "CpuOperationUtils.h"
 
-#include "tensorflow/contrib/lite/kernels/internal/optimized/optimized_ops.h"
+#include "tensorflow/contrib/lite/kernels/internal/optimized/legacy_optimized_ops.h"
 
 #include "Tracing.h"
 
@@ -78,24 +78,24 @@ bool softmaxFloat32(const float* inputData, const Shape& inputShape,
                     const float beta,
                     float* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("softmaxFloat32");
-    tflite::RuntimeShape tflShape;
+    tflite::Dims<4> dim;
     if (getNumberOfDimensions(inputShape) == 2) {
         uint32_t batch_size = getSizeOfDimension(inputShape, 0);
         uint32_t input_size = getNumberOfElements(inputShape) / batch_size;
 
         Shape shapeIn4D;
         shapeIn4D.dimensions = {batch_size, 1, 1, input_size};
-        tflShape = convertShapeToTflshape(shapeIn4D);
+        dim = convertShapeToDims(shapeIn4D);
     } else if (getNumberOfDimensions(inputShape) == 4) {
-        tflShape = convertShapeToTflshape(inputShape);
+        dim = convertShapeToDims(inputShape);
     } else {
         LOG(ERROR) << "only 2D and 4D tensors supported";
         return false;
     }
 
     NNTRACE_COMP_SWITCH("optimized_ops::Softmax");
-    tflite::optimized_ops::Softmax(inputData, tflShape, beta,
-                                   outputData, tflShape);
+    tflite::optimized_ops::Softmax(inputData, dim, beta,
+                                   outputData, dim);
     return true;
 }
 
@@ -176,16 +176,16 @@ bool softmaxQuant8(const uint8_t* inputData, const Shape& inputShape,
                    const float beta,
                    uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("softmaxQuant8");
-    tflite::RuntimeShape tflShape;
+    tflite::Dims<4> dim;
     if (getNumberOfDimensions(inputShape) == 2) {
         uint32_t batch_size = getSizeOfDimension(inputShape, 0);
         uint32_t input_size = getNumberOfElements(inputShape) / batch_size;
 
         Shape shapeIn4D;
         shapeIn4D.dimensions = {batch_size, 1, 1, input_size};
-        tflShape = convertShapeToTflshape(shapeIn4D);
+        dim = convertShapeToDims(shapeIn4D);
     } else if (getNumberOfDimensions(inputShape) == 4) {
-        tflShape = convertShapeToTflshape(inputShape);
+        dim = convertShapeToDims(inputShape);
     } else {
         LOG(ERROR) << "only 2D and 4D tensors supported";
         return false;
@@ -212,9 +212,9 @@ bool softmaxQuant8(const uint8_t* inputData, const Shape& inputShape,
                                                   input_left_shift);
 
     NNTRACE_COMP_SWITCH("optimized_ops::Softmax");
-    tflite::optimized_ops::Softmax(inputData, tflShape, input_multiplier,
+    tflite::optimized_ops::Softmax(inputData, dim, input_multiplier,
                                    input_left_shift, diff_min,
-                                   outputData, tflShape);
+                                   outputData, dim);
     return true;
 }
 
