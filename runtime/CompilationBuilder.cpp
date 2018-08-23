@@ -64,6 +64,10 @@ int CompilationBuilder::finish(const std::vector<std::shared_ptr<Device>>& devic
                 if (!DeviceManager::partitioningAllowsFallback(mPartitioning)) {
                     return n;
                 }
+                if (mModel->hasOEMOperation()) {
+                    LOG(ERROR) << "Because of OEM op cannot fall back to CPU";
+                    return n;
+                }
                 break;
         }
     }
