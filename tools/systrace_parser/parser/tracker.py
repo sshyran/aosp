@@ -63,6 +63,7 @@ class Tracker(object):
     self.items = {}
     self.mytree = SingleThreadCallTree()
     self.begins_and_ends_ms = {}
+    self.la_pe_counts = {}
     self.debugstring = "\n"
 
   def handle_mark(self, time, mark):
@@ -110,6 +111,9 @@ class Tracker(object):
         layer = layer.replace(LAYER_DRIVER, LAYER_CPU)
       else:
         layer = layer.replace(LAYER_CPU, LAYER_DRIVER)
+      if layer == LAYER_APPLICATION and phase == PHASE_EXECUTION:
+        self.la_pe_counts[self.app_phase.current()] = (
+            self.la_pe_counts.get(self.app_phase.current(), 0) + 1)
       self.mytree.push(time, mark, layer, phase, self.app_phase.current(), subtract)
     elif mark[0] == "E":
       node = self.mytree.pop(time)
@@ -122,7 +126,14 @@ class Tracker(object):
         self.begins_and_ends_ms[function] = (self.begins_and_ends_ms.get(function, []) +
                                              [[float(node.start_time_s) * 1000.0,
                                                float(node.end_time_s) * 1000.0]])
+
+  def is_complete(self):
+    """ Checks if we've seen all end tracepoints for the begin tracepoints.
+    """
+    return self.mytree.current.is_root()
+
   def calculate_stats(self):
+    assert self.is_complete()
     self.mytree.remove_dummies()
     self.mytree.copy_subtracted_init_and_wrong_la()
     self.mytree.add_missing_la_nodes()
@@ -136,6 +147,9 @@ class Tracker(object):
       tag = None
       elapsed0 = "DETAIL"
       elapsed1 = node.elapsed_less_subtracted_ms()
+      if elapsed1 is None:
+        raise Exception("Elapsed for {} returned None".format(node.to_str()))
+
       if not node.is_added_detail() and not node.subtract:
         tag = node.app_phase + "_" + layer + "_" + phase
         elapsed0 = elapsed1
@@ -191,7 +205,13 @@ class Tracker(object):
     return self.stats.get(app_phase + "_" + tag, 0.0)
 
   def get_execution_count(self, app_phase):
-    return len(self.get_begins(app_phase, "ANeuralNetworksExecution_create"))
+    # ANeuralNetworksExecution_create is reliable and comes from the runtime,
+    # but not available pre-P
+    count = len(self.get_begins(app_phase, "ANeuralNetworksExecution_create"))
+    if count > 0:
+      return count
+    # Application may have added tracepoints
+    return self.la_pe_counts.get(app_phase, 0)
 
   def get_begins(self, app_phase, function):
     name = app_phase + "::" + function
