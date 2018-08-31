@@ -9,6 +9,7 @@ Used by parser.tracker to gather and interpret the traces for a single thread.
 
 from parser.naming import subphases, layer_order
 from parser.naming import LAYER_APPLICATION, LAYER_RUNTIME, LAYER_UTILITY, LAYER_IGNORE
+from parser.naming import LAYER_IPC
 from parser.naming import PHASE_EXECUTION, PHASE_INITIALIZATION, PHASE_OVERALL, PHASE_UNSPECIFIED
 
 class SingleThreadCallTree(object):
@@ -66,7 +67,7 @@ class SingleThreadCallTree(object):
       elif node.phase() == PHASE_INITIALIZATION and node.parent.phase() != PHASE_INITIALIZATION:
         to_be_subtracted.append(node)
       elif (node.parent and node.parent.layer == LAYER_APPLICATION and
-            node.layer == LAYER_RUNTIME and
+            (node.layer == LAYER_RUNTIME or node.layer == LAYER_IPC) and
             node.parent.phase() != node.phase() and node.parent.phase() != PHASE_OVERALL and
             node.phase() != PHASE_EXECUTION and node.phase() not in subphases[PHASE_EXECUTION]):
         # The application level phase may be wrong, we move the runtime nodes
@@ -109,7 +110,7 @@ class SingleThreadCallTree(object):
     la_to_be_added = []
     def recurse(node):
       if not node.is_added_detail() and not node.subtract:
-        if (node.layer == LAYER_RUNTIME and
+        if ((node.layer == LAYER_RUNTIME or node.layer == LAYER_IPC) and
             # Wrong LA node
             (node.parent.layer == LAYER_APPLICATION and
              node.parent.phase() != PHASE_OVERALL and
