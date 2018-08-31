@@ -7,9 +7,10 @@ from parser.naming import (PHASE_INITIALIZATION, PHASE_PREPARATION, PHASE_COMPIL
                            PHASE_BENCHMARK)
 import json
 import math
+import sys
 
 def print_stats(tracker_map, print_detail=True, total_times=False, per_execution=False,
-                json_output=False, starting_mark=''):
+                json_output=False, starting_mark='', sep=''):
   """ Prints statistics for a single Overall phase as text or json.
 
       For text output:
@@ -35,6 +36,13 @@ def print_stats(tracker_map, print_detail=True, total_times=False, per_execution
   """
   PHASE_EXECUTION_LESS_IO_AND_RESULTS = "PEO"
   phases_to_pick = phases + [PHASE_INPUTS_AND_OUTPUTS, PHASE_RESULTS]
+
+  for tracker in tracker_map.values():
+    if not tracker.is_complete():
+      sys.stderr.write("Incomplete trace, not able to print all statistics\n")
+      return
+  if sep:
+    print(sep)
 
   # Select template and statistics to use
   times, self_times, has_warmup_and_benchmark, execution_counts = aggregate_times(tracker_map)
