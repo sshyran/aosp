@@ -209,10 +209,14 @@ class CallTreeNode(object):
     return True
 
   def elapsed_ms(self):
+    if (self.end_time_s is None) or (self.start_time_s is None):
+      return None
     return (float(self.end_time_s) - float(self.start_time_s)) * 1000.0
 
   def elapsed_less_subtracted_ms(self):
     ret = self.elapsed_ms()
+    if ret is None:
+      return None
     for c in self.children:
       ret = ret - c.subtracted_ms()
     return ret
