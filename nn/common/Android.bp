@@ -81,6 +81,7 @@ cc_library_static {
         "operations/Split.cpp",
         "operations/StridedSlice.cpp",
         "operations/SVDF.cpp",
+        "operations/TransposeConv2D.cpp",
     ],
     shared_libs: [
         "libbase",
