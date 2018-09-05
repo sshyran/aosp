@@ -1640,6 +1640,81 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       channelShuffleGeneric(input.buffer, input.shape(), numGroups, out.buffer,
                                             outShape);
         } break;
+        case OperationType::TRANSPOSE_CONV_2D: {
+            const size_t inCount = ins.size();
+            if ((inCount != 10 && inCount != 8) || !allParametersPresent(inCount, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            const RunTimeOperandInfo& filter = mOperands[ins[1]];
+            const RunTimeOperandInfo& bias = mOperands[ins[2]];
+
+            int32_t padding_left, padding_right;
+            int32_t padding_top, padding_bottom;
+            int32_t stride_width, stride_height;
+            int32_t activation;
+
+            if (inCount == 10) {
+                padding_left = getScalarData<int32_t>(mOperands[ins[3]]);
+                padding_right = getScalarData<int32_t>(mOperands[ins[4]]);
+                padding_top = getScalarData<int32_t>(mOperands[ins[5]]);
+                padding_bottom = getScalarData<int32_t>(mOperands[ins[6]]);
+                stride_width = getScalarData<int32_t>(mOperands[ins[7]]);
+                stride_height = getScalarData<int32_t>(mOperands[ins[8]]);
+                activation = getScalarData<int32_t>(mOperands[ins[9]]);
+            } else {
+                const RunTimeOperandInfo& outShape = mOperands[ins[3]];
+                int32_t padding_implicit = getScalarData<int32_t>(mOperands[ins[4]]);
+                stride_width = getScalarData<int32_t>(mOperands[ins[5]]);
+                stride_height = getScalarData<int32_t>(mOperands[ins[6]]);
+                activation = getScalarData<int32_t>(mOperands[ins[7]]);
+
+                NN_OPS_CHECK(getNumberOfDimensions(outShape.shape()) == 1);
+                NN_OPS_CHECK(getSizeOfDimension(outShape.shape(), 0) == 4);
+
+                const int32_t* outShapeData = reinterpret_cast<const int32_t*>(outShape.buffer);
+                Shape filterShape = filter.shape();
+                int32_t width = outShapeData[2];
+                int32_t height = outShapeData[1];
+                int32_t filter_width = getSizeOfDimension(filterShape, 2);
+                int32_t filter_height = getSizeOfDimension(filterShape, 1);
+                calculateExplicitPadding(width, stride_width, filter_width, padding_implicit,
+                                         &padding_left, &padding_right);
+                calculateExplicitPadding(height, stride_height, filter_height, padding_implicit,
+                                         &padding_top, &padding_bottom);
+            }
+
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outShape = output.shape();
+
+            if (input.type == OperandType::TENSOR_FLOAT32) {
+                success = transposeConvPrepare(input.shape(), filter.shape(), bias.shape(),
+                                               padding_left, padding_right, padding_top,
+                                               padding_bottom, stride_width, stride_height,
+                                               &outShape) &&
+                          setInfoAndAllocateIfNeeded(&output, outShape) &&
+                          transposeConvFloat32(
+                                  reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                  reinterpret_cast<const float*>(filter.buffer), filter.shape(),
+                                  reinterpret_cast<const float*>(bias.buffer), bias.shape(),
+                                  padding_left, padding_right, padding_top, padding_bottom,
+                                  stride_width, stride_height, activation,
+                                  reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                success = transposeConvPrepare(input.shape(), filter.shape(), bias.shape(),
+                                               padding_left, padding_right, padding_top,
+                                               padding_bottom, stride_width, stride_height,
+                                               &outShape) &&
+                          setInfoAndAllocateIfNeeded(&output, outShape) &&
+                          transposeConvQuant8(
+                                  reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
+                                  reinterpret_cast<const uint8_t*>(filter.buffer), filter.shape(),
+                                  reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
+                                  padding_left, padding_right, padding_top, padding_bottom,
+                                  stride_width, stride_height, activation,
+                                  reinterpret_cast<uint8_t*>(output.buffer), outShape);
+            }
+        } break;
         default:
             nnAssert(false);
             break;

@@ -368,3 +368,4 @@
 #include "../generated/tests/split_quant8_2.mod.py.cpp"
 #include "../generated/tests/split_quant8_3.mod.py.cpp"
 #include "../generated/tests/split_quant8_4.mod.py.cpp"
+#include "../generated/tests/transpose_conv2d.mod.py.cpp"
