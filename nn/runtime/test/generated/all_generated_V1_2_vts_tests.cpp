@@ -701,6 +701,56 @@ TEST_F(NeuralnetworksHidlTest, pad_v2_1_quant8) {
                            pad_v2_1_quant8::examples);
 }
 
+// Generated from: prelu.mod.py.
+namespace prelu {
+// Generated prelu test
+#include "examples/prelu.example.cpp"
+// Generated model constructor
+#include "vts_models/prelu.model.cpp"
+} // namespace prelu
+
+TEST_F(NeuralnetworksHidlTest, prelu) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel,
+                           prelu::is_ignored,
+                           prelu::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, prelu_relaxed) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_relaxed,
+                           prelu::is_ignored_relaxed,
+                           prelu::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, prelu_quant8) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_quant8,
+                           prelu::is_ignored_quant8,
+                           prelu::examples_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_weight_as_input,
+                           prelu::is_ignored_weight_as_input,
+                           prelu::examples_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input_relaxed) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_weight_as_input_relaxed,
+                           prelu::is_ignored_weight_as_input_relaxed,
+                           prelu::examples_weight_as_input_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input_quant8) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_weight_as_input_quant8,
+                           prelu::is_ignored_weight_as_input_quant8,
+                           prelu::examples_weight_as_input_quant8);
+}
+
 // Generated from: roi_align.mod.py.
 namespace roi_align {
 // Generated roi_align test

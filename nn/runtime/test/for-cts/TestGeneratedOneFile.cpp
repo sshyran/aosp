@@ -353,6 +353,7 @@
 #include "../generated/tests/pad_v2_1_float.mod.py.cpp"
 #include "../generated/tests/pad_v2_1_float_relaxed.mod.py.cpp"
 #include "../generated/tests/pad_v2_1_quant8.mod.py.cpp"
+#include "../generated/tests/prelu.mod.py.cpp"
 #include "../generated/tests/roi_align.mod.py.cpp"
 #include "../generated/tests/split_float_1.mod.py.cpp"
 #include "../generated/tests/split_float_2.mod.py.cpp"
