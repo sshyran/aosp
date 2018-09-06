@@ -2109,6 +2109,43 @@ typedef enum {
     ANEURALNETWORKS_MINIMUM = 65,
     ANEURALNETWORKS_NEG = 66,
     ANEURALNETWORKS_POW = 67,
+
+    /**
+     * Parametric Rectified Linear Unit.
+     *
+     * It follows: f(x) = alpha * x for x < 0, f(x) = x for x >= 0, where alpha
+     * is a learned array with the same {@link OperandCode} and compatible
+     * dimensions as input x.
+     *
+     * Two dimensions are compatible when:
+     *     1. they are equal, or
+     *     2. one of them is 1
+     *
+     * The size of the output is the maximum size along each dimension of the
+     * input operands. It starts with the trailing dimensions, and works its way
+     * forward.
+     *
+     * Example:
+     *     input.dimension  =    {4, 1, 2}
+     *     alpha.dimension  = {5, 4, 3, 1}
+     *     output.dimension = {5, 4, 3, 2}
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: up to 4
+     *
+     * Inputs:
+     * * 0: A tensor, specifying the input.
+     * * 1: A tensor of the same {@link OperandCode}, and compatible dimensions
+     *      as input0, specifying the alpha.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_PRELU = 68,
     ANEURALNETWORKS_PRIOR_BOX = 69,
     ANEURALNETWORKS_QUANTIZE = 70,
