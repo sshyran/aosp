@@ -18,6 +18,7 @@
 NNAPI_VERSION="
 V1_0
 V1_1
+V1_2
 "
 
 # Process one test spec, and optionally provide the log file argument
