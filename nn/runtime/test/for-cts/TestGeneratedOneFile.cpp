@@ -341,3 +341,6 @@
 #include "../generated/tests/argmin_2_float_relaxed.mod.py.cpp"
 #include "../generated/tests/argmin_2_int32.mod.py.cpp"
 #include "../generated/tests/argmin_2_quant8.mod.py.cpp"
+#include "../generated/tests/lsh_projection_3_relaxed.mod.py.cpp"
+#include "../generated/tests/lsh_projection_4_relaxed.mod.py.cpp"
+#include "../generated/tests/lsh_projection_deprecated.mod.py.cpp"
