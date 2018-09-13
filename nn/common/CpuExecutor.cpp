@@ -1451,6 +1451,60 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       setInfoAndAllocateIfNeeded(&output, outShape) &&
                       expand_dims::eval(input.buffer, input.shape(), axis, output.buffer, outShape);
         } break;
+        case OperationType::SPLIT: {
+            if (ins.size() != 3) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            const int32_t axis = getScalarData<int32_t>(mOperands[ins[1]]);
+            const int32_t numOutputs = getScalarData<int32_t>(mOperands[ins[2]]);
+
+            if (numOutputs != outs.size()) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+
+            std::vector<Shape> outputShapes(numOutputs);
+            for (int i = 0; i < numOutputs; ++i) {
+                outputShapes[i] = mOperands[outs[i]].shape();
+            }
+
+            success = splitPrepare(input.shape(), axis, numOutputs, &outputShapes);
+            for (int i = 0; i < numOutputs; ++i) {
+                success = success &&
+                          setInfoAndAllocateIfNeeded(&(mOperands[outs[i]]), outputShapes[i]);
+            }
+            switch (input.type) {
+                case OperandType::TENSOR_FLOAT32: {
+                    std::vector<float*> outputDataPtrs(numOutputs);
+                    for (int i = 0; i < numOutputs; ++i) {
+                        outputDataPtrs[i] = reinterpret_cast<float*>(mOperands[outs[i]].buffer);
+                    }
+                    success = success &&
+                              splitFloat32(reinterpret_cast<const float*>(input.buffer),
+                                           input.shape(), axis, &outputDataPtrs, outputShapes);
+                } break;
+                case OperandType::TENSOR_INT32: {
+                    std::vector<int32_t*> outputDataPtrs(numOutputs);
+                    for (int i = 0; i < numOutputs; ++i) {
+                        outputDataPtrs[i] = reinterpret_cast<int32_t*>(mOperands[outs[i]].buffer);
+                    }
+                    success = success &&
+                              splitInt32(reinterpret_cast<const int32_t*>(input.buffer),
+                                         input.shape(), axis, &outputDataPtrs, outputShapes);
+                } break;
+                case OperandType::TENSOR_QUANT8_ASYMM: {
+                    std::vector<uint8_t*> outputDataPtrs(numOutputs);
+                    for (int i = 0; i < numOutputs; ++i) {
+                        outputDataPtrs[i] = reinterpret_cast<uint8_t*>(mOperands[outs[i]].buffer);
+                    }
+                    success = success &&
+                              splitQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
+                                          input.shape(), axis, &outputDataPtrs, outputShapes);
+                } break;
+                default: { return ANEURALNETWORKS_BAD_DATA; }
+            }
+        } break;
         default:
             nnAssert(false);
             break;
