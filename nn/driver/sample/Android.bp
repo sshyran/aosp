@@ -57,37 +57,42 @@ cc_defaults {
 
 cc_binary {
     name: "android.hardware.neuralnetworks@1.2-service-sample-all",
+    srcs: ["SampleDriverAll.cpp"],
     defaults: ["NeuralNetworksSampleDriver_server_defaults"],
-    init_rc: ["SampleDriverAll.rc"],
-    srcs: ["SampleDriverAll.cpp"]
+    init_rc: ["config/android.hardware.neuralnetworks@1.2-service-sample-all.rc"],
+    vintf_fragments: ["config/android.hardware.neuralnetworks@1.2-service-sample-all.xml"],
 }
 
 cc_binary {
     name: "android.hardware.neuralnetworks@1.2-service-sample-float-fast",
+    srcs: ["SampleDriverFloatFast.cpp"],
     defaults: ["NeuralNetworksSampleDriver_server_defaults"],
-    init_rc: ["SampleDriverFloatFast.rc"],
-    srcs: ["SampleDriverFloatFast.cpp"]
+    init_rc: ["config/android.hardware.neuralnetworks@1.2-service-sample-float-fast.rc"],
+    vintf_fragments: ["config/android.hardware.neuralnetworks@1.2-service-sample-float-fast.xml"],
 }
 
 cc_binary {
     name: "android.hardware.neuralnetworks@1.2-service-sample-float-slow",
+    srcs: ["SampleDriverFloatSlow.cpp"],
     defaults: ["NeuralNetworksSampleDriver_server_defaults"],
-    init_rc: ["SampleDriverFloatSlow.rc"],
-    srcs: ["SampleDriverFloatSlow.cpp"]
+    init_rc: ["config/android.hardware.neuralnetworks@1.2-service-sample-float-slow.rc"],
+    vintf_fragments: ["config/android.hardware.neuralnetworks@1.2-service-sample-float-slow.xml"],
 }
 
 cc_binary {
     name: "android.hardware.neuralnetworks@1.2-service-sample-quant",
+    srcs: ["SampleDriverQuant.cpp"],
     defaults: ["NeuralNetworksSampleDriver_server_defaults"],
-    init_rc: ["SampleDriverQuant.rc"],
-    srcs: ["SampleDriverQuant.cpp"]
+    init_rc: ["config/android.hardware.neuralnetworks@1.2-service-sample-quant.rc"],
+    vintf_fragments: ["config/android.hardware.neuralnetworks@1.2-service-sample-quant.xml"],
 }
 
 cc_binary {
     name: "android.hardware.neuralnetworks@1.2-service-sample-minimal",
+    srcs: ["SampleDriverMinimal.cpp"],
     defaults: ["NeuralNetworksSampleDriver_server_defaults"],
-    init_rc: ["SampleDriverMinimal.rc"],
-    srcs: ["SampleDriverMinimal.cpp"]
+    init_rc: ["config/android.hardware.neuralnetworks@1.2-service-sample-minimal.rc"],
+    vintf_fragments: ["config/android.hardware.neuralnetworks@1.2-service-sample-minimal.xml"],
 }
 
 cc_library_static {
