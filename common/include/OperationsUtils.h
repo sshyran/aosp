@@ -289,6 +289,7 @@ bool stridedSlicePrepare(const Shape& input,
 
 bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output);
 
+bool splitPrepare(const Shape& input, int32_t axis, int32_t numOutputs, std::vector<Shape>* output);
 } // namespace nn
 } // namespace android
 
