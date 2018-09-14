@@ -16,9 +16,10 @@
 
 #define LOG_TAG "Utils"
 
-#include "Utils.h"
 #include "NeuralNetworks.h"
 #include "NeuralNetworksOEM.h"
+#include "Utils.h"
+#include "ValidateHal.h"
 
 #include <android-base/logging.h>
 #include <android-base/properties.h>
@@ -1497,41 +1498,7 @@ bool compliantWithV1_0(V1_0::OperationType) {
 }
 
 bool compliantWithV1_0(V1_1::OperationType operation) {
-    switch (static_cast<V1_0::OperationType>(operation)) {
-        case V1_0::OperationType::ADD:
-        case V1_0::OperationType::AVERAGE_POOL_2D:
-        case V1_0::OperationType::CONCATENATION:
-        case V1_0::OperationType::CONV_2D:
-        case V1_0::OperationType::DEPTHWISE_CONV_2D:
-        case V1_0::OperationType::DEPTH_TO_SPACE:
-        case V1_0::OperationType::DEQUANTIZE:
-        case V1_0::OperationType::EMBEDDING_LOOKUP:
-        case V1_0::OperationType::FLOOR:
-        case V1_0::OperationType::FULLY_CONNECTED:
-        case V1_0::OperationType::HASHTABLE_LOOKUP:
-        case V1_0::OperationType::L2_NORMALIZATION:
-        case V1_0::OperationType::L2_POOL_2D:
-        case V1_0::OperationType::LOCAL_RESPONSE_NORMALIZATION:
-        case V1_0::OperationType::LOGISTIC:
-        case V1_0::OperationType::LSH_PROJECTION:
-        case V1_0::OperationType::LSTM:
-        case V1_0::OperationType::MAX_POOL_2D:
-        case V1_0::OperationType::MUL:
-        case V1_0::OperationType::RELU:
-        case V1_0::OperationType::RELU1:
-        case V1_0::OperationType::RELU6:
-        case V1_0::OperationType::RESHAPE:
-        case V1_0::OperationType::RESIZE_BILINEAR:
-        case V1_0::OperationType::RNN:
-        case V1_0::OperationType::SOFTMAX:
-        case V1_0::OperationType::SPACE_TO_DEPTH:
-        case V1_0::OperationType::SVDF:
-        case V1_0::OperationType::TANH:
-        case V1_0::OperationType::OEM_OPERATION:
-            return true;
-        default:
-            return false;
-    }
+    return validOperationType(static_cast<V1_0::OperationType>(operation));
 }
 
 bool compliantWithV1_1(V1_0::OperationType) {
@@ -1718,6 +1685,158 @@ V1_1::Model convertToV1_1(const V1_0::Model& model) {
 
 V1_1::Model convertToV1_1(const V1_1::Model& model) {
     return model;
+}
+
+void logModelToInfo(const V1_2::Model& model) {
+    LOG(INFO) << "V1_2::Model start";
+    LOG(INFO) << "operands" << toString(model.operands);
+    LOG(INFO) << "operations" << toString(model.operations);
+    LOG(INFO) << "inputIndexes" << toString(model.inputIndexes);
+    LOG(INFO) << "outputIndexes" << toString(model.outputIndexes);
+    LOG(INFO) << "operandValues size" << model.operandValues.size();
+    LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
+}
+
+bool compliantWithV1_0(V1_2::OperationType operation) {
+    return validOperationType(static_cast<V1_0::OperationType>(operation));
+}
+
+bool compliantWithV1_1(V1_2::OperationType operation) {
+    return validOperationType(static_cast<V1_1::OperationType>(operation));
+}
+
+bool compliantWithV1_0(const V1_2::Operation& operation) {
+    return compliantWithV1_0(operation.type);
+}
+
+static bool compliantWithV1_0(const hidl_vec<V1_2::Operation>& operations) {
+    return std::all_of(operations.begin(), operations.end(),
+                       [](const V1_2::Operation& operation) {
+                           return compliantWithV1_0(operation);
+                       });
+}
+
+bool compliantWithV1_0(const V1_2::Model& model) {
+    // See the comment in compliantWithV1_0(const V1_1::Model&).
+    return compliantWithV1_0(model.operations);
+}
+
+bool compliantWithV1_1(const V1_2::Model&) {
+    return true;
+}
+
+V1_0::OperationType convertToV1_0(V1_2::OperationType type) {
+    if (!compliantWithV1_0(type)) {
+        LOG(ERROR) << "Upcasting non-compliant type " << toString(type)
+                   << " from V1_2::OperationType to V1_1::OperationType";
+    }
+    return static_cast<V1_0::OperationType>(type);
+}
+
+V1_1::OperationType convertToV1_1(V1_2::OperationType type) {
+    if (!compliantWithV1_1(type)) {
+        LOG(ERROR) << "Upcasting non-compliant type " << toString(type)
+                   << " from V1_2::OperationType to V1_1::OperationType";
+    }
+    return static_cast<V1_1::OperationType>(type);
+}
+
+V1_2::OperationType convertToV1_2(V1_0::OperationType type) {
+    return static_cast<V1_2::OperationType>(type);
+}
+
+V1_2::OperationType convertToV1_2(V1_1::OperationType type) {
+    return static_cast<V1_2::OperationType>(type);
+}
+
+V1_0::Operation convertToV1_0(const V1_2::Operation& operation) {
+    if (!compliantWithV1_0(operation)) {
+        LOG(ERROR) << "Upcasting non-compliant operation " << toString(operation)
+                   << " from V1_1::Operation to V1_0::Operation";
+    }
+    return {.type = convertToV1_0(operation.type),
+            .inputs = operation.inputs,
+            .outputs = operation.outputs};
+}
+
+V1_1::Operation convertToV1_1(const V1_2::Operation& operation) {
+    return {.type = convertToV1_1(operation.type),
+            .inputs = operation.inputs,
+            .outputs = operation.outputs};
+}
+
+template <typename T>
+V1_2::Operation convertToV1_2(const T& operation) {
+    return {.type = convertToV1_2(operation.type),
+            .inputs = operation.inputs,
+            .outputs = operation.outputs};
+}
+
+static hidl_vec<V1_0::Operation> convertToV1_0(const hidl_vec<V1_2::Operation>& operations) {
+    hidl_vec<V1_0::Operation> result(operations.size());
+    std::transform(operations.begin(), operations.end(), result.begin(),
+                   [](const V1_2::Operation& operation) { return convertToV1_0(operation); });
+    return result;
+}
+
+static hidl_vec<V1_1::Operation> convertToV1_1(const hidl_vec<V1_2::Operation>& operations) {
+    hidl_vec<V1_1::Operation> result(operations.size());
+    std::transform(operations.begin(), operations.end(), result.begin(),
+                   [](const V1_2::Operation& operation) { return convertToV1_1(operation); });
+    return result;
+}
+
+template <typename T>
+static hidl_vec<V1_2::Operation> convertToV1_2(const hidl_vec<T>& operations) {
+    hidl_vec<V1_2::Operation> result(operations.size());
+    std::transform(operations.begin(), operations.end(), result.begin(),
+                   [](const T& operation) {
+                       return convertToV1_2(operation);
+                   });
+    return result;
+}
+
+V1_0::Model convertToV1_0(const V1_2::Model& model) {
+    if (!compliantWithV1_0(model)) {
+        LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
+                   << " from V1_1::Model to V1_0::Model";
+    }
+    return {.operands = model.operands,
+            .operations = convertToV1_0(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools};
+}
+
+V1_1::Model convertToV1_1(const V1_2::Model& model) {
+    return {.operands = model.operands,
+            .operations = convertToV1_1(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools,
+            .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16};
+}
+
+V1_2::Model convertToV1_2(const V1_0::Model& model) {
+    return {.operands = model.operands,
+            .operations = convertToV1_2(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools,
+            .relaxComputationFloat32toFloat16 = false};
+}
+
+V1_2::Model convertToV1_2(const V1_1::Model& model) {
+    return {.operands = model.operands,
+            .operations = convertToV1_2(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools,
+            .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16};
 }
 
 #ifdef NN_DEBUGGABLE

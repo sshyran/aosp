@@ -17,7 +17,6 @@
 #include "LSHProjection.h"
 
 #include "CpuExecutor.h"
-#include "HalInterfaces.h"
 #include "util/hash/farmhash.h"
 
 #include "Tracing.h"
