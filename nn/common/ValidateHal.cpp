@@ -221,7 +221,7 @@ static bool validateOperands(const hidl_vec<Operand>& operands,
     return true;
 }
 
-static bool validOperationType(V1_0::OperationType operation) {
+bool validOperationType(V1_0::OperationType operation) {
     switch (operation) {
         case V1_0::OperationType::ADD:
         case V1_0::OperationType::AVERAGE_POOL_2D:
@@ -259,7 +259,7 @@ static bool validOperationType(V1_0::OperationType operation) {
     }
 }
 
-static bool validOperationType(V1_1::OperationType operation) {
+bool validOperationType(V1_1::OperationType operation) {
     switch (operation) {
         case V1_1::OperationType::ADD:
         case V1_1::OperationType::AVERAGE_POOL_2D:
@@ -300,6 +300,53 @@ static bool validOperationType(V1_1::OperationType operation) {
         case V1_1::OperationType::SUB:
         case V1_1::OperationType::TRANSPOSE:
         case V1_1::OperationType::OEM_OPERATION:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool validOperationType(V1_2::OperationType operation) {
+    switch (operation) {
+        case V1_2::OperationType::ADD:
+        case V1_2::OperationType::AVERAGE_POOL_2D:
+        case V1_2::OperationType::CONCATENATION:
+        case V1_2::OperationType::CONV_2D:
+        case V1_2::OperationType::DEPTHWISE_CONV_2D:
+        case V1_2::OperationType::DEPTH_TO_SPACE:
+        case V1_2::OperationType::DEQUANTIZE:
+        case V1_2::OperationType::EMBEDDING_LOOKUP:
+        case V1_2::OperationType::FLOOR:
+        case V1_2::OperationType::FULLY_CONNECTED:
+        case V1_2::OperationType::HASHTABLE_LOOKUP:
+        case V1_2::OperationType::L2_NORMALIZATION:
+        case V1_2::OperationType::L2_POOL_2D:
+        case V1_2::OperationType::LOCAL_RESPONSE_NORMALIZATION:
+        case V1_2::OperationType::LOGISTIC:
+        case V1_2::OperationType::LSH_PROJECTION:
+        case V1_2::OperationType::LSTM:
+        case V1_2::OperationType::MAX_POOL_2D:
+        case V1_2::OperationType::MUL:
+        case V1_2::OperationType::RELU:
+        case V1_2::OperationType::RELU1:
+        case V1_2::OperationType::RELU6:
+        case V1_2::OperationType::RESHAPE:
+        case V1_2::OperationType::RESIZE_BILINEAR:
+        case V1_2::OperationType::RNN:
+        case V1_2::OperationType::SOFTMAX:
+        case V1_2::OperationType::SPACE_TO_DEPTH:
+        case V1_2::OperationType::SVDF:
+        case V1_2::OperationType::TANH:
+        case V1_2::OperationType::BATCH_TO_SPACE_ND:
+        case V1_2::OperationType::DIV:
+        case V1_2::OperationType::MEAN:
+        case V1_2::OperationType::PAD:
+        case V1_2::OperationType::SPACE_TO_BATCH_ND:
+        case V1_2::OperationType::SQUEEZE:
+        case V1_2::OperationType::STRIDED_SLICE:
+        case V1_2::OperationType::SUB:
+        case V1_2::OperationType::TRANSPOSE:
+        case V1_2::OperationType::OEM_OPERATION:
             return true;
         default:
             return false;
@@ -425,6 +472,10 @@ bool validateModel(const V1_1::Model& model) {
     return validateModelVersioned(model);
 }
 
+bool validateModel(const V1_2::Model& model) {
+    return validateModelVersioned(model);
+}
+
 // Validates the arguments of a request. type is either "input" or "output" and is used
 // for printing error messages. The operandIndexes is the appropriate array of input
 // or output operand indexes that was passed to the ANeuralNetworksModel_identifyInputsAndOutputs.
@@ -515,6 +566,10 @@ bool validateRequest(const Request& request, const V1_0::Model& model) {
 }
 
 bool validateRequest(const Request& request, const V1_1::Model& model) {
+    return validateRequestVersioned(request, model);
+}
+
+bool validateRequest(const Request& request, const V1_2::Model& model) {
     return validateRequestVersioned(request, model);
 }
 

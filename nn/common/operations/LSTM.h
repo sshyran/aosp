@@ -18,20 +18,11 @@
 #define FRAMEWORKS_ML_NN_LSTMCELL_H
 
 #include "ActivationFunctor.h"
+#include "HalOperation.h"
 #include "tensorflow/contrib/lite/kernels/internal/tensor_utils.h"
 
 #include <algorithm>
 #include <cmath>
-
-namespace android {
-namespace hardware {
-namespace neuralnetworks {
-namespace V1_1 {
-struct Operation;
-}
-}  // namespace neuralnetworks
-}  // namespace hardware
-}  // namespace android
 
 namespace android {
 namespace nn {
@@ -47,10 +38,10 @@ struct Shape;
 
 class LSTMCell {
  public:
-  LSTMCell(const android::hardware::neuralnetworks::V1_1::Operation &operation,
+  LSTMCell(const Operation &operation,
            std::vector<RunTimeOperandInfo> &operands);
 
-  static bool Prepare(const android::hardware::neuralnetworks::V1_1::Operation &operation,
+  static bool Prepare(const Operation &operation,
                       std::vector<RunTimeOperandInfo> &operands,
                       Shape *scratchShape,
                       Shape *outputStateShape,
@@ -104,7 +95,7 @@ class LSTMCell {
 
  private:
   static bool CheckInputTensorDimensions(
-      const android::hardware::neuralnetworks::V1_1::Operation &operation,
+      const Operation &operation,
       std::vector<RunTimeOperandInfo> &operands, uint32_t n_input,
       uint32_t n_output, uint32_t n_cell);
   LSTMParams params_;
