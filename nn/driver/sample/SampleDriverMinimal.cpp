@@ -35,8 +35,8 @@ class SampleDriverMinimal : public SampleDriver {
 public:
     SampleDriverMinimal() : SampleDriver("sample-minimal") {}
     Return<void> getCapabilities_1_1(getCapabilities_1_1_cb cb) override;
-    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
-                                            getSupportedOperations_1_1_cb cb) override;
+    Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
+                                            getSupportedOperations_1_2_cb cb) override;
 };
 
 Return<void> SampleDriverMinimal::getCapabilities_1_1(getCapabilities_1_1_cb cb) {
@@ -50,8 +50,8 @@ Return<void> SampleDriverMinimal::getCapabilities_1_1(getCapabilities_1_1_cb cb)
     return Void();
 }
 
-Return<void> SampleDriverMinimal::getSupportedOperations_1_1(const V1_1::Model& model,
-                                                             getSupportedOperations_1_1_cb cb) {
+Return<void> SampleDriverMinimal::getSupportedOperations_1_2(const V1_2::Model& model,
+                                                             getSupportedOperations_1_2_cb cb) {
     VLOG(DRIVER) << "getSupportedOperations()";
     if (validateModel(model)) {
         const size_t count = model.operations.size();

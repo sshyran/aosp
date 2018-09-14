@@ -34,8 +34,8 @@ class SampleDriverQuant : public SampleDriver {
 public:
     SampleDriverQuant() : SampleDriver("sample-quant") {}
     Return<void> getCapabilities_1_1(getCapabilities_1_1_cb cb) override;
-    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
-                                            getSupportedOperations_1_1_cb cb) override;
+    Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
+                                            getSupportedOperations_1_2_cb cb) override;
 };
 
 Return<void> SampleDriverQuant::getCapabilities_1_1(getCapabilities_1_1_cb cb) {
@@ -49,8 +49,8 @@ Return<void> SampleDriverQuant::getCapabilities_1_1(getCapabilities_1_1_cb cb) {
     return Void();
 }
 
-Return<void> SampleDriverQuant::getSupportedOperations_1_1(const V1_1::Model& model,
-                                                           getSupportedOperations_1_1_cb cb) {
+Return<void> SampleDriverQuant::getSupportedOperations_1_2(const V1_2::Model& model,
+                                                           getSupportedOperations_1_2_cb cb) {
     VLOG(DRIVER) << "getSupportedOperations()";
     if (validateModel(model)) {
         const size_t count = model.operations.size();
