@@ -27,11 +27,10 @@ namespace android {
 namespace nn {
 
 /**
- * This object is either a V1_1::IDevice or V1_0::IDevice object. This class
- * abstracts away version differences, allowing the remainder of the runtime to
- * always use the most up-to-date version of all HIDL types. As such, any
- * reference to a HIDL type in the rest of the runtime will--by default--be the
- * latest HIDL version.
+ * This class wraps an IDevice object of any version to abstract away version
+ * differences. It allows the remainder of the runtime to always use the most
+ * up-to-date version of all HIDL types. As such, any reference to a HIDL type
+ * in the rest of the runtime will--by default--be the latest HIDL version.
  *
  * This class will attempt to call the latest version of each interface method
  * if possible. If the latest method is unavailable, the VersionedIDevice class
@@ -175,8 +174,8 @@ public:
 
 private:
     /**
-     * Both versions of IDevice are necessary because the driver could be v1.0,
-     * v1.1, or a later version. These two pointers logically represent the same
+     * All versions of IDevice are necessary because the driver could be v1.0,
+     * v1.1, or a later version. All these pointers logically represent the same
      * object.
      *
      * The general strategy is: HIDL returns a V1_0 device object, which
@@ -196,6 +195,7 @@ private:
      */
     sp<V1_0::IDevice> mDeviceV1_0;
     sp<V1_1::IDevice> mDeviceV1_1;
+    sp<V1_2::IDevice> mDeviceV1_2;
 };
 
 }  // namespace nn

@@ -30,6 +30,7 @@ namespace nn {
 // Each driver should do their own validation of OEM types.
 bool validateModel(const V1_0::Model& model);
 bool validateModel(const V1_1::Model& model);
+bool validateModel(const V1_2::Model& model);
 
 // Verfies that the request for the given model is valid.
 // IMPORTANT: This function cannot validate that OEM operation and operands
@@ -37,9 +38,14 @@ bool validateModel(const V1_1::Model& model);
 // Each driver should do their own validation of OEM types.
 bool validateRequest(const Request& request, const V1_0::Model& model);
 bool validateRequest(const Request& request, const V1_1::Model& model);
+bool validateRequest(const Request& request, const V1_2::Model& model);
 
 // Verfies that the execution preference is valid.
 bool validateExecutionPreference(ExecutionPreference preference);
+
+bool validOperationType(V1_0::OperationType operation);
+bool validOperationType(V1_1::OperationType operation);
+bool validOperationType(V1_2::OperationType operation);
 
 }  // namespace nn
 }  // namespace android

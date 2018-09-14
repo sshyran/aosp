@@ -118,6 +118,7 @@ uint32_t alignBytesNeeded(uint32_t index, size_t length);
 // Does a detailed LOG(INFO) of the model
 void logModelToInfo(const V1_0::Model& model);
 void logModelToInfo(const V1_1::Model& model);
+void logModelToInfo(const V1_2::Model& model);
 
 inline std::string toString(uint32_t obj) {
     return std::to_string(obj);
@@ -175,8 +176,10 @@ bool compliantWithV1_1(const V1_1::Operation& operation);
 
 bool compliantWithV1_0(const V1_0::Model& model);
 bool compliantWithV1_0(const V1_1::Model& model);
+bool compliantWithV1_0(const V1_2::Model& model);
 bool compliantWithV1_1(const V1_0::Model& model);
 bool compliantWithV1_1(const V1_1::Model& model);
+bool compliantWithV1_1(const V1_2::Model& model);
 
 V1_0::OperationType convertToV1_0(V1_0::OperationType type);
 V1_0::OperationType convertToV1_0(V1_1::OperationType type);
@@ -197,6 +200,15 @@ V1_0::Model convertToV1_0(const V1_0::Model& model);
 V1_0::Model convertToV1_0(const V1_1::Model& model);
 V1_1::Model convertToV1_1(const V1_0::Model& model);
 V1_1::Model convertToV1_1(const V1_1::Model& model);
+
+V1_0::OperationType convertToV1_0(V1_2::OperationType type);
+V1_1::OperationType convertToV1_1(V1_2::OperationType type);
+V1_0::Operation convertToV1_0(const V1_2::Operation& operation);
+V1_1::Operation convertToV1_1(const V1_2::Operation& operation);
+V1_0::Model convertToV1_0(const V1_2::Model& model);
+V1_1::Model convertToV1_1(const V1_2::Model& model);
+V1_2::Model convertToV1_2(const V1_0::Model& model);
+V1_2::Model convertToV1_2(const V1_1::Model& model);
 
 
 #ifdef NN_DEBUGGABLE
