@@ -107,10 +107,7 @@ public:
     // specified in the constructor.
     // The model must outlive the executor.  We prevent it from being modified
     // while this is executing.
-    int run(const V1_0::Model& model, const Request& request,
-            const std::vector<RunTimePoolInfo>& modelPoolInfos,
-            const std::vector<RunTimePoolInfo>& requestPoolInfos);
-    int run(const V1_1::Model& model, const Request& request,
+    int run(const Model& model, const Request& request,
             const std::vector<RunTimePoolInfo>& modelPoolInfos,
             const std::vector<RunTimePoolInfo>& requestPoolInfos);
 

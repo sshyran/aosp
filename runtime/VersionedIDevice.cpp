@@ -27,7 +27,8 @@ namespace nn {
 // HIDL guarantees all V1_1 interfaces inherit from their corresponding V1_0 interfaces.
 VersionedIDevice::VersionedIDevice(sp<V1_0::IDevice> device) :
         mDeviceV1_0(device),
-        mDeviceV1_1(V1_1::IDevice::castFrom(mDeviceV1_0).withDefault(nullptr)) {}
+        mDeviceV1_1(V1_1::IDevice::castFrom(mDeviceV1_0).withDefault(nullptr)),
+        mDeviceV1_2(V1_2::IDevice::castFrom(mDeviceV1_0).withDefault(nullptr)) {}
 
 std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() {
     std::pair<ErrorStatus, Capabilities> result;
@@ -65,10 +66,21 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
         const Model& model) {
     std::pair<ErrorStatus, hidl_vec<bool>> result;
 
-    if (mDeviceV1_1 != nullptr) {
+    if (mDeviceV1_2 != nullptr) {
+        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_2");
+        Return<void> ret = mDeviceV1_2->getSupportedOperations_1_2(
+            model, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
+                result = std::make_pair(error, supported);
+            });
+        if (!ret.isOk()) {
+            LOG(ERROR) << "getSupportedOperations_1_2 failure: " << ret.description();
+            return {ErrorStatus::GENERAL_FAILURE, {}};
+        }
+    } else if (mDeviceV1_1 != nullptr && compliantWithV1_1(model)) {
+        V1_1::Model model11 = convertToV1_1(model);
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_1");
         Return<void> ret = mDeviceV1_1->getSupportedOperations_1_1(
-            model, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
+            model11, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
                 result = std::make_pair(error, supported);
             });
         if (!ret.isOk()) {
@@ -98,13 +110,40 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
 
 ErrorStatus VersionedIDevice::prepareModel(const Model& model, ExecutionPreference preference,
                                            const sp<IPreparedModelCallback>& callback) {
-    if (mDeviceV1_1 != nullptr) {
-        Return<ErrorStatus> ret = mDeviceV1_1->prepareModel_1_1(model, preference, callback);
+    if (mDeviceV1_2 != nullptr) {
+        Return<ErrorStatus> ret = mDeviceV1_2->prepareModel_1_2(model, preference, callback);
         if (!ret.isOk()) {
-            LOG(ERROR) << "prepareModel_1_1 failure: " << ret.description();
+            LOG(ERROR) << "prepareModel_1_2 failure: " << ret.description();
             return ErrorStatus::GENERAL_FAILURE;
         }
         return static_cast<ErrorStatus>(ret);
+    } else if (mDeviceV1_1 != nullptr) {
+        bool compliant = false;
+        V1_1::Model model11;
+        {
+            // Attribute time spent in model inspection and conversion to
+            // Runtime, as the time may be substantial (0.03ms for mobilenet,
+            // but could be larger for other models).
+            NNTRACE_FULL_SUBTRACT(NNTRACE_LAYER_RUNTIME, NNTRACE_PHASE_COMPILATION,
+                                  "VersionedIDevice::prepareModel_1_1");
+            compliant = compliantWithV1_1(model);
+            if (compliant) {
+                model11 = convertToV1_1(model);  // copy is elided
+            }
+        }
+        if (compliant) {
+            Return<ErrorStatus> ret = mDeviceV1_1->prepareModel_1_1(model11, preference, callback);
+            if (!ret.isOk()) {
+                LOG(ERROR) << "prepareModel_1_1 failure: " << ret.description();
+                return ErrorStatus::GENERAL_FAILURE;
+            }
+            return static_cast<ErrorStatus>(ret);
+        } else {
+            // TODO: partition the model such that v1.2 ops are not passed to v1.1
+            // device
+            LOG(ERROR) << "Could not handle prepareModel_1_1!";
+            return ErrorStatus::GENERAL_FAILURE;
+        }
     } else if (mDeviceV1_0 != nullptr) {
         bool compliant = false;
         V1_0::Model model10;
