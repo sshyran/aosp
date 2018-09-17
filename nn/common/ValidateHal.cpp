@@ -309,6 +309,8 @@ bool validOperationType(V1_1::OperationType operation) {
 bool validOperationType(V1_2::OperationType operation) {
     switch (operation) {
         case V1_2::OperationType::ADD:
+        case V1_2::OperationType::ARGMAX:
+        case V1_2::OperationType::ARGMIN:
         case V1_2::OperationType::AVERAGE_POOL_2D:
         case V1_2::OperationType::CONCATENATION:
         case V1_2::OperationType::CONV_2D:
