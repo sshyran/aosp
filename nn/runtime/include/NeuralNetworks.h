@@ -1796,6 +1796,47 @@ typedef enum {
 
     // Operations below are available since API level 29.
 
+    /**
+     * Returns the index of the largest element along an axis.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: An n-D tensor specifying the input. Must not be non-empty.
+     * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis to
+     *      reduce accross.
+     *
+     * Outputs:
+     * * 0: An (n - 1)-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor.
+     *
+     * Available since API level 29.
+     */
+    // There is no underscore in ARG_MAX to avoid name conflict with
+    // the macro defined in libc/kernel/uapi/linux/limits.h.
+    ANEURALNETWORKS_ARGMAX = 38,
+
+    /**
+     * Returns the index of the smallest element along an axis.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: An n-D tensor specifying the input. Must not be non-empty.
+     * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis to
+     *      reduce accross.
+     *
+     * Outputs:
+     * * 0: An (n - 1)-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_ARGMIN = 39, // See ARGMAX for naming discussion.
 } OperationCode;
 
 /**
