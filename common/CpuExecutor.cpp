@@ -1411,6 +1411,24 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                   output.buffer,
                                   outShape);
         } break;
+        case OperationType::ARGMAX:
+        case OperationType::ARGMIN: {
+            if (!allParametersPresent(2, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            int32_t axis = getScalarData<int32_t>(mOperands[ins[1]]);
+
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outShape = output.shape();
+
+            const bool isArgMin = operation.type == OperationType::ARGMIN;
+            success = argMinMaxPrepare(input.shape(), axis, &outShape) &&
+                    setInfoAndAllocateIfNeeded(&output, outShape) &&
+                    argMinMaxGeneric(input.buffer, input.shape(),
+                                     axis, isArgMin,
+                                     output.buffer, outShape);
+        } break;
         default:
             nnAssert(false);
             break;
