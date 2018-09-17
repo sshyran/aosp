@@ -94,6 +94,8 @@ typedef enum {
  * Available since API level 27.
  */
 typedef enum {
+    // Operations below are available since API level 27.
+
     /**
      * Adds two tensors, element-wise.
      *
@@ -1472,6 +1474,8 @@ typedef enum {
      */
     ANEURALNETWORKS_TANH = 28,
 
+    // Operations below are available since API level 28.
+
     // TODO: make the description easier to understand.
     /**
      * BatchToSpace for N-dimensional tensors.
@@ -1789,6 +1793,9 @@ typedef enum {
      * Available since API level 28.
      */
     ANEURALNETWORKS_TRANSPOSE = 37,
+
+    // Operations below are available since API level 29.
+
 } OperationCode;
 
 /**
