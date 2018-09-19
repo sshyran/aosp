@@ -32,7 +32,10 @@ import sys
 
 # Stuff from test generator
 import test_generator as tg
+from test_generator import ActivationConverter
 from test_generator import Configuration
+from test_generator import DataTypeConverter
+from test_generator import DataLayoutConverter
 from test_generator import Example
 from test_generator import Float32Scalar
 from test_generator import GetJointStr
@@ -44,6 +47,8 @@ from test_generator import Model
 from test_generator import Operand
 from test_generator import Output
 from test_generator import Parameter
+from test_generator import ParameterAsInputConverter
+from test_generator import RelaxedModeConverter
 from test_generator import SmartOpen
 
 def IndentedPrint(s, indent=2, *args, **kwargs):
