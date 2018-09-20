@@ -224,6 +224,17 @@ class Type(NamedVariable):
         else:
             return GetJointStr([self.GetDimensionsString(), self.scale, self.zeroPoint])
 
+# To track implicitly convertible parameter types
+class ImplicitParameter():
+    @staticmethod
+    def ImplicitConvertion(value):
+        if isinstance(value, Operand):
+            return value
+        for implicitType in ImplicitParameter.__subclasses__():
+            if implicitType.IsCompatible(value):
+                return implicitType("param", value)
+        assert False, "%s not supported for implicit parameter"%value
+
 # An operand that can be fed into operations. Also, an operand is always
 # declared before operations.
 class Operand(NamedVariable):
@@ -304,14 +315,40 @@ class Parameter(Operand):
         self.lifetime = "CONSTANT_COPY"
 
 # A shortcut for parameters of INT32
-class Int32Scalar(Parameter):
+class Int32Scalar(Parameter, ImplicitParameter):
     def __init__(self, name, value):
         Parameter.__init__(self, name, ("INT32", []), int(value))
+    @staticmethod
+    def IsCompatible(value):
+        return isinstance(value, int)
 
 # A shortcut for parameters of FLOAT32
-class Float32Scalar(Parameter):
+class Float32Scalar(Parameter, ImplicitParameter):
     def __init__(self, name, value):
         Parameter.__init__(self, name, ("FLOAT32", []), float(value))
+    @staticmethod
+    def IsCompatible(value):
+        return isinstance(value, float)
+
+# A shortcut for parameter of 1-D TENSOR_INT32
+class Int32Vector(Parameter, ImplicitParameter):
+    def __init__(self, name, value):
+        Parameter.__init__(self, name, ("TENSOR_INT32", [len(value)]), [int(v) for v in value])
+    @staticmethod
+    def IsCompatible(value):
+        if type(value) is not list and type(value) is not tuple:
+            return False
+        return all(isinstance(i, int) for i in value)
+
+# A shortcut for parameter of 1-D TENSOR_FLOAT32
+class Float32Vector(Parameter, ImplicitParameter):
+    def __init__(self, name, value):
+        Parameter.__init__(self, name, ("TENSOR_FLOAT32", [len(value)]), [float(v) for v in value])
+    @staticmethod
+    def IsCompatible(value):
+        if type(value) is not list and type(value) is not tuple:
+            return False
+        return all(isinstance(i, float) for i in value)
 
 # An explicitly declared intermediate result
 class Internal(Operand):
@@ -335,7 +372,7 @@ class Operation:
     __repr__ = __str__
 
     def SetInputs(self, ins):
-        self.ins = list(ins)
+        self.ins = [ImplicitParameter.ImplicitConvertion(i) for i in ins]
         for i in self.ins:
             i.outs.append(self)
         return self
@@ -471,6 +508,21 @@ class Model:
         self.compiled = True
         return self
 
+# To track implicitly convertible variation types
+class ImplicitVariation:
+    @staticmethod
+    def ImplicitConvertion(value):
+        if isinstance(value, ModelVariation):
+            return value
+        for implicitType in ImplicitVariation.__subclasses__():
+            value = value if type(value) is tuple or type(value) is list else [value]
+            if implicitType.IsCompatible(value[0]):
+                var = implicitType(value[0])
+                if len(value) > 1:
+                    var.Identify(*value[1:])
+                return var
+        assert False, "%s not supported for implicit variation"%value[0]
+
 # The base class for model variations
 class ModelVariation:
 
@@ -602,11 +654,19 @@ class DataTypeConverter(ModelVariation):
         return op
 
 # Convert model to turn on/off relaxed computation
-class RelaxedModeConverter(ModelVariation):
+class RelaxedModeConverter(ModelVariation, ImplicitVariation):
 
     def __init__(self, isRelaxed=True, name=None):
         ModelVariation.__init__(self, name=name)
-        self.isRelaxed = isRelaxed
+        if isinstance(isRelaxed, bool):
+            self.isRelaxed = isRelaxed
+        else:
+            assert RelaxedModeConverter.IsCompatible(isRelaxed.lower())
+            self.isRelaxed = True
+
+    @staticmethod
+    def IsCompatible(value):
+        return value.lower() in ["relaxed"]
 
     def SetToDefaultName(self):
         self.name = "relaxed" if self.isRelaxed else "float"
@@ -617,13 +677,18 @@ class RelaxedModeConverter(ModelVariation):
         return model
 
 # Convert data layout between "NHWC" amd "NCHW"
-class DataLayoutConverter(ModelVariation):
+class DataLayoutConverter(ModelVariation, ImplicitVariation):
 
     def __init__(self, targetLayout="nchw", name=None):
         ModelVariation.__init__(self, name=name)
         self.targetLayout = targetLayout.lower()
+        assert DataLayoutConverter.IsCompatible(self.targetLayout)
         self.perm = (0, 3, 1, 2) if self.targetLayout == "nchw" else (0, 2, 3, 1)
         self.enum = 1 if self.targetLayout == "nchw" else 0
+
+    @staticmethod
+    def IsCompatible(value):
+        return value.lower() in ["nhwc", "nchw"]
 
     def SetToDefaultName(self):
         self.name = self.targetLayout
@@ -645,11 +710,16 @@ class DataLayoutConverter(ModelVariation):
         return parameters
 
 # Convert a Parameter to Input
-class ParameterAsInputConverter(ModelVariation):
+class ParameterAsInputConverter(ModelVariation, ImplicitVariation):
 
-    def __init__(self, prefix="weight", name=None):
+    def __init__(self, arg="as_input", prefix="weight", name=None):
         ModelVariation.__init__(self, name=name)
+        assert ParameterAsInputConverter.IsCompatible(arg.lower())
         self.prefix = prefix
+
+    @staticmethod
+    def IsCompatible(value):
+        return value.lower() in ["as_input"]
 
     def SetToDefaultName(self):
         self.name = self.prefix + "_as_input"
@@ -662,7 +732,7 @@ class ParameterAsInputConverter(ModelVariation):
         return newop
 
 # Convert Output based on activation
-class ActivationConverter(ModelVariation):
+class ActivationConverter(ModelVariation, ImplicitVariation):
     # (Enum, low, high)
     actMap = {
         "none": (0, None, None),
@@ -673,9 +743,14 @@ class ActivationConverter(ModelVariation):
     def __init__(self, act="relu", name=None):
         ModelVariation.__init__(self, name=name)
         self.act = act.lower()
+        assert ActivationConverter.IsCompatible(self.act)
         self.enum = ActivationConverter.actMap[self.act][0]
         self.low = ActivationConverter.actMap[self.act][1]
         self.high = ActivationConverter.actMap[self.act][2]
+
+    @staticmethod
+    def IsCompatible(value):
+        return value.lower() in ActivationConverter.actMap.keys()
 
     def SetToDefaultName(self):
         self.name = self.act
@@ -743,7 +818,7 @@ class Example:
 
     def AddVariations(self, *args, includeDefault=True, defaultName=None):
         self.variations.append([DefaultVariation(defaultName)] if includeDefault else [])
-        self.variations[-1].extend(list(args))
+        self.variations[-1].extend(ImplicitVariation.ImplicitConvertion(i) for i in args)
         return self
 
     def AddNchw(self, ops, params, includeDefault=True, defaultName=None):
