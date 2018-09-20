@@ -41,6 +41,13 @@ Return<void> SampleDriver::getCapabilities(getCapabilities_cb cb) {
         });
 }
 
+Return<void> SampleDriver::getVersionString(getVersionString_cb cb) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
+                 "SampleDriver::getVersionString");
+    cb(ErrorStatus::NONE, "JUST_AN_EXAMPLE");
+    return Void();
+}
+
 Return<void> SampleDriver::getSupportedOperations(const V1_0::Model& model,
                                                   getSupportedOperations_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,

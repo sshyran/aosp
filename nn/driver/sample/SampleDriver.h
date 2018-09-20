@@ -37,6 +37,7 @@ public:
     SampleDriver(const char* name) : mName(name) {}
     ~SampleDriver() override {}
     Return<void> getCapabilities(getCapabilities_cb cb) override;
+    Return<void> getVersionString(getVersionString_cb cb) override;
     Return<void> getSupportedOperations(const V1_0::Model& model,
                                         getSupportedOperations_cb cb) override;
     Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
