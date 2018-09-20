@@ -51,7 +51,20 @@ Return<void> SampleDriver::getSupportedOperations(const V1_0::Model& model,
         cb(ErrorStatus::INVALID_ARGUMENT, supported);
         return Void();
     }
-    return getSupportedOperations_1_1(convertToV1_1(model), cb);
+    return getSupportedOperations_1_2(convertToV1_2(model), cb);
+}
+
+Return<void> SampleDriver::getSupportedOperations_1_1(const V1_1::Model& model,
+                                                      getSupportedOperations_1_1_cb cb) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
+                 "SampleDriver::getSupportedOperations_1_1");
+    if (!validateModel(model)) {
+        VLOG(DRIVER) << "getSupportedOperations_1_1";
+        std::vector<bool> supported;
+        cb(ErrorStatus::INVALID_ARGUMENT, supported);
+        return Void();
+    }
+    return getSupportedOperations_1_2(convertToV1_2(model), cb);
 }
 
 Return<ErrorStatus> SampleDriver::prepareModel(const V1_0::Model& model,
@@ -68,7 +81,7 @@ Return<ErrorStatus> SampleDriver::prepareModel(const V1_0::Model& model,
         callback->notify(ErrorStatus::INVALID_ARGUMENT, nullptr);
         return ErrorStatus::INVALID_ARGUMENT;
     }
-    return prepareModel_1_1(convertToV1_1(model), ExecutionPreference::FAST_SINGLE_ANSWER,
+    return prepareModel_1_2(convertToV1_2(model), ExecutionPreference::FAST_SINGLE_ANSWER,
                             callback);
 }
 
@@ -77,13 +90,29 @@ Return<ErrorStatus> SampleDriver::prepareModel_1_1(const V1_1::Model& model,
                                                    const sp<IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
                  "SampleDriver::prepareModel_1_1");
-    if (VLOG_IS_ON(DRIVER)) {
-        VLOG(DRIVER) << "prepareModel_1_1";
-        logModelToInfo(model);
-    }
     if (callback.get() == nullptr) {
-        LOG(ERROR) << "invalid callback passed to prepareModel";
+        LOG(ERROR) << "invalid callback passed to prepareModel_1_1";
         return ErrorStatus::INVALID_ARGUMENT;
+    }
+    if (!validateModel(model) || !validateExecutionPreference(preference)) {
+        callback->notify(ErrorStatus::INVALID_ARGUMENT, nullptr);
+        return ErrorStatus::INVALID_ARGUMENT;
+    }
+    return prepareModel_1_2(convertToV1_2(model), preference, callback);
+}
+
+Return<ErrorStatus> SampleDriver::prepareModel_1_2(const V1_2::Model& model,
+                                                   ExecutionPreference preference,
+                                                   const sp<IPreparedModelCallback>& callback) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
+                 "SampleDriver::prepareModel_1_2");
+    if (callback.get() == nullptr) {
+        LOG(ERROR) << "invalid callback passed to prepareModel_1_2";
+        return ErrorStatus::INVALID_ARGUMENT;
+    }
+    if (VLOG_IS_ON(DRIVER)) {
+        VLOG(DRIVER) << "prepareModel_1_2";
+        logModelToInfo(model);
     }
     if (!validateModel(model) || !validateExecutionPreference(preference)) {
         callback->notify(ErrorStatus::INVALID_ARGUMENT, nullptr);
