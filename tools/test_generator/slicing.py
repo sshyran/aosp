@@ -45,9 +45,11 @@ import pprint
 from test_generator import Configuration
 from test_generator import Example
 from test_generator import Float32Scalar
+from test_generator import Float32Vector
 from test_generator import IgnoredOutput
 from test_generator import Input
 from test_generator import Int32Scalar
+from test_generator import Int32Vector
 from test_generator import Internal
 from test_generator import Model
 from test_generator import Output
