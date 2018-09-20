@@ -82,3 +82,4 @@ TEST_F(GeneratedTests, conv_float) {
             conv_float::examples);
 }
 
+#include "../generated/tests/conv_float.mod.py.cpp"
