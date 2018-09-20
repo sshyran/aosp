@@ -1845,3 +1845,4 @@ TEST_F(GeneratedTests, conv_float_model_name_example_name_nchw_layout_relu6_w_as
             conv_float::examples_model_name_example_name_nchw_layout_relu6_w_as_input_quantized);
 }
 
+#include "../generated/tests/conv_float.mod.py.cpp"
