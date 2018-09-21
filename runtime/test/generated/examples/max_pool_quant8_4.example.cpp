@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: max_pool_quant8_4.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {96, 160}}}
 }
 }, // End of an example
+};
+
