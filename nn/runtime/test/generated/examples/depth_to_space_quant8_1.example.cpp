@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: depth_to_space_quant8_1.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {1, 2, 3, 4, 252, 253, 254, 255}}}
 }
 }, // End of an example
+};
+

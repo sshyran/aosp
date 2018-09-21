@@ -1,7 +1,8 @@
+// clang-format off
 // Generated file (from: softmax_float_2_relaxed.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type1(Type::FLOAT32, {});
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
+  OperandType type1(Type::FLOAT32, {});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto beta = model->addOperand(&type1);
@@ -23,3 +24,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

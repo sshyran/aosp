@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: fully_connected_float_2.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -13,10 +15,12 @@
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
-  {{0, {0, 0.0732134f, 0, 0, 0, 0.280859f, 0, 0.128927f, 0, 0.0777251f, 0, 0.270268f, 0.271435f, 0.0173503f, 0.335465f, 0.235562f, 0, 0.0745866f, 0, 0.051611f, 0, 0.253876f, 0, 0.0814873f, 0, 0.104104f, 0, 0.248529f, 0.264194f, 0, 0.302973f, 0.166252f}}},
+  {{0, {0.0f, 0.0732134f, 0.0f, 0.0f, 0.0f, 0.280859f, 0.0f, 0.128927f, 0.0f, 0.0777251f, 0.0f, 0.270268f, 0.271435f, 0.0173503f, 0.335465f, 0.235562f, 0.0f, 0.0745866f, 0.0f, 0.051611f, 0.0f, 0.253876f, 0.0f, 0.0814873f, 0.0f, 0.104104f, 0.0f, 0.248529f, 0.264194f, 0.0f, 0.302973f, 0.166252f}}},
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
   {}
 }
 }, // End of an example
+};
+
