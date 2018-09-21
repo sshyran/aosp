@@ -1,7 +1,8 @@
+// clang-format off
 // Generated file (from: concat_float_1_relaxed.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type1(Type::INT32, {});
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
+  OperandType type1(Type::INT32, {});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 3});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
@@ -25,3 +26,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

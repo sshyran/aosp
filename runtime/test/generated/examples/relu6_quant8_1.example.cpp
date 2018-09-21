@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: relu6_quant8_1.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -41,3 +43,5 @@
   {{0, {12, 12, 12, 12}}}
 }
 }, // End of an example
+};
+

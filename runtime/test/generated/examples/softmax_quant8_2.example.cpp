@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: softmax_quant8_2.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {15, 24, 40, 67, 110, 110, 67, 40, 24, 15}}}
 }
 }, // End of an example
+};
+

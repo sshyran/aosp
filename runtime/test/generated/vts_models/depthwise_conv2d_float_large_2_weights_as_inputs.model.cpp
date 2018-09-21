@@ -1,4 +1,5 @@
-// Generated code. Do not edit
+// clang-format off
+// Generated file (from: depthwise_conv2d_float_large_2_weights_as_inputs.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
@@ -41,7 +42,7 @@ Model createTestModel() {
         {
             .type = OperandType::INT32,
             .dimensions = {},
-            .numberOfConsumers = 1,
+            .numberOfConsumers = 2,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -50,7 +51,7 @@ Model createTestModel() {
         {
             .type = OperandType::INT32,
             .dimensions = {},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -79,7 +80,7 @@ Model createTestModel() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::DEPTHWISE_CONV_2D,
-            .inputs = {0, 1, 2, 3, 3, 3, 3, 5, 5, 6, 4},
+            .inputs = {0, 1, 2, 3, 3, 3, 3, 4, 4, 5, 6},
             .outputs = {7},
         }
     };
@@ -87,7 +88,7 @@ Model createTestModel() {
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
     const std::vector<uint32_t> outputIndexes = {7};
     std::vector<uint8_t> operandValues = {
-      0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0
+      0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -101,8 +102,8 @@ Model createTestModel() {
     };
 }
 
-
 bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

@@ -1,3 +1,4 @@
+// clang-format off
 // Generated file (from: floor.mod.py). Do not edit
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 2});
@@ -17,3 +18,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

@@ -1,16 +1,17 @@
+// clang-format off
 // Generated file (from: fully_connected_quant8_2.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type4(Type::INT32, {});
-  OperandType type2(Type::TENSOR_INT32, {3}, 0.25f, 0);
-  OperandType type3(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 1.f, 127);
-  OperandType type1(Type::TENSOR_QUANT8_ASYMM, {3, 10}, 0.5f, 127);
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {4, 1, 5, 1}, 0.5f, 127);
+  OperandType type1(Type::TENSOR_QUANT8_ASYMM, {3, 10}, 0.5f, 127);
+  OperandType type2(Type::TENSOR_INT32, {3}, 0.25f, 0);
+  OperandType type3(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 1.0f, 127);
+  OperandType type4(Type::INT32, {});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto op2 = model->addOperand(&type1);
   auto b0 = model->addOperand(&type2);
-  auto op3 = model->addOperand(&type3);
   auto act_relu = model->addOperand(&type4);
+  auto op3 = model->addOperand(&type3);
   // Phase 2, operations
   static uint8_t op2_init[] = {129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 129, 131, 133, 135, 137, 139, 141, 143, 145, 147};
   model->setOperandValue(op2, op2_init, sizeof(uint8_t) * 30);
@@ -30,3 +31,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
