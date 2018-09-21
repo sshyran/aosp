@@ -1592,7 +1592,7 @@ typedef enum {
     ANEURALNETWORKS_MEAN = 31,
 
     /**
-     * Pads a tensor.
+     * Pads a tensor with zeros.
      *
      * This operation pads a tensor according to the specified paddings.
      *
@@ -1850,7 +1850,46 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_ARGMIN = 39,  // See ARGMAX for naming discussion.
+
+    /**
+     * Pads a tensor with the given constant value according to the specified
+     * paddings.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: up to 4
+     *
+     * Inputs:
+     * * 0: An n-D tensor, specifying the tensor to be padded.
+     * * 1: A 2-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32}, the paddings
+     *      for each spatial dimension of the input tensor. The shape of the
+     *      tensor must be {rank(input0), 2}.
+     *      padding[i, 0] specifies the number of elements to be padded in the
+     *      front of dimension i.
+     *      padding[i, 1] specifies the number of elements to be padded after
+     *      the end of dimension i.
+     * * 2: An scalar specifying the value to use for padding input0.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the
+     *      pad value should be of {@link ANEURALNETWORKS_FLOAT32}.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      the pad value should be of {@link ANEURALNETWORKS_INT32}. The
+     *      scale and zeroPoint are assumed to be the same as in input0.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0. The
+     *      output tensor has the same rank as input0, and each
+     *      dimension of the output tensor has the same size as the
+     *      corresponding dimension of the input tensor plus the size
+     *      of the padding:
+     *          output0.dimension[i] =
+     *              padding[i, 0] + input0.dimension[i] + padding[i, 1]
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_PAD_V2 = 40,
+
     ANEURALNETWORKS_BBOX_TRANSFORM = 41,
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_LSTM = 42,
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_RNN = 43,
