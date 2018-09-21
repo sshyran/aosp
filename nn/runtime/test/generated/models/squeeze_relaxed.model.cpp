@@ -1,8 +1,9 @@
+// clang-format off
 // Generated file (from: squeeze_relaxed.mod.py). Do not edit
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {4, 1, 1, 2});
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 2});
   OperandType type1(Type::TENSOR_INT32, {2});
+  OperandType type2(Type::TENSOR_FLOAT32, {4, 2});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto squeezeDims = model->addOperand(&type1);
@@ -24,3 +25,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

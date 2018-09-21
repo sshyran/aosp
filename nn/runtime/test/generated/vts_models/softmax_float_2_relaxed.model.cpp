@@ -1,4 +1,5 @@
-// Generated code. Do not edit
+// clang-format off
+// Generated file (from: softmax_float_2_relaxed.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
@@ -57,8 +58,8 @@ Model createTestModel() {
     };
 }
 
-
 bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

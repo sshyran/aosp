@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: depthwise_conv_relaxed.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -41,3 +43,5 @@
   {}
 }
 }, // End of an example
+};
+

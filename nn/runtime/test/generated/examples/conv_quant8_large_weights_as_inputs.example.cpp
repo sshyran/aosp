@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: conv_quant8_large_weights_as_inputs.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {8, 9, 11, 17, 21, 24, 26, 32, 38, 35, 43, 51, 44, 54, 65, 53, 66, 78}}}
 }
 }, // End of an example
+};
+

@@ -1,8 +1,9 @@
+// clang-format off
 // Generated file (from: strided_slice_float_7.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type2(Type::INT32, {});
   OperandType type0(Type::TENSOR_FLOAT32, {3});
   OperandType type1(Type::TENSOR_INT32, {1});
+  OperandType type2(Type::INT32, {});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto begins = model->addOperand(&type1);
@@ -37,3 +38,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

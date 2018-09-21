@@ -1,9 +1,10 @@
+// clang-format off
 // Generated file (from: space_to_batch_float_1_relaxed.mod.py). Do not edit
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 4, 4, 1});
-  OperandType type3(Type::TENSOR_FLOAT32, {4, 2, 2, 1});
-  OperandType type2(Type::TENSOR_INT32, {2, 2});
   OperandType type1(Type::TENSOR_INT32, {2});
+  OperandType type2(Type::TENSOR_INT32, {2, 2});
+  OperandType type3(Type::TENSOR_FLOAT32, {4, 2, 2, 1});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto block_size = model->addOperand(&type1);
@@ -28,3 +29,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

@@ -1,9 +1,10 @@
+// clang-format off
 // Generated file (from: mean_quant8_2.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type2(Type::INT32, {});
+  OperandType type0(Type::TENSOR_QUANT8_ASYMM, {4, 3, 2}, 0.8f, 5);
   OperandType type1(Type::TENSOR_INT32, {2});
-  OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1}, 0.8, 5);
-  OperandType type0(Type::TENSOR_QUANT8_ASYMM, {4, 3, 2}, 0.8, 5);
+  OperandType type2(Type::INT32, {});
+  OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1}, 0.8f, 5);
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto axis = model->addOperand(&type1);
@@ -26,3 +27,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

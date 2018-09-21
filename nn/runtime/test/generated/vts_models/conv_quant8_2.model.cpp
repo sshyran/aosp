@@ -1,4 +1,5 @@
-// Generated code. Do not edit
+// clang-format off
+// Generated file (from: conv_quant8_2.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
@@ -79,7 +80,7 @@ Model createTestModel() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::CONV_2D,
-            .inputs = {0, 1, 2, 3, 6, 5, 4},
+            .inputs = {0, 1, 2, 3, 4, 5, 6},
             .outputs = {7},
         }
     };
@@ -87,7 +88,7 @@ Model createTestModel() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {7};
     std::vector<uint8_t> operandValues = {
-      129, 131, 133, 135, 252, 255, 255, 255, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0
+      129, 131, 133, 135, 252, 255, 255, 255, 2, 0, 0, 0, 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -101,8 +102,8 @@ Model createTestModel() {
     };
 }
 
-
 bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

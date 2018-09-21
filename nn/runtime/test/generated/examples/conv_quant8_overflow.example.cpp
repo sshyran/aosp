@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: conv_quant8_overflow.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {75, 90, 105, 165, 203, 240, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}}}
 }
 }, // End of an example
+};
+
