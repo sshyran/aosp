@@ -18,6 +18,7 @@
 NNAPI_VERSION="
 V1_0
 V1_1
+V1_2
 "
 
 VTS_PATH=`realpath ../`
