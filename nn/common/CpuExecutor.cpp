@@ -376,26 +376,18 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& out = mOperands[outs[0]];
             Shape outShape = out.shape();
 
+            if (!addMulPrepare(in1.shape(), in2.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&out, outShape)) {
+                break;
+            }
             if (in1.type == OperandType::TENSOR_FLOAT32) {
-                success = addMulPrepare(in1.shape(), in2.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&out, outShape) &&
-                          addFloat32(reinterpret_cast<const float*>(in1.buffer),
-                                     in1.shape(),
-                                     reinterpret_cast<const float*>(in2.buffer),
-                                     in2.shape(),
-                                     activation,
-                                     reinterpret_cast<float*>(out.buffer),
-                                     outShape);
+                success = addFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const float*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<float*>(out.buffer), outShape);
             } else if (in1.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = addMulPrepare(in1.shape(), in2.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&out, outShape) &&
-                          addQuant8(reinterpret_cast<const uint8_t*>(in1.buffer),
-                                    in1.shape(),
-                                    reinterpret_cast<const uint8_t*>(in2.buffer),
-                                    in2.shape(),
-                                    activation,
-                                    reinterpret_cast<uint8_t*>(out.buffer),
-                                    outShape);
+                success = addQuant8(reinterpret_cast<const uint8_t*>(in1.buffer), in1.shape(),
+                                    reinterpret_cast<const uint8_t*>(in2.buffer), in2.shape(),
+                                    activation, reinterpret_cast<uint8_t*>(out.buffer), outShape);
             }
         } break;
         case OperationType::MUL: {
@@ -409,26 +401,18 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& out = mOperands[outs[0]];
             Shape outShape = out.shape();
 
+            if (!addMulPrepare(in1.shape(), in2.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&out, outShape)) {
+                break;
+            }
             if (in1.type == OperandType::TENSOR_FLOAT32) {
-                success = addMulPrepare(in1.shape(), in2.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&out, outShape) &&
-                          mulFloat32(reinterpret_cast<const float*>(in1.buffer),
-                                     in1.shape(),
-                                     reinterpret_cast<const float*>(in2.buffer),
-                                     in2.shape(),
-                                     activation,
-                                     reinterpret_cast<float*>(out.buffer),
-                                     outShape);
+                success = mulFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const float*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<float*>(out.buffer), outShape);
             } else if (in1.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = addMulPrepare(in1.shape(), in2.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&out, outShape) &&
-                          mulQuant8(reinterpret_cast<const uint8_t*>(in1.buffer),
-                                    in1.shape(),
-                                    reinterpret_cast<const uint8_t*>(in2.buffer),
-                                    in2.shape(),
-                                    activation,
-                                    reinterpret_cast<uint8_t*>(out.buffer),
-                                    outShape);
+                success = mulQuant8(reinterpret_cast<const uint8_t*>(in1.buffer), in1.shape(),
+                                    reinterpret_cast<const uint8_t*>(in2.buffer), in2.shape(),
+                                    activation, reinterpret_cast<uint8_t*>(out.buffer), outShape);
             }
         } break;
         case OperationType::FLOOR: {
@@ -439,12 +423,13 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!floorPrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = floorPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          floorFloat32(reinterpret_cast<const float*>(input.buffer),
-                                       reinterpret_cast<float*>(output.buffer),
-                                       outShape);
+                success = floorFloat32(reinterpret_cast<const float*>(input.buffer),
+                                       reinterpret_cast<float*>(output.buffer), outShape);
             }
         } break;
         case OperationType::DEQUANTIZE: {
@@ -455,19 +440,19 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!dequantizePrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = dequantizePrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          dequantizeQuant8ToFloat32(
-                                  reinterpret_cast<const uint8_t*>(input.buffer),
-                                  reinterpret_cast<float*>(output.buffer),
-                                  input.shape());
+                success = dequantizeQuant8ToFloat32(reinterpret_cast<const uint8_t*>(input.buffer),
+                                                    reinterpret_cast<float*>(output.buffer),
+                                                    input.shape());
             }
         } break;
         case OperationType::DEPTHWISE_CONV_2D: {
             const size_t inCount = ins.size();
-            if ((inCount != 11 && inCount != 8) ||
-                    !allParametersPresent(inCount, 1)) {
+            if ((inCount != 11 && inCount != 8) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input  = mOperands[ins[0]];
@@ -513,51 +498,33 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
-            if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = depthwiseConvPrepare(input.shape(), filter.shape(), bias.shape(),
-                                               padding_left, padding_right,
-                                               padding_top, padding_bottom,
-                                               stride_width, stride_height,
-                                               &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          depthwiseConvFloat32(reinterpret_cast<const float*>(input.buffer),
-                                               input.shape(),
-                                               reinterpret_cast<const float*>(filter.buffer),
-                                               filter.shape(),
-                                               reinterpret_cast<const float*>(bias.buffer),
-                                               bias.shape(),
-                                               padding_left, padding_right,
-                                               padding_top, padding_bottom,
-                                               stride_width, stride_height,
-                                               depth_multiplier, activation,
-                                               reinterpret_cast<float*>(output.buffer),
-                                               outShape);
-            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = depthwiseConvPrepare(input.shape(), filter.shape(), bias.shape(),
-                                               padding_left, padding_right,
-                                               padding_top, padding_bottom,
-                                               stride_width, stride_height,
-                                               &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          depthwiseConvQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                              input.shape(),
-                                              reinterpret_cast<const uint8_t*>(filter.buffer),
-                                              filter.shape(),
-                                              reinterpret_cast<const int32_t*>(bias.buffer),
-                                              bias.shape(),
-                                              padding_left, padding_right,
-                                              padding_top, padding_bottom,
-                                              stride_width, stride_height,
-                                              depth_multiplier, activation,
-                                              reinterpret_cast<uint8_t*>(output.buffer),
-                                              outShape);
+            if (!depthwiseConvPrepare(input.shape(), filter.shape(), bias.shape(), padding_left,
+                                      padding_right, padding_top, padding_bottom, stride_width,
+                                      stride_height, &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
             }
-
+            if (input.type == OperandType::TENSOR_FLOAT32) {
+                success = depthwiseConvFloat32(
+                        reinterpret_cast<const float*>(input.buffer), input.shape(),
+                        reinterpret_cast<const float*>(filter.buffer), filter.shape(),
+                        reinterpret_cast<const float*>(bias.buffer), bias.shape(), padding_left,
+                        padding_right, padding_top, padding_bottom, stride_width, stride_height,
+                        depth_multiplier, activation, reinterpret_cast<float*>(output.buffer),
+                        outShape);
+            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                success = depthwiseConvQuant8(
+                        reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
+                        reinterpret_cast<const uint8_t*>(filter.buffer), filter.shape(),
+                        reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(), padding_left,
+                        padding_right, padding_top, padding_bottom, stride_width, stride_height,
+                        depth_multiplier, activation, reinterpret_cast<uint8_t*>(output.buffer),
+                        outShape);
+            }
         } break;
         case OperationType::CONV_2D: {
             const size_t inCount = ins.size();
-            if ((inCount != 10 && inCount != 7) ||
-                    !allParametersPresent(inCount, 1)) {
+            if ((inCount != 10 && inCount != 7) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input  = mOperands[ins[0]];
@@ -600,44 +567,31 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!convPrepare(input.shape(), filter.shape(), bias.shape(), padding_left,
+                             padding_right, padding_top, padding_bottom, stride_width,
+                             stride_height, &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = convPrepare(input.shape(), filter.shape(), bias.shape(),
-                                      padding_left, padding_right,
-                                      padding_top, padding_bottom,
-                                      stride_width, stride_height,
-                                      &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          convFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                success = convFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
                                       reinterpret_cast<const float*>(filter.buffer), filter.shape(),
                                       reinterpret_cast<const float*>(bias.buffer), bias.shape(),
-                                      padding_left, padding_right,
-                                      padding_top, padding_bottom,
+                                      padding_left, padding_right, padding_top, padding_bottom,
                                       stride_width, stride_height, activation,
                                       reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = convPrepare(input.shape(), filter.shape(), bias.shape(),
-                                      padding_left, padding_right,
-                                      padding_top, padding_bottom,
-                                      stride_width, stride_height,
-                                      &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          convQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                     input.shape(),
+                success = convQuant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
                                      reinterpret_cast<const uint8_t*>(filter.buffer),
-                                     filter.shape(),
-                                     reinterpret_cast<const int32_t*>(bias.buffer),
-                                     bias.shape(),
-                                     padding_left, padding_right,
-                                     padding_top, padding_bottom,
-                                     stride_width, stride_height, activation,
-                                     reinterpret_cast<uint8_t*>(output.buffer),
-                                     outShape);
+                                     filter.shape(), reinterpret_cast<const int32_t*>(bias.buffer),
+                                     bias.shape(), padding_left, padding_right, padding_top,
+                                     padding_bottom, stride_width, stride_height, activation,
+                                     reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::AVERAGE_POOL_2D: {
             const size_t inCount = ins.size();
-            if ((inCount != 10 && inCount != 7) ||
-                    !allParametersPresent(inCount, 1)) {
+            if ((inCount != 10 && inCount != 7) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
@@ -680,44 +634,29 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!genericPoolingPrepare(input.shape(), padding_left, padding_right, padding_top,
+                                       padding_bottom, stride_width, stride_height, filter_width,
+                                       filter_height, &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericPoolingPrepare(input.shape(),
-                                                padding_left, padding_right,
-                                                padding_top, padding_bottom,
-                                                stride_width, stride_height,
-                                                filter_width, filter_height,
-                                                &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          averagePoolFloat32(reinterpret_cast<const float*>(input.buffer),
-                                             input.shape(),
-                                             padding_left, padding_right,
-                                             padding_top, padding_bottom,
-                                             stride_width, stride_height,
-                                             filter_width, filter_height, activation,
-                                             reinterpret_cast<float*>(output.buffer),
-                                             outShape);
+                success = averagePoolFloat32(reinterpret_cast<const float*>(input.buffer),
+                                             input.shape(), padding_left, padding_right,
+                                             padding_top, padding_bottom, stride_width,
+                                             stride_height, filter_width, filter_height, activation,
+                                             reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = genericPoolingPrepare(input.shape(),
-                                                padding_left, padding_right,
-                                                padding_top, padding_bottom,
-                                                stride_width, stride_height,
-                                                filter_width, filter_height,
-                                                &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          averagePoolQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                            input.shape(),
-                                            padding_left, padding_right,
-                                            padding_top, padding_bottom,
-                                            stride_width, stride_height,
+                success = averagePoolQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
+                                            input.shape(), padding_left, padding_right, padding_top,
+                                            padding_bottom, stride_width, stride_height,
                                             filter_width, filter_height, activation,
-                                            reinterpret_cast<uint8_t*>(output.buffer),
-                                            outShape);
+                                            reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::L2_POOL_2D: {
             const size_t inCount = ins.size();
-            if ((inCount != 10 && inCount != 7) ||
-                    !allParametersPresent(inCount, 1)) {
+            if ((inCount != 10 && inCount != 7) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
@@ -760,28 +699,23 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!genericPoolingPrepare(input.shape(), padding_left, padding_right, padding_top,
+                                       padding_bottom, stride_width, stride_height, filter_width,
+                                       filter_height, &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericPoolingPrepare(input.shape(),
-                                                padding_left, padding_right,
-                                                padding_top, padding_bottom,
-                                                stride_width, stride_height,
-                                                filter_width, filter_height,
-                                                &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          l2PoolFloat32(reinterpret_cast<const float*>(input.buffer),
-                                        input.shape(),
-                                        padding_left, padding_right,
-                                        padding_top, padding_bottom,
-                                        stride_width, stride_height,
-                                        filter_width, filter_height, activation,
-                                        reinterpret_cast<float*>(output.buffer),
+                success = l2PoolFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                        padding_left, padding_right, padding_top, padding_bottom,
+                                        stride_width, stride_height, filter_width, filter_height,
+                                        activation, reinterpret_cast<float*>(output.buffer),
                                         outShape);
             }
         } break;
         case OperationType::MAX_POOL_2D: {
             const size_t inCount = ins.size();
-            if ((inCount != 10 && inCount != 7) ||
-                    !allParametersPresent(inCount, 1)) {
+            if ((inCount != 10 && inCount != 7) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
@@ -824,40 +758,25 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
-            if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericPoolingPrepare(input.shape(),
-                                                padding_left, padding_right,
-                                                padding_top, padding_bottom,
-                                                stride_width, stride_height,
-                                                filter_width, filter_height,
-                                                &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          maxPoolFloat32(reinterpret_cast<const float*>(input.buffer),
-                                         input.shape(),
-                                         padding_left, padding_right,
-                                         padding_top, padding_bottom,
-                                         stride_width, stride_height,
-                                         filter_width, filter_height, activation,
-                                         reinterpret_cast<float*>(output.buffer),
-                                         outShape);
-            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = genericPoolingPrepare(input.shape(),
-                                                padding_left, padding_right,
-                                                padding_top, padding_bottom,
-                                                stride_width, stride_height,
-                                                filter_width, filter_height,
-                                                &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          maxPoolQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                        input.shape(),
-                                        padding_left, padding_right,
-                                        padding_top, padding_bottom,
-                                        stride_width, stride_height,
-                                        filter_width, filter_height, activation,
-                                        reinterpret_cast<uint8_t*>(output.buffer),
-                                        outShape);
+            if (!genericPoolingPrepare(input.shape(), padding_left, padding_right, padding_top,
+                                       padding_bottom, stride_width, stride_height, filter_width,
+                                       filter_height, &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
             }
-
+            if (input.type == OperandType::TENSOR_FLOAT32) {
+                success = maxPoolFloat32(reinterpret_cast<const float*>(input.buffer),
+                                         input.shape(), padding_left, padding_right, padding_top,
+                                         padding_bottom, stride_width, stride_height, filter_width,
+                                         filter_height, activation,
+                                         reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                success = maxPoolQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
+                                        input.shape(), padding_left, padding_right, padding_top,
+                                        padding_bottom, stride_width, stride_height, filter_width,
+                                        filter_height, activation,
+                                        reinterpret_cast<uint8_t*>(output.buffer), outShape);
+            }
         } break;
         case OperationType::RELU: {
             if (!allParametersPresent(1, 1)) {
@@ -867,20 +786,16 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!genericActivationPrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          reluFloat32(reinterpret_cast<const float*>(input.buffer),
-                                      input.shape(),
-                                      reinterpret_cast<float*>(output.buffer),
-                                      outShape);
+                success = reluFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                      reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          reluQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                     input.shape(),
-                                     reinterpret_cast<uint8_t*>(output.buffer),
-                                     outShape);
+                success = reluQuant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
+                                     reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::RELU1: {
@@ -891,20 +806,16 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!genericActivationPrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          relu1Float32(reinterpret_cast<const float*>(input.buffer),
-                                       input.shape(),
-                                       reinterpret_cast<float*>(output.buffer),
-                                       outShape);
+                success = relu1Float32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                       reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          relu1Quant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                      input.shape(),
-                                      reinterpret_cast<uint8_t*>(output.buffer),
-                                      outShape);
+                success = relu1Quant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
+                                      reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::RELU6: {
@@ -915,20 +826,16 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!genericActivationPrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          relu6Float32(reinterpret_cast<const float*>(input.buffer),
-                                       input.shape(),
-                                       reinterpret_cast<float*>(output.buffer),
-                                       outShape);
+                success = relu6Float32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                       reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          relu6Quant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                      input.shape(),
-                                      reinterpret_cast<uint8_t*>(output.buffer),
-                                      outShape);
+                success = relu6Quant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
+                                      reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::TANH: {
@@ -939,13 +846,13 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!genericActivationPrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          tanhFloat32(reinterpret_cast<const float*>(input.buffer),
-                                      input.shape(),
-                                      reinterpret_cast<float*>(output.buffer),
-                                      outShape);
+                success = tanhFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                      reinterpret_cast<float*>(output.buffer), outShape);
             }
         } break;
         case OperationType::LOGISTIC: {
@@ -956,19 +863,17 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!genericActivationPrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          logisticFloat32(reinterpret_cast<const float*>(input.buffer),
-                                          input.shape(),
-                                          reinterpret_cast<float*>(output.buffer),
-                                          outShape);
+                success =
+                        logisticFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                        reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          logisticQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                         input.shape(),
-                                         reinterpret_cast<uint8_t*>(output.buffer),
+                success = logisticQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
+                                         input.shape(), reinterpret_cast<uint8_t*>(output.buffer),
                                          outShape);
             }
         } break;
@@ -986,22 +891,18 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!genericActivationPrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          softmaxFloat32(reinterpret_cast<const float*>(input.buffer),
-                                         input.shape(),
-                                         beta,
-                                         reinterpret_cast<float*>(output.buffer),
-                                         output.shape());
+                success = softmaxFloat32(reinterpret_cast<const float*>(input.buffer),
+                                         input.shape(), beta,
+                                         reinterpret_cast<float*>(output.buffer), output.shape());
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = genericActivationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          softmaxQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                        input.shape(),
-                                        beta,
-                                        reinterpret_cast<uint8_t*>(output.buffer),
-                                        output.shape());
+                success = softmaxQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
+                                        input.shape(), beta,
+                                        reinterpret_cast<uint8_t*>(output.buffer), output.shape());
             }
         } break;
         case OperationType::FULLY_CONNECTED: {
@@ -1017,32 +918,22 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!fullyConnectedPrepare(input.shape(), weights.shape(), bias.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = fullyConnectedPrepare(input.shape(), weights.shape(), bias.shape(),
-                                                &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          fullyConnectedFloat32(reinterpret_cast<const float*>(input.buffer),
-                                                input.shape(),
-                                                reinterpret_cast<const float*>(weights.buffer),
-                                                weights.shape(),
-                                                reinterpret_cast<const float*>(bias.buffer),
-                                                bias.shape(),
-                                                activation,
-                                                reinterpret_cast<float*>(output.buffer),
-                                                outShape);
+                success = fullyConnectedFloat32(
+                        reinterpret_cast<const float*>(input.buffer), input.shape(),
+                        reinterpret_cast<const float*>(weights.buffer), weights.shape(),
+                        reinterpret_cast<const float*>(bias.buffer), bias.shape(), activation,
+                        reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = fullyConnectedPrepare(input.shape(), weights.shape(), bias.shape(),
-                                                &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          fullyConnectedQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                               input.shape(),
-                                               reinterpret_cast<const uint8_t*>(weights.buffer),
-                                               weights.shape(),
-                                               reinterpret_cast<const int32_t*>(bias.buffer),
-                                               bias.shape(),
-                                               activation,
-                                               reinterpret_cast<uint8_t*>(output.buffer),
-                                               outShape);
+                success = fullyConnectedQuant8(
+                        reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
+                        reinterpret_cast<const uint8_t*>(weights.buffer), weights.shape(),
+                        reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(), activation,
+                        reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::CONCATENATION: {
@@ -1093,20 +984,17 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!genericNormalizationPrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericNormalizationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          l2normFloat32(reinterpret_cast<const float*>(input.buffer),
-                                        input.shape(),
-                                        reinterpret_cast<float*>(output.buffer),
-                                        outShape);
+                success = l2normFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                        reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = genericNormalizationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          l2normQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                       input.shape(),
-                                       reinterpret_cast<uint8_t*>(output.buffer),
-                                       outShape);
+                success =
+                        l2normQuant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
+                                     reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::LOCAL_RESPONSE_NORMALIZATION: {
@@ -1122,14 +1010,14 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
+            if (!genericNormalizationPrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = genericNormalizationPrepare(input.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          localResponseNormFloat32(reinterpret_cast<const float*>(input.buffer),
-                                                   input.shape(),
-                                                   radius, bias, alpha, beta,
-                                                   reinterpret_cast<float*>(output.buffer),
-                                                   outShape);
+                success = localResponseNormFloat32(
+                        reinterpret_cast<const float*>(input.buffer), input.shape(), radius, bias,
+                        alpha, beta, reinterpret_cast<float*>(output.buffer), outShape);
             }
         } break;
         case OperationType::RESHAPE: {
