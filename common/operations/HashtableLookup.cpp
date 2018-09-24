@@ -17,7 +17,6 @@
 #include "HashtableLookup.h"
 
 #include "CpuExecutor.h"
-#include "HalInterfaces.h"
 #include "Operations.h"
 
 #include "Tracing.h"
