@@ -123,7 +123,7 @@ using DeviceManager = ::android::nn::DeviceManager;
 using ExecutePreference = ::android::nn::wrapper::ExecutePreference;
 using ExecutionPlan = ::android::nn::ExecutionPlan;
 using ExecutionStep = ::android::nn::ExecutionStep;
-using HidlModel = ::android::hardware::neuralnetworks::V1_1::Model;
+using HidlModel = ::android::hardware::neuralnetworks::V1_2::Model;
 using ModelBuilder = ::android::nn::ModelBuilder;
 using Result = ::android::nn::wrapper::Result;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
@@ -227,7 +227,7 @@ public:
             mOperationMask(operationMask), mOEM(oem) {}
     ~PartitioningDriver() override {}
 
-    Return<ErrorStatus> prepareModel_1_1(const Model& model, ExecutionPreference,
+    Return<ErrorStatus> prepareModel_1_2(const Model& model, ExecutionPreference,
                                          const sp<IPreparedModelCallback>& cb) override {
         ErrorStatus status = ErrorStatus::NONE;
         if (mOEM != OEMYes) {
@@ -251,7 +251,7 @@ public:
         return Void();
     }
 
-    Return<void> getSupportedOperations_1_1(const Model& model,
+    Return<void> getSupportedOperations_1_2(const Model& model,
                                             getSupportedOperations_cb cb) override {
         if (!android::nn::validateModel(model)) {
             cb(ErrorStatus::INVALID_ARGUMENT, std::vector<bool>());

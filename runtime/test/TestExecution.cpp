@@ -36,7 +36,7 @@ namespace android {
 using CompilationBuilder = nn::CompilationBuilder;
 using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
-using HidlModel = hardware::neuralnetworks::V1_1::Model;
+using HidlModel = hardware::neuralnetworks::V1_2::Model;
 using PreparedModelCallback = hardware::neuralnetworks::V1_0::implementation::PreparedModelCallback;
 using Result = nn::wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
@@ -95,8 +95,8 @@ public:
         return Void();
     }
 
-    Return<void> getSupportedOperations_1_1(const HidlModel& model,
-                                            getSupportedOperations_cb cb) override {
+    Return<void> getSupportedOperations_1_2(const HidlModel& model,
+                                            getSupportedOperations_1_2_cb cb) override {
         if (nn::validateModel(model)) {
             std::vector<bool> supported(model.operations.size(), true);
             cb(ErrorStatus::NONE, supported);
@@ -107,14 +107,14 @@ public:
         return Void();
     }
 
-    Return<ErrorStatus> prepareModel_1_1(
+    Return<ErrorStatus> prepareModel_1_2(
         const HidlModel& model,
         ExecutionPreference preference,
         const sp<IPreparedModelCallback>& actualCallback) override {
 
         sp<PreparedModelCallback> localCallback = new PreparedModelCallback;
         Return<ErrorStatus> prepareModelReturn =
-                SampleDriver::prepareModel_1_1(model, preference, localCallback);
+                SampleDriver::prepareModel_1_2(model, preference, localCallback);
         if (!prepareModelReturn.isOkUnchecked()) {
             return prepareModelReturn;
         }
@@ -138,6 +138,7 @@ private:
 };
 
 // Like TestDriver, but implementing 1.0
+// TODO: Add TestDriver11.
 class TestDriver10 : public V1_0::IDevice {
 public:
     TestDriver10(const std::string& name, ErrorStatus errorStatus) : m11Driver(name, errorStatus) {}
