@@ -92,7 +92,7 @@ using CompilationBuilder = nn::CompilationBuilder;
 using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
 using ExecutionPlan = nn::ExecutionPlan;
-using HidlModel = hardware::neuralnetworks::V1_1::Model;
+using HidlModel = hardware::neuralnetworks::V1_2::Model;
 using MemoryBuilder = nn::Memory;
 using ModelBuilder = nn::ModelBuilder;
 using Result = nn::wrapper::Result;
@@ -477,7 +477,7 @@ public:
         return Void();
     }
 
-    Return<void> getSupportedOperations_1_1(const HidlModel& model,
+    Return<void> getSupportedOperations_1_2(const HidlModel& model,
                                             getSupportedOperations_cb cb) override {
         if (nn::validateModel(model)) {
             const size_t count = model.operations.size();
@@ -497,11 +497,11 @@ public:
         return Void();
     }
 
-    Return<ErrorStatus> prepareModel_1_1(const HidlModel& model, ExecutionPreference preference,
+    Return<ErrorStatus> prepareModel_1_2(const HidlModel& model, ExecutionPreference preference,
                                          const sp<IPreparedModelCallback>& callback) override {
         // NOTE: We verify that all operations in the model are supported.
         ErrorStatus outStatus = ErrorStatus::INVALID_ARGUMENT;
-        auto ret = getSupportedOperations_1_1(
+        auto ret = getSupportedOperations_1_2(
             model,
             [&outStatus](ErrorStatus inStatus, const hidl_vec<bool>& supportedOperations) {
                 if (inStatus == ErrorStatus::NONE) {
@@ -512,7 +512,7 @@ public:
                 }
             });
         if (ret.isOk() && (outStatus == ErrorStatus::NONE)) {
-            return SampleDriver::prepareModel_1_1(model, preference, callback);
+            return SampleDriver::prepareModel_1_2(model, preference, callback);
         } else {
             callback->notify(ErrorStatus::INVALID_ARGUMENT, nullptr);
             return ErrorStatus::INVALID_ARGUMENT;

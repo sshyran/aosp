@@ -94,6 +94,8 @@ typedef enum {
  * Available since API level 27.
  */
 typedef enum {
+    // Operations below are available since API level 27.
+
     /**
      * Adds two tensors, element-wise.
      *
@@ -1472,6 +1474,8 @@ typedef enum {
      */
     ANEURALNETWORKS_TANH = 28,
 
+    // Operations below are available since API level 28.
+
     // TODO: make the description easier to understand.
     /**
      * BatchToSpace for N-dimensional tensors.
@@ -1694,28 +1698,30 @@ typedef enum {
      *
      * Inputs:
      * * 0: An n-D tensor, specifying the tensor to be sliced.
-     * * 1: A 1-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32}, the starts of
-     *      the dimensions of the input tensor to be sliced. The length must be
-     *      of rank(input0).
-     * * 2: A 1-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32}, the ends of
-     *      the dimensions of the input tensor to be sliced. The length must be
-     *      of rank(input0).
-     * * 3: A 1-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32}, the strides of
-     *      the dimensions of the input tensor to be sliced. The length must be
-     *      of rank(input0).
-     * * 4: An {@link ANEURALNETWORKS_INT32} scalar, begin_mask. If the ith bit
+     * * 1: begin, a 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}. The
+     *      starts of the dimensions of the input tensor to be sliced. The
+     *      length must be of rank(input0).
+     * * 2: end, a 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}. The
+     *      ends of the dimensions of the input tensor to be sliced. The length
+     *      must be of rank(input0).
+     * * 3: strides, a 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}. The
+     *      strides of the dimensions of the input tensor to be sliced. The
+     *      length must be of rank(input0). The entries must be non-zero.
+     * * 4: begin_mask, an {@link ANEURALNETWORKS_INT32} scalar. If the ith bit
      *      of begin_mask is set, begin[i] is ignored and the fullest possible
      *      range in that dimension is used instead.
-     * * 5: An {@link ANEURALNETWORKS_INT32} scalar, end_mask. If the ith bit of
+     * * 5: end_mask, an {@link ANEURALNETWORKS_INT32} scalar. If the ith bit of
      *      end_mask is set, end[i] is ignored and the fullest possible range in
      *      that dimension is used instead.
-     * * 6: An {@link ANEURALNETWORKS_INT32} scalar, shrink_axis_mask. An int32
-     *      mask. If the ith bit of shrink_axis_mask is set, it implies that the
-     *      ith specification shrinks the dimensionality by 1. A slice of size 1
-     *      starting from begin[i] in the dimension must be preserved.
+     * * 6: shrink_axis_mask, an {@link ANEURALNETWORKS_INT32} scalar. If the
+     *      ith bit of shrink_axis_mask is set, the ith dimension specification
+     *      shrinks the dimensionality by 1, taking on the value at index
+     *      begin[i]. In this case, the ith specification must define a
+     *      slice of size 1, e.g. begin[i] = x, end[i] = x + 1.
      *
      * Outputs:
-     * * 0: A tensor of the same {@link OperandCode} as input0.
+     * * 0: A tensor of the same {@link OperandCode} as input0 and rank (n - k),
+     *      where k is the number of bits set in shrink_axis_mask.
      *
      * Available since API level 28.
      */
@@ -1787,6 +1793,9 @@ typedef enum {
      * Available since API level 28.
      */
     ANEURALNETWORKS_TRANSPOSE = 37,
+
+    // Operations below are available since API level 29.
+
 } OperationCode;
 
 /**

@@ -18,16 +18,7 @@
 #define FRAMEWORKS_ML_NN_RNN_H
 
 #include "ActivationFunctor.h"
-
-namespace android {
-namespace hardware {
-namespace neuralnetworks {
-namespace V1_1 {
-struct Operation;
-}
-}  // namespace neuralnetworks
-}  // namespace hardware
-}  // namespace android
+#include "HalOperation.h"
 
 namespace android {
 namespace nn {
@@ -37,10 +28,10 @@ struct Shape;
 
 class RNN {
  public:
-  RNN(const android::hardware::neuralnetworks::V1_1::Operation &operation,
+  RNN(const Operation &operation,
       std::vector<RunTimeOperandInfo> &operands);
 
-  static bool Prepare(const android::hardware::neuralnetworks::V1_1::Operation &operation,
+  static bool Prepare(const Operation &operation,
                       std::vector<RunTimeOperandInfo> &operands,
                       Shape *hiddenStateShape,
                       Shape *outputShape);
