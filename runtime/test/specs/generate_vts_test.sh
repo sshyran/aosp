@@ -15,11 +15,15 @@
 
 # usage: generate_vts_test.sh <tests>
 
+set -Eeuo pipefail
+
 NNAPI_VERSION="
 V1_0
 V1_1
 V1_2
 "
+
+cd "$(dirname $0)"
 
 VTS_PATH=`realpath ../`
 function generate_one_testcase {
