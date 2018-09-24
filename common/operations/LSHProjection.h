@@ -17,17 +17,9 @@
 #ifndef FRAMEWORKS_ML_NN_LSH_PROJECTION_H
 #define FRAMEWORKS_ML_NN_LSH_PROJECTION_H
 
-#include "Operations.h"
+#include "HalOperation.h"
 
-namespace android {
-namespace hardware {
-namespace neuralnetworks {
-namespace V1_0 {
-struct Operation;
-}
-}  // namespace neuralnetworks
-}  // namespace hardware
-}  // namespace android
+#include <vector>
 
 namespace android {
 namespace nn {
@@ -44,11 +36,11 @@ struct Shape;
 class LSHProjection {
  public:
   LSHProjection(
-      const android::hardware::neuralnetworks::V1_1::Operation &operation,
+      const Operation &operation,
       std::vector<RunTimeOperandInfo> &operands);
 
   static bool Prepare(
-      const android::hardware::neuralnetworks::V1_1::Operation &operation,
+      const Operation &operation,
       std::vector<RunTimeOperandInfo>& operands,
       Shape *outputShape);
   bool Eval();
