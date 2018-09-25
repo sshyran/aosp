@@ -2309,6 +2309,64 @@ typedef enum {
      */
     ANEURALNETWORKS_QUANTIZE = 70,
 
+    /**
+     * A version of quantized LSTM, using 16 bit quantization for internal
+     * state.
+     *
+     * There is no projection layer, so cell state size is equal to the output
+     * size.
+     *
+     * Inputs:
+     * * 0: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [numBatches, inputSize] specifying the input to the LSTM
+     *      cell. Tensor is quantized with a fixed quantization range of
+     *      [-1, 127/128] (scale = 1/128, zeroPoint = 128).
+     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [numBathes, outputSize] specifying the output of the LSTM
+     *      cell from previous time-step. Tensor is quantized with a fixed
+     *      quantization range of [-1, 127/128] (scale = 1/128, zeroPoint =
+     *      128).
+     * * 2: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [4 * cellSize, inputSize + outputSize] specifying the
+     *      weights for the fully-connected layer inside the LSTM cell. Weights
+     *      have no additional restrictions on their quantization.
+     * * 3: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} and shape
+     *      [4 * cellSize] specifying the bias for the fully-connected layer
+     *      inside the LSTM cell. Bias is quantized with scale being a product
+     *      of input and weights scales and zeroPoint equal to 0.
+     * * 4: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     *      and shape [numBatches, cellSize] specifying the cell state from the
+     *      previous time step of the LSTM cell. It is quantized using a
+     *      quantization range of [-2^4, 2^4 * 32767/32768] (scale = 2^4 /
+     *      32768, zeroPoint = 0).
+     *
+     * Outputs:
+     * * 0: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [numBatches, inputSize + outputSize]. This tensor is a
+     *      scratch buffer used to store concatenation of the input and the
+     *      output from previous time step to pass it to the fully-connected
+     *      layer. Tensor is quantized with a fixed quantization range of
+     *      [-1, 127/128] (scale = 1/128, zeroPoint = 128).
+     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     *      and shape [numBatches, 4 * cellSize]. This tensor is a scratch
+     *      buffer used to store the result of the fully-connected layer.
+     * * 2: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [numBathes, outputSize] which contains a copy of the
+     *      output from the current time step. NN API requires this tensor to
+     *      pass the output value through time. Tensor is quantized with a fixed
+     *      quantization range of [-1, 127/128] (scale = 1/128, zeroPoint =
+     *      128).
+     * * 3: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     *      and shape [numBatches, cellSize] which contains a cell state from
+     *      the current time step. NN API requires this tensor to pass the cell
+     *      state value through time. Tensor is quantized using a quantization
+     *      range of [-2^4, 2^4 * 32767/32768] (scale = 2^4 / 32768, zeroPoint =
+     *      0).
+     * * 4: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [numBathes, outputSize] which contains the output value.
+     *      Tensor is quantized with a fixed quantization range of [-1, 127/128]
+     *      (scale = 1/128, zeroPoint = 128).
+     */
     ANEURALNETWORKS_QUANTIZED_16BIT_LSTM = 71,
     ANEURALNETWORKS_RANDOM_MULTINOMIAL = 72,
     ANEURALNETWORKS_REDUCE = 73,
