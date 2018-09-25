@@ -74,6 +74,7 @@ cc_library_static {
         "operations/HeatmapMaxKeypoint.cpp",
         "operations/LSHProjection.cpp",
         "operations/LSTM.cpp",
+        "operations/Multinomial.cpp",
         "operations/Normalization.cpp",
         "operations/Pooling.cpp",
         "operations/QuantizedLSTM.cpp",
@@ -106,10 +107,12 @@ cc_library_static {
         "libtextclassifier_hash_headers",
         "libeigen",
         "gemmlowp_headers",
+        "philox_random_headers",
         "tensorflow_headers",
     ],
     whole_static_libs: [
         "libtflite_kernel_utils",
+        "philox_random",
     ],
 
     cflags: [
@@ -130,19 +133,30 @@ cc_library_static {
 cc_test {
     name: "NeuralNetworksTest_operations",
     shared_libs: [
+        "libhidlmemory",
         "libneuralnetworks",
+        "android.hardware.neuralnetworks@1.0",
+        "android.hardware.neuralnetworks@1.1",
+        "android.hardware.neuralnetworks@1.2",
+        "android.hidl.allocator@1.0",
+        "android.hidl.memory@1.0",
     ],
     static_libs: [
         "libgmock",
+        "libneuralnetworks_common",
     ],
     cflags: [
         "-Wno-extern-c-compat",
+        "-Wno-unused-parameter",
+        "-Wno-invalid-partial-specialization",
     ],
     srcs: [
         "operations/*Test.cpp",
     ],
     local_include_dirs: [ "include" ],
     header_libs: [
+        "libeigen",
+        "philox_random_headers",
         "tensorflow_headers",
     ],
 }
