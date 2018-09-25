@@ -74,6 +74,7 @@ cc_library_static {
         "operations/LSTM.cpp",
         "operations/Normalization.cpp",
         "operations/Pooling.cpp",
+        "operations/QuantizedLSTM.cpp",
         "operations/Reshape.cpp",
         "operations/RNN.cpp",
         "operations/RoiAlign.cpp",
