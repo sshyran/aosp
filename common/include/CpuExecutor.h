@@ -75,8 +75,8 @@ public:
     explicit RunTimePoolInfo(uint8_t* buffer);
 
     // Implement move
-    RunTimePoolInfo(RunTimePoolInfo&& other);
-    RunTimePoolInfo& operator=(RunTimePoolInfo&& other);
+    RunTimePoolInfo(RunTimePoolInfo&& other) noexcept;
+    RunTimePoolInfo& operator=(RunTimePoolInfo&& other) noexcept;
 
     // Forbid copy
     RunTimePoolInfo(const RunTimePoolInfo&) = delete;
