@@ -562,11 +562,11 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_DEPTHWISE_CONV_2D: {
-            if ((inputCount != 11 && inputCount != 8) || outputCount != 1) {
-                LOG(ERROR) << "Invalid number of input operands ("
-                           << inputCount << ", expected 11 or 8) or output operands ("
-                           << outputCount << ", expected 1) for operation "
-                           << kOperationNames[opType];
+            if ((inputCount != 12 && inputCount != 11 && inputCount != 9 && inputCount != 8) ||
+                outputCount != 1) {
+                LOG(ERROR) << "Invalid number of input operands (" << inputCount
+                           << ", expected 12, 11, 9 or 8) or output operands (" << outputCount
+                           << ", expected 1) for operation " << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -598,11 +598,14 @@ int validateOperation(ANeuralNetworksOperationType opType,
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
-            if (inputCount == 11) {
+            if (inputCount >= 11) {
                 std::vector<OperandType> explicitScalarTypes(3, OperandType::INT32);
                 inExpectedTypes.insert(inExpectedTypes.end(),
                                        explicitScalarTypes.begin(),
                                        explicitScalarTypes.end());
+            }
+            if (inputCount == 12 || inputCount == 9) {
+                inExpectedTypes.push_back(OperandType::BOOL);
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
