@@ -1480,6 +1480,18 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 setInfoAndAllocateIfNeeded(&output, outputShape) &&
                 lstm_cell.Eval();
         } break;
+        case OperationType::RANDOM_MULTINOMIAL: {
+            const RunTimeOperandInfo& lookups = mOperands[ins[HashtableLookup::kLookupTensor]];
+            const RunTimeOperandInfo& keys = mOperands[ins[HashtableLookup::kKeyTensor]];
+            const RunTimeOperandInfo& values = mOperands[ins[HashtableLookup::kValueTensor]];
+            RunTimeOperandInfo& output = mOperands[outs[Multinomial::kOutputTensor]];
+
+            Shape outputShape;
+            Multinomial multinomial(operation, mOperands);
+
+            success = Multinomial::Prepare(operation, mOperands, &outputShape) &&
+                      setInfoAndAllocateIfNeeded(&output, outputShape) && multinomial.Eval();
+        } break;
         case OperationType::RNN: {
             RunTimeOperandInfo &hiddenStateOut =
                 mOperands[outs[RNN::kHiddenStateOutTensor]];
