@@ -941,18 +941,21 @@ int CpuExecutor::executeOperation(const Operation& operation) {
         } break;
         case OperationType::MAX_POOL_2D: {
             const size_t inCount = ins.size();
-            if ((inCount != 10 && inCount != 7) || !allParametersPresent(inCount, 1)) {
+            if ((inCount != 11 && inCount != 10 && inCount != 8 && inCount != 7) ||
+                !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
 
             int32_t padding_left, padding_right;
             int32_t padding_top, padding_bottom;
+            int32_t padding_implicit = 0;
             int32_t stride_width, stride_height;
             int32_t filter_width, filter_height;
             int32_t activation;
+            bool data_layout = false;
 
-            if (inCount == 10) {
+            if (inCount >= 10) {
                 padding_left     = getScalarData<int32_t>(mOperands[ins[1]]);
                 padding_right    = getScalarData<int32_t>(mOperands[ins[2]]);
                 padding_top      = getScalarData<int32_t>(mOperands[ins[3]]);
@@ -962,15 +965,35 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 filter_width     = getScalarData<int32_t>(mOperands[ins[7]]);
                 filter_height    = getScalarData<int32_t>(mOperands[ins[8]]);
                 activation       = getScalarData<int32_t>(mOperands[ins[9]]);
+                if (inCount == 11) {
+                    data_layout = getScalarData<bool>(mOperands[ins[10]]);
+                }
             } else {
-                int32_t padding_implicit = getScalarData<int32_t>(mOperands[ins[1]]);
+                padding_implicit = getScalarData<int32_t>(mOperands[ins[1]]);
                 stride_width     = getScalarData<int32_t>(mOperands[ins[2]]);
                 stride_height    = getScalarData<int32_t>(mOperands[ins[3]]);
                 filter_width     = getScalarData<int32_t>(mOperands[ins[4]]);
                 filter_height    = getScalarData<int32_t>(mOperands[ins[5]]);
                 activation       = getScalarData<int32_t>(mOperands[ins[6]]);
+                if (inCount == 8) {
+                    data_layout = getScalarData<bool>(mOperands[ins[7]]);
+                }
+            }
 
-                Shape inputShape = input.shape();
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outShape = output.shape();
+
+            RunTimeOperandInfo input_tmp, output_tmp;
+            std::unique_ptr<uint8_t[]> input_tmp_guard, output_tmp_guard;
+            if (!convertToNhwc(input_tmp, input, input_tmp_guard, data_layout)) {
+                success = false;
+                break;
+            }
+            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            output_tmp.buffer = data_layout ? nullptr : output.buffer;
+
+            if (inCount <= 8) {
+                Shape inputShape = input_tmp.shape();
                 int32_t input_width  = getSizeOfDimension(inputShape, 2);
                 int32_t input_height = getSizeOfDimension(inputShape, 1);
                 calculateExplicitPadding(input_width, stride_width,
@@ -981,27 +1004,33 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                          &padding_top, &padding_bottom);
             }
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
-            Shape outShape = output.shape();
-
-            if (!genericPoolingPrepare(input.shape(), padding_left, padding_right, padding_top,
+            if (!genericPoolingPrepare(input_tmp.shape(), padding_left, padding_right, padding_top,
                                        padding_bottom, stride_width, stride_height, filter_width,
                                        filter_height, &outShape) ||
-                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                !setInfoAndAllocateIfNeeded(&output_tmp, outShape)) {
+                success = false;
                 break;
             }
-            if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = maxPoolFloat32(reinterpret_cast<const float*>(input.buffer),
-                                         input.shape(), padding_left, padding_right, padding_top,
-                                         padding_bottom, stride_width, stride_height, filter_width,
-                                         filter_height, activation,
-                                         reinterpret_cast<float*>(output.buffer), outShape);
-            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = maxPoolQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                        input.shape(), padding_left, padding_right, padding_top,
+            if (input_tmp.type == OperandType::TENSOR_FLOAT32) {
+                success = maxPoolFloat32(reinterpret_cast<const float*>(input_tmp.buffer),
+                                         input_tmp.shape(), padding_left, padding_right,
+                                         padding_top, padding_bottom, stride_width, stride_height,
+                                         filter_width, filter_height, activation,
+                                         reinterpret_cast<float*>(output_tmp.buffer), outShape);
+            } else if (input_tmp.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                success = maxPoolQuant8(reinterpret_cast<const uint8_t*>(input_tmp.buffer),
+                                        input_tmp.shape(), padding_left, padding_right, padding_top,
                                         padding_bottom, stride_width, stride_height, filter_width,
                                         filter_height, activation,
-                                        reinterpret_cast<uint8_t*>(output.buffer), outShape);
+                                        reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+            }
+
+            if (data_layout) {
+                output_tmp_guard.reset(output_tmp.buffer);
+            }
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+                success = false;
+                break;
             }
         } break;
         case OperationType::RELU: {
