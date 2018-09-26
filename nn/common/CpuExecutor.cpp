@@ -1296,25 +1296,42 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                      outShape);
         } break;
         case OperationType::RESIZE_BILINEAR: {
-            if (!allParametersPresent(3, 1)) {
+            const size_t inCount = ins.size();
+            if ((inCount != 4 && inCount != 3) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
             int32_t width = getScalarData<int32_t>(mOperands[ins[1]]);
             int32_t height = getScalarData<int32_t>(mOperands[ins[2]]);
+            bool data_layout = inCount == 4 ? getScalarData<bool>(mOperands[ins[3]]) : 0;
 
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
-            if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = resizeBilinearPrepare(input.shape(),
-                                                width, height,
-                                                &outShape) &&
-                          setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          resizeBilinearFloat32(reinterpret_cast<const float*>(input.buffer),
-                                                input.shape(),
-                                                reinterpret_cast<float*>(output.buffer),
+            RunTimeOperandInfo input_tmp, output_tmp;
+            std::unique_ptr<uint8_t[]> input_tmp_guard, output_tmp_guard;
+            if (!convertToNhwc(input_tmp, input, input_tmp_guard, data_layout)) {
+                success = false;
+                break;
+            }
+            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            output_tmp.buffer = data_layout ? nullptr : output.buffer;
+
+            if (input_tmp.type == OperandType::TENSOR_FLOAT32) {
+                success = resizeBilinearPrepare(input_tmp.shape(), width, height, &outShape) &&
+                          setInfoAndAllocateIfNeeded(&output_tmp, outShape) &&
+                          resizeBilinearFloat32(reinterpret_cast<const float*>(input_tmp.buffer),
+                                                input_tmp.shape(),
+                                                reinterpret_cast<float*>(output_tmp.buffer),
                                                 outShape);
+            }
+
+            if (data_layout) {
+                output_tmp_guard.reset(output_tmp.buffer);
+            }
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+                success = false;
+                break;
             }
         } break;
         case OperationType::DEPTH_TO_SPACE: {
