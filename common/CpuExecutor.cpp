@@ -1369,24 +1369,38 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
         } break;
         case OperationType::SPACE_TO_DEPTH: {
-            if (!allParametersPresent(2, 1)) {
+            const size_t inCount = ins.size();
+            if ((inCount != 3 && inCount != 2) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
             int32_t blockSize = getScalarData<int32_t>(mOperands[ins[1]]);
+            bool data_layout = inCount == 3 ? getScalarData<bool>(mOperands[ins[2]]) : false;
 
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
-            success = spaceToDepthPrepare(input.shape(),
-                                          blockSize,
-                                          &outShape) &&
-                      setInfoAndAllocateIfNeeded(&output, outShape) &&
-                      spaceToDepthGeneric(input.buffer,
-                                          input.shape(),
-                                          blockSize,
-                                          output.buffer,
-                                          outShape);
+            RunTimeOperandInfo input_tmp, output_tmp;
+            std::unique_ptr<uint8_t[]> input_tmp_guard, output_tmp_guard;
+            if (!convertToNhwc(input_tmp, input, input_tmp_guard, data_layout)) {
+                success = false;
+                break;
+            }
+            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            output_tmp.buffer = data_layout ? nullptr : output.buffer;
+
+            success = spaceToDepthPrepare(input_tmp.shape(), blockSize, &outShape) &&
+                      setInfoAndAllocateIfNeeded(&output_tmp, outShape) &&
+                      spaceToDepthGeneric(input_tmp.buffer, input_tmp.shape(), blockSize,
+                                          output_tmp.buffer, outShape);
+
+            if (data_layout) {
+                output_tmp_guard.reset(output_tmp.buffer);
+            }
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+                success = false;
+                break;
+            }
         } break;
         case OperationType::EMBEDDING_LOOKUP: {
             const RunTimeOperandInfo &values =
