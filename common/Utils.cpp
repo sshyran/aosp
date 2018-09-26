@@ -1330,8 +1330,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_SPACE_TO_BATCH_ND: {
-            if (inputCount != 3 || outputCount != 1) {
-                logInvalidInOutNumber(3, 1);
+            if ((inputCount != 4 && inputCount != 3) || outputCount != 1) {
+                LOG(ERROR) << "Invalid number of input operands (" << inputCount
+                           << ", expected 4 or 3) or output operands (" << outputCount
+                           << ", expected 1) for operation " << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -1351,6 +1353,9 @@ int validateOperation(ANeuralNetworksOperationType opType,
                 LOG(ERROR) << "Unsupported input tensor type for operation "
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
+            }
+            if (inputCount == 4) {
+                inExpectedTypes.push_back(OperandType::BOOL);
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
