@@ -1766,6 +1766,182 @@ TEST_F(NeuralnetworksHidlTest, lsh_projection_deprecated) {
                            lsh_projection_deprecated::examples);
 }
 
+// Generated from: max_pool_v1_2.mod.py.
+namespace max_pool_v1_2 {
+// Generated max_pool_v1_2 test
+#include "examples/max_pool_v1_2.example.cpp"
+// Generated model constructor
+#include "vts_models/max_pool_v1_2.model.cpp"
+} // namespace max_pool_v1_2
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc,
+                           max_pool_v1_2::is_ignored_nhwc,
+                           max_pool_v1_2::examples_nhwc);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_relaxed) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_relaxed,
+                           max_pool_v1_2::is_ignored_nhwc_relaxed,
+                           max_pool_v1_2::examples_nhwc_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_quant8) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_quant8,
+                           max_pool_v1_2::is_ignored_nhwc_quant8,
+                           max_pool_v1_2::examples_nhwc_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw,
+                           max_pool_v1_2::is_ignored_nchw,
+                           max_pool_v1_2::examples_nchw);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_relaxed) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_relaxed,
+                           max_pool_v1_2::is_ignored_nchw_relaxed,
+                           max_pool_v1_2::examples_nchw_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_quant8) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_quant8,
+                           max_pool_v1_2::is_ignored_nchw_quant8,
+                           max_pool_v1_2::examples_nchw_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_2) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_2,
+                           max_pool_v1_2::is_ignored_nhwc_2,
+                           max_pool_v1_2::examples_nhwc_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_relaxed_2) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_relaxed_2,
+                           max_pool_v1_2::is_ignored_nhwc_relaxed_2,
+                           max_pool_v1_2::examples_nhwc_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_quant8_2) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_quant8_2,
+                           max_pool_v1_2::is_ignored_nhwc_quant8_2,
+                           max_pool_v1_2::examples_nhwc_quant8_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_2) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_2,
+                           max_pool_v1_2::is_ignored_nchw_2,
+                           max_pool_v1_2::examples_nchw_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_relaxed_2) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_relaxed_2,
+                           max_pool_v1_2::is_ignored_nchw_relaxed_2,
+                           max_pool_v1_2::examples_nchw_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_quant8_2) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_quant8_2,
+                           max_pool_v1_2::is_ignored_nchw_quant8_2,
+                           max_pool_v1_2::examples_nchw_quant8_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_3) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_3,
+                           max_pool_v1_2::is_ignored_nhwc_3,
+                           max_pool_v1_2::examples_nhwc_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_relaxed_3) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_relaxed_3,
+                           max_pool_v1_2::is_ignored_nhwc_relaxed_3,
+                           max_pool_v1_2::examples_nhwc_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_quant8_3) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_quant8_3,
+                           max_pool_v1_2::is_ignored_nhwc_quant8_3,
+                           max_pool_v1_2::examples_nhwc_quant8_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_3) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_3,
+                           max_pool_v1_2::is_ignored_nchw_3,
+                           max_pool_v1_2::examples_nchw_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_relaxed_3) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_relaxed_3,
+                           max_pool_v1_2::is_ignored_nchw_relaxed_3,
+                           max_pool_v1_2::examples_nchw_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_quant8_3) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_quant8_3,
+                           max_pool_v1_2::is_ignored_nchw_quant8_3,
+                           max_pool_v1_2::examples_nchw_quant8_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_4) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_4,
+                           max_pool_v1_2::is_ignored_nhwc_4,
+                           max_pool_v1_2::examples_nhwc_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_relaxed_4) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_relaxed_4,
+                           max_pool_v1_2::is_ignored_nhwc_relaxed_4,
+                           max_pool_v1_2::examples_nhwc_relaxed_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nhwc_quant8_4) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nhwc_quant8_4,
+                           max_pool_v1_2::is_ignored_nhwc_quant8_4,
+                           max_pool_v1_2::examples_nhwc_quant8_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_4) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_4,
+                           max_pool_v1_2::is_ignored_nchw_4,
+                           max_pool_v1_2::examples_nchw_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_relaxed_4) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_relaxed_4,
+                           max_pool_v1_2::is_ignored_nchw_relaxed_4,
+                           max_pool_v1_2::examples_nchw_relaxed_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_quant8_4) {
+  generated_tests::Execute(device,
+                           max_pool_v1_2::createTestModel_nchw_quant8_4,
+                           max_pool_v1_2::is_ignored_nchw_quant8_4,
+                           max_pool_v1_2::examples_nchw_quant8_4);
+}
+
 // Generated from: pad_v2_1_float.mod.py.
 namespace pad_v2_1_float {
 // Generated pad_v2_1_float test
