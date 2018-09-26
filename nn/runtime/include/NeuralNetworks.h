@@ -464,7 +464,10 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Inputs:
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
@@ -472,6 +475,8 @@ typedef enum {
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the block_size.
      *      block_size must be >=1 and block_size * block_size must be a divisor
      *      of the input depth.
+     * * 2: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batch, height*block_size,
