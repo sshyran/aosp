@@ -1504,25 +1504,41 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 svdf.Eval();
         } break;
         case OperationType::BATCH_TO_SPACE_ND: {
-            if (!allParametersPresent(2, 1)) {
+            const size_t inCount = ins.size();
+            if ((inCount != 3 && inCount != 2) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
             const RunTimeOperandInfo& blockSize = mOperands[ins[1]];
+            bool data_layout = inCount == 3 ? getScalarData<bool>(mOperands[ins[2]]) : false;
 
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
-            success = batchToSpacePrepare(input.shape(),
+            RunTimeOperandInfo input_tmp, output_tmp;
+            std::unique_ptr<uint8_t[]> input_tmp_guard, output_tmp_guard;
+            if (!convertToNhwc(input_tmp, input, input_tmp_guard, data_layout)) {
+                success = false;
+                break;
+            }
+            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            output_tmp.buffer = data_layout ? nullptr : output.buffer;
+
+            success = batchToSpacePrepare(input_tmp.shape(),
                                           reinterpret_cast<const int32_t*>(blockSize.buffer),
-                                          blockSize.shape(),
-                                          &outShape) &&
-                      setInfoAndAllocateIfNeeded(&output, outShape) &&
-                      batchToSpaceGeneric(input.buffer,
-                                          input.shape(),
+                                          blockSize.shape(), &outShape) &&
+                      setInfoAndAllocateIfNeeded(&output_tmp, outShape) &&
+                      batchToSpaceGeneric(input_tmp.buffer, input_tmp.shape(),
                                           reinterpret_cast<const int32_t*>(blockSize.buffer),
-                                          output.buffer,
-                                          outShape);
+                                          output_tmp.buffer, outShape);
+
+            if (data_layout) {
+                output_tmp_guard.reset(output_tmp.buffer);
+            }
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+                success = false;
+                break;
+            }
         } break;
         case OperationType::SPACE_TO_BATCH_ND: {
             if (!allParametersPresent(3, 1)) {

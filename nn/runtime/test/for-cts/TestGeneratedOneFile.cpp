@@ -344,6 +344,7 @@
 #include "../generated/tests/argmin_2_quant8.mod.py.cpp"
 #include "../generated/tests/argmin_3_float.mod.py.cpp"
 #include "../generated/tests/avg_pool_v1_2.mod.py.cpp"
+#include "../generated/tests/batch_to_space_v1_2.mod.py.cpp"
 #include "../generated/tests/channel_shuffle.mod.py.cpp"
 #include "../generated/tests/conv2d_v1_2.mod.py.cpp"
 #include "../generated/tests/depth_to_space_v1_2.mod.py.cpp"

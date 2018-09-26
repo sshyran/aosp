@@ -489,6 +489,98 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_quant8_5) {
                            avg_pool_v1_2::examples_nchw_quant8_5);
 }
 
+// Generated from: batch_to_space_v1_2.mod.py.
+namespace batch_to_space_v1_2 {
+// Generated batch_to_space_v1_2 test
+#include "examples/batch_to_space_v1_2.example.cpp"
+// Generated model constructor
+#include "vts_models/batch_to_space_v1_2.model.cpp"
+} // namespace batch_to_space_v1_2
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nhwc) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nhwc,
+                           batch_to_space_v1_2::is_ignored_nhwc,
+                           batch_to_space_v1_2::examples_nhwc);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nhwc_relaxed) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nhwc_relaxed,
+                           batch_to_space_v1_2::is_ignored_nhwc_relaxed,
+                           batch_to_space_v1_2::examples_nhwc_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nhwc_quant8) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nhwc_quant8,
+                           batch_to_space_v1_2::is_ignored_nhwc_quant8,
+                           batch_to_space_v1_2::examples_nhwc_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nchw) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nchw,
+                           batch_to_space_v1_2::is_ignored_nchw,
+                           batch_to_space_v1_2::examples_nchw);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nchw_relaxed) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nchw_relaxed,
+                           batch_to_space_v1_2::is_ignored_nchw_relaxed,
+                           batch_to_space_v1_2::examples_nchw_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nchw_quant8) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nchw_quant8,
+                           batch_to_space_v1_2::is_ignored_nchw_quant8,
+                           batch_to_space_v1_2::examples_nchw_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nhwc_2) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nhwc_2,
+                           batch_to_space_v1_2::is_ignored_nhwc_2,
+                           batch_to_space_v1_2::examples_nhwc_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nhwc_relaxed_2) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nhwc_relaxed_2,
+                           batch_to_space_v1_2::is_ignored_nhwc_relaxed_2,
+                           batch_to_space_v1_2::examples_nhwc_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nhwc_quant8_2) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nhwc_quant8_2,
+                           batch_to_space_v1_2::is_ignored_nhwc_quant8_2,
+                           batch_to_space_v1_2::examples_nhwc_quant8_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nchw_2) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nchw_2,
+                           batch_to_space_v1_2::is_ignored_nchw_2,
+                           batch_to_space_v1_2::examples_nchw_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nchw_relaxed_2) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nchw_relaxed_2,
+                           batch_to_space_v1_2::is_ignored_nchw_relaxed_2,
+                           batch_to_space_v1_2::examples_nchw_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nchw_quant8_2) {
+  generated_tests::Execute(device,
+                           batch_to_space_v1_2::createTestModel_nchw_quant8_2,
+                           batch_to_space_v1_2::is_ignored_nchw_quant8_2,
+                           batch_to_space_v1_2::examples_nchw_quant8_2);
+}
+
 // Generated from: channel_shuffle.mod.py.
 namespace channel_shuffle {
 // Generated channel_shuffle test
