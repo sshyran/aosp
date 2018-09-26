@@ -350,6 +350,7 @@
 #include "../generated/tests/expand_dims.mod.py.cpp"
 #include "../generated/tests/grouped_conv2d.mod.py.cpp"
 #include "../generated/tests/heatmap_max_keypoint.mod.py.cpp"
+#include "../generated/tests/l2_pool_v1_2.mod.py.cpp"
 #include "../generated/tests/lsh_projection_3_relaxed.mod.py.cpp"
 #include "../generated/tests/lsh_projection_4_relaxed.mod.py.cpp"
 #include "../generated/tests/lsh_projection_deprecated.mod.py.cpp"
