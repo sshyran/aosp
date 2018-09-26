@@ -2073,6 +2073,70 @@ TEST_F(NeuralnetworksHidlTest, quantize_quant8_4) {
                            quantize::examples_quant8_4);
 }
 
+// Generated from: resize_bilinear_v1_2.mod.py.
+namespace resize_bilinear_v1_2 {
+// Generated resize_bilinear_v1_2 test
+#include "examples/resize_bilinear_v1_2.example.cpp"
+// Generated model constructor
+#include "vts_models/resize_bilinear_v1_2.model.cpp"
+} // namespace resize_bilinear_v1_2
+
+TEST_F(NeuralnetworksHidlTest, resize_bilinear_v1_2_nhwc) {
+  generated_tests::Execute(device,
+                           resize_bilinear_v1_2::createTestModel_nhwc,
+                           resize_bilinear_v1_2::is_ignored_nhwc,
+                           resize_bilinear_v1_2::examples_nhwc);
+}
+
+TEST_F(NeuralnetworksHidlTest, resize_bilinear_v1_2_nhwc_relaxed) {
+  generated_tests::Execute(device,
+                           resize_bilinear_v1_2::createTestModel_nhwc_relaxed,
+                           resize_bilinear_v1_2::is_ignored_nhwc_relaxed,
+                           resize_bilinear_v1_2::examples_nhwc_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, resize_bilinear_v1_2_nchw) {
+  generated_tests::Execute(device,
+                           resize_bilinear_v1_2::createTestModel_nchw,
+                           resize_bilinear_v1_2::is_ignored_nchw,
+                           resize_bilinear_v1_2::examples_nchw);
+}
+
+TEST_F(NeuralnetworksHidlTest, resize_bilinear_v1_2_nchw_relaxed) {
+  generated_tests::Execute(device,
+                           resize_bilinear_v1_2::createTestModel_nchw_relaxed,
+                           resize_bilinear_v1_2::is_ignored_nchw_relaxed,
+                           resize_bilinear_v1_2::examples_nchw_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, resize_bilinear_v1_2_nhwc_2) {
+  generated_tests::Execute(device,
+                           resize_bilinear_v1_2::createTestModel_nhwc_2,
+                           resize_bilinear_v1_2::is_ignored_nhwc_2,
+                           resize_bilinear_v1_2::examples_nhwc_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, resize_bilinear_v1_2_nhwc_relaxed_2) {
+  generated_tests::Execute(device,
+                           resize_bilinear_v1_2::createTestModel_nhwc_relaxed_2,
+                           resize_bilinear_v1_2::is_ignored_nhwc_relaxed_2,
+                           resize_bilinear_v1_2::examples_nhwc_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, resize_bilinear_v1_2_nchw_2) {
+  generated_tests::Execute(device,
+                           resize_bilinear_v1_2::createTestModel_nchw_2,
+                           resize_bilinear_v1_2::is_ignored_nchw_2,
+                           resize_bilinear_v1_2::examples_nchw_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, resize_bilinear_v1_2_nchw_relaxed_2) {
+  generated_tests::Execute(device,
+                           resize_bilinear_v1_2::createTestModel_nchw_relaxed_2,
+                           resize_bilinear_v1_2::is_ignored_nchw_relaxed_2,
+                           resize_bilinear_v1_2::examples_nchw_relaxed_2);
+}
+
 // Generated from: roi_align.mod.py.
 namespace roi_align {
 // Generated roi_align test
