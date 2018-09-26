@@ -1629,6 +1629,98 @@ TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_relaxed_2) {
                            heatmap_max_keypoint::examples_relaxed_2);
 }
 
+// Generated from: l2_pool_v1_2.mod.py.
+namespace l2_pool_v1_2 {
+// Generated l2_pool_v1_2 test
+#include "examples/l2_pool_v1_2.example.cpp"
+// Generated model constructor
+#include "vts_models/l2_pool_v1_2.model.cpp"
+} // namespace l2_pool_v1_2
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nhwc,
+                           l2_pool_v1_2::is_ignored_nhwc,
+                           l2_pool_v1_2::examples_nhwc);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_relaxed) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nhwc_relaxed,
+                           l2_pool_v1_2::is_ignored_nhwc_relaxed,
+                           l2_pool_v1_2::examples_nhwc_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nchw,
+                           l2_pool_v1_2::is_ignored_nchw,
+                           l2_pool_v1_2::examples_nchw);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_relaxed) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nchw_relaxed,
+                           l2_pool_v1_2::is_ignored_nchw_relaxed,
+                           l2_pool_v1_2::examples_nchw_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_2) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nhwc_2,
+                           l2_pool_v1_2::is_ignored_nhwc_2,
+                           l2_pool_v1_2::examples_nhwc_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_relaxed_2) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nhwc_relaxed_2,
+                           l2_pool_v1_2::is_ignored_nhwc_relaxed_2,
+                           l2_pool_v1_2::examples_nhwc_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_2) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nchw_2,
+                           l2_pool_v1_2::is_ignored_nchw_2,
+                           l2_pool_v1_2::examples_nchw_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_relaxed_2) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nchw_relaxed_2,
+                           l2_pool_v1_2::is_ignored_nchw_relaxed_2,
+                           l2_pool_v1_2::examples_nchw_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nhwc) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_large_nhwc,
+                           l2_pool_v1_2::is_ignored_large_nhwc,
+                           l2_pool_v1_2::examples_large_nhwc);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nhwc_relaxed) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_large_nhwc_relaxed,
+                           l2_pool_v1_2::is_ignored_large_nhwc_relaxed,
+                           l2_pool_v1_2::examples_large_nhwc_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nchw) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_large_nchw,
+                           l2_pool_v1_2::is_ignored_large_nchw,
+                           l2_pool_v1_2::examples_large_nchw);
+}
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nchw_relaxed) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_large_nchw_relaxed,
+                           l2_pool_v1_2::is_ignored_large_nchw_relaxed,
+                           l2_pool_v1_2::examples_large_nchw_relaxed);
+}
+
 // Generated from: lsh_projection_3_relaxed.mod.py.
 namespace lsh_projection_3_relaxed {
 // Generated lsh_projection_3_relaxed test
