@@ -346,6 +346,7 @@
 #include "../generated/tests/avg_pool_v1_2.mod.py.cpp"
 #include "../generated/tests/channel_shuffle.mod.py.cpp"
 #include "../generated/tests/conv2d_v1_2.mod.py.cpp"
+#include "../generated/tests/depth_to_space_v1_2.mod.py.cpp"
 #include "../generated/tests/depthwise_conv2d_v1_2.mod.py.cpp"
 #include "../generated/tests/expand_dims.mod.py.cpp"
 #include "../generated/tests/grouped_conv2d.mod.py.cpp"
