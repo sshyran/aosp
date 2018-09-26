@@ -1541,30 +1541,44 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
         } break;
         case OperationType::SPACE_TO_BATCH_ND: {
-            if (!allParametersPresent(3, 1)) {
+            const size_t inCount = ins.size();
+            if ((inCount != 4 && inCount != 3) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
             const RunTimeOperandInfo& blockSize = mOperands[ins[1]];
             const RunTimeOperandInfo& paddings = mOperands[ins[2]];
+            bool data_layout = inCount == 4 ? getScalarData<bool>(mOperands[ins[3]]) : false;
 
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
-            success = spaceToBatchPrepare(input.shape(),
+            RunTimeOperandInfo input_tmp, output_tmp;
+            std::unique_ptr<uint8_t[]> input_tmp_guard, output_tmp_guard;
+            if (!convertToNhwc(input_tmp, input, input_tmp_guard, data_layout)) {
+                success = false;
+                break;
+            }
+            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            output_tmp.buffer = data_layout ? nullptr : output.buffer;
+
+            success = spaceToBatchPrepare(
+                              input_tmp.shape(), reinterpret_cast<const int32_t*>(blockSize.buffer),
+                              blockSize.shape(), reinterpret_cast<const int32_t*>(paddings.buffer),
+                              paddings.shape(), &outShape) &&
+                      setInfoAndAllocateIfNeeded(&output_tmp, outShape) &&
+                      spaceToBatchGeneric(input_tmp.buffer, input_tmp.shape(),
                                           reinterpret_cast<const int32_t*>(blockSize.buffer),
-                                          blockSize.shape(),
                                           reinterpret_cast<const int32_t*>(paddings.buffer),
-                                          paddings.shape(),
-                                          &outShape) &&
-                      setInfoAndAllocateIfNeeded(&output, outShape) &&
-                      spaceToBatchGeneric(input.buffer,
-                                          input.shape(),
-                                          reinterpret_cast<const int32_t*>(blockSize.buffer),
-                                          reinterpret_cast<const int32_t*>(paddings.buffer),
-                                          paddings.shape(),
-                                          output.buffer,
-                                          outShape);
+                                          paddings.shape(), output_tmp.buffer, outShape);
+
+            if (data_layout) {
+                output_tmp_guard.reset(output_tmp.buffer);
+            }
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+                success = false;
+                break;
+            }
         } break;
         case OperationType::PAD:
         case OperationType::PAD_V2: {
