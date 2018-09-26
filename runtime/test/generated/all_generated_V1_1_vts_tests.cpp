@@ -91,6 +91,21 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_5_relaxed) {
                            avg_pool_float_5_relaxed::examples);
 }
 
+// Generated from: batch_to_space.mod.py.
+namespace batch_to_space {
+// Generated batch_to_space test
+#include "examples/batch_to_space.example.cpp"
+// Generated model constructor
+#include "vts_models/batch_to_space.model.cpp"
+} // namespace batch_to_space
+
+TEST_F(NeuralnetworksHidlTest, batch_to_space) {
+  generated_tests::Execute(device,
+                           batch_to_space::createTestModel,
+                           batch_to_space::is_ignored,
+                           batch_to_space::examples);
+}
+
 // Generated from: batch_to_space_float_1.mod.py.
 namespace batch_to_space_float_1 {
 // Generated batch_to_space_float_1 test
@@ -119,21 +134,6 @@ TEST_F(NeuralnetworksHidlTest, batch_to_space_float_1_relaxed) {
                            batch_to_space_float_1_relaxed::createTestModel,
                            batch_to_space_float_1_relaxed::is_ignored,
                            batch_to_space_float_1_relaxed::examples);
-}
-
-// Generated from: batch_to_space.mod.py.
-namespace batch_to_space {
-// Generated batch_to_space test
-#include "examples/batch_to_space.example.cpp"
-// Generated model constructor
-#include "vts_models/batch_to_space.model.cpp"
-} // namespace batch_to_space
-
-TEST_F(NeuralnetworksHidlTest, batch_to_space) {
-  generated_tests::Execute(device,
-                           batch_to_space::createTestModel,
-                           batch_to_space::is_ignored,
-                           batch_to_space::examples);
 }
 
 // Generated from: batch_to_space_quant8_1.mod.py.
@@ -556,6 +556,21 @@ TEST_F(NeuralnetworksHidlTest, dequantize_relaxed) {
                            dequantize_relaxed::examples);
 }
 
+// Generated from: div.mod.py.
+namespace div {
+// Generated div test
+#include "examples/div.example.cpp"
+// Generated model constructor
+#include "vts_models/div.model.cpp"
+} // namespace div
+
+TEST_F(NeuralnetworksHidlTest, div) {
+  generated_tests::Execute(device,
+                           div::createTestModel,
+                           div::is_ignored,
+                           div::examples);
+}
+
 // Generated from: div_broadcast_float.mod.py.
 namespace div_broadcast_float {
 // Generated div_broadcast_float test
@@ -584,21 +599,6 @@ TEST_F(NeuralnetworksHidlTest, div_broadcast_float_relaxed) {
                            div_broadcast_float_relaxed::createTestModel,
                            div_broadcast_float_relaxed::is_ignored,
                            div_broadcast_float_relaxed::examples);
-}
-
-// Generated from: div.mod.py.
-namespace div {
-// Generated div test
-#include "examples/div.example.cpp"
-// Generated model constructor
-#include "vts_models/div.model.cpp"
-} // namespace div
-
-TEST_F(NeuralnetworksHidlTest, div) {
-  generated_tests::Execute(device,
-                           div::createTestModel,
-                           div::is_ignored,
-                           div::examples);
 }
 
 // Generated from: div_relaxed.mod.py.
@@ -1201,6 +1201,21 @@ TEST_F(NeuralnetworksHidlTest, max_pool_float_4_relaxed) {
                            max_pool_float_4_relaxed::examples);
 }
 
+// Generated from: mean.mod.py.
+namespace mean {
+// Generated mean test
+#include "examples/mean.example.cpp"
+// Generated model constructor
+#include "vts_models/mean.model.cpp"
+} // namespace mean
+
+TEST_F(NeuralnetworksHidlTest, mean) {
+  generated_tests::Execute(device,
+                           mean::createTestModel,
+                           mean::is_ignored,
+                           mean::examples);
+}
+
 // Generated from: mean_float_1.mod.py.
 namespace mean_float_1 {
 // Generated mean_float_1 test
@@ -1259,21 +1274,6 @@ TEST_F(NeuralnetworksHidlTest, mean_float_2_relaxed) {
                            mean_float_2_relaxed::createTestModel,
                            mean_float_2_relaxed::is_ignored,
                            mean_float_2_relaxed::examples);
-}
-
-// Generated from: mean.mod.py.
-namespace mean {
-// Generated mean test
-#include "examples/mean.example.cpp"
-// Generated model constructor
-#include "vts_models/mean.model.cpp"
-} // namespace mean
-
-TEST_F(NeuralnetworksHidlTest, mean) {
-  generated_tests::Execute(device,
-                           mean::createTestModel,
-                           mean::is_ignored,
-                           mean::examples);
 }
 
 // Generated from: mean_quant8_1.mod.py.
@@ -1366,6 +1366,21 @@ TEST_F(NeuralnetworksHidlTest, mul_relu_relaxed) {
                            mul_relu_relaxed::examples);
 }
 
+// Generated from: pad.mod.py.
+namespace pad {
+// Generated pad test
+#include "examples/pad.example.cpp"
+// Generated model constructor
+#include "vts_models/pad.model.cpp"
+} // namespace pad
+
+TEST_F(NeuralnetworksHidlTest, pad) {
+  generated_tests::Execute(device,
+                           pad::createTestModel,
+                           pad::is_ignored,
+                           pad::examples);
+}
+
 // Generated from: pad_float_1.mod.py.
 namespace pad_float_1 {
 // Generated pad_float_1 test
@@ -1394,21 +1409,6 @@ TEST_F(NeuralnetworksHidlTest, pad_float_1_relaxed) {
                            pad_float_1_relaxed::createTestModel,
                            pad_float_1_relaxed::is_ignored,
                            pad_float_1_relaxed::examples);
-}
-
-// Generated from: pad.mod.py.
-namespace pad {
-// Generated pad test
-#include "examples/pad.example.cpp"
-// Generated model constructor
-#include "vts_models/pad.model.cpp"
-} // namespace pad
-
-TEST_F(NeuralnetworksHidlTest, pad) {
-  generated_tests::Execute(device,
-                           pad::createTestModel,
-                           pad::is_ignored,
-                           pad::examples);
 }
 
 // Generated from: pad_relaxed.mod.py.
@@ -1636,6 +1636,21 @@ TEST_F(NeuralnetworksHidlTest, softmax_float_2_relaxed) {
                            softmax_float_2_relaxed::examples);
 }
 
+// Generated from: space_to_batch.mod.py.
+namespace space_to_batch {
+// Generated space_to_batch test
+#include "examples/space_to_batch.example.cpp"
+// Generated model constructor
+#include "vts_models/space_to_batch.model.cpp"
+} // namespace space_to_batch
+
+TEST_F(NeuralnetworksHidlTest, space_to_batch) {
+  generated_tests::Execute(device,
+                           space_to_batch::createTestModel,
+                           space_to_batch::is_ignored,
+                           space_to_batch::examples);
+}
+
 // Generated from: space_to_batch_float_1.mod.py.
 namespace space_to_batch_float_1 {
 // Generated space_to_batch_float_1 test
@@ -1724,21 +1739,6 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_float_3_relaxed) {
                            space_to_batch_float_3_relaxed::createTestModel,
                            space_to_batch_float_3_relaxed::is_ignored,
                            space_to_batch_float_3_relaxed::examples);
-}
-
-// Generated from: space_to_batch.mod.py.
-namespace space_to_batch {
-// Generated space_to_batch test
-#include "examples/space_to_batch.example.cpp"
-// Generated model constructor
-#include "vts_models/space_to_batch.model.cpp"
-} // namespace space_to_batch
-
-TEST_F(NeuralnetworksHidlTest, space_to_batch) {
-  generated_tests::Execute(device,
-                           space_to_batch::createTestModel,
-                           space_to_batch::is_ignored,
-                           space_to_batch::examples);
 }
 
 // Generated from: space_to_batch_quant8_1.mod.py.
@@ -1846,6 +1846,21 @@ TEST_F(NeuralnetworksHidlTest, space_to_depth_float_3_relaxed) {
                            space_to_depth_float_3_relaxed::examples);
 }
 
+// Generated from: squeeze.mod.py.
+namespace squeeze {
+// Generated squeeze test
+#include "examples/squeeze.example.cpp"
+// Generated model constructor
+#include "vts_models/squeeze.model.cpp"
+} // namespace squeeze
+
+TEST_F(NeuralnetworksHidlTest, squeeze) {
+  generated_tests::Execute(device,
+                           squeeze::createTestModel,
+                           squeeze::is_ignored,
+                           squeeze::examples);
+}
+
 // Generated from: squeeze_float_1.mod.py.
 namespace squeeze_float_1 {
 // Generated squeeze_float_1 test
@@ -1876,21 +1891,6 @@ TEST_F(NeuralnetworksHidlTest, squeeze_float_1_relaxed) {
                            squeeze_float_1_relaxed::examples);
 }
 
-// Generated from: squeeze.mod.py.
-namespace squeeze {
-// Generated squeeze test
-#include "examples/squeeze.example.cpp"
-// Generated model constructor
-#include "vts_models/squeeze.model.cpp"
-} // namespace squeeze
-
-TEST_F(NeuralnetworksHidlTest, squeeze) {
-  generated_tests::Execute(device,
-                           squeeze::createTestModel,
-                           squeeze::is_ignored,
-                           squeeze::examples);
-}
-
 // Generated from: squeeze_quant8_1.mod.py.
 namespace squeeze_quant8_1 {
 // Generated squeeze_quant8_1 test
@@ -1919,6 +1919,36 @@ TEST_F(NeuralnetworksHidlTest, squeeze_relaxed) {
                            squeeze_relaxed::createTestModel,
                            squeeze_relaxed::is_ignored,
                            squeeze_relaxed::examples);
+}
+
+// Generated from: strided_slice.mod.py.
+namespace strided_slice {
+// Generated strided_slice test
+#include "examples/strided_slice.example.cpp"
+// Generated model constructor
+#include "vts_models/strided_slice.model.cpp"
+} // namespace strided_slice
+
+TEST_F(NeuralnetworksHidlTest, strided_slice) {
+  generated_tests::Execute(device,
+                           strided_slice::createTestModel,
+                           strided_slice::is_ignored,
+                           strided_slice::examples);
+}
+
+// Generated from: strided_slice_float_1.mod.py.
+namespace strided_slice_float_1 {
+// Generated strided_slice_float_1 test
+#include "examples/strided_slice_float_1.example.cpp"
+// Generated model constructor
+#include "vts_models/strided_slice_float_1.model.cpp"
+} // namespace strided_slice_float_1
+
+TEST_F(NeuralnetworksHidlTest, strided_slice_float_1) {
+  generated_tests::Execute(device,
+                           strided_slice_float_1::createTestModel,
+                           strided_slice_float_1::is_ignored,
+                           strided_slice_float_1::examples);
 }
 
 // Generated from: strided_slice_float_10.mod.py.
@@ -1979,21 +2009,6 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_11_relaxed) {
                            strided_slice_float_11_relaxed::createTestModel,
                            strided_slice_float_11_relaxed::is_ignored,
                            strided_slice_float_11_relaxed::examples);
-}
-
-// Generated from: strided_slice_float_1.mod.py.
-namespace strided_slice_float_1 {
-// Generated strided_slice_float_1 test
-#include "examples/strided_slice_float_1.example.cpp"
-// Generated model constructor
-#include "vts_models/strided_slice_float_1.model.cpp"
-} // namespace strided_slice_float_1
-
-TEST_F(NeuralnetworksHidlTest, strided_slice_float_1) {
-  generated_tests::Execute(device,
-                           strided_slice_float_1::createTestModel,
-                           strided_slice_float_1::is_ignored,
-                           strided_slice_float_1::examples);
 }
 
 // Generated from: strided_slice_float_1_relaxed.mod.py.
@@ -2251,21 +2266,6 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_9_relaxed) {
                            strided_slice_float_9_relaxed::examples);
 }
 
-// Generated from: strided_slice.mod.py.
-namespace strided_slice {
-// Generated strided_slice test
-#include "examples/strided_slice.example.cpp"
-// Generated model constructor
-#include "vts_models/strided_slice.model.cpp"
-} // namespace strided_slice
-
-TEST_F(NeuralnetworksHidlTest, strided_slice) {
-  generated_tests::Execute(device,
-                           strided_slice::createTestModel,
-                           strided_slice::is_ignored,
-                           strided_slice::examples);
-}
-
 // Generated from: strided_slice_qaunt8_10.mod.py.
 namespace strided_slice_qaunt8_10 {
 // Generated strided_slice_qaunt8_10 test
@@ -2446,6 +2446,21 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_relaxed) {
                            strided_slice_relaxed::examples);
 }
 
+// Generated from: sub.mod.py.
+namespace sub {
+// Generated sub test
+#include "examples/sub.example.cpp"
+// Generated model constructor
+#include "vts_models/sub.model.cpp"
+} // namespace sub
+
+TEST_F(NeuralnetworksHidlTest, sub) {
+  generated_tests::Execute(device,
+                           sub::createTestModel,
+                           sub::is_ignored,
+                           sub::examples);
+}
+
 // Generated from: sub_broadcast_float.mod.py.
 namespace sub_broadcast_float {
 // Generated sub_broadcast_float test
@@ -2474,21 +2489,6 @@ TEST_F(NeuralnetworksHidlTest, sub_broadcast_float_relaxed) {
                            sub_broadcast_float_relaxed::createTestModel,
                            sub_broadcast_float_relaxed::is_ignored,
                            sub_broadcast_float_relaxed::examples);
-}
-
-// Generated from: sub.mod.py.
-namespace sub {
-// Generated sub test
-#include "examples/sub.example.cpp"
-// Generated model constructor
-#include "vts_models/sub.model.cpp"
-} // namespace sub
-
-TEST_F(NeuralnetworksHidlTest, sub) {
-  generated_tests::Execute(device,
-                           sub::createTestModel,
-                           sub::is_ignored,
-                           sub::examples);
 }
 
 // Generated from: sub_relaxed.mod.py.
@@ -2566,6 +2566,21 @@ TEST_F(NeuralnetworksHidlTest, tanh_relaxed) {
                            tanh_relaxed::examples);
 }
 
+// Generated from: transpose.mod.py.
+namespace transpose {
+// Generated transpose test
+#include "examples/transpose.example.cpp"
+// Generated model constructor
+#include "vts_models/transpose.model.cpp"
+} // namespace transpose
+
+TEST_F(NeuralnetworksHidlTest, transpose) {
+  generated_tests::Execute(device,
+                           transpose::createTestModel,
+                           transpose::is_ignored,
+                           transpose::examples);
+}
+
 // Generated from: transpose_float_1.mod.py.
 namespace transpose_float_1 {
 // Generated transpose_float_1 test
@@ -2594,21 +2609,6 @@ TEST_F(NeuralnetworksHidlTest, transpose_float_1_relaxed) {
                            transpose_float_1_relaxed::createTestModel,
                            transpose_float_1_relaxed::is_ignored,
                            transpose_float_1_relaxed::examples);
-}
-
-// Generated from: transpose.mod.py.
-namespace transpose {
-// Generated transpose test
-#include "examples/transpose.example.cpp"
-// Generated model constructor
-#include "vts_models/transpose.model.cpp"
-} // namespace transpose
-
-TEST_F(NeuralnetworksHidlTest, transpose) {
-  generated_tests::Execute(device,
-                           transpose::createTestModel,
-                           transpose::is_ignored,
-                           transpose::examples);
 }
 
 // Generated from: transpose_quant8_1.mod.py.
