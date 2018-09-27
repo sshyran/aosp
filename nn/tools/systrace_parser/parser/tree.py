@@ -55,6 +55,19 @@ class SingleThreadCallTree(object):
     for node in to_be_removed:
       node.remove()
 
+  # Remove tracing nodes we are not interested in
+  def remove_ignored(self):
+    to_be_removed = []
+    def recurse(node):
+      if node.layer == LAYER_IGNORE:
+        to_be_removed.append(node)
+      for c in node.children:
+        recurse(c)
+    recurse(self.root)
+    for node in to_be_removed:
+      node.remove()
+
+
   # For nodes that are in the wrong place in the tree: create a copy of the node
   # in the right place and mark the original to be subtracted from timing.
   # SPEC: Subtracting time when nesting is violated
@@ -144,13 +157,12 @@ class SingleThreadCallTree(object):
              (phase == PHASE_INITIALIZATION) or  # One-time initialization
              (phase in subphases.get(prev_phase, [])) or # Subphase as designed
              (phase in subphases.get(PHASE_EXECUTION) and # Nested subphase missing
-              PHASE_EXECUTION in subphases.get(prev_phase)) or
+              PHASE_EXECUTION in subphases.get(prev_phase, [])) or
              node.subtract                       # Marker for wrong nesting
              ), self.debugstring
       assert ((prev_layer is None) or
               (layer == LAYER_UTILITY) or
               (layer == prev_layer) or
-              (layer == LAYER_IGNORE) or
               (layer in layer_order.get(prev_layer, [])) or
               node.subtract), self.debugstring
       for c in node.children:

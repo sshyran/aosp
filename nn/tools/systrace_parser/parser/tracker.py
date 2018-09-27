@@ -134,6 +134,7 @@ class Tracker(object):
 
   def calculate_stats(self):
     assert self.is_complete()
+    self.mytree.remove_ignored()
     self.mytree.remove_dummies()
     self.mytree.copy_subtracted_init_and_wrong_la()
     self.mytree.add_missing_la_nodes()
