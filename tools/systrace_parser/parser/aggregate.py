@@ -68,8 +68,21 @@ def aggregate_times(tracker_map, special_case_lr_pe=True):
         tag = layer + "_" + phase
         for app_phase in all_application_phases:
           t0 = 0.0
-          for pid in tracker_map:
-            t0 += tracker_map[pid].get_stat(tag, app_phase, special_case_lr_pe)
+          if layer == LAYER_DRIVER and phase == PHASE_EXECUTION:
+            # Calculate driver execution times from begins and ends
+            begins = []
+            ends = []
+            for pid in tracker_map:
+              begins = begins + tracker_map[pid].get_ld_pe_begins(app_phase)
+              ends = ends + tracker_map[pid].get_ld_pe_ends(app_phase)
+            assert len(begins) == len(ends)
+            begins.sort()
+            ends.sort()
+            for i in range(0, len(begins)):
+              t0 += (ends[i] - begins[i])
+          else:
+            for pid in tracker_map:
+              t0 += tracker_map[pid].get_stat(tag, app_phase, special_case_lr_pe)
           if phase0 == PHASE_EXECUTION and (app_phase != PHASE_OVERALL):
             times[app_phase][phase][layer] = zero_to_nan_if_missing(t0, phase, layer)
           t += t0

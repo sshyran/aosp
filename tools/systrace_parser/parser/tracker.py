@@ -175,22 +175,23 @@ class Tracker(object):
       recurse(top, None, None, "", {})
     self.debugstring = self.mytree.to_str()
 
+  # We need to special case the driver execution time because:
+  # - The existing drivers don't have tracing, so we rely on HIDL traces
+  # - Best we can do is to take the start of the HIDL server side call as
+  #   the starting point (which includes a bit of overhead, but not much) and
+  #   the start of the callback as the end point (which should be pretty
+  #   accurate)
+  # Note that the begin and end may be on different threads, hence the
+  # calculation needs to happen in aggregation rather than here.
+  def get_ld_pe_begins(self, app_phase):
+      return self.get_begins(app_phase, "HIDL::IPreparedModel::execute::server")
+
+  def get_ld_pe_ends(self, app_phase):
+      return self.get_begins(app_phase, "HIDL::IExecutionCallback::notify::client")
+
   def get_stat(self, tag, app_phase, special_case_pe=True):
     if not self.stats and not self.mytree.is_empty():
       self.calculate_stats()
-    if tag == make_tag(LAYER_DRIVER, PHASE_EXECUTION) and special_case_pe:
-      # We special case the driver execution time because:
-      # - The existing drivers don't have tracing, so we rely on HIDL traces
-      # - Best we can do is to take the start of the HIDL server side call as
-      #   the starting point (which includes a bit of overhead, but not much) and
-      #   the start of the callback as the end point (which should be pretty
-      #   accurate)
-      server_begins = self.get_begins(app_phase, "HIDL::IPreparedModel::execute::server")
-      notify_begins = self.get_begins(app_phase, "HIDL::IExecutionCallback::notify::client")
-      elapsed = 0.0
-      for i in range(0, len(server_begins)):
-        elapsed = elapsed + (notify_begins[i] - server_begins[i])
-      return elapsed
     if tag == make_tag(LAYER_RUNTIME, PHASE_EXECUTION) and special_case_pe:
       # Execution is exposed as an asynchronous event from the runtime, we
       # calculate the runtime time as starting from when the async operation is
