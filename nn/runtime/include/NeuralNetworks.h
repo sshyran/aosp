@@ -1818,7 +1818,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
      * Inputs:
-     * * 0: An n-D tensor specifying the input. Must not be non-empty.
+     * * 0: An n-D tensor specifying the input. Must be non-empty.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis to
      *      reduce accross.
      *
@@ -1840,7 +1840,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
      * Inputs:
-     * * 0: An n-D tensor specifying the input. Must not be non-empty.
+     * * 0: An n-D tensor specifying the input. Must be non-empty.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis to
      *      reduce accross.
      *
