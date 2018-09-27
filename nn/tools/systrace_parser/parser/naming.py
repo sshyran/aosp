@@ -72,6 +72,8 @@ def translate_hidl_mark_to_nn_and_tag(mark):
       layer = LAYER_DRIVER
   elif ("getCapabilities" in mark) or ("getSupportedOperations" in mark):
     layer = LAYER_DRIVER
+  elif "HIDL" not in mark:
+    layer = LAYER_IGNORE
   assert layer, mark
 
   phase = PHASE_INITIALIZATION
