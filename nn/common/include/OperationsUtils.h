@@ -70,6 +70,9 @@ uint32_t getNumberOfDimensions(const Shape& shape);
 
 uint32_t getSizeOfDimension(const Shape& shape, uint32_t dimensionIdx);
 
+// Converts an axis index from the range [-dims, dims) into the range [0, dims).
+int32_t getDimensionIndex(const Shape& shape, int32_t axis);
+
 inline uint32_t computeOutSize(uint32_t imageSize, uint32_t filterSize, uint32_t stride,
                                uint32_t paddingHead, uint32_t paddingTail) {
     return (imageSize - filterSize + stride + paddingHead + paddingTail) / stride;
