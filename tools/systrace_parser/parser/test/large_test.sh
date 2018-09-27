@@ -22,11 +22,8 @@ echo parsing unittest
 ../../parse_systrace.py unittest.html > unittest.tmp
 echo parsing hdrnet --per-execution
 ../../parse_systrace.py --per-execution hdrnet.html > hdrnet-bm.tmp
-echo parsing omr1_incomplete
-../../parse_systrace.py --per-execution --json omr1_incomplete.html > omr1_incomplete.tmp 2>/dev/null
-echo parsing omr1
-../../parse_systrace.py omr1.html > omr1.tmp 2>/dev/null
-echo parsing old
+../../parse_systrace.py --per-execution --json omr1_incomplete.html > omr1_incomplete.tmp
+../../parse_systrace.py omr1.html > omr1.tmp
 ../../parse_systrace.py old.html > old.tmp
 
 echo checking hdrnet
@@ -41,7 +38,7 @@ echo checking omr1_incomplete
 diff omr1_incomplete.json omr1_incomplete.tmp
 echo checking omr1
 diff omr1.txt omr1.tmp
-echo checking old
+echo old
 diff old.txt old.tmp
 
 echo Success
