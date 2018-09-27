@@ -76,13 +76,16 @@ uint32_t getSizeOfDimension(const Shape& shape, uint32_t dimensionIdx) {
     return shape.dimensions[dimensionIdx];
 }
 
-int32_t getDimensionIndex(const Shape& shape, int32_t axis) {
-    int32_t dims = getNumberOfDimensions(shape);
-    NN_OPS_CHECK(-dims <= axis && axis < dims);
+int32_t getDimensionIndex(int32_t numberOfDimensions, int32_t axis) {
+    NN_OPS_CHECK(-numberOfDimensions <= axis && axis < numberOfDimensions);
     if (axis < 0) {
-        axis += dims;
+        axis += numberOfDimensions;
     }
     return axis;
+}
+
+int32_t getDimensionIndex(const Shape& shape, int32_t axis) {
+    return getDimensionIndex(getNumberOfDimensions(shape), axis);
 }
 
 bool QuantizeMultiplierSmallerThanOne(double double_multiplier,

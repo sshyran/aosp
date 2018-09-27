@@ -18,6 +18,7 @@
 #define ANDROID_ML_NN_COMMON_OPERATIONS_H
 
 #include "operations/EmbeddingLookup.h"
+#include "operations/ExpandDims.h"
 #include "operations/HashtableLookup.h"
 #include "operations/LSHProjection.h"
 #include "operations/LSTM.h"
