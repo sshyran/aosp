@@ -192,9 +192,11 @@ bool spaceToDepthGeneric(const uint8_t* inputData, const Shape& inputShape,
                          int32_t blockSize,
                          uint8_t* outputData, const Shape& outputShape);
 
-bool padGeneric(const uint8_t* inputData, const Shape& inputShape,
-                const int32_t* paddings,
-                uint8_t* outputData, const Shape& outputShape);
+bool padFloat32(const float* inputData, const Shape& inputShape, const int32_t* paddings,
+                float pad_value, float* outputData, const Shape& outputShape);
+
+bool padQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_t* paddings,
+               uint8_t pad_value, uint8_t* outputData, const Shape& outputShape);
 
 bool batchToSpaceGeneric(const uint8_t* inputData, const Shape& inputShape,
                          const int32_t* blockSize,
