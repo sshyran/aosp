@@ -11,7 +11,8 @@ def get_trace_part(filename):
   lineno = 0
   for line in lines:
     lineno = lineno + 1
-    if "#           TASK-PID    TGID   CPU#  ||||    TIMESTAMP  FUNCTION" in line:
+    if ("#           TASK-PID    TGID   CPU#  ||||    TIMESTAMP  FUNCTION" in line or
+        "#           TASK-PID   CPU#  ||||    TIMESTAMP  FUNCTION" in line):
       seen_begin = True
     if seen_begin:
       if "</script>" in line:
@@ -20,6 +21,7 @@ def get_trace_part(filename):
   return trace
 
 MATCHER = re.compile(r"^\s*([^ ].{1,15})-(\d+)\s+\(\s*([-0-9]+)\) .* (\d+\.\d+): tracing_mark_write: ([BE].*)$")
+MATCHER_FOR_OLD = re.compile(r"^\s*([^ ].{1,15})-(\d+) .* (\d+\.\d+): tracing_mark_write: ([BE].*)$")
 
 def parse_trace_part(trace):
   """ Takes a string containing the text trace form systrace, parses the rows
@@ -48,18 +50,28 @@ def parse_trace_part(trace):
   mark_matcher = re.compile(r"([BE])\|(\d+).*")
   tracked_pids = {}
   driver_tgids = {}
+  pid_to_tgid = {}
   parsed = []
   for [line, lineno] in trace:
     m = MATCHER.match(line)
-    if not m:
+    m_old = MATCHER_FOR_OLD.match(line)
+    if not m and not m_old:
       # Check parsing doesn't discard interesting lines
       assert not "HIDL::IDevice" in line, line
       assert not "[NN_" in line, line
       assert not "tracing_mark_write: B" in line, line
       assert not "tracing_mark_write: E" in line, line
       continue
-    [task, pid, tgid, time, mark] = m.groups()
+    if m:
+      [task, pid, tgid, time, mark] = m.groups()
+    else:
+      [task, pid, time, mark] = m_old.groups()
+      if "|" in mark:
+        tgid = mark.split("|")[1]
+      else:
+        tgid = pid_to_tgid[pid]
     assert pid
+    pid_to_tgid[pid] = tgid
     if tgid == "-----":
       mm = mark_matcher.match(mark)
       tgid = mm.group(2)
