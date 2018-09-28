@@ -1,10 +1,14 @@
 import unittest
 
-from parser.input import MATCHER
+from parser.input import MATCHER, MATCHER_FOR_OLD
 
 class TestInput(unittest.TestCase):
   def check_match(self, line):
     m = MATCHER.match(line)
+    self.assertTrue(m, "'" + line + "'")
+
+  def check_old_match(self, line):
+    m = MATCHER_FOR_OLD.match(line)
     self.assertTrue(m, "'" + line + "'")
 
   def test_thread_names(self):
@@ -22,3 +26,15 @@ class TestInput(unittest.TestCase):
       if line:
         self.check_match(line)
 
+  def test_old_systrace(self):
+    lines = """
+           <...>-4762  [007] .... 407453.701225: tracing_mark_write: B|4762|HIDL::IServiceManager::getTransport::client
+           <...>-550   [007] .... 407453.701675: tracing_mark_write: E|550
+           <...>-4840  [005] .... 407457.494359: tracing_mark_write: B|4828|[SW][NN_LI_PE]StepExecutor::startComputeOnDevice::execute
+           <...>-4840  [005] .... 407457.494365: tracing_mark_write: B|4828|HIDL::IPreparedModel::execute::client
+           <...>-13947 [005] .... 407457.494606: tracing_mark_write: B|13947|HIDL::IPreparedModel::execute::server
+           <...>-13949 [005] .... 407457.508264: tracing_mark_write: B|13947|HIDL::IExecutionCallback::notify::client"""
+    for line in lines.splitlines():
+      line = line.strip()
+      if line:
+        self.check_old_match(line)
