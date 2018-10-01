@@ -121,6 +121,21 @@ TEST_F(NeuralnetworksHidlTest, argmax_2_quant8) {
                            argmax_2_quant8::examples);
 }
 
+// Generated from: argmax_3_float.mod.py.
+namespace argmax_3_float {
+// Generated argmax_3_float test
+#include "examples/argmax_3_float.example.cpp"
+// Generated model constructor
+#include "vts_models/argmax_3_float.model.cpp"
+} // namespace argmax_3_float
+
+TEST_F(NeuralnetworksHidlTest, argmax_3_float) {
+  generated_tests::Execute(device,
+                           argmax_3_float::createTestModel,
+                           argmax_3_float::is_ignored,
+                           argmax_3_float::examples);
+}
+
 // Generated from: argmin_1_float.mod.py.
 namespace argmin_1_float {
 // Generated argmin_1_float test
@@ -239,6 +254,21 @@ TEST_F(NeuralnetworksHidlTest, argmin_2_quant8) {
                            argmin_2_quant8::createTestModel,
                            argmin_2_quant8::is_ignored,
                            argmin_2_quant8::examples);
+}
+
+// Generated from: argmin_3_float.mod.py.
+namespace argmin_3_float {
+// Generated argmin_3_float test
+#include "examples/argmin_3_float.example.cpp"
+// Generated model constructor
+#include "vts_models/argmin_3_float.model.cpp"
+} // namespace argmin_3_float
+
+TEST_F(NeuralnetworksHidlTest, argmin_3_float) {
+  generated_tests::Execute(device,
+                           argmin_3_float::createTestModel,
+                           argmin_3_float::is_ignored,
+                           argmin_3_float::examples);
 }
 
 // Generated from: lsh_projection_3_relaxed.mod.py.
