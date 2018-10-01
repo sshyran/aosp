@@ -36,7 +36,9 @@ class Device {
 public:
     Device(std::string name, const sp<V1_0::IDevice>& device);
     VersionedIDevice* getInterface() { return &mInterface; }
-    const std::string& getName() const { return mName; }
+    const char* getName() const { return mName.c_str(); }
+    const char* getVersionString() const { return mVersionString.c_str(); }
+
     // Returns true if succesfully initialized.
     bool initialize();
 
@@ -50,6 +52,7 @@ public:
 
 private:
     std::string mName;
+    std::string mVersionString;
     VersionedIDevice mInterface;
     PerformanceInfo mFloat32Performance;
     PerformanceInfo mQuantized8Performance;

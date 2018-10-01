@@ -192,6 +192,40 @@ DeviceStatus VersionedIDevice::getStatus() {
     return static_cast<DeviceStatus>(ret);
 }
 
+int64_t VersionedIDevice::getFeatureLevel() {
+    if (mDeviceV1_2 != nullptr) {
+        return __ANDROID_API_Q__;
+    } else if (mDeviceV1_1 != nullptr) {
+        return __ANDROID_API_P__;
+    } else if (mDeviceV1_0 != nullptr) {
+        return __ANDROID_API_O_MR1__;
+    } else {
+        LOG(ERROR) << "Device not available!";
+        return -1;
+    }
+}
+
+std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionString() {
+    std::pair<ErrorStatus, hidl_string> result;
+
+    if (mDeviceV1_2 != nullptr) {
+        Return<void> ret = mDeviceV1_2->getVersionString(
+                [&result](ErrorStatus error, const hidl_string& version) {
+                    result = std::make_pair(error, version);
+                });
+        if (!ret.isOk()) {
+            LOG(ERROR) << "getVersion failure: " << ret.description();
+            return {ErrorStatus::GENERAL_FAILURE, ""};
+        }
+        return result;
+    } else if (mDeviceV1_1 != nullptr || mDeviceV1_0 != nullptr) {
+        return {ErrorStatus::NONE, "UNKNOWN"};
+    } else {
+        LOG(ERROR) << "Could not handle getVersionString";
+        return {ErrorStatus::GENERAL_FAILURE, ""};
+    }
+}
+
 bool VersionedIDevice::operator==(nullptr_t) {
     return mDeviceV1_0 == nullptr;
 }
