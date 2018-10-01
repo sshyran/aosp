@@ -260,6 +260,64 @@ static_assert(static_cast<int32_t>(FusedActivationFunc::RELU6) == ANEURALNETWORK
 using android::sp;
 using namespace android::nn;
 
+int ANeuralNetworks_getDeviceCount(uint32_t* numDevices) {
+    if (numDevices == nullptr) {
+        LOG(ERROR) << "ANeuralNetworks_getDeviceCount passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    *numDevices = DeviceManager::get()->getDrivers().size();
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ANeuralNetworks_getDevice(uint32_t devIndex, ANeuralNetworksDevice** device) {
+    if (device == nullptr) {
+        LOG(ERROR) << "ANeuralNetworks_getDevice passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const std::vector<std::shared_ptr<Device>>& devices = DeviceManager::get()->getDrivers();
+    if (devIndex >= devices.size()) {
+        LOG(ERROR) << "ANeuralNetworks_getDevice passed an invalid device index";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    *device = reinterpret_cast<ANeuralNetworksDevice*>(devices.at(devIndex).get());
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ANeuralNetworksDevice_getName(const ANeuralNetworksDevice* device, const char** name) {
+    if (device == nullptr || name == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksDevice_getName passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const Device* d = reinterpret_cast<const Device*>(device);
+    *name = d->getName();
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const char** version) {
+    if (device == nullptr || version == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksDevice_getVersion passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const Device* d = reinterpret_cast<const Device*>(device);
+    *version = d->getVersionString();
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
+                                          int64_t* featureLevel) {
+    if (device == nullptr || featureLevel == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksDevice_getFeatureLevel passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    Device* d = reinterpret_cast<Device*>(const_cast<ANeuralNetworksDevice*>(device));
+    int64_t dFeatureLevel = d->getInterface()->getFeatureLevel();
+    if (dFeatureLevel < 0) {
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    *featureLevel = dFeatureLevel;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd, size_t offset,
                                        ANeuralNetworksMemory** memory) {
     NNTRACE_RT(NNTRACE_PHASE_PREPARATION, "ANeuralNetworksMemory_createFromFd");

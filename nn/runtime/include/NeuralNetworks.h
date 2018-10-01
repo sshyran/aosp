@@ -2788,6 +2788,111 @@ typedef int32_t ANeuralNetworksOperationType;
  */
 typedef struct ANeuralNetworksEvent ANeuralNetworksEvent;
 
+#if __ANDROID_API__ >= __ANDROID_API_Q__
+
+/**
+ * ANeuralNetworksDevice is an opaque type that represents an accelerator.
+ *
+ * This type is used to query basic properties and supported operations of specified
+ * accelerator, and control which accelerator(s) a model is to be run on.
+ *
+ * Available since API level 29.
+ */
+typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
+
+/**
+ * Get the number of available accelerators.
+ *
+ * @param numDevices Used to return the number of accelerators.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworks_getDeviceCount(uint32_t* numDevices);
+
+/**
+ * Get the representation of the specified accelerator.
+ *
+ * @param devIndex The index of the specified accelerator. Must be less than the
+                   number of available accelerators.
+ * @param device The representation of the specified accelerator.
+ *               The same representation will always be returned for the specified
+ *               accelerator.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworks_getDevice(uint32_t devIndex, ANeuralNetworksDevice** device);
+
+/**
+ * Get the name of the specified accelerator.
+ *
+ * @param device The representation of the specified accelerator.
+ * @param name   The returned name of the specified accelerator. The name will be in UTF-8
+ *               and will be null-terminated. It will be recognizable as a known device name
+ *               rather than a cryptic string. For devices with feature level 29 and above, the
+ *               format of the name is {VENDOR}-{DEVICE}, e.g. “google-ipu”. For devices with
+ *               feature level 28 or lower, the name will always be “unknown-device”.
+ *               The name will remain valid for the duration of the application.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksDevice_getName(const ANeuralNetworksDevice* device, const char** name);
+
+/**
+ * Get the version of the driver implementation of the specified accelerator.
+ *
+ * It’s the responsibility of the driver implementor to insure that this version string
+ * uniquely distinguishes this implementation from all previous implementations.
+ *
+ * This version string must not be confused with the feature level which is solely defined
+ * by {@link ANeuralNetworksDevice_getFeatureLevel}. There is no implicit ordering of the versions.
+ * For example, it is not possible to filter all drivers older than a certain version.
+ *
+ * Application developers may use this version string to avoid or prefer specific driver
+ * implementations. For example, an application may want to do so because:
+ *     - A specific version of the driver does not provide the required performance,
+ *       perhaps because of a performance regression.
+ *     - A specific version of the driver has a bug or returns results that don’t match
+ *       the minimum precision requirement for the application.
+ *
+ * @param device The representation of the specified accelerator.
+ * @param version The returned version string of the driver for the specified accelerator. The
+ *                string will be in UTF-8 and will be null-terminated. For devices with feature
+ *                level 28 or lower, "UNKOWN" will be returned. The version string will remain
+ *                valid for the duration of the application.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const char** version);
+
+/**
+ * Get the supported NNAPI version of the specified accelerator.
+ *
+ * Each accelerator has a supported feature level, which is the most advanced feature this driver
+ * implements. For example, if the driver implements the features introduced in Android P,
+ * but does not implement the features introduced after Android P, the value would be 28.
+ * Developers could decide whether or not the specified accelerator should be used for a Model that
+ * has certain feature requirements.
+ *
+ * @param device The representation of the specified accelerator.
+ * @param featureLevel The API level of the most advanced feature this driver implements.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
+                                          int64_t* featureLevel);
+
+#endif  // __ANDROID_API__ >= __ANDROID_API_Q__
+
 #if __ANDROID_API__ >= 27
 
 /**
