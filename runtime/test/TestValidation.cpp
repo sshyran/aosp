@@ -580,4 +580,69 @@ TEST_F(ValidationTestExecution, StartCompute) {
 TEST_F(ValidationTestExecution, EventWait) {
     EXPECT_EQ(ANeuralNetworksEvent_wait(nullptr), ANEURALNETWORKS_UNEXPECTED_NULL);
 }
+
+TEST(ValidationTestIntrospection, GetNumDevices) {
+    uint32_t numDevices = 0;
+    EXPECT_EQ(ANeuralNetworks_getDeviceCount(&numDevices), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworks_getDeviceCount(nullptr), ANEURALNETWORKS_UNEXPECTED_NULL);
+}
+
+TEST(ValidationTestIntrospection, GetDevice) {
+    uint32_t numDevices = 0;
+    EXPECT_EQ(ANeuralNetworks_getDeviceCount(&numDevices), ANEURALNETWORKS_NO_ERROR);
+
+    ANeuralNetworksDevice* device = nullptr;
+    for (uint32_t i = 0; i < numDevices; i++) {
+        SCOPED_TRACE(i);
+        EXPECT_EQ(ANeuralNetworks_getDevice(i, &device), ANEURALNETWORKS_NO_ERROR);
+        EXPECT_NE(device, nullptr);
+    }
+    EXPECT_EQ(ANeuralNetworks_getDevice(0, nullptr), ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworks_getDevice(numDevices, &device), ANEURALNETWORKS_BAD_DATA);
+}
+
+static void deviceStringCheck(
+        std::function<int(const ANeuralNetworksDevice*, const char**)> func) {
+    uint32_t numDevices = 0;
+    EXPECT_EQ(ANeuralNetworks_getDeviceCount(&numDevices), ANEURALNETWORKS_NO_ERROR);
+
+    const char* buffer;
+    for (uint32_t i = 0; i < numDevices; i++) {
+        SCOPED_TRACE(i);
+        ANeuralNetworksDevice* device;
+        EXPECT_EQ(ANeuralNetworks_getDevice(i, &device), ANEURALNETWORKS_NO_ERROR);
+        EXPECT_EQ(func(device, &buffer), ANEURALNETWORKS_NO_ERROR);
+        EXPECT_EQ(func(device, nullptr), ANEURALNETWORKS_UNEXPECTED_NULL);
+    }
+    EXPECT_EQ(func(nullptr, &buffer), ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(func(nullptr, nullptr), ANEURALNETWORKS_UNEXPECTED_NULL);
+}
+
+TEST(ValidationTestIntrospection, DeviceGetName) {
+    deviceStringCheck(ANeuralNetworksDevice_getName);
+}
+
+TEST(ValidationTestIntrospection, DeviceGetVersion) {
+    deviceStringCheck(ANeuralNetworksDevice_getVersion);
+}
+
+TEST(ValidationTestIntrospection, DeviceGetFeatureLevel) {
+    uint32_t numDevices = 0;
+    EXPECT_EQ(ANeuralNetworks_getDeviceCount(&numDevices), ANEURALNETWORKS_NO_ERROR);
+
+    int64_t featureLevel;
+    for (uint32_t i = 0; i < numDevices; i++) {
+        SCOPED_TRACE(i);
+        ANeuralNetworksDevice* device;
+        EXPECT_EQ(ANeuralNetworks_getDevice(i, &device), ANEURALNETWORKS_NO_ERROR);
+        EXPECT_EQ(ANeuralNetworksDevice_getFeatureLevel(device, &featureLevel),
+                  ANEURALNETWORKS_NO_ERROR);
+        EXPECT_EQ(ANeuralNetworksDevice_getFeatureLevel(device, nullptr),
+                  ANEURALNETWORKS_UNEXPECTED_NULL);
+    }
+    EXPECT_EQ(ANeuralNetworksDevice_getFeatureLevel(nullptr, &featureLevel),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksDevice_getFeatureLevel(nullptr, nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+}
 }  // namespace

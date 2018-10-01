@@ -157,6 +157,45 @@ public:
     DeviceStatus getStatus();
 
     /**
+     * Returns the feature level of a driver.
+     *
+     * @return featureLevel The API level of the most advanced feature this driver implements.
+     *                      For example, if the driver implements the features introduced in
+     *                      Android P, the value would be 28.
+     */
+    int64_t getFeatureLevel();
+
+    /**
+     * Get the version string of the driver implementation.
+     *
+     * The version string must be a unique token among the set of version strings of
+     * drivers of a specific device. The token identifies the device driver's
+     * implementation. The token must not be confused with the feature level which is solely
+     * defined by the interface version. This API is opaque to the Android framework, but the
+     * Android framework may use the information for debugging or to pass on to NNAPI applications.
+     *
+     * Application developers sometimes have specific requirements to ensure good user experiences,
+     * and they need more information to make intelligent decisions when the Android framework
+     * cannot. For example, combined with the device name and other information, the token can help
+     * NNAPI applications filter devices based on their needs:
+     *     - An application demands a certain level of performance, but a specific version of
+     *       the driver cannot meet that requirement because of a performance regression.
+     *       The application can blacklist the driver based on the version provided.
+     *     - An application has a minimum precision requirement, but certain versions of
+     *       the driver cannot meet that requirement because of bugs or certain optimizations.
+     *       The application can filter out versions of these drivers.
+     *
+     * @return status Error status returned from querying the version string. Must be:
+     *     - NONE if the query was successful
+     *     - DEVICE_UNAVAILABLE if driver is offline or busy
+     *     - GENERAL_FAILURE if the query resulted in an
+     *       unspecified error
+     * @return version The version string of the device implementation.
+     *     Must have nonzero length if the query is successful, and must be an empty string if not.
+     */
+    std::pair<ErrorStatus, hidl_string> getVersionString();
+
+    /**
      * Returns whether this handle to an IDevice object is valid or not.
      *
      * @return bool true if V1_0::IDevice (which could be V1_1::IDevice) is
