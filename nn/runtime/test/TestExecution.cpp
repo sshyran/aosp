@@ -21,8 +21,8 @@
 #include "Manager.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
-#include "NeuralNetworksWrapper.h"
 #include "SampleDriver.h"
+#include "TestNeuralNetworksWrapper.h"
 #include "ValidateHal.h"
 
 #include <algorithm>
@@ -38,14 +38,14 @@ using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
 using HidlModel = hardware::neuralnetworks::V1_2::Model;
 using PreparedModelCallback = hardware::neuralnetworks::V1_0::implementation::PreparedModelCallback;
-using Result = nn::wrapper::Result;
+using Result = nn::test_wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
-using WrapperCompilation = nn::wrapper::Compilation;
-using WrapperEvent = nn::wrapper::Event;
-using WrapperExecution = nn::wrapper::Execution;
-using WrapperModel = nn::wrapper::Model;
-using WrapperOperandType = nn::wrapper::OperandType;
-using WrapperType = nn::wrapper::Type;
+using WrapperCompilation = nn::test_wrapper::Compilation;
+using WrapperEvent = nn::test_wrapper::Event;
+using WrapperExecution = nn::test_wrapper::Execution;
+using WrapperModel = nn::test_wrapper::Model;
+using WrapperOperandType = nn::test_wrapper::OperandType;
+using WrapperType = nn::test_wrapper::Type;
 
 namespace {
 
@@ -168,31 +168,29 @@ private:
 template<typename DriverClass>
 class TestCompilation : public WrapperCompilation {
 public:
-    TestCompilation(const WrapperModel* model) : WrapperCompilation(model) {
-        // We need to ensure that we use our TestDriver and do not
-        // fall back to CPU.  (If we allow CPU fallback, then when our
-        // TestDriver reports an execution failure, we'll re-execute
-        // on CPU, and will not see the failure.)
-        builder()->setPartitioning(DeviceManager::kPartitioningWithoutFallback);
-    }
-
     // Allow dummying up the error status for all executions from this
     // compilation.  If errorStatus is NONE, then execute behaves
     // normally (and sends back the actual execution status).
     // Otherwise, don't bother to execute, and just send back
     // errorStatus (as the execution status, not the launch status).
-    Result finish(const std::string& deviceName, ErrorStatus errorStatus) {
+    TestCompilation(const WrapperModel* model, const std::string& deviceName,
+                    ErrorStatus errorStatus) {
         std::vector<std::shared_ptr<Device>> devices;
         auto device = std::make_shared<Device>(deviceName,
                                                new DriverClass(deviceName, errorStatus));
         assert(device->initialize());
         devices.push_back(device);
-        return static_cast<Result>(builder()->finish(devices));
-    }
 
-private:
-    CompilationBuilder* builder() {
-        return reinterpret_cast<CompilationBuilder*>(getHandle());
+        nn::ModelBuilder* m = reinterpret_cast<nn::ModelBuilder*>(model->getHandle());
+        CompilationBuilder* c = nullptr;
+        int result = m->createCompilation(&c, devices);
+        EXPECT_EQ(result, 0);
+        // We need to ensure that we use our TestDriver and do not
+        // fall back to CPU.  (If we allow CPU fallback, then when our
+        // TestDriver reports an execution failure, we'll re-execute
+        // on CPU, and will not see the failure.)
+        c->setPartitioning(DeviceManager::kPartitioningWithoutFallback);
+        mCompilation = reinterpret_cast<ANeuralNetworksCompilation*>(c);
     }
 };
 
@@ -205,7 +203,7 @@ public:
             kForceErrorStatus(std::get<0>(GetParam())),
             kExpectResult(std::get<1>(GetParam())),
             mModel(makeModel()),
-            mCompilation(&mModel) { }
+            mCompilation(&mModel, kName, kForceErrorStatus) {}
 
 protected:
     // Unit test method
@@ -253,7 +251,7 @@ private:
 
 template<class DriverClass> void ExecutionTestTemplate<DriverClass>::TestWait() {
     SCOPED_TRACE(kName);
-    ASSERT_EQ(mCompilation.finish(kName, kForceErrorStatus), Result::NO_ERROR);
+    ASSERT_EQ(mCompilation.finish(), Result::NO_ERROR);
     WrapperExecution execution(&mCompilation);
     ASSERT_NO_FATAL_FAILURE(setInputOutput(&execution));
     WrapperEvent event;
