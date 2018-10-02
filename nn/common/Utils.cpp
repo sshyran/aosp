@@ -101,8 +101,8 @@ EntryType tableLookup(const EntryType (&table)[entryCount],
 #define COUNT(X) (sizeof(X) / sizeof(X[0]))
 
 const char* kTypeNames[kNumberOfDataTypes] = {
-        "FLOAT32",        "INT32",        "UINT32",
-        "TENSOR_FLOAT32", "TENSOR_INT32", "TENSOR_QUANT8_ASYMM",
+        "FLOAT32", "INT32", "UINT32", "TENSOR_FLOAT32", "TENSOR_INT32", "TENSOR_QUANT8_ASYMM",
+        "BOOL",
 };
 
 static_assert(COUNT(kTypeNames) == kNumberOfDataTypes, "kTypeNames is incorrect");
@@ -229,23 +229,25 @@ const char* getOperationName(OperationType type) {
 }
 
 const uint32_t kSizeOfDataType[]{
-        4, // ANEURALNETWORKS_FLOAT32
-        4, // ANEURALNETWORKS_INT32
-        4, // ANEURALNETWORKS_UINT32
-        4, // ANEURALNETWORKS_TENSOR_FLOAT32
-        4, // ANEURALNETWORKS_TENSOR_INT32
-        1  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
+        4,  // ANEURALNETWORKS_FLOAT32
+        4,  // ANEURALNETWORKS_INT32
+        4,  // ANEURALNETWORKS_UINT32
+        4,  // ANEURALNETWORKS_TENSOR_FLOAT32
+        4,  // ANEURALNETWORKS_TENSOR_INT32
+        1,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
+        1,  // ANEURALNETWORKS_BOOL
 };
 
 static_assert(COUNT(kSizeOfDataType) == kNumberOfDataTypes, "kSizeOfDataType is incorrect");
 
 const bool kScalarDataType[]{
-        true,  // ANEURALNETWORKS_FLOAT32
-        true,  // ANEURALNETWORKS_INT32
-        true,  // ANEURALNETWORKS_UINT32
-        false, // ANEURALNETWORKS_TENSOR_FLOAT32
-        false, // ANEURALNETWORKS_TENSOR_INT32
-        false, // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
+        true,   // ANEURALNETWORKS_FLOAT32
+        true,   // ANEURALNETWORKS_INT32
+        true,   // ANEURALNETWORKS_UINT32
+        false,  // ANEURALNETWORKS_TENSOR_FLOAT32
+        false,  // ANEURALNETWORKS_TENSOR_INT32
+        false,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
+        true,   // ANEURALNETWORKS_BOOL
 };
 
 static_assert(COUNT(kScalarDataType) == kNumberOfDataTypes, "kScalarDataType is incorrect");
@@ -358,9 +360,8 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
-    if (type.type == ANEURALNETWORKS_FLOAT32 ||
-        type.type == ANEURALNETWORKS_INT32 ||
-        type.type == ANEURALNETWORKS_UINT32 ||
+    if (type.type == ANEURALNETWORKS_FLOAT32 || type.type == ANEURALNETWORKS_INT32 ||
+        type.type == ANEURALNETWORKS_UINT32 || type.type == ANEURALNETWORKS_BOOL ||
         type.type == ANEURALNETWORKS_OEM_SCALAR) {
         if (type.dimensionCount != 0 || type.dimensions != nullptr) {
             LOG(ERROR) << tag << " Invalid dimensions for scalar type";
@@ -2088,12 +2089,76 @@ static hidl_vec<V1_2::Operation> convertToV1_2(const hidl_vec<T>& operations) {
     return result;
 }
 
+// We only need to convert from 1.0 and back since there wasn't any changes to
+// Operand in 1.1
+V1_2::OperandType convertToV1_2(const V1_0::OperandType& operandType) {
+    return static_cast<V1_2::OperandType>(operandType);
+}
+
+bool compliantWithV1_0(const V1_2::OperandType& operandType) {
+    return validOperandType(static_cast<V1_0::OperandType>(operandType));
+}
+
+V1_0::OperandType convertToV1_0(const V1_2::OperandType& operandType) {
+    if (!compliantWithV1_0(operandType)) {
+        LOG(ERROR) << "Upcasting non-compliant operand type " << toString(operandType)
+                   << " from V1_2::Operand to V1_0::Operand";
+    }
+    return static_cast<V1_0::OperandType>(operandType);
+}
+
+// We only need to convert from 1.0 and back since there wasn't any changes to
+// Operand in 1.1
+V1_2::Operand convertToV1_2(const V1_0::Operand& operand) {
+    return {.type = convertToV1_2(operand.type),
+            .dimensions = operand.dimensions,
+            .numberOfConsumers = operand.numberOfConsumers,
+            .scale = operand.scale,
+            .zeroPoint = operand.zeroPoint,
+            .lifetime = operand.lifetime,
+            .location = operand.location};
+}
+
+V1_2::Operand convertToV1_2(const V1_2::Operand& operand) {
+    return operand;
+}
+
+V1_0::Operand convertToV1_0(const V1_2::Operand& operand) {
+    return {.type = convertToV1_0(operand.type),
+            .dimensions = operand.dimensions,
+            .numberOfConsumers = operand.numberOfConsumers,
+            .scale = operand.scale,
+            .zeroPoint = operand.zeroPoint,
+            .lifetime = operand.lifetime,
+            .location = operand.location};
+}
+
+// We only need to convert from 1.0 and back since there wasn't any changes to
+// Operand in 1.1
+hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_0::Operand>& operands) {
+    hidl_vec<V1_2::Operand> result(operands.size());
+    std::transform(operands.begin(), operands.end(), result.begin(),
+                   [](const V1_0::Operand& operand) { return convertToV1_2(operand); });
+    return result;
+}
+
+hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_2::Operand>& operands) {
+    return operands;
+}
+
+hidl_vec<V1_0::Operand> convertToV1_0(const hidl_vec<V1_2::Operand>& operands) {
+    hidl_vec<V1_0::Operand> result(operands.size());
+    std::transform(operands.begin(), operands.end(), result.begin(),
+                   [](const V1_2::Operand& operand) { return convertToV1_0(operand); });
+    return result;
+}
+
 V1_0::Model convertToV1_0(const V1_2::Model& model) {
     if (!compliantWithV1_0(model)) {
         LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
                    << " from V1_1::Model to V1_0::Model";
     }
-    return {.operands = model.operands,
+    return {.operands = convertToV1_0(model.operands),
             .operations = convertToV1_0(model.operations),
             .inputIndexes = model.inputIndexes,
             .outputIndexes = model.outputIndexes,
@@ -2102,7 +2167,7 @@ V1_0::Model convertToV1_0(const V1_2::Model& model) {
 }
 
 V1_1::Model convertToV1_1(const V1_2::Model& model) {
-    return {.operands = model.operands,
+    return {.operands = convertToV1_0(model.operands),  // Operands in 1.1 and 1.0 are identical.
             .operations = convertToV1_1(model.operations),
             .inputIndexes = model.inputIndexes,
             .outputIndexes = model.outputIndexes,
@@ -2112,7 +2177,7 @@ V1_1::Model convertToV1_1(const V1_2::Model& model) {
 }
 
 V1_2::Model convertToV1_2(const V1_0::Model& model) {
-    return {.operands = model.operands,
+    return {.operands = convertToV1_2(model.operands),
             .operations = convertToV1_2(model.operations),
             .inputIndexes = model.inputIndexes,
             .outputIndexes = model.outputIndexes,
@@ -2122,7 +2187,7 @@ V1_2::Model convertToV1_2(const V1_0::Model& model) {
 }
 
 V1_2::Model convertToV1_2(const V1_1::Model& model) {
-    return {.operands = model.operands,
+    return {.operands = convertToV1_2(model.operands),
             .operations = convertToV1_2(model.operations),
             .inputIndexes = model.inputIndexes,
             .outputIndexes = model.outputIndexes,
