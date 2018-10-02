@@ -218,6 +218,9 @@ bool subFloat32(const float* in1, const Shape& shape1,
                 int32_t activation,
                 float* out, const Shape& shapeOut);
 
+bool subQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
+               int32_t activation, uint8_t* out, const Shape& shapeOut);
+
 bool squeezeGeneric(const void* inputData, const Shape& inputShape,
                     void* outputData, const Shape& outputShape);
 

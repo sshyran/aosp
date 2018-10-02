@@ -38,4 +38,15 @@ TEST_F(ComplianceTest, tanh_quantized) {
     ASSERT_FALSE(compliantWithV1_0(model));
 }
 
+namespace sub_quantized {
+#include "generated/vts_models/sub_quantized.model.cpp"
+}  // namespace sub_quantized
+
+TEST_F(ComplianceTest, sub_quantized) {
+    Model model = sub_quantized::createTestModel();
+
+    ASSERT_FALSE(compliantWithV1_1(model));
+    ASSERT_FALSE(compliantWithV1_0(model));
+}
+
 }  // end namespace

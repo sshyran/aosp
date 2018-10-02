@@ -324,6 +324,61 @@ bool subFloat32(const float* in1, const Shape& shape1,
     return true;
 }
 
+bool subQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
+               int32_t activation, uint8_t* out, const Shape& shapeOut) {
+    NNTRACE_TRANS("subQuant8");
+
+    const int32_t input1_offset = -shape1.offset;
+    const int32_t input2_offset = -shape2.offset;
+    const int32_t output_offset = shapeOut.offset;
+    const int left_shift = 20;
+    const double twice_max_input_scale = 2 * std::max(shape1.scale, shape2.scale);
+    const double real_input1_multiplier = shape1.scale / twice_max_input_scale;
+    const double real_input2_multiplier = shape2.scale / twice_max_input_scale;
+    const double real_output_multiplier =
+            twice_max_input_scale / ((1 << left_shift) * shapeOut.scale);
+
+    int32_t input1_multiplier;
+    int32_t input1_shift;
+    if (!QuantizeMultiplierSmallerThanOne(real_input1_multiplier, &input1_multiplier,
+                                          &input1_shift)) {
+        return false;
+    }
+    int32_t input2_multiplier;
+    int32_t input2_shift;
+    if (!QuantizeMultiplierSmallerThanOne(real_input2_multiplier, &input2_multiplier,
+                                          &input2_shift)) {
+        return false;
+    }
+    input2_multiplier *= -1;
+    int32_t output_multiplier;
+    int32_t output_shift;
+    if (!QuantizeMultiplierSmallerThanOne(real_output_multiplier, &output_multiplier,
+                                          &output_shift)) {
+        return false;
+    }
+    int32_t output_activation_min;
+    int32_t output_activation_max;
+    CalculateActivationRangeUint8(activation, shapeOut, &output_activation_min,
+                                  &output_activation_max);
+
+    // We are using tflite::optimized_ops::BroadcastAdd unconditionally here
+    // because tflite::optimized_ops::Add fails to pass some of the
+    // sub_quantized_different_scales tests.
+    NNTRACE_COMP_SWITCH("optimized_ops::BroadcastAdd");
+#define ANDROID_NN_BROADCAST_ADD(activation)                                                     \
+    tflite::optimized_ops::BroadcastAdd<tflite::FusedActivationFunctionType::activation>(        \
+            left_shift, in1, convertShapeToDims(shape1), input1_offset, input1_multiplier,       \
+            input1_shift, in2, convertShapeToDims(shape2), input2_offset, input2_multiplier,     \
+            input2_shift, output_offset, output_multiplier, output_shift, output_activation_min, \
+            output_activation_max, out, convertShapeToDims(shapeOut))
+
+    ANDROID_NN_MACRO_DISPATCH(ANDROID_NN_BROADCAST_ADD)
+#undef ANDROID_NN_BROADCAST_ADD
+
+    return true;
+}
+
 bool divFloat32(const float* in1, const Shape& shape1,
                 const float* in2, const Shape& shape2,
                 int32_t activation,

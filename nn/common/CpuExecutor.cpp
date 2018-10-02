@@ -1722,16 +1722,18 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& out = mOperands[outs[0]];
             Shape outShape = out.shape();
 
+            if (!addMulPrepare(in1.shape(), in2.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&out, outShape)) {
+                break;
+            }
             if (in1.type == OperandType::TENSOR_FLOAT32) {
-                success = addMulPrepare(in1.shape(), in2.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&out, outShape) &&
-                          subFloat32(reinterpret_cast<const float*>(in1.buffer),
-                                     in1.shape(),
-                                     reinterpret_cast<const float*>(in2.buffer),
-                                     in2.shape(),
-                                     activation,
-                                     reinterpret_cast<float*>(out.buffer),
-                                     outShape);
+                success = subFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const float*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<float*>(out.buffer), outShape);
+            } else if (in1.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                success = subQuant8(reinterpret_cast<const uint8_t*>(in1.buffer), in1.shape(),
+                                    reinterpret_cast<const uint8_t*>(in2.buffer), in2.shape(),
+                                    activation, reinterpret_cast<uint8_t*>(out.buffer), outShape);
             }
         } break;
         case OperationType::MEAN: {
