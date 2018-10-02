@@ -94,6 +94,7 @@ cc_defaults {
         // "TestOpenmpSettings.cpp",
         "TestPartitioning.cpp",
         "TestPartitioningRandom.cpp",
+        "TestIntrospectionControl.cpp",
     ],
     static_libs: [
         "libgmock",

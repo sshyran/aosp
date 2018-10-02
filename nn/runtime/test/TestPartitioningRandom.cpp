@@ -20,8 +20,8 @@
 #include "Manager.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
-#include "NeuralNetworksWrapper.h"
 #include "SampleDriver.h"
+#include "TestNeuralNetworksWrapper.h"
 #include "Utils.h"
 #include "ValidateHal.h"
 
@@ -95,14 +95,14 @@ using ExecutionPlan = nn::ExecutionPlan;
 using HidlModel = hardware::neuralnetworks::V1_2::Model;
 using MemoryBuilder = nn::Memory;
 using ModelBuilder = nn::ModelBuilder;
-using Result = nn::wrapper::Result;
+using Result = nn::test_wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
-using WrapperCompilation = nn::wrapper::Compilation;
-using WrapperExecution = nn::wrapper::Execution;
-using WrapperMemory = nn::wrapper::Memory;
-using WrapperModel = nn::wrapper::Model;
-using WrapperOperandType = nn::wrapper::OperandType;
-using WrapperType = nn::wrapper::Type;
+using WrapperCompilation = nn::test_wrapper::Compilation;
+using WrapperExecution = nn::test_wrapper::Execution;
+using WrapperMemory = nn::test_wrapper::Memory;
+using WrapperModel = nn::test_wrapper::Model;
+using WrapperOperandType = nn::test_wrapper::OperandType;
+using WrapperType = nn::test_wrapper::Type;
 
 namespace {
 
@@ -210,13 +210,18 @@ class TestCompilation : public WrapperCompilation {
 public:
     TestCompilation(const WrapperModel* model) : WrapperCompilation(model) {}
 
-    Result setPartitioning(uint32_t partitioning) {
-        return static_cast<Result>(builder()->setPartitioning(partitioning));
+    TestCompilation(const WrapperModel* model, std::vector<std::shared_ptr<Device>> devices) {
+        ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model->getHandle());
+        CompilationBuilder* c = nullptr;
+        int result = m->createCompilation(&c, devices);
+        EXPECT_EQ(result, 0);
+        mCompilation = reinterpret_cast<ANeuralNetworksCompilation*>(c);
     }
 
     using WrapperCompilation::finish;
-    Result finish(const std::vector<std::shared_ptr<Device>>& devices) {
-        return static_cast<Result>(builder()->finish(devices));
+
+    Result setPartitioning(uint32_t partitioning) {
+        return static_cast<Result>(builder()->setPartitioning(partitioning));
     }
 
     const ExecutionPlan& getExecutionPlan() const {
@@ -929,17 +934,17 @@ TEST_P(RandomPartitioningTest, Test) {
     // partitioning to succeed without CPU fallback. With unknown sizes we
     // retry with a fallback if the non-fallback partitioning fails and require
     // the fallback to succeed.
-    TestCompilation cNoFallback(&model);
-    TestCompilation cWithFallback(&model);
+    TestCompilation cNoFallback(&model, devices);
+    TestCompilation cWithFallback(&model, devices);
     TestCompilation *c2 = nullptr;
     ASSERT_EQ(cNoFallback.setPartitioning(DeviceManager::kPartitioningWithoutFallback),
               Result::NO_ERROR);
-    auto compilationResult = cNoFallback.finish(devices);
+    auto compilationResult = cNoFallback.finish();
     if (hasUnknownDimensions && compilationResult == Result::OP_FAILED &&
         cNoFallback.getExecutionPlan().forTest_hasSubModelOutputsOfUnknownSize()) {
         ASSERT_EQ(cWithFallback.setPartitioning(DeviceManager::kPartitioningWithFallback),
                   Result::NO_ERROR);
-        ASSERT_EQ(cWithFallback.finish(devices), Result::NO_ERROR);
+        ASSERT_EQ(cWithFallback.finish(), Result::NO_ERROR);
         c2 = &cWithFallback;
     } else {
         ASSERT_EQ(compilationResult, Result::NO_ERROR);
