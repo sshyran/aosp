@@ -101,8 +101,10 @@ EntryType tableLookup(const EntryType (&table)[entryCount],
 #define COUNT(X) (sizeof(X) / sizeof(X[0]))
 
 const char* kTypeNames[kNumberOfDataTypes] = {
-        "FLOAT32", "INT32", "UINT32", "TENSOR_FLOAT32", "TENSOR_INT32", "TENSOR_QUANT8_ASYMM",
-        "BOOL",
+        "FLOAT32",      "INT32",
+        "UINT32",       "TENSOR_FLOAT32",
+        "TENSOR_INT32", "TENSOR_QUANT8_ASYMM",
+        "BOOL",         "TENSOR_QUANT16_ASYMM",
 };
 
 static_assert(COUNT(kTypeNames) == kNumberOfDataTypes, "kTypeNames is incorrect");
@@ -236,6 +238,7 @@ const uint32_t kSizeOfDataType[]{
         4,  // ANEURALNETWORKS_TENSOR_INT32
         1,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
         1,  // ANEURALNETWORKS_BOOL
+        2,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
 };
 
 static_assert(COUNT(kSizeOfDataType) == kNumberOfDataTypes, "kSizeOfDataType is incorrect");
@@ -248,6 +251,7 @@ const bool kScalarDataType[]{
         false,  // ANEURALNETWORKS_TENSOR_INT32
         false,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
         true,   // ANEURALNETWORKS_BOOL
+        false,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
 };
 
 static_assert(COUNT(kScalarDataType) == kNumberOfDataTypes, "kScalarDataType is incorrect");
@@ -352,6 +356,16 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
     }
     if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
         if (type.zeroPoint < 0 || type.zeroPoint > 255) {
+            LOG(ERROR) << tag << " OperandType invalid zeroPoint " << type.zeroPoint;
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+        if (type.scale <= 0.f) {
+            LOG(ERROR) << tag << " OperandType invalid scale " << type.scale;
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+    }
+    if (type.type == ANEURALNETWORKS_TENSOR_QUANT16_ASYMM) {
+        if (type.zeroPoint < -32768 || type.zeroPoint > 32767) {
             LOG(ERROR) << tag << " OperandType invalid zeroPoint " << type.zeroPoint;
             return ANEURALNETWORKS_BAD_DATA;
         }

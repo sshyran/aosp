@@ -75,7 +75,7 @@ typedef enum {
     /**
      * A tensor of 8 bit integers that represent real numbers.
      *
-     * Attached to this tensor are two numbers that can be used to convert the
+     * Attached to this tensor are two numbers that be used to convert the
      * 8 bit integer to the real value and vice versa. These two numbers are:
      * - scale: a 32 bit floating point value greater than zero.
      * - zeroPoint: a 32 bit integer, in range [0, 255].
@@ -92,6 +92,19 @@ typedef enum {
      * represents false; any other value represents true.
      */
     ANEURALNETWORKS_BOOL = 6,
+
+    /**
+     * A tensor of 16 bit signed integers that represent real numbers.
+     *
+     * Attached to this tensor are two numbers that are used to convert the 16
+     * bit integer to the real value and vice versa. These two numbers are:
+     * - scale: a 32 bit floating point value greater than zero.
+     * - zeroPoint: a 32 bit integer, in range [-32768, 32767].
+     *
+     * The formula is:
+     * realValue = (integerValue - zeroPoint) * scale.
+     */
+    ANEURALNETWORKS_TENSOR_QUANT16_ASYMM = 7,
 } OperandCode;
 
 /**
