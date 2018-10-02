@@ -2995,6 +2995,492 @@ TEST_F(NeuralnetworksHidlTest, split_quant8_4) {
                            split_quant8_4::examples);
 }
 
+// Generated from: sub_quantized.mod.py.
+namespace sub_quantized {
+// Generated sub_quantized test
+#include "examples/sub_quantized.example.cpp"
+// Generated model constructor
+#include "vts_models/sub_quantized.model.cpp"
+} // namespace sub_quantized
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized) {
+  generated_tests::Execute(device,
+                           sub_quantized::createTestModel,
+                           sub_quantized::is_ignored,
+                           sub_quantized::examples);
+}
+
+// Generated from: sub_quantized_broadcast.mod.py.
+namespace sub_quantized_broadcast {
+// Generated sub_quantized_broadcast test
+#include "examples/sub_quantized_broadcast.example.cpp"
+// Generated model constructor
+#include "vts_models/sub_quantized_broadcast.model.cpp"
+} // namespace sub_quantized_broadcast
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_broadcast) {
+  generated_tests::Execute(device,
+                           sub_quantized_broadcast::createTestModel,
+                           sub_quantized_broadcast::is_ignored,
+                           sub_quantized_broadcast::examples);
+}
+
+// Generated from: sub_quantized_different_scales.mod.py.
+namespace sub_quantized_different_scales {
+// Generated sub_quantized_different_scales test
+#include "examples/sub_quantized_different_scales.example.cpp"
+// Generated model constructor
+#include "vts_models/sub_quantized_different_scales.model.cpp"
+} // namespace sub_quantized_different_scales
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel,
+                           sub_quantized_different_scales::is_ignored,
+                           sub_quantized_different_scales::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_2) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_2,
+                           sub_quantized_different_scales::is_ignored_2,
+                           sub_quantized_different_scales::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_3) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_3,
+                           sub_quantized_different_scales::is_ignored_3,
+                           sub_quantized_different_scales::examples_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_4) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_4,
+                           sub_quantized_different_scales::is_ignored_4,
+                           sub_quantized_different_scales::examples_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_5) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_5,
+                           sub_quantized_different_scales::is_ignored_5,
+                           sub_quantized_different_scales::examples_5);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_6) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_6,
+                           sub_quantized_different_scales::is_ignored_6,
+                           sub_quantized_different_scales::examples_6);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_7) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_7,
+                           sub_quantized_different_scales::is_ignored_7,
+                           sub_quantized_different_scales::examples_7);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_8) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_8,
+                           sub_quantized_different_scales::is_ignored_8,
+                           sub_quantized_different_scales::examples_8);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_9) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_9,
+                           sub_quantized_different_scales::is_ignored_9,
+                           sub_quantized_different_scales::examples_9);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_10) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_10,
+                           sub_quantized_different_scales::is_ignored_10,
+                           sub_quantized_different_scales::examples_10);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_11) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_11,
+                           sub_quantized_different_scales::is_ignored_11,
+                           sub_quantized_different_scales::examples_11);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_12) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_12,
+                           sub_quantized_different_scales::is_ignored_12,
+                           sub_quantized_different_scales::examples_12);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_13) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_13,
+                           sub_quantized_different_scales::is_ignored_13,
+                           sub_quantized_different_scales::examples_13);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_14) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_14,
+                           sub_quantized_different_scales::is_ignored_14,
+                           sub_quantized_different_scales::examples_14);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_15) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_15,
+                           sub_quantized_different_scales::is_ignored_15,
+                           sub_quantized_different_scales::examples_15);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_16) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_16,
+                           sub_quantized_different_scales::is_ignored_16,
+                           sub_quantized_different_scales::examples_16);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_17) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_17,
+                           sub_quantized_different_scales::is_ignored_17,
+                           sub_quantized_different_scales::examples_17);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_18) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_18,
+                           sub_quantized_different_scales::is_ignored_18,
+                           sub_quantized_different_scales::examples_18);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_19) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_19,
+                           sub_quantized_different_scales::is_ignored_19,
+                           sub_quantized_different_scales::examples_19);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_20) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_20,
+                           sub_quantized_different_scales::is_ignored_20,
+                           sub_quantized_different_scales::examples_20);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_21) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_21,
+                           sub_quantized_different_scales::is_ignored_21,
+                           sub_quantized_different_scales::examples_21);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_22) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_22,
+                           sub_quantized_different_scales::is_ignored_22,
+                           sub_quantized_different_scales::examples_22);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_23) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_23,
+                           sub_quantized_different_scales::is_ignored_23,
+                           sub_quantized_different_scales::examples_23);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_24) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_24,
+                           sub_quantized_different_scales::is_ignored_24,
+                           sub_quantized_different_scales::examples_24);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_25) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_25,
+                           sub_quantized_different_scales::is_ignored_25,
+                           sub_quantized_different_scales::examples_25);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_26) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_26,
+                           sub_quantized_different_scales::is_ignored_26,
+                           sub_quantized_different_scales::examples_26);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_27) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_27,
+                           sub_quantized_different_scales::is_ignored_27,
+                           sub_quantized_different_scales::examples_27);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_28) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_28,
+                           sub_quantized_different_scales::is_ignored_28,
+                           sub_quantized_different_scales::examples_28);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_29) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_29,
+                           sub_quantized_different_scales::is_ignored_29,
+                           sub_quantized_different_scales::examples_29);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_30) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_30,
+                           sub_quantized_different_scales::is_ignored_30,
+                           sub_quantized_different_scales::examples_30);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_31) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_31,
+                           sub_quantized_different_scales::is_ignored_31,
+                           sub_quantized_different_scales::examples_31);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_32) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_32,
+                           sub_quantized_different_scales::is_ignored_32,
+                           sub_quantized_different_scales::examples_32);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_33) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_33,
+                           sub_quantized_different_scales::is_ignored_33,
+                           sub_quantized_different_scales::examples_33);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_34) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_34,
+                           sub_quantized_different_scales::is_ignored_34,
+                           sub_quantized_different_scales::examples_34);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_35) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_35,
+                           sub_quantized_different_scales::is_ignored_35,
+                           sub_quantized_different_scales::examples_35);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_36) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_36,
+                           sub_quantized_different_scales::is_ignored_36,
+                           sub_quantized_different_scales::examples_36);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_37) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_37,
+                           sub_quantized_different_scales::is_ignored_37,
+                           sub_quantized_different_scales::examples_37);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_38) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_38,
+                           sub_quantized_different_scales::is_ignored_38,
+                           sub_quantized_different_scales::examples_38);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_39) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_39,
+                           sub_quantized_different_scales::is_ignored_39,
+                           sub_quantized_different_scales::examples_39);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_40) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_40,
+                           sub_quantized_different_scales::is_ignored_40,
+                           sub_quantized_different_scales::examples_40);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_41) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_41,
+                           sub_quantized_different_scales::is_ignored_41,
+                           sub_quantized_different_scales::examples_41);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_42) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_42,
+                           sub_quantized_different_scales::is_ignored_42,
+                           sub_quantized_different_scales::examples_42);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_43) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_43,
+                           sub_quantized_different_scales::is_ignored_43,
+                           sub_quantized_different_scales::examples_43);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_44) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_44,
+                           sub_quantized_different_scales::is_ignored_44,
+                           sub_quantized_different_scales::examples_44);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_45) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_45,
+                           sub_quantized_different_scales::is_ignored_45,
+                           sub_quantized_different_scales::examples_45);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_46) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_46,
+                           sub_quantized_different_scales::is_ignored_46,
+                           sub_quantized_different_scales::examples_46);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_47) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_47,
+                           sub_quantized_different_scales::is_ignored_47,
+                           sub_quantized_different_scales::examples_47);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_48) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_48,
+                           sub_quantized_different_scales::is_ignored_48,
+                           sub_quantized_different_scales::examples_48);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_49) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_49,
+                           sub_quantized_different_scales::is_ignored_49,
+                           sub_quantized_different_scales::examples_49);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_50) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_50,
+                           sub_quantized_different_scales::is_ignored_50,
+                           sub_quantized_different_scales::examples_50);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_51) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_51,
+                           sub_quantized_different_scales::is_ignored_51,
+                           sub_quantized_different_scales::examples_51);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_52) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_52,
+                           sub_quantized_different_scales::is_ignored_52,
+                           sub_quantized_different_scales::examples_52);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_53) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_53,
+                           sub_quantized_different_scales::is_ignored_53,
+                           sub_quantized_different_scales::examples_53);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_54) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_54,
+                           sub_quantized_different_scales::is_ignored_54,
+                           sub_quantized_different_scales::examples_54);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_55) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_55,
+                           sub_quantized_different_scales::is_ignored_55,
+                           sub_quantized_different_scales::examples_55);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_56) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_56,
+                           sub_quantized_different_scales::is_ignored_56,
+                           sub_quantized_different_scales::examples_56);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_57) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_57,
+                           sub_quantized_different_scales::is_ignored_57,
+                           sub_quantized_different_scales::examples_57);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_58) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_58,
+                           sub_quantized_different_scales::is_ignored_58,
+                           sub_quantized_different_scales::examples_58);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_59) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_59,
+                           sub_quantized_different_scales::is_ignored_59,
+                           sub_quantized_different_scales::examples_59);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_60) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_60,
+                           sub_quantized_different_scales::is_ignored_60,
+                           sub_quantized_different_scales::examples_60);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_61) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_61,
+                           sub_quantized_different_scales::is_ignored_61,
+                           sub_quantized_different_scales::examples_61);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_62) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_62,
+                           sub_quantized_different_scales::is_ignored_62,
+                           sub_quantized_different_scales::examples_62);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_63) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_63,
+                           sub_quantized_different_scales::is_ignored_63,
+                           sub_quantized_different_scales::examples_63);
+}
+
+TEST_F(NeuralnetworksHidlTest, sub_quantized_different_scales_64) {
+  generated_tests::Execute(device,
+                           sub_quantized_different_scales::createTestModel_64,
+                           sub_quantized_different_scales::is_ignored_64,
+                           sub_quantized_different_scales::examples_64);
+}
+
 // Generated from: tanh_quantized.mod.py.
 namespace tanh_quantized {
 // Generated tanh_quantized test
