@@ -47,6 +47,9 @@ bool validOperationType(V1_0::OperationType operation);
 bool validOperationType(V1_1::OperationType operation);
 bool validOperationType(V1_2::OperationType operation);
 
+bool validOperandType(V1_0::OperandType operand);
+bool validOperandType(V1_2::OperandType operand);
+
 }  // namespace nn
 }  // namespace android
 

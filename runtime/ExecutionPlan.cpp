@@ -899,6 +899,7 @@ PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> d
             }
         case OperandType::INT32:
         case OperandType::UINT32:
+        case OperandType::BOOL:
         case OperandType::TENSOR_INT32:
         case OperandType::TENSOR_QUANT8_ASYMM:
             // For OEM, the real selection will be made from who can run the operand.

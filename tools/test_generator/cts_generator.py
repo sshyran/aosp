@@ -33,6 +33,7 @@ import sys
 # Stuff from test generator
 import test_generator as tg
 from test_generator import ActivationConverter
+from test_generator import BoolScalar
 from test_generator import Configuration
 from test_generator import DataTypeConverter
 from test_generator import DataLayoutConverter
