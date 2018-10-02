@@ -2936,7 +2936,8 @@ typedef struct ANeuralNetworksModel ANeuralNetworksModel;
  *
  * <p>To use:<ul>
  *    <li>Create a new compilation instance by calling the
- *        {@link ANeuralNetworksCompilation_create} function.</li>
+ *        {@link ANeuralNetworksCompilation_create} function or
+ *        {@link ANeuralNetworksCompilation_createForDevices}.</li>
  *    <li>Set any desired properties on the compilation (for example,
  *        {@link ANeuralNetworksCompilation_setPreference}).</li>
  *    <li>Complete the compilation with {@link ANeuralNetworksCompilation_finish}.</li>
@@ -3079,7 +3080,7 @@ typedef struct ANeuralNetworksEvent ANeuralNetworksEvent;
 /**
  * ANeuralNetworksDevice is an opaque type that represents an accelerator.
  *
- * This type is used to query basic properties and supported operations of specified
+ * This type is used to query basic properties and supported operations of the corresponding
  * accelerator, and control which accelerator(s) a model is to be run on.
  *
  * Available since API level 29.
@@ -3177,6 +3178,50 @@ int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const 
 int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
                                           int64_t* featureLevel);
 
+/**
+ * Get the supported operations for a specified set of accelerators. If multiple devices
+ * are selected, the supported operation list is a union of supported operations of all
+ * selected devices.
+ *
+ * @param model The model to be queried.
+ * @param devices The set of accelerators. Must not contain duplicates.
+ * @param numDevices The number of accelerators in the set.
+ * @param supportedOps The boolean array to be filled. True means supported. The size of the
+ *                     boolean array must be at least as large as the number of operations
+ *                     in the model. The order of elements in the supportedOps array matches
+ *                     the order in which the corresponding operations were added to the model.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksModel_getSupportedOperationsForDevices(
+        const ANeuralNetworksModel* model, const ANeuralNetworksDevice* const* devices,
+        uint32_t numDevices, bool* supportedOps);
+
+/**
+ * Create a {@link ANeuralNetworksCompilation} to compile the given model for a specified set
+ * of accelerators. If more than one accelerator is specified, the compilation will
+ * distribute the workload automatically across the accelerators. The model must be fully
+ * supported by the specified set of accelerators. This means that
+ * ANeuralNetworksModel_getSupportedOperationsForDevices() must have returned true for every
+ * operation for that model/devices pair.
+ *
+ * @param model The {@link ANeuralNetworksModel} to be compiled.
+ * @param devices The set of accelerators. Must not contain duplicates.
+ * @param numDevices The number of accelerators in the set.
+ * @param compilation The newly created object or NULL if unsuccessful.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful, ANEURALNETWORKS_BAD_DATA
+ *         if the model is invalid.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
+                                                const ANeuralNetworksDevice* const* devices,
+                                                uint32_t numDevices,
+                                                ANeuralNetworksCompilation** compilation);
+
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
 #if __ANDROID_API__ >= 27
@@ -3263,7 +3308,8 @@ void ANeuralNetworksModel_free(ANeuralNetworksModel* model) __INTRODUCED_IN(27);
 
 /**
  * Indicate that we have finished modifying a model. Required before
- * calling {@link ANeuralNetworksCompilation_create}.
+ * calling {@link ANeuralNetworksCompilation_create} and
+ * {@link ANeuralNetworksCompilation_createForDevices}.
  *
  * An application is responsible to make sure that no other thread uses
  * the model at the same time.
