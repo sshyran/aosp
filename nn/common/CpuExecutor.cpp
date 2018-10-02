@@ -1730,6 +1730,24 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       pReluGeneric(input.buffer, input.shape(), alpha.buffer, alpha.shape(),
                                    out.buffer, outShape);
         } break;
+        case OperationType::TILE: {
+            if (!allParametersPresent(2, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            const RunTimeOperandInfo& multiples = mOperands[ins[1]];
+
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outShape = output.shape();
+
+            success =
+                    tile::prepare(input.shape(), reinterpret_cast<const int32_t*>(multiples.buffer),
+                                  multiples.shape(), &outShape) &&
+                    setInfoAndAllocateIfNeeded(&output, outShape) &&
+                    tile::eval(input.buffer, input.shape(),
+                               reinterpret_cast<const int32_t*>(multiples.buffer), output.buffer,
+                               outShape);
+        } break;
         default:
             nnAssert(false);
             break;
