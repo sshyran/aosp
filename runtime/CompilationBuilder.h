@@ -34,15 +34,14 @@ class CompilationBuilder {
 public:
     friend class ExecutionBuilder;  // TODO remove this
 
-    CompilationBuilder(const ModelBuilder* model);
+    CompilationBuilder(const ModelBuilder* model,
+                       const std::vector<std::shared_ptr<Device>>& devices);
 
     int setPreference(int32_t preference);
 
     int setPartitioning(uint32_t partitioning);
 
     int finish();
-
-    int finish(const std::vector<std::shared_ptr<Device>>& devices);
 
     int createExecution(ExecutionBuilder** execution);
 
@@ -64,6 +63,10 @@ private:
     // Once the compilation has been finished, we should not allow further
     // modifications to the compilation.
     bool mFinished = false;
+
+    // The set of devices that the partitioning algorithm operates on when
+    // finish() is called.
+    std::vector<std::shared_ptr<Device>> mDevices;
 };
 
 } // namespace nn

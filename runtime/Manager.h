@@ -79,6 +79,7 @@ public:
 
     // For testing only:
     void setUseCpuOnly(bool useCpuOnly) { mSetCpuOnly = useCpuOnly; }
+    bool getUseCpuOnly() const { return mSetCpuOnly; }
 
     // How to handle graph partitioning?
     // 0 - Don't do graph partitioning.
@@ -98,7 +99,20 @@ public:
     // Returns the singleton manager.
     static DeviceManager* get();
 
-private:
+    // These functions are solely intended for use by unit tests of
+    // the introspection and control API.
+    //
+    // Register a test device.
+    void forTest_registerDevice(const char* name, const sp<V1_0::IDevice>& device) {
+        registerDevice(name, device);
+    }
+    // Re-initialize the list of available devices.
+    void forTest_reInitializeDeviceList() {
+        mDevices.clear();
+        findAvailableDevices();
+    }
+
+   private:
     // Builds the list of available drivers and queries their capabilities.
     DeviceManager();
 
