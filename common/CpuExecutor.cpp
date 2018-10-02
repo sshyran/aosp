@@ -80,12 +80,12 @@ RunTimePoolInfo::RunTimePoolInfo(uint8_t* buffer) {
     mBuffer = buffer;
 }
 
-RunTimePoolInfo::RunTimePoolInfo(RunTimePoolInfo&& other) {
+RunTimePoolInfo::RunTimePoolInfo(RunTimePoolInfo&& other) noexcept {
     moveFrom(std::move(other));
     other.mBuffer = nullptr;
 }
 
-RunTimePoolInfo& RunTimePoolInfo::operator=(RunTimePoolInfo&& other) {
+RunTimePoolInfo& RunTimePoolInfo::operator=(RunTimePoolInfo&& other) noexcept {
     if (this != &other) {
         release();
         moveFrom(std::move(other));
