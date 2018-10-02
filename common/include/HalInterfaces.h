@@ -30,11 +30,11 @@
 #include <android/hidl/memory/1.0/IMemory.h>
 #include <hidlmemory/mapping.h>
 
-using ::android::hardware::Return;
-using ::android::hardware::Void;
 using ::android::hardware::hidl_memory;
 using ::android::hardware::hidl_string;
 using ::android::hardware::hidl_vec;
+using ::android::hardware::Return;
+using ::android::hardware::Void;
 using ::android::hardware::neuralnetworks::V1_0::DataLocation;
 using ::android::hardware::neuralnetworks::V1_0::DeviceStatus;
 using ::android::hardware::neuralnetworks::V1_0::ErrorStatus;
@@ -42,9 +42,7 @@ using ::android::hardware::neuralnetworks::V1_0::FusedActivationFunc;
 using ::android::hardware::neuralnetworks::V1_0::IExecutionCallback;
 using ::android::hardware::neuralnetworks::V1_0::IPreparedModel;
 using ::android::hardware::neuralnetworks::V1_0::IPreparedModelCallback;
-using ::android::hardware::neuralnetworks::V1_0::Operand;
 using ::android::hardware::neuralnetworks::V1_0::OperandLifeTime;
-using ::android::hardware::neuralnetworks::V1_0::OperandType;
 using ::android::hardware::neuralnetworks::V1_0::PerformanceInfo;
 using ::android::hardware::neuralnetworks::V1_0::Request;
 using ::android::hardware::neuralnetworks::V1_0::RequestArgument;
@@ -52,6 +50,8 @@ using ::android::hardware::neuralnetworks::V1_1::Capabilities;
 using ::android::hardware::neuralnetworks::V1_1::ExecutionPreference;
 using ::android::hardware::neuralnetworks::V1_2::IDevice;
 using ::android::hardware::neuralnetworks::V1_2::Model;
+using ::android::hardware::neuralnetworks::V1_2::Operand;
+using ::android::hardware::neuralnetworks::V1_2::OperandType;
 using ::android::hardware::neuralnetworks::V1_2::Operation;
 using ::android::hardware::neuralnetworks::V1_2::OperationType;
 using ::android::hidl::allocator::V1_0::IAllocator;

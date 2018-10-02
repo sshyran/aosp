@@ -55,17 +55,27 @@ private:
     std::vector<size_t> mPoolSizes;
 };
 
-static bool validateOperands(const hidl_vec<Operand>& operands,
+template <typename VersionedOperand>
+static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                              const hidl_vec<uint8_t>& operandValues,
                              const hidl_vec<hidl_memory>& pools) {
     uint32_t index = 0;
     MemoryAccessVerifier poolVerifier(pools);
-    for (auto& operand : operands) {
+    for (auto& versionedOperand : operands) {
+        if (!validOperandType(versionedOperand.type)) {
+            LOG(ERROR) << "Operand is not supported by this version: "
+                       << toString(versionedOperand.type);
+            return false;
+        }
+        // Once we are sure the operand is supported by its version, it is safe
+        // to convert it to the latest version for the rest of the validations.
+        V1_2::Operand operand = convertToV1_2(versionedOperand);
         // Validate type and dimensions.
         switch (operand.type) {
             case OperandType::FLOAT32:
             case OperandType::INT32:
             case OperandType::UINT32:
+            case OperandType::BOOL:
             case OperandType::OEM: {
                 size_t count = operand.dimensions.size();
                 if (count != 0) {
@@ -101,6 +111,7 @@ static bool validateOperands(const hidl_vec<Operand>& operands,
             case OperandType::FLOAT32:
             case OperandType::INT32:
             case OperandType::UINT32:
+            case OperandType::BOOL:
             case OperandType::TENSOR_FLOAT32:
                 if (operand.scale != 0.f) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
@@ -136,6 +147,7 @@ static bool validateOperands(const hidl_vec<Operand>& operands,
             case OperandType::FLOAT32:
             case OperandType::INT32:
             case OperandType::UINT32:
+            case OperandType::BOOL:
             case OperandType::TENSOR_FLOAT32:
             case OperandType::TENSOR_INT32:
                 if (operand.zeroPoint != 0) {
@@ -505,11 +517,14 @@ template<typename VersionedModel>
 static bool validateModelVersioned(const VersionedModel& model) {
     NNTRACE_FULL(NNTRACE_LAYER_UTILITY, NNTRACE_PHASE_UNSPECIFIED,
                  "validateModelVersioned");
+    // We only need versioned operands for their validation. For all the other
+    // validations we can use operands upcasted to the latest version.
+    const hidl_vec<Operand> latestVersionOperands = convertToV1_2(model.operands);
     return (validateOperands(model.operands, model.operandValues, model.pools) &&
-            validateOperations(model.operations, model.operands) &&
-            validateModelInputOutputs(model.inputIndexes, model.operands,
+            validateOperations(model.operations, latestVersionOperands) &&
+            validateModelInputOutputs(model.inputIndexes, latestVersionOperands,
                                       OperandLifeTime::MODEL_INPUT) &&
-            validateModelInputOutputs(model.outputIndexes, model.operands,
+            validateModelInputOutputs(model.outputIndexes, latestVersionOperands,
                                       OperandLifeTime::MODEL_OUTPUT) &&
             validatePools(model.pools));
 }
@@ -604,10 +619,10 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
 
 template<typename VersionedModel>
 static bool validateRequestVersioned(const Request& request, const VersionedModel& model) {
-    return (validateRequestArguments(request.inputs, model.inputIndexes, model.operands,
-                                     request.pools, "input") &&
-            validateRequestArguments(request.outputs, model.outputIndexes, model.operands,
-                                     request.pools, "output") &&
+    return (validateRequestArguments(request.inputs, model.inputIndexes,
+                                     convertToV1_2(model.operands), request.pools, "input") &&
+            validateRequestArguments(request.outputs, model.outputIndexes,
+                                     convertToV1_2(model.operands), request.pools, "output") &&
             validatePools(request.pools));
 }
 
@@ -627,6 +642,39 @@ bool validateExecutionPreference(ExecutionPreference preference) {
     return preference == ExecutionPreference::LOW_POWER ||
            preference == ExecutionPreference::FAST_SINGLE_ANSWER ||
            preference == ExecutionPreference::SUSTAINED_SPEED;
+}
+
+bool validOperandType(V1_0::OperandType operandType) {
+    switch (operandType) {
+        case V1_0::OperandType::FLOAT32:
+        case V1_0::OperandType::INT32:
+        case V1_0::OperandType::UINT32:
+        case V1_0::OperandType::TENSOR_FLOAT32:
+        case V1_0::OperandType::TENSOR_INT32:
+        case V1_0::OperandType::TENSOR_QUANT8_ASYMM:
+        case V1_0::OperandType::OEM:
+        case V1_0::OperandType::TENSOR_OEM_BYTE:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool validOperandType(V1_2::OperandType operandType) {
+    switch (operandType) {
+        case V1_2::OperandType::FLOAT32:
+        case V1_2::OperandType::INT32:
+        case V1_2::OperandType::UINT32:
+        case V1_2::OperandType::BOOL:
+        case V1_2::OperandType::TENSOR_FLOAT32:
+        case V1_2::OperandType::TENSOR_INT32:
+        case V1_2::OperandType::TENSOR_QUANT8_ASYMM:
+        case V1_2::OperandType::OEM:
+        case V1_2::OperandType::TENSOR_OEM_BYTE:
+            return true;
+        default:
+            return false;
+    }
 }
 
 }  // namespace nn
