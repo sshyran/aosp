@@ -1073,6 +1073,107 @@ TEST_F(NeuralnetworksHidlTest, split_quant8_4) {
                            split_quant8_4::examples);
 }
 
+// Generated from: tile_1.mod.py.
+namespace tile_1 {
+// Generated tile_1 test
+#include "examples/tile_1.example.cpp"
+// Generated model constructor
+#include "vts_models/tile_1.model.cpp"
+} // namespace tile_1
+
+TEST_F(NeuralnetworksHidlTest, tile_1) {
+  generated_tests::Execute(device,
+                           tile_1::createTestModel,
+                           tile_1::is_ignored,
+                           tile_1::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, tile_1_relaxed) {
+  generated_tests::Execute(device,
+                           tile_1::createTestModel_relaxed,
+                           tile_1::is_ignored_relaxed,
+                           tile_1::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, tile_1_quant8) {
+  generated_tests::Execute(device,
+                           tile_1::createTestModel_quant8,
+                           tile_1::is_ignored_quant8,
+                           tile_1::examples_quant8);
+}
+
+// Generated from: tile_2.mod.py.
+namespace tile_2 {
+// Generated tile_2 test
+#include "examples/tile_2.example.cpp"
+// Generated model constructor
+#include "vts_models/tile_2.model.cpp"
+} // namespace tile_2
+
+TEST_F(NeuralnetworksHidlTest, tile_2) {
+  generated_tests::Execute(device,
+                           tile_2::createTestModel,
+                           tile_2::is_ignored,
+                           tile_2::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, tile_2_relaxed) {
+  generated_tests::Execute(device,
+                           tile_2::createTestModel_relaxed,
+                           tile_2::is_ignored_relaxed,
+                           tile_2::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, tile_2_quant8) {
+  generated_tests::Execute(device,
+                           tile_2::createTestModel_quant8,
+                           tile_2::is_ignored_quant8,
+                           tile_2::examples_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, tile_2_int32) {
+  generated_tests::Execute(device,
+                           tile_2::createTestModel_int32,
+                           tile_2::is_ignored_int32,
+                           tile_2::examples_int32);
+}
+
+// Generated from: tile_3.mod.py.
+namespace tile_3 {
+// Generated tile_3 test
+#include "examples/tile_3.example.cpp"
+// Generated model constructor
+#include "vts_models/tile_3.model.cpp"
+} // namespace tile_3
+
+TEST_F(NeuralnetworksHidlTest, tile_3) {
+  generated_tests::Execute(device,
+                           tile_3::createTestModel,
+                           tile_3::is_ignored,
+                           tile_3::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, tile_3_relaxed) {
+  generated_tests::Execute(device,
+                           tile_3::createTestModel_relaxed,
+                           tile_3::is_ignored_relaxed,
+                           tile_3::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, tile_3_quant8) {
+  generated_tests::Execute(device,
+                           tile_3::createTestModel_quant8,
+                           tile_3::is_ignored_quant8,
+                           tile_3::examples_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, tile_3_int32) {
+  generated_tests::Execute(device,
+                           tile_3::createTestModel_int32,
+                           tile_3::is_ignored_int32,
+                           tile_3::examples_int32);
+}
+
 // Generated from: transpose_conv2d.mod.py.
 namespace transpose_conv2d {
 // Generated transpose_conv2d test
