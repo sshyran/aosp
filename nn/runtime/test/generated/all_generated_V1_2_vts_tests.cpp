@@ -481,3 +481,275 @@ TEST_F(NeuralnetworksHidlTest, pad_v2_1_quant8) {
                            pad_v2_1_quant8::examples);
 }
 
+// Generated from: split_float_1.mod.py.
+namespace split_float_1 {
+// Generated split_float_1 test
+#include "examples/split_float_1.example.cpp"
+// Generated model constructor
+#include "vts_models/split_float_1.model.cpp"
+} // namespace split_float_1
+
+TEST_F(NeuralnetworksHidlTest, split_float_1) {
+  generated_tests::Execute(device,
+                           split_float_1::createTestModel,
+                           split_float_1::is_ignored,
+                           split_float_1::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_float_1_relaxed) {
+  generated_tests::Execute(device,
+                           split_float_1::createTestModel_relaxed,
+                           split_float_1::is_ignored_relaxed,
+                           split_float_1::examples_relaxed);
+}
+
+// Generated from: split_float_2.mod.py.
+namespace split_float_2 {
+// Generated split_float_2 test
+#include "examples/split_float_2.example.cpp"
+// Generated model constructor
+#include "vts_models/split_float_2.model.cpp"
+} // namespace split_float_2
+
+TEST_F(NeuralnetworksHidlTest, split_float_2) {
+  generated_tests::Execute(device,
+                           split_float_2::createTestModel,
+                           split_float_2::is_ignored,
+                           split_float_2::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_float_2_relaxed) {
+  generated_tests::Execute(device,
+                           split_float_2::createTestModel_relaxed,
+                           split_float_2::is_ignored_relaxed,
+                           split_float_2::examples_relaxed);
+}
+
+// Generated from: split_float_3.mod.py.
+namespace split_float_3 {
+// Generated split_float_3 test
+#include "examples/split_float_3.example.cpp"
+// Generated model constructor
+#include "vts_models/split_float_3.model.cpp"
+} // namespace split_float_3
+
+TEST_F(NeuralnetworksHidlTest, split_float_3) {
+  generated_tests::Execute(device,
+                           split_float_3::createTestModel,
+                           split_float_3::is_ignored,
+                           split_float_3::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_float_3_relaxed) {
+  generated_tests::Execute(device,
+                           split_float_3::createTestModel_relaxed,
+                           split_float_3::is_ignored_relaxed,
+                           split_float_3::examples_relaxed);
+}
+
+// Generated from: split_float_4.mod.py.
+namespace split_float_4 {
+// Generated split_float_4 test
+#include "examples/split_float_4.example.cpp"
+// Generated model constructor
+#include "vts_models/split_float_4.model.cpp"
+} // namespace split_float_4
+
+TEST_F(NeuralnetworksHidlTest, split_float_4) {
+  generated_tests::Execute(device,
+                           split_float_4::createTestModel,
+                           split_float_4::is_ignored,
+                           split_float_4::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_float_4_relaxed) {
+  generated_tests::Execute(device,
+                           split_float_4::createTestModel_relaxed,
+                           split_float_4::is_ignored_relaxed,
+                           split_float_4::examples_relaxed);
+}
+
+// Generated from: split_float_5.mod.py.
+namespace split_float_5 {
+// Generated split_float_5 test
+#include "examples/split_float_5.example.cpp"
+// Generated model constructor
+#include "vts_models/split_float_5.model.cpp"
+} // namespace split_float_5
+
+TEST_F(NeuralnetworksHidlTest, split_float_5) {
+  generated_tests::Execute(device,
+                           split_float_5::createTestModel,
+                           split_float_5::is_ignored,
+                           split_float_5::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_float_5_relaxed) {
+  generated_tests::Execute(device,
+                           split_float_5::createTestModel_relaxed,
+                           split_float_5::is_ignored_relaxed,
+                           split_float_5::examples_relaxed);
+}
+
+// Generated from: split_int32_1.mod.py.
+namespace split_int32_1 {
+// Generated split_int32_1 test
+#include "examples/split_int32_1.example.cpp"
+// Generated model constructor
+#include "vts_models/split_int32_1.model.cpp"
+} // namespace split_int32_1
+
+TEST_F(NeuralnetworksHidlTest, split_int32_1) {
+  generated_tests::Execute(device,
+                           split_int32_1::createTestModel,
+                           split_int32_1::is_ignored,
+                           split_int32_1::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_int32_1_relaxed) {
+  generated_tests::Execute(device,
+                           split_int32_1::createTestModel_relaxed,
+                           split_int32_1::is_ignored_relaxed,
+                           split_int32_1::examples_relaxed);
+}
+
+// Generated from: split_int32_2.mod.py.
+namespace split_int32_2 {
+// Generated split_int32_2 test
+#include "examples/split_int32_2.example.cpp"
+// Generated model constructor
+#include "vts_models/split_int32_2.model.cpp"
+} // namespace split_int32_2
+
+TEST_F(NeuralnetworksHidlTest, split_int32_2) {
+  generated_tests::Execute(device,
+                           split_int32_2::createTestModel,
+                           split_int32_2::is_ignored,
+                           split_int32_2::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_int32_2_relaxed) {
+  generated_tests::Execute(device,
+                           split_int32_2::createTestModel_relaxed,
+                           split_int32_2::is_ignored_relaxed,
+                           split_int32_2::examples_relaxed);
+}
+
+// Generated from: split_int32_3.mod.py.
+namespace split_int32_3 {
+// Generated split_int32_3 test
+#include "examples/split_int32_3.example.cpp"
+// Generated model constructor
+#include "vts_models/split_int32_3.model.cpp"
+} // namespace split_int32_3
+
+TEST_F(NeuralnetworksHidlTest, split_int32_3) {
+  generated_tests::Execute(device,
+                           split_int32_3::createTestModel,
+                           split_int32_3::is_ignored,
+                           split_int32_3::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_int32_3_relaxed) {
+  generated_tests::Execute(device,
+                           split_int32_3::createTestModel_relaxed,
+                           split_int32_3::is_ignored_relaxed,
+                           split_int32_3::examples_relaxed);
+}
+
+// Generated from: split_int32_4.mod.py.
+namespace split_int32_4 {
+// Generated split_int32_4 test
+#include "examples/split_int32_4.example.cpp"
+// Generated model constructor
+#include "vts_models/split_int32_4.model.cpp"
+} // namespace split_int32_4
+
+TEST_F(NeuralnetworksHidlTest, split_int32_4) {
+  generated_tests::Execute(device,
+                           split_int32_4::createTestModel,
+                           split_int32_4::is_ignored,
+                           split_int32_4::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_int32_4_relaxed) {
+  generated_tests::Execute(device,
+                           split_int32_4::createTestModel_relaxed,
+                           split_int32_4::is_ignored_relaxed,
+                           split_int32_4::examples_relaxed);
+}
+
+// Generated from: split_quant8_1.mod.py.
+namespace split_quant8_1 {
+// Generated split_quant8_1 test
+#include "examples/split_quant8_1.example.cpp"
+// Generated model constructor
+#include "vts_models/split_quant8_1.model.cpp"
+} // namespace split_quant8_1
+
+TEST_F(NeuralnetworksHidlTest, split_quant8_1) {
+  generated_tests::Execute(device,
+                           split_quant8_1::createTestModel,
+                           split_quant8_1::is_ignored,
+                           split_quant8_1::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_quant8_1_relaxed) {
+  generated_tests::Execute(device,
+                           split_quant8_1::createTestModel_relaxed,
+                           split_quant8_1::is_ignored_relaxed,
+                           split_quant8_1::examples_relaxed);
+}
+
+// Generated from: split_quant8_2.mod.py.
+namespace split_quant8_2 {
+// Generated split_quant8_2 test
+#include "examples/split_quant8_2.example.cpp"
+// Generated model constructor
+#include "vts_models/split_quant8_2.model.cpp"
+} // namespace split_quant8_2
+
+TEST_F(NeuralnetworksHidlTest, split_quant8_2) {
+  generated_tests::Execute(device,
+                           split_quant8_2::createTestModel,
+                           split_quant8_2::is_ignored,
+                           split_quant8_2::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, split_quant8_2_relaxed) {
+  generated_tests::Execute(device,
+                           split_quant8_2::createTestModel_relaxed,
+                           split_quant8_2::is_ignored_relaxed,
+                           split_quant8_2::examples_relaxed);
+}
+
+// Generated from: split_quant8_3.mod.py.
+namespace split_quant8_3 {
+// Generated split_quant8_3 test
+#include "examples/split_quant8_3.example.cpp"
+// Generated model constructor
+#include "vts_models/split_quant8_3.model.cpp"
+} // namespace split_quant8_3
+
+TEST_F(NeuralnetworksHidlTest, split_quant8_3) {
+  generated_tests::Execute(device,
+                           split_quant8_3::createTestModel,
+                           split_quant8_3::is_ignored,
+                           split_quant8_3::examples);
+}
+
+// Generated from: split_quant8_4.mod.py.
+namespace split_quant8_4 {
+// Generated split_quant8_4 test
+#include "examples/split_quant8_4.example.cpp"
+// Generated model constructor
+#include "vts_models/split_quant8_4.model.cpp"
+} // namespace split_quant8_4
+
+TEST_F(NeuralnetworksHidlTest, split_quant8_4) {
+  generated_tests::Execute(device,
+                           split_quant8_4::createTestModel,
+                           split_quant8_4::is_ignored,
+                           split_quant8_4::examples);
+}
+
