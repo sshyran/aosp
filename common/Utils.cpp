@@ -165,7 +165,7 @@ const char* kOperationNames[kNumberOfOperationTypes] = {
         "ARGMAX",
         "ARGMIN",
         "PAD_V2",
-        "BBOX_TRANSFORM",
+        "AXIS_ALIGNED_BBOX_TRANSFORM",
         "BIDIRECTIONAL_SEQUENCE_LSTM",
         "BIDIRECTIONAL_SEQUENCE_RNN",
         "BOX_WITH_NMS_LIMIT",
@@ -211,6 +211,7 @@ const char* kOperationNames[kNumberOfOperationTypes] = {
         "TRANSPOSE_CONV_2D",
         "UNIDIRECTIONAL_SEQUENCE_LSTM",
         "UNIDIRECTIONAL_SEQUENCE_RNN",
+        "ROTATED_BBOX_TRANSFORM",
 };
 
 static_assert(COUNT(kOperationNames) == kNumberOfOperationTypes, "kOperationNames is incorrect");
