@@ -24,7 +24,7 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored(int i) {
+inline bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -55,7 +55,7 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_relaxed(int i) {
+inline bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
