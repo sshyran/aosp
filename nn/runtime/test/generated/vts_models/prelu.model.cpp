@@ -57,7 +57,7 @@ Model createTestModel() {
     };
 }
 
-bool is_ignored(int i) {
+inline bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -120,7 +120,7 @@ Model createTestModel_relaxed() {
     };
 }
 
-bool is_ignored_relaxed(int i) {
+inline bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -182,7 +182,7 @@ Model createTestModel_quant8() {
     };
 }
 
-bool is_ignored_quant8(int i) {
+inline bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -242,7 +242,7 @@ Model createTestModel_weight_as_input() {
     };
 }
 
-bool is_ignored_weight_as_input(int i) {
+inline bool is_ignored_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -303,7 +303,7 @@ Model createTestModel_weight_as_input_relaxed() {
     };
 }
 
-bool is_ignored_weight_as_input_relaxed(int i) {
+inline bool is_ignored_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -363,7 +363,7 @@ Model createTestModel_weight_as_input_quant8() {
     };
 }
 
-bool is_ignored_weight_as_input_quant8(int i) {
+inline bool is_ignored_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
