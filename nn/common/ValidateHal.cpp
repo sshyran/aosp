@@ -349,7 +349,7 @@ bool validOperationType(V1_2::OperationType operation) {
         case V1_2::OperationType::ARGMAX:
         case V1_2::OperationType::ARGMIN:
         case V1_2::OperationType::PAD_V2:
-        case V1_2::OperationType::BBOX_TRANSFORM:
+        case V1_2::OperationType::AXIS_ALIGNED_BBOX_TRANSFORM:
         case V1_2::OperationType::BIDIRECTIONAL_SEQUENCE_LSTM:
         case V1_2::OperationType::BIDIRECTIONAL_SEQUENCE_RNN:
         case V1_2::OperationType::BOX_WITH_NMS_LIMIT:
@@ -395,6 +395,7 @@ bool validOperationType(V1_2::OperationType operation) {
         case V1_2::OperationType::TRANSPOSE_CONV_2D:
         case V1_2::OperationType::UNIDIRECTIONAL_SEQUENCE_LSTM:
         case V1_2::OperationType::UNIDIRECTIONAL_SEQUENCE_RNN:
+        case V1_2::OperationType::ROTATED_BBOX_TRANSFORM:
         case V1_2::OperationType::OEM_OPERATION:
             return true;
         default:
