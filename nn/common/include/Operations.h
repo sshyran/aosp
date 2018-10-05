@@ -62,6 +62,8 @@ bool dequantizeQuant8ToFloat32(const uint8_t* inputData,
                                float* outputData,
                                const Shape& shape);
 
+bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData, const Shape& outputShape);
+
 bool depthwiseConvFloat32(const float* inputData, const Shape& inputShape,
                           const float* filterData, const Shape& filterShape,
                           const float* biasData, const Shape& biasShape,
