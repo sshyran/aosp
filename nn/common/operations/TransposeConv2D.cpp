@@ -30,6 +30,10 @@ namespace nn {
 static constexpr size_t kStaticBufferSize = 1605632;
 static char static_scratch_buffer[kStaticBufferSize];
 
+// executionMutex is used to protect concurrent access of the static_scratch_buffer.
+// std::mutex is safe for pthreads on Android.
+static std::mutex executionMutex;
+
 #define ANDROID_NN_TRANSPOSE_CONV_PARAMETERS                    \
     uint32_t numBatches = getSizeOfDimension(inputShape, 0);    \
     uint32_t inputHeight = getSizeOfDimension(inputShape, 1);   \
@@ -120,7 +124,6 @@ bool transposeConvQuant8(const uint8_t* inputData, const Shape& inputShape,
         }
         bufferGuard.reset(tempBuffer);
     }
-    memset(tempBuffer, 0, tempBufferByteSize);
 
     int32_t inputOffset = -inputShape.offset;
     int32_t filterOffset = -filterShape.offset;
@@ -138,6 +141,10 @@ bool transposeConvQuant8(const uint8_t* inputData, const Shape& inputShape,
     int32_t output_activation_min = 0, output_activation_max = 0;
     CalculateActivationRangeUint8(activation, outputShape, &output_activation_min,
                                   &output_activation_max);
+
+    // Prevent concurrent executions that may access the scratch buffer
+    std::unique_lock<std::mutex> lock(executionMutex);
+    memset(tempBuffer, 0, tempBufferByteSize);
 
     const uint8_t* inputPtr = inputData;
     int32_t* outputBase = tempBuffer;
