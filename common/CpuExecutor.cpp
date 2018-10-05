@@ -443,6 +443,24 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                                     input.shape());
             }
         } break;
+        case OperationType::QUANTIZE: {
+            if (!allParametersPresent(1, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outShape = output.shape();
+
+            if (!quantizePrepare(input.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
+            if (input.type == OperandType::TENSOR_FLOAT32) {
+                success = quantizeFloat32ToQuant8(reinterpret_cast<const float*>(input.buffer),
+                                                  reinterpret_cast<uint8_t*>(output.buffer),
+                                                  output.shape());
+            }
+        } break;
         case OperationType::DEPTHWISE_CONV_2D: {
             const size_t inCount = ins.size();
             if ((inCount != 11 && inCount != 8) || !allParametersPresent(inCount, 1)) {
