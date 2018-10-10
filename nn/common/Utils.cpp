@@ -162,6 +162,55 @@ const char* kOperationNames[kNumberOfOperationTypes] = {
         "STRIDED_SLICE",
         "SUB",
         "TRANSPOSE",
+        "ARGMAX",
+        "ARGMIN",
+        "PAD_V2",
+        "BBOX_TRANSFORM",
+        "BIDIRECTIONAL_SEQUENCE_LSTM",
+        "BIDIRECTIONAL_SEQUENCE_RNN",
+        "BOX_WITH_NMS_LIMIT",
+        "CAST",
+        "CHANNEL_SHUFFLE",
+        "DETECTION_OUTPUT",
+        "EMBEDDING_LOOKUP_SPARSE",
+        "EXP",
+        "EXPAND_DIMS",
+        "GATHER",
+        "GENERATE_PROPOSALS",
+        "GREATER",
+        "GREATER_EQUAL",
+        "GROUPED_CONV_2D",
+        "HEATMAP_MAX_KEYPOINT",
+        "LESS",
+        "LESS_EQUAL",
+        "LOG",
+        "LOGICAL_AND",
+        "LOGICAL_NOT",
+        "LOGICAL_OR",
+        "LOG_SOFTMAX",
+        "MAXIMUM",
+        "MINIMUM",
+        "NEG",
+        "POW",
+        "PRELU",
+        "PRIOR_BOX",
+        "QUANTIZE",
+        "QUANTIZED_16BIT_LSTM",
+        "RANDOM_MULTINOMIAL",
+        "REDUCE",
+        "ROI_ALIGN",
+        "RSQRT",
+        "SELECT",
+        "SIN",
+        "SLICE",
+        "SPARSE_TO_DENSE",
+        "SPLIT",
+        "SQRT",
+        "TILE",
+        "TOPK_V2",
+        "TRANSPOSE_CONV_2D",
+        "UNIDIRECTIONAL_SEQUENCE_LSTM",
+        "UNIDIRECTIONAL_SEQUENCE_RNN",
 };
 
 static_assert(COUNT(kOperationNames) == kNumberOfOperationTypes, "kOperationNames is incorrect");
@@ -1273,6 +1322,31 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
+        case ANEURALNETWORKS_PAD_V2: {
+            if (inputCount != 3 || outputCount != 1) {
+                logInvalidInOutNumber(2, 1);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            auto inputType = operands[inputIndexes[0]].type;
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            if (inputType == OperandType::TENSOR_FLOAT32) {
+                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_INT32,
+                                   OperandType::FLOAT32};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_INT32,
+                                   OperandType::INT32};  // TODO(b/116699425): Make it UINT8.
+                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
+            } else {
+                LOG(ERROR) << "Unsupported input tensor type for operation "
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1445,6 +1519,67 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
                                                  outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
+        case ANEURALNETWORKS_ARGMAX:
+        case ANEURALNETWORKS_ARGMIN: {
+            if (inputCount != 2 || outputCount != 1) {
+                logInvalidInOutNumber(2, 1);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            auto inputType = operands[inputIndexes[0]].type;
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            if (inputType == OperandType::TENSOR_FLOAT32 ||
+                inputType == OperandType::TENSOR_INT32 ||
+                inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                inExpectedTypes = {inputType, OperandType::INT32};
+                outExpectedTypes = {OperandType::TENSOR_INT32};
+            } else {
+                LOG(ERROR) << "Unsupported input tensor type for operation "
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
+        case ANEURALNETWORKS_EXPAND_DIMS: {
+            if (inputCount != 2 || outputCount != 1) {
+                logInvalidInOutNumber(2, 1);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            auto inputType = operands[inputIndexes[0]].type;
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            if (inputType == OperandType::TENSOR_FLOAT32 ||
+                inputType == OperandType::TENSOR_INT32 ||
+                inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                inExpectedTypes = {inputType, OperandType::INT32};
+                outExpectedTypes = {inputType};
+            } else {
+                LOG(ERROR) << "Unsupported input tensor type for operation "
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            return validateOperationOperandTypes(operands,
+                                                 inputCount, inputIndexes,
+                                                 inExpectedTypes,
+                                                 outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
+        case ANEURALNETWORKS_SPLIT: {
+            if (inputCount != 3) {
+                LOG(ERROR) << "Invalid number of input operands (" << inputCount << ", expected 3)"
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            auto inputType = operands[inputIndexes[0]].type;
+            std::vector<OperandType> inExpectedTypes = {inputType, OperandType::INT32,
+                                                        OperandType::INT32};
+            std::vector<OperandType> outExpectedTypes(outputCount, inputType);
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
         default:

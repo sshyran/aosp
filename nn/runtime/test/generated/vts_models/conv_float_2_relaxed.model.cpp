@@ -1,4 +1,5 @@
-// Generated code. Do not edit
+// clang-format off
+// Generated file (from: conv_float_2_relaxed.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
@@ -41,7 +42,7 @@ Model createTestModel() {
         {
             .type = OperandType::INT32,
             .dimensions = {},
-            .numberOfConsumers = 1,
+            .numberOfConsumers = 2,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -50,7 +51,7 @@ Model createTestModel() {
         {
             .type = OperandType::INT32,
             .dimensions = {},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -70,7 +71,7 @@ Model createTestModel() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::CONV_2D,
-            .inputs = {0, 1, 2, 3, 5, 5, 4},
+            .inputs = {0, 1, 2, 3, 4, 4, 5},
             .outputs = {6},
         }
     };
@@ -93,8 +94,8 @@ Model createTestModel() {
     };
 }
 
-
 bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

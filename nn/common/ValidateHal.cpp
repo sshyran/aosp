@@ -346,6 +346,55 @@ bool validOperationType(V1_2::OperationType operation) {
         case V1_2::OperationType::STRIDED_SLICE:
         case V1_2::OperationType::SUB:
         case V1_2::OperationType::TRANSPOSE:
+        case V1_2::OperationType::ARGMAX:
+        case V1_2::OperationType::ARGMIN:
+        case V1_2::OperationType::PAD_V2:
+        case V1_2::OperationType::BBOX_TRANSFORM:
+        case V1_2::OperationType::BIDIRECTIONAL_SEQUENCE_LSTM:
+        case V1_2::OperationType::BIDIRECTIONAL_SEQUENCE_RNN:
+        case V1_2::OperationType::BOX_WITH_NMS_LIMIT:
+        case V1_2::OperationType::CAST:
+        case V1_2::OperationType::CHANNEL_SHUFFLE:
+        case V1_2::OperationType::DETECTION_OUTPUT:
+        case V1_2::OperationType::EMBEDDING_LOOKUP_SPARSE:
+        case V1_2::OperationType::EXP:
+        case V1_2::OperationType::EXPAND_DIMS:
+        case V1_2::OperationType::GATHER:
+        case V1_2::OperationType::GENERATE_PROPOSALS:
+        case V1_2::OperationType::GREATER:
+        case V1_2::OperationType::GREATER_EQUAL:
+        case V1_2::OperationType::GROUPED_CONV_2D:
+        case V1_2::OperationType::HEATMAP_MAX_KEYPOINT:
+        case V1_2::OperationType::LESS:
+        case V1_2::OperationType::LESS_EQUAL:
+        case V1_2::OperationType::LOG:
+        case V1_2::OperationType::LOGICAL_AND:
+        case V1_2::OperationType::LOGICAL_NOT:
+        case V1_2::OperationType::LOGICAL_OR:
+        case V1_2::OperationType::LOG_SOFTMAX:
+        case V1_2::OperationType::MAXIMUM:
+        case V1_2::OperationType::MINIMUM:
+        case V1_2::OperationType::NEG:
+        case V1_2::OperationType::POW:
+        case V1_2::OperationType::PRELU:
+        case V1_2::OperationType::PRIOR_BOX:
+        case V1_2::OperationType::QUANTIZE:
+        case V1_2::OperationType::QUANTIZED_16BIT_LSTM:
+        case V1_2::OperationType::RANDOM_MULTINOMIAL:
+        case V1_2::OperationType::REDUCE:
+        case V1_2::OperationType::ROI_ALIGN:
+        case V1_2::OperationType::RSQRT:
+        case V1_2::OperationType::SELECT:
+        case V1_2::OperationType::SIN:
+        case V1_2::OperationType::SLICE:
+        case V1_2::OperationType::SPARSE_TO_DENSE:
+        case V1_2::OperationType::SPLIT:
+        case V1_2::OperationType::SQRT:
+        case V1_2::OperationType::TILE:
+        case V1_2::OperationType::TOPK_V2:
+        case V1_2::OperationType::TRANSPOSE_CONV_2D:
+        case V1_2::OperationType::UNIDIRECTIONAL_SEQUENCE_LSTM:
+        case V1_2::OperationType::UNIDIRECTIONAL_SEQUENCE_RNN:
         case V1_2::OperationType::OEM_OPERATION:
             return true;
         default:

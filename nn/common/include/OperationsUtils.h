@@ -62,10 +62,17 @@ bool SetShape(const Shape& in, Shape* out);
 // Return the total number of elements, i.e. all the dimensions multiplied
 // together. For a scalar, returns one.
 uint32_t getNumberOfElements(const Shape& shape);
+uint32_t getNumberOfElements(const Shape& shape,
+                             size_t firstAxisInclusive,
+                             size_t lastAxisExclusive);
 
 uint32_t getNumberOfDimensions(const Shape& shape);
 
 uint32_t getSizeOfDimension(const Shape& shape, uint32_t dimensionIdx);
+
+// Converts an axis index from the range [-dims, dims) into the range [0, dims).
+int32_t getDimensionIndex(const Shape& shape, int32_t axis);
+int32_t getDimensionIndex(int32_t numberOfDimensions, int32_t axis);
 
 inline uint32_t computeOutSize(uint32_t imageSize, uint32_t filterSize, uint32_t stride,
                                uint32_t paddingHead, uint32_t paddingTail) {
@@ -279,6 +286,10 @@ bool stridedSlicePrepare(const Shape& input,
                          const int32_t* stridesData, const Shape& stridesShape,
                          int32_t beginMask, int32_t endMask, int32_t shrinkAxisMask,
                          Shape* output);
+
+bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output);
+
+bool splitPrepare(const Shape& input, int32_t axis, int32_t numOutputs, std::vector<Shape>* output);
 } // namespace nn
 } // namespace android
 

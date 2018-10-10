@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: lstm_state_relaxed.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -13,10 +15,12 @@
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
-  {{1, {-0.0371611f, 0.125073f, 0.411934f, -0.208605f}}, {2, {-0.287121f, 0.148115f, 0.556837f, -0.388276f}}, {3, {-0.03716109f, 0.12507336f, 0.41193449f, -0.20860538f}}, {0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}},
+  {{0, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}, {1, {-0.0371611f, 0.125073f, 0.411934f, -0.208605f}}, {2, {-0.287121f, 0.148115f, 0.556837f, -0.388276f}}, {3, {-0.03716109f, 0.12507336f, 0.41193449f, -0.20860538f}}},
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
   {}
 }
 }, // End of an example
+};
+

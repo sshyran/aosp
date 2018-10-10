@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: logistic_quant8_1.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {128, 159, 187, 255}}}
 }
 }, // End of an example
+};
+
