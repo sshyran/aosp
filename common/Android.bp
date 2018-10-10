@@ -64,6 +64,7 @@ cc_library_static {
         "operations/Conv2D.cpp",
         "operations/DepthwiseConv2D.cpp",
         "operations/EmbeddingLookup.cpp",
+        "operations/ExpandDims.cpp",
         "operations/FullyConnected.cpp",
         "operations/HashtableLookup.cpp",
         "operations/LSHProjection.cpp",

@@ -271,6 +271,126 @@ TEST_F(NeuralnetworksHidlTest, argmin_3_float) {
                            argmin_3_float::examples);
 }
 
+// Generated from: expand_dims.mod.py.
+namespace expand_dims {
+// Generated expand_dims test
+#include "examples/expand_dims.example.cpp"
+// Generated model constructor
+#include "vts_models/expand_dims.model.cpp"
+} // namespace expand_dims
+
+TEST_F(NeuralnetworksHidlTest, expand_dims) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel,
+                           expand_dims::is_ignored,
+                           expand_dims::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_relaxed) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_relaxed,
+                           expand_dims::is_ignored_relaxed,
+                           expand_dims::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_quant8) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_quant8,
+                           expand_dims::is_ignored_quant8,
+                           expand_dims::examples_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_int32) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_int32,
+                           expand_dims::is_ignored_int32,
+                           expand_dims::examples_int32);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_2) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_2,
+                           expand_dims::is_ignored_2,
+                           expand_dims::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_relaxed_2) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_relaxed_2,
+                           expand_dims::is_ignored_relaxed_2,
+                           expand_dims::examples_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_quant8_2) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_quant8_2,
+                           expand_dims::is_ignored_quant8_2,
+                           expand_dims::examples_quant8_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_int32_2) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_int32_2,
+                           expand_dims::is_ignored_int32_2,
+                           expand_dims::examples_int32_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_3) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_3,
+                           expand_dims::is_ignored_3,
+                           expand_dims::examples_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_relaxed_3) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_relaxed_3,
+                           expand_dims::is_ignored_relaxed_3,
+                           expand_dims::examples_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_quant8_3) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_quant8_3,
+                           expand_dims::is_ignored_quant8_3,
+                           expand_dims::examples_quant8_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_int32_3) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_int32_3,
+                           expand_dims::is_ignored_int32_3,
+                           expand_dims::examples_int32_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_4) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_4,
+                           expand_dims::is_ignored_4,
+                           expand_dims::examples_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_relaxed_4) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_relaxed_4,
+                           expand_dims::is_ignored_relaxed_4,
+                           expand_dims::examples_relaxed_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_quant8_4) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_quant8_4,
+                           expand_dims::is_ignored_quant8_4,
+                           expand_dims::examples_quant8_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_int32_4) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_int32_4,
+                           expand_dims::is_ignored_int32_4,
+                           expand_dims::examples_int32_4);
+}
+
 // Generated from: lsh_projection_3_relaxed.mod.py.
 namespace lsh_projection_3_relaxed {
 // Generated lsh_projection_3_relaxed test
