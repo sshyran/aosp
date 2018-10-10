@@ -348,6 +348,7 @@ bool validOperationType(V1_2::OperationType operation) {
         case V1_2::OperationType::STRIDED_SLICE:
         case V1_2::OperationType::SUB:
         case V1_2::OperationType::TRANSPOSE:
+        case V1_2::OperationType::PAD_V2:
         case V1_2::OperationType::OEM_OPERATION:
             return true;
         default:

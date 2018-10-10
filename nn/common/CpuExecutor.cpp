@@ -1243,8 +1243,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                           output.buffer,
                                           outShape);
         } break;
-        case OperationType::PAD: {
-            if (!allParametersPresent(2, 1)) {
+        case OperationType::PAD:
+        case OperationType::PAD_V2: {
+            const bool isV2 = operation.type == OperationType::PAD_V2;
+            if (!allParametersPresent(isV2 ? 3 : 2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
@@ -1253,16 +1255,22 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
-            success = padPrepare(input.shape(),
-                                 reinterpret_cast<const int32_t*>(paddings.buffer),
-                                 paddings.shape(),
-                                 &outShape) &&
-                      setInfoAndAllocateIfNeeded(&output, outShape) &&
-                      padGeneric(input.buffer,
-                                 input.shape(),
-                                 reinterpret_cast<const int32_t*>(paddings.buffer),
-                                 output.buffer,
-                                 outShape);
+            if (!padPrepare(input.shape(), reinterpret_cast<const int32_t*>(paddings.buffer),
+                            paddings.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
+            if (input.type == OperandType::TENSOR_FLOAT32) {
+                float pad_value = isV2 ? getScalarData<float>(mOperands[ins[2]]) : 0;
+                success = padFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                     reinterpret_cast<const int32_t*>(paddings.buffer), pad_value,
+                                     reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                uint8_t pad_value = isV2 ? getScalarData<uint8_t>(mOperands[ins[2]]) : 0;
+                success = padQuant8(input.buffer, input.shape(),
+                                    reinterpret_cast<const int32_t*>(paddings.buffer), pad_value,
+                                    output.buffer, outShape);
+            }
         } break;
         case OperationType::SQUEEZE: {
             if (!allParametersPresent(2, 1)) {
