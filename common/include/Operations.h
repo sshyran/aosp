@@ -18,6 +18,7 @@
 #define ANDROID_ML_NN_COMMON_OPERATIONS_H
 
 #include "operations/EmbeddingLookup.h"
+#include "operations/ExpandDims.h"
 #include "operations/HashtableLookup.h"
 #include "operations/LSHProjection.h"
 #include "operations/LSTM.h"
@@ -192,9 +193,11 @@ bool spaceToDepthGeneric(const uint8_t* inputData, const Shape& inputShape,
                          int32_t blockSize,
                          uint8_t* outputData, const Shape& outputShape);
 
-bool padGeneric(const uint8_t* inputData, const Shape& inputShape,
-                const int32_t* paddings,
-                uint8_t* outputData, const Shape& outputShape);
+bool padFloat32(const float* inputData, const Shape& inputShape, const int32_t* paddings,
+                float pad_value, float* outputData, const Shape& outputShape);
+
+bool padQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_t* paddings,
+               uint8_t pad_value, uint8_t* outputData, const Shape& outputShape);
 
 bool batchToSpaceGeneric(const uint8_t* inputData, const Shape& inputShape,
                          const int32_t* blockSize,
@@ -231,6 +234,22 @@ bool stridedSliceGeneric(const uint8_t* inputData, const Shape& inputShape,
                          const int32_t* stridesData,
                          int32_t beginMask, int32_t endMask, int32_t shrinkAxisMask,
                          uint8_t* outputData, const Shape& outputShape);
+
+bool argMinMaxGeneric(const uint8_t* inputData, const Shape& inputShape,
+                      int32_t axis, bool isArgMin,
+                      uint8_t* outputData, const Shape& outputShape);
+
+bool splitFloat32(const float* inputData, const Shape& inputShape, const int32_t axis,
+                  const std::vector<float*>* outputDataPtrs,
+                  const std::vector<Shape>& outputShapes);
+
+bool splitInt32(const int32_t* inputData, const Shape& inputShape, const int32_t axis,
+                const std::vector<int32_t*>* outputDataPtrs,
+                const std::vector<Shape>& outputShapes);
+
+bool splitQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_t axis,
+                 const std::vector<uint8_t*>* outputDataPtrs,
+                 const std::vector<Shape>& outputShapes);
 } // namespace nn
 } // namespace android
 #endif // ANDROID_ML_NN_COMMON_OPERATIONS_H

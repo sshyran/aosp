@@ -1,16 +1,17 @@
+// clang-format off
 // Generated file (from: lstm3_state2.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type9(Type::FLOAT32, {});
-  OperandType type8(Type::INT32, {});
-  OperandType type5(Type::TENSOR_FLOAT32, {0});
-  OperandType type4(Type::TENSOR_FLOAT32, {16,20});
-  OperandType type6(Type::TENSOR_FLOAT32, {2, 16});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 20});
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
+  OperandType type1(Type::TENSOR_FLOAT32, {20, 5});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 80});
   OperandType type2(Type::TENSOR_FLOAT32, {20, 16});
-  OperandType type1(Type::TENSOR_FLOAT32, {20, 5});
   OperandType type3(Type::TENSOR_FLOAT32, {20});
+  OperandType type4(Type::TENSOR_FLOAT32, {16, 20});
+  OperandType type5(Type::TENSOR_FLOAT32, {0});
+  OperandType type6(Type::TENSOR_FLOAT32, {2, 16});
+  OperandType type7(Type::TENSOR_FLOAT32, {2, 20});
+  OperandType type8(Type::INT32, {});
+  OperandType type9(Type::FLOAT32, {});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto input_to_input_weights = model->addOperand(&type1);
@@ -58,3 +59,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
+

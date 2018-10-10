@@ -1,8 +1,9 @@
+// clang-format off
 // Generated file (from: local_response_norm_float_4.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type1(Type::INT32, {});
   OperandType type0(Type::TENSOR_FLOAT32, {1, 1, 1, 6});
+  OperandType type1(Type::INT32, {});
+  OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto radius = model->addOperand(&type1);
@@ -31,3 +32,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

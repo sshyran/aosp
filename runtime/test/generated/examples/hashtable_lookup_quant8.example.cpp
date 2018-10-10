@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: hashtable_lookup_quant8.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {10, 11, 0, 0, 20, 21, 0, 1}}, {1, {1, 0, 1, 1}}}
 }
 }, // End of an example
+};
+
