@@ -56,6 +56,7 @@ bool argMinMaxGeneric(const uint8_t* inputData, const Shape& inputShape,
                       int32 axis, bool isArgMin,
                       uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("argMinMaxGeneric");
+    axis = getDimensionIndex(inputShape, axis);
 
 #define NNAPI_IMPL_ARG_MIN_MAX(operandType, dataType)                          \
     if (inputShape.type == operandType) {                                      \

@@ -1820,7 +1820,8 @@ typedef enum {
      * Inputs:
      * * 0: An n-D tensor specifying the input. Must be non-empty.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis to
-     *      reduce accross.
+     *      reduce across. Negative index is used to specify axis from the
+     *      end (e.g. -1 for the last axis). Must be in the range [-n, n).
      *
      * Outputs:
      * * 0: An (n - 1)-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor.
@@ -1842,7 +1843,8 @@ typedef enum {
      * Inputs:
      * * 0: An n-D tensor specifying the input. Must be non-empty.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis to
-     *      reduce accross.
+     *      reduce across. Negative index is used to specify axis from the
+     *      end (e.g. -1 for the last axis). Must be in the range [-n, n).
      *
      * Outputs:
      * * 0: An (n - 1)-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor.
