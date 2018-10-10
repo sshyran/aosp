@@ -1,3 +1,4 @@
+// clang-format off
 // Generated file (from: relu1_float_2_relaxed.mod.py). Do not edit
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 30, 24, 2});
@@ -19,3 +20,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

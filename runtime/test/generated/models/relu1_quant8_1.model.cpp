@@ -1,3 +1,4 @@
+// clang-format off
 // Generated file (from: relu1_quant8_1.mod.py). Do not edit
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
@@ -17,3 +18,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

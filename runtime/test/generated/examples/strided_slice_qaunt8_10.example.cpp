@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: strided_slice_qaunt8_10.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {4, 5, 6}}}
 }
 }, // End of an example
+};
+

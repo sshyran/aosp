@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: reshape_quant8_weights_as_inputs.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {1, 2, 3, 4, 5, 6, 7, 8, 9}}}
 }
 }, // End of an example
+};
+
