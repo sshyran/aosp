@@ -1957,6 +1957,26 @@ typedef enum {
     ANEURALNETWORKS_SIN = 77,
     ANEURALNETWORKS_SLICE = 78,
     ANEURALNETWORKS_SPARSE_TO_DENSE = 79,
+    /**
+     * Splits a tensor along a given axis into num_splits subtensors.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: An n-D tensor to split.
+     * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis along
+     *      which to split.
+     * * 2: An {@link ANEURALNETWORKS_INT32} scalar indicating the number of
+     *      splits along given axis. Must evenly divide axis size.
+     *
+     * Outputs:
+     * * 0 ~ (num_splits - 1): Resulting subtensors.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_SPLIT = 80,
     ANEURALNETWORKS_SQRT = 81,
     ANEURALNETWORKS_TILE = 82,
