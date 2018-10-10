@@ -79,3 +79,4 @@ TEST_F(GeneratedTests, depthwise_conv2d_quant8) {
             depthwise_conv2d_quant8::examples);
 }
 
+#include "../generated/tests/depthwise_conv2d_quant8.mod.py.cpp"

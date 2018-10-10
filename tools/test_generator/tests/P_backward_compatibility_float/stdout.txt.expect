@@ -104,3 +104,4 @@ TEST_F(GeneratedTests, lstm_float) {
             lstm_float::examples);
 }
 
+#include "../generated/tests/lstm_float.mod.py.cpp"

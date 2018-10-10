@@ -57,31 +57,38 @@ def IndentedPrint(s, indent=2, *args, **kwargs):
     print('\n'.join([" " * indent + i for i in s.split('\n')]), *args, **kwargs)
 
 # Take a model from command line
-def ImportSource():
+def ParseCmdLine():
     parser = argparse.ArgumentParser()
-    parser.add_argument("spec", help="the spec file")
+    parser.add_argument("spec", help="the spec file/directory")
     parser.add_argument(
-        "-m", "--model", help="the output model file", default="-")
+        "-m", "--model", help="the output model file/directory", default="-")
     parser.add_argument(
-        "-e", "--example", help="the output example file", default="-")
+        "-e", "--example", help="the output example file/directory", default="-")
     parser.add_argument(
-        "-t", "--test", help="the output test file", default="-")
+        "-t", "--test", help="the output test file/directory", default="-")
+    parser.add_argument(
+        "-c", "--cts", help="the CTS TestGeneratedOneFile.cpp", default="-")
+    parser.add_argument(
+        "-f", "--force", help="force to regenerate all spec files", action="store_true")
     # for slicing tool
     parser.add_argument(
         "-l", "--log", help="the optional log file", default="")
     args = parser.parse_args()
+    tg.FileNames.InitializeFileLists(
+        args.spec, args.model, args.example, args.test, args.cts, args.log)
+    Configuration.force_regenerate = args.force
 
-    if os.path.exists(args.spec):
-        tg.FileNames.specFile = os.path.abspath(args.spec)
-        tg.FileNames.specName = re.sub(r"\..*", "", os.path.basename(tg.FileNames.specFile))
-        exec (open(tg.FileNames.specFile, "r").read())
-    else:
-        sys.exit()
-
-    tg.FileNames.modelFile = os.path.abspath(args.model) if args.model != "-" else "-"
-    tg.FileNames.exampleFile = os.path.abspath(args.example) if args.example != "-" else "-"
-    tg.FileNames.testFile = os.path.abspath(args.test) if args.test != "-" else "-"
-    tg.FileNames.logFile = ", \"%s\""%args.log if args.log != "" else ""
+def NeedRegenerate():
+    if not all(os.path.exists(f) for f in \
+        [tg.FileNames.modelFile, tg.FileNames.exampleFile, tg.FileNames.testFile]):
+        return True
+    specTime = os.path.getmtime(tg.FileNames.specFile) + 10
+    modelTime = os.path.getmtime(tg.FileNames.modelFile)
+    exampleTime = os.path.getmtime(tg.FileNames.exampleFile)
+    testTime = os.path.getmtime(tg.FileNames.testFile)
+    if all(t > specTime for t in [modelTime, exampleTime, testTime]):
+        return False
+    return True
 
 # Write headers for generated files, which are boilerplate codes only related to filenames
 def InitializeFiles(model_fd, example_fd, test_fd):
@@ -211,16 +218,23 @@ TEST_F(GeneratedTests, {test_name}) {{
         log_file=tg.FileNames.logFile), file=test_fd)
 
 if __name__ == '__main__':
-    ImportSource()
-    print("Output CTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
-    print("Output example:%s" % tg.FileNames.exampleFile, file=sys.stderr)
-    print("Output CTS test: %s" % tg.FileNames.testFile, file=sys.stderr)
-    with SmartOpen(tg.FileNames.modelFile) as model_fd, \
-         SmartOpen(tg.FileNames.exampleFile) as example_fd, \
-         SmartOpen(tg.FileNames.testFile) as test_fd:
-
-        InitializeFiles(model_fd, example_fd, test_fd)
-        Example.DumpAllExamples(
-            DumpModel=DumpCtsModel, model_fd=model_fd,
-            DumpExample=DumpCtsExample, example_fd=example_fd,
-            DumpTest=DumpCtsTest, test_fd=test_fd)
+    ParseCmdLine()
+    while tg.FileNames.NextFile():
+        if Configuration.force_regenerate or NeedRegenerate():
+            exec (open(tg.FileNames.specFile, "r").read())
+            print("Output CTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
+            print("Output example:%s" % tg.FileNames.exampleFile, file=sys.stderr)
+            print("Output CTS test: %s" % tg.FileNames.testFile, file=sys.stderr)
+            with SmartOpen(tg.FileNames.modelFile) as model_fd, \
+                 SmartOpen(tg.FileNames.exampleFile) as example_fd, \
+                 SmartOpen(tg.FileNames.testFile) as test_fd:
+                InitializeFiles(model_fd, example_fd, test_fd)
+                Example.DumpAllExamples(
+                    DumpModel=DumpCtsModel, model_fd=model_fd,
+                    DumpExample=DumpCtsExample, example_fd=example_fd,
+                    DumpTest=DumpCtsTest, test_fd=test_fd)
+        else:
+            print("Skip file: %s" % tg.FileNames.specFile, file=sys.stderr)
+        with SmartOpen(tg.FileNames.ctsFile, mode="a") as cts_fd:
+            print("#include \"../generated/tests/%s.cpp\""%os.path.basename(tg.FileNames.specFile),
+                file=cts_fd)

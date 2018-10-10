@@ -31,6 +31,7 @@ from functools import reduce
 import itertools
 import math
 import os
+import re
 import struct
 import sys
 import contextlib
@@ -926,15 +927,75 @@ if collecting_data is True:
             print (example_template.format(**example_contents), file = example_file)
 
 class FileNames:
+    specFiles = []
+    specNames = []
+    modelFiles = []
+    exampleFiles = []
+    testFiles = []
     specFile = ""
     specName = ""
     modelFile = ""
     exampleFile = ""
     testFile = ""
+    ctsFile = ""
     logFile = ""
+    fileIndex = 0
+
+    @staticmethod
+    def InitializeFileLists(spec, model, example, test, cts="-", log=""):
+        # get all spec files and target files
+        if os.path.isfile(spec):
+            FileNames.specFiles = [os.path.abspath(spec)]
+        elif os.path.isdir(spec):
+            FileNames.specFiles = sorted([os.path.abspath(os.path.join(spec, f))
+                for f in os.listdir(spec) if f.endswith(".mod.py")])
+        else:
+            assert False, "%s is neither a file or a directory"%spec
+        FileNames.specNames = [re.sub(r"\..*", "", os.path.basename(f))
+            for f in FileNames.specFiles]
+        FileNames.modelFiles = FileNames.ParseTargetFiles(model, ".model.cpp")
+        FileNames.exampleFiles = FileNames.ParseTargetFiles(example, ".example.cpp")
+        FileNames.testFiles = FileNames.ParseTargetFiles(test, ".mod.py.cpp")
+        FileNames.ctsFile = os.path.abspath(cts) if cts != "-" else "-"
+        FileNames.logFile = ", \"%s\""%log if log != "" else ""
+
+    @staticmethod
+    def ParseTargetFiles(arg, ext):
+        numFiles = len(FileNames.specFiles)
+        absPath = os.path.abspath(arg)
+        if os.path.isfile(arg):
+            assert numFiles == 1
+            target = [absPath]
+        elif os.path.isdir(arg):
+            target = [os.path.join(absPath, f + ext) for f in FileNames.specNames]
+        elif arg == "-":
+            target = ["-"] * numFiles
+        else:
+            assert False, "%s is neither a file or a directory"%arg
+        return target
+
+    @staticmethod
+    def NextFile():
+        if FileNames.fileIndex >= len(FileNames.specFiles):
+            return False
+        FileNames.specFile = FileNames.specFiles[FileNames.fileIndex]
+        FileNames.specName = FileNames.specNames[FileNames.fileIndex]
+        FileNames.modelFile = FileNames.modelFiles[FileNames.fileIndex]
+        FileNames.exampleFile = FileNames.exampleFiles[FileNames.fileIndex]
+        FileNames.testFile = FileNames.testFiles[FileNames.fileIndex]
+        FileNames.fileIndex += 1
+        NamedObject.existingNames = set()
+        NamedVariable.existingNames = set()
+        NamedTest.existingNames = set()
+        Type.typesMap = dict()
+        Model.models = list()
+        Example.examples = list()
+        Configuration.use_shm_for_weights = False
+        return True
 
 class Configuration:
     use_shm_for_weights = False
+    force_regenerate = False
 
     @staticmethod
     def useSHM():
