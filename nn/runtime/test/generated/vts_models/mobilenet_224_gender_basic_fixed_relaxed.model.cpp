@@ -18,7 +18,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 0, .length = 1728},
         },
         {
@@ -27,7 +27,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 1728, .length = 64},
         },
         {
@@ -36,7 +36,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 1792, .length = 4},
         },
         {
@@ -45,7 +45,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 1796, .length = 4},
         },
         {
@@ -54,7 +54,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 1800, .length = 4},
         },
         {
@@ -63,7 +63,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 1804, .length = 4},
         },
         {
@@ -81,7 +81,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 1808, .length = 576},
         },
         {
@@ -90,7 +90,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 2384, .length = 64},
         },
         {
@@ -99,7 +99,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 2448, .length = 4},
         },
         {
@@ -108,7 +108,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 2452, .length = 4},
         },
         {
@@ -117,7 +117,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 2456, .length = 4},
         },
         {
@@ -126,7 +126,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 2460, .length = 4},
         },
         {
@@ -135,7 +135,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 2464, .length = 4},
         },
         {
@@ -153,7 +153,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 2468, .length = 1024},
         },
         {
@@ -162,7 +162,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 3492, .length = 64},
         },
         {
@@ -171,7 +171,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 3556, .length = 4},
         },
         {
@@ -180,7 +180,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 3560, .length = 4},
         },
         {
@@ -189,7 +189,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 3564, .length = 4},
         },
         {
@@ -198,7 +198,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 3568, .length = 4},
         },
         {
@@ -216,7 +216,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 3572, .length = 576},
         },
         {
@@ -225,7 +225,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 4148, .length = 64},
         },
         {
@@ -234,7 +234,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 4212, .length = 4},
         },
         {
@@ -243,7 +243,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 4216, .length = 4},
         },
         {
@@ -252,7 +252,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 4220, .length = 4},
         },
         {
@@ -261,7 +261,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 4224, .length = 4},
         },
         {
@@ -270,7 +270,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 4228, .length = 4},
         },
         {
@@ -288,7 +288,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 4232, .length = 2048},
         },
         {
@@ -297,7 +297,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 6280, .length = 128},
         },
         {
@@ -306,7 +306,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 6408, .length = 4},
         },
         {
@@ -315,7 +315,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 6412, .length = 4},
         },
         {
@@ -324,7 +324,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 6416, .length = 4},
         },
         {
@@ -333,7 +333,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 6420, .length = 4},
         },
         {
@@ -351,7 +351,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 6424, .length = 1152},
         },
         {
@@ -360,7 +360,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 7576, .length = 128},
         },
         {
@@ -369,7 +369,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 7704, .length = 4},
         },
         {
@@ -378,7 +378,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 7708, .length = 4},
         },
         {
@@ -387,7 +387,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 7712, .length = 4},
         },
         {
@@ -396,7 +396,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 7716, .length = 4},
         },
         {
@@ -405,7 +405,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 7720, .length = 4},
         },
         {
@@ -423,7 +423,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 7724, .length = 4096},
         },
         {
@@ -432,7 +432,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 11820, .length = 128},
         },
         {
@@ -441,7 +441,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 11948, .length = 4},
         },
         {
@@ -450,7 +450,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 11952, .length = 4},
         },
         {
@@ -459,7 +459,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 11956, .length = 4},
         },
         {
@@ -468,7 +468,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 11960, .length = 4},
         },
         {
@@ -486,7 +486,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 11964, .length = 1152},
         },
         {
@@ -495,7 +495,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 13116, .length = 128},
         },
         {
@@ -504,7 +504,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 13244, .length = 4},
         },
         {
@@ -513,7 +513,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 13248, .length = 4},
         },
         {
@@ -522,7 +522,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 13252, .length = 4},
         },
         {
@@ -531,7 +531,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 13256, .length = 4},
         },
         {
@@ -540,7 +540,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 13260, .length = 4},
         },
         {
@@ -558,7 +558,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 13264, .length = 8192},
         },
         {
@@ -567,7 +567,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 21456, .length = 256},
         },
         {
@@ -576,7 +576,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 21712, .length = 4},
         },
         {
@@ -585,7 +585,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 21716, .length = 4},
         },
         {
@@ -594,7 +594,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 21720, .length = 4},
         },
         {
@@ -603,7 +603,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 21724, .length = 4},
         },
         {
@@ -621,7 +621,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 21728, .length = 2304},
         },
         {
@@ -630,7 +630,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 24032, .length = 256},
         },
         {
@@ -639,7 +639,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 24288, .length = 4},
         },
         {
@@ -648,7 +648,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 24292, .length = 4},
         },
         {
@@ -657,7 +657,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 24296, .length = 4},
         },
         {
@@ -666,7 +666,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 24300, .length = 4},
         },
         {
@@ -675,7 +675,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 24304, .length = 4},
         },
         {
@@ -693,7 +693,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 24308, .length = 16384},
         },
         {
@@ -702,7 +702,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 40692, .length = 256},
         },
         {
@@ -711,7 +711,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 40948, .length = 4},
         },
         {
@@ -720,7 +720,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 40952, .length = 4},
         },
         {
@@ -729,7 +729,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 40956, .length = 4},
         },
         {
@@ -738,7 +738,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 40960, .length = 4},
         },
         {
@@ -756,7 +756,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 40964, .length = 2304},
         },
         {
@@ -765,7 +765,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 43268, .length = 256},
         },
         {
@@ -774,7 +774,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 43524, .length = 4},
         },
         {
@@ -783,7 +783,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 43528, .length = 4},
         },
         {
@@ -792,7 +792,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 43532, .length = 4},
         },
         {
@@ -801,7 +801,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 43536, .length = 4},
         },
         {
@@ -810,7 +810,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 43540, .length = 4},
         },
         {
@@ -828,7 +828,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 43544, .length = 32768},
         },
         {
@@ -837,7 +837,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 76312, .length = 512},
         },
         {
@@ -846,7 +846,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 76824, .length = 4},
         },
         {
@@ -855,7 +855,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 76828, .length = 4},
         },
         {
@@ -864,7 +864,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 76832, .length = 4},
         },
         {
@@ -873,7 +873,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 76836, .length = 4},
         },
         {
@@ -891,7 +891,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 76840, .length = 4608},
         },
         {
@@ -900,7 +900,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 81448, .length = 512},
         },
         {
@@ -909,7 +909,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 81960, .length = 4},
         },
         {
@@ -918,7 +918,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 81964, .length = 4},
         },
         {
@@ -927,7 +927,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 81968, .length = 4},
         },
         {
@@ -936,7 +936,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 81972, .length = 4},
         },
         {
@@ -945,7 +945,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 81976, .length = 4},
         },
         {
@@ -963,7 +963,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 81980, .length = 65536},
         },
         {
@@ -972,7 +972,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 147516, .length = 512},
         },
         {
@@ -981,7 +981,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 148028, .length = 4},
         },
         {
@@ -990,7 +990,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 148032, .length = 4},
         },
         {
@@ -999,7 +999,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 148036, .length = 4},
         },
         {
@@ -1008,7 +1008,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 148040, .length = 4},
         },
         {
@@ -1026,7 +1026,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 148044, .length = 4608},
         },
         {
@@ -1035,7 +1035,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 152652, .length = 512},
         },
         {
@@ -1044,7 +1044,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 153164, .length = 4},
         },
         {
@@ -1053,7 +1053,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 153168, .length = 4},
         },
         {
@@ -1062,7 +1062,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 153172, .length = 4},
         },
         {
@@ -1071,7 +1071,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 153176, .length = 4},
         },
         {
@@ -1080,7 +1080,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 153180, .length = 4},
         },
         {
@@ -1098,7 +1098,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 153184, .length = 65536},
         },
         {
@@ -1107,7 +1107,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 218720, .length = 512},
         },
         {
@@ -1116,7 +1116,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 219232, .length = 4},
         },
         {
@@ -1125,7 +1125,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 219236, .length = 4},
         },
         {
@@ -1134,7 +1134,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 219240, .length = 4},
         },
         {
@@ -1143,7 +1143,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 219244, .length = 4},
         },
         {
@@ -1161,7 +1161,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 219248, .length = 4608},
         },
         {
@@ -1170,7 +1170,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 223856, .length = 512},
         },
         {
@@ -1179,7 +1179,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 224368, .length = 4},
         },
         {
@@ -1188,7 +1188,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 224372, .length = 4},
         },
         {
@@ -1197,7 +1197,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 224376, .length = 4},
         },
         {
@@ -1206,7 +1206,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 224380, .length = 4},
         },
         {
@@ -1215,7 +1215,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 224384, .length = 4},
         },
         {
@@ -1233,7 +1233,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 224388, .length = 65536},
         },
         {
@@ -1242,7 +1242,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 289924, .length = 512},
         },
         {
@@ -1251,7 +1251,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 290436, .length = 4},
         },
         {
@@ -1260,7 +1260,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 290440, .length = 4},
         },
         {
@@ -1269,7 +1269,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 290444, .length = 4},
         },
         {
@@ -1278,7 +1278,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 290448, .length = 4},
         },
         {
@@ -1296,7 +1296,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 290452, .length = 4608},
         },
         {
@@ -1305,7 +1305,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 295060, .length = 512},
         },
         {
@@ -1314,7 +1314,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 295572, .length = 4},
         },
         {
@@ -1323,7 +1323,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 295576, .length = 4},
         },
         {
@@ -1332,7 +1332,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 295580, .length = 4},
         },
         {
@@ -1341,7 +1341,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 295584, .length = 4},
         },
         {
@@ -1350,7 +1350,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 295588, .length = 4},
         },
         {
@@ -1368,7 +1368,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 295592, .length = 65536},
         },
         {
@@ -1377,7 +1377,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 361128, .length = 512},
         },
         {
@@ -1386,7 +1386,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 361640, .length = 4},
         },
         {
@@ -1395,7 +1395,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 361644, .length = 4},
         },
         {
@@ -1404,7 +1404,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 361648, .length = 4},
         },
         {
@@ -1413,7 +1413,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 361652, .length = 4},
         },
         {
@@ -1431,7 +1431,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 361656, .length = 4608},
         },
         {
@@ -1440,7 +1440,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 366264, .length = 512},
         },
         {
@@ -1449,7 +1449,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 366776, .length = 4},
         },
         {
@@ -1458,7 +1458,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 366780, .length = 4},
         },
         {
@@ -1467,7 +1467,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 366784, .length = 4},
         },
         {
@@ -1476,7 +1476,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 366788, .length = 4},
         },
         {
@@ -1485,7 +1485,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 366792, .length = 4},
         },
         {
@@ -1503,7 +1503,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 366796, .length = 65536},
         },
         {
@@ -1512,7 +1512,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 432332, .length = 512},
         },
         {
@@ -1521,7 +1521,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 432844, .length = 4},
         },
         {
@@ -1530,7 +1530,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 432848, .length = 4},
         },
         {
@@ -1539,7 +1539,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 432852, .length = 4},
         },
         {
@@ -1548,7 +1548,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 432856, .length = 4},
         },
         {
@@ -1566,7 +1566,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 432860, .length = 4608},
         },
         {
@@ -1575,7 +1575,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 437468, .length = 512},
         },
         {
@@ -1584,7 +1584,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 437980, .length = 4},
         },
         {
@@ -1593,7 +1593,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 437984, .length = 4},
         },
         {
@@ -1602,7 +1602,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 437988, .length = 4},
         },
         {
@@ -1611,7 +1611,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 437992, .length = 4},
         },
         {
@@ -1620,7 +1620,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 437996, .length = 4},
         },
         {
@@ -1638,7 +1638,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 438000, .length = 131072},
         },
         {
@@ -1647,7 +1647,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 569072, .length = 1024},
         },
         {
@@ -1656,7 +1656,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 570096, .length = 4},
         },
         {
@@ -1665,7 +1665,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 570100, .length = 4},
         },
         {
@@ -1674,7 +1674,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 570104, .length = 4},
         },
         {
@@ -1683,7 +1683,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 570108, .length = 4},
         },
         {
@@ -1701,7 +1701,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 570112, .length = 9216},
         },
         {
@@ -1710,7 +1710,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 579328, .length = 1024},
         },
         {
@@ -1719,7 +1719,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 580352, .length = 4},
         },
         {
@@ -1728,7 +1728,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 580356, .length = 4},
         },
         {
@@ -1737,7 +1737,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 580360, .length = 4},
         },
         {
@@ -1746,7 +1746,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 580364, .length = 4},
         },
         {
@@ -1755,7 +1755,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 580368, .length = 4},
         },
         {
@@ -1773,7 +1773,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 580372, .length = 262144},
         },
         {
@@ -1782,7 +1782,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 842516, .length = 1024},
         },
         {
@@ -1791,7 +1791,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843540, .length = 4},
         },
         {
@@ -1800,7 +1800,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843544, .length = 4},
         },
         {
@@ -1809,7 +1809,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843548, .length = 4},
         },
         {
@@ -1818,7 +1818,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843552, .length = 4},
         },
         {
@@ -1836,7 +1836,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843556, .length = 4},
         },
         {
@@ -1845,7 +1845,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843560, .length = 4},
         },
         {
@@ -1854,7 +1854,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843564, .length = 4},
         },
         {
@@ -1863,7 +1863,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843568, .length = 4},
         },
         {
@@ -1872,7 +1872,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843572, .length = 4},
         },
         {
@@ -1881,7 +1881,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843576, .length = 4},
         },
         {
@@ -1899,7 +1899,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 843580, .length = 11264},
         },
         {
@@ -1908,7 +1908,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 854844, .length = 44},
         },
         {
@@ -1917,7 +1917,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 854888, .length = 4},
         },
         {
@@ -1926,7 +1926,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 854892, .length = 4},
         },
         {
@@ -1935,7 +1935,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 854896, .length = 4},
         },
         {
@@ -1944,7 +1944,7 @@ Model createTestModel() {
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .lifetime = OperandLifeTime::CONSTANT_REFERENCE,
             .location = {.poolIndex = 0, .offset = 854900, .length = 4},
         },
         {
