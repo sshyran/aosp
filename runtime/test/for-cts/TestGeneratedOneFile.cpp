@@ -344,3 +344,6 @@
 #include "../generated/tests/lsh_projection_3_relaxed.mod.py.cpp"
 #include "../generated/tests/lsh_projection_4_relaxed.mod.py.cpp"
 #include "../generated/tests/lsh_projection_deprecated.mod.py.cpp"
+#include "../generated/tests/pad_v2_1_float.mod.py.cpp"
+#include "../generated/tests/pad_v2_1_float_relaxed.mod.py.cpp"
+#include "../generated/tests/pad_v2_1_quant8.mod.py.cpp"
