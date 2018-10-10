@@ -1437,6 +1437,20 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                      axis, isArgMin,
                                      output.buffer, outShape);
         } break;
+        case OperationType::EXPAND_DIMS: {
+            if (!allParametersPresent(2, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            int32_t axis = getScalarData<int32_t>(mOperands[ins[1]]);
+
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outShape = output.shape();
+
+            success = expand_dims::prepare(input.shape(), axis, &outShape) &&
+                      setInfoAndAllocateIfNeeded(&output, outShape) &&
+                      expand_dims::eval(input.buffer, input.shape(), axis, output.buffer, outShape);
+        } break;
         default:
             nnAssert(false);
             break;
