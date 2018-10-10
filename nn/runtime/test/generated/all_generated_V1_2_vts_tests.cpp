@@ -241,3 +241,48 @@ TEST_F(NeuralnetworksHidlTest, argmin_2_quant8) {
                            argmin_2_quant8::examples);
 }
 
+// Generated from: lsh_projection_3_relaxed.mod.py.
+namespace lsh_projection_3_relaxed {
+// Generated lsh_projection_3_relaxed test
+#include "examples/lsh_projection_3_relaxed.example.cpp"
+// Generated model constructor
+#include "vts_models/lsh_projection_3_relaxed.model.cpp"
+} // namespace lsh_projection_3_relaxed
+
+TEST_F(NeuralnetworksHidlTest, lsh_projection_3_relaxed) {
+  generated_tests::Execute(device,
+                           lsh_projection_3_relaxed::createTestModel,
+                           lsh_projection_3_relaxed::is_ignored,
+                           lsh_projection_3_relaxed::examples);
+}
+
+// Generated from: lsh_projection_4_relaxed.mod.py.
+namespace lsh_projection_4_relaxed {
+// Generated lsh_projection_4_relaxed test
+#include "examples/lsh_projection_4_relaxed.example.cpp"
+// Generated model constructor
+#include "vts_models/lsh_projection_4_relaxed.model.cpp"
+} // namespace lsh_projection_4_relaxed
+
+TEST_F(NeuralnetworksHidlTest, lsh_projection_4_relaxed) {
+  generated_tests::Execute(device,
+                           lsh_projection_4_relaxed::createTestModel,
+                           lsh_projection_4_relaxed::is_ignored,
+                           lsh_projection_4_relaxed::examples);
+}
+
+// Generated from: lsh_projection_deprecated.mod.py.
+namespace lsh_projection_deprecated {
+// Generated lsh_projection_deprecated test
+#include "examples/lsh_projection_deprecated.example.cpp"
+// Generated model constructor
+#include "vts_models/lsh_projection_deprecated.model.cpp"
+} // namespace lsh_projection_deprecated
+
+TEST_F(NeuralnetworksHidlTest, lsh_projection_deprecated) {
+  generated_tests::Execute(device,
+                           lsh_projection_deprecated::createTestModel,
+                           lsh_projection_deprecated::is_ignored,
+                           lsh_projection_deprecated::examples);
+}
+
