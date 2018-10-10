@@ -1,11 +1,12 @@
+// clang-format off
 // Generated file (from: rnn_state.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type5(Type::INT32, {});
-  OperandType type2(Type::TENSOR_FLOAT32, {16, 16});
+  OperandType type0(Type::TENSOR_FLOAT32, {2, 8});
   OperandType type1(Type::TENSOR_FLOAT32, {16, 8});
+  OperandType type2(Type::TENSOR_FLOAT32, {16, 16});
   OperandType type3(Type::TENSOR_FLOAT32, {16});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 16});
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 8});
+  OperandType type5(Type::INT32, {});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto weights = model->addOperand(&type1);
@@ -30,3 +31,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
+

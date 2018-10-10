@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: avg_pool_quant8_1.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {1, 2, 3, 4}}}
 }
 }, // End of an example
+};
+

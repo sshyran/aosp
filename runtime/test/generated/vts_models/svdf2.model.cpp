@@ -1,4 +1,5 @@
-// Generated code. Do not edit
+// clang-format off
+// Generated file (from: svdf2.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
@@ -110,8 +111,8 @@ Model createTestModel() {
     };
 }
 
-
 bool is_ignored(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
+

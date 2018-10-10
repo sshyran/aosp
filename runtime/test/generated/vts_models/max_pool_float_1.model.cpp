@@ -1,4 +1,5 @@
-// Generated code. Do not edit
+// clang-format off
+// Generated file (from: max_pool_float_1.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
@@ -52,7 +53,7 @@ Model createTestModel() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::MAX_POOL_2D,
-            .inputs = {0, 2, 2, 2, 2, 1, 1, 1, 1, 3},
+            .inputs = {0, 1, 1, 1, 1, 2, 2, 2, 2, 3},
             .outputs = {4},
         }
     };
@@ -60,7 +61,7 @@ Model createTestModel() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+      0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -74,8 +75,8 @@ Model createTestModel() {
     };
 }
 
-
 bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

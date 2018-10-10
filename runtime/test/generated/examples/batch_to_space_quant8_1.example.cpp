@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: batch_to_space_quant8_1.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {1, 5, 2, 6, 9, 13, 10, 14, 3, 7, 4, 8, 11, 15, 12, 16}}}
 }
 }, // End of an example
+};
+

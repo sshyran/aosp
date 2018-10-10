@@ -1,4 +1,5 @@
-// Generated code. Do not edit
+// clang-format off
+// Generated file (from: lstm_state2.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
@@ -148,7 +149,7 @@ Model createTestModel() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0,0},
+            .dimensions = {0, 0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -272,8 +273,8 @@ Model createTestModel() {
     };
 }
 
-
 bool is_ignored(int i) {
-  static std::set<int> ignore = {1, 2, 0};
+  static std::set<int> ignore = {0, 1, 2};
   return ignore.find(i) != ignore.end();
 }
+
