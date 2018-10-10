@@ -231,6 +231,10 @@ bool stridedSliceGeneric(const uint8_t* inputData, const Shape& inputShape,
                          const int32_t* stridesData,
                          int32_t beginMask, int32_t endMask, int32_t shrinkAxisMask,
                          uint8_t* outputData, const Shape& outputShape);
+
+bool argMinMaxGeneric(const uint8_t* inputData, const Shape& inputShape,
+                      int32_t axis, bool isArgMin,
+                      uint8_t* outputData, const Shape& outputShape);
 } // namespace nn
 } // namespace android
 #endif // ANDROID_ML_NN_COMMON_OPERATIONS_H
