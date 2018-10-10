@@ -259,3 +259,4 @@ TEST_F(GeneratedTests, mean_implicit_3) {
             mean_implicit::examples_3);
 }
 
+#include "../generated/tests/mean_implicit.mod.py.cpp"

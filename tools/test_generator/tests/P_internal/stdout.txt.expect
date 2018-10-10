@@ -95,3 +95,4 @@ TEST_F(GeneratedTests, add_internal) {
             add_internal::examples);
 }
 
+#include "../generated/tests/add_internal.mod.py.cpp"
