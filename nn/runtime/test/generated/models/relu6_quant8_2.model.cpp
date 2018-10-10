@@ -1,6 +1,7 @@
+// clang-format off
 // Generated file (from: relu6_quant8_2.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type0(Type::TENSOR_QUANT8_ASYMM, {2, 128, 20, 2}, 1.f, 128);
+  OperandType type0(Type::TENSOR_QUANT8_ASYMM, {2, 128, 20, 2}, 1.0f, 128);
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto output = model->addOperand(&type0);
@@ -17,3 +18,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

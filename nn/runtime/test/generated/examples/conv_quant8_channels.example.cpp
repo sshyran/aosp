@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: conv_quant8_channels.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {15, 38, 60}}}
 }
 }, // End of an example
+};
+
