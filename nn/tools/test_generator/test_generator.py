@@ -313,7 +313,7 @@ class Parameter(Operand):
     def __init__(self, name, opType, value, backward=None, skipRenaming=False):
         Operand.__init__(self, name, opType, value, backward, skipRenaming=skipRenaming)
         self.initializer = NamedVariable(str(self) + "_init")
-        self.lifetime = "CONSTANT_COPY"
+        self.lifetime = "CONSTANT_REFERENCE" if Configuration.useSHM() else "CONSTANT_COPY"
 
 # A shortcut for parameters of INT32
 class Int32Scalar(Parameter, ImplicitParameter):
