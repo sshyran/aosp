@@ -1568,6 +1568,20 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                  outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
+        case ANEURALNETWORKS_SPLIT: {
+            if (inputCount != 3) {
+                LOG(ERROR) << "Invalid number of input operands (" << inputCount << ", expected 3)"
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            auto inputType = operands[inputIndexes[0]].type;
+            std::vector<OperandType> inExpectedTypes = {inputType, OperandType::INT32,
+                                                        OperandType::INT32};
+            std::vector<OperandType> outExpectedTypes(outputCount, inputType);
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
         default:
             return ANEURALNETWORKS_BAD_DATA;
     }

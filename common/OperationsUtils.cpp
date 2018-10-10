@@ -921,5 +921,24 @@ bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output) {
 
     return true;
 }
+
+bool splitPrepare(const Shape& input, int32_t axis, int32_t numOutputs,
+                  std::vector<Shape>* output) {
+    axis = getDimensionIndex(input, axis);
+
+    const int32_t sizeOfAxisToSplit = input.dimensions[axis];
+    NN_OPS_CHECK(sizeOfAxisToSplit % numOutputs == 0);
+    const int32_t sliceSize = sizeOfAxisToSplit / numOutputs;
+
+    for (int i = 0; i < numOutputs; ++i) {
+        output->at(i).type = input.type;
+        output->at(i).dimensions = input.dimensions;
+        output->at(i).dimensions[axis] = sliceSize;
+        output->at(i).offset = input.offset;
+        output->at(i).scale = input.scale;
+    }
+    return true;
+}
+
 } // namespace nn
 } // namespace android
