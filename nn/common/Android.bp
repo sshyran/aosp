@@ -59,6 +59,7 @@ cc_library_static {
         "Utils.cpp",
         "ValidateHal.cpp",
         "operations/Activation.cpp",
+        "operations/ArgMinMax.cpp",
         "operations/Concatenation.cpp",
         "operations/Conv2D.cpp",
         "operations/DepthwiseConv2D.cpp",
