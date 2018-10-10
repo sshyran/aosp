@@ -26,13 +26,16 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 import argparse
+import copy
 from functools import reduce
+import itertools
 import math
 import os
 import struct
 import sys
 import contextlib
 import pprint
+import numpy as np
 
 def GetJointStr(l, sep=", ", method=str):
     return sep.join([method(i) for i in l])
@@ -44,6 +47,27 @@ def PrettyPrintAsFloat(x):
         return s + "f"
     else:
         return s + ".0f"
+
+# Transform from original type to float32
+def Dequantize(v, ty):
+    v -= ty.zeroPoint
+    if ty.scale != 0:
+        v *= ty.scale
+    return v
+
+# Transform float32 to target data type
+def Quantize(v, ty):
+    if ty.scale != 0:
+        v /= ty.scale
+    v += ty.zeroPoint
+    if not ty.IsFloat():
+        v = np.round(v)
+        v = int(v) if np.isscalar(v) else v.astype(int)
+    if ty.type == "TENSOR_QUANT8_ASYMM":
+        v = np.minimum(np.maximum(v, 0), 255)
+    elif ty.type == "UINT32":
+        v = np.maximum(v, 0)
+    return v
 
 @contextlib.contextmanager
 def SmartOpen(filename=None, mode="w"):
@@ -220,6 +244,13 @@ class Operand(NamedVariable):
         self.value = value if type(value) is list or type(value) is tuple else [value]
         return self
 
+    def SetValueFromNumpy(self, value):
+        self.value = value.flatten().tolist()
+        return self
+
+    def GetValueAsNumpy(self):
+        return np.array(self.value).reshape(self.type.dimensions)
+
     # Print value as cpp-style list initialization
     def GetListInitialization(self):
         assert self.value is not None, \
@@ -342,6 +373,14 @@ class Model:
         self.dumped = False
         Model.models.append(self)
 
+    def WithSuffix(self, *args):
+        if all(n is None or n == "" for n in args):
+            return self
+        self.createFunctionName = GlobalVariable("CreateModel", self.name, *args)
+        self.createTestFunctionName = GlobalVariable("createTestModel", self.name, *args)
+        self.isIgnoredFunctionName = GlobalVariable("is_ignored", self.name, *args)
+        return self
+
     def AddOperation(self, operation):
         self.operations.append(operation)
         for i in operation.ins:
@@ -432,7 +471,233 @@ class Model:
         self.compiled = True
         return self
 
-# An example is always attached to a model
+# The base class for model variations
+class ModelVariation:
+
+    def __init__(self, name=None):
+        self.targetOperands = {}
+        self.targetParameters = []
+        self.name = name
+
+    def ApplyToHelper(self, model, args, feedDicts, transform):
+        opVarList = []
+        for op in model.GetEquivalentOperands(sorted(args.keys())):
+            opVar = op
+            feedDictsVar = []
+            if isinstance(op, Input) or isinstance(op, Output):
+                for feedDict in feedDicts:
+                    op_tmp = copy.deepcopy(op)
+                    if op_tmp in feedDict[0]:
+                        opVar = transform(op_tmp.Feed(feedDict[0]), args[op_tmp])
+                    elif op_tmp in feedDict[1]:
+                        opVar = transform(op_tmp.Feed(feedDict[1]), args[op_tmp])
+                    else:
+                        assert False
+                    feedDictsVar.append(opVar.value)
+                assert type(op) == type(opVar), "Can not handle %s -> %s"%(type(op), type(opVar))
+            else:
+                opVar = transform(op, args[op])
+                # handle Parameter -> Input
+                if isinstance(opVar, Input) or isinstance(opVar, Output):
+                    feedDictsVar = [opVar.value] * len(feedDicts)
+            if isinstance(opVar, Input) or isinstance(opVar, Output):
+                for feedDict, feedDictVar in zip(feedDicts, feedDictsVar):
+                    if opVar in feedDict[1]:
+                        feedDict[1][opVar] = feedDictVar
+                    else:
+                        feedDict[0][opVar] = feedDictVar
+            opVarList.append(opVar)
+        return opVarList
+
+    # Make a deepcopy of the model and feedDicts, and apply the change
+    def ApplyTo(self, modelOrigin, feedDictsOrigin):
+        model, feedDicts = copy.deepcopy((modelOrigin, feedDictsOrigin))
+        model.compiled = False
+        model.dumped = False
+
+        # get transformed operands and update feedDicts
+        operandsVar = self.ApplyToHelper(
+            model, self.targetOperands, feedDicts, self.TransformOperand)
+        parametersVar = self.TransformParameters(
+            model.GetEquivalentOperands(self.targetParameters))
+
+        model = self.TransformModel(model)
+        model.UpdateEquivalentOperands(operandsVar)
+        model.UpdateEquivalentOperands(parametersVar)
+        return model, feedDicts
+
+    def IdentifyOperands(self, args=None):
+        if args is None:
+            return self
+        self.targetOperands = args if type(args) is dict else {i: None for i in args}
+        return self
+
+    def IdentifyParameters(self, args=None):
+        if args is None:
+            return self
+        self.targetParameters = args
+        return self
+
+    def Identify(self, operandArgs=None, paramArgs=None):
+        self.IdentifyOperands(operandArgs).IdentifyParameters(paramArgs)
+        return self
+
+    # Set variation to its default name
+    def SetToDefaultName(self):
+        self.name = ""
+        return self
+
+    # Transform operands that are marked by IdentifyOperands()
+    def TransformOperand(self, op, arg=None):
+        return op
+
+    # Transform operands that are marked as parameters by IdentifyParameters()
+    def TransformParameters(self, parameters):
+        return parameters
+
+    # Transform the model
+    def TransformModel(self, model):
+        return model
+
+# Default variation that does nothing
+class DefaultVariation(ModelVariation):
+
+    def __init__(self, name=None):
+        ModelVariation.__init__(self, name=name)
+
+    # For faster execution
+    def ApplyTo(self, model, feedDicts):
+        return model, feedDicts
+
+# Convert operand data type
+class DataTypeConverter(ModelVariation):
+
+    def __init__(self, name=None):
+        ModelVariation.__init__(self, name=name)
+
+    def SetToDefaultName(self):
+        # get all target types
+        targetTypes = list(zip(*self.targetOperands.values()))[0]
+        if "TENSOR_QUANT8_ASYMM" in targetTypes:
+            self.name = "quant8"
+        elif "TENSOR_INT32" in targetTypes:
+            self.name = "int32"
+        else:
+            self.name = "float"
+        return self
+
+    def TransformOperand(self, op, arg=None):
+        if len(arg) == 1:
+            typeTuple = (arg[0], op.type.dimensions)
+        else:
+            typeTuple = (arg[0], op.type.dimensions, *arg[1:])
+        # To handle Internal operands
+        if op.value is None:
+            op.type = Type.GetType(*typeTuple)
+        else:
+            v = Dequantize(op.GetValueAsNumpy().astype(np.float32), op.type)
+            op.type = Type.GetType(*typeTuple)
+            v = Quantize(v, op.type)
+            op.SetValueFromNumpy(v)
+        return op
+
+# Convert model to turn on/off relaxed computation
+class RelaxedModeConverter(ModelVariation):
+
+    def __init__(self, isRelaxed=True, name=None):
+        ModelVariation.__init__(self, name=name)
+        self.isRelaxed = isRelaxed
+
+    def SetToDefaultName(self):
+        self.name = "relaxed" if self.isRelaxed else "float"
+        return self
+
+    def TransformModel(self, model):
+        model.RelaxedExecution(self.isRelaxed)
+        return model
+
+# Convert data layout between "NHWC" amd "NCHW"
+class DataLayoutConverter(ModelVariation):
+
+    def __init__(self, targetLayout="nchw", name=None):
+        ModelVariation.__init__(self, name=name)
+        self.targetLayout = targetLayout.lower()
+        self.perm = (0, 3, 1, 2) if self.targetLayout == "nchw" else (0, 2, 3, 1)
+        self.enum = 1 if self.targetLayout == "nchw" else 0
+
+    def SetToDefaultName(self):
+        self.name = self.targetLayout
+        return self
+
+    def TransformOperand(self, op, arg=None):
+        assert len(op.type.dimensions) == 4, \
+            "Error converting layout of %s, can only apply transformation to 4-D tensor"%op
+        # To handle Internal operands
+        if op.value is not None:
+            op.SetValueFromNumpy(op.GetValueAsNumpy().transpose(self.perm))
+        newDim = [op.type.dimensions[i] for i in self.perm]
+        op.type = Type.GetType(op.type.type, newDim, op.type.scale, op.type.zeroPoint)
+        return op
+
+    def TransformParameters(self, parameters):
+        for p in parameters:
+            p.SetValue(self.enum)
+        return parameters
+
+# Convert a Parameter to Input
+class ParameterAsInputConverter(ModelVariation):
+
+    def __init__(self, prefix="weight", name=None):
+        ModelVariation.__init__(self, name=name)
+        self.prefix = prefix
+
+    def SetToDefaultName(self):
+        self.name = self.prefix + "_as_input"
+        return self
+
+    def TransformOperand(self, op, arg=None):
+        assert isinstance(op, Parameter), "%s cannot be converted to Input."%type(op)
+        newop = Input(op.name, op.type.GetSignatureTuple(), skipRenaming=True)
+        newop.SetValue(op.value)
+        return newop
+
+# Convert Output based on activation
+class ActivationConverter(ModelVariation):
+    # (Enum, low, high)
+    actMap = {
+        "none": (0, None, None),
+        "relu": (1, 0.0, None),
+        "relu1": (2, -1.0, 1.0),
+        "relu6": (3, 0.0, 6.0),
+    }
+    def __init__(self, act="relu", name=None):
+        ModelVariation.__init__(self, name=name)
+        self.act = act.lower()
+        self.enum = ActivationConverter.actMap[self.act][0]
+        self.low = ActivationConverter.actMap[self.act][1]
+        self.high = ActivationConverter.actMap[self.act][2]
+
+    def SetToDefaultName(self):
+        self.name = self.act
+        return self
+
+    def TransformOperand(self, op, arg=None):
+        assert isinstance(op, Output)
+        v = op.GetValueAsNumpy()
+        if self.low is not None:
+            low = Quantize(self.low, op.type)
+            v = np.maximum(v, low)
+        if self.high is not None:
+            high = Quantize(self.high, op.type)
+            v = np.minimum(v, high)
+        return op.SetValueFromNumpy(v)
+
+    def TransformParameters(self, parameters):
+        for p in parameters:
+            p.SetValue(self.enum)
+        return parameters
+
+# An example is always attached to a model, and could have multiple variations
 class Example:
     examples = []
 
@@ -450,6 +715,7 @@ class Example:
                 ))
             else:
                 assert False
+        self.variations = []
         Example.examples.append(self)
 
     # Main entrance of test generator
@@ -461,13 +727,13 @@ class Example:
         for example in Example.examples:
             example.Dump(DumpModel, model_fd, DumpExample, example_fd, DumpTest, test_fd)
 
-    # Combine examples with the same model and same name
+    # Combine examples with the same model, same name, and same set of variations
     @staticmethod
     def CombineAllExamples():
         modelMap = {}
         newExamples = []
         for example in Example.examples:
-            key = (example.model, example.name)
+            key = (example.model, example.name, tuple(tuple(e) for e in example.variations))
             if key in modelMap:
                 modelMap[key].Combine(example)
             else:
@@ -475,24 +741,67 @@ class Example:
                 newExamples.append(example)
         Example.examples = newExamples
 
+    def AddVariations(self, *args, includeDefault=True, defaultName=None):
+        self.variations.append([DefaultVariation(defaultName)] if includeDefault else [])
+        self.variations[-1].extend(list(args))
+        return self
+
+    def AddNchw(self, ops, params, includeDefault=True, defaultName=None):
+        var = DataLayoutConverter("nchw").Identify(ops, params)
+        self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
+        return self
+
+    def AddRelaxed(self, isRelaxed=True, includeDefault=True, defaultName=None):
+        var = RelaxedModeConverter(isRelaxed)
+        self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
+        return self
+
+    def AddInput(self, ops, includeDefault=True, defaultName=None):
+        var = ParameterAsInputConverter().Identify(ops)
+        self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
+        return self
+
+    def AddRelu(self, ops, params, includeDefault=True, defaultName=None):
+        var = ActivationConverter("relu").Identify(ops, params)
+        self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
+        return self
+
+    def AddAllActivations(self, ops, params):
+        var = [ActivationConverter(i).Identify(ops, params)
+            for i in sorted(ActivationConverter.actMap.keys())]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
     def Combine(self, other):
         assert self.model is other.model, "Only examples targetting the same model can be combined"
+        assert tuple(self.variations) == tuple(other.variations), \
+            "Only examples with the same set of variations can be combined"
         assert self.name == other.name, "Only examples with the same name can be combined"
         self.feedDicts.extend(other.feedDicts)
         return self
 
     def Dump(self, DumpModel, model_fd, DumpExample, example_fd, DumpTest, test_fd):
-        # Concat names for test and examples
-        self.testName = NamedTest(FileNames.specName, self.model.name, self.name)
-        self.examplesName = GlobalVariable("examples", self.model.name, self.name)
-        self.model.Compile()
-        # Dump files
-        if DumpModel is not None and model_fd is not None:
-            DumpModel(self.model, model_fd)
-        if DumpExample is not None and example_fd is not None:
-            DumpExample(self, example_fd)
-        if DumpTest is not None and test_fd is not None:
-            DumpTest(self, test_fd)
+        [v.SetToDefaultName() for vs in self.variations for v in vs if v.name is None]
+        for variationList in itertools.product(*self.variations):
+            # Apply variations
+            modelOrigin, feedDictsOrigin = self.model, self.feedDicts
+            for variation in variationList:
+                self.model, self.feedDicts = variation.ApplyTo(self.model, self.feedDicts)
+            # Concat names for test and examples
+            varNames = [v.name for v in variationList]
+            self.testName = NamedTest(FileNames.specName, self.model.name, self.name, *varNames)
+            self.examplesName = GlobalVariable("examples", self.model.name, self.name, *varNames)
+            self.model.WithSuffix(*varNames).Compile()
+            # Dump files
+            if DumpModel is not None and model_fd is not None:
+                DumpModel(self.model, model_fd)
+            if DumpExample is not None and example_fd is not None:
+                DumpExample(self, example_fd)
+            if DumpTest is not None and test_fd is not None:
+                DumpTest(self, test_fd)
+            # Restore model and feedDicts before variation
+            self.model = modelOrigin
+            self.feedDicts = feedDictsOrigin
         return self
 
     # For backward-compatibility with slicing.py
