@@ -76,6 +76,15 @@ uint32_t getSizeOfDimension(const Shape& shape, uint32_t dimensionIdx) {
     return shape.dimensions[dimensionIdx];
 }
 
+int32_t getDimensionIndex(const Shape& shape, int32_t axis) {
+    int32_t dims = getNumberOfDimensions(shape);
+    NN_OPS_CHECK(-dims <= axis && axis < dims);
+    if (axis < 0) {
+        axis += dims;
+    }
+    return axis;
+}
+
 bool QuantizeMultiplierSmallerThanOne(double double_multiplier,
                                       int32_t* quantized_multiplier,
                                       int32_t* right_shift) {
@@ -893,7 +902,7 @@ bool stridedSlicePrepare(const Shape& input,
 }
 
 bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output) {
-    NN_OPS_CHECK(0 <= axis && axis < getNumberOfDimensions(input));
+    axis = getDimensionIndex(input, axis);
 
     output->type = OperandType::TENSOR_INT32;
 
