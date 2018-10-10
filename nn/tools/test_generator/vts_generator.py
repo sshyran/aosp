@@ -61,7 +61,7 @@ from cts_generator import DumpCtsExample
 from cts_generator import DumpCtsIsIgnored
 
 # Take a model from command line
-def import_source():
+def ParseCmdLine():
     parser = argparse.ArgumentParser()
     parser.add_argument("spec", help="the spec file")
     parser.add_argument(
@@ -71,17 +71,8 @@ def import_source():
     parser.add_argument(
         "-t", "--test", help="the output test file", default="-")
     args = parser.parse_args()
-
-    if os.path.exists(args.spec):
-        tg.FileNames.specFile = os.path.abspath(args.spec)
-        tg.FileNames.specName = re.sub(r"\..*", "", os.path.basename(tg.FileNames.specFile))
-        exec (open(tg.FileNames.specFile, "r").read())
-    else:
-        sys.exit()
-
-    tg.FileNames.modelFile = os.path.abspath(args.model) if args.model != "-" else "-"
-    tg.FileNames.exampleFile = os.path.abspath(args.example) if args.example != "-" else "-"
-    tg.FileNames.testFile = os.path.abspath(args.test) if args.test != "-" else "-"
+    tg.FileNames.InitializeFileLists(
+        args.spec, args.model, args.example, args.test)
 
 # Generate operands in VTS format
 def generate_vts_operands(model):
@@ -278,16 +269,16 @@ namespace {spec_name} {{
         spec_name=tg.FileNames.specName), file=test_fd)
 
 if __name__ == "__main__":
-    import_source()
-    print("Output VTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
-    print("Output example:" + tg.FileNames.exampleFile, file=sys.stderr)
-
-    with SmartOpen(tg.FileNames.modelFile) as model_fd, \
-         SmartOpen(tg.FileNames.exampleFile) as example_fd, \
-         SmartOpen(tg.FileNames.testFile, mode="a") as test_fd:
-
-        InitializeFiles(model_fd, example_fd, test_fd)
-        Example.DumpAllExamples(
-            DumpModel=generate_vts, model_fd=model_fd,
-            DumpExample=DumpCtsExample, example_fd=example_fd,
-            DumpTest=generate_vts_test, test_fd=test_fd)
+    ParseCmdLine()
+    while tg.FileNames.NextFile():
+        exec (open(tg.FileNames.specFile, "r").read())
+        print("Output VTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
+        print("Output example:" + tg.FileNames.exampleFile, file=sys.stderr)
+        with SmartOpen(tg.FileNames.modelFile) as model_fd, \
+             SmartOpen(tg.FileNames.exampleFile) as example_fd, \
+             SmartOpen(tg.FileNames.testFile, mode="a") as test_fd:
+            InitializeFiles(model_fd, example_fd, test_fd)
+            Example.DumpAllExamples(
+                DumpModel=generate_vts, model_fd=model_fd,
+                DumpExample=DumpCtsExample, example_fd=example_fd,
+                DumpTest=generate_vts_test, test_fd=test_fd)
