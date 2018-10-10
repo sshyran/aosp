@@ -1,12 +1,13 @@
+// clang-format off
 // Generated file (from: svdf_state_relaxed.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type5(Type::INT32, {});
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 40});
-  OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 10});
   OperandType type1(Type::TENSOR_FLOAT32, {4, 3});
+  OperandType type2(Type::TENSOR_FLOAT32, {4, 10});
   OperandType type3(Type::TENSOR_FLOAT32, {4});
+  OperandType type4(Type::TENSOR_FLOAT32, {2, 40});
+  OperandType type5(Type::INT32, {});
+  OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto weights_feature = model->addOperand(&type1);
@@ -36,3 +37,4 @@ bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

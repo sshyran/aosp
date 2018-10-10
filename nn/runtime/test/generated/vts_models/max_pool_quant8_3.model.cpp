@@ -1,4 +1,5 @@
-// Generated code. Do not edit
+// clang-format off
+// Generated file (from: max_pool_quant8_3.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
@@ -14,7 +15,7 @@ Model createTestModel() {
         {
             .type = OperandType::INT32,
             .dimensions = {},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 4,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -32,7 +33,7 @@ Model createTestModel() {
         {
             .type = OperandType::INT32,
             .dimensions = {},
-            .numberOfConsumers = 4,
+            .numberOfConsumers = 2,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -61,7 +62,7 @@ Model createTestModel() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::MAX_POOL_2D,
-            .inputs = {0, 3, 3, 3, 3, 1, 1, 2, 2, 4},
+            .inputs = {0, 1, 1, 1, 1, 2, 2, 3, 3, 4},
             .outputs = {5},
         }
     };
@@ -69,7 +70,7 @@ Model createTestModel() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {5};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0
+      0, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -83,8 +84,8 @@ Model createTestModel() {
     };
 }
 
-
 bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+

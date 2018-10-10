@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: fully_connected_quant8_2.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {151, 152, 153, 185, 186, 187}}}
 }
 }, // End of an example
+};
+

@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: concat_quant8_1.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {1, 2, 3, 7, 8, 9, 4, 5, 6, 10, 11, 12}}}
 }
 }, // End of an example
+};
+

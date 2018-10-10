@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: depthwise_conv2d_quant8_large.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {{0, {8, 48}}}
 }
 }, // End of an example
+};
+

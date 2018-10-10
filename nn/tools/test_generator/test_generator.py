@@ -436,12 +436,20 @@ class Model:
 class Example:
     examples = []
 
-    def __init__(self, feedDicts, model=None, name=None):
+    def __init__(self, *args, model=None, name=None):
         self.model = Model.models[-1] if model is None else model
         self.name = name
-        if type(feedDicts[0]) is not tuple and type(feedDicts[0]) is not list:
-            feedDicts = [feedDicts]
-        self.feedDicts = list(feedDicts)
+        self.feedDicts = []
+        for feedDict in args:
+            if type(feedDict) is tuple or type(feedDict) is list:
+                self.feedDicts.append(feedDict)
+            elif type(feedDict) is dict:
+                self.feedDicts.append((
+                    {i: feedDict[i] for i in self.model.GetInputs()},
+                    {o: feedDict[o] for o in self.model.GetOutputs()}
+                ))
+            else:
+                assert False
         Example.examples.append(self)
 
     # Main entrance of test generator

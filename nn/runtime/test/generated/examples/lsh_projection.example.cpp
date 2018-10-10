@@ -1,4 +1,6 @@
+// clang-format off
 // Generated file (from: lsh_projection.mod.py). Do not edit
+std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 //Input(s)
@@ -20,3 +22,5 @@
   {}
 }
 }, // End of an example
+};
+
