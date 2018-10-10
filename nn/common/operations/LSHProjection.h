@@ -25,42 +25,39 @@ namespace android {
 namespace nn {
 
 enum LSHProjectionType {
-  LSHProjectionType_UNKNOWN = 0,
-  LSHProjectionType_SPARSE = 1,
-  LSHProjectionType_DENSE = 2,
+    LSHProjectionType_UNKNOWN = 0,
+    LSHProjectionType_SPARSE_DEPRECATED = 1,
+    LSHProjectionType_DENSE = 2,
+    LSHProjectionType_SPARSE = 3,
 };
 
 struct RunTimeOperandInfo;
 struct Shape;
 
 class LSHProjection {
- public:
-  LSHProjection(
-      const Operation &operation,
-      std::vector<RunTimeOperandInfo> &operands);
+   public:
+    LSHProjection(const Operation& operation, std::vector<RunTimeOperandInfo>& operands);
 
-  static bool Prepare(
-      const Operation &operation,
-      std::vector<RunTimeOperandInfo>& operands,
-      Shape *outputShape);
-  bool Eval();
+    static bool Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+                        Shape* outputShape);
+    bool Eval();
 
-  static constexpr int kHashTensor = 0;
-  static constexpr int kInputTensor = 1;
-  static constexpr int kWeightTensor = 2;  // Optional
+    static constexpr int kHashTensor = 0;
+    static constexpr int kInputTensor = 1;
+    static constexpr int kWeightTensor = 2;  // Optional
 
-  static constexpr int kTypeParam = 3;
+    static constexpr int kTypeParam = 3;
 
-  static constexpr int kOutputTensor = 0;
+    static constexpr int kOutputTensor = 0;
 
- private:
-  LSHProjectionType type_;
+   private:
+    LSHProjectionType type_;
 
-  const RunTimeOperandInfo *hash_;
-  const RunTimeOperandInfo *input_;
-  const RunTimeOperandInfo *weight_;
+    const RunTimeOperandInfo* hash_;
+    const RunTimeOperandInfo* input_;
+    const RunTimeOperandInfo* weight_;
 
-  RunTimeOperandInfo *output_;
+    RunTimeOperandInfo* output_;
 };
 
 }  // namespace nn
