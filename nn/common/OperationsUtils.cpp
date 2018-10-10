@@ -53,6 +53,17 @@ uint32_t getNumberOfElements(const Shape& shape) {
     return count;
 }
 
+uint32_t getNumberOfElements(const Shape& shape,
+                             size_t firstAxisInclusive,
+                             size_t lastAxisExclusive) {
+    NN_CHECK(lastAxisExclusive <= shape.dimensions.size());
+    uint32_t count = 1;
+    for (size_t i = firstAxisInclusive; i < lastAxisExclusive; i++) {
+        count *= shape.dimensions[i];
+    }
+    return count;
+}
+
 uint32_t getNumberOfDimensions(const Shape& shape) {
     return shape.dimensions.size();
 }
@@ -877,6 +888,24 @@ bool stridedSlicePrepare(const Shape& input,
     output->dimensions = outDims;
     output->offset = input.offset;
     output->scale = input.scale;
+
+    return true;
+}
+
+bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output) {
+    NN_OPS_CHECK(0 <= axis && axis < getNumberOfDimensions(input));
+
+    output->type = OperandType::TENSOR_INT32;
+
+    // Copy the input dimensions, omitting the axis dimension.
+    output->dimensions.clear();
+    output->dimensions.reserve(getNumberOfDimensions(input) - 1);
+    output->dimensions.insert(output->dimensions.end(),
+                              input.dimensions.begin(),
+                              input.dimensions.begin() + axis);
+    output->dimensions.insert(output->dimensions.end(),
+                              input.dimensions.begin() + axis + 1,
+                              input.dimensions.end());
 
     return true;
 }
