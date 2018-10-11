@@ -33,6 +33,15 @@ static const int32_t kAvailableOperandCodes[] = {
     ANEURALNETWORKS_TENSOR_OEM_BYTE
 };
 
+ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0, uint32_t* dim = nullptr,
+                                     float scale = 0.0f, int32_t zeroPoint = 0) {
+    return {.type = opcode,
+            .dimensionCount = dimCount,
+            .dimensions = dim,
+            .scale = scale,
+            .zeroPoint = zeroPoint};
+}
+
 class OperationTestBase {
 public:
     OperationTestBase(ANeuralNetworksOperationType opCode,
@@ -1114,4 +1123,155 @@ TEST(OperationValidationTest, STRIDED_SLICE_quant8) {
     stridedSliceOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, ROI_ALIGN_float32) {
+    uint32_t inDim[] = {1, 4, 4, 1}, roiDim[] = {4, 4}, outShapeDim[] = {2};
+    uint32_t outDim[] = {4, 2, 2, 1};
+    OperationTestBase roiAlignTest(
+            ANEURALNETWORKS_ROI_ALIGN,
+            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, inDim),
+             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, roiDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim),
+             getOpType(ANEURALNETWORKS_FLOAT32), getOpType(ANEURALNETWORKS_INT32)},
+            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, outDim)});
+
+    EXPECT_TRUE(roiAlignTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(roiAlignTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(roiAlignTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(roiAlignTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
+    uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outDim[] = {6, 1, 3};
+    OperationTestBase heatmapMaxKeypointTest(
+            ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT,
+            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, heatmapDim),
+             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, boxDim)},
+            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 3, outDim)});
+
+    EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingOutputOperandCounts());
+}
+
+void groupedConvOpTest(int32_t operandCode) {
+    uint32_t inDim[] = {1, 3, 3, 2}, weightDim[] = {2, 2, 2, 1}, biasDim[] = {2};
+    uint32_t outDim[] = {1, 2, 2, 2};
+    ANeuralNetworksOperandType bias = (operandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM)
+                                              ? getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, biasDim)
+                                              : getOpType(operandCode, 1, biasDim);
+    ANeuralNetworksOperandType scalar = getOpType(ANEURALNETWORKS_INT32);
+
+    OperationTestBase explicitGroupedConvTest(
+            ANEURALNETWORKS_GROUPED_CONV_2D,
+            {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
+             scalar, scalar, scalar, scalar, scalar, scalar, scalar},
+            {getOpType(operandCode, 4, outDim)});
+
+    EXPECT_TRUE(explicitGroupedConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(explicitGroupedConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(explicitGroupedConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(explicitGroupedConvTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase implicitGroupedConvTest(
+            ANEURALNETWORKS_GROUPED_CONV_2D,
+            {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
+             scalar, scalar, scalar, scalar},
+            {getOpType(operandCode, 4, outDim)});
+
+    EXPECT_TRUE(implicitGroupedConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(implicitGroupedConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(implicitGroupedConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(implicitGroupedConvTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, GROUPED_CONV_2D_float32) {
+    groupedConvOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, GROUPED_CONV_2D_quant8) {
+    groupedConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+void transposeConvOpTest(int32_t operandCode) {
+    uint32_t inDim[] = {1, 2, 2, 2}, weightDim[] = {2, 3, 3, 1}, biasDim[] = {2};
+    uint32_t outDim[] = {1, 5, 5, 2}, outShapeDim[] = {4};
+    ANeuralNetworksOperandType bias = (operandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM)
+                                              ? getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, biasDim)
+                                              : getOpType(operandCode, 1, biasDim);
+    ANeuralNetworksOperandType scalar = getOpType(ANEURALNETWORKS_INT32);
+
+    OperationTestBase explicitTransposeConvTest(
+            ANEURALNETWORKS_TRANSPOSE_CONV_2D,
+            {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
+             scalar, scalar, scalar, scalar, scalar, scalar},
+            {getOpType(operandCode, 4, outDim)});
+
+    EXPECT_TRUE(explicitTransposeConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(explicitTransposeConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(explicitTransposeConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(explicitTransposeConvTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase implicitTransposeConvTest(
+            ANEURALNETWORKS_TRANSPOSE_CONV_2D,
+            {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias,
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim), scalar, scalar, scalar,
+             scalar},
+            {getOpType(operandCode, 4, outDim)});
+
+    EXPECT_TRUE(implicitTransposeConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(implicitTransposeConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(implicitTransposeConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(implicitTransposeConvTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, TRANSPOSE_CONV_2D_float32) {
+    transposeConvOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, TRANSPOSE_CONV_2D_quant8) {
+    transposeConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+void channelShuffleOpTest(int32_t operandCode) {
+    uint32_t inoutDim[] = {2, 6};
+    OperationTestBase channelShuffleTest(
+            ANEURALNETWORKS_CHANNEL_SHUFFLE,
+            {getOpType(operandCode, 2, inoutDim), getOpType(ANEURALNETWORKS_INT32)},
+            {getOpType(operandCode, 2, inoutDim)});
+
+    EXPECT_TRUE(channelShuffleTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(channelShuffleTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(channelShuffleTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(channelShuffleTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, CHANNEL_SHUFFLE_float32) {
+    channelShuffleOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, CHANNEL_SHUFFLE_quant8) {
+    channelShuffleOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+void preluOpTest(int32_t operandCode) {
+    uint32_t inoutDim[] = {1, 2, 2, 3}, alphaDim[] = {1, 1, 3};
+    OperationTestBase preluTest(
+            ANEURALNETWORKS_PRELU,
+            {getOpType(operandCode, 4, inoutDim), getOpType(operandCode, 3, alphaDim)},
+            {getOpType(operandCode, 4, inoutDim)});
+
+    EXPECT_TRUE(preluTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(preluTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(preluTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(preluTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, PRELU_float32) {
+    preluOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, PRELU_quant8) {
+    preluOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
 }  // end namespace

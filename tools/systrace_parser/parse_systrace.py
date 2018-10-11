@@ -36,7 +36,9 @@ def produce_stats(trace, print_detail=False, total_times=False, per_execution=Fa
   starting_mark = ''
   printed_one = False
   if json:
-    print("[")
+    sep = "["
+  else:
+    sep = ""
   for [task, pid, tgid, time, mark, line, lineno] in parsed:
     if ("HIDL::IDevice" in mark) or ("[NN_" in mark):
         assert tracker_map.get(pid)
@@ -45,9 +47,10 @@ def produce_stats(trace, print_detail=False, total_times=False, per_execution=Fa
           # Next run
           if not first:
             if json and printed_one:
-              print(",")
+              sep = ","
             printed_one = True
-            print_stats(tracker_map, print_detail, total_times, per_execution, json, starting_mark)
+            print_stats(tracker_map, print_detail, total_times, per_execution, json,
+                        starting_mark, sep)
             reset_trackers(tracker_map)
             app_phase.reset()
           starting_mark = mark
@@ -58,8 +61,8 @@ def produce_stats(trace, print_detail=False, total_times=False, per_execution=Fa
           print("failed on line", lineno, line)
           raise
   if json and printed_one:
-    print(",")
-  print_stats(tracker_map, print_detail, total_times, per_execution, json, starting_mark)
+    sep = ","
+  print_stats(tracker_map, print_detail, total_times, per_execution, json, starting_mark, sep)
   if json:
     print("]")
 

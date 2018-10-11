@@ -7,9 +7,10 @@ from parser.naming import (PHASE_INITIALIZATION, PHASE_PREPARATION, PHASE_COMPIL
                            PHASE_BENCHMARK)
 import json
 import math
+import sys
 
 def print_stats(tracker_map, print_detail=True, total_times=False, per_execution=False,
-                json_output=False, starting_mark=''):
+                json_output=False, starting_mark='', sep=''):
   """ Prints statistics for a single Overall phase as text or json.
 
       For text output:
@@ -35,6 +36,13 @@ def print_stats(tracker_map, print_detail=True, total_times=False, per_execution
   """
   PHASE_EXECUTION_LESS_IO_AND_RESULTS = "PEO"
   phases_to_pick = phases + [PHASE_INPUTS_AND_OUTPUTS, PHASE_RESULTS]
+
+  for tracker in tracker_map.values():
+    if not tracker.is_complete():
+      sys.stderr.write("Incomplete trace, not able to print all statistics\n")
+      return
+  if sep:
+    print(sep)
 
   # Select template and statistics to use
   times, self_times, has_warmup_and_benchmark, execution_counts = aggregate_times(tracker_map)
@@ -79,8 +87,11 @@ def print_stats(tracker_map, print_detail=True, total_times=False, per_execution
     values[make_tag(layer, PHASE_OVERALL)] = times_to_use[PHASE_OVERALL][layer]
   # Calculate layer execution percentages
   for layer in layers:
-    values[make_tag(layer, "PEp")] = (values[make_tag(layer, PHASE_EXECUTION)] * 100.0 /
-                                      values[make_tag(LAYER_TOTAL, PHASE_EXECUTION)])
+    if values[make_tag(LAYER_TOTAL, PHASE_EXECUTION)] > 0.0:
+      values[make_tag(layer, "PEp")] = (values[make_tag(layer, PHASE_EXECUTION)] * 100.0 /
+                                        values[make_tag(LAYER_TOTAL, PHASE_EXECUTION)])
+    else:
+      values[make_tag(layer, "PEp")] = math.nan
 
   # Make output numbers per-execution if desired
   if per_execution:
@@ -90,7 +101,10 @@ def print_stats(tracker_map, print_detail=True, total_times=False, per_execution
       divide_by = execution_counts[PHASE_OVERALL]
     for layer in (layers + [LAYER_TOTAL]):
       for phase in [PHASE_INPUTS_AND_OUTPUTS, PHASE_EXECUTION_LESS_IO_AND_RESULTS, PHASE_RESULTS, PHASE_EXECUTION]:
-        values[layer + "_" + phase] = values[layer + "_" + phase] / divide_by
+        if divide_by != 0:
+          values[layer + "_" + phase] = values[layer + "_" + phase] / divide_by
+        else:
+          values[layer + "_" + phase] = math.nan
 
   # Generate and print output
   if not json_output:
