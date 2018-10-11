@@ -9,6 +9,7 @@ Used by parser.tracker to gather and interpret the traces for a single thread.
 
 from parser.naming import subphases, layer_order
 from parser.naming import LAYER_APPLICATION, LAYER_RUNTIME, LAYER_UTILITY, LAYER_IGNORE
+from parser.naming import LAYER_IPC
 from parser.naming import PHASE_EXECUTION, PHASE_INITIALIZATION, PHASE_OVERALL, PHASE_UNSPECIFIED
 
 class SingleThreadCallTree(object):
@@ -54,6 +55,19 @@ class SingleThreadCallTree(object):
     for node in to_be_removed:
       node.remove()
 
+  # Remove tracing nodes we are not interested in
+  def remove_ignored(self):
+    to_be_removed = []
+    def recurse(node):
+      if node.layer == LAYER_IGNORE:
+        to_be_removed.append(node)
+      for c in node.children:
+        recurse(c)
+    recurse(self.root)
+    for node in to_be_removed:
+      node.remove()
+
+
   # For nodes that are in the wrong place in the tree: create a copy of the node
   # in the right place and mark the original to be subtracted from timing.
   # SPEC: Subtracting time when nesting is violated
@@ -66,7 +80,7 @@ class SingleThreadCallTree(object):
       elif node.phase() == PHASE_INITIALIZATION and node.parent.phase() != PHASE_INITIALIZATION:
         to_be_subtracted.append(node)
       elif (node.parent and node.parent.layer == LAYER_APPLICATION and
-            node.layer == LAYER_RUNTIME and
+            (node.layer == LAYER_RUNTIME or node.layer == LAYER_IPC) and
             node.parent.phase() != node.phase() and node.parent.phase() != PHASE_OVERALL and
             node.phase() != PHASE_EXECUTION and node.phase() not in subphases[PHASE_EXECUTION]):
         # The application level phase may be wrong, we move the runtime nodes
@@ -109,7 +123,7 @@ class SingleThreadCallTree(object):
     la_to_be_added = []
     def recurse(node):
       if not node.is_added_detail() and not node.subtract:
-        if (node.layer == LAYER_RUNTIME and
+        if ((node.layer == LAYER_RUNTIME or node.layer == LAYER_IPC) and
             # Wrong LA node
             (node.parent.layer == LAYER_APPLICATION and
              node.parent.phase() != PHASE_OVERALL and
@@ -143,14 +157,13 @@ class SingleThreadCallTree(object):
              (phase == PHASE_INITIALIZATION) or  # One-time initialization
              (phase in subphases.get(prev_phase, [])) or # Subphase as designed
              (phase in subphases.get(PHASE_EXECUTION) and # Nested subphase missing
-              PHASE_EXECUTION in subphases.get(prev_phase)) or
+              PHASE_EXECUTION in subphases.get(prev_phase, [])) or
              node.subtract                       # Marker for wrong nesting
              ), self.debugstring
       assert ((prev_layer is None) or
               (layer == LAYER_UTILITY) or
               (layer == prev_layer) or
-              (layer == LAYER_IGNORE) or
-              (layer in layer_order[prev_layer]) or
+              (layer in layer_order.get(prev_layer, [])) or
               node.subtract), self.debugstring
       for c in node.children:
         recurse(c, indent + '  ')
@@ -209,10 +222,14 @@ class CallTreeNode(object):
     return True
 
   def elapsed_ms(self):
+    if (self.end_time_s is None) or (self.start_time_s is None):
+      return None
     return (float(self.end_time_s) - float(self.start_time_s)) * 1000.0
 
   def elapsed_less_subtracted_ms(self):
     ret = self.elapsed_ms()
+    if ret is None:
+      return None
     for c in self.children:
       ret = ret - c.subtracted_ms()
     return ret
