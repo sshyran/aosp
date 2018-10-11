@@ -84,6 +84,14 @@ typedef enum {
      * real_value = (integer_value - zeroPoint) * scale.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_ASYMM = 5,
+
+    /**
+     * An 8 bit boolean scalar value.
+     *
+     * Values of this operand type are either true or false. A zero value
+     * represents false; any other value represents true.
+     */
+    ANEURALNETWORKS_BOOL = 6,
 } OperandCode;
 
 /**

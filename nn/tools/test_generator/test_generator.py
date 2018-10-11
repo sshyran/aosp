@@ -144,6 +144,7 @@ class Type(NamedVariable):
         "TENSOR_INT32": "int32_t",
         "TENSOR_FLOAT32": "float",
         "TENSOR_QUANT8_ASYMM": "uint8_t",
+        "BOOL": "bool",
 #     "OEM_SCALAR": this is service-defined.
         "TENSOR_OEM_BYTE": "uint8_t",
     }
@@ -206,8 +207,11 @@ class Type(NamedVariable):
     def IsFloat(self):
         return self.GetCppTypeString() == "float"
 
+    def IsBool(self):
+        return self.GetCppTypeString() == "bool"
+
     def GetElementByteSize(self):
-        return 1 if self.GetCppTypeString() == "uint8_t" else 4
+        return 1 if self.GetCppTypeString() in ["uint8_t", "bool"] else 4
 
     def GetByteSize(self):
         return self.GetElementByteSize() * self.GetNumberOfElements()
@@ -269,6 +273,8 @@ class Operand(NamedVariable):
             "Trying to print operand %s with None value"%(str(self))
         if self.type.IsFloat():
             return "{%s}"%(GetJointStr(self.value, method=PrettyPrintAsFloat))
+        elif self.type.IsBool():
+            return "{%s}"%(GetJointStr(self.value, method=lambda v: "true" if v else "false"))
         else:
             return "{%s}"%(GetJointStr(self.value, method=lambda x: str(int(x))))
 
@@ -330,6 +336,14 @@ class Float32Scalar(Parameter, ImplicitParameter):
     @staticmethod
     def IsCompatible(value):
         return isinstance(value, float)
+
+# A shortcut for parameters of BOOL
+class BoolScalar(Parameter, ImplicitParameter):
+    def __init__(self, name, value):
+        Parameter.__init__(self, name, ("BOOL", []), bool(value))
+    @staticmethod
+    def IsCompatible(value):
+        return isinstance(value, bool)
 
 # A shortcut for parameter of 1-D TENSOR_INT32
 class Int32Vector(Parameter, ImplicitParameter):
@@ -685,7 +699,7 @@ class DataLayoutConverter(ModelVariation, ImplicitVariation):
         self.targetLayout = targetLayout.lower()
         assert DataLayoutConverter.IsCompatible(self.targetLayout)
         self.perm = (0, 3, 1, 2) if self.targetLayout == "nchw" else (0, 2, 3, 1)
-        self.enum = 1 if self.targetLayout == "nchw" else 0
+        self.param = True if self.targetLayout == "nchw" else False
 
     @staticmethod
     def IsCompatible(value):
@@ -707,7 +721,7 @@ class DataLayoutConverter(ModelVariation, ImplicitVariation):
 
     def TransformParameters(self, parameters):
         for p in parameters:
-            p.SetValue(self.enum)
+            p.SetValue(self.param)
         return parameters
 
 # Convert a Parameter to Input
