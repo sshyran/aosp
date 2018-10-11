@@ -2225,7 +2225,33 @@ typedef enum {
      */
     ANEURALNETWORKS_SPLIT = 80,
     ANEURALNETWORKS_SQRT = 81,
+
+    /**
+     * Constructs a tensor by tiling a given tensor.
+     *
+     * This operation creates a new tensor by replicating `input` `multiples`
+     * times. The output tensor's i-th dimension has `input.dims(i) * multiples[i]`
+     * elements, and the values of `input` are replicated `multiples[i]` times
+     * along the i-th dimension.
+     * For example, tiling `[a b c d]` by `[2]` produces `[a b c d a b c d]`.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: input, an n-D tensor specifying the input.
+     * * 1: multiples, a 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}.
+     *      The length of multiples must be n.
+     *
+     * Outputs:
+     * * 0: A tiled tensor of the same {@link OperandCode} and rank as `input`.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_TILE = 82,
+
     ANEURALNETWORKS_TOPK_V2 = 83,
 
     /**
