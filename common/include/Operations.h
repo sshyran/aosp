@@ -24,6 +24,7 @@
 #include "operations/LSTM.h"
 #include "operations/RNN.h"
 #include "operations/SVDF.h"
+#include "operations/Tile.h"
 
 #include <stddef.h>
 
