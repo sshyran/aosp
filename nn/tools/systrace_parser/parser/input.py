@@ -11,13 +11,17 @@ def get_trace_part(filename):
   lineno = 0
   for line in lines:
     lineno = lineno + 1
-    if "#           TASK-PID    TGID   CPU#  ||||    TIMESTAMP  FUNCTION" in line:
+    if ("#           TASK-PID    TGID   CPU#  ||||    TIMESTAMP  FUNCTION" in line or
+        "#           TASK-PID   CPU#  ||||    TIMESTAMP  FUNCTION" in line):
       seen_begin = True
     if seen_begin:
       if "</script>" in line:
         break
       trace.append([line, lineno])
   return trace
+
+MATCHER = re.compile(r"^\s*([^ ].{1,15})-(\d+)\s+\(\s*([-0-9]+)\) .* (\d+\.\d+): tracing_mark_write: ([BE].*)$")
+MATCHER_FOR_OLD = re.compile(r"^\s*([^ ].{1,15})-(\d+) .* (\d+\.\d+): tracing_mark_write: ([BE].*)$")
 
 def parse_trace_part(trace):
   """ Takes a string containing the text trace form systrace, parses the rows
@@ -38,26 +42,36 @@ def parse_trace_part(trace):
   #  <...>-756 ( 756) [000] ...1   143.140553: tracing_mark_write: B|756|HIDL::IDevice::prepa
   #  <...>-5149  (-----) [001] ...1   143.149856: tracing_mark_write: B|756|[NN_LCC_PE][optim
   #    HwBinder:784_1-5236  (  784) [001] ...1   397.528915: tracing_mark_write: B|784|HIDL::
+  #    GLThread 35-1739  ( 1500) [001] ...1   277.001798: tracing_mark_write: B|1500|HIDL::IMapper::importBuffer::passthrough
   # Notes:
   #    - systrace enter/exit marks are per PID, which is really a thread id on Linux
   #    - TGIDs identify processes
   #
-  matcher = re.compile(r"^\s*([^ ]+)-(\d+)\s+\(\s*([-0-9]+)\) .* (\d+\.\d+): tracing_mark_write: ([BE].*)$")
   mark_matcher = re.compile(r"([BE])\|(\d+).*")
   tracked_pids = {}
   driver_tgids = {}
+  pid_to_tgid = {}
   parsed = []
   for [line, lineno] in trace:
-    m = matcher.match(line)
-    if not m:
+    m = MATCHER.match(line)
+    m_old = MATCHER_FOR_OLD.match(line)
+    if not m and not m_old:
       # Check parsing doesn't discard interesting lines
       assert not "HIDL::IDevice" in line, line
       assert not "[NN_" in line, line
       assert not "tracing_mark_write: B" in line, line
       assert not "tracing_mark_write: E" in line, line
       continue
-    [task, pid, tgid, time, mark] = m.groups()
+    if m:
+      [task, pid, tgid, time, mark] = m.groups()
+    else:
+      [task, pid, time, mark] = m_old.groups()
+      if "|" in mark:
+        tgid = mark.split("|")[1]
+      else:
+        tgid = pid_to_tgid[pid]
     assert pid
+    pid_to_tgid[pid] = tgid
     if tgid == "-----":
       mm = mark_matcher.match(mark)
       tgid = mm.group(2)

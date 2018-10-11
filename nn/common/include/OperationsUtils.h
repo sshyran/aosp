@@ -79,6 +79,12 @@ inline uint32_t computeOutSize(uint32_t imageSize, uint32_t filterSize, uint32_t
     return (imageSize - filterSize + stride + paddingHead + paddingTail) / stride;
 }
 
+inline uint32_t computeOutSizeTransposeConv(uint32_t imageSize, uint32_t filterSize,
+                                            uint32_t stride, uint32_t paddingHead,
+                                            uint32_t paddingTail) {
+    return imageSize * stride + filterSize - stride - paddingHead - paddingTail;
+}
+
 __wur
 bool QuantizeMultiplierSmallerThanOne(double double_multiplier,
                                       int32_t* quantized_multiplier,
@@ -290,6 +296,25 @@ bool stridedSlicePrepare(const Shape& input,
 bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output);
 
 bool splitPrepare(const Shape& input, int32_t axis, int32_t numOutputs, std::vector<Shape>* output);
+
+bool roiAlignPrepare(const Shape& input, const float* roiData, const Shape& roiShape,
+                     const int32_t* outputShapeData, const Shape& outputShapeShape,
+                     const float spatialScale, Shape* output);
+
+bool heatmapMaxKeypointPrepare(const Shape& heatmapShape, const float* boxesData,
+                               const Shape& boxesShape, Shape* output);
+
+bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
+                        int32_t padding_left, int32_t padding_right, int32_t padding_top,
+                        int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                        int32_t numGroups, Shape* output);
+
+bool channelShufflePrepare(const Shape& input, int32_t numGroups, Shape* output);
+
+bool transposeConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
+                          int32_t padding_left, int32_t padding_right, int32_t padding_top,
+                          int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                          Shape* output);
 } // namespace nn
 } // namespace android
 
