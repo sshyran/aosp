@@ -36,7 +36,7 @@ V1_2
 
 export NNAPI_BASE=$ANDROID_BUILD_TOP/frameworks/ml/nn
 : ${TEST_DIR:=frameworks/ml/nn/runtime/test}
-FORCE=""
+: ${FORCE:=""}
 
 function generate_one_testcase {
   # Generate one testcase
