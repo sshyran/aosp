@@ -250,6 +250,43 @@ bool splitInt32(const int32_t* inputData, const Shape& inputShape, const int32_t
 bool splitQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_t axis,
                  const std::vector<uint8_t*>* outputDataPtrs,
                  const std::vector<Shape>& outputShapes);
+
+bool roiAlign(const float* inputData, const Shape& inputShape, const float* roiData,
+              const Shape& roiShape, float spatialScale, int32_t samplingRatio, float* outputData,
+              const Shape& outputShape);
+
+bool heatmapMaxKeypoint(const float* heatmap, const Shape& heatmapShape, const float* boxes,
+                        const Shape& boxesShape, float* outputData, const Shape& outputShape);
+
+bool groupedConvFloat32(const float* inputData, const Shape& inputShape, const float* filterData,
+                        const Shape& filterShape, const float* biasData, const Shape& biasShape,
+                        int32_t numGroups, int32_t padding_left, int32_t padding_right,
+                        int32_t padding_top, int32_t padding_bottom, int32_t stride_width,
+                        int32_t stride_height, int32_t activation, float* outputData,
+                        const Shape& outputShape);
+
+bool groupedConvQuant8(const uint8_t* inputData, const Shape& inputShape, const uint8_t* filterData,
+                       const Shape& filterShape, const int32_t* biasData, const Shape& biasShape,
+                       int32_t numGroups, int32_t padding_left, int32_t padding_right,
+                       int32_t padding_top, int32_t padding_bottom, int32_t stride_width,
+                       int32_t stride_height, int32_t activation, uint8_t* outputData,
+                       const Shape& outputShape);
+
+bool channelShuffleGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t numGroups,
+                           uint8_t* outputData, const Shape& outputShape);
+
+bool transposeConvFloat32(const float* inputData, const Shape& inputShape, const float* filterData,
+                          const Shape& filterShape, const float* biasData, const Shape& biasShape,
+                          int32_t padding_left, int32_t padding_right, int32_t padding_top,
+                          int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                          int32_t activation, float* outputData, const Shape& outputShape);
+
+bool transposeConvQuant8(const uint8_t* inputData, const Shape& inputShape,
+                         const uint8_t* filterData, const Shape& filterShape,
+                         const int32_t* biasData, const Shape& biasShape, int32_t padding_left,
+                         int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                         int32_t stride_width, int32_t stride_height, int32_t activation,
+                         uint8_t* outputData, const Shape& outputShape);
 } // namespace nn
 } // namespace android
 #endif // ANDROID_ML_NN_COMMON_OPERATIONS_H
