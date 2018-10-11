@@ -1730,6 +1730,7 @@ ErrorStatus convertResultCodeToErrorStatus(int resultCode) {
         default:
             LOG(ERROR) << "Unknown result code " << resultCode
                        << " mapped to ErrorStatus::GENERAL_FAILURE";
+            return ErrorStatus::GENERAL_FAILURE;
         case ANEURALNETWORKS_BAD_STATE:
         case ANEURALNETWORKS_INCOMPLETE:
         case ANEURALNETWORKS_OP_FAILED:
@@ -1750,6 +1751,7 @@ int convertErrorStatusToResultCode(ErrorStatus status) {
         default:
             LOG(ERROR) << "Unknown ErrorStatus " << toString(status)
                        << " mapped to ANEURALNETWORKS_OP_FAILED";
+            return ANEURALNETWORKS_OP_FAILED;
         case ErrorStatus::DEVICE_UNAVAILABLE:
         case ErrorStatus::GENERAL_FAILURE:
         case ErrorStatus::OUTPUT_INSUFFICIENT_SIZE:
