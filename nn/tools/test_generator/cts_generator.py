@@ -116,7 +116,7 @@ namespace {spec_name} {{
 # Dump is_ignored function for IgnoredOutput
 def DumpCtsIsIgnored(model, model_fd):
     isIgnoredTemplate = """\
-bool {is_ignored_name}(int i) {{
+inline bool {is_ignored_name}(int i) {{
   static std::set<int> ignore = {{{ignored_index}}};
   return ignore.find(i) != ignore.end();\n}}\n"""
     print(isIgnoredTemplate.format(

@@ -75,7 +75,7 @@ Model createTestModel() {
     };
 }
 
-bool is_ignored(int i) {
+inline bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -156,7 +156,7 @@ Model createTestModel_relaxed() {
     };
 }
 
-bool is_ignored_relaxed(int i) {
+inline bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
