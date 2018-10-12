@@ -541,6 +541,26 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                  outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
+        case ANEURALNETWORKS_QUANTIZE: {
+            if (inputCount != 1 || outputCount != 1) {
+                logInvalidInOutNumber(1, 1);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            auto inputType = operands[inputIndexes[0]].type;
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            if (inputType == OperandType::TENSOR_FLOAT32) {
+                inExpectedTypes = {inputType};
+                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
+            } else {
+                LOG(ERROR) << "Unsupported input tensor type for operation "
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
         case ANEURALNETWORKS_DEPTHWISE_CONV_2D: {
             if ((inputCount != 11 && inputCount != 8) || outputCount != 1) {
                 LOG(ERROR) << "Invalid number of input operands ("

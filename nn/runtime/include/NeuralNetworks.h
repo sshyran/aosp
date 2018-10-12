@@ -2156,7 +2156,28 @@ typedef enum {
      */
     ANEURALNETWORKS_PRELU = 68,
     ANEURALNETWORKS_PRIOR_BOX = 69,
+
+    /**
+     * Quantizes the input tensor.
+     *
+     * The formula is:
+     *
+     *     output = max(0, min(255, round(input / scale) + zeroPoint)
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Inputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape as input0, but with
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_QUANTIZE = 70,
+
     ANEURALNETWORKS_QUANTIZED_16BIT_LSTM = 71,
     ANEURALNETWORKS_RANDOM_MULTINOMIAL = 72,
     ANEURALNETWORKS_REDUCE = 73,
