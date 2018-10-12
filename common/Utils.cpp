@@ -1504,6 +1504,38 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
+        case ANEURALNETWORKS_CAST: {
+            if (inputCount != 1 || outputCount != 1) {
+                logInvalidInOutNumber(1, 1);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            auto inputType = operands[inputIndexes[0]].type;
+            auto outputType = operands[outputIndexes[0]].type;
+            std::vector<OperandType> inExpectedTypes;
+            if (inputType == OperandType::TENSOR_FLOAT32 ||
+                inputType == OperandType::TENSOR_INT32 ||
+                inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                inExpectedTypes = {inputType};
+            } else {
+                LOG(ERROR) << "Unsupported input tensor type for operation "
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            std::vector<OperandType> outExpectedTypes;
+            if (outputType == OperandType::TENSOR_FLOAT32 ||
+                outputType == OperandType::TENSOR_INT32 ||
+                outputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                outExpectedTypes = {outputType};
+            } else {
+                LOG(ERROR) << "Unsupported output tensor type for operation "
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            *minSupportedHalVersion = HalVersion::V1_2;
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
         case ANEURALNETWORKS_SQUEEZE: {
             if (inputCount != 2 || outputCount != 1) {
                 logInvalidInOutNumber(2, 1);

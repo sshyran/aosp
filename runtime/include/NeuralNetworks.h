@@ -1980,6 +1980,27 @@ typedef enum {
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_LSTM = 42,
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_RNN = 43,
     ANEURALNETWORKS_BOX_WITH_NMS_LIMIT = 44,
+
+    /**
+     * Casts a tensor to a new type.
+     *
+     * This operation ignores the scale and zeroPoint of quanized tensors,
+     * e.g. it treats a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} input
+     * as a tensor of uint8 values.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: A tensor with the same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_CAST = 45,
 
     /**
