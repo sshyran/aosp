@@ -631,6 +631,112 @@ TEST_F(NeuralnetworksHidlTest, batch_to_space_v1_2_nchw_quant8_2) {
                            batch_to_space_v1_2::examples_nchw_quant8_2);
 }
 
+// Generated from: cast.mod.py.
+namespace cast {
+// Generated cast test
+#include "examples/cast.example.cpp"
+// Generated model constructor
+#include "vts_models/cast.model.cpp"
+} // namespace cast
+
+TEST_F(NeuralnetworksHidlTest, cast) {
+  generated_tests::Execute(device,
+                           cast::createTestModel,
+                           cast::is_ignored,
+                           cast::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_relaxed) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_relaxed,
+                           cast::is_ignored_relaxed,
+                           cast::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_2) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_2,
+                           cast::is_ignored_2,
+                           cast::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_relaxed_2) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_relaxed_2,
+                           cast::is_ignored_relaxed_2,
+                           cast::examples_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_3) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_3,
+                           cast::is_ignored_3,
+                           cast::examples_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_relaxed_3) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_relaxed_3,
+                           cast::is_ignored_relaxed_3,
+                           cast::examples_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_4) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_4,
+                           cast::is_ignored_4,
+                           cast::examples_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_relaxed_4) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_relaxed_4,
+                           cast::is_ignored_relaxed_4,
+                           cast::examples_relaxed_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_5) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_5,
+                           cast::is_ignored_5,
+                           cast::examples_5);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_6) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_6,
+                           cast::is_ignored_6,
+                           cast::examples_6);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_7) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_7,
+                           cast::is_ignored_7,
+                           cast::examples_7);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_relaxed_5) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_relaxed_5,
+                           cast::is_ignored_relaxed_5,
+                           cast::examples_relaxed_5);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_8) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_8,
+                           cast::is_ignored_8,
+                           cast::examples_8);
+}
+
+TEST_F(NeuralnetworksHidlTest, cast_9) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_9,
+                           cast::is_ignored_9,
+                           cast::examples_9);
+}
+
 // Generated from: channel_shuffle.mod.py.
 namespace channel_shuffle {
 // Generated channel_shuffle test

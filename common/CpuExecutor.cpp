@@ -1616,6 +1616,19 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                     output.buffer, outShape);
             }
         } break;
+        case OperationType::CAST: {
+            if (!allParametersPresent(1, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outShape = output.shape();
+
+            success = cast::prepare(input.shape(), &outShape) &&
+                      setInfoAndAllocateIfNeeded(&output, outShape) &&
+                      cast::eval(input.buffer, input.shape(), output.buffer, outShape);
+        } break;
         case OperationType::SQUEEZE: {
             if (!allParametersPresent(2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
