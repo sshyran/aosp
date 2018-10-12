@@ -101,10 +101,11 @@ EntryType tableLookup(const EntryType (&table)[entryCount],
 #define COUNT(X) (sizeof(X) / sizeof(X[0]))
 
 const char* kTypeNames[kNumberOfDataTypes] = {
-        "FLOAT32",      "INT32",
-        "UINT32",       "TENSOR_FLOAT32",
-        "TENSOR_INT32", "TENSOR_QUANT8_ASYMM",
-        "BOOL",         "TENSOR_QUANT16_ASYMM",
+        "FLOAT32",        "INT32",
+        "UINT32",         "TENSOR_FLOAT32",
+        "TENSOR_INT32",   "TENSOR_QUANT8_ASYMM",
+        "BOOL",           "TENSOR_QUANT16_ASYMM",
+        "TENSOR_FLOAT16",
 };
 
 static_assert(COUNT(kTypeNames) == kNumberOfDataTypes, "kTypeNames is incorrect");
@@ -239,6 +240,7 @@ const uint32_t kSizeOfDataType[]{
         1,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
         1,  // ANEURALNETWORKS_BOOL
         2,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+        2,  // ANEURALNETWORKS_TENSOR_FLOAT16
 };
 
 static_assert(COUNT(kSizeOfDataType) == kNumberOfDataTypes, "kSizeOfDataType is incorrect");
@@ -252,6 +254,7 @@ const bool kScalarDataType[]{
         false,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
         true,   // ANEURALNETWORKS_BOOL
         false,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+        false,  // ANEURALNETWORKS_TENSOR_FLOAT16
 };
 
 static_assert(COUNT(kScalarDataType) == kNumberOfDataTypes, "kScalarDataType is incorrect");

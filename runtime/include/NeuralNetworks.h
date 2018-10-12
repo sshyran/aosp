@@ -67,7 +67,6 @@ typedef enum {
     ANEURALNETWORKS_INT32 = 1,
     /** An unsigned 32 bit integer scalar value. */
     ANEURALNETWORKS_UINT32 = 2,
-
     /** A tensor of 32 bit floating point values. */
     ANEURALNETWORKS_TENSOR_FLOAT32 = 3,
     /** A tensor of 32 bit integer values. */
@@ -84,7 +83,6 @@ typedef enum {
      * real_value = (integer_value - zeroPoint) * scale.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_ASYMM = 5,
-
     /**
      * An 8 bit boolean scalar value.
      *
@@ -92,7 +90,6 @@ typedef enum {
      * represents false; any other value represents true.
      */
     ANEURALNETWORKS_BOOL = 6,
-
     /**
      * A tensor of 16 bit signed integers that represent real numbers.
      *
@@ -105,6 +102,9 @@ typedef enum {
      * realValue = (integerValue - zeroPoint) * scale.
      */
     ANEURALNETWORKS_TENSOR_QUANT16_ASYMM = 7,
+
+    /** A tensor of 16 bit floating point values. */
+    ANEURALNETWORKS_TENSOR_FLOAT16 = 8,
 } OperandCode;
 
 /**
