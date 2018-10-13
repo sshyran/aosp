@@ -977,15 +977,12 @@ class FileNames:
     def ParseTargetFiles(arg, ext):
         numFiles = len(FileNames.specFiles)
         absPath = os.path.abspath(arg)
-        if os.path.isfile(arg):
-            assert numFiles == 1
-            target = [absPath]
-        elif os.path.isdir(arg):
+        if os.path.isdir(arg):
             target = [os.path.join(absPath, f + ext) for f in FileNames.specNames]
         elif arg == "-":
             target = ["-"] * numFiles
         else:
-            assert False, "%s is neither a file or a directory"%arg
+            target = [absPath] * numFiles
         return target
 
     @staticmethod

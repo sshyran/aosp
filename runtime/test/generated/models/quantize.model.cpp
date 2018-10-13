@@ -15,7 +15,7 @@ void CreateModel_quant8(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_quant8(int i) {
+inline bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -36,7 +36,7 @@ void CreateModel_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_quant8_2(int i) {
+inline bool is_ignored_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -58,7 +58,7 @@ void CreateModel_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_quant8_3(int i) {
+inline bool is_ignored_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -81,7 +81,7 @@ void CreateModel_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_quant8_4(int i) {
+inline bool is_ignored_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
