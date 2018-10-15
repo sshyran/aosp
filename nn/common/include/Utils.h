@@ -19,6 +19,7 @@
 
 #include "HalInterfaces.h"
 #include "NeuralNetworks.h"
+#include "ValidateHal.h"
 
 #include <android-base/logging.h>
 #include <vector>
@@ -141,10 +142,18 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
 int validateOperandList(uint32_t count, const uint32_t* list, uint32_t operandCount,
                         const char* tag);
 // Typename substitutes are contained in the cpp file.
-int validateOperation(ANeuralNetworksOperationType opType,
-                      uint32_t inputCount, const uint32_t* inputIndexes,
-                      uint32_t outputCount, const uint32_t* outputIndexes,
-                      const std::vector<Operand>& operands);
+int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
+                      const uint32_t* inputIndexes, uint32_t outputCount,
+                      const uint32_t* outputIndexes, const std::vector<Operand>& operands,
+                      HalVersion* minSupportedHalVersion);
+
+inline int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
+                             const uint32_t* inputIndexes, uint32_t outputCount,
+                             const uint32_t* outputIndexes, const std::vector<Operand>& operands) {
+    HalVersion minSupportedHalVersion;
+    return validateOperation(opType, inputCount, inputIndexes, outputCount, outputIndexes, operands,
+                             &minSupportedHalVersion);
+}
 
 inline size_t getSizeFromInts(int lower, int higher) {
     return (uint32_t)(lower) + ((uint64_t)(uint32_t)(higher) << 32);
