@@ -413,10 +413,15 @@ int validateOperationOperandTypes(const std::vector<Operand>& operands,
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int validateOperation(ANeuralNetworksOperationType opType,
-                      uint32_t inputCount, const uint32_t* inputIndexes,
-                      uint32_t outputCount, const uint32_t* outputIndexes,
-                      const std::vector<Operand>& operands) {
+int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
+                      const uint32_t* inputIndexes, uint32_t outputCount,
+                      const uint32_t* outputIndexes, const std::vector<Operand>& operands,
+                      HalVersion* minSupportedHalVersion) {
+    if (minSupportedHalVersion == nullptr) {
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    *minSupportedHalVersion = HalVersion::UNKNOWN;
+
     int n = validateOperandList(inputCount, inputIndexes, static_cast<uint32_t>(operands.size()),
                                 "ANeuralNetworksModel_addOperation inputs");
     if (n != ANEURALNETWORKS_NO_ERROR) {
@@ -437,6 +442,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
 
     switch (opType) {
         case ANEURALNETWORKS_OEM_OPERATION: {
+            *minSupportedHalVersion = HalVersion::V1_0;
             return ANEURALNETWORKS_NO_ERROR;
         }
         case ANEURALNETWORKS_ADD: {
@@ -462,6 +468,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -491,6 +498,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -513,6 +521,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -535,6 +544,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -557,6 +567,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -606,6 +617,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             if (inputCount == 12 || inputCount == 9) {
                 inExpectedTypes.push_back(OperandType::BOOL);
+                // TODO(xusongw): Mention this in NeuralNetworks.h.
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                *minSupportedHalVersion = HalVersion::V1_0;
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -656,6 +671,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
+                // TODO(xusongw): Mention this in NeuralNetworks.h.
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                *minSupportedHalVersion = HalVersion::V1_0;
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -706,6 +725,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
+                // TODO(xusongw): Mention this in NeuralNetworks.h.
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                *minSupportedHalVersion = HalVersion::V1_0;
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -747,6 +770,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
+                // TODO(xusongw): Mention this in NeuralNetworks.h.
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                *minSupportedHalVersion = HalVersion::V1_0;
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -797,6 +824,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
+                // TODO(xusongw): Mention this in NeuralNetworks.h.
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                *minSupportedHalVersion = HalVersion::V1_0;
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -823,6 +854,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -848,6 +880,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -873,6 +906,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -895,6 +929,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -920,6 +955,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -947,6 +983,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -978,6 +1015,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -997,6 +1035,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
             std::vector<OperandType> outExpectedTypes = {inputType};
             // The last one is the activation function.
             inExpectedTypes.back() = OperandType::INT32;
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1019,6 +1058,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1045,6 +1085,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1072,6 +1113,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1100,6 +1142,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             if (inputCount == 4) {
                 inExpectedTypes.push_back(OperandType::BOOL);
+                // TODO(xusongw): Mention this in NeuralNetworks.h.
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                *minSupportedHalVersion = HalVersion::V1_0;
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -1132,6 +1178,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             if (inputCount == 3) {
                 inExpectedTypes.push_back(OperandType::BOOL);
+                // TODO(xusongw): Mention this in NeuralNetworks.h.
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                *minSupportedHalVersion = HalVersion::V1_0;
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -1164,6 +1214,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             if (inputCount == 3) {
                 inExpectedTypes.push_back(OperandType::BOOL);
+                // TODO(xusongw): Mention this in NeuralNetworks.h.
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                *minSupportedHalVersion = HalVersion::V1_0;
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -1180,6 +1234,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
             std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_INT32,
                                                         inputType};
             std::vector<OperandType> outExpectedTypes = {inputType};
+            *minSupportedHalVersion = HalVersion::V1_1;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1197,6 +1252,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                         inputType};
             std::vector<OperandType> outExpectedTypes = {inputType,
                                                          OperandType::TENSOR_QUANT8_ASYMM};
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1214,6 +1270,8 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                         OperandType::TENSOR_FLOAT32,
                                                         OperandType::INT32};
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
+            // TODO(mks): Return V1_2 if inputType is sparse.
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1252,6 +1310,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                          OperandType::TENSOR_FLOAT32,
                                                          OperandType::TENSOR_FLOAT32,
                                                          OperandType::TENSOR_FLOAT32};
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1271,6 +1330,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                         OperandType::INT32};
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_FLOAT32,
                                                          OperandType::TENSOR_FLOAT32};
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1291,6 +1351,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                                                         OperandType::INT32};
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_FLOAT32,
                                                          OperandType::TENSOR_FLOAT32};
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1322,6 +1383,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             if (inputCount == 3) {
                 inExpectedTypes.push_back(OperandType::BOOL);
+                // TODO(xusongw): Mention this in NeuralNetworks.h.
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                *minSupportedHalVersion = HalVersion::V1_1;
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -1356,6 +1421,10 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             if (inputCount == 4) {
                 inExpectedTypes.push_back(OperandType::BOOL);
+                // TODO(xusongw): Mention this in NeuralNetworks.h.
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                *minSupportedHalVersion = HalVersion::V1_1;
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -1384,6 +1453,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_1;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1409,6 +1479,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1436,6 +1507,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_1;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1463,6 +1535,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_1;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1500,6 +1573,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_1;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1524,6 +1598,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_1;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1548,6 +1623,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_1;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1577,6 +1653,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_1;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1602,6 +1679,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1624,6 +1702,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1640,6 +1719,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
             std::vector<OperandType> inExpectedTypes = {inputType, OperandType::INT32,
                                                         OperandType::INT32};
             std::vector<OperandType> outExpectedTypes(outputCount, inputType);
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1654,6 +1734,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
             inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
                                OperandType::TENSOR_INT32, OperandType::FLOAT32, OperandType::INT32};
             outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1667,6 +1748,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
             std::vector<OperandType> outExpectedTypes;
             inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32};
             outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1708,6 +1790,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                 inExpectedTypes.insert(inExpectedTypes.end(), explicitScalarTypes.begin(),
                                        explicitScalarTypes.end());
             }
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1731,6 +1814,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1770,6 +1854,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
             }
             inExpectedTypes.insert(inExpectedTypes.end(), argExpectedTypes.begin(),
                                    argExpectedTypes.end());
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1794,6 +1879,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1816,6 +1902,7 @@ int validateOperation(ANeuralNetworksOperationType opType,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
