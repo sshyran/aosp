@@ -1955,32 +1955,15 @@ int convertErrorStatusToResultCode(ErrorStatus status) {
 
 // Versioning
 
-bool compliantWithV1_0(V1_0::OperationType) {
-    return true;
-}
-
-bool compliantWithV1_0(V1_1::OperationType operation) {
-    return validOperationType(static_cast<V1_0::OperationType>(operation));
-}
-
-bool compliantWithV1_1(V1_0::OperationType) {
-    return true;
-}
-
-bool compliantWithV1_1(V1_1::OperationType) {
-    return true;
-}
-
 bool compliantWithV1_0(V1_0::Capabilities) {
     return true;
 }
 
 bool compliantWithV1_0(const V1_1::Capabilities& capabilities) {
     return capabilities.relaxedFloat32toFloat16Performance.execTime ==
-           capabilities.float32Performance.execTime
-           &&
+                   capabilities.float32Performance.execTime &&
            capabilities.relaxedFloat32toFloat16Performance.powerUsage ==
-           capabilities.float32Performance.powerUsage;
+                   capabilities.float32Performance.powerUsage;
 }
 
 bool compliantWithV1_1(const V1_0::Capabilities&) {
@@ -1989,29 +1972,6 @@ bool compliantWithV1_1(const V1_0::Capabilities&) {
 
 bool compliantWithV1_1(const V1_1::Capabilities&) {
     return true;
-}
-
-bool compliantWithV1_0(const V1_0::Operation&) {
-    return true;
-}
-
-bool compliantWithV1_0(const V1_1::Operation& operation) {
-    return compliantWithV1_0(operation.type);
-}
-
-bool compliantWithV1_1(const V1_0::Operation&) {
-    return true;
-}
-
-bool compliantWithV1_1(const V1_1::Operation&) {
-    return true;
-}
-
-static bool compliantWithV1_0(const hidl_vec<V1_1::Operation>& operations) {
-    return std::all_of(operations.begin(), operations.end(),
-                       [](const V1_1::Operation& operation) {
-                           return compliantWithV1_0(operation);
-                       });
 }
 
 bool compliantWithV1_0(const V1_0::Model&) {
@@ -2026,7 +1986,17 @@ bool compliantWithV1_0(const V1_1::Model& model) {
     // V1_0::Model because all 1.0 drivers require strict calculation by default
     // in the P NN runtime. Even if fp16 calculations are allowed, they can
     // still be computed by a strict fp32 driver.
-    return compliantWithV1_0(model.operations);
+    return std::all_of(
+            model.operations.begin(), model.operations.end(), [&model](const V1_1::Operation& op) {
+                HalVersion minSupportedHalVersion;
+                int error = validateOperation(
+                        static_cast<int32_t>(op.type), op.inputs.size(),
+                        op.inputs.size() > 0 ? op.inputs.data() : nullptr, op.outputs.size(),
+                        op.outputs.size() > 0 ? op.outputs.data() : nullptr,
+                        convertToV1_2(model.operands), &minSupportedHalVersion);
+                return error == ANEURALNETWORKS_NO_ERROR &&
+                       minSupportedHalVersion == HalVersion::V1_0;
+            });
 }
 
 bool compliantWithV1_1(const V1_0::Model&) {
@@ -2037,24 +2007,12 @@ bool compliantWithV1_1(const V1_1::Model&) {
     return true;
 }
 
-V1_0::OperationType convertToV1_0(V1_0::OperationType type) {
-    return type;
-}
-
-V1_0::OperationType convertToV1_0(V1_1::OperationType type) {
-    if (!compliantWithV1_0(type)) {
-        LOG(ERROR) << "Upcasting non-compliant type " << toString(type)
-                   << " from V1_1::OperationType to V1_0::OperationType";
-    }
+static V1_0::OperationType uncheckedConvertToV1_0(V1_1::OperationType type) {
     return static_cast<V1_0::OperationType>(type);
 }
 
-V1_1::OperationType convertToV1_1(V1_0::OperationType type) {
+static V1_1::OperationType convertToV1_1(V1_0::OperationType type) {
     return static_cast<V1_1::OperationType>(type);
-}
-
-V1_1::OperationType convertToV1_1(V1_1::OperationType type) {
-    return type;
 }
 
 V1_0::Capabilities convertToV1_0(const V1_0::Capabilities& capabilities) {
@@ -2080,34 +2038,24 @@ V1_1::Capabilities convertToV1_1(const V1_1::Capabilities& capabilities) {
     return capabilities;
 }
 
-V1_0::Operation convertToV1_0(const V1_0::Operation& operation) {
-    return operation;
-}
-
-V1_0::Operation convertToV1_0(const V1_1::Operation& operation) {
-    if (!compliantWithV1_0(operation)) {
-        LOG(ERROR) << "Upcasting non-compliant operation " << toString(operation)
-                   << " from V1_1::Operation to V1_0::Operation";
-    }
-    return {.type = convertToV1_0(operation.type),
+static V1_0::Operation uncheckedConvertToV1_0(const V1_1::Operation& operation) {
+    return {.type = uncheckedConvertToV1_0(operation.type),
             .inputs = operation.inputs,
             .outputs = operation.outputs};
 }
 
-V1_1::Operation convertToV1_1(const V1_0::Operation& operation) {
+static V1_1::Operation convertToV1_1(const V1_0::Operation& operation) {
     return {.type = convertToV1_1(operation.type),
             .inputs = operation.inputs,
             .outputs = operation.outputs};
 }
 
-V1_1::Operation convertToV1_1(const V1_1::Operation& operation) {
-    return operation;
-}
-
-static hidl_vec<V1_0::Operation> convertToV1_0(const hidl_vec<V1_1::Operation>& operations) {
+static hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
+        const hidl_vec<V1_1::Operation>& operations) {
     hidl_vec<V1_0::Operation> result(operations.size());
-    std::transform(operations.begin(), operations.end(), result.begin(),
-                   [](const V1_1::Operation& operation) { return convertToV1_0(operation); });
+    std::transform(
+            operations.begin(), operations.end(), result.begin(),
+            [](const V1_1::Operation& operation) { return uncheckedConvertToV1_0(operation); });
     return result;
 }
 
@@ -2128,7 +2076,7 @@ V1_0::Model convertToV1_0(const V1_1::Model& model) {
                    << " from V1_1::Model to V1_0::Model";
     }
     return {.operands = model.operands,
-            .operations = convertToV1_0(model.operations),
+            .operations = uncheckedConvertToV1_0(model.operations),
             .inputIndexes = model.inputIndexes,
             .outputIndexes = model.outputIndexes,
             .operandValues = model.operandValues,
@@ -2159,102 +2107,103 @@ void logModelToInfo(const V1_2::Model& model) {
     LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
 }
 
-bool compliantWithV1_0(V1_2::OperationType operation) {
-    return validOperationType(static_cast<V1_0::OperationType>(operation));
-}
-
-bool compliantWithV1_1(V1_2::OperationType operation) {
-    return validOperationType(static_cast<V1_1::OperationType>(operation));
-}
-
-bool compliantWithV1_0(const V1_2::Operation& operation) {
-    return compliantWithV1_0(operation.type);
-}
-
-static bool compliantWithV1_0(const hidl_vec<V1_2::Operation>& operations) {
-    return std::all_of(operations.begin(), operations.end(),
-                       [](const V1_2::Operation& operation) {
-                           return compliantWithV1_0(operation);
-                       });
-}
-
 bool compliantWithV1_0(const V1_2::Model& model) {
-    // See the comment in compliantWithV1_0(const V1_1::Model&).
-    return compliantWithV1_0(model.operations);
+    return std::all_of(
+            model.operations.begin(), model.operations.end(), [&model](const V1_2::Operation& op) {
+                HalVersion minSupportedHalVersion;
+                int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
+                                              op.inputs.size() > 0 ? op.inputs.data() : nullptr,
+                                              op.outputs.size(),
+                                              op.outputs.size() > 0 ? op.outputs.data() : nullptr,
+                                              model.operands, &minSupportedHalVersion);
+                return error == ANEURALNETWORKS_NO_ERROR &&
+                       minSupportedHalVersion == HalVersion::V1_0;
+            });
 }
 
-bool compliantWithV1_1(const V1_2::Model&) {
-    return true;
+bool compliantWithV1_1(const V1_2::Model& model) {
+    return std::all_of(
+            model.operations.begin(), model.operations.end(), [&model](const V1_2::Operation& op) {
+                HalVersion minSupportedHalVersion;
+                int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
+                                              op.inputs.size() > 0 ? op.inputs.data() : nullptr,
+                                              op.outputs.size(),
+                                              op.outputs.size() > 0 ? op.outputs.data() : nullptr,
+                                              model.operands, &minSupportedHalVersion);
+                return error == ANEURALNETWORKS_NO_ERROR &&
+                       minSupportedHalVersion <= HalVersion::V1_1;
+            });
 }
 
-V1_0::OperationType convertToV1_0(V1_2::OperationType type) {
-    if (!compliantWithV1_0(type)) {
-        LOG(ERROR) << "Upcasting non-compliant type " << toString(type)
-                   << " from V1_2::OperationType to V1_1::OperationType";
-    }
+static V1_0::OperationType uncheckedConvertToV1_0(V1_2::OperationType type) {
     return static_cast<V1_0::OperationType>(type);
 }
 
-V1_1::OperationType convertToV1_1(V1_2::OperationType type) {
-    if (!compliantWithV1_1(type)) {
-        LOG(ERROR) << "Upcasting non-compliant type " << toString(type)
-                   << " from V1_2::OperationType to V1_1::OperationType";
-    }
+static V1_1::OperationType uncheckedConvertToV1_1(V1_2::OperationType type) {
     return static_cast<V1_1::OperationType>(type);
 }
 
-V1_2::OperationType convertToV1_2(V1_0::OperationType type) {
+static V1_2::OperationType convertToV1_2(V1_0::OperationType type) {
     return static_cast<V1_2::OperationType>(type);
 }
 
-V1_2::OperationType convertToV1_2(V1_1::OperationType type) {
+static V1_2::OperationType convertToV1_2(V1_1::OperationType type) {
     return static_cast<V1_2::OperationType>(type);
 }
 
-V1_0::Operation convertToV1_0(const V1_2::Operation& operation) {
-    if (!compliantWithV1_0(operation)) {
-        LOG(ERROR) << "Upcasting non-compliant operation " << toString(operation)
-                   << " from V1_1::Operation to V1_0::Operation";
-    }
-    return {.type = convertToV1_0(operation.type),
+static V1_0::Operation uncheckedConvertToV1_0(const V1_2::Operation& operation) {
+    return {.type = uncheckedConvertToV1_0(operation.type),
             .inputs = operation.inputs,
             .outputs = operation.outputs};
 }
 
-V1_1::Operation convertToV1_1(const V1_2::Operation& operation) {
-    return {.type = convertToV1_1(operation.type),
+static V1_1::Operation uncheckedConvertToV1_1(const V1_2::Operation& operation) {
+    return {.type = uncheckedConvertToV1_1(operation.type),
             .inputs = operation.inputs,
             .outputs = operation.outputs};
 }
 
-template <typename T>
-V1_2::Operation convertToV1_2(const T& operation) {
+static V1_2::Operation convertToV1_2(const V1_0::Operation& operation) {
     return {.type = convertToV1_2(operation.type),
             .inputs = operation.inputs,
             .outputs = operation.outputs};
 }
 
-static hidl_vec<V1_0::Operation> convertToV1_0(const hidl_vec<V1_2::Operation>& operations) {
+static V1_2::Operation convertToV1_2(const V1_1::Operation& operation) {
+    return {.type = convertToV1_2(operation.type),
+            .inputs = operation.inputs,
+            .outputs = operation.outputs};
+}
+
+static hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
+        const hidl_vec<V1_2::Operation>& operations) {
     hidl_vec<V1_0::Operation> result(operations.size());
-    std::transform(operations.begin(), operations.end(), result.begin(),
-                   [](const V1_2::Operation& operation) { return convertToV1_0(operation); });
+    std::transform(
+            operations.begin(), operations.end(), result.begin(),
+            [](const V1_2::Operation& operation) { return uncheckedConvertToV1_0(operation); });
     return result;
 }
 
-static hidl_vec<V1_1::Operation> convertToV1_1(const hidl_vec<V1_2::Operation>& operations) {
+static hidl_vec<V1_1::Operation> uncheckedConvertToV1_1(
+        const hidl_vec<V1_2::Operation>& operations) {
     hidl_vec<V1_1::Operation> result(operations.size());
-    std::transform(operations.begin(), operations.end(), result.begin(),
-                   [](const V1_2::Operation& operation) { return convertToV1_1(operation); });
+    std::transform(
+            operations.begin(), operations.end(), result.begin(),
+            [](const V1_2::Operation& operation) { return uncheckedConvertToV1_1(operation); });
     return result;
 }
 
-template <typename T>
-static hidl_vec<V1_2::Operation> convertToV1_2(const hidl_vec<T>& operations) {
+static hidl_vec<V1_2::Operation> convertToV1_2(const hidl_vec<V1_0::Operation>& operations) {
     hidl_vec<V1_2::Operation> result(operations.size());
     std::transform(operations.begin(), operations.end(), result.begin(),
-                   [](const T& operation) {
-                       return convertToV1_2(operation);
-                   });
+                   [](const V1_0::Operation& operation) { return convertToV1_2(operation); });
+    return result;
+}
+
+static hidl_vec<V1_2::Operation> convertToV1_2(const hidl_vec<V1_1::Operation>& operations) {
+    hidl_vec<V1_2::Operation> result(operations.size());
+    std::transform(operations.begin(), operations.end(), result.begin(),
+                   [](const V1_1::Operation& operation) { return convertToV1_2(operation); });
     return result;
 }
 
@@ -2264,7 +2213,7 @@ V1_2::OperandType convertToV1_2(const V1_0::OperandType& operandType) {
     return static_cast<V1_2::OperandType>(operandType);
 }
 
-bool compliantWithV1_0(const V1_2::OperandType& operandType) {
+static bool compliantWithV1_0(const V1_2::OperandType& operandType) {
     return validOperandType(static_cast<V1_0::OperandType>(operandType));
 }
 
@@ -2325,10 +2274,10 @@ hidl_vec<V1_0::Operand> convertToV1_0(const hidl_vec<V1_2::Operand>& operands) {
 V1_0::Model convertToV1_0(const V1_2::Model& model) {
     if (!compliantWithV1_0(model)) {
         LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
-                   << " from V1_1::Model to V1_0::Model";
+                   << " from V1_2::Model to V1_0::Model";
     }
     return {.operands = convertToV1_0(model.operands),
-            .operations = convertToV1_0(model.operations),
+            .operations = uncheckedConvertToV1_0(model.operations),
             .inputIndexes = model.inputIndexes,
             .outputIndexes = model.outputIndexes,
             .operandValues = model.operandValues,
@@ -2336,8 +2285,12 @@ V1_0::Model convertToV1_0(const V1_2::Model& model) {
 }
 
 V1_1::Model convertToV1_1(const V1_2::Model& model) {
+    if (!compliantWithV1_1(model)) {
+        LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
+                   << " from V1_2::Model to V1_1::Model";
+    }
     return {.operands = convertToV1_0(model.operands),  // Operands in 1.1 and 1.0 are identical.
-            .operations = convertToV1_1(model.operations),
+            .operations = uncheckedConvertToV1_1(model.operations),
             .inputIndexes = model.inputIndexes,
             .outputIndexes = model.outputIndexes,
             .operandValues = model.operandValues,
