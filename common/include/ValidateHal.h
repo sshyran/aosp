@@ -22,6 +22,13 @@
 namespace android {
 namespace nn {
 
+enum class HalVersion : int32_t {
+    UNKNOWN,
+    V1_0,
+    V1_1,
+    V1_2,
+};
+
 // Verifies that the model is valid, i.e. it is consistent, takes
 // only acceptable values, the constants don't extend outside the memory
 // regions they are part of, etc.
