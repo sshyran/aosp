@@ -233,189 +233,19 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
     return true;
 }
 
-bool validOperationType(V1_0::OperationType operation) {
-    switch (operation) {
-        case V1_0::OperationType::ADD:
-        case V1_0::OperationType::AVERAGE_POOL_2D:
-        case V1_0::OperationType::CONCATENATION:
-        case V1_0::OperationType::CONV_2D:
-        case V1_0::OperationType::DEPTHWISE_CONV_2D:
-        case V1_0::OperationType::DEPTH_TO_SPACE:
-        case V1_0::OperationType::DEQUANTIZE:
-        case V1_0::OperationType::EMBEDDING_LOOKUP:
-        case V1_0::OperationType::FLOOR:
-        case V1_0::OperationType::FULLY_CONNECTED:
-        case V1_0::OperationType::HASHTABLE_LOOKUP:
-        case V1_0::OperationType::L2_NORMALIZATION:
-        case V1_0::OperationType::L2_POOL_2D:
-        case V1_0::OperationType::LOCAL_RESPONSE_NORMALIZATION:
-        case V1_0::OperationType::LOGISTIC:
-        case V1_0::OperationType::LSH_PROJECTION:
-        case V1_0::OperationType::LSTM:
-        case V1_0::OperationType::MAX_POOL_2D:
-        case V1_0::OperationType::MUL:
-        case V1_0::OperationType::RELU:
-        case V1_0::OperationType::RELU1:
-        case V1_0::OperationType::RELU6:
-        case V1_0::OperationType::RESHAPE:
-        case V1_0::OperationType::RESIZE_BILINEAR:
-        case V1_0::OperationType::RNN:
-        case V1_0::OperationType::SOFTMAX:
-        case V1_0::OperationType::SPACE_TO_DEPTH:
-        case V1_0::OperationType::SVDF:
-        case V1_0::OperationType::TANH:
-        case V1_0::OperationType::OEM_OPERATION:
-            return true;
-        default:
-            return false;
-    }
+static HalVersion getHalVersion(const V1_0::Operation&) {
+    return HalVersion::V1_0;
 }
 
-bool validOperationType(V1_1::OperationType operation) {
-    switch (operation) {
-        case V1_1::OperationType::ADD:
-        case V1_1::OperationType::AVERAGE_POOL_2D:
-        case V1_1::OperationType::CONCATENATION:
-        case V1_1::OperationType::CONV_2D:
-        case V1_1::OperationType::DEPTHWISE_CONV_2D:
-        case V1_1::OperationType::DEPTH_TO_SPACE:
-        case V1_1::OperationType::DEQUANTIZE:
-        case V1_1::OperationType::EMBEDDING_LOOKUP:
-        case V1_1::OperationType::FLOOR:
-        case V1_1::OperationType::FULLY_CONNECTED:
-        case V1_1::OperationType::HASHTABLE_LOOKUP:
-        case V1_1::OperationType::L2_NORMALIZATION:
-        case V1_1::OperationType::L2_POOL_2D:
-        case V1_1::OperationType::LOCAL_RESPONSE_NORMALIZATION:
-        case V1_1::OperationType::LOGISTIC:
-        case V1_1::OperationType::LSH_PROJECTION:
-        case V1_1::OperationType::LSTM:
-        case V1_1::OperationType::MAX_POOL_2D:
-        case V1_1::OperationType::MUL:
-        case V1_1::OperationType::RELU:
-        case V1_1::OperationType::RELU1:
-        case V1_1::OperationType::RELU6:
-        case V1_1::OperationType::RESHAPE:
-        case V1_1::OperationType::RESIZE_BILINEAR:
-        case V1_1::OperationType::RNN:
-        case V1_1::OperationType::SOFTMAX:
-        case V1_1::OperationType::SPACE_TO_DEPTH:
-        case V1_1::OperationType::SVDF:
-        case V1_1::OperationType::TANH:
-        case V1_1::OperationType::BATCH_TO_SPACE_ND:
-        case V1_1::OperationType::DIV:
-        case V1_1::OperationType::MEAN:
-        case V1_1::OperationType::PAD:
-        case V1_1::OperationType::SPACE_TO_BATCH_ND:
-        case V1_1::OperationType::SQUEEZE:
-        case V1_1::OperationType::STRIDED_SLICE:
-        case V1_1::OperationType::SUB:
-        case V1_1::OperationType::TRANSPOSE:
-        case V1_1::OperationType::OEM_OPERATION:
-            return true;
-        default:
-            return false;
-    }
+static HalVersion getHalVersion(const V1_1::Operation&) {
+    return HalVersion::V1_1;
 }
 
-bool validOperationType(V1_2::OperationType operation) {
-    switch (operation) {
-        case V1_2::OperationType::ADD:
-        case V1_2::OperationType::AVERAGE_POOL_2D:
-        case V1_2::OperationType::CONCATENATION:
-        case V1_2::OperationType::CONV_2D:
-        case V1_2::OperationType::DEPTHWISE_CONV_2D:
-        case V1_2::OperationType::DEPTH_TO_SPACE:
-        case V1_2::OperationType::DEQUANTIZE:
-        case V1_2::OperationType::EMBEDDING_LOOKUP:
-        case V1_2::OperationType::FLOOR:
-        case V1_2::OperationType::FULLY_CONNECTED:
-        case V1_2::OperationType::HASHTABLE_LOOKUP:
-        case V1_2::OperationType::L2_NORMALIZATION:
-        case V1_2::OperationType::L2_POOL_2D:
-        case V1_2::OperationType::LOCAL_RESPONSE_NORMALIZATION:
-        case V1_2::OperationType::LOGISTIC:
-        case V1_2::OperationType::LSH_PROJECTION:
-        case V1_2::OperationType::LSTM:
-        case V1_2::OperationType::MAX_POOL_2D:
-        case V1_2::OperationType::MUL:
-        case V1_2::OperationType::RELU:
-        case V1_2::OperationType::RELU1:
-        case V1_2::OperationType::RELU6:
-        case V1_2::OperationType::RESHAPE:
-        case V1_2::OperationType::RESIZE_BILINEAR:
-        case V1_2::OperationType::RNN:
-        case V1_2::OperationType::SOFTMAX:
-        case V1_2::OperationType::SPACE_TO_DEPTH:
-        case V1_2::OperationType::SVDF:
-        case V1_2::OperationType::TANH:
-        case V1_2::OperationType::BATCH_TO_SPACE_ND:
-        case V1_2::OperationType::DIV:
-        case V1_2::OperationType::MEAN:
-        case V1_2::OperationType::PAD:
-        case V1_2::OperationType::SPACE_TO_BATCH_ND:
-        case V1_2::OperationType::SQUEEZE:
-        case V1_2::OperationType::STRIDED_SLICE:
-        case V1_2::OperationType::SUB:
-        case V1_2::OperationType::TRANSPOSE:
-        case V1_2::OperationType::ARGMAX:
-        case V1_2::OperationType::ARGMIN:
-        case V1_2::OperationType::PAD_V2:
-        case V1_2::OperationType::AXIS_ALIGNED_BBOX_TRANSFORM:
-        case V1_2::OperationType::BIDIRECTIONAL_SEQUENCE_LSTM:
-        case V1_2::OperationType::BIDIRECTIONAL_SEQUENCE_RNN:
-        case V1_2::OperationType::BOX_WITH_NMS_LIMIT:
-        case V1_2::OperationType::CAST:
-        case V1_2::OperationType::CHANNEL_SHUFFLE:
-        case V1_2::OperationType::DETECTION_OUTPUT:
-        case V1_2::OperationType::EMBEDDING_LOOKUP_SPARSE:
-        case V1_2::OperationType::EXP:
-        case V1_2::OperationType::EXPAND_DIMS:
-        case V1_2::OperationType::GATHER:
-        case V1_2::OperationType::GENERATE_PROPOSALS:
-        case V1_2::OperationType::GREATER:
-        case V1_2::OperationType::GREATER_EQUAL:
-        case V1_2::OperationType::GROUPED_CONV_2D:
-        case V1_2::OperationType::HEATMAP_MAX_KEYPOINT:
-        case V1_2::OperationType::LESS:
-        case V1_2::OperationType::LESS_EQUAL:
-        case V1_2::OperationType::LOG:
-        case V1_2::OperationType::LOGICAL_AND:
-        case V1_2::OperationType::LOGICAL_NOT:
-        case V1_2::OperationType::LOGICAL_OR:
-        case V1_2::OperationType::LOG_SOFTMAX:
-        case V1_2::OperationType::MAXIMUM:
-        case V1_2::OperationType::MINIMUM:
-        case V1_2::OperationType::NEG:
-        case V1_2::OperationType::POW:
-        case V1_2::OperationType::PRELU:
-        case V1_2::OperationType::PRIOR_BOX:
-        case V1_2::OperationType::QUANTIZE:
-        case V1_2::OperationType::QUANTIZED_16BIT_LSTM:
-        case V1_2::OperationType::RANDOM_MULTINOMIAL:
-        case V1_2::OperationType::REDUCE:
-        case V1_2::OperationType::ROI_ALIGN:
-        case V1_2::OperationType::RSQRT:
-        case V1_2::OperationType::SELECT:
-        case V1_2::OperationType::SIN:
-        case V1_2::OperationType::SLICE:
-        case V1_2::OperationType::SPARSE_TO_DENSE:
-        case V1_2::OperationType::SPLIT:
-        case V1_2::OperationType::SQRT:
-        case V1_2::OperationType::TILE:
-        case V1_2::OperationType::TOPK_V2:
-        case V1_2::OperationType::TRANSPOSE_CONV_2D:
-        case V1_2::OperationType::UNIDIRECTIONAL_SEQUENCE_LSTM:
-        case V1_2::OperationType::UNIDIRECTIONAL_SEQUENCE_RNN:
-        case V1_2::OperationType::ROTATED_BBOX_TRANSFORM:
-        case V1_2::OperationType::OEM_OPERATION:
-            return true;
-        default:
-            return false;
-    }
+static HalVersion getHalVersion(const V1_2::Operation&) {
+    return HalVersion::V1_2;
 }
 
-template<typename VersionedOperation>
+template <typename VersionedOperation>
 static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
                                const hidl_vec<Operand>& operands) {
     const size_t operandCount = operands.size();
@@ -424,17 +254,22 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
     // model outputs will be written to.
     std::vector<bool> writtenTo(operandCount, false);
     for (auto& op : operations) {
-        if (!validOperationType(op.type)) {
-            LOG(ERROR) << "Invalid operation type " << toString(op.type);
-            return false;
-        }
+        HalVersion minSupportedHalVersion;
         // TODO Validate the shapes and any known values. This is currently
         // done in CpuExecutor but should be done here for all drivers.
-        int error =
-            validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
-                              op.inputs.size() > 0 ? op.inputs.data() : nullptr, op.outputs.size(),
-                              op.outputs.size() > 0 ? op.outputs.data() : nullptr, operands);
+        int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
+                                      op.inputs.size() > 0 ? op.inputs.data() : nullptr,
+                                      op.outputs.size(),
+                                      op.outputs.size() > 0 ? op.outputs.data() : nullptr, operands,
+                                      &minSupportedHalVersion);
         if (error != ANEURALNETWORKS_NO_ERROR) {
+            LOG(ERROR) << "Invalid operation " << toString(op.type);
+            return false;
+        }
+        if (getHalVersion(op) < minSupportedHalVersion) {
+            LOG(ERROR) << "Operation " << toString(op.type)
+                       << " with the given operand types is only supported"
+                       << " in later HAL versions";
             return false;
         }
 
