@@ -1108,6 +1108,9 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (input.type == OperandType::TENSOR_FLOAT32) {
                 success = tanhFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
                                       reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                success = tanhQuant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
+                                     reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::LOGISTIC: {
