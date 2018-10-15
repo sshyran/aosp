@@ -169,20 +169,10 @@ int convertErrorStatusToResultCode(ErrorStatus status);
 
 // Versioning
 
-bool compliantWithV1_0(V1_0::OperationType type);
-bool compliantWithV1_0(V1_1::OperationType type);
-bool compliantWithV1_1(V1_0::OperationType type);
-bool compliantWithV1_1(V1_1::OperationType type);
-
 bool compliantWithV1_0(const V1_0::Capabilities& capabilities);
 bool compliantWithV1_0(const V1_1::Capabilities& capabilities);
 bool compliantWithV1_1(const V1_0::Capabilities& capabilities);
 bool compliantWithV1_1(const V1_1::Capabilities& capabilities);
-
-bool compliantWithV1_0(const V1_0::Operation& operation);
-bool compliantWithV1_0(const V1_1::Operation& operation);
-bool compliantWithV1_1(const V1_0::Operation& operation);
-bool compliantWithV1_1(const V1_1::Operation& operation);
 
 bool compliantWithV1_0(const V1_0::Model& model);
 bool compliantWithV1_0(const V1_1::Model& model);
@@ -191,39 +181,22 @@ bool compliantWithV1_1(const V1_0::Model& model);
 bool compliantWithV1_1(const V1_1::Model& model);
 bool compliantWithV1_1(const V1_2::Model& model);
 
-bool compliantWithV1_0(const V1_2::OperandType& operandType);
-
-V1_0::OperationType convertToV1_0(V1_0::OperationType type);
-V1_0::OperationType convertToV1_0(V1_1::OperationType type);
-V1_1::OperationType convertToV1_1(V1_0::OperationType type);
-V1_1::OperationType convertToV1_1(V1_1::OperationType type);
-
 V1_0::Capabilities convertToV1_0(const V1_0::Capabilities& capabilities);
 V1_0::Capabilities convertToV1_0(const V1_1::Capabilities& capabilities);
 V1_1::Capabilities convertToV1_1(const V1_0::Capabilities& capabilities);
 V1_1::Capabilities convertToV1_1(const V1_1::Capabilities& capabilities);
 
-V1_0::Operation convertToV1_0(const V1_0::Operation& operation);
-V1_0::Operation convertToV1_0(const V1_1::Operation& operation);
-V1_1::Operation convertToV1_1(const V1_0::Operation& operation);
-V1_1::Operation convertToV1_1(const V1_1::Operation& operation);
-
 V1_0::Model convertToV1_0(const V1_0::Model& model);
 V1_0::Model convertToV1_0(const V1_1::Model& model);
+V1_0::Model convertToV1_0(const V1_2::Model& model);
 V1_1::Model convertToV1_1(const V1_0::Model& model);
 V1_1::Model convertToV1_1(const V1_1::Model& model);
-
-V1_0::OperationType convertToV1_0(V1_2::OperationType type);
-V1_1::OperationType convertToV1_1(V1_2::OperationType type);
-V1_0::Operation convertToV1_0(const V1_2::Operation& operation);
-V1_1::Operation convertToV1_1(const V1_2::Operation& operation);
-V1_0::Model convertToV1_0(const V1_2::Model& model);
 V1_1::Model convertToV1_1(const V1_2::Model& model);
 V1_2::Model convertToV1_2(const V1_0::Model& model);
 V1_2::Model convertToV1_2(const V1_1::Model& model);
 
-V1_2::Operand convertToV1_2(const V1_0::Operand& operands);
-V1_2::Operand convertToV1_2(const V1_2::Operand& operands);
+V1_2::Operand convertToV1_2(const V1_0::Operand& operand);
+V1_2::Operand convertToV1_2(const V1_2::Operand& operand);
 
 hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_0::Operand>& operands);
 hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_2::Operand>& operands);
