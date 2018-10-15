@@ -137,6 +137,8 @@ bool relu6Float32(const float* inputData, const Shape& inputShape,
                   float* outputData, const Shape& outputShape);
 bool tanhFloat32(const float* inputData, const Shape& inputShape,
                  float* outputData, const Shape& outputShape);
+bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                const Shape& outputShape);
 bool logisticFloat32(const float* inputData, const Shape& inputShape,
                      float* outputData, const Shape& outputShape);
 bool softmaxFloat32(const float* inputData, const Shape& inputShape,

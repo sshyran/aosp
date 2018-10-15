@@ -84,6 +84,7 @@ cc_defaults {
         "Bridge.cpp",
         // Tests that rely on non-public functionality (i.e., symbols
         // not exported from libneuralnetworks.so).
+        "TestCompliance.cpp",
         "TestExecution.cpp",
         "TestMemoryInternal.cpp",
         // b/109953668, disable OpenMP
