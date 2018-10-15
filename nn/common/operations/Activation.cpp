@@ -137,6 +137,36 @@ bool relu6Quant8(const uint8_t* inputData, const Shape& inputShape,
 
 #undef ANDROID_NN_RELUX_QUANT8
 
+bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                const Shape& outputShape) {
+    NNTRACE_TRANS("tanhQuant8");
+    if (outputShape.offset != 128 || outputShape.scale != 1.f / 128) {
+        LOG(ERROR) << "incorrect scale or offset for TANH output";
+        return false;
+    }
+
+    int numElements = getNumberOfElements(inputShape);
+    static constexpr int kInputIntegerBits = 4;
+
+    const double input_real_multiplier =
+            inputShape.scale * static_cast<double>(1 << (31 - kInputIntegerBits));
+
+    int32_t input_multiplier = 0;
+    int32_t input_left_shift = 0;
+    if (!QuantizeMultiplierGreaterThanOne(input_real_multiplier, &input_multiplier,
+                                          &input_left_shift)) {
+        return false;
+    }
+    int32_t input_range_radius = CalculateInputRadius(kInputIntegerBits, input_left_shift);
+
+    NNTRACE_COMP_SWITCH("optimized_ops::Tanh");
+    tflite::optimized_ops::Tanh(inputData, convertShapeToTflshape(inputShape), inputShape.offset,
+                                input_range_radius, input_multiplier, input_left_shift, outputData,
+                                convertShapeToTflshape(outputShape));
+
+    return true;
+}
+
 bool logisticQuant8(const uint8_t* inputData, const Shape& inputShape,
                     uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("logisticQuant8");
