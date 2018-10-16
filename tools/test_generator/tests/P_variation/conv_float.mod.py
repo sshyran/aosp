@@ -40,5 +40,5 @@ quant8 = DataTypeConverter().Identify({
 })
 
 # Instantiate an example
-Example((input0, output0)).AddNchw([i1, f1, output], [layout]).AddAllActivations(
-    [output], [act]).AddInput([f1]).AddVariations(RelaxedModeConverter(True), quant8)
+Example((input0, output0)).AddNchw(i1, f1, output, layout).AddAllActivations(
+    output, act).AddInput(f1).AddVariations(RelaxedModeConverter(True), quant8)
