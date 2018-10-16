@@ -19,6 +19,7 @@
 
 #include "operations/EmbeddingLookup.h"
 #include "operations/ExpandDims.h"
+#include "operations/Gather.h"
 #include "operations/HashtableLookup.h"
 #include "operations/LSHProjection.h"
 #include "operations/LSTM.h"
