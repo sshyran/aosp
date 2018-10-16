@@ -178,29 +178,29 @@ void compare_(
 inline void compare(const MixedTyped& golden, const MixedTyped& test,
                     float fpAtol = 1e-5f, float fpRtol = 1e-5f) {
     size_t totalNumberOfErrors = 0;
-    compare_<0>(golden, test, [&totalNumberOfErrors, fpAtol, fpRtol](float g, float t) {
+    compare_<0>(golden, test, [&totalNumberOfErrors, fpAtol, fpRtol](float expected, float actual) {
         // Compute the range based on both absolute tolerance and relative tolerance
-        float fpRange = fpAtol + fpRtol * std::abs(g);
+        float fpRange = fpAtol + fpRtol * std::abs(expected);
         if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-            EXPECT_NEAR(g, t, fpRange);
+            EXPECT_NEAR(expected, actual, fpRange);
         }
-        if (std::abs(g - t) > fpRange) {
+        if (std::abs(expected - actual) > fpRange) {
             totalNumberOfErrors++;
         }
     });
-    compare_<1>(golden, test, [&totalNumberOfErrors](int32_t g, int32_t t) {
+    compare_<1>(golden, test, [&totalNumberOfErrors](int32_t expected, int32_t actual) {
         if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-            EXPECT_EQ(g, t);
+            EXPECT_EQ(expected, actual);
         }
-        if (g != t) {
+        if (expected != actual) {
             totalNumberOfErrors++;
         }
     });
-    compare_<2>(golden, test, [&totalNumberOfErrors](uint8_t g, uint8_t t) {
+    compare_<2>(golden, test, [&totalNumberOfErrors](uint8_t expected, uint8_t actual) {
         if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-            EXPECT_NEAR(g, t, 1);
+            EXPECT_NEAR(expected, actual, 1);
         }
-        if (std::abs(g - t) > 1) {
+        if (std::abs(expected - actual) > 1) {
             totalNumberOfErrors++;
         }
     });
