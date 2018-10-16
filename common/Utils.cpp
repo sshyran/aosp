@@ -1836,9 +1836,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_TRANSPOSE_CONV_2D: {
-            if ((inputCount != 10 && inputCount != 8) || outputCount != 1) {
+            if ((inputCount != 11 && inputCount != 9) || outputCount != 1) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
-                           << ", expected 10 or 8) or output operands (" << outputCount
+                           << ", expected 11 or 9) or output operands (" << outputCount
                            << ", expected 1) for operation " << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
@@ -1860,13 +1860,14 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
 
             std::vector<OperandType> argExpectedTypes;
-            if (inputCount == 10) {
+            if (inputCount == 11) {
                 argExpectedTypes = {OperandType::INT32, OperandType::INT32, OperandType::INT32,
                                     OperandType::INT32, OperandType::INT32, OperandType::INT32,
-                                    OperandType::INT32};
+                                    OperandType::INT32, OperandType::BOOL};
             } else {
                 argExpectedTypes = {OperandType::TENSOR_INT32, OperandType::INT32,
-                                    OperandType::INT32, OperandType::INT32, OperandType::INT32};
+                                    OperandType::INT32,        OperandType::INT32,
+                                    OperandType::INT32,        OperandType::BOOL};
             }
             inExpectedTypes.insert(inExpectedTypes.end(), argExpectedTypes.begin(),
                                    argExpectedTypes.end());
