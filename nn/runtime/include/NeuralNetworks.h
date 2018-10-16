@@ -207,6 +207,7 @@ typedef enum {
      *      invoke on the result.
      * * 10: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *       Set to true to specify NCHW data layout for input0 and output0.
+     *       Available since API level 29.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
@@ -227,6 +228,7 @@ typedef enum {
      *      invoke on the result.
      * * 7: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -322,6 +324,7 @@ typedef enum {
      *      invoke on the result.
      * * 10: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *       Set to true to specify NCHW data layout for input0 and output0.
+     *       Available since API level 29.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
@@ -347,6 +350,7 @@ typedef enum {
      *      invoke on the result.
      * * 7: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -421,6 +425,7 @@ typedef enum {
      *       invoke on the result.
      * * 11: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *       Set to true to specify NCHW data layout for input0 and output0.
+     *       Available since API level 29.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
@@ -447,6 +452,7 @@ typedef enum {
      *      invoke on the result.
      * * 8: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -490,6 +496,7 @@ typedef enum {
      *      of the input depth.
      * * 2: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batch, height*block_size,
@@ -746,6 +753,7 @@ typedef enum {
      *      invoke on the result.
      * * 10: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *       Set to true to specify NCHW data layout for input0 and output0.
+     *       Available since API level 29.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
@@ -766,6 +774,7 @@ typedef enum {
      *      invoke on the result.
      * * 7: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -1132,6 +1141,7 @@ typedef enum {
      *      invoke on the result.
      * * 10: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *       Set to true to specify NCHW data layout for input0 and output0.
+     *       Available since API level 29.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
@@ -1152,6 +1162,7 @@ typedef enum {
      *      invoke on the result.
      * * 7: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -1318,6 +1329,7 @@ typedef enum {
      *      width of the output tensor.
      * * 3: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -1446,6 +1458,7 @@ typedef enum {
      *      input height and width.
      * * 2: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batches, height/block_size,
@@ -1589,6 +1602,7 @@ typedef enum {
      *      must be >= 1.
      * * 2: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
@@ -1738,6 +1752,7 @@ typedef enum {
      *      end of dimension i.
      * * 3: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
