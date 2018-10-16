@@ -163,8 +163,10 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4, with "NHWC" (i.e., Num_samples, Height, Width,
-     * and Channels) data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Both explicit padding and implicit padding are supported.
      *
@@ -190,6 +192,8 @@ typedef enum {
      * * 9: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 10: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *       Set to true to specify NCHW data layout for input0 and output0.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
@@ -208,6 +212,8 @@ typedef enum {
      * * 6: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 7: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -267,7 +273,10 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Both explicit padding and implicit padding are supported.
      *
@@ -298,6 +307,8 @@ typedef enum {
      * * 9: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 10: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *       Set to true to specify NCHW data layout for input0 and output0.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
@@ -321,6 +332,8 @@ typedef enum {
      * * 6: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 7: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -358,7 +371,10 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Both explicit padding and implicit padding are supported.
      *
@@ -390,6 +406,8 @@ typedef enum {
      * * 10: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *       {@link FuseCode} values. Specifies the activation to
      *       invoke on the result.
+     * * 11: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *       Set to true to specify NCHW data layout for input0 and output0.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
@@ -414,6 +432,8 @@ typedef enum {
      * * 7: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 8: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -444,7 +464,10 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Inputs:
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
@@ -452,6 +475,8 @@ typedef enum {
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the block_size.
      *      block_size must be >=1 and block_size * block_size must be a divisor
      *      of the input depth.
+     * * 2: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batch, height*block_size,
@@ -677,7 +702,10 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Both explicit padding and implicit padding are supported.
      *
@@ -703,6 +731,8 @@ typedef enum {
      * * 9: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 10: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *       Set to true to specify NCHW data layout for input0 and output0.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
@@ -721,6 +751,8 @@ typedef enum {
      * * 6: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 7: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -1056,7 +1088,10 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Both explicit padding and implicit padding are supported.
      *
@@ -1082,6 +1117,8 @@ typedef enum {
      * * 9: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 10: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *       Set to true to specify NCHW data layout for input0 and output0.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
@@ -1100,6 +1137,8 @@ typedef enum {
      * * 6: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 7: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -1252,7 +1291,10 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Inputs:
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
@@ -1261,6 +1303,8 @@ typedef enum {
      *      height of the output tensor.
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
      *      width of the output tensor.
+     * * 3: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -1376,7 +1420,10 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Inputs:
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
@@ -1384,6 +1431,8 @@ typedef enum {
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the block_size.
      *      block_size must be >=1 and block_size must be a divisor of both the
      *      input height and width.
+     * * 2: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batches, height/block_size,
@@ -1512,13 +1561,18 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Inputs:
      * * 0: An n-D tensor, specifying the tensor to be reshaped
      * * 1: A 1-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32}, the block
      *      sizes for each spatial dimension of the input tensor. All values
      *      must be >= 1.
+     * * 2: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
@@ -1649,7 +1703,10 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Inputs:
      * * 0: An n-D tensor, specifying the input.
@@ -1663,6 +1720,8 @@ typedef enum {
      *      front of dimension i.
      *      padding[i, 1] specifies the number of element to be padded after the
      *      end of dimension i.
+     * * 3: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
