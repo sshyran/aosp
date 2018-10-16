@@ -1317,11 +1317,12 @@ void transposeConvOpTest(int32_t operandCode) {
                                               ? getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, biasDim)
                                               : getOpType(operandCode, 1, biasDim);
     ANeuralNetworksOperandType scalar = getOpType(ANEURALNETWORKS_INT32);
+    ANeuralNetworksOperandType layout = getOpType(ANEURALNETWORKS_BOOL);
 
     OperationTestBase explicitTransposeConvTest(
             ANEURALNETWORKS_TRANSPOSE_CONV_2D,
             {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
-             scalar, scalar, scalar, scalar, scalar, scalar},
+             scalar, scalar, scalar, scalar, scalar, scalar, layout},
             {getOpType(operandCode, 4, outDim)});
 
     EXPECT_TRUE(explicitTransposeConvTest.testMutatingInputOperandCode());
@@ -1333,7 +1334,7 @@ void transposeConvOpTest(int32_t operandCode) {
             ANEURALNETWORKS_TRANSPOSE_CONV_2D,
             {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias,
              getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim), scalar, scalar, scalar,
-             scalar},
+             scalar, layout},
             {getOpType(operandCode, 4, outDim)});
 
     EXPECT_TRUE(implicitTransposeConvTest.testMutatingInputOperandCode());
