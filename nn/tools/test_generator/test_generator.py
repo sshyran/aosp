@@ -717,13 +717,18 @@ class DataLayoutConverter(ModelVariation, ImplicitVariation):
         return self
 
     def TransformOperand(self, op, arg=None):
-        assert len(op.type.dimensions) == 4, \
-            "Error converting layout of %s, can only apply transformation to 4-D tensor"%op
-        # To handle Internal operands
-        if op.value is not None:
-            op.SetValueFromNumpy(op.GetValueAsNumpy().transpose(self.perm))
-        newDim = [op.type.dimensions[i] for i in self.perm]
-        op.type = Type.GetType(op.type.type, newDim, op.type.scale, op.type.zeroPoint)
+        if len(op.type.dimensions) == 4:
+            # To handle Internal operands
+            if op.value is not None:
+                op.SetValueFromNumpy(op.GetValueAsNumpy().transpose(self.perm))
+            newDim = [op.type.dimensions[i] for i in self.perm]
+            op.type = Type.GetType(op.type.type, newDim, op.type.scale, op.type.zeroPoint)
+        elif len(op.type.dimensions) == 1 and len(op.value) == 4:
+            op.SetValueFromNumpy(op.GetValueAsNumpy()[list(self.perm)])
+        elif op.type.type == "BOOL":
+            op.SetValue(self.param)
+        else:
+            assert False, "%s not supported by DataLayoutConverter"%op
         return op
 
     def TransformParameters(self, parameters):
@@ -843,7 +848,7 @@ class Example:
         self.variations[-1].extend(ImplicitVariation.ImplicitConvertion(i) for i in args)
         return self
 
-    def AddNchw(self, ops, params, includeDefault=True, defaultName=None):
+    def AddNchw(self, ops, params, includeDefault=True, defaultName="nhwc"):
         var = DataLayoutConverter("nchw").Identify(ops, params)
         self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
         return self
