@@ -1158,11 +1158,12 @@ void groupedConvOpTest(int32_t operandCode) {
                                               ? getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, biasDim)
                                               : getOpType(operandCode, 1, biasDim);
     ANeuralNetworksOperandType scalar = getOpType(ANEURALNETWORKS_INT32);
+    ANeuralNetworksOperandType layout = getOpType(ANEURALNETWORKS_BOOL);
 
     OperationTestBase explicitGroupedConvTest(
             ANEURALNETWORKS_GROUPED_CONV_2D,
             {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
-             scalar, scalar, scalar, scalar, scalar, scalar, scalar},
+             scalar, scalar, scalar, scalar, scalar, scalar, scalar, layout},
             {getOpType(operandCode, 4, outDim)});
 
     EXPECT_TRUE(explicitGroupedConvTest.testMutatingInputOperandCode());
@@ -1173,7 +1174,7 @@ void groupedConvOpTest(int32_t operandCode) {
     OperationTestBase implicitGroupedConvTest(
             ANEURALNETWORKS_GROUPED_CONV_2D,
             {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
-             scalar, scalar, scalar, scalar},
+             scalar, scalar, scalar, scalar, layout},
             {getOpType(operandCode, 4, outDim)});
 
     EXPECT_TRUE(implicitGroupedConvTest.testMutatingInputOperandCode());
