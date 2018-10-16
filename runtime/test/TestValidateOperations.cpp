@@ -383,6 +383,33 @@ void poolingOpTest(ANeuralNetworksOperationType operationCode, int32_t operandCo
     EXPECT_TRUE(implicitPoolingTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(implicitPoolingTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(implicitPoolingTest.testMutatingOutputOperandCounts());
+
+    ANeuralNetworksOperandType layout = {.type = ANEURALNETWORKS_BOOL,
+                                         .dimensionCount = 0,
+                                         .dimensions = nullptr,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+
+    OperationTestBase explicitNchwPoolingTest(
+            operationCode,
+            {input, padLeft, padRight, padTop, padBottom, strideWidth, strideHeight, filterWidth,
+             filterHeight, activation, layout},
+            {output});
+
+    EXPECT_TRUE(explicitNchwPoolingTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(explicitNchwPoolingTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(explicitNchwPoolingTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(explicitNchwPoolingTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase implicitNchwPoolingTest(operationCode,
+                                              {input, padImplicit, strideWidth, strideHeight,
+                                               filterWidth, filterHeight, activation, layout},
+                                              {output});
+
+    EXPECT_TRUE(implicitNchwPoolingTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(implicitNchwPoolingTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(implicitNchwPoolingTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(implicitNchwPoolingTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, AVERAGE_POOL_2D_float32) {
@@ -421,14 +448,24 @@ void spaceDepthOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
                                              .dimensions = nullptr,
                                              .scale = 0.0f,
                                              .zeroPoint = 0};
-
     ANeuralNetworksOperandType output = input;
-    OperationTestBase spaceDepthTest(operationCode, {input, block_size}, {output});
 
+    OperationTestBase spaceDepthTest(operationCode, {input, block_size}, {output});
     EXPECT_TRUE(spaceDepthTest.testMutatingInputOperandCode());
     EXPECT_TRUE(spaceDepthTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(spaceDepthTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(spaceDepthTest.testMutatingOutputOperandCounts());
+
+    ANeuralNetworksOperandType layout = {.type = ANEURALNETWORKS_BOOL,
+                                         .dimensionCount = 0,
+                                         .dimensions = nullptr,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+    OperationTestBase spaceDepthNchwTest(operationCode, {input, block_size, layout}, {output});
+    EXPECT_TRUE(spaceDepthNchwTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(spaceDepthNchwTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(spaceDepthNchwTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(spaceDepthNchwTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, SPACE_TO_DEPTH_float32) {
@@ -464,23 +501,39 @@ void spaceBatchOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
                                              .dimensions = blockDimensions,
                                              .scale = 0.0f,
                                              .zeroPoint = 0};
+    ANeuralNetworksOperandType layout = {.type = ANEURALNETWORKS_BOOL,
+                                         .dimensionCount = 0,
+                                         .dimensions = nullptr,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
 
     ANeuralNetworksOperandType padding = blockShape;
     ANeuralNetworksOperandType output = input;
     if (operationCode == ANEURALNETWORKS_SPACE_TO_BATCH_ND) {
         OperationTestBase spaceBatchTest(operationCode, {input, blockShape, padding}, {output});
-
         EXPECT_TRUE(spaceBatchTest.testMutatingInputOperandCode());
         EXPECT_TRUE(spaceBatchTest.testMutatingInputOperandCounts());
         EXPECT_TRUE(spaceBatchTest.testMutatingOutputOperandCode());
         EXPECT_TRUE(spaceBatchTest.testMutatingOutputOperandCounts());
+
+        OperationTestBase spaceBatchNchwTest(operationCode, {input, blockShape, padding, layout},
+                                             {output});
+        EXPECT_TRUE(spaceBatchNchwTest.testMutatingInputOperandCode());
+        EXPECT_TRUE(spaceBatchNchwTest.testMutatingInputOperandCounts());
+        EXPECT_TRUE(spaceBatchNchwTest.testMutatingOutputOperandCode());
+        EXPECT_TRUE(spaceBatchNchwTest.testMutatingOutputOperandCounts());
     } else {
         OperationTestBase spaceBatchTest(operationCode, {input, blockShape}, {output});
-
         EXPECT_TRUE(spaceBatchTest.testMutatingInputOperandCode());
         EXPECT_TRUE(spaceBatchTest.testMutatingInputOperandCounts());
         EXPECT_TRUE(spaceBatchTest.testMutatingOutputOperandCode());
         EXPECT_TRUE(spaceBatchTest.testMutatingOutputOperandCounts());
+
+        OperationTestBase spaceBatchNchwTest(operationCode, {input, blockShape, layout}, {output});
+        EXPECT_TRUE(spaceBatchNchwTest.testMutatingInputOperandCode());
+        EXPECT_TRUE(spaceBatchNchwTest.testMutatingInputOperandCounts());
+        EXPECT_TRUE(spaceBatchNchwTest.testMutatingOutputOperandCode());
+        EXPECT_TRUE(spaceBatchNchwTest.testMutatingOutputOperandCounts());
     }
 }
 
@@ -605,6 +658,33 @@ void convOpTest(int32_t operandCode) {
     EXPECT_TRUE(implicitConvTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(implicitConvTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(implicitConvTest.testMutatingOutputOperandCounts());
+
+    ANeuralNetworksOperandType layout = {.type = ANEURALNETWORKS_BOOL,
+                                         .dimensionCount = 0,
+                                         .dimensions = nullptr,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+
+    OperationTestBase explicitNchwConvTest(
+            ANEURALNETWORKS_CONV_2D,
+            {input, filter, bias, padLeft, padRight, padTop, padBottom, strideWidth, strideHeight,
+             activation, layout},
+            {output});
+
+    EXPECT_TRUE(explicitNchwConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(explicitNchwConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(explicitNchwConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(explicitNchwConvTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase implicitNchwConvTest(
+            ANEURALNETWORKS_CONV_2D,
+            {input, filter, bias, padImplicit, strideWidth, strideHeight, activation, layout},
+            {output});
+
+    EXPECT_TRUE(implicitNchwConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(implicitNchwConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(implicitNchwConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(implicitNchwConvTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, CONV_2D_float32) {
@@ -678,6 +758,33 @@ void depthwiseConvOpTest(int32_t operandCode) {
     EXPECT_TRUE(implicitDepthwiseConvTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(implicitDepthwiseConvTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(implicitDepthwiseConvTest.testMutatingOutputOperandCounts());
+
+    ANeuralNetworksOperandType layout = {.type = ANEURALNETWORKS_BOOL,
+                                         .dimensionCount = 0,
+                                         .dimensions = nullptr,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+
+    OperationTestBase explicitNchwDepthwiseConvTest(
+            ANEURALNETWORKS_DEPTHWISE_CONV_2D,
+            {input, filter, bias, padLeft, padRight, padTop, padBottom, strideWidth, strideHeight,
+             multiplier, activation, layout},
+            {output});
+
+    EXPECT_TRUE(explicitNchwDepthwiseConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(explicitNchwDepthwiseConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(explicitNchwDepthwiseConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(explicitNchwDepthwiseConvTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase implicitNchwDepthwiseConvTest(ANEURALNETWORKS_DEPTHWISE_CONV_2D,
+                                                    {input, filter, bias, padImplicit, strideWidth,
+                                                     strideHeight, multiplier, activation, layout},
+                                                    {output});
+
+    EXPECT_TRUE(implicitNchwDepthwiseConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(implicitNchwDepthwiseConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(implicitNchwDepthwiseConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(implicitNchwDepthwiseConvTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, DEPTHWISE_CONV_2D_float32) {
@@ -793,13 +900,25 @@ TEST(OperationValidationTest, RESIZE_BILINEAR_float32) {
                                          .zeroPoint = 0};
     ANeuralNetworksOperandType width = height;
     ANeuralNetworksOperandType output = input;
+
     OperationTestBase resizeTest(ANEURALNETWORKS_RESIZE_BILINEAR,
                                  {input, height, width}, {output});
-
     EXPECT_TRUE(resizeTest.testMutatingInputOperandCode());
     EXPECT_TRUE(resizeTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(resizeTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(resizeTest.testMutatingOutputOperandCounts());
+
+    ANeuralNetworksOperandType layout = {.type = ANEURALNETWORKS_BOOL,
+                                         .dimensionCount = 0,
+                                         .dimensions = nullptr,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+    OperationTestBase resizeNchwTest(ANEURALNETWORKS_RESIZE_BILINEAR,
+                                     {input, height, width, layout}, {output});
+    EXPECT_TRUE(resizeNchwTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(resizeNchwTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(resizeNchwTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(resizeNchwTest.testMutatingOutputOperandCounts());
 }
 
 void embeddingLookupTest(int32_t operandCode) {
