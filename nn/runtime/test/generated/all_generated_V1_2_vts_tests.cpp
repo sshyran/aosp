@@ -2995,6 +2995,21 @@ TEST_F(NeuralnetworksHidlTest, split_quant8_4) {
                            split_quant8_4::examples);
 }
 
+// Generated from: tanh_quantized.mod.py.
+namespace tanh_quantized {
+// Generated tanh_quantized test
+#include "examples/tanh_quantized.example.cpp"
+// Generated model constructor
+#include "vts_models/tanh_quantized.model.cpp"
+} // namespace tanh_quantized
+
+TEST_F(NeuralnetworksHidlTest, tanh_quantized) {
+  generated_tests::Execute(device,
+                           tanh_quantized::createTestModel,
+                           tanh_quantized::is_ignored,
+                           tanh_quantized::examples);
+}
+
 // Generated from: tile_1.mod.py.
 namespace tile_1 {
 // Generated tile_1 test
