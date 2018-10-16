@@ -42,5 +42,5 @@ relu = ActivationConverter("relu").Identify([output], [act])
 relu6 = ActivationConverter("relu6").Identify([output], [act])
 
 # Instantiate an example
-Example((input0, output0)).AddNchw([i1, f1, output], [layout]).AddAllActivations(
-    [output], [act]).AddInput([f1]).AddVariations(RelaxedModeConverter(True), quant8)
+Example((input0, output0)).AddNchw(i1, f1, output, layout).AddAllActivations(
+    output, act).AddInput(f1).AddVariations(RelaxedModeConverter(True), quant8)

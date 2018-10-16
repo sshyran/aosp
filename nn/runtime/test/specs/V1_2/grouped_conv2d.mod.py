@@ -37,7 +37,7 @@ Example({
          33, 6,
          31, 3,
          27, 0]
-}).AddVariations("relaxed", quant8).AddInput([w1, b1])
+}).AddVariations("relaxed", quant8).AddInput(w1, b1)
 
 
 # TEST 2: GROUPED_CONV2D_LARGE, pad = same, stride = 1, numGroups = 2, act = none
@@ -65,7 +65,7 @@ Example({
          1370, -10,
          543, -907,
          760, -310]
-}).AddVariations("relaxed", quant8).AddInput([w2, b2])
+}).AddVariations("relaxed", quant8).AddInput(w2, b2)
 
 
 # TEST 3: GROUPED_CONV2D_CHANNEL, pad = same, stride = 1, numGroups = 3, act = none
@@ -92,4 +92,4 @@ Example({
          32,  -6,  73,  50, 134, -45,
          24, -13, 111, 128, 102, -51,
          17, -18, 134, 170,  73, -55]
-}).AddVariations("relaxed", quant8).AddInput([w3, b3])
+}).AddVariations("relaxed", quant8).AddInput(w3, b3)
