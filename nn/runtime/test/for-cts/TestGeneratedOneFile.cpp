@@ -351,6 +351,8 @@
 #include "../generated/tests/depth_to_space_v1_2.mod.py.cpp"
 #include "../generated/tests/depthwise_conv2d_v1_2.mod.py.cpp"
 #include "../generated/tests/expand_dims.mod.py.cpp"
+#include "../generated/tests/gather.mod.py.cpp"
+#include "../generated/tests/gather_higher_rank.mod.py.cpp"
 #include "../generated/tests/grouped_conv2d.mod.py.cpp"
 #include "../generated/tests/heatmap_max_keypoint.mod.py.cpp"
 #include "../generated/tests/l2_pool_v1_2.mod.py.cpp"

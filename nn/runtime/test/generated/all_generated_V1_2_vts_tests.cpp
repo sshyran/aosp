@@ -1791,6 +1791,274 @@ TEST_F(NeuralnetworksHidlTest, expand_dims_int32_4) {
                            expand_dims::examples_int32_4);
 }
 
+// Generated from: gather.mod.py.
+namespace gather {
+// Generated gather test
+#include "examples/gather.example.cpp"
+// Generated model constructor
+#include "vts_models/gather.model.cpp"
+} // namespace gather
+
+TEST_F(NeuralnetworksHidlTest, gather) {
+  generated_tests::Execute(device,
+                           gather::createTestModel,
+                           gather::is_ignored,
+                           gather::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_relaxed) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_relaxed,
+                           gather::is_ignored_relaxed,
+                           gather::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_quant8) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_quant8,
+                           gather::is_ignored_quant8,
+                           gather::examples_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_int32) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_int32,
+                           gather::is_ignored_int32,
+                           gather::examples_int32);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_2) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_2,
+                           gather::is_ignored_2,
+                           gather::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_relaxed_2) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_relaxed_2,
+                           gather::is_ignored_relaxed_2,
+                           gather::examples_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_quant8_2) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_quant8_2,
+                           gather::is_ignored_quant8_2,
+                           gather::examples_quant8_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_int32_2) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_int32_2,
+                           gather::is_ignored_int32_2,
+                           gather::examples_int32_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_3) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_3,
+                           gather::is_ignored_3,
+                           gather::examples_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_relaxed_3) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_relaxed_3,
+                           gather::is_ignored_relaxed_3,
+                           gather::examples_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_quant8_3) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_quant8_3,
+                           gather::is_ignored_quant8_3,
+                           gather::examples_quant8_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_int32_3) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_int32_3,
+                           gather::is_ignored_int32_3,
+                           gather::examples_int32_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_4) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_4,
+                           gather::is_ignored_4,
+                           gather::examples_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_relaxed_4) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_relaxed_4,
+                           gather::is_ignored_relaxed_4,
+                           gather::examples_relaxed_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_quant8_4) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_quant8_4,
+                           gather::is_ignored_quant8_4,
+                           gather::examples_quant8_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_int32_4) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_int32_4,
+                           gather::is_ignored_int32_4,
+                           gather::examples_int32_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_5) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_5,
+                           gather::is_ignored_5,
+                           gather::examples_5);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_relaxed_5) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_relaxed_5,
+                           gather::is_ignored_relaxed_5,
+                           gather::examples_relaxed_5);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_quant8_5) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_quant8_5,
+                           gather::is_ignored_quant8_5,
+                           gather::examples_quant8_5);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_int32_5) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_int32_5,
+                           gather::is_ignored_int32_5,
+                           gather::examples_int32_5);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_6) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_6,
+                           gather::is_ignored_6,
+                           gather::examples_6);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_relaxed_6) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_relaxed_6,
+                           gather::is_ignored_relaxed_6,
+                           gather::examples_relaxed_6);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_quant8_6) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_quant8_6,
+                           gather::is_ignored_quant8_6,
+                           gather::examples_quant8_6);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_int32_6) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_int32_6,
+                           gather::is_ignored_int32_6,
+                           gather::examples_int32_6);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_7) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_7,
+                           gather::is_ignored_7,
+                           gather::examples_7);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_relaxed_7) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_relaxed_7,
+                           gather::is_ignored_relaxed_7,
+                           gather::examples_relaxed_7);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_quant8_7) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_quant8_7,
+                           gather::is_ignored_quant8_7,
+                           gather::examples_quant8_7);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_int32_7) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_int32_7,
+                           gather::is_ignored_int32_7,
+                           gather::examples_int32_7);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_8) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_8,
+                           gather::is_ignored_8,
+                           gather::examples_8);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_relaxed_8) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_relaxed_8,
+                           gather::is_ignored_relaxed_8,
+                           gather::examples_relaxed_8);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_quant8_8) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_quant8_8,
+                           gather::is_ignored_quant8_8,
+                           gather::examples_quant8_8);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_int32_8) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_int32_8,
+                           gather::is_ignored_int32_8,
+                           gather::examples_int32_8);
+}
+
+// Generated from: gather_higher_rank.mod.py.
+namespace gather_higher_rank {
+// Generated gather_higher_rank test
+#include "examples/gather_higher_rank.example.cpp"
+// Generated model constructor
+#include "vts_models/gather_higher_rank.model.cpp"
+} // namespace gather_higher_rank
+
+TEST_F(NeuralnetworksHidlTest, gather_higher_rank) {
+  generated_tests::Execute(device,
+                           gather_higher_rank::createTestModel,
+                           gather_higher_rank::is_ignored,
+                           gather_higher_rank::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_higher_rank_relaxed) {
+  generated_tests::Execute(device,
+                           gather_higher_rank::createTestModel_relaxed,
+                           gather_higher_rank::is_ignored_relaxed,
+                           gather_higher_rank::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_higher_rank_quant8) {
+  generated_tests::Execute(device,
+                           gather_higher_rank::createTestModel_quant8,
+                           gather_higher_rank::is_ignored_quant8,
+                           gather_higher_rank::examples_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, gather_higher_rank_int32) {
+  generated_tests::Execute(device,
+                           gather_higher_rank::createTestModel_int32,
+                           gather_higher_rank::is_ignored_int32,
+                           gather_higher_rank::examples_int32);
+}
+
 // Generated from: grouped_conv2d.mod.py.
 namespace grouped_conv2d {
 // Generated grouped_conv2d test
