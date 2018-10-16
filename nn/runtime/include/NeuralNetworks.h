@@ -2085,7 +2085,41 @@ typedef enum {
      */
     ANEURALNETWORKS_EXPAND_DIMS = 50,
 
+    /**
+     * Gathers values along an axis.
+     *
+     * Produces an output tensor with shape
+     *     input0.dimension[:axis] + indices.dimension + input0.dimension[axis + 1:]
+     * where:
+     *     # Vector indices (output is rank(input0)).
+     *     output[a_0, ..., a_n, i, b_0, ..., b_n] =
+     *       input0[a_0, ..., a_n, indices[i], b_0, ..., b_n]
+     *
+     *     # Higher rank indices (output is rank(input0) + rank(indices) - 1).
+     *     output[a_0, ..., a_n, i, ..., j, b_0, ... b_n] =
+     *       input0[a_0, ..., a_n, indices[i, ..., j], b_0, ..., b_n]
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: An n-D tensor from which to gather values.
+     * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis.
+     *      Negative index is used to specify axis from the end
+     *      (e.g. -1 for the last axis). Must be in the range [-n, n).
+     * * 2: A k-D tensor {@link ANEURALNETWORKS_TENSOR_INT32} of indices.
+     *      The values must be in the bounds of the corresponding dimensions
+     *      of input0.
+     *
+     * Outputs:
+     * * 0: An (n + k - 1)-D tensor with the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_GATHER = 51,
+
     ANEURALNETWORKS_GENERATE_PROPOSALS = 52,
     ANEURALNETWORKS_GREATER = 53,
     ANEURALNETWORKS_GREATER_EQUAL = 54,
