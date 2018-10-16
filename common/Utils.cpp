@@ -631,7 +631,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 12 || inputCount == 9) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                // TODO(xusongw): Mention this in NeuralNetworks.h.
                 *minSupportedHalVersion = HalVersion::V1_2;
             } else {
                 *minSupportedHalVersion = HalVersion::V1_0;
@@ -685,7 +684,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                // TODO(xusongw): Mention this in NeuralNetworks.h.
                 *minSupportedHalVersion = HalVersion::V1_2;
             } else {
                 *minSupportedHalVersion = HalVersion::V1_0;
@@ -739,7 +737,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                // TODO(xusongw): Mention this in NeuralNetworks.h.
                 *minSupportedHalVersion = HalVersion::V1_2;
             } else {
                 *minSupportedHalVersion = HalVersion::V1_0;
@@ -784,7 +781,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                // TODO(xusongw): Mention this in NeuralNetworks.h.
                 *minSupportedHalVersion = HalVersion::V1_2;
             } else {
                 *minSupportedHalVersion = HalVersion::V1_0;
@@ -838,7 +834,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                // TODO(xusongw): Mention this in NeuralNetworks.h.
                 *minSupportedHalVersion = HalVersion::V1_2;
             } else {
                 *minSupportedHalVersion = HalVersion::V1_0;
@@ -1160,7 +1155,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 4) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                // TODO(xusongw): Mention this in NeuralNetworks.h.
                 *minSupportedHalVersion = HalVersion::V1_2;
             } else {
                 *minSupportedHalVersion = HalVersion::V1_0;
@@ -1196,7 +1190,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 3) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                // TODO(xusongw): Mention this in NeuralNetworks.h.
                 *minSupportedHalVersion = HalVersion::V1_2;
             } else {
                 *minSupportedHalVersion = HalVersion::V1_0;
@@ -1232,7 +1225,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 3) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                // TODO(xusongw): Mention this in NeuralNetworks.h.
                 *minSupportedHalVersion = HalVersion::V1_2;
             } else {
                 *minSupportedHalVersion = HalVersion::V1_0;
@@ -1401,7 +1393,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 3) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                // TODO(xusongw): Mention this in NeuralNetworks.h.
                 *minSupportedHalVersion = HalVersion::V1_2;
             } else {
                 *minSupportedHalVersion = HalVersion::V1_1;
@@ -1439,7 +1430,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 4) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                // TODO(xusongw): Mention this in NeuralNetworks.h.
                 *minSupportedHalVersion = HalVersion::V1_2;
             } else {
                 *minSupportedHalVersion = HalVersion::V1_1;
