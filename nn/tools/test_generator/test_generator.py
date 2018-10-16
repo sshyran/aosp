@@ -550,7 +550,6 @@ class ModelVariation:
 
     def __init__(self, name=None):
         self.targetOperands = {}
-        self.targetParameters = []
         self.name = name
 
     def ApplyToHelper(self, model, args, feedDicts, transform):
@@ -592,12 +591,9 @@ class ModelVariation:
         # get transformed operands and update feedDicts
         operandsVar = self.ApplyToHelper(
             model, self.targetOperands, feedDicts, self.TransformOperand)
-        parametersVar = self.TransformParameters(
-            model.GetEquivalentOperands(self.targetParameters))
 
         model = self.TransformModel(model)
         model.UpdateEquivalentOperands(operandsVar)
-        model.UpdateEquivalentOperands(parametersVar)
         return model, feedDicts
 
     def IdentifyOperands(self, args=None):
@@ -606,14 +602,8 @@ class ModelVariation:
         self.targetOperands = args if type(args) is dict else {i: None for i in args}
         return self
 
-    def IdentifyParameters(self, args=None):
-        if args is None:
-            return self
-        self.targetParameters = args
-        return self
-
     def Identify(self, operandArgs=None, paramArgs=None):
-        self.IdentifyOperands(operandArgs).IdentifyParameters(paramArgs)
+        self.IdentifyOperands(operandArgs)
         return self
 
     # Set variation to its default name
@@ -624,10 +614,6 @@ class ModelVariation:
     # Transform operands that are marked by IdentifyOperands()
     def TransformOperand(self, op, arg=None):
         return op
-
-    # Transform operands that are marked as parameters by IdentifyParameters()
-    def TransformParameters(self, parameters):
-        return parameters
 
     # Transform the model
     def TransformModel(self, model):
@@ -731,11 +717,6 @@ class DataLayoutConverter(ModelVariation, ImplicitVariation):
             assert False, "%s not supported by DataLayoutConverter"%op
         return op
 
-    def TransformParameters(self, parameters):
-        for p in parameters:
-            p.SetValue(self.param)
-        return parameters
-
 # Convert a Parameter to Input
 class ParameterAsInputConverter(ModelVariation, ImplicitVariation):
 
@@ -784,20 +765,18 @@ class ActivationConverter(ModelVariation, ImplicitVariation):
         return self
 
     def TransformOperand(self, op, arg=None):
-        assert isinstance(op, Output)
-        v = op.GetValueAsNumpy()
-        if self.low is not None:
-            low = Quantize(self.low, op.type)
-            v = np.maximum(v, low)
-        if self.high is not None:
-            high = Quantize(self.high, op.type)
-            v = np.minimum(v, high)
-        return op.SetValueFromNumpy(v)
-
-    def TransformParameters(self, parameters):
-        for p in parameters:
-            p.SetValue(self.enum)
-        return parameters
+        if op.type.type == "INT32": # activation enum
+            return op.SetValue(self.enum)
+        else:
+            assert isinstance(op, Output)
+            v = op.GetValueAsNumpy()
+            if self.low is not None:
+                low = Quantize(self.low, op.type)
+                v = np.maximum(v, low)
+            if self.high is not None:
+                high = Quantize(self.high, op.type)
+                v = np.minimum(v, high)
+            return op.SetValueFromNumpy(v)
 
 # An example is always attached to a model, and could have multiple variations
 class Example:
@@ -848,8 +827,8 @@ class Example:
         self.variations[-1].extend(ImplicitVariation.ImplicitConvertion(i) for i in args)
         return self
 
-    def AddNchw(self, ops, params, includeDefault=True, defaultName="nhwc"):
-        var = DataLayoutConverter("nchw").Identify(ops, params)
+    def AddNchw(self, *args, includeDefault=True, defaultName="nhwc"):
+        var = DataLayoutConverter("nchw").Identify(args)
         self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
         return self
 
@@ -858,18 +837,18 @@ class Example:
         self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
         return self
 
-    def AddInput(self, ops, includeDefault=True, defaultName=None):
-        var = ParameterAsInputConverter().Identify(ops)
+    def AddInput(self, *args, includeDefault=True, defaultName=None):
+        var = ParameterAsInputConverter().Identify(args)
         self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
         return self
 
-    def AddRelu(self, ops, params, includeDefault=True, defaultName=None):
-        var = ActivationConverter("relu").Identify(ops, params)
+    def AddRelu(self, *args, includeDefault=True, defaultName=None):
+        var = ActivationConverter("relu").Identify(args)
         self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
         return self
 
-    def AddAllActivations(self, ops, params):
-        var = [ActivationConverter(i).Identify(ops, params)
+    def AddAllActivations(self, *args):
+        var = [ActivationConverter(i).Identify(args)
             for i in sorted(ActivationConverter.actMap.keys())]
         self.AddVariations(*var, includeDefault=False)
         return self

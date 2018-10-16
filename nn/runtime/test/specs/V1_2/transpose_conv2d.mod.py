@@ -36,7 +36,7 @@ Example({
          15, 18, 23, 26, 61,  70,  41, 46, 53, 58,
          20, 22, 26, 28, 60,  66,  35, 38, 43, 46,
          38, 40, 44, 46, 102, 108, 59, 62, 67, 70]
-}).AddVariations("relaxed", quant8).AddInput([w1, b1])
+}).AddVariations("relaxed", quant8).AddInput(w1, b1)
 
 
 # TEST 2: TRANSPOSE_CONV2D_LARGE, outputShape = [1, 3, 4, 1], pad = same, stride = 3, act = relu
@@ -59,7 +59,7 @@ Example({
     o2: [500.,  800.,  3500., 1500.,
          1400., 500.,  3500., 3000.,
          0.,    200.,  500.,  0.]
-}).AddVariations("relaxed", quant8).AddInput([w2, b2])
+}).AddVariations("relaxed", quant8).AddInput(w2, b2)
 
 
 # TEST 3: TRANSPOSE_CONV2D_SAME, outputShape = [1, 4, 4, 1], pad = same, stride = 1, act = none
@@ -84,7 +84,7 @@ Example({
          678,  1347, 1689, 1434,
          1494, 2715, 3057, 2442,
          1968, 3352, 3652, 2760]
-}).AddVariations("relaxed", quant8).AddInput([w3, b3])
+}).AddVariations("relaxed", quant8).AddInput(w3, b3)
 
 
 # TEST 4: TRANSPOSE_CONV2D_VALID, outputShape = [1, 6, 6, 1], pad = valid, stride = 1, act = none
@@ -111,7 +111,7 @@ Example({
          597,  1494, 2715, 3057, 2442, 1431,
          856,  1968, 3352, 3652, 2760, 1548,
          689,  1534, 2543, 2729, 2010, 1103]
-}).AddVariations("relaxed", quant8).AddInput([w4, b4])
+}).AddVariations("relaxed", quant8).AddInput(w4, b4)
 
 
 # TEST 5: TRANSPOSE_CONV2D_EXPLICIT, pad = [1, 2, 2, 1], stride = 1, act = none
@@ -135,4 +135,4 @@ Example({
     o5: [678,  1347, 1689,
          1494, 2715, 3057,
          1968, 3352, 3652]
-}).AddVariations("relaxed", quant8).AddInput([w5, b5])
+}).AddVariations("relaxed", quant8).AddInput(w5, b5)

@@ -136,7 +136,7 @@ Convert input/parameter/output between NHWC and NCHW. The caller need to provide
 
 ```Python
 converter = DataLayoutConverter(target_data_layout, name="variation_name").Identify(
-    [op1, op2, ...], [layout_parameter]
+    [op1, op2, ..., layout_parameter]
 )
 ```
 
@@ -164,7 +164,7 @@ Convert the output by certain activation, the original activation is assumed to 
 
 ```Python
 converter = ActivationConverter(name="variation_name").Identify(
-    [op1, op2, ...], [act_parameter]
+    [op1, op2, ..., act_parameter]
 )
 ```
 
@@ -201,31 +201,31 @@ The test generator provides several helper functions or shorthands to add common
 ```Python
 # Each following group of statements are equivalent
 
-example.AddVariations(DataLayoutConverter("nchw").Identify(op_list, parameters))
-example.AddVariations(("nchw", op_list, parameters))
-example.AddNchw(op_list, parameters)
+example.AddVariations(DataLayoutConverter("nchw").Identify(op_list))
+example.AddVariations(("nchw", op_list))
+example.AddNchw(*op_list)
 
 example.AddVariations(ParameterAsInputConverter().Identify(op_list))
 example.AddVariations(("as_input", op_list))
-example.AddInput(op_list)
+example.AddInput(*op_list)
 
 example.Addvariations(RelaxedModeConverter(True))
 example.AddVariations("relaxed")
 example.AddRelaxed()
 
-example.AddVariations(ActivationConverter("relu").Identify(op_list, parameters))
-example.AddVariations(("relu", op_list, parameters))
-example.AddRelu(op_list, parameters)
+example.AddVariations(ActivationConverter("relu").Identify(op_list))
+example.AddVariations(("relu", op_list))
+example.AddRelu(*op_list)
 
 example.AddVariations(
-    ActivationConverter("relu").Identify(op_list, parameters),
-    ActivationConverter("relu1").Identify(op_list, parameters),
-    ActivationConverter("relu6").Identify(op_list, parameters))
+    ActivationConverter("relu").Identify(op_list),
+    ActivationConverter("relu1").Identify(op_list),
+    ActivationConverter("relu6").Identify(op_list))
 example.AddVariations(
-    ("relu", op_list, parameters),
-    ("relu1", op_list, parameters),
-    ("relu6", op_list, parameters))
-example.AddAllActivations()
+    ("relu", op_list),
+    ("relu1", op_list),
+    ("relu6", op_list))
+example.AddAllActivations(*op_list)
 ```
 
 ### A Complete Example
@@ -235,11 +235,12 @@ example.AddAllActivations()
 i1 = Input("op1", "TENSOR_FLOAT32", "{1, 3, 4, 1}")
 f1 = Parameter("op2", "TENSOR_FLOAT32", "{1, 3, 3, 1}", [1, 4, 7, 2, 5, 8, 3, 6, 9])
 b1 = Parameter("op3", "TENSOR_FLOAT32", "{1}", [-200])
+act = Int32Scalar("act", 0)
 o1 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 4, 1}")
 
 # Instantiate a model and add CONV_2D operation
-# Use implicit parameter for padding, stride, and activation
-Model().Operation("CONV_2D", i1, f1, b1, 1, 1, 1, 1, layout).To(o1)
+# Use implicit parameter for implicit padding and strides
+Model().Operation("CONV_2D", i1, f1, b1, 1, 1, 1, act, layout).To(o1)
 
 # Additional data type
 quant8 = DataTypeConverter().Identify({
@@ -256,13 +257,13 @@ example = Example({
 })
 
 # Only use NCHW data layout
-example.AddNchw([i1, f1, o1], [layout], includeDefault=False)
+example.AddNchw(i1, f1, o1, layout, includeDefault=False)
 
 # Add two more groups of variations
-example.AddInput([f1, b1]).AddVariations("relaxed", quant8)
+example.AddInput(f1, b1).AddVariations("relaxed", quant8).AddAllActivations(o1, act)
 ```
 
-The spec above will result in 6 tests.
+The spec above will result in 24 tests.
 
 ## Generate Tests
 
