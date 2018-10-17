@@ -1693,130 +1693,508 @@ namespace grouped_conv2d {
 #include "vts_models/grouped_conv2d.model.cpp"
 } // namespace grouped_conv2d
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel,
-                           grouped_conv2d::is_ignored,
-                           grouped_conv2d::examples);
+                           grouped_conv2d::createTestModel_nhwc_none,
+                           grouped_conv2d::is_ignored_nhwc_none,
+                           grouped_conv2d::examples_nhwc_none);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none_weight_as_input) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_weight_as_input,
-                           grouped_conv2d::is_ignored_weight_as_input,
-                           grouped_conv2d::examples_weight_as_input);
+                           grouped_conv2d::createTestModel_nhwc_none_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_none_weight_as_input,
+                           grouped_conv2d::examples_nhwc_none_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_relaxed) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none_relaxed) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_relaxed,
-                           grouped_conv2d::is_ignored_relaxed,
-                           grouped_conv2d::examples_relaxed);
+                           grouped_conv2d::createTestModel_nhwc_none_relaxed,
+                           grouped_conv2d::is_ignored_nhwc_none_relaxed,
+                           grouped_conv2d::examples_nhwc_none_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_relaxed_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none_relaxed_weight_as_input) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_relaxed_weight_as_input,
-                           grouped_conv2d::is_ignored_relaxed_weight_as_input,
-                           grouped_conv2d::examples_relaxed_weight_as_input);
+                           grouped_conv2d::createTestModel_nhwc_none_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_none_relaxed_weight_as_input,
+                           grouped_conv2d::examples_nhwc_none_relaxed_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_quant8) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none_quant8) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_quant8,
-                           grouped_conv2d::is_ignored_quant8,
-                           grouped_conv2d::examples_quant8);
+                           grouped_conv2d::createTestModel_nhwc_none_quant8,
+                           grouped_conv2d::is_ignored_nhwc_none_quant8,
+                           grouped_conv2d::examples_nhwc_none_quant8);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_quant8_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none_quant8_weight_as_input) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_quant8_weight_as_input,
-                           grouped_conv2d::is_ignored_quant8_weight_as_input,
-                           grouped_conv2d::examples_quant8_weight_as_input);
+                           grouped_conv2d::createTestModel_nhwc_none_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_none_quant8_weight_as_input,
+                           grouped_conv2d::examples_nhwc_none_quant8_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_large,
-                           grouped_conv2d::is_ignored_large,
-                           grouped_conv2d::examples_large);
+                           grouped_conv2d::createTestModel_nhwc_relu,
+                           grouped_conv2d::is_ignored_nhwc_relu,
+                           grouped_conv2d::examples_nhwc_relu);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_weight_as_input) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_large_weight_as_input,
-                           grouped_conv2d::is_ignored_large_weight_as_input,
-                           grouped_conv2d::examples_large_weight_as_input);
+                           grouped_conv2d::createTestModel_nhwc_relu_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu_weight_as_input,
+                           grouped_conv2d::examples_nhwc_relu_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_relaxed) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_relaxed) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_large_relaxed,
-                           grouped_conv2d::is_ignored_large_relaxed,
-                           grouped_conv2d::examples_large_relaxed);
+                           grouped_conv2d::createTestModel_nhwc_relu_relaxed,
+                           grouped_conv2d::is_ignored_nhwc_relu_relaxed,
+                           grouped_conv2d::examples_nhwc_relu_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_relaxed_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_relaxed_weight_as_input) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_large_relaxed_weight_as_input,
-                           grouped_conv2d::is_ignored_large_relaxed_weight_as_input,
-                           grouped_conv2d::examples_large_relaxed_weight_as_input);
+                           grouped_conv2d::createTestModel_nhwc_relu_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu_relaxed_weight_as_input,
+                           grouped_conv2d::examples_nhwc_relu_relaxed_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_quant8) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_quant8) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_large_quant8,
-                           grouped_conv2d::is_ignored_large_quant8,
-                           grouped_conv2d::examples_large_quant8);
+                           grouped_conv2d::createTestModel_nhwc_relu_quant8,
+                           grouped_conv2d::is_ignored_nhwc_relu_quant8,
+                           grouped_conv2d::examples_nhwc_relu_quant8);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_quant8_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_quant8_weight_as_input) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_large_quant8_weight_as_input,
-                           grouped_conv2d::is_ignored_large_quant8_weight_as_input,
-                           grouped_conv2d::examples_large_quant8_weight_as_input);
+                           grouped_conv2d::createTestModel_nhwc_relu_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu_quant8_weight_as_input,
+                           grouped_conv2d::examples_nhwc_relu_quant8_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_channel,
-                           grouped_conv2d::is_ignored_channel,
-                           grouped_conv2d::examples_channel);
+                           grouped_conv2d::createTestModel_nhwc_relu1,
+                           grouped_conv2d::is_ignored_nhwc_relu1,
+                           grouped_conv2d::examples_nhwc_relu1);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1_weight_as_input) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_channel_weight_as_input,
-                           grouped_conv2d::is_ignored_channel_weight_as_input,
-                           grouped_conv2d::examples_channel_weight_as_input);
+                           grouped_conv2d::createTestModel_nhwc_relu1_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu1_weight_as_input,
+                           grouped_conv2d::examples_nhwc_relu1_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_relaxed) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1_relaxed) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_channel_relaxed,
-                           grouped_conv2d::is_ignored_channel_relaxed,
-                           grouped_conv2d::examples_channel_relaxed);
+                           grouped_conv2d::createTestModel_nhwc_relu1_relaxed,
+                           grouped_conv2d::is_ignored_nhwc_relu1_relaxed,
+                           grouped_conv2d::examples_nhwc_relu1_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_relaxed_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1_relaxed_weight_as_input) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_channel_relaxed_weight_as_input,
-                           grouped_conv2d::is_ignored_channel_relaxed_weight_as_input,
-                           grouped_conv2d::examples_channel_relaxed_weight_as_input);
+                           grouped_conv2d::createTestModel_nhwc_relu1_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu1_relaxed_weight_as_input,
+                           grouped_conv2d::examples_nhwc_relu1_relaxed_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_quant8) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1_quant8) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_channel_quant8,
-                           grouped_conv2d::is_ignored_channel_quant8,
-                           grouped_conv2d::examples_channel_quant8);
+                           grouped_conv2d::createTestModel_nhwc_relu1_quant8,
+                           grouped_conv2d::is_ignored_nhwc_relu1_quant8,
+                           grouped_conv2d::examples_nhwc_relu1_quant8);
 }
 
-TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_quant8_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1_quant8_weight_as_input) {
   generated_tests::Execute(device,
-                           grouped_conv2d::createTestModel_channel_quant8_weight_as_input,
-                           grouped_conv2d::is_ignored_channel_quant8_weight_as_input,
-                           grouped_conv2d::examples_channel_quant8_weight_as_input);
+                           grouped_conv2d::createTestModel_nhwc_relu1_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu1_quant8_weight_as_input,
+                           grouped_conv2d::examples_nhwc_relu1_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu6,
+                           grouped_conv2d::is_ignored_nhwc_relu6,
+                           grouped_conv2d::examples_nhwc_relu6);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu6_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu6_weight_as_input,
+                           grouped_conv2d::examples_nhwc_relu6_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_relaxed) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu6_relaxed,
+                           grouped_conv2d::is_ignored_nhwc_relu6_relaxed,
+                           grouped_conv2d::examples_nhwc_relu6_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu6_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu6_relaxed_weight_as_input,
+                           grouped_conv2d::examples_nhwc_relu6_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_quant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu6_quant8,
+                           grouped_conv2d::is_ignored_nhwc_relu6_quant8,
+                           grouped_conv2d::examples_nhwc_relu6_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu6_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu6_quant8_weight_as_input,
+                           grouped_conv2d::examples_nhwc_relu6_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_none,
+                           grouped_conv2d::is_ignored_nchw_none,
+                           grouped_conv2d::examples_nchw_none);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_none_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_none_weight_as_input,
+                           grouped_conv2d::examples_nchw_none_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none_relaxed) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_none_relaxed,
+                           grouped_conv2d::is_ignored_nchw_none_relaxed,
+                           grouped_conv2d::examples_nchw_none_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_none_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_none_relaxed_weight_as_input,
+                           grouped_conv2d::examples_nchw_none_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none_quant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_none_quant8,
+                           grouped_conv2d::is_ignored_nchw_none_quant8,
+                           grouped_conv2d::examples_nchw_none_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_none_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_none_quant8_weight_as_input,
+                           grouped_conv2d::examples_nchw_none_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu,
+                           grouped_conv2d::is_ignored_nchw_relu,
+                           grouped_conv2d::examples_nchw_relu);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu_weight_as_input,
+                           grouped_conv2d::examples_nchw_relu_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_relaxed) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu_relaxed,
+                           grouped_conv2d::is_ignored_nchw_relu_relaxed,
+                           grouped_conv2d::examples_nchw_relu_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu_relaxed_weight_as_input,
+                           grouped_conv2d::examples_nchw_relu_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_quant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu_quant8,
+                           grouped_conv2d::is_ignored_nchw_relu_quant8,
+                           grouped_conv2d::examples_nchw_relu_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu_quant8_weight_as_input,
+                           grouped_conv2d::examples_nchw_relu_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu1,
+                           grouped_conv2d::is_ignored_nchw_relu1,
+                           grouped_conv2d::examples_nchw_relu1);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu1_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu1_weight_as_input,
+                           grouped_conv2d::examples_nchw_relu1_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1_relaxed) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu1_relaxed,
+                           grouped_conv2d::is_ignored_nchw_relu1_relaxed,
+                           grouped_conv2d::examples_nchw_relu1_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu1_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu1_relaxed_weight_as_input,
+                           grouped_conv2d::examples_nchw_relu1_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1_quant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu1_quant8,
+                           grouped_conv2d::is_ignored_nchw_relu1_quant8,
+                           grouped_conv2d::examples_nchw_relu1_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu1_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu1_quant8_weight_as_input,
+                           grouped_conv2d::examples_nchw_relu1_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu6,
+                           grouped_conv2d::is_ignored_nchw_relu6,
+                           grouped_conv2d::examples_nchw_relu6);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu6_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu6_weight_as_input,
+                           grouped_conv2d::examples_nchw_relu6_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_relaxed) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu6_relaxed,
+                           grouped_conv2d::is_ignored_nchw_relu6_relaxed,
+                           grouped_conv2d::examples_nchw_relu6_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu6_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu6_relaxed_weight_as_input,
+                           grouped_conv2d::examples_nchw_relu6_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_quant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu6_quant8,
+                           grouped_conv2d::is_ignored_nchw_relu6_quant8,
+                           grouped_conv2d::examples_nchw_relu6_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu6_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu6_quant8_weight_as_input,
+                           grouped_conv2d::examples_nchw_relu6_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nhwc,
+                           grouped_conv2d::is_ignored_large_nhwc,
+                           grouped_conv2d::examples_large_nhwc);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nhwc_weight_as_input,
+                           grouped_conv2d::is_ignored_large_nhwc_weight_as_input,
+                           grouped_conv2d::examples_large_nhwc_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc_relaxed) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nhwc_relaxed,
+                           grouped_conv2d::is_ignored_large_nhwc_relaxed,
+                           grouped_conv2d::examples_large_nhwc_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nhwc_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_large_nhwc_relaxed_weight_as_input,
+                           grouped_conv2d::examples_large_nhwc_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc_quant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nhwc_quant8,
+                           grouped_conv2d::is_ignored_large_nhwc_quant8,
+                           grouped_conv2d::examples_large_nhwc_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nhwc_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_large_nhwc_quant8_weight_as_input,
+                           grouped_conv2d::examples_large_nhwc_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nchw,
+                           grouped_conv2d::is_ignored_large_nchw,
+                           grouped_conv2d::examples_large_nchw);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nchw_weight_as_input,
+                           grouped_conv2d::is_ignored_large_nchw_weight_as_input,
+                           grouped_conv2d::examples_large_nchw_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_relaxed) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nchw_relaxed,
+                           grouped_conv2d::is_ignored_large_nchw_relaxed,
+                           grouped_conv2d::examples_large_nchw_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nchw_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_large_nchw_relaxed_weight_as_input,
+                           grouped_conv2d::examples_large_nchw_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_quant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nchw_quant8,
+                           grouped_conv2d::is_ignored_large_nchw_quant8,
+                           grouped_conv2d::examples_large_nchw_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nchw_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_large_nchw_quant8_weight_as_input,
+                           grouped_conv2d::examples_large_nchw_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nhwc,
+                           grouped_conv2d::is_ignored_channel_nhwc,
+                           grouped_conv2d::examples_channel_nhwc);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nhwc_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_nhwc_weight_as_input,
+                           grouped_conv2d::examples_channel_nhwc_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc_relaxed) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nhwc_relaxed,
+                           grouped_conv2d::is_ignored_channel_nhwc_relaxed,
+                           grouped_conv2d::examples_channel_nhwc_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nhwc_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_nhwc_relaxed_weight_as_input,
+                           grouped_conv2d::examples_channel_nhwc_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc_quant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nhwc_quant8,
+                           grouped_conv2d::is_ignored_channel_nhwc_quant8,
+                           grouped_conv2d::examples_channel_nhwc_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nhwc_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_nhwc_quant8_weight_as_input,
+                           grouped_conv2d::examples_channel_nhwc_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nchw,
+                           grouped_conv2d::is_ignored_channel_nchw,
+                           grouped_conv2d::examples_channel_nchw);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nchw_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_nchw_weight_as_input,
+                           grouped_conv2d::examples_channel_nchw_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_relaxed) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nchw_relaxed,
+                           grouped_conv2d::is_ignored_channel_nchw_relaxed,
+                           grouped_conv2d::examples_channel_nchw_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nchw_relaxed_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_nchw_relaxed_weight_as_input,
+                           grouped_conv2d::examples_channel_nchw_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_quant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nchw_quant8,
+                           grouped_conv2d::is_ignored_channel_nchw_quant8,
+                           grouped_conv2d::examples_channel_nchw_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nchw_quant8_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_nchw_quant8_weight_as_input,
+                           grouped_conv2d::examples_channel_nchw_quant8_weight_as_input);
 }
 
 // Generated from: heatmap_max_keypoint.mod.py.
@@ -3605,213 +3983,675 @@ namespace transpose_conv2d {
 #include "vts_models/transpose_conv2d.model.cpp"
 } // namespace transpose_conv2d
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_none) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel,
-                           transpose_conv2d::is_ignored,
-                           transpose_conv2d::examples);
+                           transpose_conv2d::createTestModel_nhwc_none,
+                           transpose_conv2d::is_ignored_nhwc_none,
+                           transpose_conv2d::examples_nhwc_none);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_none_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_weight_as_input,
-                           transpose_conv2d::is_ignored_weight_as_input,
-                           transpose_conv2d::examples_weight_as_input);
+                           transpose_conv2d::createTestModel_nhwc_none_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_none_weight_as_input,
+                           transpose_conv2d::examples_nhwc_none_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_relaxed) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_none_relaxed) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_relaxed,
-                           transpose_conv2d::is_ignored_relaxed,
-                           transpose_conv2d::examples_relaxed);
+                           transpose_conv2d::createTestModel_nhwc_none_relaxed,
+                           transpose_conv2d::is_ignored_nhwc_none_relaxed,
+                           transpose_conv2d::examples_nhwc_none_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_relaxed_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_none_relaxed_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_relaxed_weight_as_input,
-                           transpose_conv2d::is_ignored_relaxed_weight_as_input,
-                           transpose_conv2d::examples_relaxed_weight_as_input);
+                           transpose_conv2d::createTestModel_nhwc_none_relaxed_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_none_relaxed_weight_as_input,
+                           transpose_conv2d::examples_nhwc_none_relaxed_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_quant8) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_none_quant8) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_quant8,
-                           transpose_conv2d::is_ignored_quant8,
-                           transpose_conv2d::examples_quant8);
+                           transpose_conv2d::createTestModel_nhwc_none_quant8,
+                           transpose_conv2d::is_ignored_nhwc_none_quant8,
+                           transpose_conv2d::examples_nhwc_none_quant8);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_quant8_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_none_quant8_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_quant8_weight_as_input,
-                           transpose_conv2d::is_ignored_quant8_weight_as_input,
-                           transpose_conv2d::examples_quant8_weight_as_input);
+                           transpose_conv2d::createTestModel_nhwc_none_quant8_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_none_quant8_weight_as_input,
+                           transpose_conv2d::examples_nhwc_none_quant8_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_2) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_2,
-                           transpose_conv2d::is_ignored_2,
-                           transpose_conv2d::examples_2);
+                           transpose_conv2d::createTestModel_nhwc_relu,
+                           transpose_conv2d::is_ignored_nhwc_relu,
+                           transpose_conv2d::examples_nhwc_relu);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_weight_as_input_2) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_weight_as_input_2,
-                           transpose_conv2d::is_ignored_weight_as_input_2,
-                           transpose_conv2d::examples_weight_as_input_2);
+                           transpose_conv2d::createTestModel_nhwc_relu_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_relu_weight_as_input,
+                           transpose_conv2d::examples_nhwc_relu_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_relaxed_2) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu_relaxed) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_relaxed_2,
-                           transpose_conv2d::is_ignored_relaxed_2,
-                           transpose_conv2d::examples_relaxed_2);
+                           transpose_conv2d::createTestModel_nhwc_relu_relaxed,
+                           transpose_conv2d::is_ignored_nhwc_relu_relaxed,
+                           transpose_conv2d::examples_nhwc_relu_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_relaxed_weight_as_input_2) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu_relaxed_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_relaxed_weight_as_input_2,
-                           transpose_conv2d::is_ignored_relaxed_weight_as_input_2,
-                           transpose_conv2d::examples_relaxed_weight_as_input_2);
+                           transpose_conv2d::createTestModel_nhwc_relu_relaxed_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_relu_relaxed_weight_as_input,
+                           transpose_conv2d::examples_nhwc_relu_relaxed_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_quant8_2) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu_quant8) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_quant8_2,
-                           transpose_conv2d::is_ignored_quant8_2,
-                           transpose_conv2d::examples_quant8_2);
+                           transpose_conv2d::createTestModel_nhwc_relu_quant8,
+                           transpose_conv2d::is_ignored_nhwc_relu_quant8,
+                           transpose_conv2d::examples_nhwc_relu_quant8);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_quant8_weight_as_input_2) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu_quant8_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_quant8_weight_as_input_2,
-                           transpose_conv2d::is_ignored_quant8_weight_as_input_2,
-                           transpose_conv2d::examples_quant8_weight_as_input_2);
+                           transpose_conv2d::createTestModel_nhwc_relu_quant8_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_relu_quant8_weight_as_input,
+                           transpose_conv2d::examples_nhwc_relu_quant8_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_3) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu1) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_3,
-                           transpose_conv2d::is_ignored_3,
-                           transpose_conv2d::examples_3);
+                           transpose_conv2d::createTestModel_nhwc_relu1,
+                           transpose_conv2d::is_ignored_nhwc_relu1,
+                           transpose_conv2d::examples_nhwc_relu1);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_weight_as_input_3) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu1_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_weight_as_input_3,
-                           transpose_conv2d::is_ignored_weight_as_input_3,
-                           transpose_conv2d::examples_weight_as_input_3);
+                           transpose_conv2d::createTestModel_nhwc_relu1_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_relu1_weight_as_input,
+                           transpose_conv2d::examples_nhwc_relu1_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_relaxed_3) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu1_relaxed) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_relaxed_3,
-                           transpose_conv2d::is_ignored_relaxed_3,
-                           transpose_conv2d::examples_relaxed_3);
+                           transpose_conv2d::createTestModel_nhwc_relu1_relaxed,
+                           transpose_conv2d::is_ignored_nhwc_relu1_relaxed,
+                           transpose_conv2d::examples_nhwc_relu1_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_relaxed_weight_as_input_3) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu1_relaxed_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_relaxed_weight_as_input_3,
-                           transpose_conv2d::is_ignored_relaxed_weight_as_input_3,
-                           transpose_conv2d::examples_relaxed_weight_as_input_3);
+                           transpose_conv2d::createTestModel_nhwc_relu1_relaxed_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_relu1_relaxed_weight_as_input,
+                           transpose_conv2d::examples_nhwc_relu1_relaxed_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_quant8_3) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu1_quant8) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_quant8_3,
-                           transpose_conv2d::is_ignored_quant8_3,
-                           transpose_conv2d::examples_quant8_3);
+                           transpose_conv2d::createTestModel_nhwc_relu1_quant8,
+                           transpose_conv2d::is_ignored_nhwc_relu1_quant8,
+                           transpose_conv2d::examples_nhwc_relu1_quant8);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_quant8_weight_as_input_3) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu1_quant8_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_quant8_weight_as_input_3,
-                           transpose_conv2d::is_ignored_quant8_weight_as_input_3,
-                           transpose_conv2d::examples_quant8_weight_as_input_3);
+                           transpose_conv2d::createTestModel_nhwc_relu1_quant8_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_relu1_quant8_weight_as_input,
+                           transpose_conv2d::examples_nhwc_relu1_quant8_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_4) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu6) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_4,
-                           transpose_conv2d::is_ignored_4,
-                           transpose_conv2d::examples_4);
+                           transpose_conv2d::createTestModel_nhwc_relu6,
+                           transpose_conv2d::is_ignored_nhwc_relu6,
+                           transpose_conv2d::examples_nhwc_relu6);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_weight_as_input_4) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu6_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_weight_as_input_4,
-                           transpose_conv2d::is_ignored_weight_as_input_4,
-                           transpose_conv2d::examples_weight_as_input_4);
+                           transpose_conv2d::createTestModel_nhwc_relu6_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_relu6_weight_as_input,
+                           transpose_conv2d::examples_nhwc_relu6_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_relaxed_4) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu6_relaxed) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_relaxed_4,
-                           transpose_conv2d::is_ignored_relaxed_4,
-                           transpose_conv2d::examples_relaxed_4);
+                           transpose_conv2d::createTestModel_nhwc_relu6_relaxed,
+                           transpose_conv2d::is_ignored_nhwc_relu6_relaxed,
+                           transpose_conv2d::examples_nhwc_relu6_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_relaxed_weight_as_input_4) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu6_relaxed_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_relaxed_weight_as_input_4,
-                           transpose_conv2d::is_ignored_relaxed_weight_as_input_4,
-                           transpose_conv2d::examples_relaxed_weight_as_input_4);
+                           transpose_conv2d::createTestModel_nhwc_relu6_relaxed_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_relu6_relaxed_weight_as_input,
+                           transpose_conv2d::examples_nhwc_relu6_relaxed_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_quant8_4) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu6_quant8) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_quant8_4,
-                           transpose_conv2d::is_ignored_quant8_4,
-                           transpose_conv2d::examples_quant8_4);
+                           transpose_conv2d::createTestModel_nhwc_relu6_quant8,
+                           transpose_conv2d::is_ignored_nhwc_relu6_quant8,
+                           transpose_conv2d::examples_nhwc_relu6_quant8);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_quant8_weight_as_input_4) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relu6_quant8_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_quant8_weight_as_input_4,
-                           transpose_conv2d::is_ignored_quant8_weight_as_input_4,
-                           transpose_conv2d::examples_quant8_weight_as_input_4);
+                           transpose_conv2d::createTestModel_nhwc_relu6_quant8_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_relu6_quant8_weight_as_input,
+                           transpose_conv2d::examples_nhwc_relu6_quant8_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_5) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_none) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_5,
-                           transpose_conv2d::is_ignored_5,
-                           transpose_conv2d::examples_5);
+                           transpose_conv2d::createTestModel_nchw_none,
+                           transpose_conv2d::is_ignored_nchw_none,
+                           transpose_conv2d::examples_nchw_none);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_weight_as_input_5) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_none_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_weight_as_input_5,
-                           transpose_conv2d::is_ignored_weight_as_input_5,
-                           transpose_conv2d::examples_weight_as_input_5);
+                           transpose_conv2d::createTestModel_nchw_none_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_none_weight_as_input,
+                           transpose_conv2d::examples_nchw_none_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_relaxed_5) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_none_relaxed) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_relaxed_5,
-                           transpose_conv2d::is_ignored_relaxed_5,
-                           transpose_conv2d::examples_relaxed_5);
+                           transpose_conv2d::createTestModel_nchw_none_relaxed,
+                           transpose_conv2d::is_ignored_nchw_none_relaxed,
+                           transpose_conv2d::examples_nchw_none_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_relaxed_weight_as_input_5) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_none_relaxed_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_relaxed_weight_as_input_5,
-                           transpose_conv2d::is_ignored_relaxed_weight_as_input_5,
-                           transpose_conv2d::examples_relaxed_weight_as_input_5);
+                           transpose_conv2d::createTestModel_nchw_none_relaxed_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_none_relaxed_weight_as_input,
+                           transpose_conv2d::examples_nchw_none_relaxed_weight_as_input);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_quant8_5) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_none_quant8) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_quant8_5,
-                           transpose_conv2d::is_ignored_quant8_5,
-                           transpose_conv2d::examples_quant8_5);
+                           transpose_conv2d::createTestModel_nchw_none_quant8,
+                           transpose_conv2d::is_ignored_nchw_none_quant8,
+                           transpose_conv2d::examples_nchw_none_quant8);
 }
 
-TEST_F(NeuralnetworksHidlTest, transpose_conv2d_quant8_weight_as_input_5) {
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_none_quant8_weight_as_input) {
   generated_tests::Execute(device,
-                           transpose_conv2d::createTestModel_quant8_weight_as_input_5,
-                           transpose_conv2d::is_ignored_quant8_weight_as_input_5,
-                           transpose_conv2d::examples_quant8_weight_as_input_5);
+                           transpose_conv2d::createTestModel_nchw_none_quant8_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_none_quant8_weight_as_input,
+                           transpose_conv2d::examples_nchw_none_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu,
+                           transpose_conv2d::is_ignored_nchw_relu,
+                           transpose_conv2d::examples_nchw_relu);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_relu_weight_as_input,
+                           transpose_conv2d::examples_nchw_relu_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu_relaxed) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu_relaxed,
+                           transpose_conv2d::is_ignored_nchw_relu_relaxed,
+                           transpose_conv2d::examples_nchw_relu_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu_relaxed_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_relu_relaxed_weight_as_input,
+                           transpose_conv2d::examples_nchw_relu_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu_quant8) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu_quant8,
+                           transpose_conv2d::is_ignored_nchw_relu_quant8,
+                           transpose_conv2d::examples_nchw_relu_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu_quant8_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_relu_quant8_weight_as_input,
+                           transpose_conv2d::examples_nchw_relu_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu1) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu1,
+                           transpose_conv2d::is_ignored_nchw_relu1,
+                           transpose_conv2d::examples_nchw_relu1);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu1_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu1_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_relu1_weight_as_input,
+                           transpose_conv2d::examples_nchw_relu1_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu1_relaxed) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu1_relaxed,
+                           transpose_conv2d::is_ignored_nchw_relu1_relaxed,
+                           transpose_conv2d::examples_nchw_relu1_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu1_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu1_relaxed_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_relu1_relaxed_weight_as_input,
+                           transpose_conv2d::examples_nchw_relu1_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu1_quant8) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu1_quant8,
+                           transpose_conv2d::is_ignored_nchw_relu1_quant8,
+                           transpose_conv2d::examples_nchw_relu1_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu1_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu1_quant8_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_relu1_quant8_weight_as_input,
+                           transpose_conv2d::examples_nchw_relu1_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu6) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu6,
+                           transpose_conv2d::is_ignored_nchw_relu6,
+                           transpose_conv2d::examples_nchw_relu6);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu6_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu6_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_relu6_weight_as_input,
+                           transpose_conv2d::examples_nchw_relu6_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu6_relaxed) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu6_relaxed,
+                           transpose_conv2d::is_ignored_nchw_relu6_relaxed,
+                           transpose_conv2d::examples_nchw_relu6_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu6_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu6_relaxed_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_relu6_relaxed_weight_as_input,
+                           transpose_conv2d::examples_nchw_relu6_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu6_quant8) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu6_quant8,
+                           transpose_conv2d::is_ignored_nchw_relu6_quant8,
+                           transpose_conv2d::examples_nchw_relu6_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relu6_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relu6_quant8_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_relu6_quant8_weight_as_input,
+                           transpose_conv2d::examples_nchw_relu6_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc,
+                           transpose_conv2d::is_ignored_nhwc,
+                           transpose_conv2d::examples_nhwc);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_weight_as_input,
+                           transpose_conv2d::examples_nhwc_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relaxed) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_relaxed,
+                           transpose_conv2d::is_ignored_nhwc_relaxed,
+                           transpose_conv2d::examples_nhwc_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_relaxed_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_relaxed_weight_as_input,
+                           transpose_conv2d::examples_nhwc_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_quant8) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_quant8,
+                           transpose_conv2d::is_ignored_nhwc_quant8,
+                           transpose_conv2d::examples_nhwc_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_quant8_weight_as_input,
+                           transpose_conv2d::is_ignored_nhwc_quant8_weight_as_input,
+                           transpose_conv2d::examples_nhwc_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw,
+                           transpose_conv2d::is_ignored_nchw,
+                           transpose_conv2d::examples_nchw);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_weight_as_input,
+                           transpose_conv2d::examples_nchw_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relaxed) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relaxed,
+                           transpose_conv2d::is_ignored_nchw_relaxed,
+                           transpose_conv2d::examples_nchw_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relaxed_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relaxed_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_relaxed_weight_as_input,
+                           transpose_conv2d::examples_nchw_relaxed_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_quant8) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_quant8,
+                           transpose_conv2d::is_ignored_nchw_quant8,
+                           transpose_conv2d::examples_nchw_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_quant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_quant8_weight_as_input,
+                           transpose_conv2d::is_ignored_nchw_quant8_weight_as_input,
+                           transpose_conv2d::examples_nchw_quant8_weight_as_input);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_2,
+                           transpose_conv2d::is_ignored_nhwc_2,
+                           transpose_conv2d::examples_nhwc_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_weight_as_input_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_weight_as_input_2,
+                           transpose_conv2d::is_ignored_nhwc_weight_as_input_2,
+                           transpose_conv2d::examples_nhwc_weight_as_input_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relaxed_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_relaxed_2,
+                           transpose_conv2d::is_ignored_nhwc_relaxed_2,
+                           transpose_conv2d::examples_nhwc_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relaxed_weight_as_input_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_relaxed_weight_as_input_2,
+                           transpose_conv2d::is_ignored_nhwc_relaxed_weight_as_input_2,
+                           transpose_conv2d::examples_nhwc_relaxed_weight_as_input_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_quant8_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_quant8_2,
+                           transpose_conv2d::is_ignored_nhwc_quant8_2,
+                           transpose_conv2d::examples_nhwc_quant8_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_quant8_weight_as_input_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_quant8_weight_as_input_2,
+                           transpose_conv2d::is_ignored_nhwc_quant8_weight_as_input_2,
+                           transpose_conv2d::examples_nhwc_quant8_weight_as_input_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_2,
+                           transpose_conv2d::is_ignored_nchw_2,
+                           transpose_conv2d::examples_nchw_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_weight_as_input_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_weight_as_input_2,
+                           transpose_conv2d::is_ignored_nchw_weight_as_input_2,
+                           transpose_conv2d::examples_nchw_weight_as_input_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relaxed_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relaxed_2,
+                           transpose_conv2d::is_ignored_nchw_relaxed_2,
+                           transpose_conv2d::examples_nchw_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relaxed_weight_as_input_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relaxed_weight_as_input_2,
+                           transpose_conv2d::is_ignored_nchw_relaxed_weight_as_input_2,
+                           transpose_conv2d::examples_nchw_relaxed_weight_as_input_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_quant8_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_quant8_2,
+                           transpose_conv2d::is_ignored_nchw_quant8_2,
+                           transpose_conv2d::examples_nchw_quant8_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_quant8_weight_as_input_2) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_quant8_weight_as_input_2,
+                           transpose_conv2d::is_ignored_nchw_quant8_weight_as_input_2,
+                           transpose_conv2d::examples_nchw_quant8_weight_as_input_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_3,
+                           transpose_conv2d::is_ignored_nhwc_3,
+                           transpose_conv2d::examples_nhwc_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_weight_as_input_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_weight_as_input_3,
+                           transpose_conv2d::is_ignored_nhwc_weight_as_input_3,
+                           transpose_conv2d::examples_nhwc_weight_as_input_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relaxed_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_relaxed_3,
+                           transpose_conv2d::is_ignored_nhwc_relaxed_3,
+                           transpose_conv2d::examples_nhwc_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relaxed_weight_as_input_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_relaxed_weight_as_input_3,
+                           transpose_conv2d::is_ignored_nhwc_relaxed_weight_as_input_3,
+                           transpose_conv2d::examples_nhwc_relaxed_weight_as_input_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_quant8_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_quant8_3,
+                           transpose_conv2d::is_ignored_nhwc_quant8_3,
+                           transpose_conv2d::examples_nhwc_quant8_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_quant8_weight_as_input_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_quant8_weight_as_input_3,
+                           transpose_conv2d::is_ignored_nhwc_quant8_weight_as_input_3,
+                           transpose_conv2d::examples_nhwc_quant8_weight_as_input_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_3,
+                           transpose_conv2d::is_ignored_nchw_3,
+                           transpose_conv2d::examples_nchw_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_weight_as_input_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_weight_as_input_3,
+                           transpose_conv2d::is_ignored_nchw_weight_as_input_3,
+                           transpose_conv2d::examples_nchw_weight_as_input_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relaxed_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relaxed_3,
+                           transpose_conv2d::is_ignored_nchw_relaxed_3,
+                           transpose_conv2d::examples_nchw_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relaxed_weight_as_input_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relaxed_weight_as_input_3,
+                           transpose_conv2d::is_ignored_nchw_relaxed_weight_as_input_3,
+                           transpose_conv2d::examples_nchw_relaxed_weight_as_input_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_quant8_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_quant8_3,
+                           transpose_conv2d::is_ignored_nchw_quant8_3,
+                           transpose_conv2d::examples_nchw_quant8_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_quant8_weight_as_input_3) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_quant8_weight_as_input_3,
+                           transpose_conv2d::is_ignored_nchw_quant8_weight_as_input_3,
+                           transpose_conv2d::examples_nchw_quant8_weight_as_input_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_4,
+                           transpose_conv2d::is_ignored_nhwc_4,
+                           transpose_conv2d::examples_nhwc_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_weight_as_input_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_weight_as_input_4,
+                           transpose_conv2d::is_ignored_nhwc_weight_as_input_4,
+                           transpose_conv2d::examples_nhwc_weight_as_input_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relaxed_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_relaxed_4,
+                           transpose_conv2d::is_ignored_nhwc_relaxed_4,
+                           transpose_conv2d::examples_nhwc_relaxed_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_relaxed_weight_as_input_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_relaxed_weight_as_input_4,
+                           transpose_conv2d::is_ignored_nhwc_relaxed_weight_as_input_4,
+                           transpose_conv2d::examples_nhwc_relaxed_weight_as_input_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_quant8_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_quant8_4,
+                           transpose_conv2d::is_ignored_nhwc_quant8_4,
+                           transpose_conv2d::examples_nhwc_quant8_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nhwc_quant8_weight_as_input_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nhwc_quant8_weight_as_input_4,
+                           transpose_conv2d::is_ignored_nhwc_quant8_weight_as_input_4,
+                           transpose_conv2d::examples_nhwc_quant8_weight_as_input_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_4,
+                           transpose_conv2d::is_ignored_nchw_4,
+                           transpose_conv2d::examples_nchw_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_weight_as_input_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_weight_as_input_4,
+                           transpose_conv2d::is_ignored_nchw_weight_as_input_4,
+                           transpose_conv2d::examples_nchw_weight_as_input_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relaxed_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relaxed_4,
+                           transpose_conv2d::is_ignored_nchw_relaxed_4,
+                           transpose_conv2d::examples_nchw_relaxed_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_relaxed_weight_as_input_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_relaxed_weight_as_input_4,
+                           transpose_conv2d::is_ignored_nchw_relaxed_weight_as_input_4,
+                           transpose_conv2d::examples_nchw_relaxed_weight_as_input_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_quant8_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_quant8_4,
+                           transpose_conv2d::is_ignored_nchw_quant8_4,
+                           transpose_conv2d::examples_nchw_quant8_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, transpose_conv2d_nchw_quant8_weight_as_input_4) {
+  generated_tests::Execute(device,
+                           transpose_conv2d::createTestModel_nchw_quant8_weight_as_input_4,
+                           transpose_conv2d::is_ignored_nchw_quant8_weight_as_input_4,
+                           transpose_conv2d::examples_nchw_quant8_weight_as_input_4);
 }
 

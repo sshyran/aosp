@@ -31,7 +31,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i1: [1.4, 2.3, 3.2, 4.1, 5.4, 6.3, 7.2, 8.1],
     o1: [1.4, 2.3, 3.2, 4.1, 5.4, 6.3, 7.2, 8.1]
-}).AddNchw([i1, o1], [layout], defaultName="nhwc").AddVariations("relaxed", quant8)
+}).AddNchw(i1, o1, layout).AddVariations("relaxed", quant8)
 
 
 # TEST 2: BATCH_TO_SPACE_NCHW_2, block_size = [2, 2]
@@ -49,4 +49,4 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
     o2: [1, 5, 2, 6, 9, 13, 10, 14, 3, 7, 4, 8, 11, 15, 12, 16]
-}).AddNchw([i2, o2], [layout], defaultName="nhwc").AddVariations("relaxed", quant8)
+}).AddNchw(i2, o2, layout).AddVariations("relaxed", quant8)
