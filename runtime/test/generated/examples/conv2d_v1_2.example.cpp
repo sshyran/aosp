@@ -3,6 +3,7 @@
 std::vector<MixedTypedExample> examples_nhwc = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -21,12 +22,14 @@ std::vector<MixedTypedExample> examples_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -45,12 +48,14 @@ std::vector<MixedTypedExample> examples_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -69,12 +74,14 @@ std::vector<MixedTypedExample> examples_nhwc_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {7, 7, 7, 7}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_weight_as_input = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -93,12 +100,14 @@ std::vector<MixedTypedExample> examples_nhwc_weight_as_input = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_weight_as_input_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -117,12 +126,14 @@ std::vector<MixedTypedExample> examples_nhwc_weight_as_input_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_weight_as_input_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -141,12 +152,14 @@ std::vector<MixedTypedExample> examples_nhwc_weight_as_input_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {7, 7, 7, 7}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -165,12 +178,14 @@ std::vector<MixedTypedExample> examples_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -189,12 +204,14 @@ std::vector<MixedTypedExample> examples_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -213,12 +230,14 @@ std::vector<MixedTypedExample> examples_nchw_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {7, 7, 7, 7}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_weight_as_input = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -237,12 +256,14 @@ std::vector<MixedTypedExample> examples_nchw_weight_as_input = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_weight_as_input_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -261,12 +282,14 @@ std::vector<MixedTypedExample> examples_nchw_weight_as_input_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_weight_as_input_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -285,12 +308,14 @@ std::vector<MixedTypedExample> examples_nchw_weight_as_input_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {7, 7, 7, 7}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -309,12 +334,14 @@ std::vector<MixedTypedExample> examples_nhwc_2 = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -333,12 +360,14 @@ std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -357,12 +386,14 @@ std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
   // int -> QUANT8_ASYMM map
   {{0, {50, 50, 50, 50, 85, 162, 207, 50, 50, 84, 111, 50}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_weight_as_input_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -381,12 +412,14 @@ std::vector<MixedTypedExample> examples_nhwc_weight_as_input_2 = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_weight_as_input_relaxed_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -405,12 +438,14 @@ std::vector<MixedTypedExample> examples_nhwc_weight_as_input_relaxed_2 = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nhwc_weight_as_input_quant8_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -429,12 +464,14 @@ std::vector<MixedTypedExample> examples_nhwc_weight_as_input_quant8_2 = {
   // int -> QUANT8_ASYMM map
   {{0, {50, 50, 50, 50, 85, 162, 207, 50, 50, 84, 111, 50}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -453,12 +490,14 @@ std::vector<MixedTypedExample> examples_nchw_2 = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -477,12 +516,14 @@ std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -501,12 +542,14 @@ std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
   // int -> QUANT8_ASYMM map
   {{0, {50, 50, 50, 50, 85, 162, 207, 50, 50, 84, 111, 50}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_weight_as_input_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -525,12 +568,14 @@ std::vector<MixedTypedExample> examples_nchw_weight_as_input_2 = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_weight_as_input_relaxed_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -549,12 +594,14 @@ std::vector<MixedTypedExample> examples_nchw_weight_as_input_relaxed_2 = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_nchw_weight_as_input_quant8_2 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -573,12 +620,14 @@ std::vector<MixedTypedExample> examples_nchw_weight_as_input_quant8_2 = {
   // int -> QUANT8_ASYMM map
   {{0, {50, 50, 50, 50, 85, 162, 207, 50, 50, 84, 111, 50}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nhwc = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -597,12 +646,14 @@ std::vector<MixedTypedExample> examples_channel_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nhwc_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -621,12 +672,14 @@ std::vector<MixedTypedExample> examples_channel_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nhwc_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -645,12 +698,14 @@ std::vector<MixedTypedExample> examples_channel_nhwc_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {30, 75, 120}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -669,12 +724,14 @@ std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -693,12 +750,14 @@ std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -717,12 +776,14 @@ std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {30, 75, 120}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nchw = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -741,12 +802,14 @@ std::vector<MixedTypedExample> examples_channel_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nchw_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -765,12 +828,14 @@ std::vector<MixedTypedExample> examples_channel_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nchw_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -789,12 +854,14 @@ std::vector<MixedTypedExample> examples_channel_nchw_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {30, 75, 120}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -813,12 +880,14 @@ std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -837,12 +906,14 @@ std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -861,12 +932,14 @@ std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {30, 75, 120}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nhwc = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -885,12 +958,14 @@ std::vector<MixedTypedExample> examples_large_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nhwc_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -909,12 +984,14 @@ std::vector<MixedTypedExample> examples_large_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nhwc_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -933,12 +1010,14 @@ std::vector<MixedTypedExample> examples_large_nhwc_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {15, 18, 21, 33, 40, 48, 51, 63, 75, 69, 86, 102, 87, 108, 129, 105, 130, 156}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -957,12 +1036,14 @@ std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -981,12 +1062,14 @@ std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1005,12 +1088,14 @@ std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {15, 18, 21, 33, 40, 48, 51, 63, 75, 69, 86, 102, 87, 108, 129, 105, 130, 156}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nchw = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1029,12 +1114,14 @@ std::vector<MixedTypedExample> examples_large_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nchw_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1053,12 +1140,14 @@ std::vector<MixedTypedExample> examples_large_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nchw_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1077,12 +1166,14 @@ std::vector<MixedTypedExample> examples_large_nchw_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {15, 33, 51, 69, 87, 105, 18, 40, 63, 86, 108, 130, 21, 48, 75, 102, 129, 156}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nchw_weight_as_input = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1101,12 +1192,14 @@ std::vector<MixedTypedExample> examples_large_nchw_weight_as_input = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nchw_weight_as_input_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1125,12 +1218,14 @@ std::vector<MixedTypedExample> examples_large_nchw_weight_as_input_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_large_nchw_weight_as_input_quant8 = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1149,12 +1244,14 @@ std::vector<MixedTypedExample> examples_large_nchw_weight_as_input_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {15, 33, 51, 69, 87, 105, 18, 40, 63, 86, 108, 130, 21, 48, 75, 102, 129, 156}}}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1173,9 +1270,11 @@ std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1194,12 +1293,14 @@ std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1218,9 +1319,11 @@ std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1239,12 +1342,14 @@ std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1263,9 +1368,11 @@ std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1284,12 +1391,14 @@ std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1308,9 +1417,11 @@ std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1329,12 +1440,14 @@ std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1353,9 +1466,11 @@ std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1374,12 +1489,14 @@ std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1398,9 +1515,11 @@ std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1419,12 +1538,14 @@ std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1443,9 +1564,11 @@ std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1464,12 +1587,14 @@ std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1488,9 +1613,11 @@ std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1509,12 +1636,14 @@ std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1533,9 +1662,11 @@ std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1554,12 +1685,14 @@ std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1578,9 +1711,11 @@ std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1599,12 +1734,14 @@ std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1623,9 +1760,11 @@ std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1644,12 +1783,14 @@ std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1668,9 +1809,11 @@ std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1689,12 +1832,14 @@ std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1713,9 +1858,11 @@ std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1734,12 +1881,14 @@ std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1758,9 +1907,11 @@ std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1779,12 +1930,14 @@ std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1803,9 +1956,11 @@ std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1824,12 +1979,14 @@ std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
 std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw_relaxed = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1848,9 +2005,11 @@ std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -1869,6 +2028,7 @@ std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+},
 }, // End of an example
 };
 
