@@ -2855,46 +2855,88 @@ namespace roi_align {
 #include "vts_models/roi_align.model.cpp"
 } // namespace roi_align
 
-TEST_F(NeuralnetworksHidlTest, roi_align) {
+TEST_F(NeuralnetworksHidlTest, roi_align_nhwc) {
   generated_tests::Execute(device,
-                           roi_align::createTestModel,
-                           roi_align::is_ignored,
-                           roi_align::examples);
+                           roi_align::createTestModel_nhwc,
+                           roi_align::is_ignored_nhwc,
+                           roi_align::examples_nhwc);
 }
 
-TEST_F(NeuralnetworksHidlTest, roi_align_relaxed) {
+TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_relaxed) {
   generated_tests::Execute(device,
-                           roi_align::createTestModel_relaxed,
-                           roi_align::is_ignored_relaxed,
-                           roi_align::examples_relaxed);
+                           roi_align::createTestModel_nhwc_relaxed,
+                           roi_align::is_ignored_nhwc_relaxed,
+                           roi_align::examples_nhwc_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, roi_align_2) {
+TEST_F(NeuralnetworksHidlTest, roi_align_nchw) {
   generated_tests::Execute(device,
-                           roi_align::createTestModel_2,
-                           roi_align::is_ignored_2,
-                           roi_align::examples_2);
+                           roi_align::createTestModel_nchw,
+                           roi_align::is_ignored_nchw,
+                           roi_align::examples_nchw);
 }
 
-TEST_F(NeuralnetworksHidlTest, roi_align_relaxed_2) {
+TEST_F(NeuralnetworksHidlTest, roi_align_nchw_relaxed) {
   generated_tests::Execute(device,
-                           roi_align::createTestModel_relaxed_2,
-                           roi_align::is_ignored_relaxed_2,
-                           roi_align::examples_relaxed_2);
+                           roi_align::createTestModel_nchw_relaxed,
+                           roi_align::is_ignored_nchw_relaxed,
+                           roi_align::examples_nchw_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, roi_align_3) {
+TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_2) {
   generated_tests::Execute(device,
-                           roi_align::createTestModel_3,
-                           roi_align::is_ignored_3,
-                           roi_align::examples_3);
+                           roi_align::createTestModel_nhwc_2,
+                           roi_align::is_ignored_nhwc_2,
+                           roi_align::examples_nhwc_2);
 }
 
-TEST_F(NeuralnetworksHidlTest, roi_align_relaxed_3) {
+TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_relaxed_2) {
   generated_tests::Execute(device,
-                           roi_align::createTestModel_relaxed_3,
-                           roi_align::is_ignored_relaxed_3,
-                           roi_align::examples_relaxed_3);
+                           roi_align::createTestModel_nhwc_relaxed_2,
+                           roi_align::is_ignored_nhwc_relaxed_2,
+                           roi_align::examples_nhwc_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_nchw_2) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nchw_2,
+                           roi_align::is_ignored_nchw_2,
+                           roi_align::examples_nchw_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_nchw_relaxed_2) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nchw_relaxed_2,
+                           roi_align::is_ignored_nchw_relaxed_2,
+                           roi_align::examples_nchw_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_3) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nhwc_3,
+                           roi_align::is_ignored_nhwc_3,
+                           roi_align::examples_nhwc_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_relaxed_3) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nhwc_relaxed_3,
+                           roi_align::is_ignored_nhwc_relaxed_3,
+                           roi_align::examples_nhwc_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_nchw_3) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nchw_3,
+                           roi_align::is_ignored_nchw_3,
+                           roi_align::examples_nchw_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_nchw_relaxed_3) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nchw_relaxed_3,
+                           roi_align::is_ignored_nchw_relaxed_3,
+                           roi_align::examples_nchw_relaxed_3);
 }
 
 // Generated from: space_to_batch_v1_2.mod.py.
