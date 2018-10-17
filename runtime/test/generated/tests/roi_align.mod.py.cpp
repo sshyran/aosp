@@ -9,39 +9,75 @@ namespace roi_align {
 #include "generated/models/roi_align.model.cpp"
 } // namespace roi_align
 
-TEST_F(GeneratedTests, roi_align) {
-    execute(roi_align::CreateModel,
-            roi_align::is_ignored,
-            roi_align::examples);
+TEST_F(GeneratedTests, roi_align_nhwc) {
+    execute(roi_align::CreateModel_nhwc,
+            roi_align::is_ignored_nhwc,
+            roi_align::examples_nhwc);
 }
 
-TEST_F(GeneratedTests, roi_align_relaxed) {
-    execute(roi_align::CreateModel_relaxed,
-            roi_align::is_ignored_relaxed,
-            roi_align::examples_relaxed);
+TEST_F(GeneratedTests, roi_align_nhwc_relaxed) {
+    execute(roi_align::CreateModel_nhwc_relaxed,
+            roi_align::is_ignored_nhwc_relaxed,
+            roi_align::examples_nhwc_relaxed);
 }
 
-TEST_F(GeneratedTests, roi_align_2) {
-    execute(roi_align::CreateModel_2,
-            roi_align::is_ignored_2,
-            roi_align::examples_2);
+TEST_F(GeneratedTests, roi_align_nchw) {
+    execute(roi_align::CreateModel_nchw,
+            roi_align::is_ignored_nchw,
+            roi_align::examples_nchw);
 }
 
-TEST_F(GeneratedTests, roi_align_relaxed_2) {
-    execute(roi_align::CreateModel_relaxed_2,
-            roi_align::is_ignored_relaxed_2,
-            roi_align::examples_relaxed_2);
+TEST_F(GeneratedTests, roi_align_nchw_relaxed) {
+    execute(roi_align::CreateModel_nchw_relaxed,
+            roi_align::is_ignored_nchw_relaxed,
+            roi_align::examples_nchw_relaxed);
 }
 
-TEST_F(GeneratedTests, roi_align_3) {
-    execute(roi_align::CreateModel_3,
-            roi_align::is_ignored_3,
-            roi_align::examples_3);
+TEST_F(GeneratedTests, roi_align_nhwc_2) {
+    execute(roi_align::CreateModel_nhwc_2,
+            roi_align::is_ignored_nhwc_2,
+            roi_align::examples_nhwc_2);
 }
 
-TEST_F(GeneratedTests, roi_align_relaxed_3) {
-    execute(roi_align::CreateModel_relaxed_3,
-            roi_align::is_ignored_relaxed_3,
-            roi_align::examples_relaxed_3);
+TEST_F(GeneratedTests, roi_align_nhwc_relaxed_2) {
+    execute(roi_align::CreateModel_nhwc_relaxed_2,
+            roi_align::is_ignored_nhwc_relaxed_2,
+            roi_align::examples_nhwc_relaxed_2);
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_2) {
+    execute(roi_align::CreateModel_nchw_2,
+            roi_align::is_ignored_nchw_2,
+            roi_align::examples_nchw_2);
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_relaxed_2) {
+    execute(roi_align::CreateModel_nchw_relaxed_2,
+            roi_align::is_ignored_nchw_relaxed_2,
+            roi_align::examples_nchw_relaxed_2);
+}
+
+TEST_F(GeneratedTests, roi_align_nhwc_3) {
+    execute(roi_align::CreateModel_nhwc_3,
+            roi_align::is_ignored_nhwc_3,
+            roi_align::examples_nhwc_3);
+}
+
+TEST_F(GeneratedTests, roi_align_nhwc_relaxed_3) {
+    execute(roi_align::CreateModel_nhwc_relaxed_3,
+            roi_align::is_ignored_nhwc_relaxed_3,
+            roi_align::examples_nhwc_relaxed_3);
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_3) {
+    execute(roi_align::CreateModel_nchw_3,
+            roi_align::is_ignored_nchw_3,
+            roi_align::examples_nchw_3);
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_relaxed_3) {
+    execute(roi_align::CreateModel_nchw_relaxed_3,
+            roi_align::is_ignored_nchw_relaxed_3,
+            roi_align::examples_nchw_relaxed_3);
 }
 

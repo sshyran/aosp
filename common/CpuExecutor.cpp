@@ -1861,7 +1861,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
         } break;
         case OperationType::ROI_ALIGN: {
-            if (!allParametersPresent(5, 1)) {
+            if (!allParametersPresent(6, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
@@ -1869,20 +1869,38 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             const RunTimeOperandInfo& outputShape = mOperands[ins[2]];
             const float spatialScale = getScalarData<float>(mOperands[ins[3]]);
             const int32_t samplingRatio = getScalarData<int32_t>(mOperands[ins[4]]);
+            const bool data_layout = getScalarData<bool>(mOperands[ins[5]]);
 
             RunTimeOperandInfo& out = mOperands[outs[0]];
             Shape outShape = out.shape();
 
-            if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = roiAlignPrepare(input.shape(), reinterpret_cast<const float*>(roi.buffer),
-                                          roi.shape(),
+            RunTimeOperandInfo input_tmp, out_tmp;
+            std::unique_ptr<uint8_t[]> input_tmp_guard, out_tmp_guard;
+            if (!convertToNhwc(input_tmp, input, input_tmp_guard, data_layout)) {
+                success = false;
+                break;
+            }
+            out_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            out_tmp.buffer = data_layout ? nullptr : out.buffer;
+
+            if (input_tmp.type == OperandType::TENSOR_FLOAT32) {
+                success = roiAlignPrepare(input_tmp.shape(),
+                                          reinterpret_cast<const float*>(roi.buffer), roi.shape(),
                                           reinterpret_cast<const int32_t*>(outputShape.buffer),
                                           outputShape.shape(), spatialScale, &outShape) &&
-                          setInfoAndAllocateIfNeeded(&out, outShape) &&
-                          roiAlign(reinterpret_cast<const float*>(input.buffer), input.shape(),
-                                   reinterpret_cast<const float*>(roi.buffer), roi.shape(),
-                                   spatialScale, samplingRatio,
-                                   reinterpret_cast<float*>(out.buffer), outShape);
+                          setInfoAndAllocateIfNeeded(&out_tmp, outShape) &&
+                          roiAlign(reinterpret_cast<const float*>(input_tmp.buffer),
+                                   input_tmp.shape(), reinterpret_cast<const float*>(roi.buffer),
+                                   roi.shape(), spatialScale, samplingRatio,
+                                   reinterpret_cast<float*>(out_tmp.buffer), outShape);
+            }
+
+            if (data_layout) {
+                out_tmp_guard.reset(out_tmp.buffer);
+            }
+            if (!success || !convertFromNhwc(out, out_tmp, data_layout)) {
+                success = false;
+                break;
             }
         } break;
         case OperationType::HEATMAP_MAX_KEYPOINT: {
