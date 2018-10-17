@@ -589,46 +589,424 @@ namespace channel_shuffle {
 #include "vts_models/channel_shuffle.model.cpp"
 } // namespace channel_shuffle
 
-TEST_F(NeuralnetworksHidlTest, channel_shuffle) {
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim4_axis0) {
   generated_tests::Execute(device,
-                           channel_shuffle::createTestModel,
-                           channel_shuffle::is_ignored,
-                           channel_shuffle::examples);
+                           channel_shuffle::createTestModel_dim4_axis0,
+                           channel_shuffle::is_ignored_dim4_axis0,
+                           channel_shuffle::examples_dim4_axis0);
 }
 
-TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed) {
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim4_axis0_neg) {
   generated_tests::Execute(device,
-                           channel_shuffle::createTestModel_relaxed,
-                           channel_shuffle::is_ignored_relaxed,
-                           channel_shuffle::examples_relaxed);
+                           channel_shuffle::createTestModel_dim4_axis0_neg,
+                           channel_shuffle::is_ignored_dim4_axis0_neg,
+                           channel_shuffle::examples_dim4_axis0_neg);
 }
 
-TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8) {
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim4_axis1) {
   generated_tests::Execute(device,
-                           channel_shuffle::createTestModel_quant8,
-                           channel_shuffle::is_ignored_quant8,
-                           channel_shuffle::examples_quant8);
+                           channel_shuffle::createTestModel_dim4_axis1,
+                           channel_shuffle::is_ignored_dim4_axis1,
+                           channel_shuffle::examples_dim4_axis1);
 }
 
-TEST_F(NeuralnetworksHidlTest, channel_shuffle_2) {
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim4_axis1_neg) {
   generated_tests::Execute(device,
-                           channel_shuffle::createTestModel_2,
-                           channel_shuffle::is_ignored_2,
-                           channel_shuffle::examples_2);
+                           channel_shuffle::createTestModel_dim4_axis1_neg,
+                           channel_shuffle::is_ignored_dim4_axis1_neg,
+                           channel_shuffle::examples_dim4_axis1_neg);
 }
 
-TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_2) {
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim4_axis2) {
   generated_tests::Execute(device,
-                           channel_shuffle::createTestModel_relaxed_2,
-                           channel_shuffle::is_ignored_relaxed_2,
-                           channel_shuffle::examples_relaxed_2);
+                           channel_shuffle::createTestModel_dim4_axis2,
+                           channel_shuffle::is_ignored_dim4_axis2,
+                           channel_shuffle::examples_dim4_axis2);
 }
 
-TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_2) {
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim4_axis2_neg) {
   generated_tests::Execute(device,
-                           channel_shuffle::createTestModel_quant8_2,
-                           channel_shuffle::is_ignored_quant8_2,
-                           channel_shuffle::examples_quant8_2);
+                           channel_shuffle::createTestModel_dim4_axis2_neg,
+                           channel_shuffle::is_ignored_dim4_axis2_neg,
+                           channel_shuffle::examples_dim4_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim4_axis3) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim4_axis3,
+                           channel_shuffle::is_ignored_dim4_axis3,
+                           channel_shuffle::examples_dim4_axis3);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim4_axis3_neg,
+                           channel_shuffle::is_ignored_dim4_axis3_neg,
+                           channel_shuffle::examples_dim4_axis3_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim3_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim3_axis0,
+                           channel_shuffle::is_ignored_dim3_axis0,
+                           channel_shuffle::examples_dim3_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim3_axis0_neg,
+                           channel_shuffle::is_ignored_dim3_axis0_neg,
+                           channel_shuffle::examples_dim3_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim3_axis1) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim3_axis1,
+                           channel_shuffle::is_ignored_dim3_axis1,
+                           channel_shuffle::examples_dim3_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim3_axis1_neg,
+                           channel_shuffle::is_ignored_dim3_axis1_neg,
+                           channel_shuffle::examples_dim3_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim3_axis2) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim3_axis2,
+                           channel_shuffle::is_ignored_dim3_axis2,
+                           channel_shuffle::examples_dim3_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim3_axis2_neg,
+                           channel_shuffle::is_ignored_dim3_axis2_neg,
+                           channel_shuffle::examples_dim3_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim2_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim2_axis0,
+                           channel_shuffle::is_ignored_dim2_axis0,
+                           channel_shuffle::examples_dim2_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim2_axis0_neg,
+                           channel_shuffle::is_ignored_dim2_axis0_neg,
+                           channel_shuffle::examples_dim2_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim2_axis1) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim2_axis1,
+                           channel_shuffle::is_ignored_dim2_axis1,
+                           channel_shuffle::examples_dim2_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim2_axis1_neg,
+                           channel_shuffle::is_ignored_dim2_axis1_neg,
+                           channel_shuffle::examples_dim2_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim1_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim1_axis0,
+                           channel_shuffle::is_ignored_dim1_axis0,
+                           channel_shuffle::examples_dim1_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_dim1_axis0_neg,
+                           channel_shuffle::is_ignored_dim1_axis0_neg,
+                           channel_shuffle::examples_dim1_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim4_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim4_axis0,
+                           channel_shuffle::is_ignored_relaxed_dim4_axis0,
+                           channel_shuffle::examples_relaxed_dim4_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim4_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim4_axis0_neg,
+                           channel_shuffle::is_ignored_relaxed_dim4_axis0_neg,
+                           channel_shuffle::examples_relaxed_dim4_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim4_axis1) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim4_axis1,
+                           channel_shuffle::is_ignored_relaxed_dim4_axis1,
+                           channel_shuffle::examples_relaxed_dim4_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim4_axis1_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim4_axis1_neg,
+                           channel_shuffle::is_ignored_relaxed_dim4_axis1_neg,
+                           channel_shuffle::examples_relaxed_dim4_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim4_axis2) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim4_axis2,
+                           channel_shuffle::is_ignored_relaxed_dim4_axis2,
+                           channel_shuffle::examples_relaxed_dim4_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim4_axis2_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim4_axis2_neg,
+                           channel_shuffle::is_ignored_relaxed_dim4_axis2_neg,
+                           channel_shuffle::examples_relaxed_dim4_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim4_axis3) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim4_axis3,
+                           channel_shuffle::is_ignored_relaxed_dim4_axis3,
+                           channel_shuffle::examples_relaxed_dim4_axis3);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim4_axis3_neg,
+                           channel_shuffle::is_ignored_relaxed_dim4_axis3_neg,
+                           channel_shuffle::examples_relaxed_dim4_axis3_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim3_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim3_axis0,
+                           channel_shuffle::is_ignored_relaxed_dim3_axis0,
+                           channel_shuffle::examples_relaxed_dim3_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim3_axis0_neg,
+                           channel_shuffle::is_ignored_relaxed_dim3_axis0_neg,
+                           channel_shuffle::examples_relaxed_dim3_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim3_axis1) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim3_axis1,
+                           channel_shuffle::is_ignored_relaxed_dim3_axis1,
+                           channel_shuffle::examples_relaxed_dim3_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim3_axis1_neg,
+                           channel_shuffle::is_ignored_relaxed_dim3_axis1_neg,
+                           channel_shuffle::examples_relaxed_dim3_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim3_axis2) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim3_axis2,
+                           channel_shuffle::is_ignored_relaxed_dim3_axis2,
+                           channel_shuffle::examples_relaxed_dim3_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim3_axis2_neg,
+                           channel_shuffle::is_ignored_relaxed_dim3_axis2_neg,
+                           channel_shuffle::examples_relaxed_dim3_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim2_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim2_axis0,
+                           channel_shuffle::is_ignored_relaxed_dim2_axis0,
+                           channel_shuffle::examples_relaxed_dim2_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim2_axis0_neg,
+                           channel_shuffle::is_ignored_relaxed_dim2_axis0_neg,
+                           channel_shuffle::examples_relaxed_dim2_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim2_axis1) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim2_axis1,
+                           channel_shuffle::is_ignored_relaxed_dim2_axis1,
+                           channel_shuffle::examples_relaxed_dim2_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim2_axis1_neg,
+                           channel_shuffle::is_ignored_relaxed_dim2_axis1_neg,
+                           channel_shuffle::examples_relaxed_dim2_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim1_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim1_axis0,
+                           channel_shuffle::is_ignored_relaxed_dim1_axis0,
+                           channel_shuffle::examples_relaxed_dim1_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_relaxed_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_relaxed_dim1_axis0_neg,
+                           channel_shuffle::is_ignored_relaxed_dim1_axis0_neg,
+                           channel_shuffle::examples_relaxed_dim1_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim4_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim4_axis0,
+                           channel_shuffle::is_ignored_quant8_dim4_axis0,
+                           channel_shuffle::examples_quant8_dim4_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim4_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim4_axis0_neg,
+                           channel_shuffle::is_ignored_quant8_dim4_axis0_neg,
+                           channel_shuffle::examples_quant8_dim4_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim4_axis1) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim4_axis1,
+                           channel_shuffle::is_ignored_quant8_dim4_axis1,
+                           channel_shuffle::examples_quant8_dim4_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim4_axis1_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim4_axis1_neg,
+                           channel_shuffle::is_ignored_quant8_dim4_axis1_neg,
+                           channel_shuffle::examples_quant8_dim4_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim4_axis2) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim4_axis2,
+                           channel_shuffle::is_ignored_quant8_dim4_axis2,
+                           channel_shuffle::examples_quant8_dim4_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim4_axis2_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim4_axis2_neg,
+                           channel_shuffle::is_ignored_quant8_dim4_axis2_neg,
+                           channel_shuffle::examples_quant8_dim4_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim4_axis3) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim4_axis3,
+                           channel_shuffle::is_ignored_quant8_dim4_axis3,
+                           channel_shuffle::examples_quant8_dim4_axis3);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim4_axis3_neg,
+                           channel_shuffle::is_ignored_quant8_dim4_axis3_neg,
+                           channel_shuffle::examples_quant8_dim4_axis3_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim3_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim3_axis0,
+                           channel_shuffle::is_ignored_quant8_dim3_axis0,
+                           channel_shuffle::examples_quant8_dim3_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim3_axis0_neg,
+                           channel_shuffle::is_ignored_quant8_dim3_axis0_neg,
+                           channel_shuffle::examples_quant8_dim3_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim3_axis1) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim3_axis1,
+                           channel_shuffle::is_ignored_quant8_dim3_axis1,
+                           channel_shuffle::examples_quant8_dim3_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim3_axis1_neg,
+                           channel_shuffle::is_ignored_quant8_dim3_axis1_neg,
+                           channel_shuffle::examples_quant8_dim3_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim3_axis2) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim3_axis2,
+                           channel_shuffle::is_ignored_quant8_dim3_axis2,
+                           channel_shuffle::examples_quant8_dim3_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim3_axis2_neg,
+                           channel_shuffle::is_ignored_quant8_dim3_axis2_neg,
+                           channel_shuffle::examples_quant8_dim3_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim2_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim2_axis0,
+                           channel_shuffle::is_ignored_quant8_dim2_axis0,
+                           channel_shuffle::examples_quant8_dim2_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim2_axis0_neg,
+                           channel_shuffle::is_ignored_quant8_dim2_axis0_neg,
+                           channel_shuffle::examples_quant8_dim2_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim2_axis1) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim2_axis1,
+                           channel_shuffle::is_ignored_quant8_dim2_axis1,
+                           channel_shuffle::examples_quant8_dim2_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim2_axis1_neg,
+                           channel_shuffle::is_ignored_quant8_dim2_axis1_neg,
+                           channel_shuffle::examples_quant8_dim2_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim1_axis0) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim1_axis0,
+                           channel_shuffle::is_ignored_quant8_dim1_axis0,
+                           channel_shuffle::examples_quant8_dim1_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, channel_shuffle_quant8_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           channel_shuffle::createTestModel_quant8_dim1_axis0_neg,
+                           channel_shuffle::is_ignored_quant8_dim1_axis0_neg,
+                           channel_shuffle::examples_quant8_dim1_axis0_neg);
 }
 
 // Generated from: conv2d_v1_2.mod.py.
