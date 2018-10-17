@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
+#include "ModelBuilder.h"
+#include "NeuralNetworksWrapper.h"
 #include "Utils.h"
 
 #include <gtest/gtest.h>
 
-namespace {
+namespace compliance_test {
 
 using namespace ::android::nn;
 
@@ -27,26 +29,43 @@ class ComplianceTest : public ::testing::Test {
     virtual void SetUp() {}
 };
 
-namespace tanh_quantized {
-#include "generated/vts_models/tanh_quantized.model.cpp"
-}  // namespace tanh_quantized
-
-TEST_F(ComplianceTest, tanh_quantized) {
-    Model model = tanh_quantized::createTestModel();
-
-    ASSERT_FALSE(compliantWithV1_1(model));
-    ASSERT_FALSE(compliantWithV1_0(model));
+void CreateHidlModel(std::function<void(wrapper::Model*)> CreateModel, Model* model) {
+    wrapper::Model wrapperModel;
+    CreateModel(&wrapperModel);
+    ModelBuilder* modelBuilder = reinterpret_cast<ModelBuilder*>(wrapperModel.getHandle());
+    modelBuilder->setHidlModel(model);
 }
 
-namespace sub_quantized {
-#include "generated/vts_models/sub_quantized.model.cpp"
-}  // namespace sub_quantized
+}  // namespace compliance_test
 
-TEST_F(ComplianceTest, sub_quantized) {
-    Model model = sub_quantized::createTestModel();
+#define FORWARD_DECLARE_GENERATED_OBJECTS(NamespaceName, FunctionName) \
+    namespace NamespaceName {                                          \
+    void FunctionName(android::nn::wrapper::Model* model);             \
+    }
 
-    ASSERT_FALSE(compliantWithV1_1(model));
-    ASSERT_FALSE(compliantWithV1_0(model));
-}
+#define TEST_AVAILABLE_SINCE_V1_2(NamespaceName, FunctionName)     \
+    FORWARD_DECLARE_GENERATED_OBJECTS(NamespaceName, FunctionName) \
+    namespace compliance_test {                                    \
+    TEST_F(ComplianceTest, NamespaceName) {                        \
+        Model model;                                               \
+        CreateHidlModel(NamespaceName::FunctionName, &model);      \
+        ASSERT_FALSE(compliantWithV1_1(model));                    \
+        ASSERT_FALSE(compliantWithV1_0(model));                    \
+    }                                                              \
+    }
 
-}  // end namespace
+TEST_AVAILABLE_SINCE_V1_2(tanh_quantized, CreateModel)
+TEST_AVAILABLE_SINCE_V1_2(sub_quantized, CreateModel)
+TEST_AVAILABLE_SINCE_V1_2(conv2d_v1_2, CreateModel_nchw)
+TEST_AVAILABLE_SINCE_V1_2(depthwise_conv2d_v1_2, CreateModel_nchw)
+TEST_AVAILABLE_SINCE_V1_2(avg_pool_v1_2, CreateModel_nchw)
+TEST_AVAILABLE_SINCE_V1_2(l2_pool_v1_2, CreateModel_nchw)
+TEST_AVAILABLE_SINCE_V1_2(max_pool_v1_2, CreateModel_nchw)
+TEST_AVAILABLE_SINCE_V1_2(resize_bilinear_v1_2, CreateModel_nchw)
+TEST_AVAILABLE_SINCE_V1_2(depth_to_space_v1_2, CreateModel_nchw)
+TEST_AVAILABLE_SINCE_V1_2(space_to_depth_v1_2, CreateModel_nchw)
+TEST_AVAILABLE_SINCE_V1_2(batch_to_space_v1_2, CreateModel_nchw)
+TEST_AVAILABLE_SINCE_V1_2(space_to_batch_v1_2, CreateModel_nchw)
+
+#undef TEST_AVAILABLE_SINCE_V1_2
+#undef FORWARD_DECLARE_GENERATED_OBJECTS
