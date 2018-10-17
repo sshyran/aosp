@@ -195,11 +195,15 @@ def DumpCtsExample(example, example_fd):
     print("std::vector<MixedTypedExample> %s = {"%(example.examplesName), file=example_fd)
     for inputFeedDict, outputFeedDict in example.feedDicts:
         print ('// Begin of an example', file = example_fd)
-        print ('{', file = example_fd)
+        print ('{\n.operands = {', file = example_fd)
         inputs = DumpMixedType(example.model.GetInputs(), inputFeedDict)
         outputs = DumpMixedType(example.model.GetOutputs(), outputFeedDict)
         print ('//Input(s)\n%s,' % inputs , file = example_fd)
         print ('//Output(s)\n%s' % outputs, file = example_fd)
+        print ('},', file = example_fd)
+        if example.expectedMultinomialDistributionTolerance is not None:
+          print ('.expectedMultinomialDistributionTolerance = %f' %
+                 example.expectedMultinomialDistributionTolerance, file = example_fd)
         print ('}, // End of an example', file = example_fd)
     print("};\n", file=example_fd)
 

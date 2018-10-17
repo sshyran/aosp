@@ -58,6 +58,9 @@ cc_defaults {
         "TestValidation.cpp",
         "TestWrapper.cpp",
     ],
+    static_libs: [
+        "libgmock",
+    ],
 }
 
 cc_test {
@@ -94,6 +97,7 @@ cc_defaults {
         "TestIntrospectionControl.cpp",
     ],
     static_libs: [
+        "libgmock",
         "libneuralnetworks",
         "libneuralnetworks_common",
         "libSampleDriver",
@@ -143,6 +147,7 @@ cc_defaults {
         "-DNNTEST_MULTITHREADED"
     ],
     static_libs: [
+        "libgmock",
         "libneuralnetworks",
         "libneuralnetworks_common",
         "libSampleDriver",

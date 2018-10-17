@@ -860,6 +860,7 @@ class Example:
     def __init__(self, *args, model=None, name=None):
         self.model = Model.models[-1] if model is None else model
         self.name = name
+        self.expectedMultinomialDistributionTolerance = None
         self.feedDicts = []
         for feedDict in args:
             if type(feedDict) is tuple or type(feedDict) is list:
@@ -1025,6 +1026,13 @@ class Example:
             self.model = modelOrigin
             self.feedDicts = feedDictsOrigin
         return self
+
+    # Specifies the RANDOM_MULTINOMIAL distribution tolerance.
+    # If set to greater than zero, the input is compared as log-probabilities
+    # to the output and must be within this tolerance to pass.
+    def WithMultinomialDistributionTolerance(self, expectedTolerance):
+      self.expectedMultinomialDistributionTolerance = expectedTolerance
+      return self
 
     # For backward-compatibility with slicing.py
     # Similar to dump_dict, but in python. Used by the slicing tool
