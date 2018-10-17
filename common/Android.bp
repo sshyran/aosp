@@ -60,6 +60,7 @@ cc_library_static {
         "ValidateHal.cpp",
         "operations/Activation.cpp",
         "operations/ArgMinMax.cpp",
+        "operations/Cast.cpp",
         "operations/ChannelShuffle.cpp",
         "operations/Concatenation.cpp",
         "operations/Conv2D.cpp",
