@@ -1867,18 +1867,20 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_CHANNEL_SHUFFLE: {
-            if (inputCount != 2 || outputCount != 1) {
-                logInvalidInOutNumber(2, 1);
+            if (inputCount != 3 || outputCount != 1) {
+                logInvalidInOutNumber(3, 1);
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
             if (inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::INT32};
+                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::INT32,
+                                   OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::INT32};
+                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::INT32,
+                                   OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
             } else {
                 LOG(ERROR) << "Unsupported input tensor type for operation "

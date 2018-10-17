@@ -1352,10 +1352,11 @@ TEST(OperationValidationTest, TRANSPOSE_CONV_2D_quant8) {
 }
 
 void channelShuffleOpTest(int32_t operandCode) {
-    uint32_t inoutDim[] = {2, 6};
+    uint32_t inoutDim[] = {2, 2, 3, 12};
     OperationTestBase channelShuffleTest(
             ANEURALNETWORKS_CHANNEL_SHUFFLE,
-            {getOpType(operandCode, 2, inoutDim), getOpType(ANEURALNETWORKS_INT32)},
+            {getOpType(operandCode, 2, inoutDim), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(ANEURALNETWORKS_INT32)},
             {getOpType(operandCode, 2, inoutDim)});
 
     EXPECT_TRUE(channelShuffleTest.testMutatingInputOperandCode());
