@@ -3,6 +3,7 @@
 std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
+.operands = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -21,6 +22,7 @@ std::vector<MixedTypedExample> examples = {
   // int -> QUANT8_ASYMM map
   {{0, {1, 3, 9, 11, 2, 4, 10, 12, 5, 7, 13, 15, 6, 8, 14, 16}}}
 }
+},
 }, // End of an example
 };
 
