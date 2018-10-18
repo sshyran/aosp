@@ -1235,24 +1235,23 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
         } break;
         case OperationType::L2_NORMALIZATION: {
-            if (!allParametersPresent(1, 1)) {
+            const size_t inCount = ins.size();
+            if ((inCount != 2 && inCount != 1) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
+            const int32_t axis = inCount == 2 ? getScalarData<int32_t>(mOperands[ins[1]]) : -1;
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
             if (!genericNormalizationPrepare(input.shape(), &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                success = false;
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
                 success = l2normFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
-                                        reinterpret_cast<float*>(output.buffer), outShape);
-            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success =
-                        l2normQuant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
-                                     reinterpret_cast<uint8_t*>(output.buffer), outShape);
+                                        axis, reinterpret_cast<float*>(output.buffer), outShape);
             }
         } break;
         case OperationType::LOCAL_RESPONSE_NORMALIZATION: {
