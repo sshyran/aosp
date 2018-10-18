@@ -1255,7 +1255,8 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
         } break;
         case OperationType::LOCAL_RESPONSE_NORMALIZATION: {
-            if (!allParametersPresent(5, 1)) {
+            const size_t inCount = ins.size();
+            if ((inCount != 6 && inCount != 5) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
@@ -1263,18 +1264,20 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             float bias = getScalarData<float>(mOperands[ins[2]]);
             float alpha = getScalarData<float>(mOperands[ins[3]]);
             float beta = getScalarData<float>(mOperands[ins[4]]);
+            const int32_t axis = inCount == 6 ? getScalarData<int32_t>(mOperands[ins[5]]) : -1;
 
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
             if (!genericNormalizationPrepare(input.shape(), &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                success = false;
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
                 success = localResponseNormFloat32(
                         reinterpret_cast<const float*>(input.buffer), input.shape(), radius, bias,
-                        alpha, beta, reinterpret_cast<float*>(output.buffer), outShape);
+                        alpha, beta, axis, reinterpret_cast<float*>(output.buffer), outShape);
             }
         } break;
         case OperationType::RESHAPE: {
