@@ -174,10 +174,8 @@ bool concatenationQuant8(const std::vector<const uint8_t*>& inputDataPtrs,
                          const std::vector<Shape>& inputShapes, int32_t axis,
                          uint8_t* outputData, const Shape& outputShape);
 
-bool l2normFloat32(const float* inputData, const Shape& inputShape,
-                   float* outputData, const Shape& outputShape);
-bool l2normQuant8(const uint8_t* inputData, const Shape& inputShape,
-                  uint8_t* outputData, const Shape& outputShape);
+bool l2normFloat32(const float* inputData, const Shape& inputShape, int32_t axis, float* outputData,
+                   const Shape& outputShape);
 bool localResponseNormFloat32(const float* inputData, const Shape& inputShape,
                               int32_t radius, float bias, float alpha, float beta,
                               float* outputData, const Shape& outputShape);

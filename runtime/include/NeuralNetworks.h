@@ -687,21 +687,25 @@ typedef enum {
      *         input[batch, row, col, channel] /
      *         sqrt(sum_{c} pow(input[batch, row, col, c], 2))
      *
-     * For input tensor with more dimensions, independently normalizes each 1-D
-     * slice along dimension dim.
+     * For input tensor with rank less than 4, independently normalizes each
+     * 1-D slice along dimension dim.
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout (i.e., Num_samples,
-     * Height, Width, and Channels).
+     * Supported tensor rank: up to 4
+     * Tensors with rank less than 4 are only supported since API level 29.
      *
      * Inputs:
-     * * 0: A 4-D tensor, of shape [batches, height, width, depth].
+     * * 0: An n-D tensor, specifying the tensor to be normalized.
+     * * 1: An optional {@link ANEURALNETWORKS_INT32} scalar, default to -1,
+     *      specifying the dimension normalization would be performed on.
+     *      Negative index is used to specify axis from the end (e.g. -1 for
+     *      the last axis). Must be in the range [-n, n).
+     *      Available since API level 29.
      *
      * Outputs:
-     * * 0: The output 4-D tensor, of the same shape as input
-     *      [batches, height, width, depth].
+     * * 0: A tensor of the same {@link OperandCode} and same shape as input0.
      *
      * Available since API level 27.
      */
