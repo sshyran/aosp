@@ -451,7 +451,6 @@ bool concatenationPrepare(const std::vector<Shape>& inputShapes,
 
 
 bool genericNormalizationPrepare(const Shape& input, Shape* output) {
-    NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
     return SetShape(input, output);
 }
 

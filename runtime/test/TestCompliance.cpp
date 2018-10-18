@@ -38,34 +38,45 @@ void CreateHidlModel(std::function<void(wrapper::Model*)> CreateModel, Model* mo
 
 }  // namespace compliance_test
 
-#define FORWARD_DECLARE_GENERATED_OBJECTS(NamespaceName, FunctionName) \
-    namespace NamespaceName {                                          \
-    void FunctionName(android::nn::wrapper::Model* model);             \
+#define CONCAT_NAME_1(name) name
+#define CONCAT_NAME_2(name, suffix) name##_##suffix
+#define GET_CONCAT_NAME(_0, _1, macro, ...) macro
+#define CONCAT_NAME(...) GET_CONCAT_NAME(__VA_ARGS__, CONCAT_NAME_2, CONCAT_NAME_1)(__VA_ARGS__)
+
+#define FORWARD_DECLARE_GENERATED_OBJECTS(NamespaceName, ...)                          \
+    namespace NamespaceName {                                                          \
+    void CONCAT_NAME(CreateModel, ##__VA_ARGS__)(android::nn::wrapper::Model * model); \
     }
 
-#define TEST_AVAILABLE_SINCE_V1_2(NamespaceName, FunctionName)     \
-    FORWARD_DECLARE_GENERATED_OBJECTS(NamespaceName, FunctionName) \
-    namespace compliance_test {                                    \
-    TEST_F(ComplianceTest, NamespaceName) {                        \
-        Model model;                                               \
-        CreateHidlModel(NamespaceName::FunctionName, &model);      \
-        ASSERT_FALSE(compliantWithV1_1(model));                    \
-        ASSERT_FALSE(compliantWithV1_0(model));                    \
-    }                                                              \
+#define TEST_AVAILABLE_SINCE_V1_2(NamespaceName, ...)                                    \
+    FORWARD_DECLARE_GENERATED_OBJECTS(NamespaceName, ##__VA_ARGS__)                      \
+    namespace compliance_test {                                                          \
+    TEST_F(ComplianceTest, CONCAT_NAME(NamespaceName, ##__VA_ARGS__)) {                  \
+        Model model;                                                                     \
+        CreateHidlModel(NamespaceName::CONCAT_NAME(CreateModel, ##__VA_ARGS__), &model); \
+        ASSERT_FALSE(compliantWithV1_1(model));                                          \
+        ASSERT_FALSE(compliantWithV1_0(model));                                          \
+    }                                                                                    \
     }
 
-TEST_AVAILABLE_SINCE_V1_2(tanh_quantized, CreateModel)
-TEST_AVAILABLE_SINCE_V1_2(sub_quantized, CreateModel)
-TEST_AVAILABLE_SINCE_V1_2(conv2d_v1_2, CreateModel_nchw)
-TEST_AVAILABLE_SINCE_V1_2(depthwise_conv2d_v1_2, CreateModel_nchw)
-TEST_AVAILABLE_SINCE_V1_2(avg_pool_v1_2, CreateModel_nchw)
-TEST_AVAILABLE_SINCE_V1_2(l2_pool_v1_2, CreateModel_nchw)
-TEST_AVAILABLE_SINCE_V1_2(max_pool_v1_2, CreateModel_nchw)
-TEST_AVAILABLE_SINCE_V1_2(resize_bilinear_v1_2, CreateModel_nchw)
-TEST_AVAILABLE_SINCE_V1_2(depth_to_space_v1_2, CreateModel_nchw)
-TEST_AVAILABLE_SINCE_V1_2(space_to_depth_v1_2, CreateModel_nchw)
-TEST_AVAILABLE_SINCE_V1_2(batch_to_space_v1_2, CreateModel_nchw)
-TEST_AVAILABLE_SINCE_V1_2(space_to_batch_v1_2, CreateModel_nchw)
+TEST_AVAILABLE_SINCE_V1_2(tanh_quantized)
+TEST_AVAILABLE_SINCE_V1_2(sub_quantized)
+TEST_AVAILABLE_SINCE_V1_2(conv2d_v1_2, nchw)
+TEST_AVAILABLE_SINCE_V1_2(depthwise_conv2d_v1_2, nchw)
+TEST_AVAILABLE_SINCE_V1_2(avg_pool_v1_2, nchw)
+TEST_AVAILABLE_SINCE_V1_2(l2_pool_v1_2, nchw)
+TEST_AVAILABLE_SINCE_V1_2(max_pool_v1_2, nchw)
+TEST_AVAILABLE_SINCE_V1_2(resize_bilinear_v1_2, nchw)
+TEST_AVAILABLE_SINCE_V1_2(depth_to_space_v1_2, nchw)
+TEST_AVAILABLE_SINCE_V1_2(space_to_depth_v1_2, nchw)
+TEST_AVAILABLE_SINCE_V1_2(batch_to_space_v1_2, nchw)
+TEST_AVAILABLE_SINCE_V1_2(space_to_batch_v1_2, nchw)
+TEST_AVAILABLE_SINCE_V1_2(l2_normalization_v1_2, dim2_axis1)
+TEST_AVAILABLE_SINCE_V1_2(l2_normalization_v1_2, axis_dim4_axis0)
 
 #undef TEST_AVAILABLE_SINCE_V1_2
 #undef FORWARD_DECLARE_GENERATED_OBJECTS
+#undef CONCAT_NAME
+#undef GET_CONCAT_NAME
+#undef CONCAT_NAME_2
+#undef CONCAT_NAME_1
