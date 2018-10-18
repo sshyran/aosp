@@ -366,6 +366,7 @@
 #include "../generated/tests/pad_v2_1_float.mod.py.cpp"
 #include "../generated/tests/pad_v2_1_float_relaxed.mod.py.cpp"
 #include "../generated/tests/pad_v2_1_quant8.mod.py.cpp"
+#include "../generated/tests/pow.mod.py.cpp"
 #include "../generated/tests/prelu.mod.py.cpp"
 #include "../generated/tests/quantize.mod.py.cpp"
 #include "../generated/tests/random_multinomial.mod.py.cpp"
