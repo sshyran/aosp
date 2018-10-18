@@ -1312,7 +1312,7 @@ void CreateModel_8(Model *model) {
   auto param15 = model->addOperand(&type2);
   auto output07 = model->addOperand(&type8);
   // Phase 2, operations
-  static int32_t param14_init[] = {2};
+  static int32_t param14_init[] = {-1};
   model->setOperandValue(param14, param14_init, sizeof(int32_t) * 1);
   static int32_t param15_init[] = {2, 0};
   model->setOperandValue(param15, param15_init, sizeof(int32_t) * 2);
@@ -1367,7 +1367,7 @@ void CreateModel_relaxed_8(Model *model) {
   auto param15 = model->addOperand(&type2);
   auto output07 = model->addOperand(&type8);
   // Phase 2, operations
-  static int32_t param14_init[] = {2};
+  static int32_t param14_init[] = {-1};
   model->setOperandValue(param14, param14_init, sizeof(int32_t) * 1);
   static int32_t param15_init[] = {2, 0};
   model->setOperandValue(param15, param15_init, sizeof(int32_t) * 2);
@@ -1424,7 +1424,7 @@ void CreateModel_quant8_8(Model *model) {
   auto param15 = model->addOperand(&type2);
   auto output07 = model->addOperand(&type21);
   // Phase 2, operations
-  static int32_t param14_init[] = {2};
+  static int32_t param14_init[] = {-1};
   model->setOperandValue(param14, param14_init, sizeof(int32_t) * 1);
   static int32_t param15_init[] = {2, 0};
   model->setOperandValue(param15, param15_init, sizeof(int32_t) * 2);
@@ -1479,7 +1479,7 @@ void CreateModel_int32_8(Model *model) {
   auto param15 = model->addOperand(&type2);
   auto output07 = model->addOperand(&type23);
   // Phase 2, operations
-  static int32_t param14_init[] = {2};
+  static int32_t param14_init[] = {-1};
   model->setOperandValue(param14, param14_init, sizeof(int32_t) * 1);
   static int32_t param15_init[] = {2, 0};
   model->setOperandValue(param15, param15_init, sizeof(int32_t) * 2);
