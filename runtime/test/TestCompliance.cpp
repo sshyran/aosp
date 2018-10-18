@@ -73,6 +73,8 @@ TEST_AVAILABLE_SINCE_V1_2(batch_to_space_v1_2, nchw)
 TEST_AVAILABLE_SINCE_V1_2(space_to_batch_v1_2, nchw)
 TEST_AVAILABLE_SINCE_V1_2(l2_normalization_v1_2, dim2_axis1)
 TEST_AVAILABLE_SINCE_V1_2(l2_normalization_v1_2, axis_dim4_axis0)
+TEST_AVAILABLE_SINCE_V1_2(local_response_normalization_v1_2, dim2_axis1)
+TEST_AVAILABLE_SINCE_V1_2(local_response_normalization_v1_2, axis_dim4_axis0)
 
 #undef TEST_AVAILABLE_SINCE_V1_2
 #undef FORWARD_DECLARE_GENERATED_OBJECTS

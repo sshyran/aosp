@@ -1093,8 +1093,10 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION: {
-            if (inputCount != 5 || outputCount != 1) {
-                logInvalidInOutNumber(5, 1);
+            if ((inputCount != 6 && inputCount != 5) || outputCount != 1) {
+                LOG(ERROR) << "Invalid number of input operands (" << inputCount
+                           << ", expected 6 or 5) or output operands (" << outputCount
+                           << ", expected 1) for operation " << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -1112,7 +1114,16 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
+            if (inputCount == 6) {
+                inExpectedTypes.push_back(OperandType::INT32);
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                if (operands[inputIndexes[0]].dimensions.size() == 4) {
+                    *minSupportedHalVersion = HalVersion::V1_0;
+                } else {
+                    *minSupportedHalVersion = HalVersion::V1_2;
+                }
+            }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,

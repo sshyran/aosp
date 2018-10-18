@@ -178,9 +178,9 @@ bool concatenationQuant8(const std::vector<const uint8_t*>& inputDataPtrs,
 
 bool l2normFloat32(const float* inputData, const Shape& inputShape, int32_t axis, float* outputData,
                    const Shape& outputShape);
-bool localResponseNormFloat32(const float* inputData, const Shape& inputShape,
-                              int32_t radius, float bias, float alpha, float beta,
-                              float* outputData, const Shape& outputShape);
+bool localResponseNormFloat32(const float* inputData, const Shape& inputShape, int32_t radius,
+                              float bias, float alpha, float beta, int32_t axis, float* outputData,
+                              const Shape& outputShape);
 
 bool reshapeGeneric(const void* inputData, const Shape& inputShape,
                     void* outputData, const Shape& outputShape);
