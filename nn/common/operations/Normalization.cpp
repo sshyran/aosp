@@ -17,32 +17,56 @@
 #include "Operations.h"
 #include "CpuOperationUtils.h"
 
+#include <cmath>
 #include "tensorflow/contrib/lite/kernels/internal/optimized/legacy_optimized_ops.h"
+#include "tensorflow/contrib/lite/kernels/internal/optimized/optimized_ops.h"
 
 #include "Tracing.h"
 
 namespace android {
 namespace nn {
 
-bool l2normFloat32(const float* inputData, const Shape& inputShape,
-                   float* outputData, const Shape& outputShape) {
-    NNTRACE_COMP("optimized_ops::L2Normalization::float");
-    tflite::optimized_ops::L2Normalization<tflite::FusedActivationFunctionType::kNone>(
-            inputData, convertShapeToTflshape(inputShape),
-            outputData, convertShapeToTflshape(outputShape));
-
+inline bool l2normFloat32Impl(const float* inputData, const Shape& inputShape, int32_t axis,
+                              float* outputData, const Shape& outputShape) {
+    NNTRACE_TRANS("l2normFloat32");
+    const uint32_t outerSize = getNumberOfElements(inputShape, 0, axis);
+    const uint32_t axisSize = getSizeOfDimension(inputShape, axis);
+    const uint32_t innerSize =
+            getNumberOfElements(inputShape, axis + 1, getNumberOfDimensions(inputShape));
+    for (uint32_t outer = 0; outer < outerSize; ++outer) {
+        const float* inputBeg = inputData + outer * axisSize * innerSize;
+        const float* inputEnd = inputBeg + axisSize * innerSize;
+        float* outputBeg = outputData + outer * axisSize * innerSize;
+        for (uint32_t inner = 0; inner < innerSize; ++inner, ++inputBeg, ++inputEnd, ++outputBeg) {
+            float sum = 0.0f;
+            for (const float* p = inputBeg; p < inputEnd; p += innerSize) {
+                float val = *p;
+                sum += val * val;
+            }
+            float l2_norm = std::sqrt(sum);
+            float* pOut = outputBeg;
+            for (const float* p = inputBeg; p < inputEnd; p += innerSize, pOut += innerSize) {
+                *pOut = *p / l2_norm;
+            }
+        }
+    }
     return true;
 }
 
-bool l2normQuant8(const uint8_t* inputData, const Shape& inputShape,
-                  uint8_t* outputData, const Shape& outputShape) {
-    NNTRACE_COMP("optimized_ops::L2Normalization::uint8");
-    tflite::optimized_ops::L2Normalization(
-            inputData, convertShapeToTflshape(inputShape),
-            inputShape.offset,
-            outputData, convertShapeToTflshape(outputShape));
-
-    return true;
+bool l2normFloat32(const float* inputData, const Shape& inputShape, int32_t axis, float* outputData,
+                   const Shape& outputShape) {
+    int32_t ndim = getNumberOfDimensions(inputShape);
+    axis = getDimensionIndex(inputShape, axis);
+    // TFLite optimized implementation only supports computation along the last axis
+    if (axis == ndim - 1) {
+        NNTRACE_COMP("optimized_ops::L2Normalization::float");
+        tflite::L2NormalizationParams param = {.input_zero_point = 0};
+        tflite::optimized_ops::L2Normalization(param, convertShapeToTflshape(inputShape), inputData,
+                                               convertShapeToTflshape(outputShape), outputData);
+        return true;
+    } else {
+        return l2normFloat32Impl(inputData, inputShape, axis, outputData, outputShape);
+    }
 }
 
 bool localResponseNormFloat32(const float* inputData, const Shape& inputShape,
