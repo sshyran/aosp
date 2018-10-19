@@ -141,8 +141,7 @@ bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outp
                 const Shape& outputShape);
 bool logisticFloat32(const float* inputData, const Shape& inputShape,
                      float* outputData, const Shape& outputShape);
-bool softmaxFloat32(const float* inputData, const Shape& inputShape,
-                    const float beta,
+bool softmaxFloat32(const float* inputData, const Shape& inputShape, const float beta, int32_t axis,
                     float* outputData, const Shape& outputShape);
 bool reluQuant8(const uint8_t* inputData, const Shape& inputShape,
                 uint8_t* outputData, const Shape& outputShape);
@@ -152,9 +151,8 @@ bool relu6Quant8(const uint8_t* inputData, const Shape& inputShape,
                  uint8_t* outputData, const Shape& outputShape);
 bool logisticQuant8(const uint8_t* inputData, const Shape& inputShape,
                     uint8_t* outputData, const Shape& outputShape);
-bool softmaxQuant8(const uint8_t* inputData, const Shape& inputShape,
-                   const float beta,
-                   uint8_t* outputData, const Shape& outputShape);
+bool softmaxQuant8(const uint8_t* inputData, const Shape& inputShape, const float beta,
+                   int32_t axis, uint8_t* outputData, const Shape& outputShape);
 
 bool fullyConnectedFloat32(const float* inputData, const Shape& inputShape,
                            const float* weights, const Shape& weightsShape,

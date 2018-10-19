@@ -4431,6 +4431,980 @@ TEST_F(NeuralnetworksHidlTest, roi_align_nchw_relaxed_3) {
                            roi_align::examples_nchw_relaxed_3);
 }
 
+// Generated from: softmax_v1_2.mod.py.
+namespace softmax_v1_2 {
+// Generated softmax_v1_2 test
+#include "examples/softmax_v1_2.example.cpp"
+// Generated model constructor
+#include "vts_models/softmax_v1_2.model.cpp"
+} // namespace softmax_v1_2
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel,
+                           softmax_v1_2::is_ignored,
+                           softmax_v1_2::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_dim1_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_dim1_axis0,
+                           softmax_v1_2::is_ignored_dim1_axis0,
+                           softmax_v1_2::examples_dim1_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_dim3_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_dim3_axis2,
+                           softmax_v1_2::is_ignored_dim3_axis2,
+                           softmax_v1_2::examples_dim3_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_relaxed) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_relaxed,
+                           softmax_v1_2::is_ignored_relaxed,
+                           softmax_v1_2::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_relaxed_dim1_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_relaxed_dim1_axis0,
+                           softmax_v1_2::is_ignored_relaxed_dim1_axis0,
+                           softmax_v1_2::examples_relaxed_dim1_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_relaxed_dim3_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_relaxed_dim3_axis2,
+                           softmax_v1_2::is_ignored_relaxed_dim3_axis2,
+                           softmax_v1_2::examples_relaxed_dim3_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_quant8) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_quant8,
+                           softmax_v1_2::is_ignored_quant8,
+                           softmax_v1_2::examples_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_quant8_dim1_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_quant8_dim1_axis0,
+                           softmax_v1_2::is_ignored_quant8_dim1_axis0,
+                           softmax_v1_2::examples_quant8_dim1_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_quant8_dim3_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_quant8_dim3_axis2,
+                           softmax_v1_2::is_ignored_quant8_dim3_axis2,
+                           softmax_v1_2::examples_quant8_dim3_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_2,
+                           softmax_v1_2::is_ignored_2,
+                           softmax_v1_2::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_dim1_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_dim1_axis0_2,
+                           softmax_v1_2::is_ignored_dim1_axis0_2,
+                           softmax_v1_2::examples_dim1_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_dim3_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_dim3_axis2_2,
+                           softmax_v1_2::is_ignored_dim3_axis2_2,
+                           softmax_v1_2::examples_dim3_axis2_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_relaxed_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_relaxed_2,
+                           softmax_v1_2::is_ignored_relaxed_2,
+                           softmax_v1_2::examples_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_relaxed_dim1_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_relaxed_dim1_axis0_2,
+                           softmax_v1_2::is_ignored_relaxed_dim1_axis0_2,
+                           softmax_v1_2::examples_relaxed_dim1_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_relaxed_dim3_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_relaxed_dim3_axis2_2,
+                           softmax_v1_2::is_ignored_relaxed_dim3_axis2_2,
+                           softmax_v1_2::examples_relaxed_dim3_axis2_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_quant8_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_quant8_2,
+                           softmax_v1_2::is_ignored_quant8_2,
+                           softmax_v1_2::examples_quant8_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_quant8_dim1_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_quant8_dim1_axis0_2,
+                           softmax_v1_2::is_ignored_quant8_dim1_axis0_2,
+                           softmax_v1_2::examples_quant8_dim1_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_quant8_dim3_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_quant8_dim3_axis2_2,
+                           softmax_v1_2::is_ignored_quant8_dim3_axis2_2,
+                           softmax_v1_2::examples_quant8_dim3_axis2_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis0,
+                           softmax_v1_2::is_ignored_axis_dim4_axis0,
+                           softmax_v1_2::examples_axis_dim4_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_dim4_axis0_neg,
+                           softmax_v1_2::examples_axis_dim4_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis1,
+                           softmax_v1_2::is_ignored_axis_dim4_axis1,
+                           softmax_v1_2::examples_axis_dim4_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_dim4_axis1_neg,
+                           softmax_v1_2::examples_axis_dim4_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis2,
+                           softmax_v1_2::is_ignored_axis_dim4_axis2,
+                           softmax_v1_2::examples_axis_dim4_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis2_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis2_neg,
+                           softmax_v1_2::is_ignored_axis_dim4_axis2_neg,
+                           softmax_v1_2::examples_axis_dim4_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis3) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis3,
+                           softmax_v1_2::is_ignored_axis_dim4_axis3,
+                           softmax_v1_2::examples_axis_dim4_axis3);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis3_neg,
+                           softmax_v1_2::is_ignored_axis_dim4_axis3_neg,
+                           softmax_v1_2::examples_axis_dim4_axis3_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis0,
+                           softmax_v1_2::is_ignored_axis_dim3_axis0,
+                           softmax_v1_2::examples_axis_dim3_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_dim3_axis0_neg,
+                           softmax_v1_2::examples_axis_dim3_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis1,
+                           softmax_v1_2::is_ignored_axis_dim3_axis1,
+                           softmax_v1_2::examples_axis_dim3_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_dim3_axis1_neg,
+                           softmax_v1_2::examples_axis_dim3_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis2,
+                           softmax_v1_2::is_ignored_axis_dim3_axis2,
+                           softmax_v1_2::examples_axis_dim3_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis2_neg,
+                           softmax_v1_2::is_ignored_axis_dim3_axis2_neg,
+                           softmax_v1_2::examples_axis_dim3_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim2_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim2_axis0,
+                           softmax_v1_2::is_ignored_axis_dim2_axis0,
+                           softmax_v1_2::examples_axis_dim2_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim2_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_dim2_axis0_neg,
+                           softmax_v1_2::examples_axis_dim2_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim2_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim2_axis1,
+                           softmax_v1_2::is_ignored_axis_dim2_axis1,
+                           softmax_v1_2::examples_axis_dim2_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim2_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_dim2_axis1_neg,
+                           softmax_v1_2::examples_axis_dim2_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim1_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim1_axis0,
+                           softmax_v1_2::is_ignored_axis_dim1_axis0,
+                           softmax_v1_2::examples_axis_dim1_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim1_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_dim1_axis0_neg,
+                           softmax_v1_2::examples_axis_dim1_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis0,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis0,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis0_neg,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis1,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis1,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis1_neg,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis2,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis2_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis2_neg,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis2_neg,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis3) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis3,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis3,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis3);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis3_neg,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis3_neg,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis3_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis0,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis0,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis0_neg,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis1,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis1,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis1_neg,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis2,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis2_neg,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis2_neg,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim2_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim2_axis0,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim2_axis0,
+                           softmax_v1_2::examples_axis_relaxed_dim2_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim2_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim2_axis0_neg,
+                           softmax_v1_2::examples_axis_relaxed_dim2_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim2_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim2_axis1,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim2_axis1,
+                           softmax_v1_2::examples_axis_relaxed_dim2_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim2_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim2_axis1_neg,
+                           softmax_v1_2::examples_axis_relaxed_dim2_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim1_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim1_axis0,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim1_axis0,
+                           softmax_v1_2::examples_axis_relaxed_dim1_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim1_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim1_axis0_neg,
+                           softmax_v1_2::examples_axis_relaxed_dim1_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis0,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis0,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis0_neg,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis1,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis1,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis1_neg,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis2,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis2_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis2_neg,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis2_neg,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis3) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis3,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis3,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis3);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis3_neg,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis3_neg,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis3_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis0,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis0,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis0_neg,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis1,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis1,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis1_neg,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis2,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis2_neg,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis2_neg,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis2_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim2_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim2_axis0,
+                           softmax_v1_2::is_ignored_axis_quant8_dim2_axis0,
+                           softmax_v1_2::examples_axis_quant8_dim2_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim2_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_quant8_dim2_axis0_neg,
+                           softmax_v1_2::examples_axis_quant8_dim2_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim2_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim2_axis1,
+                           softmax_v1_2::is_ignored_axis_quant8_dim2_axis1,
+                           softmax_v1_2::examples_axis_quant8_dim2_axis1);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim2_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_quant8_dim2_axis1_neg,
+                           softmax_v1_2::examples_axis_quant8_dim2_axis1_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim1_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim1_axis0,
+                           softmax_v1_2::is_ignored_axis_quant8_dim1_axis0,
+                           softmax_v1_2::examples_axis_quant8_dim1_axis0);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim1_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_quant8_dim1_axis0_neg,
+                           softmax_v1_2::examples_axis_quant8_dim1_axis0_neg);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis0_2,
+                           softmax_v1_2::is_ignored_axis_dim4_axis0_2,
+                           softmax_v1_2::examples_axis_dim4_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_dim4_axis0_neg_2,
+                           softmax_v1_2::examples_axis_dim4_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis1_2,
+                           softmax_v1_2::is_ignored_axis_dim4_axis1_2,
+                           softmax_v1_2::examples_axis_dim4_axis1_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_dim4_axis1_neg_2,
+                           softmax_v1_2::examples_axis_dim4_axis1_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis2_2,
+                           softmax_v1_2::is_ignored_axis_dim4_axis2_2,
+                           softmax_v1_2::examples_axis_dim4_axis2_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis2_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis2_neg_2,
+                           softmax_v1_2::is_ignored_axis_dim4_axis2_neg_2,
+                           softmax_v1_2::examples_axis_dim4_axis2_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis3_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis3_2,
+                           softmax_v1_2::is_ignored_axis_dim4_axis3_2,
+                           softmax_v1_2::examples_axis_dim4_axis3_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim4_axis3_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim4_axis3_neg_2,
+                           softmax_v1_2::is_ignored_axis_dim4_axis3_neg_2,
+                           softmax_v1_2::examples_axis_dim4_axis3_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis0_2,
+                           softmax_v1_2::is_ignored_axis_dim3_axis0_2,
+                           softmax_v1_2::examples_axis_dim3_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_dim3_axis0_neg_2,
+                           softmax_v1_2::examples_axis_dim3_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis1_2,
+                           softmax_v1_2::is_ignored_axis_dim3_axis1_2,
+                           softmax_v1_2::examples_axis_dim3_axis1_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_dim3_axis1_neg_2,
+                           softmax_v1_2::examples_axis_dim3_axis1_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis2_2,
+                           softmax_v1_2::is_ignored_axis_dim3_axis2_2,
+                           softmax_v1_2::examples_axis_dim3_axis2_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim3_axis2_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim3_axis2_neg_2,
+                           softmax_v1_2::is_ignored_axis_dim3_axis2_neg_2,
+                           softmax_v1_2::examples_axis_dim3_axis2_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim2_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim2_axis0_2,
+                           softmax_v1_2::is_ignored_axis_dim2_axis0_2,
+                           softmax_v1_2::examples_axis_dim2_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim2_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim2_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_dim2_axis0_neg_2,
+                           softmax_v1_2::examples_axis_dim2_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim2_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim2_axis1_2,
+                           softmax_v1_2::is_ignored_axis_dim2_axis1_2,
+                           softmax_v1_2::examples_axis_dim2_axis1_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim2_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim2_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_dim2_axis1_neg_2,
+                           softmax_v1_2::examples_axis_dim2_axis1_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim1_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim1_axis0_2,
+                           softmax_v1_2::is_ignored_axis_dim1_axis0_2,
+                           softmax_v1_2::examples_axis_dim1_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_dim1_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_dim1_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_dim1_axis0_neg_2,
+                           softmax_v1_2::examples_axis_dim1_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis0_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis0_2,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis0_neg_2,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis1_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis1_2,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis1_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis1_neg_2,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis1_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis2_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis2_2,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis2_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis2_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis2_neg_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis2_neg_2,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis2_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis3_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis3_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis3_2,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis3_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim4_axis3_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim4_axis3_neg_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim4_axis3_neg_2,
+                           softmax_v1_2::examples_axis_relaxed_dim4_axis3_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis0_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis0_2,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis0_neg_2,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis1_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis1_2,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis1_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis1_neg_2,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis1_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis2_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis2_2,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis2_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim3_axis2_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim3_axis2_neg_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim3_axis2_neg_2,
+                           softmax_v1_2::examples_axis_relaxed_dim3_axis2_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim2_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim2_axis0_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim2_axis0_2,
+                           softmax_v1_2::examples_axis_relaxed_dim2_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim2_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim2_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim2_axis0_neg_2,
+                           softmax_v1_2::examples_axis_relaxed_dim2_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim2_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim2_axis1_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim2_axis1_2,
+                           softmax_v1_2::examples_axis_relaxed_dim2_axis1_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim2_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim2_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim2_axis1_neg_2,
+                           softmax_v1_2::examples_axis_relaxed_dim2_axis1_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim1_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim1_axis0_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim1_axis0_2,
+                           softmax_v1_2::examples_axis_relaxed_dim1_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim1_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_relaxed_dim1_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_relaxed_dim1_axis0_neg_2,
+                           softmax_v1_2::examples_axis_relaxed_dim1_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis0_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis0_2,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis0_neg_2,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis1_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis1_2,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis1_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis1_neg_2,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis1_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis2_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis2_2,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis2_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis2_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis2_neg_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis2_neg_2,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis2_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis3_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis3_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis3_2,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis3_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim4_axis3_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim4_axis3_neg_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim4_axis3_neg_2,
+                           softmax_v1_2::examples_axis_quant8_dim4_axis3_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis0_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis0_2,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis0_neg_2,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis1_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis1_2,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis1_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis1_neg_2,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis1_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis2_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis2_2,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis2_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim3_axis2_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim3_axis2_neg_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim3_axis2_neg_2,
+                           softmax_v1_2::examples_axis_quant8_dim3_axis2_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim2_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim2_axis0_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim2_axis0_2,
+                           softmax_v1_2::examples_axis_quant8_dim2_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim2_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim2_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim2_axis0_neg_2,
+                           softmax_v1_2::examples_axis_quant8_dim2_axis0_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim2_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim2_axis1_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim2_axis1_2,
+                           softmax_v1_2::examples_axis_quant8_dim2_axis1_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim2_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim2_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim2_axis1_neg_2,
+                           softmax_v1_2::examples_axis_quant8_dim2_axis1_neg_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim1_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim1_axis0_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim1_axis0_2,
+                           softmax_v1_2::examples_axis_quant8_dim1_axis0_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_quant8_dim1_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_quant8_dim1_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_quant8_dim1_axis0_neg_2,
+                           softmax_v1_2::examples_axis_quant8_dim1_axis0_neg_2);
+}
+
 // Generated from: space_to_batch_v1_2.mod.py.
 namespace space_to_batch_v1_2 {
 // Generated space_to_batch_v1_2 test
