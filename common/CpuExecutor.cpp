@@ -2159,6 +2159,33 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                reinterpret_cast<const int32_t*>(multiples.buffer), output.buffer,
                                outShape);
         } break;
+        case OperationType::QUANTIZED_16BIT_LSTM: {
+            if (!allParametersPresent(5, 5)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+
+            RunTimeOperandInfo& concatTemp = mOperands[outs[QuantizedLSTMCell::kConcatTempTensor]];
+            RunTimeOperandInfo& activationTemp =
+                    mOperands[outs[QuantizedLSTMCell::kActivationTempTensor]];
+            RunTimeOperandInfo& outputStateOut =
+                    mOperands[outs[QuantizedLSTMCell::kOutputStateOutTensor]];
+            RunTimeOperandInfo& cellStateOut =
+                    mOperands[outs[QuantizedLSTMCell::kCellStateOutTensor]];
+            RunTimeOperandInfo& output = mOperands[outs[QuantizedLSTMCell::kOutputTensor]];
+
+            Shape concatTempShape, activationTempShape, outputStateOutShape, cellStateOutShape,
+                    outputShape;
+            QuantizedLSTMCell quantizedLSTMCell(operation, mOperands);
+
+            success = QuantizedLSTMCell::prepare(operation, mOperands, &concatTempShape,
+                                                 &activationTempShape, &outputStateOutShape,
+                                                 &cellStateOutShape, &outputShape) &&
+                      setInfoAndAllocateIfNeeded(&concatTemp, concatTempShape) &&
+                      setInfoAndAllocateIfNeeded(&activationTemp, activationTempShape) &&
+                      setInfoAndAllocateIfNeeded(&outputStateOut, outputStateOutShape) &&
+                      setInfoAndAllocateIfNeeded(&cellStateOut, cellStateOutShape) &&
+                      setInfoAndAllocateIfNeeded(&output, outputShape) && quantizedLSTMCell.eval();
+        } break;
         default:
             nnAssert(false);
             break;

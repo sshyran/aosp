@@ -1330,6 +1330,24 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
+        case ANEURALNETWORKS_QUANTIZED_16BIT_LSTM: {
+            if (inputCount != 5 || outputCount != 5) {
+                logInvalidInOutNumber(5, 5);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            *minSupportedHalVersion = HalVersion::V1_2;
+            std::vector<OperandType> inExpectedTypes = {
+                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
+                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_INT32,
+                    OperandType::TENSOR_QUANT16_ASYMM};
+            std::vector<OperandType> outExpectedTypes = {
+                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM,
+                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM,
+                    OperandType::TENSOR_QUANT8_ASYMM};
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
         case ANEURALNETWORKS_RNN: {
             if (inputCount != 6 || outputCount != 2) {
                 logInvalidInOutNumber(6, 2);
