@@ -2409,8 +2409,13 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
+     *
      * Inputs:
-     * * 0: A 4-D tensor, specifying the feature map with "NHWC" data layout.
+     * * 0: A 4-D tensor, specifying the feature map.
      * * 1: A 2-D Tensor of shape [num_rois, 5 or 4], specifying the locations
      *      of the regions of interest, each line with format
      *      [<optional batch_id>, x1, y1, x2, y2]. The batch_id is optional if
@@ -2422,6 +2427,8 @@ typedef enum {
      * * 4: An {@link ANEURALNETWORKS_INT32} scalar, specifying the number of
      *      sampling points used to compute the output. Set to 0 for adaptive
      *      value of ceil(roi_width/out_width) and ceil(roi_height/out_height).
+     * * 5: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     *      NCHW data layout for input0 and output0. Set to false for NHWC.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0. The output
