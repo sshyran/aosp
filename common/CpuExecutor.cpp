@@ -1136,7 +1136,8 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
         } break;
         case OperationType::SOFTMAX: {
-            if (!allParametersPresent(2, 1)) {
+            const size_t inCount = ins.size();
+            if ((inCount != 3 && inCount != 2) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             RunTimeOperandInfo& input = mOperands[ins[0]];
@@ -1145,6 +1146,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 LOG(ERROR) << "beta must be positive for softmax";
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            int32_t axis = inCount == 3 ? getScalarData<int32_t>(mOperands[ins[2]]) : -1;
 
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
@@ -1155,11 +1157,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
                 success = softmaxFloat32(reinterpret_cast<const float*>(input.buffer),
-                                         input.shape(), beta,
+                                         input.shape(), beta, axis,
                                          reinterpret_cast<float*>(output.buffer), output.shape());
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = softmaxQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
-                                        input.shape(), beta,
+                                        input.shape(), beta, axis,
                                         reinterpret_cast<uint8_t*>(output.buffer), output.shape());
             }
         } break;

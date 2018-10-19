@@ -979,8 +979,10 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_SOFTMAX: {
-            if (inputCount != 2 || outputCount != 1) {
-                logInvalidInOutNumber(2, 1);
+            if ((inputCount != 3 && inputCount != 2) || outputCount != 1) {
+                LOG(ERROR) << "Invalid number of input operands (" << inputCount
+                           << ", expected 3 or 2) or output operands (" << outputCount
+                           << ", expected 1) for operation " << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -999,7 +1001,17 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
+            if (inputCount == 3) {
+                inExpectedTypes.push_back(OperandType::INT32);
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                const size_t ndim = operands[inputIndexes[0]].dimensions.size();
+                if (ndim == 4 || ndim == 2) {
+                    *minSupportedHalVersion = HalVersion::V1_0;
+                } else {
+                    *minSupportedHalVersion = HalVersion::V1_2;
+                }
+            }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
