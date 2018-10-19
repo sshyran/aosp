@@ -1030,7 +1030,7 @@ bool heatmapMaxKeypointPrepare(const Shape& heatmapShape, const float* boxesData
     }
 
     output->type = heatmapShape.type;
-    output->dimensions = {numBoxes, numKeypoints, 3};
+    output->dimensions = {numBoxes, 3, numKeypoints};
     output->offset = heatmapShape.offset;
     output->scale = heatmapShape.scale;
 
