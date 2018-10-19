@@ -1420,16 +1420,25 @@ typedef enum {
      *         exp((input[batch, i] - max(input[batch, :])) * beta) /
      *         sum_{k}{exp((input[batch, k] - max(input[batch, :])) * beta)}
      *
+     * For input tensor with rank other than 2, the activation will be applied
+     * independently on each 1-D slice along specified dimension.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 2 or 4.
+     * Supported tensor rank: up to 4.
+     * Tensors with rank other than 2 or 4 are only supported since API level 29.
      *
      * Inputs:
      * * 0: A 2-D or 4-D tensor, specifying the tensor to be reshaped.
      * * 1: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the positive
      *      scaling factor for the exponent, beta.
+     * * 2: An optional {@link ANEURALNETWORKS_INT32} scalar, default to -1,
+     *      specifying the dimension the activation would be performed on.
+     *      Negative index is used to specify axis from the end (e.g. -1 for
+     *      the last axis). Must be in the range [-n, n).
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
