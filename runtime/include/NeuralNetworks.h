@@ -2209,6 +2209,11 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
+     *
      * Inputs:
      * * 0: A 4-D Tensor of shape
      *      [num_boxes, heatmap_size, heatmap_size, num_keypoints],
@@ -2216,11 +2221,14 @@ typedef enum {
      *      be the same, and must be greater than or equal to 2.
      * * 1: A 2-D Tensor of shape [num_boxes, 4], specifying the bounding boxes,
      *      each with format [x1, y1, x2, y2].
+     * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     *      NCHW data layout for input0. Set to false for NHWC.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
-     *      [num_boxes, num_keypoints, 3], specifying the location and score of
-     *      the keypoints, each with format [keypoint_x, keypoint_y, score].
+     *      [num_boxes, 3, num_keypoints], specifying the location and score of
+     *      the keypoints, the second dimension is organized as
+     *      [keypoint_x, keypoint_y, score].
      *
      * Available since API level 29.
      */
