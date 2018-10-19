@@ -14,11 +14,13 @@
 # limitations under the License.
 #
 
+layout = BoolScalar("layout", False) # NHWC
+
 # TEST 1: ROI_ALIGN_1, outputShape = [2, 2], spatialScale = 0.5, samplingRatio = 4
 i1 = Input("in", "TENSOR_FLOAT32", "{1, 4, 4, 1}")
 roi1 = Input("roi", "TENSOR_FLOAT32", "{4, 4}")
 o1 = Output("out", "TENSOR_FLOAT32", "{4, 2, 2, 1}")
-Model().Operation("ROI_ALIGN", i1, roi1, [2, 2], 0.5, 4).To(o1)
+Model().Operation("ROI_ALIGN", i1, roi1, [2, 2], 0.5, 4, layout).To(o1)
 
 # Instantiate an example
 Example({
@@ -40,14 +42,14 @@ Example({
          0.25, 4.25, 4.875, 0.625,
         -0.1875, 1.125, 0.9375, -2.625
     ]
-}).AddVariations("relaxed")
+}).AddNchw(i1, o1, layout).AddVariations("relaxed")
 
 
 # TEST 2: ROI_ALIGN_2, outputShape = [2, 3], spatialScale = 0.25, samplingRatio = 4
 i2 = Input("in", "TENSOR_FLOAT32", "{2, 4, 8, 2}")
 roi2 = Input("roi", "TENSOR_FLOAT32", "{4, 5}")
 o2 = Output("out", "TENSOR_FLOAT32", "{4, 2, 3, 2}")
-Model().Operation("ROI_ALIGN", i2, roi2, [2, 3], 0.25, 4).To(o2)
+Model().Operation("ROI_ALIGN", i2, roi2, [2, 3], 0.25, 4, layout).To(o2)
 
 # Instantiate an example
 Example({
@@ -87,14 +89,14 @@ Example({
         2.552812, 5.191667, 6.854167, 3.920000, 6.512500,
         4.886250, 5.497708
     ]
-}).AddVariations("relaxed")
+}).AddNchw(i2, o2, layout).AddVariations("relaxed")
 
 
 # TEST 3: ROI_ALIGN_3, outputShape = [2, 3], spatialScale = 0.25, samplingRatio = 0
 i3 = Input("in", "TENSOR_FLOAT32", "{2, 4, 8, 2}")
 roi3 = Input("roi", "TENSOR_FLOAT32", "{4, 5}")
 o3 = Output("out", "TENSOR_FLOAT32", "{4, 2, 3, 2}")
-Model().Operation("ROI_ALIGN", i3, roi3, [2, 3], 0.25, 0).To(o3)
+Model().Operation("ROI_ALIGN", i3, roi3, [2, 3], 0.25, 0, layout).To(o3)
 
 # Instantiate an example
 Example({
@@ -134,4 +136,4 @@ Example({
         1.829167, 5.191667, 6.854167, 3.920000, 6.512500,
         5.106667, 5.612500
     ]
-}).AddVariations("relaxed")
+}).AddNchw(i3, o3, layout).AddVariations("relaxed")
