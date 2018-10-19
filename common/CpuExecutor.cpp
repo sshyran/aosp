@@ -1895,24 +1895,32 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
         } break;
         case OperationType::HEATMAP_MAX_KEYPOINT: {
-            if (!allParametersPresent(2, 1)) {
+            if (!allParametersPresent(3, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& heatmap = mOperands[ins[0]];
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
             const RunTimeOperandInfo& boxes = mOperands[ins[1]];
+            const bool data_layout = getScalarData<bool>(mOperands[ins[2]]);
 
             RunTimeOperandInfo& out = mOperands[outs[0]];
             Shape outShape = out.shape();
 
-            if (heatmap.type == OperandType::TENSOR_FLOAT32) {
-                success = heatmapMaxKeypointPrepare(heatmap.shape(),
+            RunTimeOperandInfo input_tmp;
+            std::unique_ptr<uint8_t[]> input_tmp_guard;
+            if (!convertToNhwc(input_tmp, input, input_tmp_guard, data_layout)) {
+                success = false;
+                break;
+            }
+
+            if (input_tmp.type == OperandType::TENSOR_FLOAT32) {
+                success = heatmapMaxKeypointPrepare(input_tmp.shape(),
                                                     reinterpret_cast<const float*>(boxes.buffer),
                                                     boxes.shape(), &outShape) &&
                           setInfoAndAllocateIfNeeded(&out, outShape) &&
                           heatmapMaxKeypoint(
-                                  reinterpret_cast<const float*>(heatmap.buffer), heatmap.shape(),
-                                  reinterpret_cast<const float*>(boxes.buffer), boxes.shape(),
-                                  reinterpret_cast<float*>(out.buffer), outShape);
+                                  reinterpret_cast<const float*>(input_tmp.buffer),
+                                  input_tmp.shape(), reinterpret_cast<const float*>(boxes.buffer),
+                                  boxes.shape(), reinterpret_cast<float*>(out.buffer), outShape);
             }
         } break;
         case OperationType::GROUPED_CONV_2D: {
