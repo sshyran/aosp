@@ -311,11 +311,21 @@ void softmaxOpTest(int32_t operandCode) {
                                        .zeroPoint = 0};
 
     OperationTestBase softmaxTest(ANEURALNETWORKS_SOFTMAX, {input, beta}, {output});
-
     EXPECT_TRUE(softmaxTest.testMutatingInputOperandCode());
     EXPECT_TRUE(softmaxTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(softmaxTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(softmaxTest.testMutatingOutputOperandCounts());
+
+    ANeuralNetworksOperandType axis = {.type = ANEURALNETWORKS_INT32,
+                                       .dimensionCount = 0,
+                                       .dimensions = nullptr,
+                                       .scale = 0.0f,
+                                       .zeroPoint = 0};
+    OperationTestBase softmaxAxisTest(ANEURALNETWORKS_SOFTMAX, {input, beta, axis}, {output});
+    EXPECT_TRUE(softmaxAxisTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(softmaxAxisTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(softmaxAxisTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(softmaxAxisTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, SOFTMAX_float32) {
