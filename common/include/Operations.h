@@ -284,7 +284,7 @@ bool groupedConvQuant8(const uint8_t* inputData, const Shape& inputShape, const 
                        const Shape& outputShape);
 
 bool channelShuffleGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t numGroups,
-                           uint8_t* outputData, const Shape& outputShape);
+                           int32_t axis, uint8_t* outputData, const Shape& outputShape);
 
 bool transposeConvFloat32(const float* inputData, const Shape& inputShape, const float* filterData,
                           const Shape& filterShape, const float* biasData, const Shape& biasShape,
