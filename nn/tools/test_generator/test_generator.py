@@ -717,6 +717,65 @@ class DataLayoutConverter(ModelVariation, ImplicitVariation):
             assert False, "%s not supported by DataLayoutConverter"%op
         return op
 
+# Convert data by tansposing and removing axis
+class AxisConverter(ModelVariation):
+
+    def __init__(self, origin, target, dim, drop=[], name=None):
+        ModelVariation.__init__(self, name=name)
+        self.origin = origin
+        self.target = target
+        assert all(i >= -dim and i < dim for i in [self.origin, self.target])
+        self.dim = dim
+        self.perm = list(range(dim))
+        self.perm.insert(target if target >= 0 else target + dim, self.perm.pop(origin))
+        self.drop = [drop] if type(drop) is int else list(drop)
+        assert all(i >= -dim and i < dim for i in self.drop)
+        self.drop = [i if i >= 0 else i + dim for i in self.drop]
+        assert target not in self.drop and target + dim not in self.drop
+
+    def SetToDefaultName(self):
+        axis = self.target if self.target >= 0 else self.target + self.dim
+        axis -= sum(i < axis for i in self.drop)
+        neg = "" if self.target >= 0 else "_neg"
+        self.name = "dim%d_axis%d%s"%(self.dim - len(self.drop), axis, neg)
+        return self
+
+    def TransposeAxis(self, op):
+        if op.type.type == "INT32":
+            op.SetValue(self.target)
+        elif len(op.type.dimensions) == self.dim:
+            # To handle Internal operands
+            if op.value is not None:
+                op.SetValueFromNumpy(op.GetValueAsNumpy().transpose(self.perm))
+            newDim = [op.type.dimensions[i] for i in self.perm]
+            op.type = Type.GetType(op.type.type, newDim, op.type.scale, op.type.zeroPoint)
+        else:
+            assert False, "%s not supported by AxisConverter"%op
+        return op
+
+    def RemoveAxis(self, op):
+        if op.type.type == "INT32":
+            if op.value[0] >= 0:
+                op.SetValue(op.value[0] - sum(i < op.value[0] for i in self.drop))
+            else:
+                op.SetValue(op.value[0] + sum(i > (op.value[0] + self.dim) for i in self.drop))
+        elif len(op.type.dimensions) == self.dim:
+            if op.value is not None:
+                val = op.GetValueAsNumpy()
+                for i in sorted(self.drop, reverse=True):
+                    val = np.take(val, 0, axis=i)
+                op.SetValueFromNumpy(val)
+            newDim = [op.type.dimensions[i] for i in range(self.dim) if i not in self.drop]
+            op.type = Type.GetType(op.type.type, newDim, op.type.scale, op.type.zeroPoint)
+        else:
+            assert False, "%s not supported by AxisConverter"%op
+        return op
+
+    def TransformOperand(self, op, arg=None):
+        op = self.TransposeAxis(op)
+        op = self.RemoveAxis(op)
+        return op
+
 # Convert a Parameter to Input
 class ParameterAsInputConverter(ModelVariation, ImplicitVariation):
 
@@ -850,6 +909,72 @@ class Example:
     def AddAllActivations(self, *args):
         var = [ActivationConverter(i).Identify(args)
             for i in sorted(ActivationConverter.actMap.keys())]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
+    def GuessOriginalAxisAndDim(self, *args):
+        origin = None
+        dim = None
+        for arg in args:
+            if arg.type.type == "INT32":
+                origin = arg.value[0]
+            else:
+                if dim is None:
+                    dim = len(arg.type.dimensions)
+                else:
+                    assert dim == len(arg.type.dimensions)
+        assert dim is not None
+        origin = dim - 1 if origin is None else origin
+        origin = origin + dim if origin < 0 else origin
+        return origin, dim
+
+    def AddAxis(self, axis, *args, includeDefault=True, defaultName=None):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        axis = [axis] if type(axis) is int else list(axis)
+        var = [AxisConverter(origin, a, dim).Identify(args) for a in axis]
+        self.AddVariations(*var, includeDefault=includeDefault, defaultName=defaultName)
+        return self
+
+    def AddAllPositiveAxis(self, *args):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        var = [AxisConverter(origin, a, dim).Identify(args) for a in range(dim)]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
+    def AddAllAxis(self, *args):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        var = [AxisConverter(origin, a, dim).Identify(args) for a in range(-dim, dim)]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
+    def AddDims(self, dims, *args, includeDefault=True, defaultName=None):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        dims = [dims] if type(dims) is int else list(dims)
+        drop = list(range(dim))
+        drop.pop(origin)
+        var = [AxisConverter(origin, origin, dim, drop[0:(dim-i)]).Identify(args) for i in dims]
+        self.AddVariations(*var, includeDefault=includeDefault, defaultName=defaultName)
+        return self
+
+    def AddAllDims(self, *args):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        drop = list(range(dim))
+        drop.pop(origin)
+        var = [AxisConverter(origin, origin, dim, drop[0:i]).Identify(args) for i in range(dim)]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
+    def AddAllDimsAndPositiveAxis(self, *args):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        var = [AxisConverter(origin, j, dim, range(i)).Identify(args) \
+                for i in range(dim) for j in range(i, dim)]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
+    def AddAllDimsAndAxis(self, *args):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        var = [AxisConverter(origin, k, dim, range(i)).Identify(args) \
+                for i in range(dim) for j in range(i, dim) for k in [j, j - dim]]
         self.AddVariations(*var, includeDefault=False)
         return self
 
