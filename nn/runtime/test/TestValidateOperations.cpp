@@ -252,10 +252,6 @@ void activationOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
     EXPECT_TRUE(activationTest.testMutatingOutputOperandCounts());
 }
 
-TEST(OperationValidationTest, L2_NORMALIZATION_float32) {
-    activationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_FLOAT32);
-}
-
 TEST(OperationValidationTest, FLOOR_float32) {
     activationOpTest(ANEURALNETWORKS_FLOOR, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
@@ -315,11 +311,21 @@ void softmaxOpTest(int32_t operandCode) {
                                        .zeroPoint = 0};
 
     OperationTestBase softmaxTest(ANEURALNETWORKS_SOFTMAX, {input, beta}, {output});
-
     EXPECT_TRUE(softmaxTest.testMutatingInputOperandCode());
     EXPECT_TRUE(softmaxTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(softmaxTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(softmaxTest.testMutatingOutputOperandCounts());
+
+    ANeuralNetworksOperandType axis = {.type = ANEURALNETWORKS_INT32,
+                                       .dimensionCount = 0,
+                                       .dimensions = nullptr,
+                                       .scale = 0.0f,
+                                       .zeroPoint = 0};
+    OperationTestBase softmaxAxisTest(ANEURALNETWORKS_SOFTMAX, {input, beta, axis}, {output});
+    EXPECT_TRUE(softmaxAxisTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(softmaxAxisTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(softmaxAxisTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(softmaxAxisTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, SOFTMAX_float32) {
@@ -1392,5 +1398,56 @@ TEST(OperationValidationTest, PRELU_float32) {
 
 TEST(OperationValidationTest, PRELU_quant8) {
     preluOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+void normalizationOpTest(ANeuralNetworksOperationType operationCode, int32_t operandCode) {
+    uint32_t inputDim[] = {2, 2, 2, 2};
+    OperationTestBase normalizationTest(operationCode, {getOpType(operandCode, 4, inputDim)},
+                                        {getOpType(operandCode, 4, inputDim)});
+    EXPECT_TRUE(normalizationTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(normalizationTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(normalizationTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(normalizationTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase normalizationAxisTest(
+            operationCode, {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32)},
+            {getOpType(operandCode, 4, inputDim)});
+    EXPECT_TRUE(normalizationAxisTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(normalizationAxisTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(normalizationAxisTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(normalizationAxisTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, L2_NORMALIZATION_float32) {
+    normalizationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+void localResponseNormOpTest(int32_t operandCode) {
+    uint32_t inputDim[] = {2, 2, 2, 6};
+    OperationTestBase lrnTest(
+            ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
+            {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(ANEURALNETWORKS_FLOAT32), getOpType(ANEURALNETWORKS_FLOAT32),
+             getOpType(ANEURALNETWORKS_FLOAT32)},
+            {getOpType(operandCode, 4, inputDim)});
+    EXPECT_TRUE(lrnTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(lrnTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(lrnTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(lrnTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase lrnAxisTest(
+            ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
+            {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(ANEURALNETWORKS_FLOAT32), getOpType(ANEURALNETWORKS_FLOAT32),
+             getOpType(ANEURALNETWORKS_FLOAT32), getOpType(ANEURALNETWORKS_INT32)},
+            {getOpType(operandCode, 4, inputDim)});
+    EXPECT_TRUE(lrnAxisTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(lrnAxisTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(lrnAxisTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(lrnAxisTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, LOCAL_RESPONSE_NORMALIZATION_float32) {
+    localResponseNormOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 }  // end namespace
