@@ -33,6 +33,7 @@ import sys
 # Stuff from test generator
 import test_generator as tg
 from test_generator import ActivationConverter
+from test_generator import BoolScalar
 from test_generator import Configuration
 from test_generator import DataTypeConverter
 from test_generator import DataLayoutConverter
@@ -115,7 +116,7 @@ namespace {spec_name} {{
 # Dump is_ignored function for IgnoredOutput
 def DumpCtsIsIgnored(model, model_fd):
     isIgnoredTemplate = """\
-bool {is_ignored_name}(int i) {{
+inline bool {is_ignored_name}(int i) {{
   static std::set<int> ignore = {{{ignored_index}}};
   return ignore.find(i) != ignore.end();\n}}\n"""
     print(isIgnoredTemplate.format(
