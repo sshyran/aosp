@@ -395,14 +395,10 @@ class Operation:
 
     def SetInputs(self, ins):
         self.ins = [ImplicitParameter.ImplicitConvertion(i) for i in ins]
-        for i in self.ins:
-            i.outs.append(self)
         return self
 
     def SetOutputs(self, outs):
         self.outs = list(outs)
-        for o in self.outs:
-            o.ins.append(self)
         return self
 
     # For backward-compatibility with slicing.py
@@ -498,6 +494,26 @@ class Model:
             self.operands[self.operands.index(t)] = t
         return self
 
+    def SetInputAndOutputIndex(self):
+        for ind, i in enumerate(self.GetInputs()):
+            i.index = ind
+        for ind, o in enumerate(self.GetOutputs()):
+            o.index = ind
+        return self
+
+    def SetOperandInsAndOuts(self):
+        for op in self.operands:
+            op.ins = list()
+            op.outs = list()
+        for op in self.operations:
+            op.ins = self.GetEquivalentOperands(op.ins)
+            op.outs = self.GetEquivalentOperands(op.outs)
+            for i in op.ins:
+                i.outs.append(op)
+            for o in op.outs:
+                o.ins.append(op)
+        return self
+
     def TopologicalSortHelper(self, op, deps, visited):
         if op in visited:
             assert op not in deps, "Cycle detected in the graph"
@@ -521,11 +537,8 @@ class Model:
     def Compile(self):
         if self.compiled:
             return self
-        # set input/output index for MixedTypedExample mapping
-        for ind, i in enumerate(self.GetInputs()):
-            i.index = ind
-        for ind, o in enumerate(self.GetOutputs()):
-            o.index = ind
+        self.SetInputAndOutputIndex()
+        self.SetOperandInsAndOuts()
         self.TopologicalSort()
         self.compiled = True
         return self

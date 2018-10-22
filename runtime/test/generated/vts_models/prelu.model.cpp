@@ -202,7 +202,7 @@ Model createTestModel_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 1, 3},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -262,7 +262,7 @@ Model createTestModel_weight_as_input_relaxed() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 1, 3},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -323,7 +323,7 @@ Model createTestModel_weight_as_input_quant8() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 1, 3},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 50,
             .lifetime = OperandLifeTime::MODEL_INPUT,
