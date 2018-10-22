@@ -24,6 +24,7 @@
 #include "operations/LSTM.h"
 #include "operations/RNN.h"
 #include "operations/SVDF.h"
+#include "operations/Tile.h"
 
 #include <stddef.h>
 
@@ -60,6 +61,8 @@ bool floorFloat32(const float* inputData,
 bool dequantizeQuant8ToFloat32(const uint8_t* inputData,
                                float* outputData,
                                const Shape& shape);
+
+bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData, const Shape& outputShape);
 
 bool depthwiseConvFloat32(const float* inputData, const Shape& inputShape,
                           const float* filterData, const Shape& filterShape,
@@ -134,6 +137,8 @@ bool relu6Float32(const float* inputData, const Shape& inputShape,
                   float* outputData, const Shape& outputShape);
 bool tanhFloat32(const float* inputData, const Shape& inputShape,
                  float* outputData, const Shape& outputShape);
+bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                const Shape& outputShape);
 bool logisticFloat32(const float* inputData, const Shape& inputShape,
                      float* outputData, const Shape& outputShape);
 bool softmaxFloat32(const float* inputData, const Shape& inputShape,
@@ -212,6 +217,9 @@ bool subFloat32(const float* in1, const Shape& shape1,
                 const float* in2, const Shape& shape2,
                 int32_t activation,
                 float* out, const Shape& shapeOut);
+
+bool subQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
+               int32_t activation, uint8_t* out, const Shape& shapeOut);
 
 bool squeezeGeneric(const void* inputData, const Shape& inputShape,
                     void* outputData, const Shape& outputShape);

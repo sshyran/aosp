@@ -144,6 +144,8 @@ class Type(NamedVariable):
         "TENSOR_INT32": "int32_t",
         "TENSOR_FLOAT32": "float",
         "TENSOR_QUANT8_ASYMM": "uint8_t",
+        "BOOL": "bool",
+        "TENSOR_QUANT16_ASYMM": "int16_t",
 #     "OEM_SCALAR": this is service-defined.
         "TENSOR_OEM_BYTE": "uint8_t",
     }
@@ -206,8 +208,17 @@ class Type(NamedVariable):
     def IsFloat(self):
         return self.GetCppTypeString() == "float"
 
+    def IsBool(self):
+        return self.GetCppTypeString() == "bool"
+
     def GetElementByteSize(self):
-        return 1 if self.GetCppTypeString() == "uint8_t" else 4
+        cppTypeString = self.GetCppTypeString()
+        if cppTypeString in ["uint8_t", "bool"]:
+            return 1
+        elif cppTypeString == "int16_t":
+            return 2
+        else:
+            return 4
 
     def GetByteSize(self):
         return self.GetElementByteSize() * self.GetNumberOfElements()
@@ -269,6 +280,8 @@ class Operand(NamedVariable):
             "Trying to print operand %s with None value"%(str(self))
         if self.type.IsFloat():
             return "{%s}"%(GetJointStr(self.value, method=PrettyPrintAsFloat))
+        elif self.type.IsBool():
+            return "{%s}"%(GetJointStr(self.value, method=lambda v: "true" if v else "false"))
         else:
             return "{%s}"%(GetJointStr(self.value, method=lambda x: str(int(x))))
 
@@ -321,7 +334,7 @@ class Int32Scalar(Parameter, ImplicitParameter):
         Parameter.__init__(self, name, ("INT32", []), int(value))
     @staticmethod
     def IsCompatible(value):
-        return isinstance(value, int)
+        return type(value) is int
 
 # A shortcut for parameters of FLOAT32
 class Float32Scalar(Parameter, ImplicitParameter):
@@ -329,7 +342,15 @@ class Float32Scalar(Parameter, ImplicitParameter):
         Parameter.__init__(self, name, ("FLOAT32", []), float(value))
     @staticmethod
     def IsCompatible(value):
-        return isinstance(value, float)
+        return type(value) is float
+
+# A shortcut for parameters of BOOL
+class BoolScalar(Parameter, ImplicitParameter):
+    def __init__(self, name, value):
+        Parameter.__init__(self, name, ("BOOL", []), bool(value))
+    @staticmethod
+    def IsCompatible(value):
+        return type(value) is bool
 
 # A shortcut for parameter of 1-D TENSOR_INT32
 class Int32Vector(Parameter, ImplicitParameter):
@@ -339,7 +360,7 @@ class Int32Vector(Parameter, ImplicitParameter):
     def IsCompatible(value):
         if type(value) is not list and type(value) is not tuple:
             return False
-        return all(isinstance(i, int) for i in value)
+        return all(type(i) is int for i in value)
 
 # A shortcut for parameter of 1-D TENSOR_FLOAT32
 class Float32Vector(Parameter, ImplicitParameter):
@@ -349,7 +370,7 @@ class Float32Vector(Parameter, ImplicitParameter):
     def IsCompatible(value):
         if type(value) is not list and type(value) is not tuple:
             return False
-        return all(isinstance(i, float) for i in value)
+        return all(type(i) is float for i in value)
 
 # An explicitly declared intermediate result
 class Internal(Operand):
@@ -685,7 +706,7 @@ class DataLayoutConverter(ModelVariation, ImplicitVariation):
         self.targetLayout = targetLayout.lower()
         assert DataLayoutConverter.IsCompatible(self.targetLayout)
         self.perm = (0, 3, 1, 2) if self.targetLayout == "nchw" else (0, 2, 3, 1)
-        self.enum = 1 if self.targetLayout == "nchw" else 0
+        self.param = True if self.targetLayout == "nchw" else False
 
     @staticmethod
     def IsCompatible(value):
@@ -696,18 +717,23 @@ class DataLayoutConverter(ModelVariation, ImplicitVariation):
         return self
 
     def TransformOperand(self, op, arg=None):
-        assert len(op.type.dimensions) == 4, \
-            "Error converting layout of %s, can only apply transformation to 4-D tensor"%op
-        # To handle Internal operands
-        if op.value is not None:
-            op.SetValueFromNumpy(op.GetValueAsNumpy().transpose(self.perm))
-        newDim = [op.type.dimensions[i] for i in self.perm]
-        op.type = Type.GetType(op.type.type, newDim, op.type.scale, op.type.zeroPoint)
+        if len(op.type.dimensions) == 4:
+            # To handle Internal operands
+            if op.value is not None:
+                op.SetValueFromNumpy(op.GetValueAsNumpy().transpose(self.perm))
+            newDim = [op.type.dimensions[i] for i in self.perm]
+            op.type = Type.GetType(op.type.type, newDim, op.type.scale, op.type.zeroPoint)
+        elif len(op.type.dimensions) == 1 and len(op.value) == 4:
+            op.SetValueFromNumpy(op.GetValueAsNumpy()[list(self.perm)])
+        elif op.type.type == "BOOL":
+            op.SetValue(self.param)
+        else:
+            assert False, "%s not supported by DataLayoutConverter"%op
         return op
 
     def TransformParameters(self, parameters):
         for p in parameters:
-            p.SetValue(self.enum)
+            p.SetValue(self.param)
         return parameters
 
 # Convert a Parameter to Input
@@ -822,7 +848,7 @@ class Example:
         self.variations[-1].extend(ImplicitVariation.ImplicitConvertion(i) for i in args)
         return self
 
-    def AddNchw(self, ops, params, includeDefault=True, defaultName=None):
+    def AddNchw(self, ops, params, includeDefault=True, defaultName="nhwc"):
         var = DataLayoutConverter("nchw").Identify(ops, params)
         self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
         return self
@@ -963,15 +989,12 @@ class FileNames:
     def ParseTargetFiles(arg, ext):
         numFiles = len(FileNames.specFiles)
         absPath = os.path.abspath(arg)
-        if os.path.isfile(arg):
-            assert numFiles == 1
-            target = [absPath]
-        elif os.path.isdir(arg):
+        if os.path.isdir(arg):
             target = [os.path.join(absPath, f + ext) for f in FileNames.specNames]
         elif arg == "-":
             target = ["-"] * numFiles
         else:
-            assert False, "%s is neither a file or a directory"%arg
+            target = [absPath] * numFiles
         return target
 
     @staticmethod

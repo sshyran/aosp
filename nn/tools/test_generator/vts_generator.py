@@ -37,6 +37,7 @@ import pprint
 # Stuff from test generator
 import test_generator as tg
 from test_generator import ActivationConverter
+from test_generator import BoolScalar
 from test_generator import Configuration
 from test_generator import DataTypeConverter
 from test_generator import DataLayoutConverter
@@ -118,6 +119,8 @@ def generate_vts_operand_values(operands):
         ty = w.type.type
         if ty == "TENSOR_QUANT8_ASYMM":
             binit += w.value
+        elif ty == "BOOL":
+            binit += [1 if x else 0 for x in w.value]
         elif ty in {"TENSOR_FLOAT32", "FLOAT32", "TENSOR_INT32", "INT32"}:
             fmt = "f" if (ty == "TENSOR_FLOAT32" or ty == "FLOAT32") else "i"
             for f in w.value:
