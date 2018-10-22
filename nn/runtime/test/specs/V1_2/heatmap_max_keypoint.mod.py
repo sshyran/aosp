@@ -14,11 +14,13 @@
 # limitations under the License.
 #
 
+layout = BoolScalar("layout", False) # NHWC
+
 # TEST 1: HEATMAP_MAX_KEYPOINT_1
 heatmap1 = Input("heatmap", "TENSOR_FLOAT32", "{6, 4, 4, 1}")
 boxes1 = Input("boxes", "TENSOR_FLOAT32", "{6, 4}")
-o1 = Output("out", "TENSOR_FLOAT32", "{6, 1, 3}")
-Model().Operation("HEATMAP_MAX_KEYPOINT", heatmap1, boxes1).To(o1)
+o1 = Output("out", "TENSOR_FLOAT32", "{6, 3, 1}")
+Model().Operation("HEATMAP_MAX_KEYPOINT", heatmap1, boxes1, layout).To(o1)
 
 # Instantiate an example
 Example({
@@ -64,14 +66,14 @@ Example({
         9.569672, 2.000000, 10.689667,
         8.125000, 8.750000, 9.000000
     ]
-}).AddVariations("relaxed")
+}).AddNchw(heatmap1, layout).AddVariations("relaxed")
 
 
 # TEST 2: HEATMAP_MAX_KEYPOINT_2
 heatmap2 = Input("heatmap", "TENSOR_FLOAT32", "{2, 4, 4, 4}")
 boxes2 = Input("boxes", "TENSOR_FLOAT32", "{2, 4}")
-o2 = Output("out", "TENSOR_FLOAT32", "{2, 4, 3}")
-Model().Operation("HEATMAP_MAX_KEYPOINT", heatmap2, boxes2).To(o2)
+o2 = Output("out", "TENSOR_FLOAT32", "{2, 3, 4}")
+Model().Operation("HEATMAP_MAX_KEYPOINT", heatmap2, boxes2, layout).To(o2)
 
 # Instantiate an example
 Example({
@@ -96,13 +98,11 @@ Example({
         1, 7, 30, 10
     ],
     o2: [
-         7.227723,  4.250000, 1.020210,
-         8.090278, 17.750000, 0.890556,
-         8.523379, 12.589181, 1.007110,
-         8.365580, 10.122508, 0.945129,
-        12.431603,  8.934225, 0.987798,
-         4.625000,  9.239437, 1.073820,
-         4.625000,  7.375000, 0.930000,
-        26.375000,  9.625000, 0.800000
+         7.227723,  8.090278,  8.523379,  8.365580,
+         4.250000, 17.750000, 12.589181, 10.122508,
+         1.020210,  0.890556,  1.007110,  0.945129,
+        12.431603,  4.625000,  4.625000, 26.375000,
+         8.934225,  9.239437,  7.375000,  9.625000,
+         0.987798,  1.073820,  0.930000,  0.800000
     ]
-}).AddVariations("relaxed")
+}).AddNchw(heatmap2, layout).AddVariations("relaxed")

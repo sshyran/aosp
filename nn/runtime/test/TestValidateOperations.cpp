@@ -1263,11 +1263,11 @@ TEST(OperationValidationTest, ROI_ALIGN_float32) {
 }
 
 TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
-    uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outDim[] = {6, 1, 3};
+    uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outDim[] = {6, 3, 1};
     OperationTestBase heatmapMaxKeypointTest(
             ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT,
             {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, heatmapDim),
-             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, boxDim)},
+             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, boxDim), getOpType(ANEURALNETWORKS_BOOL)},
             {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 3, outDim)});
 
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCode());

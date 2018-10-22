@@ -2957,32 +2957,60 @@ namespace heatmap_max_keypoint {
 #include "vts_models/heatmap_max_keypoint.model.cpp"
 } // namespace heatmap_max_keypoint
 
-TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint) {
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nhwc) {
   generated_tests::Execute(device,
-                           heatmap_max_keypoint::createTestModel,
-                           heatmap_max_keypoint::is_ignored,
-                           heatmap_max_keypoint::examples);
+                           heatmap_max_keypoint::createTestModel_nhwc,
+                           heatmap_max_keypoint::is_ignored_nhwc,
+                           heatmap_max_keypoint::examples_nhwc);
 }
 
-TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_relaxed) {
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nhwc_relaxed) {
   generated_tests::Execute(device,
-                           heatmap_max_keypoint::createTestModel_relaxed,
-                           heatmap_max_keypoint::is_ignored_relaxed,
-                           heatmap_max_keypoint::examples_relaxed);
+                           heatmap_max_keypoint::createTestModel_nhwc_relaxed,
+                           heatmap_max_keypoint::is_ignored_nhwc_relaxed,
+                           heatmap_max_keypoint::examples_nhwc_relaxed);
 }
 
-TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_2) {
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nchw) {
   generated_tests::Execute(device,
-                           heatmap_max_keypoint::createTestModel_2,
-                           heatmap_max_keypoint::is_ignored_2,
-                           heatmap_max_keypoint::examples_2);
+                           heatmap_max_keypoint::createTestModel_nchw,
+                           heatmap_max_keypoint::is_ignored_nchw,
+                           heatmap_max_keypoint::examples_nchw);
 }
 
-TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_relaxed_2) {
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nchw_relaxed) {
   generated_tests::Execute(device,
-                           heatmap_max_keypoint::createTestModel_relaxed_2,
-                           heatmap_max_keypoint::is_ignored_relaxed_2,
-                           heatmap_max_keypoint::examples_relaxed_2);
+                           heatmap_max_keypoint::createTestModel_nchw_relaxed,
+                           heatmap_max_keypoint::is_ignored_nchw_relaxed,
+                           heatmap_max_keypoint::examples_nchw_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nhwc_2) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_nhwc_2,
+                           heatmap_max_keypoint::is_ignored_nhwc_2,
+                           heatmap_max_keypoint::examples_nhwc_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nhwc_relaxed_2) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_nhwc_relaxed_2,
+                           heatmap_max_keypoint::is_ignored_nhwc_relaxed_2,
+                           heatmap_max_keypoint::examples_nhwc_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nchw_2) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_nchw_2,
+                           heatmap_max_keypoint::is_ignored_nchw_2,
+                           heatmap_max_keypoint::examples_nchw_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nchw_relaxed_2) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_nchw_relaxed_2,
+                           heatmap_max_keypoint::is_ignored_nchw_relaxed_2,
+                           heatmap_max_keypoint::examples_nchw_relaxed_2);
 }
 
 // Generated from: l2_normalization_v1_2.mod.py.
