@@ -19,6 +19,7 @@
 
 #include "HalInterfaces.h"
 #include "NeuralNetworks.h"
+#include "ValidateHal.h"
 
 #include <android-base/logging.h>
 #include <vector>
@@ -27,7 +28,7 @@ namespace android {
 namespace nn {
 
 // The number of data types (OperandCode) defined in NeuralNetworks.h.
-const int kNumberOfDataTypes = 6;
+const int kNumberOfDataTypes = 9;
 
 // The number of operation types (OperationCode) defined in NeuralNetworks.h.
 const int kNumberOfOperationTypes = 88;
@@ -140,10 +141,19 @@ inline bool validCode(uint32_t codeCount, uint32_t codeCountOEM, uint32_t code) 
 int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag, bool allowPartial);
 int validateOperandList(uint32_t count, const uint32_t* list, uint32_t operandCount,
                         const char* tag);
-int validateOperation(ANeuralNetworksOperationType opType,
-                      uint32_t inputCount, const uint32_t* inputIndexes,
-                      uint32_t outputCount, const uint32_t* outputIndexes,
-                      const std::vector<Operand>& operands);
+// Typename substitutes are contained in the cpp file.
+int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
+                      const uint32_t* inputIndexes, uint32_t outputCount,
+                      const uint32_t* outputIndexes, const std::vector<Operand>& operands,
+                      HalVersion* minSupportedHalVersion);
+
+inline int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
+                             const uint32_t* inputIndexes, uint32_t outputCount,
+                             const uint32_t* outputIndexes, const std::vector<Operand>& operands) {
+    HalVersion minSupportedHalVersion;
+    return validateOperation(opType, inputCount, inputIndexes, outputCount, outputIndexes, operands,
+                             &minSupportedHalVersion);
+}
 
 inline size_t getSizeFromInts(int lower, int higher) {
     return (uint32_t)(lower) + ((uint64_t)(uint32_t)(higher) << 32);
@@ -159,20 +169,10 @@ int convertErrorStatusToResultCode(ErrorStatus status);
 
 // Versioning
 
-bool compliantWithV1_0(V1_0::OperationType type);
-bool compliantWithV1_0(V1_1::OperationType type);
-bool compliantWithV1_1(V1_0::OperationType type);
-bool compliantWithV1_1(V1_1::OperationType type);
-
 bool compliantWithV1_0(const V1_0::Capabilities& capabilities);
 bool compliantWithV1_0(const V1_1::Capabilities& capabilities);
 bool compliantWithV1_1(const V1_0::Capabilities& capabilities);
 bool compliantWithV1_1(const V1_1::Capabilities& capabilities);
-
-bool compliantWithV1_0(const V1_0::Operation& operation);
-bool compliantWithV1_0(const V1_1::Operation& operation);
-bool compliantWithV1_1(const V1_0::Operation& operation);
-bool compliantWithV1_1(const V1_1::Operation& operation);
 
 bool compliantWithV1_0(const V1_0::Model& model);
 bool compliantWithV1_0(const V1_1::Model& model);
@@ -181,35 +181,25 @@ bool compliantWithV1_1(const V1_0::Model& model);
 bool compliantWithV1_1(const V1_1::Model& model);
 bool compliantWithV1_1(const V1_2::Model& model);
 
-V1_0::OperationType convertToV1_0(V1_0::OperationType type);
-V1_0::OperationType convertToV1_0(V1_1::OperationType type);
-V1_1::OperationType convertToV1_1(V1_0::OperationType type);
-V1_1::OperationType convertToV1_1(V1_1::OperationType type);
-
 V1_0::Capabilities convertToV1_0(const V1_0::Capabilities& capabilities);
 V1_0::Capabilities convertToV1_0(const V1_1::Capabilities& capabilities);
 V1_1::Capabilities convertToV1_1(const V1_0::Capabilities& capabilities);
 V1_1::Capabilities convertToV1_1(const V1_1::Capabilities& capabilities);
 
-V1_0::Operation convertToV1_0(const V1_0::Operation& operation);
-V1_0::Operation convertToV1_0(const V1_1::Operation& operation);
-V1_1::Operation convertToV1_1(const V1_0::Operation& operation);
-V1_1::Operation convertToV1_1(const V1_1::Operation& operation);
-
 V1_0::Model convertToV1_0(const V1_0::Model& model);
 V1_0::Model convertToV1_0(const V1_1::Model& model);
+V1_0::Model convertToV1_0(const V1_2::Model& model);
 V1_1::Model convertToV1_1(const V1_0::Model& model);
 V1_1::Model convertToV1_1(const V1_1::Model& model);
-
-V1_0::OperationType convertToV1_0(V1_2::OperationType type);
-V1_1::OperationType convertToV1_1(V1_2::OperationType type);
-V1_0::Operation convertToV1_0(const V1_2::Operation& operation);
-V1_1::Operation convertToV1_1(const V1_2::Operation& operation);
-V1_0::Model convertToV1_0(const V1_2::Model& model);
 V1_1::Model convertToV1_1(const V1_2::Model& model);
 V1_2::Model convertToV1_2(const V1_0::Model& model);
 V1_2::Model convertToV1_2(const V1_1::Model& model);
 
+V1_2::Operand convertToV1_2(const V1_0::Operand& operand);
+V1_2::Operand convertToV1_2(const V1_2::Operand& operand);
+
+hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_0::Operand>& operands);
+hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_2::Operand>& operands);
 
 #ifdef NN_DEBUGGABLE
 uint32_t getProp(const char* str, uint32_t defaultValue = 0);
