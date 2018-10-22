@@ -28,7 +28,7 @@ template <typename Scalar>
 bool splitGeneric(const Scalar* inputData, const Shape& inputShape, int32_t axis,
                   const std::vector<Scalar*>* outputDataPtrs,
                   const std::vector<Shape>& outputShapes) {
-    axis = getDimensionIndex(inputShape, axis);
+    NN_CHECK(handleNegativeAxis(inputShape, &axis));
     int outerSize = 1;
     for (int i = 0; i < axis; ++i) {
         outerSize *= inputShape.dimensions[i];
