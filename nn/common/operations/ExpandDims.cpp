@@ -23,7 +23,7 @@ namespace nn {
 namespace expand_dims {
 
 bool prepare(const Shape& input, int32_t axis, Shape* output) {
-    axis = getDimensionIndex(getNumberOfDimensions(input) + 1, axis);
+    NN_CHECK(handleNegativeAxis(getNumberOfDimensions(input) + 1, &axis));
 
     output->type = input.type;
     output->offset = input.offset;

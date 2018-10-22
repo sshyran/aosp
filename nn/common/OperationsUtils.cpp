@@ -56,7 +56,9 @@ uint32_t getNumberOfElements(const Shape& shape) {
 uint32_t getNumberOfElements(const Shape& shape,
                              size_t firstAxisInclusive,
                              size_t lastAxisExclusive) {
-    NN_CHECK(lastAxisExclusive <= shape.dimensions.size());
+    nnAssert(0 <= firstAxisInclusive);
+    nnAssert(firstAxisInclusive <= lastAxisExclusive);
+    nnAssert(lastAxisExclusive <= shape.dimensions.size());
     uint32_t count = 1;
     for (size_t i = firstAxisInclusive; i < lastAxisExclusive; i++) {
         count *= shape.dimensions[i];
@@ -69,23 +71,16 @@ uint32_t getNumberOfDimensions(const Shape& shape) {
 }
 
 uint32_t getSizeOfDimension(const Shape& shape, uint32_t dimensionIdx) {
-    if (dimensionIdx >= shape.dimensions.size()) {
-        // TODO, log the error
-        return 0;
-    }
+    nnAssert(0 <= dimensionIdx && dimensionIdx < shape.dimensions.size());
     return shape.dimensions[dimensionIdx];
 }
 
-int32_t getDimensionIndex(int32_t numberOfDimensions, int32_t axis) {
-    NN_OPS_CHECK(-numberOfDimensions <= axis && axis < numberOfDimensions);
-    if (axis < 0) {
-        axis += numberOfDimensions;
+bool handleNegativeAxis(int32_t numberOfDimensions, int32_t* axis) {
+    NN_CHECK(-numberOfDimensions <= *axis && *axis < numberOfDimensions);
+    if (*axis < 0) {
+        *axis += numberOfDimensions;
     }
-    return axis;
-}
-
-int32_t getDimensionIndex(const Shape& shape, int32_t axis) {
-    return getDimensionIndex(getNumberOfDimensions(shape), axis);
+    return true;
 }
 
 bool QuantizeMultiplierSmallerThanOne(double double_multiplier,
@@ -921,7 +916,7 @@ bool stridedSlicePrepare(const Shape& input,
 }
 
 bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output) {
-    axis = getDimensionIndex(input, axis);
+    NN_CHECK(handleNegativeAxis(input, &axis));
 
     output->type = OperandType::TENSOR_INT32;
 
@@ -940,7 +935,7 @@ bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output) {
 
 bool splitPrepare(const Shape& input, int32_t axis, int32_t numOutputs,
                   std::vector<Shape>* output) {
-    axis = getDimensionIndex(input, axis);
+    NN_CHECK(handleNegativeAxis(input, &axis));
 
     const int32_t sizeOfAxisToSplit = input.dimensions[axis];
     NN_OPS_CHECK(sizeOfAxisToSplit % numOutputs == 0);
@@ -1074,7 +1069,7 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
 }
 
 bool channelShufflePrepare(const Shape& input, int32_t numGroups, int32_t axis, Shape* output) {
-    axis = getDimensionIndex(input, axis);
+    NN_CHECK(handleNegativeAxis(input, &axis));
     NN_OPS_CHECK(numGroups > 0);
     NN_OPS_CHECK(getSizeOfDimension(input, axis) % numGroups == 0);
     output->type = input.type;
