@@ -2047,7 +2047,7 @@ Model createTestModel_8() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {3};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0
+      255, 255, 255, 255, 2, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2118,7 +2118,7 @@ Model createTestModel_relaxed_8() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {3};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0
+      255, 255, 255, 255, 2, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2190,7 +2190,7 @@ Model createTestModel_quant8_8() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {3};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0
+      255, 255, 255, 255, 2, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2261,7 +2261,7 @@ Model createTestModel_int32_8() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {3};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0
+      255, 255, 255, 255, 2, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
