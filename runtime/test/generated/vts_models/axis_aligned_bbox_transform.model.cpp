@@ -6,7 +6,7 @@ Model createTestModel() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 5},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -15,7 +15,7 @@ Model createTestModel() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 8},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -24,7 +24,7 @@ Model createTestModel() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 3},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -104,7 +104,7 @@ Model createTestModel_relaxed() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 5},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -113,7 +113,7 @@ Model createTestModel_relaxed() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 8},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -122,7 +122,7 @@ Model createTestModel_relaxed() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 3},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -203,7 +203,7 @@ Model createTestModel_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 5},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -212,7 +212,7 @@ Model createTestModel_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 8},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -221,7 +221,7 @@ Model createTestModel_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 3},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -301,7 +301,7 @@ Model createTestModel_relaxed_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 5},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -310,7 +310,7 @@ Model createTestModel_relaxed_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 8},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -319,7 +319,7 @@ Model createTestModel_relaxed_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {5, 3},
-            .numberOfConsumers = 2,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,

@@ -78,7 +78,7 @@ Model createTestModel_nhwc_none() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -140,7 +140,7 @@ Model createTestModel_nhwc_none_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -149,7 +149,7 @@ Model createTestModel_nhwc_none_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -203,7 +203,7 @@ Model createTestModel_nhwc_none_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -328,7 +328,7 @@ Model createTestModel_nhwc_none_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -391,7 +391,7 @@ Model createTestModel_nhwc_none_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -400,7 +400,7 @@ Model createTestModel_nhwc_none_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -454,7 +454,7 @@ Model createTestModel_nhwc_none_relaxed_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -580,7 +580,7 @@ Model createTestModel_nhwc_none_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -642,7 +642,7 @@ Model createTestModel_nhwc_none_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -651,7 +651,7 @@ Model createTestModel_nhwc_none_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -705,7 +705,7 @@ Model createTestModel_nhwc_none_quant8_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -830,7 +830,7 @@ Model createTestModel_nhwc_relu() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -892,7 +892,7 @@ Model createTestModel_nhwc_relu_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -901,7 +901,7 @@ Model createTestModel_nhwc_relu_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -955,7 +955,7 @@ Model createTestModel_nhwc_relu_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1080,7 +1080,7 @@ Model createTestModel_nhwc_relu_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1143,7 +1143,7 @@ Model createTestModel_nhwc_relu_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -1152,7 +1152,7 @@ Model createTestModel_nhwc_relu_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -1206,7 +1206,7 @@ Model createTestModel_nhwc_relu_relaxed_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1332,7 +1332,7 @@ Model createTestModel_nhwc_relu_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1394,7 +1394,7 @@ Model createTestModel_nhwc_relu_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -1403,7 +1403,7 @@ Model createTestModel_nhwc_relu_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -1457,7 +1457,7 @@ Model createTestModel_nhwc_relu_quant8_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1582,7 +1582,7 @@ Model createTestModel_nhwc_relu1() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1644,7 +1644,7 @@ Model createTestModel_nhwc_relu1_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -1653,7 +1653,7 @@ Model createTestModel_nhwc_relu1_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -1707,7 +1707,7 @@ Model createTestModel_nhwc_relu1_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1832,7 +1832,7 @@ Model createTestModel_nhwc_relu1_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1895,7 +1895,7 @@ Model createTestModel_nhwc_relu1_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -1904,7 +1904,7 @@ Model createTestModel_nhwc_relu1_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -1958,7 +1958,7 @@ Model createTestModel_nhwc_relu1_relaxed_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -2084,7 +2084,7 @@ Model createTestModel_nhwc_relu1_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -2146,7 +2146,7 @@ Model createTestModel_nhwc_relu1_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -2155,7 +2155,7 @@ Model createTestModel_nhwc_relu1_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -2209,7 +2209,7 @@ Model createTestModel_nhwc_relu1_quant8_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -2334,7 +2334,7 @@ Model createTestModel_nhwc_relu6() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -2396,7 +2396,7 @@ Model createTestModel_nhwc_relu6_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -2405,7 +2405,7 @@ Model createTestModel_nhwc_relu6_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -2459,7 +2459,7 @@ Model createTestModel_nhwc_relu6_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -2584,7 +2584,7 @@ Model createTestModel_nhwc_relu6_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -2647,7 +2647,7 @@ Model createTestModel_nhwc_relu6_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -2656,7 +2656,7 @@ Model createTestModel_nhwc_relu6_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -2710,7 +2710,7 @@ Model createTestModel_nhwc_relu6_relaxed_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -2836,7 +2836,7 @@ Model createTestModel_nhwc_relu6_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -2898,7 +2898,7 @@ Model createTestModel_nhwc_relu6_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -2907,7 +2907,7 @@ Model createTestModel_nhwc_relu6_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -2961,7 +2961,7 @@ Model createTestModel_nhwc_relu6_quant8_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -3086,7 +3086,7 @@ Model createTestModel_nchw_none() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -3148,7 +3148,7 @@ Model createTestModel_nchw_none_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -3157,7 +3157,7 @@ Model createTestModel_nchw_none_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -3211,7 +3211,7 @@ Model createTestModel_nchw_none_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -3336,7 +3336,7 @@ Model createTestModel_nchw_none_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -3399,7 +3399,7 @@ Model createTestModel_nchw_none_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -3408,7 +3408,7 @@ Model createTestModel_nchw_none_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -3462,7 +3462,7 @@ Model createTestModel_nchw_none_relaxed_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -3588,7 +3588,7 @@ Model createTestModel_nchw_none_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -3650,7 +3650,7 @@ Model createTestModel_nchw_none_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -3659,7 +3659,7 @@ Model createTestModel_nchw_none_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -3713,7 +3713,7 @@ Model createTestModel_nchw_none_quant8_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -3838,7 +3838,7 @@ Model createTestModel_nchw_relu() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -3900,7 +3900,7 @@ Model createTestModel_nchw_relu_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -3909,7 +3909,7 @@ Model createTestModel_nchw_relu_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -3963,7 +3963,7 @@ Model createTestModel_nchw_relu_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -4088,7 +4088,7 @@ Model createTestModel_nchw_relu_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -4151,7 +4151,7 @@ Model createTestModel_nchw_relu_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -4160,7 +4160,7 @@ Model createTestModel_nchw_relu_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -4214,7 +4214,7 @@ Model createTestModel_nchw_relu_relaxed_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -4340,7 +4340,7 @@ Model createTestModel_nchw_relu_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -4402,7 +4402,7 @@ Model createTestModel_nchw_relu_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -4411,7 +4411,7 @@ Model createTestModel_nchw_relu_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -4465,7 +4465,7 @@ Model createTestModel_nchw_relu_quant8_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -4590,7 +4590,7 @@ Model createTestModel_nchw_relu1() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -4652,7 +4652,7 @@ Model createTestModel_nchw_relu1_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -4661,7 +4661,7 @@ Model createTestModel_nchw_relu1_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -4715,7 +4715,7 @@ Model createTestModel_nchw_relu1_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -4840,7 +4840,7 @@ Model createTestModel_nchw_relu1_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -4903,7 +4903,7 @@ Model createTestModel_nchw_relu1_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -4912,7 +4912,7 @@ Model createTestModel_nchw_relu1_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -4966,7 +4966,7 @@ Model createTestModel_nchw_relu1_relaxed_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -5092,7 +5092,7 @@ Model createTestModel_nchw_relu1_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -5154,7 +5154,7 @@ Model createTestModel_nchw_relu1_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -5163,7 +5163,7 @@ Model createTestModel_nchw_relu1_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -5217,7 +5217,7 @@ Model createTestModel_nchw_relu1_quant8_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -5342,7 +5342,7 @@ Model createTestModel_nchw_relu6() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -5404,7 +5404,7 @@ Model createTestModel_nchw_relu6_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -5413,7 +5413,7 @@ Model createTestModel_nchw_relu6_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -5467,7 +5467,7 @@ Model createTestModel_nchw_relu6_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -5592,7 +5592,7 @@ Model createTestModel_nchw_relu6_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -5655,7 +5655,7 @@ Model createTestModel_nchw_relu6_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -5664,7 +5664,7 @@ Model createTestModel_nchw_relu6_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -5718,7 +5718,7 @@ Model createTestModel_nchw_relu6_relaxed_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -5844,7 +5844,7 @@ Model createTestModel_nchw_relu6_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -5906,7 +5906,7 @@ Model createTestModel_nchw_relu6_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {2, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -5915,7 +5915,7 @@ Model createTestModel_nchw_relu6_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -5969,7 +5969,7 @@ Model createTestModel_nchw_relu6_quant8_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -6094,7 +6094,7 @@ Model createTestModel_nhwc() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -6156,7 +6156,7 @@ Model createTestModel_nhwc_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -6165,7 +6165,7 @@ Model createTestModel_nhwc_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -6219,7 +6219,7 @@ Model createTestModel_nhwc_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -6344,7 +6344,7 @@ Model createTestModel_nhwc_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -6407,7 +6407,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -6416,7 +6416,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -6470,7 +6470,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -6596,7 +6596,7 @@ Model createTestModel_nhwc_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -6658,7 +6658,7 @@ Model createTestModel_nhwc_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 128,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -6667,7 +6667,7 @@ Model createTestModel_nhwc_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -6721,7 +6721,7 @@ Model createTestModel_nhwc_quant8_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -6846,7 +6846,7 @@ Model createTestModel_nchw() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -6908,7 +6908,7 @@ Model createTestModel_nchw_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -6917,7 +6917,7 @@ Model createTestModel_nchw_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -6971,7 +6971,7 @@ Model createTestModel_nchw_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -7096,7 +7096,7 @@ Model createTestModel_nchw_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -7159,7 +7159,7 @@ Model createTestModel_nchw_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -7168,7 +7168,7 @@ Model createTestModel_nchw_relaxed_weight_as_input() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -7222,7 +7222,7 @@ Model createTestModel_nchw_relaxed_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -7348,7 +7348,7 @@ Model createTestModel_nchw_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -7410,7 +7410,7 @@ Model createTestModel_nchw_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 3, 1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 128,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -7419,7 +7419,7 @@ Model createTestModel_nchw_quant8_weight_as_input() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -7473,7 +7473,7 @@ Model createTestModel_nchw_quant8_weight_as_input() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -7598,7 +7598,7 @@ Model createTestModel_nhwc_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -7660,7 +7660,7 @@ Model createTestModel_nhwc_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -7669,7 +7669,7 @@ Model createTestModel_nhwc_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -7723,7 +7723,7 @@ Model createTestModel_nhwc_weight_as_input_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -7848,7 +7848,7 @@ Model createTestModel_nhwc_relaxed_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -7911,7 +7911,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -7920,7 +7920,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -7974,7 +7974,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -8100,7 +8100,7 @@ Model createTestModel_nhwc_quant8_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -8162,7 +8162,7 @@ Model createTestModel_nhwc_quant8_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 128,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -8171,7 +8171,7 @@ Model createTestModel_nhwc_quant8_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -8225,7 +8225,7 @@ Model createTestModel_nhwc_quant8_weight_as_input_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -8350,7 +8350,7 @@ Model createTestModel_nchw_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -8412,7 +8412,7 @@ Model createTestModel_nchw_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -8421,7 +8421,7 @@ Model createTestModel_nchw_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -8475,7 +8475,7 @@ Model createTestModel_nchw_weight_as_input_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -8600,7 +8600,7 @@ Model createTestModel_nchw_relaxed_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -8663,7 +8663,7 @@ Model createTestModel_nchw_relaxed_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -8672,7 +8672,7 @@ Model createTestModel_nchw_relaxed_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -8726,7 +8726,7 @@ Model createTestModel_nchw_relaxed_weight_as_input_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -8852,7 +8852,7 @@ Model createTestModel_nchw_quant8_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -8914,7 +8914,7 @@ Model createTestModel_nchw_quant8_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 128,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -8923,7 +8923,7 @@ Model createTestModel_nchw_quant8_weight_as_input_2() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -8977,7 +8977,7 @@ Model createTestModel_nchw_quant8_weight_as_input_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -9102,7 +9102,7 @@ Model createTestModel_nhwc_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -9164,7 +9164,7 @@ Model createTestModel_nhwc_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -9173,7 +9173,7 @@ Model createTestModel_nhwc_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -9227,7 +9227,7 @@ Model createTestModel_nhwc_weight_as_input_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -9352,7 +9352,7 @@ Model createTestModel_nhwc_relaxed_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -9415,7 +9415,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -9424,7 +9424,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -9478,7 +9478,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -9604,7 +9604,7 @@ Model createTestModel_nhwc_quant8_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -9666,7 +9666,7 @@ Model createTestModel_nhwc_quant8_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 128,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -9675,7 +9675,7 @@ Model createTestModel_nhwc_quant8_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.125f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -9729,7 +9729,7 @@ Model createTestModel_nhwc_quant8_weight_as_input_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -9854,7 +9854,7 @@ Model createTestModel_nchw_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -9916,7 +9916,7 @@ Model createTestModel_nchw_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -9925,7 +9925,7 @@ Model createTestModel_nchw_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -9979,7 +9979,7 @@ Model createTestModel_nchw_weight_as_input_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -10104,7 +10104,7 @@ Model createTestModel_nchw_relaxed_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -10167,7 +10167,7 @@ Model createTestModel_nchw_relaxed_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -10176,7 +10176,7 @@ Model createTestModel_nchw_relaxed_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -10230,7 +10230,7 @@ Model createTestModel_nchw_relaxed_weight_as_input_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -10356,7 +10356,7 @@ Model createTestModel_nchw_quant8_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -10418,7 +10418,7 @@ Model createTestModel_nchw_quant8_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.5f,
             .zeroPoint = 128,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -10427,7 +10427,7 @@ Model createTestModel_nchw_quant8_weight_as_input_3() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.125f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -10481,7 +10481,7 @@ Model createTestModel_nchw_quant8_weight_as_input_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -10624,7 +10624,7 @@ Model createTestModel_nhwc_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -10686,7 +10686,7 @@ Model createTestModel_nhwc_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -10695,7 +10695,7 @@ Model createTestModel_nhwc_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -10767,7 +10767,7 @@ Model createTestModel_nhwc_weight_as_input_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -10910,7 +10910,7 @@ Model createTestModel_nhwc_relaxed_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -10973,7 +10973,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -10982,7 +10982,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -11054,7 +11054,7 @@ Model createTestModel_nhwc_relaxed_weight_as_input_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -11198,7 +11198,7 @@ Model createTestModel_nhwc_quant8_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -11260,7 +11260,7 @@ Model createTestModel_nhwc_quant8_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 128,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -11269,7 +11269,7 @@ Model createTestModel_nhwc_quant8_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.125f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -11341,7 +11341,7 @@ Model createTestModel_nhwc_quant8_weight_as_input_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -11484,7 +11484,7 @@ Model createTestModel_nchw_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -11546,7 +11546,7 @@ Model createTestModel_nchw_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -11555,7 +11555,7 @@ Model createTestModel_nchw_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -11627,7 +11627,7 @@ Model createTestModel_nchw_weight_as_input_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -11770,7 +11770,7 @@ Model createTestModel_nchw_relaxed_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -11833,7 +11833,7 @@ Model createTestModel_nchw_relaxed_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -11842,7 +11842,7 @@ Model createTestModel_nchw_relaxed_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_FLOAT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -11914,7 +11914,7 @@ Model createTestModel_nchw_relaxed_weight_as_input_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -12058,7 +12058,7 @@ Model createTestModel_nchw_quant8_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -12120,7 +12120,7 @@ Model createTestModel_nchw_quant8_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 3, 2},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.25f,
             .zeroPoint = 128,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -12129,7 +12129,7 @@ Model createTestModel_nchw_quant8_weight_as_input_4() {
         {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {1},
-            .numberOfConsumers = 0,
+            .numberOfConsumers = 1,
             .scale = 0.125f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
@@ -12201,7 +12201,7 @@ Model createTestModel_nchw_quant8_weight_as_input_4() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 5,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
