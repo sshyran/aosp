@@ -48,7 +48,7 @@ inline bool gatherImpl(const T* inputData, const Shape& inputShape, int32_t axis
 }  // namespace
 
 bool prepare(const Shape& input, int32_t axis, const Shape& indices, Shape* output) {
-    axis = getDimensionIndex(input, axis);
+    NN_CHECK(handleNegativeAxis(input, &axis));
     output->dimensions.clear();
     output->dimensions.reserve(getNumberOfDimensions(input) + getNumberOfDimensions(indices) - 1);
     output->dimensions.insert(output->dimensions.end(), input.dimensions.begin(),
@@ -64,7 +64,7 @@ bool compute(const uint8_t* inputData, const Shape& inputShape, int32_t axis,
              const int32_t* indicesData, const Shape& indicesShape, uint8_t* outputData,
              const Shape& outputShape) {
     NNTRACE_TRANS("gather::compute");
-    axis = getDimensionIndex(inputShape, axis);
+    NN_CHECK(handleNegativeAxis(inputShape, &axis));
 
 #define ANDROID_NN_GATHER(operandType, dataType)                                                \
     case operandType: {                                                                         \
