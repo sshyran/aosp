@@ -57,7 +57,7 @@ Model createTestModel() {
     };
 }
 
-bool is_ignored(int i) {
+inline bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -120,7 +120,7 @@ Model createTestModel_relaxed() {
     };
 }
 
-bool is_ignored_relaxed(int i) {
+inline bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -182,7 +182,7 @@ Model createTestModel_quant8() {
     };
 }
 
-bool is_ignored_quant8(int i) {
+inline bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -244,7 +244,7 @@ Model createTestModel_2() {
     };
 }
 
-bool is_ignored_2(int i) {
+inline bool is_ignored_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -307,7 +307,7 @@ Model createTestModel_relaxed_2() {
     };
 }
 
-bool is_ignored_relaxed_2(int i) {
+inline bool is_ignored_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -369,7 +369,7 @@ Model createTestModel_quant8_2() {
     };
 }
 
-bool is_ignored_quant8_2(int i) {
+inline bool is_ignored_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }

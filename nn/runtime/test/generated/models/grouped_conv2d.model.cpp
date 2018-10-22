@@ -54,7 +54,7 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored(int i) {
+inline bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -109,7 +109,7 @@ void CreateModel_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_weight_as_input(int i) {
+inline bool is_ignored_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -170,7 +170,7 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_relaxed(int i) {
+inline bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -227,7 +227,7 @@ void CreateModel_relaxed_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_relaxed_weight_as_input(int i) {
+inline bool is_ignored_relaxed_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -290,7 +290,7 @@ void CreateModel_quant8(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_quant8(int i) {
+inline bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -349,7 +349,7 @@ void CreateModel_quant8_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_quant8_weight_as_input(int i) {
+inline bool is_ignored_quant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -403,7 +403,7 @@ void CreateModel_large(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_large(int i) {
+inline bool is_ignored_large(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -453,7 +453,7 @@ void CreateModel_large_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_large_weight_as_input(int i) {
+inline bool is_ignored_large_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -509,7 +509,7 @@ void CreateModel_large_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_large_relaxed(int i) {
+inline bool is_ignored_large_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -561,7 +561,7 @@ void CreateModel_large_relaxed_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_large_relaxed_weight_as_input(int i) {
+inline bool is_ignored_large_relaxed_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -619,7 +619,7 @@ void CreateModel_large_quant8(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_large_quant8(int i) {
+inline bool is_ignored_large_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -673,7 +673,7 @@ void CreateModel_large_quant8_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_large_quant8_weight_as_input(int i) {
+inline bool is_ignored_large_quant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -731,7 +731,7 @@ void CreateModel_channel(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_channel(int i) {
+inline bool is_ignored_channel(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -785,7 +785,7 @@ void CreateModel_channel_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_channel_weight_as_input(int i) {
+inline bool is_ignored_channel_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -845,7 +845,7 @@ void CreateModel_channel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_channel_relaxed(int i) {
+inline bool is_ignored_channel_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -901,7 +901,7 @@ void CreateModel_channel_relaxed_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_channel_relaxed_weight_as_input(int i) {
+inline bool is_ignored_channel_relaxed_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -963,7 +963,7 @@ void CreateModel_channel_quant8(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_channel_quant8(int i) {
+inline bool is_ignored_channel_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -1021,7 +1021,7 @@ void CreateModel_channel_quant8_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-bool is_ignored_channel_quant8_weight_as_input(int i) {
+inline bool is_ignored_channel_quant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
