@@ -47,7 +47,7 @@ inline bool channelShuffleImpl(const T* inputData, const Shape& inputShape, int3
 bool channelShuffleGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t numGroups,
                            int32_t axis, uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("channelShuffleGeneric");
-    axis = getDimensionIndex(inputShape, axis);
+    NN_CHECK(handleNegativeAxis(inputShape, &axis));
     if (inputShape.type == OperandType::TENSOR_FLOAT32) {
         return channelShuffleImpl<float>(reinterpret_cast<const float*>(inputData), inputShape,
                                          numGroups, axis, reinterpret_cast<float*>(outputData),
