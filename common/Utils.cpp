@@ -1863,13 +1863,14 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT: {
-            if (inputCount != 2 || outputCount != 1) {
-                logInvalidInOutNumber(2, 1);
+            if (inputCount != 3 || outputCount != 1) {
+                logInvalidInOutNumber(3, 1);
                 return ANEURALNETWORKS_BAD_DATA;
             }
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
-            inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32};
+            inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                               OperandType::BOOL};
             outExpectedTypes = {OperandType::TENSOR_FLOAT32};
             *minSupportedHalVersion = HalVersion::V1_2;
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
