@@ -34,6 +34,7 @@
 #define NN_CHECK_EQ(actual, expected)           \
   NN_CHECK((actual) == (expected))
 
+// DEPRECATED. Use NN_CHECK instead.
 #define NN_OPS_CHECK NN_CHECK
 
 namespace android {
