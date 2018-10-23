@@ -24,6 +24,7 @@
 #include "operations/HashtableLookup.h"
 #include "operations/LSHProjection.h"
 #include "operations/LSTM.h"
+#include "operations/Multinomial.h"
 #include "operations/QuantizedLSTM.h"
 #include "operations/RNN.h"
 #include "operations/SVDF.h"

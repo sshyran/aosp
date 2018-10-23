@@ -2463,7 +2463,26 @@ typedef enum {
      *      (scale = 1/128, zeroPoint = 128).
      */
     ANEURALNETWORKS_QUANTIZED_16BIT_LSTM = 71,
+
+    /**
+     * Draws samples from a multinomial distribution.
+     *
+     * Inputs:
+     * * 0: A 2-D {@link ANEURALNETWORKS_TENSOR_FLOAT32} tensor with shape
+     *      [batches, classes], specifying the unnormalized log-probabilities
+     *      for all classes.
+     * * 1: A scalar {@link ANEURALNETWORKS_INT32}, specifying the number of
+     *      independent samples to draw for each row slice.
+     * * 2: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor with shape [2],
+     *      specifying seeds used to initialize the random distribution.
+     * Outputs:
+     * * 0: A 2-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor with shape
+     *      [batches, samples], containing the drawn samples.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_RANDOM_MULTINOMIAL = 72,
+
     ANEURALNETWORKS_REDUCE = 73,
 
     /**
