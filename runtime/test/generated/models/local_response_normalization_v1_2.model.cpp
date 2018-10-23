@@ -1,7 +1,6 @@
 // clang-format off
 // Generated file (from: local_response_normalization_v1_2.mod.py). Do not edit
 void CreateModel_axis_dim4_axis0(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
@@ -38,7 +37,6 @@ inline bool is_ignored_axis_dim4_axis0(int i) {
 }
 
 void CreateModel_axis_dim4_axis0_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
@@ -75,10 +73,8 @@ inline bool is_ignored_axis_dim4_axis0_neg(int i) {
 }
 
 void CreateModel_axis_dim4_axis1(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
@@ -113,10 +109,8 @@ inline bool is_ignored_axis_dim4_axis1(int i) {
 }
 
 void CreateModel_axis_dim4_axis1_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
@@ -151,11 +145,8 @@ inline bool is_ignored_axis_dim4_axis1_neg(int i) {
 }
 
 void CreateModel_axis_dim4_axis2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
@@ -190,11 +181,8 @@ inline bool is_ignored_axis_dim4_axis2(int i) {
 }
 
 void CreateModel_axis_dim4_axis2_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
@@ -232,9 +220,6 @@ void CreateModel_axis_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param = model->addOperand(&type1);
@@ -271,9 +256,6 @@ void CreateModel_axis_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param = model->addOperand(&type1);
@@ -307,12 +289,8 @@ inline bool is_ignored_axis_dim4_axis3_neg(int i) {
 }
 
 void CreateModel_axis_dim3_axis0(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
@@ -347,12 +325,8 @@ inline bool is_ignored_axis_dim3_axis0(int i) {
 }
 
 void CreateModel_axis_dim3_axis0_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
@@ -387,13 +361,8 @@ inline bool is_ignored_axis_dim3_axis0_neg(int i) {
 }
 
 void CreateModel_axis_dim3_axis1(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
@@ -428,13 +397,8 @@ inline bool is_ignored_axis_dim3_axis1(int i) {
 }
 
 void CreateModel_axis_dim3_axis1_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
@@ -469,14 +433,8 @@ inline bool is_ignored_axis_dim3_axis1_neg(int i) {
 }
 
 void CreateModel_axis_dim3_axis2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
@@ -511,14 +469,8 @@ inline bool is_ignored_axis_dim3_axis2(int i) {
 }
 
 void CreateModel_axis_dim3_axis2_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
@@ -553,15 +505,8 @@ inline bool is_ignored_axis_dim3_axis2_neg(int i) {
 }
 
 void CreateModel_axis_dim2_axis0(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -596,15 +541,8 @@ inline bool is_ignored_axis_dim2_axis0(int i) {
 }
 
 void CreateModel_axis_dim2_axis0_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -639,17 +577,9 @@ inline bool is_ignored_axis_dim2_axis0_neg(int i) {
 }
 
 void CreateModel_axis_dim2_axis1(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param = model->addOperand(&type1);
@@ -683,17 +613,9 @@ inline bool is_ignored_axis_dim2_axis1(int i) {
 }
 
 void CreateModel_axis_dim2_axis1_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param = model->addOperand(&type1);
@@ -727,18 +649,9 @@ inline bool is_ignored_axis_dim2_axis1_neg(int i) {
 }
 
 void CreateModel_axis_dim1_axis0(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param = model->addOperand(&type1);
@@ -772,18 +685,9 @@ inline bool is_ignored_axis_dim1_axis0(int i) {
 }
 
 void CreateModel_axis_dim1_axis0_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param = model->addOperand(&type1);
@@ -817,18 +721,9 @@ inline bool is_ignored_axis_dim1_axis0_neg(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis0(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type3);
   auto param = model->addOperand(&type1);
@@ -864,18 +759,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis0(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis0_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type3);
   auto param = model->addOperand(&type1);
@@ -911,18 +797,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis0_neg(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis1(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
   auto param = model->addOperand(&type1);
@@ -958,18 +835,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis1(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis1_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
   auto param = model->addOperand(&type1);
@@ -1005,18 +873,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis1_neg(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
   auto param = model->addOperand(&type1);
@@ -1052,18 +911,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis2_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
   auto param = model->addOperand(&type1);
@@ -1101,16 +951,7 @@ inline bool is_ignored_axis_relaxed_dim4_axis2_neg(int i) {
 void CreateModel_axis_relaxed_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param = model->addOperand(&type1);
@@ -1148,16 +989,7 @@ inline bool is_ignored_axis_relaxed_dim4_axis3(int i) {
 void CreateModel_axis_relaxed_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param = model->addOperand(&type1);
@@ -1193,18 +1025,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis3_neg(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis0(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
   auto param = model->addOperand(&type1);
@@ -1240,18 +1063,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis0(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis0_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
   auto param = model->addOperand(&type1);
@@ -1287,18 +1101,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis0_neg(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis1(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
   auto param = model->addOperand(&type1);
@@ -1334,18 +1139,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis1(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis1_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
   auto param = model->addOperand(&type1);
@@ -1381,18 +1177,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis1_neg(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param = model->addOperand(&type1);
@@ -1428,18 +1215,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis2_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param = model->addOperand(&type1);
@@ -1475,17 +1253,8 @@ inline bool is_ignored_axis_relaxed_dim3_axis2_neg(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis0(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -1522,17 +1291,8 @@ inline bool is_ignored_axis_relaxed_dim2_axis0(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis0_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -1569,18 +1329,9 @@ inline bool is_ignored_axis_relaxed_dim2_axis0_neg(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis1(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param = model->addOperand(&type1);
@@ -1616,18 +1367,9 @@ inline bool is_ignored_axis_relaxed_dim2_axis1(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis1_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param = model->addOperand(&type1);
@@ -1663,18 +1405,9 @@ inline bool is_ignored_axis_relaxed_dim2_axis1_neg(int i) {
 }
 
 void CreateModel_axis_relaxed_dim1_axis0(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param = model->addOperand(&type1);
@@ -1710,18 +1443,9 @@ inline bool is_ignored_axis_relaxed_dim1_axis0(int i) {
 }
 
 void CreateModel_axis_relaxed_dim1_axis0_neg(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param = model->addOperand(&type1);
@@ -1757,18 +1481,9 @@ inline bool is_ignored_axis_relaxed_dim1_axis0_neg(int i) {
 }
 
 void CreateModel_axis_dim4_axis0_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type3);
   auto param4 = model->addOperand(&type1);
@@ -1802,18 +1517,9 @@ inline bool is_ignored_axis_dim4_axis0_2(int i) {
 }
 
 void CreateModel_axis_dim4_axis0_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type3);
   auto param4 = model->addOperand(&type1);
@@ -1847,18 +1553,9 @@ inline bool is_ignored_axis_dim4_axis0_neg_2(int i) {
 }
 
 void CreateModel_axis_dim4_axis1_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
   auto param4 = model->addOperand(&type1);
@@ -1892,18 +1589,9 @@ inline bool is_ignored_axis_dim4_axis1_2(int i) {
 }
 
 void CreateModel_axis_dim4_axis1_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
   auto param4 = model->addOperand(&type1);
@@ -1937,18 +1625,9 @@ inline bool is_ignored_axis_dim4_axis1_neg_2(int i) {
 }
 
 void CreateModel_axis_dim4_axis2_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
   auto param4 = model->addOperand(&type1);
@@ -1982,18 +1661,9 @@ inline bool is_ignored_axis_dim4_axis2_2(int i) {
 }
 
 void CreateModel_axis_dim4_axis2_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
   auto param4 = model->addOperand(&type1);
@@ -2029,16 +1699,7 @@ inline bool is_ignored_axis_dim4_axis2_neg_2(int i) {
 void CreateModel_axis_dim4_axis3_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param4 = model->addOperand(&type1);
@@ -2074,16 +1735,7 @@ inline bool is_ignored_axis_dim4_axis3_2(int i) {
 void CreateModel_axis_dim4_axis3_neg_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param4 = model->addOperand(&type1);
@@ -2117,18 +1769,9 @@ inline bool is_ignored_axis_dim4_axis3_neg_2(int i) {
 }
 
 void CreateModel_axis_dim3_axis0_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type1);
@@ -2162,18 +1805,9 @@ inline bool is_ignored_axis_dim3_axis0_2(int i) {
 }
 
 void CreateModel_axis_dim3_axis0_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type1);
@@ -2207,18 +1841,9 @@ inline bool is_ignored_axis_dim3_axis0_neg_2(int i) {
 }
 
 void CreateModel_axis_dim3_axis1_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
   auto param4 = model->addOperand(&type1);
@@ -2252,18 +1877,9 @@ inline bool is_ignored_axis_dim3_axis1_2(int i) {
 }
 
 void CreateModel_axis_dim3_axis1_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
   auto param4 = model->addOperand(&type1);
@@ -2297,18 +1913,9 @@ inline bool is_ignored_axis_dim3_axis1_neg_2(int i) {
 }
 
 void CreateModel_axis_dim3_axis2_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param4 = model->addOperand(&type1);
@@ -2342,18 +1949,9 @@ inline bool is_ignored_axis_dim3_axis2_2(int i) {
 }
 
 void CreateModel_axis_dim3_axis2_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param4 = model->addOperand(&type1);
@@ -2387,17 +1985,8 @@ inline bool is_ignored_axis_dim3_axis2_neg_2(int i) {
 }
 
 void CreateModel_axis_dim2_axis0_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -2432,17 +2021,8 @@ inline bool is_ignored_axis_dim2_axis0_2(int i) {
 }
 
 void CreateModel_axis_dim2_axis0_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -2477,18 +2057,9 @@ inline bool is_ignored_axis_dim2_axis0_neg_2(int i) {
 }
 
 void CreateModel_axis_dim2_axis1_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param4 = model->addOperand(&type1);
@@ -2522,18 +2093,9 @@ inline bool is_ignored_axis_dim2_axis1_2(int i) {
 }
 
 void CreateModel_axis_dim2_axis1_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param4 = model->addOperand(&type1);
@@ -2567,18 +2129,9 @@ inline bool is_ignored_axis_dim2_axis1_neg_2(int i) {
 }
 
 void CreateModel_axis_dim1_axis0_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param4 = model->addOperand(&type1);
@@ -2612,18 +2165,9 @@ inline bool is_ignored_axis_dim1_axis0_2(int i) {
 }
 
 void CreateModel_axis_dim1_axis0_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param4 = model->addOperand(&type1);
@@ -2657,18 +2201,9 @@ inline bool is_ignored_axis_dim1_axis0_neg_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis0_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type3);
   auto param4 = model->addOperand(&type1);
@@ -2704,18 +2239,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis0_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis0_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type3);
   auto param4 = model->addOperand(&type1);
@@ -2751,18 +2277,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis0_neg_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis1_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
   auto param4 = model->addOperand(&type1);
@@ -2798,18 +2315,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis1_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis1_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
   auto param4 = model->addOperand(&type1);
@@ -2845,18 +2353,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis1_neg_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis2_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
   auto param4 = model->addOperand(&type1);
@@ -2892,18 +2391,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis2_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis2_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
   auto param4 = model->addOperand(&type1);
@@ -2941,16 +2431,7 @@ inline bool is_ignored_axis_relaxed_dim4_axis2_neg_2(int i) {
 void CreateModel_axis_relaxed_dim4_axis3_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param4 = model->addOperand(&type1);
@@ -2988,16 +2469,7 @@ inline bool is_ignored_axis_relaxed_dim4_axis3_2(int i) {
 void CreateModel_axis_relaxed_dim4_axis3_neg_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param4 = model->addOperand(&type1);
@@ -3033,18 +2505,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis3_neg_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis0_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type1);
@@ -3080,18 +2543,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis0_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis0_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type1);
@@ -3127,18 +2581,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis0_neg_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis1_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
   auto param4 = model->addOperand(&type1);
@@ -3174,18 +2619,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis1_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis1_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
   auto param4 = model->addOperand(&type1);
@@ -3221,18 +2657,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis1_neg_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis2_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param4 = model->addOperand(&type1);
@@ -3268,18 +2695,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis2_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis2_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param4 = model->addOperand(&type1);
@@ -3315,17 +2733,8 @@ inline bool is_ignored_axis_relaxed_dim3_axis2_neg_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis0_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -3362,17 +2771,8 @@ inline bool is_ignored_axis_relaxed_dim2_axis0_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis0_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -3409,18 +2809,9 @@ inline bool is_ignored_axis_relaxed_dim2_axis0_neg_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis1_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param4 = model->addOperand(&type1);
@@ -3456,18 +2847,9 @@ inline bool is_ignored_axis_relaxed_dim2_axis1_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis1_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param4 = model->addOperand(&type1);
@@ -3503,18 +2885,9 @@ inline bool is_ignored_axis_relaxed_dim2_axis1_neg_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim1_axis0_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param4 = model->addOperand(&type1);
@@ -3550,18 +2923,9 @@ inline bool is_ignored_axis_relaxed_dim1_axis0_2(int i) {
 }
 
 void CreateModel_axis_relaxed_dim1_axis0_neg_2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param4 = model->addOperand(&type1);
@@ -3597,18 +2961,9 @@ inline bool is_ignored_axis_relaxed_dim1_axis0_neg_2(int i) {
 }
 
 void CreateModel_axis_dim4_axis0_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type3);
   auto param8 = model->addOperand(&type1);
@@ -3642,18 +2997,9 @@ inline bool is_ignored_axis_dim4_axis0_3(int i) {
 }
 
 void CreateModel_axis_dim4_axis0_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type3);
   auto param8 = model->addOperand(&type1);
@@ -3687,18 +3033,9 @@ inline bool is_ignored_axis_dim4_axis0_neg_3(int i) {
 }
 
 void CreateModel_axis_dim4_axis1_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
   auto param8 = model->addOperand(&type1);
@@ -3732,18 +3069,9 @@ inline bool is_ignored_axis_dim4_axis1_3(int i) {
 }
 
 void CreateModel_axis_dim4_axis1_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
   auto param8 = model->addOperand(&type1);
@@ -3777,18 +3105,9 @@ inline bool is_ignored_axis_dim4_axis1_neg_3(int i) {
 }
 
 void CreateModel_axis_dim4_axis2_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
   auto param8 = model->addOperand(&type1);
@@ -3822,18 +3141,9 @@ inline bool is_ignored_axis_dim4_axis2_3(int i) {
 }
 
 void CreateModel_axis_dim4_axis2_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
   auto param8 = model->addOperand(&type1);
@@ -3869,16 +3179,7 @@ inline bool is_ignored_axis_dim4_axis2_neg_3(int i) {
 void CreateModel_axis_dim4_axis3_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param8 = model->addOperand(&type1);
@@ -3914,16 +3215,7 @@ inline bool is_ignored_axis_dim4_axis3_3(int i) {
 void CreateModel_axis_dim4_axis3_neg_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param8 = model->addOperand(&type1);
@@ -3957,18 +3249,9 @@ inline bool is_ignored_axis_dim4_axis3_neg_3(int i) {
 }
 
 void CreateModel_axis_dim3_axis0_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
   auto param8 = model->addOperand(&type1);
@@ -4002,18 +3285,9 @@ inline bool is_ignored_axis_dim3_axis0_3(int i) {
 }
 
 void CreateModel_axis_dim3_axis0_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
   auto param8 = model->addOperand(&type1);
@@ -4047,18 +3321,9 @@ inline bool is_ignored_axis_dim3_axis0_neg_3(int i) {
 }
 
 void CreateModel_axis_dim3_axis1_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
   auto param8 = model->addOperand(&type1);
@@ -4092,18 +3357,9 @@ inline bool is_ignored_axis_dim3_axis1_3(int i) {
 }
 
 void CreateModel_axis_dim3_axis1_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
   auto param8 = model->addOperand(&type1);
@@ -4137,18 +3393,9 @@ inline bool is_ignored_axis_dim3_axis1_neg_3(int i) {
 }
 
 void CreateModel_axis_dim3_axis2_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param8 = model->addOperand(&type1);
@@ -4182,18 +3429,9 @@ inline bool is_ignored_axis_dim3_axis2_3(int i) {
 }
 
 void CreateModel_axis_dim3_axis2_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param8 = model->addOperand(&type1);
@@ -4227,17 +3465,8 @@ inline bool is_ignored_axis_dim3_axis2_neg_3(int i) {
 }
 
 void CreateModel_axis_dim2_axis0_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -4272,17 +3501,8 @@ inline bool is_ignored_axis_dim2_axis0_3(int i) {
 }
 
 void CreateModel_axis_dim2_axis0_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -4317,18 +3537,9 @@ inline bool is_ignored_axis_dim2_axis0_neg_3(int i) {
 }
 
 void CreateModel_axis_dim2_axis1_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param8 = model->addOperand(&type1);
@@ -4362,18 +3573,9 @@ inline bool is_ignored_axis_dim2_axis1_3(int i) {
 }
 
 void CreateModel_axis_dim2_axis1_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param8 = model->addOperand(&type1);
@@ -4407,18 +3609,9 @@ inline bool is_ignored_axis_dim2_axis1_neg_3(int i) {
 }
 
 void CreateModel_axis_dim1_axis0_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param8 = model->addOperand(&type1);
@@ -4452,18 +3645,9 @@ inline bool is_ignored_axis_dim1_axis0_3(int i) {
 }
 
 void CreateModel_axis_dim1_axis0_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param8 = model->addOperand(&type1);
@@ -4497,18 +3681,9 @@ inline bool is_ignored_axis_dim1_axis0_neg_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis0_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type3);
   auto param8 = model->addOperand(&type1);
@@ -4544,18 +3719,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis0_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis0_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type3);
   auto param8 = model->addOperand(&type1);
@@ -4591,18 +3757,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis0_neg_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis1_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
   auto param8 = model->addOperand(&type1);
@@ -4638,18 +3795,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis1_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis1_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
   OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type4);
   auto param8 = model->addOperand(&type1);
@@ -4685,18 +3833,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis1_neg_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis2_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
   auto param8 = model->addOperand(&type1);
@@ -4732,18 +3871,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis2_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim4_axis2_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
   auto param8 = model->addOperand(&type1);
@@ -4781,16 +3911,7 @@ inline bool is_ignored_axis_relaxed_dim4_axis2_neg_3(int i) {
 void CreateModel_axis_relaxed_dim4_axis3_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param8 = model->addOperand(&type1);
@@ -4828,16 +3949,7 @@ inline bool is_ignored_axis_relaxed_dim4_axis3_3(int i) {
 void CreateModel_axis_relaxed_dim4_axis3_neg_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
   auto param8 = model->addOperand(&type1);
@@ -4873,18 +3985,9 @@ inline bool is_ignored_axis_relaxed_dim4_axis3_neg_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis0_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
   auto param8 = model->addOperand(&type1);
@@ -4920,18 +4023,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis0_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis0_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type6);
   auto param8 = model->addOperand(&type1);
@@ -4967,18 +4061,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis0_neg_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis1_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
   auto param8 = model->addOperand(&type1);
@@ -5014,18 +4099,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis1_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis1_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
   auto param8 = model->addOperand(&type1);
@@ -5061,18 +4137,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis1_neg_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis2_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param8 = model->addOperand(&type1);
@@ -5108,18 +4175,9 @@ inline bool is_ignored_axis_relaxed_dim3_axis2_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim3_axis2_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param8 = model->addOperand(&type1);
@@ -5155,17 +4213,8 @@ inline bool is_ignored_axis_relaxed_dim3_axis2_neg_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis0_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -5202,17 +4251,8 @@ inline bool is_ignored_axis_relaxed_dim2_axis0_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis0_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
   OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -5249,18 +4289,9 @@ inline bool is_ignored_axis_relaxed_dim2_axis0_neg_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis1_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param8 = model->addOperand(&type1);
@@ -5296,18 +4327,9 @@ inline bool is_ignored_axis_relaxed_dim2_axis1_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim2_axis1_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param8 = model->addOperand(&type1);
@@ -5343,18 +4365,9 @@ inline bool is_ignored_axis_relaxed_dim2_axis1_neg_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim1_axis0_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param8 = model->addOperand(&type1);
@@ -5390,18 +4403,9 @@ inline bool is_ignored_axis_relaxed_dim1_axis0_3(int i) {
 }
 
 void CreateModel_axis_relaxed_dim1_axis0_neg_3(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param8 = model->addOperand(&type1);
@@ -5437,18 +4441,9 @@ inline bool is_ignored_axis_relaxed_dim1_axis0_neg_3(int i) {
 }
 
 void CreateModel_dim1_axis0(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param12 = model->addOperand(&type1);
@@ -5479,18 +4474,9 @@ inline bool is_ignored_dim1_axis0(int i) {
 }
 
 void CreateModel_dim2_axis1(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param12 = model->addOperand(&type1);
@@ -5521,18 +4507,9 @@ inline bool is_ignored_dim2_axis1(int i) {
 }
 
 void CreateModel_dim3_axis2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param12 = model->addOperand(&type1);
@@ -5563,18 +4540,9 @@ inline bool is_ignored_dim3_axis2(int i) {
 }
 
 void CreateModel_relaxed_dim1_axis0(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
   OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type11);
   auto param12 = model->addOperand(&type1);
@@ -5607,18 +4575,9 @@ inline bool is_ignored_relaxed_dim1_axis0(int i) {
 }
 
 void CreateModel_relaxed_dim2_axis1(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
-  OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type10);
   auto param12 = model->addOperand(&type1);
@@ -5651,18 +4610,9 @@ inline bool is_ignored_relaxed_dim2_axis1(int i) {
 }
 
 void CreateModel_relaxed_dim3_axis2(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_FLOAT32, {2, 6});
-  OperandType type11(Type::TENSOR_FLOAT32, {6});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {6, 2, 2, 2});
-  OperandType type4(Type::TENSOR_FLOAT32, {2, 6, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {2, 2, 6, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {6, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 6, 2});
   OperandType type8(Type::TENSOR_FLOAT32, {2, 2, 6});
-  OperandType type9(Type::TENSOR_FLOAT32, {6, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
   auto param12 = model->addOperand(&type1);
