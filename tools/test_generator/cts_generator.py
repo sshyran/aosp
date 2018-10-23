@@ -131,7 +131,7 @@ def DumpCtsModel(model, model_fd):
     print("void %s(Model *model) {"%(model.createFunctionName), file=model_fd)
 
     # Phase 0: types
-    for t in tg.Type.GetAllTypes():
+    for t in model.GetTypes():
         if t.scale == 0.0 and t.zeroPoint == 0:
             typeDef = "OperandType %s(Type::%s, %s);"%(t, t.type, t.GetDimensionsString())
         else:

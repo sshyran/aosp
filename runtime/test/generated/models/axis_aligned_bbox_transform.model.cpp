@@ -7,10 +7,6 @@ void CreateModel(Model *model) {
   OperandType type3(Type::TENSOR_INT32, {5});
   OperandType type4(Type::TENSOR_FLOAT32, {4});
   OperandType type5(Type::BOOL, {});
-  OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 8});
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 3});
-  OperandType type9(Type::TENSOR_INT32, {1});
   // Phase 1, operands
   auto roi = model->addOperand(&type0);
   auto bboxDeltas = model->addOperand(&type1);
@@ -44,10 +40,6 @@ void CreateModel_relaxed(Model *model) {
   OperandType type3(Type::TENSOR_INT32, {5});
   OperandType type4(Type::TENSOR_FLOAT32, {4});
   OperandType type5(Type::BOOL, {});
-  OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 8});
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 3});
-  OperandType type9(Type::TENSOR_INT32, {1});
   // Phase 1, operands
   auto roi = model->addOperand(&type0);
   auto bboxDeltas = model->addOperand(&type1);
@@ -83,10 +75,6 @@ void CreateModel_2(Model *model) {
   OperandType type3(Type::TENSOR_INT32, {5});
   OperandType type4(Type::TENSOR_FLOAT32, {4});
   OperandType type5(Type::BOOL, {});
-  OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 8});
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 3});
-  OperandType type9(Type::TENSOR_INT32, {1});
   // Phase 1, operands
   auto roi = model->addOperand(&type0);
   auto bboxDeltas = model->addOperand(&type1);
@@ -120,10 +108,6 @@ void CreateModel_relaxed_2(Model *model) {
   OperandType type3(Type::TENSOR_INT32, {5});
   OperandType type4(Type::TENSOR_FLOAT32, {4});
   OperandType type5(Type::BOOL, {});
-  OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
-  OperandType type7(Type::TENSOR_FLOAT32, {2, 8});
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 3});
-  OperandType type9(Type::TENSOR_INT32, {1});
   // Phase 1, operands
   auto roi = model->addOperand(&type0);
   auto bboxDeltas = model->addOperand(&type1);
@@ -153,10 +137,6 @@ inline bool is_ignored_relaxed_2(int i) {
 }
 
 void CreateModel_single_batch(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {5, 5});
-  OperandType type1(Type::TENSOR_FLOAT32, {5, 8});
-  OperandType type2(Type::TENSOR_FLOAT32, {5, 3});
-  OperandType type3(Type::TENSOR_INT32, {5});
   OperandType type4(Type::TENSOR_FLOAT32, {4});
   OperandType type5(Type::BOOL, {});
   OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
@@ -190,10 +170,6 @@ inline bool is_ignored_single_batch(int i) {
 }
 
 void CreateModel_single_batch_relaxed(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {5, 5});
-  OperandType type1(Type::TENSOR_FLOAT32, {5, 8});
-  OperandType type2(Type::TENSOR_FLOAT32, {5, 3});
-  OperandType type3(Type::TENSOR_INT32, {5});
   OperandType type4(Type::TENSOR_FLOAT32, {4});
   OperandType type5(Type::BOOL, {});
   OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
