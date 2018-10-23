@@ -4,10 +4,6 @@ void CreateModel_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
   // Phase 1, operands
   auto op1 = model->addOperand(&type1);
   auto param = model->addOperand(&type2);
@@ -59,10 +55,6 @@ void CreateModel_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
   // Phase 1, operands
   auto op1 = model->addOperand(&type1);
   auto param = model->addOperand(&type2);
@@ -114,12 +106,7 @@ inline bool is_ignored_nhwc_relaxed(int i) {
 
 void CreateModel_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
   OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
   // Phase 1, operands
   auto op1 = model->addOperand(&type7);
@@ -170,13 +157,7 @@ inline bool is_ignored_nhwc_quant8(int i) {
 
 void CreateModel_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
   OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
@@ -227,13 +208,7 @@ inline bool is_ignored_nchw(int i) {
 
 void CreateModel_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
   OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type8);
@@ -286,14 +261,7 @@ inline bool is_ignored_nchw_relaxed(int i) {
 
 void CreateModel_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
   OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op1 = model->addOperand(&type9);
@@ -344,15 +312,9 @@ inline bool is_ignored_nchw_quant8(int i) {
 
 void CreateModel_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type2(Type::INT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
   OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op11 = model->addOperand(&type3);
   auto param9 = model->addOperand(&type2);
@@ -402,15 +364,9 @@ inline bool is_ignored_nhwc_2(int i) {
 
 void CreateModel_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type2(Type::INT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
   OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op11 = model->addOperand(&type3);
   auto param9 = model->addOperand(&type2);
@@ -462,17 +418,9 @@ inline bool is_ignored_nhwc_relaxed_2(int i) {
 
 void CreateModel_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
   OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op11 = model->addOperand(&type10);
   auto param9 = model->addOperand(&type2);
@@ -522,19 +470,9 @@ inline bool is_ignored_nhwc_quant8_2(int i) {
 
 void CreateModel_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
   OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
   OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op11 = model->addOperand(&type12);
   auto param9 = model->addOperand(&type2);
@@ -584,19 +522,9 @@ inline bool is_ignored_nchw_2(int i) {
 
 void CreateModel_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
   OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
   OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op11 = model->addOperand(&type12);
   auto param9 = model->addOperand(&type2);
@@ -648,21 +576,9 @@ inline bool is_ignored_nchw_relaxed_2(int i) {
 
 void CreateModel_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
   OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
   OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op11 = model->addOperand(&type14);
   auto param9 = model->addOperand(&type2);
@@ -712,21 +628,9 @@ inline bool is_ignored_nchw_quant8_2(int i) {
 
 void CreateModel_nhwc_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
   OperandType type2(Type::INT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
   OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op12 = model->addOperand(&type3);
   auto param18 = model->addOperand(&type2);
@@ -776,21 +680,9 @@ inline bool is_ignored_nhwc_3(int i) {
 
 void CreateModel_nhwc_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
   OperandType type2(Type::INT32, {});
   OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
   OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op12 = model->addOperand(&type3);
   auto param18 = model->addOperand(&type2);
@@ -842,23 +734,9 @@ inline bool is_ignored_nhwc_relaxed_3(int i) {
 
 void CreateModel_nhwc_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.25f, 0);
   OperandType type17(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.25f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op12 = model->addOperand(&type16);
   auto param18 = model->addOperand(&type2);
@@ -908,23 +786,9 @@ inline bool is_ignored_nhwc_quant8_3(int i) {
 
 void CreateModel_nchw_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
   OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
   OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
-  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.25f, 0);
-  OperandType type17(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.25f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op12 = model->addOperand(&type12);
   auto param18 = model->addOperand(&type2);
@@ -974,23 +838,9 @@ inline bool is_ignored_nchw_3(int i) {
 
 void CreateModel_nchw_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
   OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
   OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
-  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.25f, 0);
-  OperandType type17(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.25f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op12 = model->addOperand(&type12);
   auto param18 = model->addOperand(&type2);
@@ -1042,25 +892,9 @@ inline bool is_ignored_nchw_relaxed_3(int i) {
 
 void CreateModel_nchw_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
-  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.25f, 0);
-  OperandType type17(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.25f, 0);
   OperandType type18(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.25f, 0);
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.25f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op12 = model->addOperand(&type18);
   auto param18 = model->addOperand(&type2);
@@ -1110,25 +944,9 @@ inline bool is_ignored_nchw_quant8_3(int i) {
 
 void CreateModel_nhwc_4(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
-  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.25f, 0);
-  OperandType type17(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.25f, 0);
-  OperandType type18(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.25f, 0);
-  OperandType type19(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.25f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
   OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
   OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op13 = model->addOperand(&type5);
   auto param27 = model->addOperand(&type2);
@@ -1169,25 +987,9 @@ inline bool is_ignored_nhwc_4(int i) {
 
 void CreateModel_nhwc_relaxed_4(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
-  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.25f, 0);
-  OperandType type17(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.25f, 0);
-  OperandType type18(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.25f, 0);
-  OperandType type19(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.25f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
   OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
   OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op13 = model->addOperand(&type5);
   auto param27 = model->addOperand(&type2);
@@ -1230,27 +1032,9 @@ inline bool is_ignored_nhwc_relaxed_4(int i) {
 
 void CreateModel_nhwc_quant8_4(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
-  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.25f, 0);
-  OperandType type17(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.25f, 0);
-  OperandType type18(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.25f, 0);
-  OperandType type19(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.25f, 0);
   OperandType type2(Type::INT32, {});
   OperandType type20(Type::TENSOR_QUANT8_ASYMM, {1, 2, 4, 1}, 0.25f, 0);
   OperandType type21(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 1}, 0.25f, 0);
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op13 = model->addOperand(&type20);
   auto param27 = model->addOperand(&type2);
@@ -1291,29 +1075,9 @@ inline bool is_ignored_nhwc_quant8_4(int i) {
 
 void CreateModel_nchw_4(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
-  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.25f, 0);
-  OperandType type17(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.25f, 0);
-  OperandType type18(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.25f, 0);
-  OperandType type19(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.25f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type20(Type::TENSOR_QUANT8_ASYMM, {1, 2, 4, 1}, 0.25f, 0);
-  OperandType type21(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 1}, 0.25f, 0);
   OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 2, 4});
   OperandType type23(Type::TENSOR_FLOAT32, {1, 1, 1, 2});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op13 = model->addOperand(&type22);
   auto param27 = model->addOperand(&type2);
@@ -1354,29 +1118,9 @@ inline bool is_ignored_nchw_4(int i) {
 
 void CreateModel_nchw_relaxed_4(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
-  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.25f, 0);
-  OperandType type17(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.25f, 0);
-  OperandType type18(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.25f, 0);
-  OperandType type19(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.25f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type20(Type::TENSOR_QUANT8_ASYMM, {1, 2, 4, 1}, 0.25f, 0);
-  OperandType type21(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 1}, 0.25f, 0);
   OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 2, 4});
   OperandType type23(Type::TENSOR_FLOAT32, {1, 1, 1, 2});
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op13 = model->addOperand(&type22);
   auto param27 = model->addOperand(&type2);
@@ -1419,31 +1163,9 @@ inline bool is_ignored_nchw_relaxed_4(int i) {
 
 void CreateModel_nchw_quant8_4(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.5f, 0);
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.5f, 0);
-  OperandType type12(Type::TENSOR_FLOAT32, {5, 3, 50, 70});
-  OperandType type13(Type::TENSOR_FLOAT32, {5, 3, 2, 3});
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.5f, 0);
-  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.5f, 0);
-  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {5, 50, 70, 3}, 0.25f, 0);
-  OperandType type17(Type::TENSOR_QUANT8_ASYMM, {5, 2, 3, 3}, 0.25f, 0);
-  OperandType type18(Type::TENSOR_QUANT8_ASYMM, {5, 3, 50, 70}, 0.25f, 0);
-  OperandType type19(Type::TENSOR_QUANT8_ASYMM, {5, 3, 2, 3}, 0.25f, 0);
   OperandType type2(Type::INT32, {});
-  OperandType type20(Type::TENSOR_QUANT8_ASYMM, {1, 2, 4, 1}, 0.25f, 0);
-  OperandType type21(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 1}, 0.25f, 0);
-  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 2, 4});
-  OperandType type23(Type::TENSOR_FLOAT32, {1, 1, 1, 2});
   OperandType type24(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 4}, 0.25f, 0);
   OperandType type25(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 2}, 0.25f, 0);
-  OperandType type3(Type::TENSOR_FLOAT32, {5, 50, 70, 3});
-  OperandType type4(Type::TENSOR_FLOAT32, {5, 2, 3, 3});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 2, 4, 1});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 1});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 0);
-  OperandType type8(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 0);
   // Phase 1, operands
   auto op13 = model->addOperand(&type24);
   auto param27 = model->addOperand(&type2);
