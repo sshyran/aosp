@@ -465,6 +465,9 @@ class Model:
         self.isRelaxed = isRelaxed
         return self
 
+    def GetTypes(self):
+        return sorted(list(set(op.type for op in self.operands)))
+
     def GetInputs(self):
         return [i for i in self.operands if isinstance(i, Input)]
 

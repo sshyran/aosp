@@ -5,8 +5,6 @@ void CreateModel_nhwc(Model *model) {
   OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type2(Type::TENSOR_FLOAT32, {1, 3, 3, 1});
   OperandType type3(Type::INT32, {});
-  OperandType type4(Type::TENSOR_FLOAT32, {1, 2, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 3, 3, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type1);
   auto param = model->addOperand(&type3);
@@ -38,8 +36,6 @@ void CreateModel_nhwc_relaxed(Model *model) {
   OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type2(Type::TENSOR_FLOAT32, {1, 3, 3, 1});
   OperandType type3(Type::INT32, {});
-  OperandType type4(Type::TENSOR_FLOAT32, {1, 2, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 3, 3, 2});
   // Phase 1, operands
   auto op1 = model->addOperand(&type1);
   auto param = model->addOperand(&type3);
@@ -70,11 +66,7 @@ inline bool is_ignored_nhwc_relaxed(int i) {
 
 void CreateModel_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type2(Type::TENSOR_FLOAT32, {1, 3, 3, 1});
   OperandType type3(Type::INT32, {});
-  OperandType type4(Type::TENSOR_FLOAT32, {1, 2, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 3, 3, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {1, 1, 3, 3});
   // Phase 1, operands
@@ -105,11 +97,7 @@ inline bool is_ignored_nchw(int i) {
 
 void CreateModel_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type2(Type::TENSOR_FLOAT32, {1, 3, 3, 1});
   OperandType type3(Type::INT32, {});
-  OperandType type4(Type::TENSOR_FLOAT32, {1, 2, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 3, 3, 2});
   OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
   OperandType type7(Type::TENSOR_FLOAT32, {1, 1, 3, 3});
   // Phase 1, operands
@@ -142,13 +130,9 @@ inline bool is_ignored_nchw_relaxed(int i) {
 
 void CreateModel_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type2(Type::TENSOR_FLOAT32, {1, 3, 3, 1});
   OperandType type3(Type::INT32, {});
   OperandType type4(Type::TENSOR_FLOAT32, {1, 2, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {1, 3, 3, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {1, 1, 3, 3});
   // Phase 1, operands
   auto op11 = model->addOperand(&type4);
   auto param2 = model->addOperand(&type3);
@@ -177,13 +161,9 @@ inline bool is_ignored_nhwc_2(int i) {
 
 void CreateModel_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type2(Type::TENSOR_FLOAT32, {1, 3, 3, 1});
   OperandType type3(Type::INT32, {});
   OperandType type4(Type::TENSOR_FLOAT32, {1, 2, 2, 2});
   OperandType type5(Type::TENSOR_FLOAT32, {1, 3, 3, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {1, 1, 3, 3});
   // Phase 1, operands
   auto op11 = model->addOperand(&type4);
   auto param2 = model->addOperand(&type3);
@@ -214,13 +194,8 @@ inline bool is_ignored_nhwc_relaxed_2(int i) {
 
 void CreateModel_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type2(Type::TENSOR_FLOAT32, {1, 3, 3, 1});
   OperandType type3(Type::INT32, {});
   OperandType type4(Type::TENSOR_FLOAT32, {1, 2, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 3, 3, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {1, 1, 3, 3});
   OperandType type8(Type::TENSOR_FLOAT32, {1, 2, 3, 3});
   // Phase 1, operands
   auto op11 = model->addOperand(&type4);
@@ -250,13 +225,8 @@ inline bool is_ignored_nchw_2(int i) {
 
 void CreateModel_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
-  OperandType type2(Type::TENSOR_FLOAT32, {1, 3, 3, 1});
   OperandType type3(Type::INT32, {});
   OperandType type4(Type::TENSOR_FLOAT32, {1, 2, 2, 2});
-  OperandType type5(Type::TENSOR_FLOAT32, {1, 3, 3, 2});
-  OperandType type6(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
-  OperandType type7(Type::TENSOR_FLOAT32, {1, 1, 3, 3});
   OperandType type8(Type::TENSOR_FLOAT32, {1, 2, 3, 3});
   // Phase 1, operands
   auto op11 = model->addOperand(&type4);

@@ -2,8 +2,6 @@
 // Generated file (from: cast.mod.py). Do not edit
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type1(Type::TENSOR_INT32, {2, 3});
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input0 = model->addOperand(&type0);
   auto output0 = model->addOperand(&type0);
@@ -23,8 +21,6 @@ inline bool is_ignored(int i) {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type1(Type::TENSOR_INT32, {2, 3});
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input0 = model->addOperand(&type0);
   auto output0 = model->addOperand(&type0);
@@ -47,7 +43,6 @@ inline bool is_ignored_relaxed(int i) {
 void CreateModel_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
   OperandType type1(Type::TENSOR_INT32, {2, 3});
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input0 = model->addOperand(&type0);
   auto output01 = model->addOperand(&type1);
@@ -68,7 +63,6 @@ inline bool is_ignored_2(int i) {
 void CreateModel_relaxed_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
   OperandType type1(Type::TENSOR_INT32, {2, 3});
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input0 = model->addOperand(&type0);
   auto output01 = model->addOperand(&type1);
@@ -90,7 +84,6 @@ inline bool is_ignored_relaxed_2(int i) {
 
 void CreateModel_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type1(Type::TENSOR_INT32, {2, 3});
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input0 = model->addOperand(&type0);
@@ -111,7 +104,6 @@ inline bool is_ignored_3(int i) {
 
 void CreateModel_relaxed_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type1(Type::TENSOR_INT32, {2, 3});
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input0 = model->addOperand(&type0);
@@ -135,7 +127,6 @@ inline bool is_ignored_relaxed_3(int i) {
 void CreateModel_4(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
   OperandType type1(Type::TENSOR_INT32, {2, 3});
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input01 = model->addOperand(&type1);
   auto output0 = model->addOperand(&type0);
@@ -156,7 +147,6 @@ inline bool is_ignored_4(int i) {
 void CreateModel_relaxed_4(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
   OperandType type1(Type::TENSOR_INT32, {2, 3});
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input01 = model->addOperand(&type1);
   auto output0 = model->addOperand(&type0);
@@ -177,9 +167,7 @@ inline bool is_ignored_relaxed_4(int i) {
 }
 
 void CreateModel_5(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
   OperandType type1(Type::TENSOR_INT32, {2, 3});
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input01 = model->addOperand(&type1);
   auto output01 = model->addOperand(&type1);
@@ -198,7 +186,6 @@ inline bool is_ignored_5(int i) {
 }
 
 void CreateModel_6(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
   OperandType type1(Type::TENSOR_INT32, {2, 3});
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
@@ -220,7 +207,6 @@ inline bool is_ignored_6(int i) {
 
 void CreateModel_7(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type1(Type::TENSOR_INT32, {2, 3});
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input02 = model->addOperand(&type2);
@@ -241,7 +227,6 @@ inline bool is_ignored_7(int i) {
 
 void CreateModel_relaxed_5(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type1(Type::TENSOR_INT32, {2, 3});
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input02 = model->addOperand(&type2);
@@ -263,7 +248,6 @@ inline bool is_ignored_relaxed_5(int i) {
 }
 
 void CreateModel_8(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
   OperandType type1(Type::TENSOR_INT32, {2, 3});
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
@@ -284,8 +268,6 @@ inline bool is_ignored_8(int i) {
 }
 
 void CreateModel_9(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type1(Type::TENSOR_INT32, {2, 3});
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 4.0f, 100);
   // Phase 1, operands
   auto input02 = model->addOperand(&type2);
