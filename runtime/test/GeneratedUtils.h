@@ -22,13 +22,9 @@
 
 namespace generated_tests {
 using namespace android::nn::wrapper;
-// Mixed-typed examples
-typedef test_helper::MixedTypedExampleType MixedTypedExample;
 
-void execute(std::function<void(Model*)> createModel,
-             std::function<bool(int)> isIgnored,
-             std::vector<MixedTypedExample>& examples,
-             std::string dumpFile = "");
+void execute(std::function<void(Model*)> createModel, std::function<bool(int)> isIgnored,
+             std::vector<test_helper::MixedTypedExample>& examples, std::string dumpFile = "");
 
 }  // namespace generated_tests
 

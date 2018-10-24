@@ -2085,8 +2085,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
-        default:
+        default: {
             return ANEURALNETWORKS_BAD_DATA;
+        }
     }
 }
 

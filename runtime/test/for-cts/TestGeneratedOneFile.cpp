@@ -368,6 +368,7 @@
 #include "../generated/tests/pad_v2_1_quant8.mod.py.cpp"
 #include "../generated/tests/prelu.mod.py.cpp"
 #include "../generated/tests/quantize.mod.py.cpp"
+#include "../generated/tests/random_multinomial.mod.py.cpp"
 #include "../generated/tests/resize_bilinear_v1_2.mod.py.cpp"
 #include "../generated/tests/roi_align.mod.py.cpp"
 #include "../generated/tests/rotated_bbox_transform.mod.py.cpp"

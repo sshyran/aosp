@@ -4727,6 +4727,21 @@ TEST_F(NeuralnetworksHidlTest, quantize_quant8_4) {
                            quantize::examples_quant8_4);
 }
 
+// Generated from: random_multinomial.mod.py.
+namespace random_multinomial {
+// Generated random_multinomial test
+#include "examples/random_multinomial.example.cpp"
+// Generated model constructor
+#include "vts_models/random_multinomial.model.cpp"
+} // namespace random_multinomial
+
+TEST_F(NeuralnetworksHidlTest, random_multinomial) {
+  generated_tests::Execute(device,
+                           random_multinomial::createTestModel,
+                           random_multinomial::is_ignored,
+                           random_multinomial::examples);
+}
+
 // Generated from: resize_bilinear_v1_2.mod.py.
 namespace resize_bilinear_v1_2 {
 // Generated resize_bilinear_v1_2 test
