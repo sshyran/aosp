@@ -40,141 +40,111 @@ namespace nn {
 
 struct Shape;
 
-bool addFloat32(const float* in1, const Shape& shape1,
-                const float* in2, const Shape& shape2,
-                int32_t activation,
-                float* out, const Shape& shapeOut);
-bool addQuant8(const uint8_t* in1, const Shape& shape1,
-               const uint8_t* in2, const Shape& shape2,
-               int32_t activation,
-               uint8_t* out, const Shape& shapeOut);
+bool addFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
+                int32_t activation, float* out, const Shape& shapeOut);
+bool addQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
+               int32_t activation, uint8_t* out, const Shape& shapeOut);
 
-bool mulFloat32(const float* in1, const Shape& shape1,
-                const float* in2, const Shape& shape2,
-                int32_t activation,
-                float* out, const Shape& shapeOut);
-bool mulQuant8(const uint8_t* in1, const Shape& shape1,
-               const uint8_t* in2, const Shape& shape2,
-               int32_t activation,
-               uint8_t* out, const Shape& shapeOut);
+bool mulFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
+                int32_t activation, float* out, const Shape& shapeOut);
+bool mulQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
+               int32_t activation, uint8_t* out, const Shape& shapeOut);
 
-bool floorFloat32(const float* inputData,
-                  float* outputData,
-                  const Shape& shape);
+bool floorFloat32(const float* inputData, float* outputData, const Shape& shape);
 
-bool dequantizeQuant8ToFloat32(const uint8_t* inputData,
-                               float* outputData,
-                               const Shape& shape);
+bool dequantizeQuant8ToFloat32(const uint8_t* inputData, float* outputData, const Shape& shape);
 
 bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData, const Shape& outputShape);
 
-bool depthwiseConvFloat32(const float* inputData, const Shape& inputShape,
-                          const float* filterData, const Shape& filterShape,
-                          const float* biasData, const Shape& biasShape,
-                          int32_t padding_left, int32_t padding_right,
-                          int32_t padding_top, int32_t padding_bottom,
-                          int32_t stride_width, int32_t stride_height,
-                          int32_t depth_multiplier, int32_t activation,
-                          float* outputData, const Shape& outputShape);
+bool depthwiseConvFloat32(const float* inputData, const Shape& inputShape, const float* filterData,
+                          const Shape& filterShape, const float* biasData, const Shape& biasShape,
+                          int32_t padding_left, int32_t padding_right, int32_t padding_top,
+                          int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                          int32_t depth_multiplier, int32_t activation, float* outputData,
+                          const Shape& outputShape);
 bool depthwiseConvQuant8(const uint8_t* inputData, const Shape& inputShape,
                          const uint8_t* filterData, const Shape& filterShape,
-                         const int32_t* biasData, const Shape& biasShape,
-                         int32_t padding_left, int32_t padding_right,
-                         int32_t padding_top, int32_t padding_bottom,
-                         int32_t stride_width, int32_t stride_height,
-                         int32_t depth_multiplier, int32_t activation,
-                         uint8_t* outputData, const Shape& outputShape);
+                         const int32_t* biasData, const Shape& biasShape, int32_t padding_left,
+                         int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                         int32_t stride_width, int32_t stride_height, int32_t depth_multiplier,
+                         int32_t activation, uint8_t* outputData, const Shape& outputShape);
 
-bool convFloat32(const float* inputData, const Shape& inputShape,
-                 const float* filterData, const Shape& filterShape,
-                 const float* biasData, const Shape& biasShape,
-                 int32_t padding_left, int32_t padding_right,
-                 int32_t padding_top, int32_t padding_bottom,
-                 int32_t stride_width, int32_t stride_height,
-                 int32_t activation,
-                 float* outputData, const Shape& outputShape);
-bool convQuant8(const uint8_t* inputData, const Shape& inputShape,
-                const uint8_t* filterData, const Shape& filterShape,
-                const int32_t* biasData, const Shape& biasShape,
-                int32_t padding_left, int32_t padding_right,
-                int32_t padding_top, int32_t padding_bottom,
-                int32_t stride_width, int32_t stride_height,
-                int32_t activation,
-                uint8_t* outputData, const Shape& outputShape);
+bool convFloat32(const float* inputData, const Shape& inputShape, const float* filterData,
+                 const Shape& filterShape, const float* biasData, const Shape& biasShape,
+                 int32_t padding_left, int32_t padding_right, int32_t padding_top,
+                 int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                 int32_t activation, float* outputData, const Shape& outputShape);
+bool convQuant8(const uint8_t* inputData, const Shape& inputShape, const uint8_t* filterData,
+                const Shape& filterShape, const int32_t* biasData, const Shape& biasShape,
+                int32_t padding_left, int32_t padding_right, int32_t padding_top,
+                int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                int32_t activation, uint8_t* outputData, const Shape& outputShape);
 
-bool averagePoolFloat32(const float* inputData, const Shape& inputShape,
-                        int32_t padding_left, int32_t padding_right,
-                        int32_t padding_top, int32_t padding_bottom,
-                        int32_t stride_width, int32_t stride_height,
-                        int32_t filter_width, int32_t filter_height, int32_t activation,
-                        float* outputData, const Shape& outputShape);
-bool averagePoolQuant8(const uint8_t* inputData, const Shape& inputShape,
-                       int32_t padding_left, int32_t padding_right,
-                       int32_t padding_top, int32_t padding_bottom,
-                       int32_t stride_width, int32_t stride_height,
-                       int32_t filter_width, int32_t filter_height, int32_t activation,
-                       uint8_t* outputData, const Shape& outputShape);
-bool l2PoolFloat32(const float* inputData, const Shape& inputShape,
-                   int32_t padding_left, int32_t padding_right,
-                   int32_t padding_top, int32_t padding_bottom,
-                   int32_t stride_width, int32_t stride_height,
-                   int32_t filter_width, int32_t filter_height, int32_t activation,
-                   float* outputData, const Shape& outputShape);
-bool maxPoolFloat32(const float* inputData, const Shape& inputShape,
-                    int32_t padding_left, int32_t padding_right,
-                    int32_t padding_top, int32_t padding_bottom,
-                    int32_t stride_width, int32_t stride_height,
-                    int32_t filter_width, int32_t filter_height, int32_t activation,
-                    float* outputData, const Shape& outputShape);
-bool maxPoolQuant8(const uint8_t* inputData, const Shape& inputShape,
-                   int32_t padding_left, int32_t padding_right,
-                   int32_t padding_top, int32_t padding_bottom,
-                   int32_t stride_width, int32_t stride_height,
-                   int32_t filter_width, int32_t filter_height, int32_t activation,
-                   uint8_t* outputData, const Shape& outputShape);
+bool averagePoolFloat32(const float* inputData, const Shape& inputShape, int32_t padding_left,
+                        int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                        int32_t stride_width, int32_t stride_height, int32_t filter_width,
+                        int32_t filter_height, int32_t activation, float* outputData,
+                        const Shape& outputShape);
+bool averagePoolQuant8(const uint8_t* inputData, const Shape& inputShape, int32_t padding_left,
+                       int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                       int32_t stride_width, int32_t stride_height, int32_t filter_width,
+                       int32_t filter_height, int32_t activation, uint8_t* outputData,
+                       const Shape& outputShape);
+bool l2PoolFloat32(const float* inputData, const Shape& inputShape, int32_t padding_left,
+                   int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                   int32_t stride_width, int32_t stride_height, int32_t filter_width,
+                   int32_t filter_height, int32_t activation, float* outputData,
+                   const Shape& outputShape);
+bool maxPoolFloat32(const float* inputData, const Shape& inputShape, int32_t padding_left,
+                    int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                    int32_t stride_width, int32_t stride_height, int32_t filter_width,
+                    int32_t filter_height, int32_t activation, float* outputData,
+                    const Shape& outputShape);
+bool maxPoolQuant8(const uint8_t* inputData, const Shape& inputShape, int32_t padding_left,
+                   int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                   int32_t stride_width, int32_t stride_height, int32_t filter_width,
+                   int32_t filter_height, int32_t activation, uint8_t* outputData,
+                   const Shape& outputShape);
 
-bool reluFloat32(const float* inputData, const Shape& inputShape,
-                 float* outputData, const Shape& outputShape);
-bool relu1Float32(const float* inputData, const Shape& inputShape,
-                  float* outputData, const Shape& outputShape);
-bool relu6Float32(const float* inputData, const Shape& inputShape,
-                  float* outputData, const Shape& outputShape);
-bool tanhFloat32(const float* inputData, const Shape& inputShape,
-                 float* outputData, const Shape& outputShape);
+bool reluFloat32(const float* inputData, const Shape& inputShape, float* outputData,
+                 const Shape& outputShape);
+bool relu1Float32(const float* inputData, const Shape& inputShape, float* outputData,
+                  const Shape& outputShape);
+bool relu6Float32(const float* inputData, const Shape& inputShape, float* outputData,
+                  const Shape& outputShape);
+bool tanhFloat32(const float* inputData, const Shape& inputShape, float* outputData,
+                 const Shape& outputShape);
 bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
                 const Shape& outputShape);
-bool logisticFloat32(const float* inputData, const Shape& inputShape,
-                     float* outputData, const Shape& outputShape);
+bool logisticFloat32(const float* inputData, const Shape& inputShape, float* outputData,
+                     const Shape& outputShape);
 bool softmaxFloat32(const float* inputData, const Shape& inputShape, const float beta, int32_t axis,
                     float* outputData, const Shape& outputShape);
-bool reluQuant8(const uint8_t* inputData, const Shape& inputShape,
-                uint8_t* outputData, const Shape& outputShape);
-bool relu1Quant8(const uint8_t* inputData, const Shape& inputShape,
-                 uint8_t* outputData, const Shape& outputShape);
-bool relu6Quant8(const uint8_t* inputData, const Shape& inputShape,
-                 uint8_t* outputData, const Shape& outputShape);
-bool logisticQuant8(const uint8_t* inputData, const Shape& inputShape,
-                    uint8_t* outputData, const Shape& outputShape);
+bool reluQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                const Shape& outputShape);
+bool relu1Quant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                 const Shape& outputShape);
+bool relu6Quant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                 const Shape& outputShape);
+bool logisticQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                    const Shape& outputShape);
 bool softmaxQuant8(const uint8_t* inputData, const Shape& inputShape, const float beta,
                    int32_t axis, uint8_t* outputData, const Shape& outputShape);
 
-bool fullyConnectedFloat32(const float* inputData, const Shape& inputShape,
-                           const float* weights, const Shape& weightsShape,
-                           const float* biasData, const Shape& biasShape,
-                           int32_t activation,
-                           float* outputData, const Shape& outputShape);
-bool fullyConnectedQuant8(const uint8_t* inputData, const Shape& inputShape,
-                          const uint8_t* weights, const Shape& weightsShape,
-                          const int32_t* biasData, const Shape& biasShape,
-                          int32_t activation,
-                          uint8_t* outputData, const Shape& outputShape);
+bool fullyConnectedFloat32(const float* inputData, const Shape& inputShape, const float* weights,
+                           const Shape& weightsShape, const float* biasData, const Shape& biasShape,
+                           int32_t activation, float* outputData, const Shape& outputShape);
+bool fullyConnectedQuant8(const uint8_t* inputData, const Shape& inputShape, const uint8_t* weights,
+                          const Shape& weightsShape, const int32_t* biasData,
+                          const Shape& biasShape, int32_t activation, uint8_t* outputData,
+                          const Shape& outputShape);
 
 bool concatenationFloat32(const std::vector<const float*>& inputDataPtrs,
-                          const std::vector<Shape>& inputShapes, int32_t axis,
-                          float* outputData, const Shape& outputShape);
+                          const std::vector<Shape>& inputShapes, int32_t axis, float* outputData,
+                          const Shape& outputShape);
 bool concatenationQuant8(const std::vector<const uint8_t*>& inputDataPtrs,
-                         const std::vector<Shape>& inputShapes, int32_t axis,
-                         uint8_t* outputData, const Shape& outputShape);
+                         const std::vector<Shape>& inputShapes, int32_t axis, uint8_t* outputData,
+                         const Shape& outputShape);
 
 bool l2normFloat32(const float* inputData, const Shape& inputShape, int32_t axis, float* outputData,
                    const Shape& outputShape);
@@ -182,20 +152,16 @@ bool localResponseNormFloat32(const float* inputData, const Shape& inputShape, i
                               float bias, float alpha, float beta, int32_t axis, float* outputData,
                               const Shape& outputShape);
 
-bool reshapeGeneric(const void* inputData, const Shape& inputShape,
-                    void* outputData, const Shape& outputShape);
+bool reshapeGeneric(const void* inputData, const Shape& inputShape, void* outputData,
+                    const Shape& outputShape);
 
-bool resizeBilinearFloat32(const float* inputData,
-                           const Shape& inputShape,
-                           float* outputData,
+bool resizeBilinearFloat32(const float* inputData, const Shape& inputShape, float* outputData,
                            const Shape& outputShape);
 
-bool depthToSpaceGeneric(const uint8_t* inputData, const Shape& inputShape,
-                         int32_t blockSize,
+bool depthToSpaceGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t blockSize,
                          uint8_t* outputData, const Shape& outputShape);
 
-bool spaceToDepthGeneric(const uint8_t* inputData, const Shape& inputShape,
-                         int32_t blockSize,
+bool spaceToDepthGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t blockSize,
                          uint8_t* outputData, const Shape& outputShape);
 
 bool padFloat32(const float* inputData, const Shape& inputShape, const int32_t* paddings,
@@ -205,47 +171,38 @@ bool padQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_t*
                uint8_t pad_value, uint8_t* outputData, const Shape& outputShape);
 
 bool batchToSpaceGeneric(const uint8_t* inputData, const Shape& inputShape,
-                         const int32_t* blockSize,
-                         uint8_t* outputData, const Shape& outputShape);
+                         const int32_t* blockSize, uint8_t* outputData, const Shape& outputShape);
 
 bool spaceToBatchGeneric(const uint8_t* inputData, const Shape& inputShape,
-                         const int32_t* blockSize,
-                         const int32_t* padding, const Shape& paddingShape,
-                         uint8_t* outputData, const Shape& outputShape);
+                         const int32_t* blockSize, const int32_t* padding,
+                         const Shape& paddingShape, uint8_t* outputData, const Shape& outputShape);
 
-bool subFloat32(const float* in1, const Shape& shape1,
-                const float* in2, const Shape& shape2,
-                int32_t activation,
-                float* out, const Shape& shapeOut);
+bool subFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
+                int32_t activation, float* out, const Shape& shapeOut);
 
 bool subQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
                int32_t activation, uint8_t* out, const Shape& shapeOut);
 
-bool squeezeGeneric(const void* inputData, const Shape& inputShape,
-                    void* outputData, const Shape& outputShape);
+bool squeezeGeneric(const void* inputData, const Shape& inputShape, void* outputData,
+                    const Shape& outputShape);
 
-bool divFloat32(const float* in1, const Shape& shape1,
-                const float* in2, const Shape& shape2,
-                int32_t activation,
-                float* out, const Shape& shapeOut);
+bool divFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
+                int32_t activation, float* out, const Shape& shapeOut);
 
-bool transposeGeneric(const uint8_t* inputData, const Shape& inputShape,
-                      const int32_t* perm, const Shape& permShape,
-                      uint8_t* outputData, const Shape& outputShape);
+bool transposeGeneric(const uint8_t* inputData, const Shape& inputShape, const int32_t* perm,
+                      const Shape& permShape, uint8_t* outputData, const Shape& outputShape);
 
-bool meanGeneric(const uint8_t* inputData, const Shape& inputShape,
-                 const int32_t* axis, const Shape& axisShape, bool keepDims,
-                 uint8_t* outputData, const Shape& outputShape);
+bool meanGeneric(const uint8_t* inputData, const Shape& inputShape, const int32_t* axis,
+                 const Shape& axisShape, bool keepDims, uint8_t* outputData,
+                 const Shape& outputShape);
 
 bool stridedSliceGeneric(const uint8_t* inputData, const Shape& inputShape,
                          const int32_t* beginData, const int32_t* endData,
-                         const int32_t* stridesData,
-                         int32_t beginMask, int32_t endMask, int32_t shrinkAxisMask,
-                         uint8_t* outputData, const Shape& outputShape);
+                         const int32_t* stridesData, int32_t beginMask, int32_t endMask,
+                         int32_t shrinkAxisMask, uint8_t* outputData, const Shape& outputShape);
 
-bool argMinMaxGeneric(const uint8_t* inputData, const Shape& inputShape,
-                      int32_t axis, bool isArgMin,
-                      uint8_t* outputData, const Shape& outputShape);
+bool argMinMaxGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t axis,
+                      bool isArgMin, uint8_t* outputData, const Shape& outputShape);
 
 bool splitFloat32(const float* inputData, const Shape& inputShape, const int32_t axis,
                   const std::vector<float*>* outputDataPtrs,
@@ -313,6 +270,6 @@ bool rotatedBBoxTransform(const float* roiData, const Shape& roiShape, const flo
                           int32_t angleBoundLow, int32_t angleBoundHigh, float clipAngleThreshold,
                           float* outputData, const Shape& outputShape, int32_t* batchSplitData,
                           const Shape& batchSplitShape);
-} // namespace nn
-} // namespace android
-#endif // ANDROID_ML_NN_COMMON_OPERATIONS_H
+}  // namespace nn
+}  // namespace android
+#endif  // ANDROID_ML_NN_COMMON_OPERATIONS_H
