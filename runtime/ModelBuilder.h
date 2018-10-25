@@ -50,10 +50,12 @@ public:
 
     int finish();
     bool isFinished() const { return mCompletedModel; }
+    bool isValid() const { return !mInvalidModel; }
 
     bool hasOEMOperation() const { return mHasOEMOperation; }
 
-    int createCompilation(CompilationBuilder** compilation);
+    int createCompilation(CompilationBuilder** compilation,
+                          const std::vector<std::shared_ptr<Device>>& devices);
 
     void setHidlModel(Model* model) const;
 
@@ -79,6 +81,9 @@ public:
     const Operation& getOperation(uint32_t index) const { return mOperations[index]; }
     const MemoryTracker& getMemories() const { return mMemories; }
     const std::vector<Operation>& getOperations() const { return mOperations; }
+    const std::vector<uint32_t>& getSortedOperationMapping() const {
+        return mSortedOperationIndexMap;
+    }
     const uint8_t* getPointerToOperandValue(uint32_t offset) const {
         return mSmallOperandValues.data() + offset;
     }
@@ -109,6 +114,9 @@ public:
 
     // The operations of the graph.
     std::vector<Operation> mOperations;
+    // The mapping from sorted index to the original index of operations in mOperations.
+    // mSortedOperationIndexMap is empty before sortIntoRunOrder() is called.
+    std::vector<uint32_t> mSortedOperationIndexMap;
     // Is at least one of those operations an OEM_OPERATION?
     bool mHasOEMOperation = false;
     // The description of the operands of the graph.

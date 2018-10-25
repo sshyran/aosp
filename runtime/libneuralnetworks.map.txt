@@ -20,6 +20,11 @@
 
 LIBNEURALNETWORKS {
   global:
+    ANeuralNetworks_getDeviceCount; # introduced=Q
+    ANeuralNetworks_getDevice; # introduced=Q
+    ANeuralNetworksDevice_getName; # introduced=Q
+    ANeuralNetworksDevice_getVersion; # introduced=Q
+    ANeuralNetworksDevice_getFeatureLevel; # introduced=Q
     ANeuralNetworksMemory_createFromFd;
     ANeuralNetworksMemory_free;
     ANeuralNetworksModel_create;
@@ -31,7 +36,9 @@ LIBNEURALNETWORKS {
     ANeuralNetworksModel_addOperation;
     ANeuralNetworksModel_identifyInputsAndOutputs;
     ANeuralNetworksModel_relaxComputationFloat32toFloat16;
+    ANeuralNetworksModel_getSupportedOperationsForDevices; # introduced=Q
     ANeuralNetworksCompilation_create;
+    ANeuralNetworksCompilation_createForDevices; # introduced=Q
     ANeuralNetworksCompilation_free;
     ANeuralNetworksCompilation_setPreference;
     ANeuralNetworksCompilation_finish;
