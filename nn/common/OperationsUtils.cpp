@@ -1001,9 +1001,6 @@ bool roiAlignPrepare(const Shape& input, const float* roiData, const Shape& roiS
     output->type = input.type;
     output->dimensions = {numRois, static_cast<uint32_t>(outputShapeData[0]),
                           static_cast<uint32_t>(outputShapeData[1]), inDepth};
-    output->offset = input.offset;
-    output->scale = input.scale;
-
     return true;
 }
 
