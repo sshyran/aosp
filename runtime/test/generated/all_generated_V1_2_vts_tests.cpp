@@ -4813,6 +4813,13 @@ TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_relaxed) {
                            roi_align::examples_nhwc_relaxed);
 }
 
+TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_quant8) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nhwc_quant8,
+                           roi_align::is_ignored_nhwc_quant8,
+                           roi_align::examples_nhwc_quant8);
+}
+
 TEST_F(NeuralnetworksHidlTest, roi_align_nchw) {
   generated_tests::Execute(device,
                            roi_align::createTestModel_nchw,
@@ -4825,6 +4832,13 @@ TEST_F(NeuralnetworksHidlTest, roi_align_nchw_relaxed) {
                            roi_align::createTestModel_nchw_relaxed,
                            roi_align::is_ignored_nchw_relaxed,
                            roi_align::examples_nchw_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_nchw_quant8) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nchw_quant8,
+                           roi_align::is_ignored_nchw_quant8,
+                           roi_align::examples_nchw_quant8);
 }
 
 TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_2) {
@@ -4841,6 +4855,13 @@ TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_relaxed_2) {
                            roi_align::examples_nhwc_relaxed_2);
 }
 
+TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_quant8_2) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nhwc_quant8_2,
+                           roi_align::is_ignored_nhwc_quant8_2,
+                           roi_align::examples_nhwc_quant8_2);
+}
+
 TEST_F(NeuralnetworksHidlTest, roi_align_nchw_2) {
   generated_tests::Execute(device,
                            roi_align::createTestModel_nchw_2,
@@ -4853,6 +4874,13 @@ TEST_F(NeuralnetworksHidlTest, roi_align_nchw_relaxed_2) {
                            roi_align::createTestModel_nchw_relaxed_2,
                            roi_align::is_ignored_nchw_relaxed_2,
                            roi_align::examples_nchw_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_nchw_quant8_2) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nchw_quant8_2,
+                           roi_align::is_ignored_nchw_quant8_2,
+                           roi_align::examples_nchw_quant8_2);
 }
 
 TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_3) {
@@ -4869,6 +4897,13 @@ TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_relaxed_3) {
                            roi_align::examples_nhwc_relaxed_3);
 }
 
+TEST_F(NeuralnetworksHidlTest, roi_align_nhwc_quant8_3) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nhwc_quant8_3,
+                           roi_align::is_ignored_nhwc_quant8_3,
+                           roi_align::examples_nhwc_quant8_3);
+}
+
 TEST_F(NeuralnetworksHidlTest, roi_align_nchw_3) {
   generated_tests::Execute(device,
                            roi_align::createTestModel_nchw_3,
@@ -4881,6 +4916,13 @@ TEST_F(NeuralnetworksHidlTest, roi_align_nchw_relaxed_3) {
                            roi_align::createTestModel_nchw_relaxed_3,
                            roi_align::is_ignored_nchw_relaxed_3,
                            roi_align::examples_nchw_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, roi_align_nchw_quant8_3) {
+  generated_tests::Execute(device,
+                           roi_align::createTestModel_nchw_quant8_3,
+                           roi_align::is_ignored_nchw_quant8_3,
+                           roi_align::examples_nchw_quant8_3);
 }
 
 // Generated from: rotated_bbox_transform.mod.py.

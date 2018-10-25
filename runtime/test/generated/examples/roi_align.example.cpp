@@ -48,6 +48,32 @@ std::vector<MixedTypedExample> examples_nhwc_relaxed = {
 }, // End of an example
 };
 
+std::vector<MixedTypedExample> examples_nhwc_quant8 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {{1, {2.0f, 2.0f, 4.0f, 4.0f, 0.0f, 0.0f, 8.0f, 8.0f, 2.0f, 0.0f, 4.0f, 8.0f, 0.0f, 2.0f, 8.0f, 4.0f}}},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {88, 124, 144, 108, 96, 120, 164, 132, 156, 120, 140, 100, 120, 168, 116, 148}}}
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {134, 210, 122, 174, 120, 123, 179, 146, 132, 196, 206, 138, 125, 146, 143, 86}}}
+}
+},
+}, // End of an example
+};
+
 std::vector<MixedTypedExample> examples_nchw = {
 // Begin of an example
 {
@@ -93,6 +119,32 @@ std::vector<MixedTypedExample> examples_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {}
 }
+}, // End of an example
+};
+
+std::vector<MixedTypedExample> examples_nchw_quant8 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {{1, {2.0f, 2.0f, 4.0f, 4.0f, 0.0f, 0.0f, 8.0f, 8.0f, 2.0f, 0.0f, 4.0f, 8.0f, 0.0f, 2.0f, 8.0f, 4.0f}}},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {88, 124, 144, 108, 96, 120, 164, 132, 156, 120, 140, 100, 120, 168, 116, 148}}}
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {134, 210, 122, 174, 120, 123, 179, 146, 132, 196, 206, 138, 125, 146, 143, 86}}}
+}
+},
 }, // End of an example
 };
 
@@ -144,6 +196,32 @@ std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
 }, // End of an example
 };
 
+std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {{1, {0.0f, 4.0f, 4.0f, 28.0f, 12.0f, 0.0f, 4.0f, 4.0f, 32.0f, 16.0f, 1.0f, 7.0f, 1.0f, 29.0f, 15.0f, 1.0f, 1.0f, 7.0f, 9.0f, 11.0f}}},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {221, 222, 185, 140, 249, 109, 2, 191, 162, 237, 189, 75, 22, 75, 158, 110, 41, 168, 154, 215, 146, 79, 178, 170, 144, 166, 128, 211, 127, 178, 71, 30, 209, 22, 197, 242, 49, 33, 111, 247, 5, 225, 233, 11, 126, 162, 27, 238, 32, 55, 51, 194, 192, 16, 104, 178, 134, 198, 26, 37, 225, 24, 102, 16, 137, 66, 22, 122, 60, 61, 219, 2, 90, 232, 146, 224, 172, 36, 98, 148, 185, 231, 78, 123, 47, 80, 238, 168, 52, 183, 77, 124, 6, 223, 27, 7, 182, 174, 58, 172, 108, 34, 22, 12, 152, 95, 22, 175, 109, 48, 205, 89, 198, 170, 116, 171, 154, 241, 66, 58, 34, 68, 250, 246, 202, 120, 195, 136}}}
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {175, 186, 161, 237, 164, 197, 161, 164, 130, 221, 184, 118, 167, 198, 168, 201, 112, 206, 175, 158, 135, 158, 187, 53, 165, 126, 116, 210, 104, 147, 127, 144, 170, 194, 248, 164, 155, 230, 104, 188, 136, 92, 176, 229, 135, 218, 166, 186}}}
+}
+},
+}, // End of an example
+};
+
 std::vector<MixedTypedExample> examples_nchw_2 = {
 // Begin of an example
 {
@@ -189,6 +267,32 @@ std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
   // int -> QUANT8_ASYMM map
   {}
 }
+}, // End of an example
+};
+
+std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {{1, {0.0f, 4.0f, 4.0f, 28.0f, 12.0f, 0.0f, 4.0f, 4.0f, 32.0f, 16.0f, 1.0f, 7.0f, 1.0f, 29.0f, 15.0f, 1.0f, 1.0f, 7.0f, 9.0f, 11.0f}}},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {221, 185, 249, 2, 162, 189, 22, 158, 41, 154, 146, 178, 144, 128, 127, 71, 209, 197, 49, 111, 5, 233, 126, 27, 32, 51, 192, 104, 134, 26, 225, 102, 222, 140, 109, 191, 237, 75, 75, 110, 168, 215, 79, 170, 166, 211, 178, 30, 22, 242, 33, 247, 225, 11, 162, 238, 55, 194, 16, 178, 198, 37, 24, 16, 137, 22, 60, 219, 90, 146, 172, 98, 185, 78, 47, 238, 52, 77, 6, 27, 182, 58, 108, 22, 152, 22, 109, 205, 198, 116, 154, 66, 34, 250, 202, 195, 66, 122, 61, 2, 232, 224, 36, 148, 231, 123, 80, 168, 183, 124, 223, 7, 174, 172, 34, 12, 95, 175, 48, 89, 170, 171, 241, 58, 68, 246, 120, 136}}}
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {175, 161, 164, 161, 130, 184, 186, 237, 197, 164, 221, 118, 167, 168, 112, 175, 135, 187, 198, 201, 206, 158, 158, 53, 165, 116, 104, 127, 170, 248, 126, 210, 147, 144, 194, 164, 155, 104, 136, 176, 135, 166, 230, 188, 92, 229, 218, 186}}}
+}
+},
 }, // End of an example
 };
 
@@ -240,6 +344,32 @@ std::vector<MixedTypedExample> examples_nhwc_relaxed_3 = {
 }, // End of an example
 };
 
+std::vector<MixedTypedExample> examples_nhwc_quant8_3 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {{1, {0.0f, 4.0f, 4.0f, 28.0f, 12.0f, 0.0f, 4.0f, 4.0f, 32.0f, 16.0f, 1.0f, 7.0f, 1.0f, 29.0f, 15.0f, 1.0f, 1.0f, 7.0f, 9.0f, 11.0f}}},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {221, 222, 185, 140, 249, 109, 2, 191, 162, 237, 189, 75, 22, 75, 158, 110, 41, 168, 154, 215, 146, 79, 178, 170, 144, 166, 128, 211, 127, 178, 71, 30, 209, 22, 197, 242, 49, 33, 111, 247, 5, 225, 233, 11, 126, 162, 27, 238, 32, 55, 51, 194, 192, 16, 104, 178, 134, 198, 26, 37, 225, 24, 102, 16, 137, 66, 22, 122, 60, 61, 219, 2, 90, 232, 146, 224, 172, 36, 98, 148, 185, 231, 78, 123, 47, 80, 238, 168, 52, 183, 77, 124, 6, 223, 27, 7, 182, 174, 58, 172, 108, 34, 22, 12, 152, 95, 22, 175, 109, 48, 205, 89, 198, 170, 116, 171, 154, 241, 66, 58, 34, 68, 250, 246, 202, 120, 195, 136}}}
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {175, 186, 161, 237, 164, 197, 161, 164, 130, 221, 184, 118, 166, 199, 168, 201, 110, 213, 175, 157, 134, 158, 192, 50, 171, 124, 111, 215, 103, 149, 124, 140, 172, 203, 247, 159, 150, 231, 100, 186, 143, 69, 176, 229, 135, 218, 173, 190}}}
+}
+},
+}, // End of an example
+};
+
 std::vector<MixedTypedExample> examples_nchw_3 = {
 // Begin of an example
 {
@@ -285,6 +415,32 @@ std::vector<MixedTypedExample> examples_nchw_relaxed_3 = {
   // int -> QUANT8_ASYMM map
   {}
 }
+}, // End of an example
+};
+
+std::vector<MixedTypedExample> examples_nchw_quant8_3 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {{1, {0.0f, 4.0f, 4.0f, 28.0f, 12.0f, 0.0f, 4.0f, 4.0f, 32.0f, 16.0f, 1.0f, 7.0f, 1.0f, 29.0f, 15.0f, 1.0f, 1.0f, 7.0f, 9.0f, 11.0f}}},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {221, 185, 249, 2, 162, 189, 22, 158, 41, 154, 146, 178, 144, 128, 127, 71, 209, 197, 49, 111, 5, 233, 126, 27, 32, 51, 192, 104, 134, 26, 225, 102, 222, 140, 109, 191, 237, 75, 75, 110, 168, 215, 79, 170, 166, 211, 178, 30, 22, 242, 33, 247, 225, 11, 162, 238, 55, 194, 16, 178, 198, 37, 24, 16, 137, 22, 60, 219, 90, 146, 172, 98, 185, 78, 47, 238, 52, 77, 6, 27, 182, 58, 108, 22, 152, 22, 109, 205, 198, 116, 154, 66, 34, 250, 202, 195, 66, 122, 61, 2, 232, 224, 36, 148, 231, 123, 80, 168, 183, 124, 223, 7, 174, 172, 34, 12, 95, 175, 48, 89, 170, 171, 241, 58, 68, 246, 120, 136}}}
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {{0, {175, 161, 164, 161, 130, 184, 186, 237, 197, 164, 221, 118, 166, 168, 110, 175, 134, 192, 199, 201, 213, 157, 158, 50, 171, 111, 103, 124, 172, 247, 124, 215, 149, 140, 203, 159, 150, 100, 143, 176, 135, 173, 231, 186, 69, 229, 218, 190}}}
+}
+},
 }, // End of an example
 };
 
