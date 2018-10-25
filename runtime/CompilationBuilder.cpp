@@ -27,27 +27,32 @@
 namespace android {
 namespace nn {
 
-CompilationBuilder::CompilationBuilder(const ModelBuilder* model) :
-        mModel(model), mPartitioning(DeviceManager::get()->getPartitioning()) {
+CompilationBuilder::CompilationBuilder(const ModelBuilder* model,
+                                       const std::vector<std::shared_ptr<Device>>& devices)
+    : mModel(model), mPartitioning(DeviceManager::get()->getPartitioning()), mDevices(devices) {
     VLOG(COMPILATION) << "CompilationBuilder::CompilationBuilder";
 }
 
 int CompilationBuilder::finish() {
-    // Get the list of HAL devices.
-    return finish(DeviceManager::get()->getDrivers());
-}
-
-int CompilationBuilder::finish(const std::vector<std::shared_ptr<Device>>& devices) {
     if (mFinished) {
         LOG(ERROR) << "ANeuralNetworksCompilation_finish called more than once";
         return ANEURALNETWORKS_BAD_STATE;
+    }
+    // TODO(miaowang): add a check for devices.size()!=0 once b/72506261 is
+    // fixed.
+    for (uint32_t i = 0; i < mDevices.size(); i++) {
+        for (uint32_t j = i + 1; j < mDevices.size(); j++) {
+            if (mDevices[i].get() == mDevices[j].get()) {
+                LOG(ERROR) << "CompilerBuilder::finish() passed duplicated devices";
+            }
+        }
     }
     // TODO validate the rest
 
     mFinished = true;
 
     if (mPartitioning) {
-        int n = mModel->partitionTheWork(devices, mPreference, &mPlan);
+        int n = mModel->partitionTheWork(mDevices, mPreference, &mPlan);
         switch (n) {
             case ANEURALNETWORKS_NO_ERROR:
                 break;

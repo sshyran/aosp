@@ -297,13 +297,14 @@ int ModelBuilder::relaxComputationFloat32toFloat16(bool allow) {
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int ModelBuilder::createCompilation(CompilationBuilder** compilation) {
+int ModelBuilder::createCompilation(CompilationBuilder** compilation,
+                                    const std::vector<std::shared_ptr<Device>>& devices) {
     if (!mCompletedModel || mInvalidModel) {
         LOG(ERROR) << "ANeuralNetworksCompilation_create passed an unfinished or invalid model";
         *compilation = nullptr;
         return ANEURALNETWORKS_BAD_STATE;
     }
-    *compilation = new (std::nothrow) CompilationBuilder(this);
+    *compilation = new (std::nothrow) CompilationBuilder(this, devices);
     return (*compilation ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_OUT_OF_MEMORY);
 }
 
@@ -346,6 +347,10 @@ int ModelBuilder::finish() {
 }
 
 void ModelBuilder::sortIntoRunOrder() {
+    if (!mSortedOperationIndexMap.empty()) {
+        LOG(ERROR) << "Operations already in run order.";
+        return;
+    }
     // Tracks the operations that can be executed.
     std::vector<uint32_t> opsReadyToRun;
     std::vector<Operation> runOrder;
@@ -377,6 +382,7 @@ void ModelBuilder::sortIntoRunOrder() {
         const Operation& operation = mOperations[opIndex];
 
         runOrder.push_back(mOperations[opIndex]);
+        mSortedOperationIndexMap.push_back(opIndex);
 
         // Mark all its outputs as known.
         for (uint32_t operandIndex : operation.outputs) {
