@@ -2650,7 +2650,8 @@ typedef struct ANeuralNetworksModel ANeuralNetworksModel;
  *
  * <p>To use:<ul>
  *    <li>Create a new compilation instance by calling the
- *        {@link ANeuralNetworksCompilation_create} function.</li>
+ *        {@link ANeuralNetworksCompilation_create} function or
+ *        {@link ANeuralNetworksCompilation_createForDevices}.</li>
  *    <li>Set any desired properties on the compilation (for example,
  *        {@link ANeuralNetworksCompilation_setPreference}).</li>
  *    <li>Complete the compilation with {@link ANeuralNetworksCompilation_finish}.</li>
@@ -2788,6 +2789,155 @@ typedef int32_t ANeuralNetworksOperationType;
  */
 typedef struct ANeuralNetworksEvent ANeuralNetworksEvent;
 
+#if __ANDROID_API__ >= __ANDROID_API_Q__
+
+/**
+ * ANeuralNetworksDevice is an opaque type that represents an accelerator.
+ *
+ * This type is used to query basic properties and supported operations of the corresponding
+ * accelerator, and control which accelerator(s) a model is to be run on.
+ *
+ * Available since API level 29.
+ */
+typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
+
+/**
+ * Get the number of available accelerators.
+ *
+ * @param numDevices Used to return the number of accelerators.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworks_getDeviceCount(uint32_t* numDevices);
+
+/**
+ * Get the representation of the specified accelerator.
+ *
+ * @param devIndex The index of the specified accelerator. Must be less than the
+                   number of available accelerators.
+ * @param device The representation of the specified accelerator.
+ *               The same representation will always be returned for the specified
+ *               accelerator.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworks_getDevice(uint32_t devIndex, ANeuralNetworksDevice** device);
+
+/**
+ * Get the name of the specified accelerator.
+ *
+ * @param device The representation of the specified accelerator.
+ * @param name   The returned name of the specified accelerator. The name will be in UTF-8
+ *               and will be null-terminated. It will be recognizable as a known device name
+ *               rather than a cryptic string. For devices with feature level 29 and above, the
+ *               format of the name is {VENDOR}-{DEVICE}, e.g. “google-ipu”. For devices with
+ *               feature level 28 or lower, the name will always be “unknown-device”.
+ *               The name will remain valid for the duration of the application.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksDevice_getName(const ANeuralNetworksDevice* device, const char** name);
+
+/**
+ * Get the version of the driver implementation of the specified accelerator.
+ *
+ * It’s the responsibility of the driver implementor to insure that this version string
+ * uniquely distinguishes this implementation from all previous implementations.
+ *
+ * This version string must not be confused with the feature level which is solely defined
+ * by {@link ANeuralNetworksDevice_getFeatureLevel}. There is no implicit ordering of the versions.
+ * For example, it is not possible to filter all drivers older than a certain version.
+ *
+ * Application developers may use this version string to avoid or prefer specific driver
+ * implementations. For example, an application may want to do so because:
+ *     - A specific version of the driver does not provide the required performance,
+ *       perhaps because of a performance regression.
+ *     - A specific version of the driver has a bug or returns results that don’t match
+ *       the minimum precision requirement for the application.
+ *
+ * @param device The representation of the specified accelerator.
+ * @param version The returned version string of the driver for the specified accelerator. The
+ *                string will be in UTF-8 and will be null-terminated. For devices with feature
+ *                level 28 or lower, "UNKOWN" will be returned. The version string will remain
+ *                valid for the duration of the application.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const char** version);
+
+/**
+ * Get the supported NNAPI version of the specified accelerator.
+ *
+ * Each accelerator has a supported feature level, which is the most advanced feature this driver
+ * implements. For example, if the driver implements the features introduced in Android P,
+ * but does not implement the features introduced after Android P, the value would be 28.
+ * Developers could decide whether or not the specified accelerator should be used for a Model that
+ * has certain feature requirements.
+ *
+ * @param device The representation of the specified accelerator.
+ * @param featureLevel The API level of the most advanced feature this driver implements.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
+                                          int64_t* featureLevel);
+
+/**
+ * Get the supported operations for a specified set of accelerators. If multiple devices
+ * are selected, the supported operation list is a union of supported operations of all
+ * selected devices.
+ *
+ * @param model The model to be queried.
+ * @param devices The set of accelerators. Must not contain duplicates.
+ * @param numDevices The number of accelerators in the set.
+ * @param supportedOps The boolean array to be filled. True means supported. The size of the
+ *                     boolean array must be at least as large as the number of operations
+ *                     in the model. The order of elements in the supportedOps array matches
+ *                     the order in which the corresponding operations were added to the model.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksModel_getSupportedOperationsForDevices(
+        const ANeuralNetworksModel* model, const ANeuralNetworksDevice* const* devices,
+        uint32_t numDevices, bool* supportedOps);
+
+/**
+ * Create a {@link ANeuralNetworksCompilation} to compile the given model for a specified set
+ * of accelerators. If more than one accelerator is specified, the compilation will
+ * distribute the workload automatically across the accelerators. The model must be fully
+ * supported by the specified set of accelerators. This means that
+ * ANeuralNetworksModel_getSupportedOperationsForDevices() must have returned true for every
+ * operation for that model/devices pair.
+ *
+ * @param model The {@link ANeuralNetworksModel} to be compiled.
+ * @param devices The set of accelerators. Must not contain duplicates.
+ * @param numDevices The number of accelerators in the set.
+ * @param compilation The newly created object or NULL if unsuccessful.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful, ANEURALNETWORKS_BAD_DATA
+ *         if the model is invalid.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
+                                                const ANeuralNetworksDevice* const* devices,
+                                                uint32_t numDevices,
+                                                ANeuralNetworksCompilation** compilation);
+
+#endif  // __ANDROID_API__ >= __ANDROID_API_Q__
+
 #if __ANDROID_API__ >= 27
 
 /**
@@ -2872,7 +3022,8 @@ void ANeuralNetworksModel_free(ANeuralNetworksModel* model) __INTRODUCED_IN(27);
 
 /**
  * Indicate that we have finished modifying a model. Required before
- * calling {@link ANeuralNetworksCompilation_create}.
+ * calling {@link ANeuralNetworksCompilation_create} and
+ * {@link ANeuralNetworksCompilation_createForDevices}.
  *
  * An application is responsible to make sure that no other thread uses
  * the model at the same time.
