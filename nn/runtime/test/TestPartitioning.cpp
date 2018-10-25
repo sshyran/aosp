@@ -21,8 +21,8 @@
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
 #include "NeuralNetworksOEM.h"
-#include "NeuralNetworksWrapper.h"
 #include "SampleDriver.h"
+#include "TestNeuralNetworksWrapper.h"
 #include "Utils.h"
 #include "ValidateHal.h"
 
@@ -120,17 +120,17 @@ namespace {
 using CompilationBuilder = ::android::nn::CompilationBuilder;
 using Device = ::android::nn::Device;
 using DeviceManager = ::android::nn::DeviceManager;
-using ExecutePreference = ::android::nn::wrapper::ExecutePreference;
+using ExecutePreference = ::android::nn::test_wrapper::ExecutePreference;
 using ExecutionPlan = ::android::nn::ExecutionPlan;
 using ExecutionStep = ::android::nn::ExecutionStep;
 using HidlModel = ::android::hardware::neuralnetworks::V1_2::Model;
 using ModelBuilder = ::android::nn::ModelBuilder;
-using Result = ::android::nn::wrapper::Result;
+using Result = ::android::nn::test_wrapper::Result;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
-using WrapperCompilation = ::android::nn::wrapper::Compilation;
-using WrapperModel = ::android::nn::wrapper::Model;
-using WrapperOperandType = ::android::nn::wrapper::OperandType;
-using WrapperType = ::android::nn::wrapper::Type;
+using WrapperCompilation = ::android::nn::test_wrapper::Compilation;
+using WrapperModel = ::android::nn::test_wrapper::Model;
+using WrapperOperandType = ::android::nn::test_wrapper::OperandType;
+using WrapperType = ::android::nn::test_wrapper::Type;
 
 template <typename T> using sp = ::android::sp<T>;
 
@@ -368,16 +368,20 @@ private:
 // This class adds some utilities on top of ::android::nn::wrapper::Compilation.
 class PartitioningCompilation : public WrapperCompilation {
 public:
-    PartitioningCompilation(const WrapperModel* model) : WrapperCompilation(model) { }
+ PartitioningCompilation(const WrapperModel* model,
+                         const std::vector<std::shared_ptr<Device>>& devices) {
+     ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model->getHandle());
+     CompilationBuilder* c = nullptr;
+     int result = m->createCompilation(&c, devices);
+     EXPECT_EQ(result, 0);
+     mCompilation = reinterpret_cast<ANeuralNetworksCompilation*>(c);
+ }
 
-    Result setPartitioning(uint32_t partitioning) {
-        return static_cast<Result>(builder()->setPartitioning(partitioning));
+ Result setPartitioning(uint32_t partitioning) {
+     return static_cast<Result>(builder()->setPartitioning(partitioning));
     }
 
     using WrapperCompilation::finish;
-    Result finish(const std::vector<std::shared_ptr<Device>>& devices) {
-        return static_cast<Result>(builder()->finish(devices));
-    }
 
     const ExecutionPlan& getExecutionPlan() const {
         return builder()->forTest_getExecutionPlan();
@@ -987,9 +991,9 @@ TEST_F(PartitioningTest, SetPartitioning) {
 
     // Test kPartitioningNo.  We should not even attempt partitioning,
     // so there should be no execution plan.
-    PartitioningCompilation cPNo(&model);
+    PartitioningCompilation cPNo(&model, devices);
     ASSERT_EQ(cPNo.setPartitioning(DeviceManager::kPartitioningNo), Result::NO_ERROR);
-    ASSERT_EQ(cPNo.finish(devices), Result::NO_ERROR);
+    ASSERT_EQ(cPNo.finish(), Result::NO_ERROR);
     ASSERT_EQ(cPNo.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::EMPTY);
 
     // Test kPartitioningWithFallback.  We should attempt
@@ -997,16 +1001,16 @@ TEST_F(PartitioningTest, SetPartitioning) {
     // have an execution plan), discover the dimensionless
     // intermediate operand, and still return success (because of
     // fallback).
-    PartitioningCompilation cPWithFallback(&model);
+    PartitioningCompilation cPWithFallback(&model, devices);
     ASSERT_EQ(cPWithFallback.setPartitioning(DeviceManager::kPartitioningWithFallback), Result::NO_ERROR);
-    ASSERT_EQ(cPWithFallback.finish(devices), Result::NO_ERROR);
+    ASSERT_EQ(cPWithFallback.finish(), Result::NO_ERROR);
     ASSERT_EQ(cPWithFallback.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::ERROR);
 
     // Test kPartitioningWithoutFallback.  We should attempt
     // partitioning, and fail.
-    PartitioningCompilation cPWithoutFallback(&model);
+    PartitioningCompilation cPWithoutFallback(&model, devices);
     ASSERT_EQ(cPWithoutFallback.setPartitioning(DeviceManager::kPartitioningWithoutFallback), Result::NO_ERROR);
-    ASSERT_EQ(cPWithoutFallback.finish(devices), Result::OP_FAILED);
+    ASSERT_EQ(cPWithoutFallback.finish(), Result::OP_FAILED);
     ASSERT_TRUE(cPWithoutFallback.getExecutionPlan().forTest_hasSubModelOutputsOfUnknownSize());
     ASSERT_EQ(cPWithoutFallback.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::ERROR);
 }
@@ -1106,8 +1110,8 @@ TEST_F(PartitioningTest, OemOperations) {
                           .quantized8Performance = { .execTime = 1.2, .powerUsage = 1.2 } },
                         ~0U, PartitioningDriver::OEMYes}
         });
-    PartitioningCompilation compilationBestOEM(&model);
-    ASSERT_EQ(compilationBestOEM.finish(devicesBestOEM), Result::NO_ERROR);
+    PartitioningCompilation compilationBestOEM(&model, devicesBestOEM);
+    ASSERT_EQ(compilationBestOEM.finish(), Result::NO_ERROR);
     const auto& planBestOEM = compilationBestOEM.getExecutionPlan();
     ASSERT_EQ(planBestOEM.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planBestOEM.forTest_simpleGetDevice().get(), nullptr);
@@ -1120,8 +1124,8 @@ TEST_F(PartitioningTest, OemOperations) {
                         .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } },
                         ~0U, PartitioningDriver::OEMNo}
         });
-    PartitioningCompilation compilationNoOEM(&model);
-    ASSERT_EQ(compilationNoOEM.finish(devicesNoOEM), Result::BAD_DATA);
+    PartitioningCompilation compilationNoOEM(&model, devicesNoOEM);
+    ASSERT_EQ(compilationNoOEM.finish(), Result::BAD_DATA);
 
     // Verify that we get an error if a driver can SUPPORT but not PREPARE an OEM operation.
     const auto devicesIndecisiveOEM = makeDevices(
@@ -1130,12 +1134,12 @@ TEST_F(PartitioningTest, OemOperations) {
                                 .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } },
                                 ~0U, PartitioningDriver::OEMIndecisive}
         });
-    PartitioningCompilation compilationIndecisiveOEM(&model);
-    ASSERT_NE(compilationIndecisiveOEM.finish(devicesIndecisiveOEM), Result::NO_ERROR);
+    PartitioningCompilation compilationIndecisiveOEM(&model, devicesIndecisiveOEM);
+    ASSERT_NE(compilationIndecisiveOEM.finish(), Result::NO_ERROR);
 
     // Verify that we get an error if there are no drivers (only CPU fallback).
-    PartitioningCompilation compilationNoDrivers(&model);
-    ASSERT_EQ(compilationNoDrivers.finish({} /* no drivers */), Result::BAD_DATA);
+    PartitioningCompilation compilationNoDrivers(&model, {} /* no drivers */);
+    ASSERT_EQ(compilationNoDrivers.finish(), Result::BAD_DATA);
 }
 
 TEST_F(PartitioningTest, RelaxedFP) {

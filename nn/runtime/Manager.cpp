@@ -58,6 +58,13 @@ bool Device::initialize() {
         mRelaxedFloat32toFloat16Performance = capabilities.relaxedFloat32toFloat16Performance;
     }
 
+    auto result = mInterface.getVersionString();
+    // TODO(miaowang): add a validation test case for in case of error.
+    if (result.first != ErrorStatus::NONE) {
+        LOG(ERROR) << "IDevice::getVersionString returned the error " << toString(status);
+    } else {
+        mVersionString = result.second;
+    }
     return status == ErrorStatus::NONE;
 }
 
