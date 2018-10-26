@@ -38,15 +38,6 @@ int CompilationBuilder::finish() {
         LOG(ERROR) << "ANeuralNetworksCompilation_finish called more than once";
         return ANEURALNETWORKS_BAD_STATE;
     }
-    // TODO(miaowang): add a check for devices.size()!=0 once b/72506261 is
-    // fixed.
-    for (uint32_t i = 0; i < mDevices.size(); i++) {
-        for (uint32_t j = i + 1; j < mDevices.size(); j++) {
-            if (mDevices[i].get() == mDevices[j].get()) {
-                LOG(ERROR) << "CompilerBuilder::finish() passed duplicated devices";
-            }
-        }
-    }
     // TODO validate the rest
 
     mFinished = true;
@@ -55,7 +46,7 @@ int CompilationBuilder::finish() {
         int n = mModel->partitionTheWork(mDevices, mPreference, &mPlan);
         switch (n) {
             case ANEURALNETWORKS_NO_ERROR:
-                break;
+                return n;
             case ANEURALNETWORKS_UNEXPECTED_NULL:
             case ANEURALNETWORKS_BAD_DATA:
                 // The two error codes above should only be used for errors in the user's
@@ -77,7 +68,11 @@ int CompilationBuilder::finish() {
         }
     }
 
-    return ANEURALNETWORKS_NO_ERROR;
+    // Fallback to CPU
+    VLOG(COMPILATION) << "CompilationBuilder::finish with CPU fallback";
+    mPlan.reset();
+    mPlan.becomeSingleStep(DeviceManager::getCpuDevice(), mModel);
+    return mPlan.finish(mModel, mPreference);
 }
 
 int CompilationBuilder::setPreference(int32_t preference) {
@@ -109,6 +104,11 @@ int CompilationBuilder::setPartitioning(uint32_t partitioning) {
 int CompilationBuilder::createExecution(ExecutionBuilder **execution) {
     if (!mFinished) {
         LOG(ERROR) << "ANeuralNetworksExecution_create passed an unfinished compilation";
+        *execution = nullptr;
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (!mPlan.isValid()) {
+        LOG(ERROR) << "ANeuralNetworksExecution_create passed an invalid compilation";
         *execution = nullptr;
         return ANEURALNETWORKS_BAD_STATE;
     }

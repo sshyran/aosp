@@ -30,6 +30,7 @@ cc_library_headers {
 cc_library {
     name: "libneuralnetworks",
     defaults: ["neuralnetworks_defaults"],
+    use_version_lib: true,
     host_supported: false,
     // b/109953668, disable OpenMP
     // openmp: true,

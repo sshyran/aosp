@@ -352,7 +352,7 @@ int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
     Device* d = reinterpret_cast<Device*>(const_cast<ANeuralNetworksDevice*>(device));
-    int64_t dFeatureLevel = d->getInterface()->getFeatureLevel();
+    int64_t dFeatureLevel = d->getFeatureLevel();
     if (dFeatureLevel < 0) {
         return ANEURALNETWORKS_BAD_STATE;
     }
@@ -367,6 +367,11 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
     if (model == nullptr || devices == nullptr || supportedOps == nullptr) {
         LOG(ERROR) << "ANeuralNetworksModel_getSupportedOperationsForDevices passed a nullptr";
         return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    if (numDevices == 0) {
+        LOG(ERROR) << "ANeuralNetworksModel_getSupportedOperationsForDevices passed an empty "
+                      "device list";
+        return ANEURALNETWORKS_BAD_DATA;
     }
     const ModelBuilder* m = reinterpret_cast<const ModelBuilder*>(model);
     if (!m->isFinished() || !m->isValid()) {
@@ -413,6 +418,11 @@ int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
     if (model == nullptr || devices == nullptr || compilation == nullptr) {
         LOG(ERROR) << "ANeuralNetworksCompilation_createForDevices passed a nullptr";
         return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+
+    if (numDevices == 0) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_createForDevices passed an empty device list";
+        return ANEURALNETWORKS_BAD_DATA;
     }
 
     std::vector<std::shared_ptr<Device>> selectedDevices;
