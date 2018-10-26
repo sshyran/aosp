@@ -33,51 +33,17 @@
 #include <utility>
 #include <vector>
 
-using ::android::hardware::neuralnetworks::V1_2::implementation::ExecutionCallback;
-using ::android::hardware::neuralnetworks::V1_2::implementation::PreparedModelCallback;
-
 namespace android {
 namespace nn {
 
 static int compile(std::shared_ptr<Device> device, const ModelBuilder* model,
                    int32_t executionPreference,
                    std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
-    nnAssert(device != nullptr);  // nullptr indicates CPU
-    *preparedModel = nullptr;
-    // Compilation logic copied from ExecutionBuilder::startComputeOnDevice().
+    nnAssert(device != nullptr);
     Model hidlModel;
     model->setHidlModel(&hidlModel);
-
-    sp<PreparedModelCallback> preparedModelCallback = new PreparedModelCallback();
-
-    // Note that some work within VersionedIDevice will be subtracted from the
-    // IPC layer
-    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
-    Return<ErrorStatus> prepareLaunchStatus = device->getInterface()->prepareModel(
-        hidlModel, static_cast<ExecutionPreference>(executionPreference), preparedModelCallback);
-    if (!prepareLaunchStatus.isOk()) {
-        LOG(ERROR) << "ExecutionStep::finishSubModel compilation failed due to transport error: "
-                   << prepareLaunchStatus.description();
-        return ANEURALNETWORKS_OP_FAILED;
-    }
-    if (prepareLaunchStatus != ErrorStatus::NONE) {
-        LOG(ERROR) << "ExecutionStep::finishSubModel compilation failed with error: "
-                   << toString(static_cast<ErrorStatus>(prepareLaunchStatus));
-        return ANEURALNETWORKS_OP_FAILED;
-    }
-
-    preparedModelCallback->wait();
-    ErrorStatus prepareReturnStatus = preparedModelCallback->getStatus();
-    if (auto returnedPreparedModel = preparedModelCallback->getPreparedModel()) {
-        *preparedModel = std::make_shared<VersionedIPreparedModel>(returnedPreparedModel);
-    }
-    if (prepareReturnStatus != ErrorStatus::NONE || *preparedModel == nullptr) {
-        LOG(ERROR) << "ExecutionPlan compilation on " << device->getName() << " failed:"
-                   << " prepareReturnStatus=" << toString(prepareReturnStatus)
-                   << ", preparedModel=" << preparedModel->get();
-        return ANEURALNETWORKS_OP_FAILED;
-    }
-    return ANEURALNETWORKS_NO_ERROR;
+    return device->prepareModel(hidlModel, static_cast<ExecutionPreference>(executionPreference),
+                                preparedModel);
 }
 
 typedef std::function<void(uint32_t)> OperationReadyCallback;
@@ -139,7 +105,7 @@ void OperandTracker::markProcessed(uint32_t operationIndex, OperationReadyCallba
 
 ExecutionStep::ExecutionStep(ExecutionPlan* plan, uint32_t stepIndex,
                              std::shared_ptr<Device> device)
-        : mPlan(plan), mIndex(stepIndex), mSubModel(), mDevice(device) {}
+    : mPlan(plan), mIndex(stepIndex), mSubModel(), mDevice(device) {}
 
 // Adds an operand if it has not been added already.
 // Sets the index in the submodel for the corresponding operand.
@@ -357,6 +323,7 @@ static void convertModelInputsOrOutputs(
 
 int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutputOfUnknownSize,
                                   int32_t executionPreference) {
+    nnAssert(mDevice != nullptr);
     if (VLOG_IS_ON(COMPILATION)) {
         logSubModel();
     }
@@ -433,11 +400,6 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
     }
 
     // TODO: Move compilation elsewhere?
-
-    if (mDevice == nullptr) {
-        return ANEURALNETWORKS_NO_ERROR;
-    }
-
     VLOG(COMPILATION) << "ExecutionStep::finishSubModel, compilation";
     return compile(mDevice, &mSubModel, executionPreference, &mPreparedSubModel);
 }
@@ -446,8 +408,7 @@ void ExecutionStep::dump() const {
     Model model;
     mSubModel.setHidlModel(&model);
     if (VLOG_IS_ON(COMPILATION)) {
-        VLOG(COMPILATION) << "ExecutionStep#" << mIndex
-                          << " for " << (mDevice == nullptr ? "CPU" : mDevice->getName());
+        VLOG(COMPILATION) << "ExecutionStep#" << mIndex << " for " << mDevice->getName();
         logModelToInfo(model);
     }
 }
@@ -474,11 +435,7 @@ int ExecutionPlan::CompoundBody::finish(const ModelBuilder* fromModel,
 
 int ExecutionPlan::SimpleBody::finish([[maybe_unused]] const ModelBuilder* fromModel,
                                       int32_t executionPreference) {
-    if (mDevice == nullptr) {
-        mSuccessfulFinish = true;
-        return ANEURALNETWORKS_NO_ERROR;
-    }
-
+    nnAssert(mDevice != nullptr);
     VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish, compilation";
     const int n = compile(mDevice, mModel, executionPreference, &mPreparedModel);
     mSuccessfulFinish = (n == ANEURALNETWORKS_NO_ERROR);
@@ -507,11 +464,7 @@ ExecutionPlan::Controller::Controller(
 
 std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
     const ExecutionBuilder* executionBuilder) const {
-    nnAssert((mState == EMPTY) == (mBody == nullptr));
-    if (mBody && !mBody->mSuccessfulFinish) {
-        VLOG(EXECUTION) << "ExecutionPlan::makeController -- unsuccessful finish";
-        return std::shared_ptr<Controller>(nullptr);
-    }
+    nnAssert(isValid());
 
     // Create the layout for a Memory object big enough for to hold
     // every TEMPORARY in the original model that is live across
@@ -611,10 +564,8 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
             // First (and only) step.
             auto simpleBody = static_cast<const SimpleBody*>(mBody);
             *executor = std::make_shared<StepExecutor>(
-                controller->mExecutionBuilder,
-                simpleBody->mModel,
-                (simpleBody->mDevice == nullptr ? nullptr : simpleBody->mDevice->getInterface()),
-                simpleBody->mPreparedModel);
+                    controller->mExecutionBuilder, simpleBody->mModel,
+                    simpleBody->mDevice->getInterface(), simpleBody->mPreparedModel);
             (*executor)->mapInputsAndOutputsTrivially();
             controller->mNextStepIndex = 1;
             return ANEURALNETWORKS_NO_ERROR;
@@ -639,11 +590,9 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
     // ExecutionStep::finishSubModel() establishes these orderings.
 
     const auto step = compoundBody->mSteps[controller->mNextStepIndex];
-    *executor = std::make_shared<StepExecutor>(
-        controller->mExecutionBuilder,
-        step->getSubModel(),
-        (step->getDevice() == nullptr ? nullptr : step->getDevice()->getInterface()),
-        step->getPreparedSubModel());
+    *executor = std::make_shared<StepExecutor>(controller->mExecutionBuilder, step->getSubModel(),
+                                               step->getDevice()->getInterface(),
+                                               step->getPreparedSubModel());
     step->mapInputsAndOutputs(*executor);
     if (controller->mSubModelInputsAndOutputs != nullptr) {
         {
@@ -733,6 +682,14 @@ void ExecutionPlan::dump() const {
     }
 }
 
+void ExecutionPlan::reset() {
+    if (mBody) {
+        delete mBody;
+        mBody = nullptr;
+    }
+    mState = EMPTY;
+}
+
 ExecutionPlan::Kind ExecutionPlan::forTest_getKind() const {
     switch (mState) {
         case EMPTY:
@@ -763,7 +720,7 @@ bool ExecutionPlan::forTest_hasSubModelOutputsOfUnknownSize() const {
 }
 
 void ExecutionPlan::SimpleBody::dump() const {
-    VLOG(COMPILATION) << "SIMPLE for " << (mDevice == nullptr ? "CPU" : mDevice->getName());
+    VLOG(COMPILATION) << "SIMPLE for " << mDevice->getName();
 }
 
 void ExecutionPlan::CompoundBody::dump() const {
@@ -777,32 +734,16 @@ int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& d
     // This function uses a heuristic approach to partitioning the graph.
     // It should be good enough for the first release.
 
-    const size_t nonCpuDeviceCount = devices.size();
-    // The device count is the number of HAL devices + 1. The +1 is for the CPU.
-    // Note that deviceCount includes CPU, which has no entry in devices[].
-    const size_t deviceCount = nonCpuDeviceCount + 1;
+    const size_t deviceCount = devices.size();
     const size_t operationCount = mOperations.size();
 
     VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: deviceCount = " << deviceCount
                       << ", operationCount = " << operationCount;
 
-    // If we only have the CPU, or if the graph has no operations, no need to try to partition.
-    if (nonCpuDeviceCount == 0 || operationCount == 0) {
-        // Make sure no op is an OEM operation.
-        if (mHasOEMOperation) {
-            LOG(ERROR) << "No driver can do the OEM op";
-            return ANEURALNETWORKS_BAD_DATA;
-        }
-        plan->becomeSingleStep(nullptr /* CPU */, this);
-        return plan->finish(this, preference);
-    }
-
     // Figure out where each operation will best execute.
-    // The value of the vector is the index in the devices vector, with devices.size()
-    // representing the CPU.
+    // The value of the vector is the index in the devices vector.
     std::vector<int> bestDeviceForOperation(operationCount);
-    int status = findBestDeviceForEachOperation(preference, devices, deviceCount,
-                                                &bestDeviceForOperation);
+    int status = findBestDeviceForEachOperation(preference, devices, &bestDeviceForOperation);
     if (status != ANEURALNETWORKS_NO_ERROR) {
         return status;
     }
@@ -811,11 +752,9 @@ int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& d
     if (std::adjacent_find(bestDeviceForOperation.begin(), bestDeviceForOperation.end(),
                            std::not_equal_to<int>()) == bestDeviceForOperation.end()) {
         const int bestDeviceIndex = bestDeviceForOperation[0];
-        const bool cpu = (size_t(bestDeviceIndex) == deviceCount - 1);
         VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: only one best device: "
-                          << bestDeviceIndex << " = "
-                          << (cpu ? "CPU" : devices[bestDeviceIndex]->getName());
-        plan->becomeSingleStep(cpu ? nullptr : devices[bestDeviceIndex], this);
+                          << bestDeviceIndex << " = " << devices[bestDeviceIndex]->getName();
+        plan->becomeSingleStep(devices[bestDeviceIndex], this);
         return plan->finish(this, preference);
     }
 
@@ -855,13 +794,9 @@ int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& d
         if (deviceIndex < 0) {
             break;
         }
-        // nullptr represents the CPU.
-        std::shared_ptr<Device> device =
-                static_cast<size_t>(deviceIndex) < nonCpuDeviceCount
-                        ? devices[deviceIndex] : nullptr;
 
         // Assign as much as possible to this device.
-        std::shared_ptr<ExecutionStep> step = plan->createNewStep(device);
+        std::shared_ptr<ExecutionStep> step = plan->createNewStep(devices[deviceIndex]);
         auto& queue = perDeviceQueue[deviceIndex];
         while (!queue.empty()) {
             uint32_t operationIndex = queue.front();
@@ -941,33 +876,29 @@ private:
 };  // anonymous namespace
 
 int ModelBuilder::findBestDeviceForEachOperation(
-        uint32_t preference,
-        const std::vector<std::shared_ptr<Device>>& devices,
-        const size_t deviceCount,
+        uint32_t preference, const std::vector<std::shared_ptr<Device>>& devices,
         std::vector<int>* bestDeviceForOperation) const {
-
-    // Note that deviceCount includes CPU, which has no entry in devices[]
-    const size_t nonCpuDeviceCount = deviceCount - 1;
-
-    std::vector<CanDo> canDo(nonCpuDeviceCount);
-    for (size_t deviceIndex = 0; deviceIndex < nonCpuDeviceCount; deviceIndex++) {
+    const size_t deviceCount = devices.size();
+    std::vector<CanDo> canDo(deviceCount);
+    for (size_t deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++) {
         canDo[deviceIndex].initialize(this, devices[deviceIndex]);
     }
 
     // Figure out the best driver for each operation.
     const size_t operationCount = mOperations.size();
     for (size_t operationIndex = 0; operationIndex < operationCount; operationIndex++) {
-        // Find which non-CPU device gives the best performance for this operation.
+        // Find which device, including CPU fallback, gives the best performance for this operation.
         int bestChoice = -1;
         float bestPerfVal = 0.0;  // Do not check bestPerfVal if bestChoice < 0.
-        for (size_t deviceIndex = 0; deviceIndex < nonCpuDeviceCount; deviceIndex++) {
+        for (size_t deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++) {
             const auto& device = devices[deviceIndex];
             if (canDo[deviceIndex].check(operationIndex)) {
                 const PerformanceInfo perf = getPerformanceInfo(device, operationIndex);
                 const float perfVal =
                             (preference == ANEURALNETWORKS_PREFER_LOW_POWER ? perf.powerUsage
                                                                             : perf.execTime);
-                if (bestChoice < 0 || perfVal < bestPerfVal) {
+                if (bestChoice < 0 || perfVal < bestPerfVal ||
+                    (perfVal == bestPerfVal && device == DeviceManager::getCpuDevice())) {
                     bestChoice = deviceIndex;
                     bestPerfVal = perfVal;
                 }
@@ -975,26 +906,16 @@ int ModelBuilder::findBestDeviceForEachOperation(
                 // Somewhat noisy logging, but only place where the user of
                 // NNAPI can get feedback on why an operation was not run on a
                 // specific device.
-                // Logs O(operationCount * nonCpuDeviceCount) times, but
-                // typically nonCpuDeviceCount is very small.
+                // Logs O(operationCount * deviceCount) times, but
+                // typically deviceCount is very small.
                 VLOG(COMPILATION) << "Device " << device->getName()
                                   << " can't do operation "
                                   << toString(getOperation(operationIndex).type);
             }
         }
-        // If it's the OEM op, we'd better have a device able to do it.
-        if (mOperations[operationIndex].type == OperationType::OEM_OPERATION) {
-            if (bestChoice < 0) {
-                LOG(ERROR) << "No driver can do the OEM op";
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-        } else {
-            // If no driver has been found, or if the best driver is not better than the CPU,
-            // prefer the CPU. Since the performance is a ratio compared to the CPU performance,
-            // by definition the performance of the CPU is 1.0.
-            if (bestChoice < 0 || bestPerfVal >= 1.0) {
-                bestChoice = nonCpuDeviceCount;  // The ID of the CPU.
-            }
+        if (bestChoice < 0) {
+            LOG(ERROR) << "No driver can do the op";
+            return ANEURALNETWORKS_BAD_DATA;
         }
 
         (*bestDeviceForOperation)[operationIndex] = bestChoice;
