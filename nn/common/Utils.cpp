@@ -2096,6 +2096,20 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
+        case ANEURALNETWORKS_POW: {
+            if (inputCount != 2 || outputCount != 1) {
+                logInvalidInOutNumber(2, 1);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32};
+            outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            *minSupportedHalVersion = HalVersion::V1_2;
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
         default: {
             return ANEURALNETWORKS_BAD_DATA;
         }

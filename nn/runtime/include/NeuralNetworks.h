@@ -2342,6 +2342,33 @@ typedef enum {
     ANEURALNETWORKS_MAXIMUM = 64,
     ANEURALNETWORKS_MINIMUM = 65,
     ANEURALNETWORKS_NEG = 66,
+    /**
+     * Computes the power of one value to another.
+     *
+     * Given a tensor base and a tensor exponent, this operation computes
+     * base^exponent elementwise.
+     *
+     * This operations supports broadcasting. The size of the output is the
+     * maximum size along each dimension of the input operands. It starts with
+     * the trailing dimensions, and works its way forward.
+     *
+     * For example:
+     *     base.dimension     =    {4, 1, 2}
+     *     exponent.dimension = {5, 4, 3, 1}
+     *     output.dimension   = {5, 4, 3, 2}
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Inputs:
+     * * 0: A tensor specifying the base.
+     * * 1: A tensor specifying the exponent.
+     *
+     * Outputs:
+     * * 0: An output tensor.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_POW = 67,
 
     /**

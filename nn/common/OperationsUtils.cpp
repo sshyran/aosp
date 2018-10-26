@@ -204,34 +204,38 @@ int32_t CalculateInputRadius(int input_integer_bits, int input_left_shift) {
     return static_cast<int32_t>(std::floor(max_input_rescaled));
 }
 
+bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
+    uint32_t numberOfDims1 = getNumberOfDimensions(in1);
+    uint32_t numberOfDims2 = getNumberOfDimensions(in2);
+    uint32_t maxDims = std::max(numberOfDims1, numberOfDims2);
+    out->dimensions = std::vector<uint32_t>(maxDims);
+    for (uint32_t i = 1; i <= maxDims; i++) {
+        uint32_t dim1 = 1;
+        if (i <= numberOfDims1) {
+            dim1 = getSizeOfDimension(in1, numberOfDims1 - i);
+        }
+        uint32_t dim2 = 1;
+        if (i <= numberOfDims2) {
+            dim2 = getSizeOfDimension(in2, numberOfDims2 - i);
+        }
+        if (dim1 != dim2 && dim1 != 1 && dim2 != 1) {
+            LOG(ERROR) << "Dimensions mismatch for broadcast:\n"
+                       << "First tensor: dimension " << numberOfDims1 - i << " of size " << dim1
+                       << "\nSecond tensor: dimension " << numberOfDims2 - i << "of size " << dim2;
+            return false;
+        }
+        out->dimensions[maxDims - i] = std::max(dim1, dim2);
+    }
+    return true;
+}
+
 bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out) {
     NN_OPS_CHECK(getNumberOfDimensions(in1) <= 4 && getNumberOfDimensions(in2) <= 4);
     NN_OPS_CHECK(in1.type == in2.type);
     if (SameShape(in1, in2)) {
         return SetShape(in1, out);
-    } else {
-        // BroadcastAdd needed
-        uint32_t numberOfDims1 = getNumberOfDimensions(in1);
-        uint32_t numberOfDims2 = getNumberOfDimensions(in2);
-        uint32_t maxDims = std::max(numberOfDims1, numberOfDims2);
-        out->dimensions = std::vector<uint32_t>(maxDims);
-        for (uint32_t i = 1; i <= maxDims; i++) {
-            uint32_t dim1 = 1;
-            if (i <= numberOfDims1) {
-                dim1 = getSizeOfDimension(in1, numberOfDims1 - i);
-            }
-            uint32_t dim2 = 1;
-            if (i <= numberOfDims2) {
-                dim2 = getSizeOfDimension(in2, numberOfDims2 - i);
-            }
-            if (dim1 != dim2 && dim1 != 1 && dim2 != 1) {
-                LOG(ERROR) << "Dimensions mismatch for BroadcastAdd";
-                return false;
-            }
-            out->dimensions[maxDims - i] = std::max(dim1, dim2);
-        }
     }
-    return true;
+    return calculateBroadcastedShape(in1, in2, out);
 }
 
 bool floorPrepare(const Shape& input, Shape* output) {

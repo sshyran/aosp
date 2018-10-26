@@ -186,6 +186,10 @@ inline int32_t ClampedIndex(int32_t index, int dim, bool pos_stride) {
                           std::min(std::max(index, -dim), dim - 1), dim));
 }
 
+// Broadcasts input shape against one another and puts the result into output
+// shape. Returns true on success and false on error.
+bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out);
+
 // Preparation functions for the corresponding ops
 bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out1);
 
