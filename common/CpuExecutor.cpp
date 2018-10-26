@@ -2309,6 +2309,21 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                 reinterpret_cast<int32_t*>(batchSplit.buffer), batchSplitShape);
             }
         } break;
+        case OperationType::POW: {
+            if (!allParametersPresent(2, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& base = mOperands[ins[0]];
+            const RunTimeOperandInfo& exponent = mOperands[ins[1]];
+
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outShape = output.shape();
+
+            success = pow::prepare(base.shape(), exponent.shape(), &outShape) &&
+                      setInfoAndAllocateIfNeeded(&output, outShape) &&
+                      pow::eval(base.buffer, base.shape(), exponent.buffer, exponent.shape(),
+                                output.buffer, outShape);
+        } break;
         default:
             nnAssert(false);
             break;
