@@ -408,6 +408,9 @@ int validateOperationOperandTypes(const std::vector<Operand>& operands,
                                   const std::vector<OperandType>& outExpectedInTypes) {
     if (inOperandCount > static_cast<uint32_t>(inExpectedTypes.size()) ||
         outOperandCount > static_cast<uint32_t>(outExpectedInTypes.size())) {
+        LOG(ERROR) << "Wrong operand count: expected " << inExpectedTypes.size() << " inputs and "
+                   << outExpectedInTypes.size() << " outputs,"
+                   << "got " << inOperandCount << " inputs and " << outOperandCount << " outputs";
         return ANEURALNETWORKS_BAD_DATA;
     }
     for (uint32_t i = 0; i < inOperandCount; i++) {
