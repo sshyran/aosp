@@ -1247,7 +1247,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_INT32,
                                                         inputType};
             std::vector<OperandType> outExpectedTypes = {inputType};
-            *minSupportedHalVersion = HalVersion::V1_1;
+            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
