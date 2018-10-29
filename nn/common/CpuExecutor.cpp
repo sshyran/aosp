@@ -478,6 +478,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 success = addFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
                                      reinterpret_cast<const float*>(in2.buffer), in2.shape(),
                                      activation, reinterpret_cast<float*>(out.buffer), outShape);
+            } else if (in1.type == OperandType::TENSOR_FLOAT16) {
+                success = addFloat16(reinterpret_cast<const _Float16*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const _Float16*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<_Float16*>(out.buffer), outShape);
             } else if (in1.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = addQuant8(reinterpret_cast<const uint8_t*>(in1.buffer), in1.shape(),
                                     reinterpret_cast<const uint8_t*>(in2.buffer), in2.shape(),

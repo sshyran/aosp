@@ -43,6 +43,8 @@ namespace nn {
 
 struct Shape;
 
+bool addFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut);
 bool addFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
                 int32_t activation, float* out, const Shape& shapeOut);
 bool addQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,

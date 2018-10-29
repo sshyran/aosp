@@ -179,6 +179,7 @@ def DumpMixedType(operands, feedDict):
         "TENSOR_QUANT8_ASYMM",
         "TENSOR_OEM_BYTE",
         "TENSOR_QUANT16_ASYMM",
+        "TENSOR_FLOAT16",
     ]
     typedMap = {t: [] for t in supportedTensors}
     FeedAndGet = lambda op, d: op.Feed(d).GetListInitialization()

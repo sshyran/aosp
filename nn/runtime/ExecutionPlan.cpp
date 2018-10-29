@@ -891,6 +891,7 @@ PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> d
     const OperandType operandType = mOperands[operandIndex].type;
     switch(operandType) {
         case OperandType::FLOAT32:
+        case OperandType::TENSOR_FLOAT16:
         case OperandType::TENSOR_FLOAT32:
             if (mRelaxComputationFloat32toFloat16) {
                 return device->getRelaxedFloat32toFloat16Performance();
