@@ -4596,6 +4596,134 @@ TEST_F(NeuralnetworksHidlTest, max_pool_v1_2_nchw_quant8_4) {
                            max_pool_v1_2::examples_nchw_quant8_4);
 }
 
+// Generated from: maximum.mod.py.
+namespace maximum {
+// Generated maximum test
+#include "examples/maximum.example.cpp"
+// Generated model constructor
+#include "vts_models/maximum.model.cpp"
+} // namespace maximum
+
+TEST_F(NeuralnetworksHidlTest, maximum_simple) {
+  generated_tests::Execute(device,
+                           maximum::createTestModel,
+                           maximum::is_ignored,
+                           maximum::examples_simple);
+}
+
+TEST_F(NeuralnetworksHidlTest, maximum_simple_relaxed) {
+  generated_tests::Execute(device,
+                           maximum::createTestModel_relaxed,
+                           maximum::is_ignored_relaxed,
+                           maximum::examples_simple_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, maximum_simple_quant8) {
+  generated_tests::Execute(device,
+                           maximum::createTestModel_quant8,
+                           maximum::is_ignored_quant8,
+                           maximum::examples_simple_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, maximum_simple_int32) {
+  generated_tests::Execute(device,
+                           maximum::createTestModel_int32,
+                           maximum::is_ignored_int32,
+                           maximum::examples_simple_int32);
+}
+
+TEST_F(NeuralnetworksHidlTest, maximum_broadcast) {
+  generated_tests::Execute(device,
+                           maximum::createTestModel_2,
+                           maximum::is_ignored_2,
+                           maximum::examples_broadcast);
+}
+
+TEST_F(NeuralnetworksHidlTest, maximum_broadcast_relaxed) {
+  generated_tests::Execute(device,
+                           maximum::createTestModel_relaxed_2,
+                           maximum::is_ignored_relaxed_2,
+                           maximum::examples_broadcast_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, maximum_broadcast_quant8) {
+  generated_tests::Execute(device,
+                           maximum::createTestModel_quant8_2,
+                           maximum::is_ignored_quant8_2,
+                           maximum::examples_broadcast_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, maximum_broadcast_int32) {
+  generated_tests::Execute(device,
+                           maximum::createTestModel_int32_2,
+                           maximum::is_ignored_int32_2,
+                           maximum::examples_broadcast_int32);
+}
+
+// Generated from: minimum.mod.py.
+namespace minimum {
+// Generated minimum test
+#include "examples/minimum.example.cpp"
+// Generated model constructor
+#include "vts_models/minimum.model.cpp"
+} // namespace minimum
+
+TEST_F(NeuralnetworksHidlTest, minimum_simple) {
+  generated_tests::Execute(device,
+                           minimum::createTestModel,
+                           minimum::is_ignored,
+                           minimum::examples_simple);
+}
+
+TEST_F(NeuralnetworksHidlTest, minimum_simple_relaxed) {
+  generated_tests::Execute(device,
+                           minimum::createTestModel_relaxed,
+                           minimum::is_ignored_relaxed,
+                           minimum::examples_simple_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, minimum_simple_quant8) {
+  generated_tests::Execute(device,
+                           minimum::createTestModel_quant8,
+                           minimum::is_ignored_quant8,
+                           minimum::examples_simple_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, minimum_simple_int32) {
+  generated_tests::Execute(device,
+                           minimum::createTestModel_int32,
+                           minimum::is_ignored_int32,
+                           minimum::examples_simple_int32);
+}
+
+TEST_F(NeuralnetworksHidlTest, minimum_broadcast) {
+  generated_tests::Execute(device,
+                           minimum::createTestModel_2,
+                           minimum::is_ignored_2,
+                           minimum::examples_broadcast);
+}
+
+TEST_F(NeuralnetworksHidlTest, minimum_broadcast_relaxed) {
+  generated_tests::Execute(device,
+                           minimum::createTestModel_relaxed_2,
+                           minimum::is_ignored_relaxed_2,
+                           minimum::examples_broadcast_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, minimum_broadcast_quant8) {
+  generated_tests::Execute(device,
+                           minimum::createTestModel_quant8_2,
+                           minimum::is_ignored_quant8_2,
+                           minimum::examples_broadcast_quant8);
+}
+
+TEST_F(NeuralnetworksHidlTest, minimum_broadcast_int32) {
+  generated_tests::Execute(device,
+                           minimum::createTestModel_int32_2,
+                           minimum::is_ignored_int32_2,
+                           minimum::examples_broadcast_int32);
+}
+
 // Generated from: pad_v2_1_float.mod.py.
 namespace pad_v2_1_float {
 // Generated pad_v2_1_float test
