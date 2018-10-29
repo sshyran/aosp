@@ -2339,8 +2339,47 @@ typedef enum {
     ANEURALNETWORKS_LOGICAL_NOT = 61,
     ANEURALNETWORKS_LOGICAL_OR = 62,
     ANEURALNETWORKS_LOG_SOFTMAX = 63,
+
+    /**
+     * Returns the element-wise maximum of two tensors.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: A tensor.
+     * * 1: A tensor of the same {@link OperandCode} and compatible dimensions
+     *      with input0.
+     *
+     * Outputs:
+     * * 0: The sum, a tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_MAXIMUM = 64,
+
+    /**
+     * Returns the element-wise minimum of two tensors.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: A tensor.
+     * * 1: A tensor of the same {@link OperandCode} and compatible dimensions
+     *      with input0.
+     *
+     * Outputs:
+     * * 0: The sum, a tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_MINIMUM = 65,
+
     ANEURALNETWORKS_NEG = 66,
     /**
      * Computes the power of one value to another.
