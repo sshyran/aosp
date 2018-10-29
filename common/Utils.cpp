@@ -475,22 +475,34 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             auto inputType = operands[inputIndexes[0]].type;
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
+            *minSupportedHalVersion = HalVersion::V1_0;
             if (inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32,
-                                   OperandType::TENSOR_FLOAT32,
-                                   OperandType::INT32};
+                inExpectedTypes = {
+                        OperandType::TENSOR_FLOAT32,
+                        OperandType::TENSOR_FLOAT32,
+                        OperandType::INT32,
+                };
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                inExpectedTypes = {
+                        OperandType::TENSOR_FLOAT16,
+                        OperandType::TENSOR_FLOAT16,
+                        OperandType::INT32,
+                };
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
+                *minSupportedHalVersion = HalVersion::V1_2;
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
-                                   OperandType::TENSOR_QUANT8_ASYMM,
-                                   OperandType::INT32};
+                inExpectedTypes = {
+                        OperandType::TENSOR_QUANT8_ASYMM,
+                        OperandType::TENSOR_QUANT8_ASYMM,
+                        OperandType::INT32,
+                };
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
             } else {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
