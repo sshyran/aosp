@@ -770,7 +770,7 @@ TEST_F(PartitioningTest, SimpleModel) {
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planA.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planA.forTest_simpleGetDevice().get(), nullptr);
-    ASSERT_EQ(planA.forTest_simpleGetDevice()->getName(), "good");
+    ASSERT_STREQ(planA.forTest_simpleGetDevice()->getName(), "good");
 
     // Simple partition (two devices are each capable of everything, none better than CPU).
     const auto devicesC = makeDevices(
@@ -1115,7 +1115,7 @@ TEST_F(PartitioningTest, OemOperations) {
     const auto& planBestOEM = compilationBestOEM.getExecutionPlan();
     ASSERT_EQ(planBestOEM.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planBestOEM.forTest_simpleGetDevice().get(), nullptr);
-    ASSERT_EQ(planBestOEM.forTest_simpleGetDevice()->getName(), "goodOEM");
+    ASSERT_STREQ(planBestOEM.forTest_simpleGetDevice()->getName(), "goodOEM");
 
     // Verify that we get an error if no driver can run an OEM operation.
     const auto devicesNoOEM = makeDevices(
@@ -1171,7 +1171,7 @@ TEST_F(PartitioningTest, RelaxedFP) {
         ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
                   ANEURALNETWORKS_NO_ERROR);
         ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
-        ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), expectDevice);
+        ASSERT_STREQ(plan.forTest_simpleGetDevice()->getName(), expectDevice);
     };
 
     ASSERT_NO_FATAL_FAILURE(TrivialTest(false, "f32"));
