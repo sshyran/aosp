@@ -549,6 +549,13 @@ typedef enum {
      * If a value in Lookups is out of bounds, the operation must fail
      * and an error must be reported.
      *
+     * Supported value tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported value tensor rank: from 2
+     *
      * Inputs:
      * * 0: Lookups. A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}.
      *      The values are indices into the first dimension of Values.
@@ -654,6 +661,13 @@ typedef enum {
      * If the sixth entry of Keys contains 123456, the sixth slice of Values
      * must be selected. If no entry in Keys has 123456, a slice of zeroes
      * must be concatenated.
+     *
+     * Supported value tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported value tensor rank: from 2
      *
      * Inputs:
      * * 0: Lookups. A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor with
@@ -862,6 +876,13 @@ typedef enum {
 
     /**
      * Projects an input to a bit vector via locality senstive hashing.
+     *
+     * Supported input tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported input tensor rank: from 1
      *
      * Inputs:
      * * 0: Hash functions. Dim.size == 2, DataType: Float.
@@ -1938,6 +1959,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
+     * Supported tensor rank: from 1
+     *
      * Inputs:
      * * 0: An n-D tensor specifying the input. Must be non-empty.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis to
@@ -1960,6 +1983,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: An n-D tensor specifying the input. Must be non-empty.
@@ -2070,6 +2095,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
+     * Supported tensor rank: from 1
+     *
      * Inputs:
      * * 0: A tensor.
      *
@@ -2133,6 +2160,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
+     * Supported tensor rank: from 1
+     *
      * Inputs:
      * * 0: An n-D tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the dimension
@@ -2164,6 +2193,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: An n-D tensor from which to gather values.
@@ -2360,6 +2391,8 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
+     * Supported tensor rank: from 1
+     *
      * Inputs:
      * * 0: A tensor specifying the base.
      * * 1: A tensor specifying the exponent.
@@ -2419,6 +2452,8 @@ typedef enum {
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}.
@@ -2562,6 +2597,7 @@ typedef enum {
     ANEURALNETWORKS_SIN = 77,
     ANEURALNETWORKS_SLICE = 78,
     ANEURALNETWORKS_SPARSE_TO_DENSE = 79,
+
     /**
      * Splits a tensor along a given axis into num_splits subtensors.
      *
@@ -2569,6 +2605,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: An n-D tensor to split.
@@ -2583,6 +2621,7 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_SPLIT = 80,
+
     ANEURALNETWORKS_SQRT = 81,
 
     /**
@@ -2598,6 +2637,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: input, an n-D tensor specifying the input.
@@ -2700,6 +2741,7 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_TRANSPOSE_CONV_2D = 84,
+
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM = 85,
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN = 86,
 
