@@ -61,13 +61,16 @@ private:
     size_t GetAshmemMappingsCount();
 
     size_t mStartingMapCount = 0;
+    bool mIsCpuOnly;
 };
 
 void MemoryLeakTest::SetUp() {
+    mIsCpuOnly = android::nn::DeviceManager::get()->getUseCpuOnly();
     mStartingMapCount = GetAshmemMappingsCount();
 }
 
 void MemoryLeakTest::TearDown() {
+    android::nn::DeviceManager::get()->setUseCpuOnly(mIsCpuOnly);
     const size_t endingMapCount = GetAshmemMappingsCount();
     ASSERT_EQ(mStartingMapCount, endingMapCount);
 }
