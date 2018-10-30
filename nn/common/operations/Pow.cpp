@@ -17,119 +17,16 @@
 #define LOG_TAG "Operations"
 
 #include "Pow.h"
+#include "IndexedShapeWrapper.h"
+#include "OperationsUtils.h"
 
 #include <cmath>
-
-#include "OperationsUtils.h"
 
 namespace android {
 namespace nn {
 namespace pow {
 
 namespace {
-
-// A wrapper over a Shape class implementing some indexing logic for a wrapped
-// shape.
-// To get an offset for an element in a tensor from vector index, one needs to
-// calculate strides first. This class removes the need to recalculate strides
-// for every indexing and also provides some utility functions.
-class IndexedShapeWrapper {
-   public:
-    IndexedShapeWrapper(const Shape& wrapped_shape) : shape(&wrapped_shape) {
-        strides.resize(shape->dimensions.size());
-        strides.back() = 1;
-        for (int i = strides.size() - 2; i >= 0; --i) {
-            strides[i] = shape->dimensions[i + 1] * strides[i + 1];
-        }
-    }
-
-    // Calculates the next index in a lexicograpical order for a wrapped shape
-    // inplace. Only accepts valid index for a given shape as an input.
-    // Sets lastIndex to true if the received index was the last in a
-    // lexicographical order for a given shape. In this case, index stays the
-    // same.
-    bool nextIndexInplace(std::vector<uint32_t>* index, bool* lastIndex) const {
-        NN_CHECK(isValid(*index));
-
-        bool anyIndicesLeft = false;
-        for (int i = 0; i < index->size(); ++i) {
-            if (index->at(i) < shape->dimensions[i] - 1) {
-                anyIndicesLeft = true;
-                break;
-            }
-        }
-        if (!anyIndicesLeft) {
-            *lastIndex = true;
-            return true;
-        }
-        for (int i = index->size() - 1; i >= 0; --i) {
-            ++index->at(i);
-            if (index->at(i) == shape->dimensions[i]) {
-                index->at(i) = 0;
-            } else {
-                break;
-            }
-        }
-        return true;
-    }
-
-    // Given an index as a vector with per-dimension indices, calculates an
-    // offset of the element in a flattened tensor.
-    bool indexToFlatIndex(const std::vector<uint32_t>& index, uint32_t* flatIndex) const {
-        NN_CHECK(isValid(index));
-
-        *flatIndex = 0;
-        for (int i = 0; i < index.size(); ++i) {
-            *flatIndex += strides[i] * index[i];
-        }
-        return true;
-    }
-
-    // Same as indexToFlatIndex, only ignores first dimensions of an index if
-    // they are not present in the shape. Also ignores dimensions of a shape of
-    // size 1.
-    // For example:
-    //    for shape:    [3, 1, 2]
-    //    and index: [4, 2, 5, 1]
-    // the function will ignore dimensions with indices 4 and 5 and set
-    // flatIndex to 5 as a result.
-    bool broadcastedIndexToFlatIndex(const std::vector<uint32_t>& index,
-                                     uint32_t* flatIndex) const {
-        NN_CHECK(index.size() >= strides.size());
-
-        *flatIndex = 0;
-        for (int i = 1; i <= strides.size(); ++i) {
-            uint32_t currentIndex = index[index.size() - i];
-            uint32_t currentDimSize = shape->dimensions[shape->dimensions.size() - i];
-            NN_CHECK(currentIndex < currentDimSize || currentDimSize == 1);
-            if (currentDimSize != 1) {
-                *flatIndex += strides[strides.size() - i] * index[index.size() - i];
-            }
-        }
-        return true;
-    }
-
-   private:
-    const Shape* const shape;
-    std::vector<uint32_t> strides;
-
-    bool isValid(const std::vector<uint32_t>& index) const {
-        if (index.size() != shape->dimensions.size()) {
-            LOG(ERROR) << "Index: " << toString(index)
-                       << " has a different number of dimensions from shape: "
-                       << toString(shape->dimensions);
-            return false;
-        }
-        for (int i = 0; i < index.size(); ++i) {
-            if (index[i] >= shape->dimensions[i]) {
-                LOG(ERROR) << "Invalid index: " << toString(index)
-                           << " is out of range for shape: " << toString(shape->dimensions);
-                return false;
-            }
-        }
-        return true;
-    }
-};
 
 template <typename T>
 bool evalGeneric(const T* baseData, const Shape& baseShape, const T* exponentData,
