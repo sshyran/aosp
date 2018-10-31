@@ -52,6 +52,8 @@ LIBNEURALNETWORKS {
     ANeuralNetworksExecution_setOutput;
     ANeuralNetworksExecution_setOutputFromMemory;
     ANeuralNetworksExecution_startCompute;
+    ANeuralNetworksExecution_getOutputOperandDimensions; # introduced=Q
+    ANeuralNetworksExecution_getOutputOperandRank; # introduced=Q
     ANeuralNetworksEvent_wait;
     ANeuralNetworksEvent_free;
   local:
