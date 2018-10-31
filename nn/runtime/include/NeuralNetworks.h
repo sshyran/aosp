@@ -4535,6 +4535,54 @@ int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
  */
 int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution);
 
+/**
+ * Get the dimensional information of the specified output operand of the model of the
+ * {@link ANeuralNetworksExecution}.
+ *
+ * On asynchronous execution initiated by {@link ANeuralNetworksExecution_startCompute},
+ * {@link ANeuralNetworksEvent_wait} must be called prior to this function to recuperate
+ * the resources used by the execution.
+ *
+ * @param execution The execution to be queried.
+ * @param index The index of the output argument we are querying. It is
+ *              an index into the lists passed to
+ *              {@link ANeuralNetworksModel_identifyInputsAndOutputs}. It is not
+ *              the index associated with {@link ANeuralNetworksModel_addOperand}.
+ * @param rank The rank of the output operand.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful, ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE
+ *         if the target output is provided an insufficient buffer at execution time,
+ *         ANEURALNETWORKS_BAD_DATA if the index is invalid.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksExecution_getOutputOperandRank(ANeuralNetworksExecution* execution,
+                                                  int32_t index, uint32_t* rank);
+
+/**
+ * Get the dimensional information of the specified output operand of the model of the
+ * {@link ANeuralNetworksExecution}. The target output operand cannot be a scalar.
+ *
+ * On asynchronous execution initiated by {@link ANeuralNetworksExecution_startCompute},
+ * {@link ANeuralNetworksEvent_wait} must be called prior to this function to recuperate
+ * the resources used by the execution.
+ *
+ * @param execution The execution to be queried.
+ * @param index The index of the output argument we are querying. It is an index into the lists
+ *              passed to {@link ANeuralNetworksModel_identifyInputsAndOutputs}. It is not
+ *              the index associated with {@link ANeuralNetworksModel_addOperand}.
+ * @param dimensions The dimension array to be filled. The size of the array must be exactly as
+ *                   large as the rank of the output operand to be queried in the model.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful, ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE
+ *         if the target output is provided an insufficient buffer at execution time,
+ *         ANEURALNETWORKS_BAD_DATA if the index is invalid or if the target is a scalar.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksExecution_getOutputOperandDimensions(ANeuralNetworksExecution* execution,
+                                                        int32_t index, uint32_t* dimensions);
+
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
 #if __ANDROID_API__ >= 27

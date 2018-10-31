@@ -129,7 +129,18 @@ sp<V1_0::IPreparedModel> PreparedModelCallback::getPreparedModel() {
     return mPreparedModel;
 }
 
-ExecutionCallback::ExecutionCallback() : mErrorStatus(ErrorStatus::GENERAL_FAILURE) {}
+ExecutionCallback::ExecutionCallback()
+    : mErrorStatus(ErrorStatus::GENERAL_FAILURE), mOnFinish(nullptr) {
+    on_finish([this]() {
+        if (mOnFinish != nullptr) {
+            ErrorStatus status = mOnFinish(mErrorStatus);
+            if (status != ErrorStatus::NONE) {
+                mErrorStatus = status;
+            }
+        }
+        return true;
+    });
+}
 
 ExecutionCallback::~ExecutionCallback() {}
 
