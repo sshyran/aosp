@@ -1841,6 +1841,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
         } break;
         case OperationType::SPLIT: {
             if (ins.size() != 3) {
+                LOG(ERROR) << "Wrong input count";
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
