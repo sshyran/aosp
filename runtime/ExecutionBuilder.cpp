@@ -477,6 +477,7 @@ void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutpu
     switch (executorInputOrOutput->state) {
         default:
             nnAssert(!"unexpected ModelArgumentInfo::state");
+            break;
         case ModelArgumentInfo::POINTER:
         case ModelArgumentInfo::UNSPECIFIED:
             break;
