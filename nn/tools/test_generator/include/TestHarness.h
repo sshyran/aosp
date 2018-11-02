@@ -68,6 +68,12 @@ struct MixedTypedIndex<uint8_t> {
     static constexpr size_t index = 2;
 };
 
+template <size_t Index>
+struct MixedTypedTypes {
+    typedef typename std::tuple_element<Index, MixedTyped>::type::mapped_type VectorType;
+    typedef typename VectorType::value_type ValueType;
+};
+
 // Go through all index-value pairs of a given input type
 template <typename T>
 inline void for_each(const MixedTyped& idx_and_data,
@@ -103,6 +109,8 @@ inline void for_all(MixedTyped& idx_and_data,
     for_all_internal<float>(idx_and_data, execute_this);
     for_all_internal<int32_t>(idx_and_data, execute_this);
     for_all_internal<uint8_t>(idx_and_data, execute_this);
+    static_assert(3 == std::tuple_size<MixedTyped>::value,
+                  "Number of types in MixedTyped changed, but for_all function wasn't updated");
 }
 
 // Const variant of internal helper for for_all
@@ -117,12 +125,14 @@ inline void for_all_internal(
 
 // Go through all index-value pairs (const variant)
 // expects a functor that takes (int index, const void *raw data, size_t sz)
-inline void for_all(
-        const MixedTyped& idx_and_data,
-        std::function<void(int, const void*, size_t)> execute_this) {
+inline void for_all(const MixedTyped& idx_and_data,
+                    std::function<void(int, const void*, size_t)> execute_this) {
     for_all_internal<float>(idx_and_data, execute_this);
     for_all_internal<int32_t>(idx_and_data, execute_this);
     for_all_internal<uint8_t>(idx_and_data, execute_this);
+    static_assert(
+            3 == std::tuple_size<MixedTyped>::value,
+            "Number of types in MixedTyped changed, but const for_all function wasn't updated");
 }
 
 // Helper template - resize test output per golden
@@ -140,6 +150,9 @@ inline void resize_accordingly(const MixedTyped& golden, MixedTyped& test) {
     resize_accordingly_<float, 0>(golden, test);
     resize_accordingly_<int32_t, 1>(golden, test);
     resize_accordingly_<uint8_t, 2>(golden, test);
+    static_assert(3 == std::tuple_size<MixedTyped>::value,
+                  "Number of types in MixedTyped changed, but resize_accordingly function wasn't "
+                  "updated");
 }
 
 template <typename ty, size_t tuple_index>
@@ -158,33 +171,30 @@ inline MixedTyped filter(const MixedTyped& golden,
     filter_internal<float, 0>(golden, &filtered, is_ignored);
     filter_internal<int32_t, 1>(golden, &filtered, is_ignored);
     filter_internal<uint8_t, 2>(golden, &filtered, is_ignored);
+    static_assert(3 == std::tuple_size<MixedTyped>::value,
+                  "Number of types in MixedTyped changed, but compare function wasn't updated");
     return filtered;
 }
 
 // Compare results
-#define VECTOR_TYPE(x) \
-    typename std::tuple_element<x, MixedTyped>::type::mapped_type
-#define VALUE_TYPE(x) VECTOR_TYPE(x)::value_type
-template <size_t tuple_index>
-void compare_(
-        const MixedTyped& golden, const MixedTyped& test,
-        std::function<void(VALUE_TYPE(tuple_index), VALUE_TYPE(tuple_index))>
-                cmp) {
-    for_each<VALUE_TYPE(tuple_index)>(
-            golden,
-            [&test, &cmp](int index, const VECTOR_TYPE(tuple_index) & m) {
-                const auto& test_operands = std::get<tuple_index>(test);
+// clang-format off
+template <size_t I>
+void compare_(const MixedTyped& golden, const MixedTyped& test,
+              std::function<void(typename MixedTypedTypes<I>::ValueType,
+                                 typename MixedTypedTypes<I>::ValueType)> cmp) {
+    for_each<typename MixedTypedTypes<I>::ValueType>(
+            golden, [&test, &cmp](int index, const typename MixedTypedTypes<I>::VectorType& m) {
+                const auto& test_operands = std::get<I>(test);
                 const auto& test_ty = test_operands.find(index);
                 ASSERT_NE(test_ty, test_operands.end());
                 for (unsigned int i = 0; i < m.size(); i++) {
-                    SCOPED_TRACE(testing::Message()
-                                 << "When comparing element " << i);
+                    SCOPED_TRACE(testing::Message() << "When comparing element " << i);
                     cmp(m[i], test_ty->second[i]);
                 }
             });
 }
-#undef VALUE_TYPE
-#undef VECTOR_TYPE
+// clang-format on
+
 inline void compare(const MixedTyped& golden, const MixedTyped& test,
                     float fpAtol = 1e-5f, float fpRtol = 1e-5f) {
     size_t totalNumberOfErrors = 0;
@@ -214,6 +224,8 @@ inline void compare(const MixedTyped& golden, const MixedTyped& test,
             totalNumberOfErrors++;
         }
     });
+    static_assert(3 == std::tuple_size<MixedTyped>::value,
+                  "Number of types in MixedTyped changed, but compare function wasn't updated");
     EXPECT_EQ(size_t{0}, totalNumberOfErrors);
 }
 
