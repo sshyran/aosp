@@ -160,6 +160,7 @@ class SingleThreadCallTree(object):
               PHASE_EXECUTION in subphases.get(prev_phase, [])) or
              node.subtract                       # Marker for wrong nesting
              ), self.debugstring
+      # Check that layers nest as we expect:
       assert ((prev_layer is None) or
               (layer == LAYER_UTILITY) or
               (layer == prev_layer) or
