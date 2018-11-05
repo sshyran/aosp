@@ -371,6 +371,7 @@
 #include "../generated/tests/pow.mod.py.cpp"
 #include "../generated/tests/prelu.mod.py.cpp"
 #include "../generated/tests/quantize.mod.py.cpp"
+#include "../generated/tests/quantized_lstm.mod.py.cpp"
 #include "../generated/tests/random_multinomial.mod.py.cpp"
 #include "../generated/tests/resize_bilinear_v1_2.mod.py.cpp"
 #include "../generated/tests/roi_align.mod.py.cpp"
