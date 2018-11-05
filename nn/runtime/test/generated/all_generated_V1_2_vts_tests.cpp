@@ -15186,6 +15186,29 @@ TEST_F(ValidationTest, sub_quantized_different_scales_64) {
 }
 
 
+// Generated from: tanh_float16.mod.py.
+namespace tanh_float16 {
+// Generated tanh_float16 test
+#include "examples/tanh_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/tanh_float16.model.cpp"
+} // namespace tanh_float16
+
+TEST_F(NeuralnetworksHidlTest, tanh_float16) {
+  generated_tests::Execute(device,
+                           tanh_float16::createTestModel,
+                           tanh_float16::is_ignored,
+                           tanh_float16::examples);
+}
+
+TEST_F(ValidationTest, tanh_float16) {
+  const Model model = tanh_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(tanh_float16::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: tanh_quantized.mod.py.
 namespace tanh_quantized {
 // Generated tanh_quantized test
