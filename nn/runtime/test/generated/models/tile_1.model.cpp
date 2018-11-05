@@ -46,14 +46,36 @@ inline bool is_ignored_relaxed(int i) {
   return ignore.find(i) != ignore.end();
 }
 
-void CreateModel_quant8(Model *model) {
+void CreateModel_float16(Model *model) {
   OperandType type1(Type::TENSOR_INT32, {1});
-  OperandType type3(Type::TENSOR_QUANT8_ASYMM, {3}, 0.5f, 127);
-  OperandType type4(Type::TENSOR_QUANT8_ASYMM, {6}, 0.5f, 127);
+  OperandType type3(Type::TENSOR_FLOAT16, {3});
+  OperandType type4(Type::TENSOR_FLOAT16, {6});
   // Phase 1, operands
   auto input0 = model->addOperand(&type3);
   auto multipliers = model->addOperand(&type1);
   auto output0 = model->addOperand(&type4);
+  // Phase 2, operations
+  model->addOperation(ANEURALNETWORKS_TILE, {input0, multipliers}, {output0});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input0, multipliers},
+    {output0});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_quant8(Model *model) {
+  OperandType type1(Type::TENSOR_INT32, {1});
+  OperandType type5(Type::TENSOR_QUANT8_ASYMM, {3}, 0.5f, 127);
+  OperandType type6(Type::TENSOR_QUANT8_ASYMM, {6}, 0.5f, 127);
+  // Phase 1, operands
+  auto input0 = model->addOperand(&type5);
+  auto multipliers = model->addOperand(&type1);
+  auto output0 = model->addOperand(&type6);
   // Phase 2, operations
   model->addOperation(ANEURALNETWORKS_TILE, {input0, multipliers}, {output0});
   // Phase 3, inputs and outputs
