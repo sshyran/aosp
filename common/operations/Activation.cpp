@@ -55,6 +55,16 @@ bool relu6Float32(const float* inputData, const Shape& inputShape,
     return true;
 }
 
+bool tanhFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* outputData,
+                 const Shape& outputShape) {
+    NNTRACE_COMP("tanhFloat16");
+    int numElements = getNumberOfElements(inputShape);
+    for (int i = 0; i < numElements; i++, inputData++, outputData++) {
+        *outputData = static_cast<_Float16>(std::tanh(static_cast<float>(*inputData)));
+    }
+    return true;
+}
+
 bool tanhFloat32(const float* inputData, const Shape& inputShape,
                  float* outputData, const Shape& outputShape) {
     NNTRACE_COMP("tanhFloat32");
