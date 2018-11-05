@@ -31,6 +31,7 @@
 #include "operations/RNN.h"
 #include "operations/SVDF.h"
 #include "operations/Tile.h"
+#include "operations/TopK_V2.h"
 
 #include <stddef.h>
 
