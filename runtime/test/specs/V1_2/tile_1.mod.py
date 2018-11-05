@@ -29,8 +29,13 @@ quant8 = DataTypeConverter().Identify({
     output0: ["TENSOR_QUANT8_ASYMM", 0.5, 127],
 })
 
+float16 = DataTypeConverter().Identify({
+    input0: ["TENSOR_FLOAT16"],
+    output0: ["TENSOR_FLOAT16"],
+})
+
 Example({
     input0: input_values,
     multipliers: multiplier_values,
     output0: output_values,
-}).AddVariations("relaxed", quant8)
+}).AddVariations("relaxed", float16, quant8)
