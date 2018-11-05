@@ -95,6 +95,7 @@ bool eval(const uint8_t* inputData, const Shape& inputShape, const int32_t* mult
     }
 
     switch (inputShape.type) {
+        ANDROID_NN_IMPL_TILE(OperandType::TENSOR_FLOAT16, _Float16);
         ANDROID_NN_IMPL_TILE(OperandType::TENSOR_FLOAT32, float);
         ANDROID_NN_IMPL_TILE(OperandType::TENSOR_INT32, int32_t);
         ANDROID_NN_IMPL_TILE(OperandType::TENSOR_QUANT8_ASYMM, uint8_t);

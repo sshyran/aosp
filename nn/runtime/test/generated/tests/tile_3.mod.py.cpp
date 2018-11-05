@@ -21,6 +21,12 @@ TEST_F(GeneratedTests, tile_3_relaxed) {
             tile_3::examples_relaxed);
 }
 
+TEST_F(GeneratedTests, tile_3_float16) {
+    execute(tile_3::CreateModel_float16,
+            tile_3::is_ignored_float16,
+            tile_3::examples_float16);
+}
+
 TEST_F(GeneratedTests, tile_3_quant8) {
     execute(tile_3::CreateModel_quant8,
             tile_3::is_ignored_quant8,
