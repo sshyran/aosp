@@ -311,6 +311,29 @@ bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData,
     return true;
 }
 
+bool subFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut) {
+    NNTRACE_TRANS("subFloat16");
+
+    std::vector<float> in1_float32(getNumberOfElements(shape1));
+    for (int i = 0; i < in1_float32.size(); ++i) {
+        in1_float32[i] = static_cast<float>(in1[i]);
+    }
+
+    std::vector<float> in2_float32(getNumberOfElements(shape2));
+    for (int i = 0; i < in2_float32.size(); ++i) {
+        in2_float32[i] = static_cast<float>(in2[i]);
+    }
+
+    std::vector<float> out_float32(getNumberOfElements(shapeOut));
+    subFloat32(in1_float32.data(), shape1, in2_float32.data(), shape2, activation,
+               out_float32.data(), shapeOut);
+    for (int i = 0; i < out_float32.size(); ++i) {
+        out[i] = static_cast<_Float16>(out_float32[i]);
+    }
+    return true;
+}
+
 bool subFloat32(const float* in1, const Shape& shape1,
                 const float* in2, const Shape& shape2,
                 int32_t activation,

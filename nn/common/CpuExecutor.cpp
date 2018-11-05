@@ -1753,7 +1753,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 !setInfoAndAllocateIfNeeded(&out, outShape)) {
                 break;
             }
-            if (in1.type == OperandType::TENSOR_FLOAT32) {
+            if (in1.type == OperandType::TENSOR_FLOAT16) {
+                success = subFloat16(reinterpret_cast<const _Float16*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const _Float16*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<_Float16*>(out.buffer), outShape);
+            } else if (in1.type == OperandType::TENSOR_FLOAT32) {
                 success = subFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
                                      reinterpret_cast<const float*>(in2.buffer), in2.shape(),
                                      activation, reinterpret_cast<float*>(out.buffer), outShape);
