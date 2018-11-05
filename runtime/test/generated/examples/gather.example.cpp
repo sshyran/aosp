@@ -11,6 +11,8 @@ std::vector<MixedTypedExample> examples = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -20,6 +22,8 @@ std::vector<MixedTypedExample> examples = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -37,6 +41,8 @@ std::vector<MixedTypedExample> examples_relaxed = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -46,6 +52,8 @@ std::vector<MixedTypedExample> examples_relaxed = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -63,7 +71,9 @@ std::vector<MixedTypedExample> examples_quant8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {123, 127, 128, 129}}}
+  {{0, {123, 127, 128, 129}}},
+  // int -> QUANT16_ASYMM map
+  {}
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -72,7 +82,9 @@ std::vector<MixedTypedExample> examples_quant8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {128, 129, 123, 127}}}
+  {{0, {128, 129, 123, 127}}},
+  // int -> QUANT16_ASYMM map
+  {}
 }
 },
 }, // End of an example
@@ -89,6 +101,8 @@ std::vector<MixedTypedExample> examples_int32 = {
   // int -> INT32 map
   {{0, {-2, 0, 1, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -98,6 +112,8 @@ std::vector<MixedTypedExample> examples_int32 = {
   // int -> INT32 map
   {{0, {1, 1, -2, 0}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -115,6 +131,8 @@ std::vector<MixedTypedExample> examples_2 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -124,6 +142,8 @@ std::vector<MixedTypedExample> examples_2 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -141,6 +161,8 @@ std::vector<MixedTypedExample> examples_relaxed_2 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -150,6 +172,8 @@ std::vector<MixedTypedExample> examples_relaxed_2 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -167,7 +191,9 @@ std::vector<MixedTypedExample> examples_quant8_2 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {123, 127, 128, 129}}}
+  {{0, {123, 127, 128, 129}}},
+  // int -> QUANT16_ASYMM map
+  {}
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -176,7 +202,9 @@ std::vector<MixedTypedExample> examples_quant8_2 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {128, 129}}}
+  {{0, {128, 129}}},
+  // int -> QUANT16_ASYMM map
+  {}
 }
 },
 }, // End of an example
@@ -193,6 +221,8 @@ std::vector<MixedTypedExample> examples_int32_2 = {
   // int -> INT32 map
   {{0, {-2, 0, 1, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -202,6 +232,8 @@ std::vector<MixedTypedExample> examples_int32_2 = {
   // int -> INT32 map
   {{0, {1, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -219,6 +251,8 @@ std::vector<MixedTypedExample> examples_3 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -228,6 +262,8 @@ std::vector<MixedTypedExample> examples_3 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -245,6 +281,8 @@ std::vector<MixedTypedExample> examples_relaxed_3 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -254,6 +292,8 @@ std::vector<MixedTypedExample> examples_relaxed_3 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -271,7 +311,9 @@ std::vector<MixedTypedExample> examples_quant8_3 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {129, 131, 133}}}
+  {{0, {129, 131, 133}}},
+  // int -> QUANT16_ASYMM map
+  {}
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -280,7 +322,9 @@ std::vector<MixedTypedExample> examples_quant8_3 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {131}}}
+  {{0, {131}}},
+  // int -> QUANT16_ASYMM map
+  {}
 }
 },
 }, // End of an example
@@ -297,6 +341,8 @@ std::vector<MixedTypedExample> examples_int32_3 = {
   // int -> INT32 map
   {{0, {1, 2, 3}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -306,6 +352,8 @@ std::vector<MixedTypedExample> examples_int32_3 = {
   // int -> INT32 map
   {{0, {2}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -323,6 +371,8 @@ std::vector<MixedTypedExample> examples_4 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -332,6 +382,8 @@ std::vector<MixedTypedExample> examples_4 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -349,6 +401,8 @@ std::vector<MixedTypedExample> examples_relaxed_4 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -358,6 +412,8 @@ std::vector<MixedTypedExample> examples_relaxed_4 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -375,7 +431,9 @@ std::vector<MixedTypedExample> examples_quant8_4 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {129, 131, 133}}}
+  {{0, {129, 131, 133}}},
+  // int -> QUANT16_ASYMM map
+  {}
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -384,7 +442,9 @@ std::vector<MixedTypedExample> examples_quant8_4 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {131, 129}}}
+  {{0, {131, 129}}},
+  // int -> QUANT16_ASYMM map
+  {}
 }
 },
 }, // End of an example
@@ -401,6 +461,8 @@ std::vector<MixedTypedExample> examples_int32_4 = {
   // int -> INT32 map
   {{0, {1, 2, 3}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -410,6 +472,8 @@ std::vector<MixedTypedExample> examples_int32_4 = {
   // int -> INT32 map
   {{0, {2, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -427,6 +491,8 @@ std::vector<MixedTypedExample> examples_5 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -436,6 +502,8 @@ std::vector<MixedTypedExample> examples_5 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -453,6 +521,8 @@ std::vector<MixedTypedExample> examples_relaxed_5 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -462,6 +532,8 @@ std::vector<MixedTypedExample> examples_relaxed_5 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -479,7 +551,9 @@ std::vector<MixedTypedExample> examples_quant8_5 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {123, 127, 128, 129}}}
+  {{0, {123, 127, 128, 129}}},
+  // int -> QUANT16_ASYMM map
+  {}
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -488,7 +562,9 @@ std::vector<MixedTypedExample> examples_quant8_5 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {123, 127, 128, 129, 123, 127, 128, 129}}}
+  {{0, {123, 127, 128, 129, 123, 127, 128, 129}}},
+  // int -> QUANT16_ASYMM map
+  {}
 }
 },
 }, // End of an example
@@ -505,6 +581,8 @@ std::vector<MixedTypedExample> examples_int32_5 = {
   // int -> INT32 map
   {{0, {-2, 0, 1, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -514,6 +592,8 @@ std::vector<MixedTypedExample> examples_int32_5 = {
   // int -> INT32 map
   {{0, {-2, 0, 1, 1, -2, 0, 1, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -531,6 +611,8 @@ std::vector<MixedTypedExample> examples_6 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -540,6 +622,8 @@ std::vector<MixedTypedExample> examples_6 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -557,6 +641,8 @@ std::vector<MixedTypedExample> examples_relaxed_6 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -566,6 +652,8 @@ std::vector<MixedTypedExample> examples_relaxed_6 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -583,7 +671,9 @@ std::vector<MixedTypedExample> examples_quant8_6 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {123, 127, 128, 129}}}
+  {{0, {123, 127, 128, 129}}},
+  // int -> QUANT16_ASYMM map
+  {}
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -592,7 +682,9 @@ std::vector<MixedTypedExample> examples_quant8_6 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {127, 129}}}
+  {{0, {127, 129}}},
+  // int -> QUANT16_ASYMM map
+  {}
 }
 },
 }, // End of an example
@@ -609,6 +701,8 @@ std::vector<MixedTypedExample> examples_int32_6 = {
   // int -> INT32 map
   {{0, {-2, 0, 1, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -618,6 +712,8 @@ std::vector<MixedTypedExample> examples_int32_6 = {
   // int -> INT32 map
   {{0, {0, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -635,6 +731,8 @@ std::vector<MixedTypedExample> examples_7 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -644,6 +742,8 @@ std::vector<MixedTypedExample> examples_7 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -661,6 +761,8 @@ std::vector<MixedTypedExample> examples_relaxed_7 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -670,6 +772,8 @@ std::vector<MixedTypedExample> examples_relaxed_7 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -687,7 +791,9 @@ std::vector<MixedTypedExample> examples_quant8_7 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {129, 131, 133, 135, 137, 139}}}
+  {{0, {129, 131, 133, 135, 137, 139}}},
+  // int -> QUANT16_ASYMM map
+  {}
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -696,7 +802,9 @@ std::vector<MixedTypedExample> examples_quant8_7 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {135, 137, 139, 129, 131, 133}}}
+  {{0, {135, 137, 139, 129, 131, 133}}},
+  // int -> QUANT16_ASYMM map
+  {}
 }
 },
 }, // End of an example
@@ -713,6 +821,8 @@ std::vector<MixedTypedExample> examples_int32_7 = {
   // int -> INT32 map
   {{0, {1, 2, 3, 4, 5, 6}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -722,6 +832,8 @@ std::vector<MixedTypedExample> examples_int32_7 = {
   // int -> INT32 map
   {{0, {4, 5, 6, 1, 2, 3}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -739,6 +851,8 @@ std::vector<MixedTypedExample> examples_8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -748,6 +862,8 @@ std::vector<MixedTypedExample> examples_8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -765,6 +881,8 @@ std::vector<MixedTypedExample> examples_relaxed_8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -774,6 +892,8 @@ std::vector<MixedTypedExample> examples_relaxed_8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -791,7 +911,9 @@ std::vector<MixedTypedExample> examples_quant8_8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {129, 131, 133, 135, 137, 139}}}
+  {{0, {129, 131, 133, 135, 137, 139}}},
+  // int -> QUANT16_ASYMM map
+  {}
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -800,7 +922,9 @@ std::vector<MixedTypedExample> examples_quant8_8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {133, 129, 139, 135}}}
+  {{0, {133, 129, 139, 135}}},
+  // int -> QUANT16_ASYMM map
+  {}
 }
 },
 }, // End of an example
@@ -817,6 +941,8 @@ std::vector<MixedTypedExample> examples_int32_8 = {
   // int -> INT32 map
   {{0, {1, 2, 3, 4, 5, 6}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -826,6 +952,8 @@ std::vector<MixedTypedExample> examples_int32_8 = {
   // int -> INT32 map
   {{0, {3, 1, 6, 4}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },

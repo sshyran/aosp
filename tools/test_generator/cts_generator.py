@@ -29,6 +29,7 @@ import math
 import os
 import re
 import sys
+import traceback
 
 # Stuff from test generator
 import test_generator as tg
@@ -171,11 +172,22 @@ def DumpCtsModel(model, model_fd):
     model.dumped = True
 
 def DumpMixedType(operands, feedDict):
-    typedMap = {}
+    supportedTensors = [
+        "TENSOR_FLOAT32",
+        "TENSOR_INT32",
+        "TENSOR_QUANT8_ASYMM",
+        "TENSOR_OEM_BYTE",
+        "TENSOR_QUANT16_ASYMM",
+    ]
+    typedMap = {t: [] for t in supportedTensors}
     FeedAndGet = lambda op, d: op.Feed(d).GetListInitialization()
     # group the operands by type
     for operand in operands:
-        typedMap.setdefault(operand.type.type, []).append(FeedAndGet(operand, feedDict))
+        try:
+            typedMap[operand.type.type].append(FeedAndGet(operand, feedDict))
+        except KeyError as e:
+            traceback.print_exc()
+            sys.exit("Cannot dump tensor of type {}".format(operand.type.type))
     mixedTypeTemplate = """\
 {{ // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> FLOAT32 map
@@ -183,12 +195,15 @@ def DumpMixedType(operands, feedDict):
   // int -> INT32 map
   {{{int32_map}}},
   // int -> QUANT8_ASYMM map
-  {{{uint8_map}}}\n}}"""
+  {{{uint8_map}}},
+  // int -> QUANT16_ASYMM map
+  {{{int16_map}}}\n}}"""
     return mixedTypeTemplate.format(
         float32_map=tg.GetJointStr(typedMap.get("TENSOR_FLOAT32", [])),
         int32_map=tg.GetJointStr(typedMap.get("TENSOR_INT32", [])),
         uint8_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT8_ASYMM", []) +
-                                 typedMap.get("TENSOR_OEM_BYTE", [])))
+                                 typedMap.get("TENSOR_OEM_BYTE", [])),
+        int16_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT16_ASYMM", [])))
 
 # Dump Example file for Cts tests
 def DumpCtsExample(example, example_fd):

@@ -11,6 +11,8 @@ std::vector<MixedTypedExample> examples = {
   // int -> INT32 map
   {{1, {2, 3, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -20,6 +22,8 @@ std::vector<MixedTypedExample> examples = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -37,6 +41,8 @@ std::vector<MixedTypedExample> examples_relaxed = {
   // int -> INT32 map
   {{1, {2, 3, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -46,6 +52,8 @@ std::vector<MixedTypedExample> examples_relaxed = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
@@ -63,7 +71,9 @@ std::vector<MixedTypedExample> examples_quant8 = {
   // int -> INT32 map
   {{1, {2, 3, 1}}},
   // int -> QUANT8_ASYMM map
-  {{0, {149, 151, 153, 169, 171, 173}}}
+  {{0, {149, 151, 153, 169, 171, 173}}},
+  // int -> QUANT16_ASYMM map
+  {}
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -72,7 +82,9 @@ std::vector<MixedTypedExample> examples_quant8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {149, 151, 153, 169, 171, 173, 149, 151, 153, 169, 171, 173, 149, 151, 153, 169, 171, 173, 149, 151, 153, 169, 171, 173, 149, 151, 153, 169, 171, 173, 149, 151, 153, 169, 171, 173}}}
+  {{0, {149, 151, 153, 169, 171, 173, 149, 151, 153, 169, 171, 173, 149, 151, 153, 169, 171, 173, 149, 151, 153, 169, 171, 173, 149, 151, 153, 169, 171, 173, 149, 151, 153, 169, 171, 173}}},
+  // int -> QUANT16_ASYMM map
+  {}
 }
 },
 }, // End of an example
@@ -89,6 +101,8 @@ std::vector<MixedTypedExample> examples_int32 = {
   // int -> INT32 map
   {{0, {11, 12, 13, 21, 22, 23}}, {1, {2, 3, 1}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 },
 //Output(s)
@@ -98,6 +112,8 @@ std::vector<MixedTypedExample> examples_int32 = {
   // int -> INT32 map
   {{0, {11, 12, 13, 21, 22, 23, 11, 12, 13, 21, 22, 23, 11, 12, 13, 21, 22, 23, 11, 12, 13, 21, 22, 23, 11, 12, 13, 21, 22, 23, 11, 12, 13, 21, 22, 23}}},
   // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_ASYMM map
   {}
 }
 },
