@@ -2165,6 +2165,29 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
+        case ANEURALNETWORKS_TOPK_V2: {
+            if (inputCount != 2 || outputCount != 2) {
+                logInvalidInOutNumber(2, 1);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            OperandType inputType = operands[inputIndexes[0]].type;
+            if (inputType == OperandType::TENSOR_FLOAT32 ||
+                inputType == OperandType::TENSOR_INT32 ||
+                inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                inExpectedTypes = {inputType, OperandType::INT32};
+                outExpectedTypes = {inputType, OperandType::TENSOR_INT32};
+            } else {
+                LOG(ERROR) << "Unsupported input tensor type for operation "
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            *minSupportedHalVersion = HalVersion::V1_2;
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
+                                                 outExpectedTypes);
+        }
         default: {
             return ANEURALNETWORKS_BAD_DATA;
         }

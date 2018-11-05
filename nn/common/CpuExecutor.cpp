@@ -2342,6 +2342,24 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       pow::eval(base.buffer, base.shape(), exponent.buffer, exponent.shape(),
                                 output.buffer, outShape);
         } break;
+        case OperationType::TOPK_V2: {
+            if (!allParametersPresent(2, 2)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            int32_t k = getScalarData<int32_t>(mOperands[ins[1]]);
+
+            RunTimeOperandInfo& values = mOperands[outs[0]];
+            Shape valuesShape = values.shape();
+            RunTimeOperandInfo& indices = mOperands[outs[1]];
+            Shape indicesShape = indices.shape();
+
+            success = topk_v2::prepare(input.shape(), k, &valuesShape, &indicesShape) &&
+                      setInfoAndAllocateIfNeeded(&values, valuesShape) &&
+                      setInfoAndAllocateIfNeeded(&indices, indicesShape) &&
+                      topk_v2::eval(input.buffer, input.shape(), k, values.buffer, valuesShape,
+                                    indices.buffer, indicesShape);
+        } break;
         default:
             nnAssert(false);
             break;
