@@ -399,4 +399,5 @@
 #include "../generated/tests/tile_1.mod.py.cpp"
 #include "../generated/tests/tile_2.mod.py.cpp"
 #include "../generated/tests/tile_3.mod.py.cpp"
+#include "../generated/tests/topk_v2.mod.py.cpp"
 #include "../generated/tests/transpose_conv2d.mod.py.cpp"
