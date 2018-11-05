@@ -20,7 +20,7 @@
 namespace android {
 namespace hardware {
 namespace neuralnetworks {
-namespace V1_0 {
+namespace V1_2 {
 namespace implementation {
 
 CallbackBase::CallbackBase() : mNotified(false) {}
@@ -104,7 +104,15 @@ PreparedModelCallback::PreparedModelCallback() :
 PreparedModelCallback::~PreparedModelCallback() {}
 
 Return<void> PreparedModelCallback::notify(ErrorStatus errorStatus,
-                                           const sp<IPreparedModel>& preparedModel) {
+                                           const sp<V1_0::IPreparedModel>& preparedModel) {
+    mErrorStatus = errorStatus;
+    mPreparedModel = preparedModel;
+    CallbackBase::notify();
+    return Void();
+}
+
+Return<void> PreparedModelCallback::notify_1_2(ErrorStatus errorStatus,
+                                               const sp<V1_2::IPreparedModel>& preparedModel) {
     mErrorStatus = errorStatus;
     mPreparedModel = preparedModel;
     CallbackBase::notify();
@@ -116,7 +124,7 @@ ErrorStatus PreparedModelCallback::getStatus() {
     return mErrorStatus;
 }
 
-sp<IPreparedModel> PreparedModelCallback::getPreparedModel() {
+sp<V1_0::IPreparedModel> PreparedModelCallback::getPreparedModel() {
     wait();
     return mPreparedModel;
 }
@@ -131,13 +139,19 @@ Return<void> ExecutionCallback::notify(ErrorStatus errorStatus) {
     return Void();
 }
 
+Return<void> ExecutionCallback::notify_1_2(ErrorStatus errorStatus) {
+    mErrorStatus = errorStatus;
+    CallbackBase::notify();
+    return Void();
+}
+
 ErrorStatus ExecutionCallback::getStatus() {
     wait();
     return mErrorStatus;
 }
 
 }  // namespace implementation
-}  // namespace V1_0
+}  // namespace V1_2
 }  // namespace neuralnetworks
 }  // namespace hardware
 }  // namespace android
