@@ -4710,6 +4710,21 @@ TEST_F(ValidationTest, gather_int32) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, gather_float16) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_float16,
+                           gather::is_ignored_float16,
+                           gather::examples_float16);
+}
+
+TEST_F(ValidationTest, gather_float16) {
+  const Model model = gather::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(gather::examples_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, gather_2) {
   generated_tests::Execute(device,
                            gather::createTestModel_2,
@@ -4765,6 +4780,21 @@ TEST_F(NeuralnetworksHidlTest, gather_int32_2) {
 TEST_F(ValidationTest, gather_int32_2) {
   const Model model = gather::createTestModel_int32_2();
   const std::vector<Request> requests = createRequests(gather::examples_int32_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, gather_float16_2) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_float16_2,
+                           gather::is_ignored_float16_2,
+                           gather::examples_float16_2);
+}
+
+TEST_F(ValidationTest, gather_float16_2) {
+  const Model model = gather::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(gather::examples_float16_2);
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -4830,6 +4860,21 @@ TEST_F(ValidationTest, gather_int32_3) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, gather_float16_3) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_float16_3,
+                           gather::is_ignored_float16_3,
+                           gather::examples_float16_3);
+}
+
+TEST_F(ValidationTest, gather_float16_3) {
+  const Model model = gather::createTestModel_float16_3();
+  const std::vector<Request> requests = createRequests(gather::examples_float16_3);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, gather_4) {
   generated_tests::Execute(device,
                            gather::createTestModel_4,
@@ -4885,6 +4930,21 @@ TEST_F(NeuralnetworksHidlTest, gather_int32_4) {
 TEST_F(ValidationTest, gather_int32_4) {
   const Model model = gather::createTestModel_int32_4();
   const std::vector<Request> requests = createRequests(gather::examples_int32_4);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, gather_float16_4) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_float16_4,
+                           gather::is_ignored_float16_4,
+                           gather::examples_float16_4);
+}
+
+TEST_F(ValidationTest, gather_float16_4) {
+  const Model model = gather::createTestModel_float16_4();
+  const std::vector<Request> requests = createRequests(gather::examples_float16_4);
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -4950,6 +5010,21 @@ TEST_F(ValidationTest, gather_int32_5) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, gather_float16_5) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_float16_5,
+                           gather::is_ignored_float16_5,
+                           gather::examples_float16_5);
+}
+
+TEST_F(ValidationTest, gather_float16_5) {
+  const Model model = gather::createTestModel_float16_5();
+  const std::vector<Request> requests = createRequests(gather::examples_float16_5);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, gather_6) {
   generated_tests::Execute(device,
                            gather::createTestModel_6,
@@ -5005,6 +5080,21 @@ TEST_F(NeuralnetworksHidlTest, gather_int32_6) {
 TEST_F(ValidationTest, gather_int32_6) {
   const Model model = gather::createTestModel_int32_6();
   const std::vector<Request> requests = createRequests(gather::examples_int32_6);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, gather_float16_6) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_float16_6,
+                           gather::is_ignored_float16_6,
+                           gather::examples_float16_6);
+}
+
+TEST_F(ValidationTest, gather_float16_6) {
+  const Model model = gather::createTestModel_float16_6();
+  const std::vector<Request> requests = createRequests(gather::examples_float16_6);
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -5070,6 +5160,21 @@ TEST_F(ValidationTest, gather_int32_7) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, gather_float16_7) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_float16_7,
+                           gather::is_ignored_float16_7,
+                           gather::examples_float16_7);
+}
+
+TEST_F(ValidationTest, gather_float16_7) {
+  const Model model = gather::createTestModel_float16_7();
+  const std::vector<Request> requests = createRequests(gather::examples_float16_7);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, gather_8) {
   generated_tests::Execute(device,
                            gather::createTestModel_8,
@@ -5125,6 +5230,21 @@ TEST_F(NeuralnetworksHidlTest, gather_int32_8) {
 TEST_F(ValidationTest, gather_int32_8) {
   const Model model = gather::createTestModel_int32_8();
   const std::vector<Request> requests = createRequests(gather::examples_int32_8);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, gather_float16_8) {
+  generated_tests::Execute(device,
+                           gather::createTestModel_float16_8,
+                           gather::is_ignored_float16_8,
+                           gather::examples_float16_8);
+}
+
+TEST_F(ValidationTest, gather_float16_8) {
+  const Model model = gather::createTestModel_float16_8();
+  const std::vector<Request> requests = createRequests(gather::examples_float16_8);
   validateModel(model);
   validateRequests(model, requests);
 }
