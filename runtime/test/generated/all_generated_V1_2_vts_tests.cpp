@@ -7355,6 +7355,98 @@ TEST_F(NeuralnetworksHidlTest, tile_3_int32) {
                            tile_3::examples_int32);
 }
 
+// Generated from: topk_v2.mod.py.
+namespace topk_v2 {
+// Generated topk_v2 test
+#include "examples/topk_v2.example.cpp"
+// Generated model constructor
+#include "vts_models/topk_v2.model.cpp"
+} // namespace topk_v2
+
+TEST_F(NeuralnetworksHidlTest, topk_v2) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel,
+                           topk_v2::is_ignored,
+                           topk_v2::examples);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_relaxed) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_relaxed,
+                           topk_v2::is_ignored_relaxed,
+                           topk_v2::examples_relaxed);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_2) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_2,
+                           topk_v2::is_ignored_2,
+                           topk_v2::examples_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_relaxed_2) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_relaxed_2,
+                           topk_v2::is_ignored_relaxed_2,
+                           topk_v2::examples_relaxed_2);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_3) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_3,
+                           topk_v2::is_ignored_3,
+                           topk_v2::examples_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_relaxed_3) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_relaxed_3,
+                           topk_v2::is_ignored_relaxed_3,
+                           topk_v2::examples_relaxed_3);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_4) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_4,
+                           topk_v2::is_ignored_4,
+                           topk_v2::examples_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_relaxed_4) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_relaxed_4,
+                           topk_v2::is_ignored_relaxed_4,
+                           topk_v2::examples_relaxed_4);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_5) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_5,
+                           topk_v2::is_ignored_5,
+                           topk_v2::examples_5);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_relaxed_5) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_relaxed_5,
+                           topk_v2::is_ignored_relaxed_5,
+                           topk_v2::examples_relaxed_5);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_6) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_6,
+                           topk_v2::is_ignored_6,
+                           topk_v2::examples_6);
+}
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_relaxed_6) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_relaxed_6,
+                           topk_v2::is_ignored_relaxed_6,
+                           topk_v2::examples_relaxed_6);
+}
+
 // Generated from: transpose_conv2d.mod.py.
 namespace transpose_conv2d {
 // Generated transpose_conv2d test
