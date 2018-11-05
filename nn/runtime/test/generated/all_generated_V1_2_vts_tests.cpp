@@ -9823,6 +9823,21 @@ TEST_F(ValidationTest, maximum_simple_int32) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, maximum_simple_float16) {
+  generated_tests::Execute(device,
+                           maximum::createTestModel_float16,
+                           maximum::is_ignored_float16,
+                           maximum::examples_simple_float16);
+}
+
+TEST_F(ValidationTest, maximum_simple_float16) {
+  const Model model = maximum::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(maximum::examples_simple_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, maximum_broadcast) {
   generated_tests::Execute(device,
                            maximum::createTestModel_2,
@@ -9878,6 +9893,21 @@ TEST_F(NeuralnetworksHidlTest, maximum_broadcast_int32) {
 TEST_F(ValidationTest, maximum_broadcast_int32) {
   const Model model = maximum::createTestModel_int32_2();
   const std::vector<Request> requests = createRequests(maximum::examples_broadcast_int32);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, maximum_broadcast_float16) {
+  generated_tests::Execute(device,
+                           maximum::createTestModel_float16_2,
+                           maximum::is_ignored_float16_2,
+                           maximum::examples_broadcast_float16);
+}
+
+TEST_F(ValidationTest, maximum_broadcast_float16) {
+  const Model model = maximum::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(maximum::examples_broadcast_float16);
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -9951,6 +9981,21 @@ TEST_F(ValidationTest, minimum_simple_int32) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, minimum_simple_float16) {
+  generated_tests::Execute(device,
+                           minimum::createTestModel_float16,
+                           minimum::is_ignored_float16,
+                           minimum::examples_simple_float16);
+}
+
+TEST_F(ValidationTest, minimum_simple_float16) {
+  const Model model = minimum::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(minimum::examples_simple_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, minimum_broadcast) {
   generated_tests::Execute(device,
                            minimum::createTestModel_2,
@@ -10006,6 +10051,21 @@ TEST_F(NeuralnetworksHidlTest, minimum_broadcast_int32) {
 TEST_F(ValidationTest, minimum_broadcast_int32) {
   const Model model = minimum::createTestModel_int32_2();
   const std::vector<Request> requests = createRequests(minimum::examples_broadcast_int32);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, minimum_broadcast_float16) {
+  generated_tests::Execute(device,
+                           minimum::createTestModel_float16_2,
+                           minimum::is_ignored_float16_2,
+                           minimum::examples_broadcast_float16);
+}
+
+TEST_F(ValidationTest, minimum_broadcast_float16) {
+  const Model model = minimum::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(minimum::examples_broadcast_float16);
   validateModel(model);
   validateRequests(model, requests);
 }
