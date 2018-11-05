@@ -1105,7 +1105,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 !setInfoAndAllocateIfNeeded(&output, outShape)) {
                 break;
             }
-            if (input.type == OperandType::TENSOR_FLOAT32) {
+            if (input.type == OperandType::TENSOR_FLOAT16) {
+                success =
+                        tanhFloat16(reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
+                                    reinterpret_cast<_Float16*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT32) {
                 success = tanhFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
                                       reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {

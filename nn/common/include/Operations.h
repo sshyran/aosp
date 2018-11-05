@@ -115,6 +115,8 @@ bool relu1Float32(const float* inputData, const Shape& inputShape, float* output
                   const Shape& outputShape);
 bool relu6Float32(const float* inputData, const Shape& inputShape, float* outputData,
                   const Shape& outputShape);
+bool tanhFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* outputData,
+                 const Shape& outputShape);
 bool tanhFloat32(const float* inputData, const Shape& inputShape, float* outputData,
                  const Shape& outputShape);
 bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
