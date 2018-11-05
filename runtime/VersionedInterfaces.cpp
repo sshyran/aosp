@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "VersionedIDevice.h"
+#include "VersionedInterfaces.h"
 
 #include "Tracing.h"
 #include "Utils.h"
@@ -24,11 +24,41 @@
 namespace android {
 namespace nn {
 
+ErrorStatus VersionedIPreparedModel::execute(const Request& request,
+                                             const sp<IExecutionCallback>& callback) {
+    if (mPreparedModelV1_2 != nullptr) {
+        Return<ErrorStatus> ret = mPreparedModelV1_2->execute_1_2(request, callback);
+        if (!ret.isOk()) {
+            LOG(ERROR) << "execute_1_2 failure: " << ret.description();
+            return ErrorStatus::GENERAL_FAILURE;
+        }
+        return static_cast<ErrorStatus>(ret);
+    } else if (mPreparedModelV1_0 != nullptr) {
+        Return<ErrorStatus> ret = mPreparedModelV1_0->execute(request, callback);
+        if (!ret.isOk()) {
+            LOG(ERROR) << "execute failure: " << ret.description();
+            return ErrorStatus::GENERAL_FAILURE;
+        }
+        return static_cast<ErrorStatus>(ret);
+    } else {
+        LOG(ERROR) << "execute called with no preparedModel";
+        return ErrorStatus::GENERAL_FAILURE;
+    }
+}
+
+bool VersionedIPreparedModel::operator==(nullptr_t) const {
+    return mPreparedModelV1_0 == nullptr;
+}
+
+bool VersionedIPreparedModel::operator!=(nullptr_t) const {
+    return mPreparedModelV1_0 != nullptr;
+}
+
 // HIDL guarantees all V1_1 interfaces inherit from their corresponding V1_0 interfaces.
-VersionedIDevice::VersionedIDevice(sp<V1_0::IDevice> device) :
-        mDeviceV1_0(device),
-        mDeviceV1_1(V1_1::IDevice::castFrom(mDeviceV1_0).withDefault(nullptr)),
-        mDeviceV1_2(V1_2::IDevice::castFrom(mDeviceV1_0).withDefault(nullptr)) {}
+VersionedIDevice::VersionedIDevice(sp<V1_0::IDevice> device)
+    : mDeviceV1_0(device),
+      mDeviceV1_1(V1_1::IDevice::castFrom(mDeviceV1_0).withDefault(nullptr)),
+      mDeviceV1_2(V1_2::IDevice::castFrom(mDeviceV1_0).withDefault(nullptr)) {}
 
 std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() {
     std::pair<ErrorStatus, Capabilities> result;
@@ -36,9 +66,9 @@ std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() {
     if (mDeviceV1_1 != nullptr) {
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_1");
         Return<void> ret = mDeviceV1_1->getCapabilities_1_1(
-            [&result](ErrorStatus error, const Capabilities& capabilities) {
-                result = std::make_pair(error, capabilities);
-            });
+                [&result](ErrorStatus error, const Capabilities& capabilities) {
+                    result = std::make_pair(error, capabilities);
+                });
         if (!ret.isOk()) {
             LOG(ERROR) << "getCapabilities_1_1 failure: " << ret.description();
             return {ErrorStatus::GENERAL_FAILURE, {}};
@@ -46,10 +76,10 @@ std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() {
     } else if (mDeviceV1_0 != nullptr) {
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities");
         Return<void> ret = mDeviceV1_0->getCapabilities(
-            [&result](ErrorStatus error, const V1_0::Capabilities& capabilities) {
-                // Time taken to convert capabilities is trivial
-                result = std::make_pair(error, convertToV1_1(capabilities));
-            });
+                [&result](ErrorStatus error, const V1_0::Capabilities& capabilities) {
+                    // Time taken to convert capabilities is trivial
+                    result = std::make_pair(error, convertToV1_1(capabilities));
+                });
         if (!ret.isOk()) {
             LOG(ERROR) << "getCapabilities failure: " << ret.description();
             return {ErrorStatus::GENERAL_FAILURE, {}};
@@ -69,9 +99,9 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
     if (mDeviceV1_2 != nullptr) {
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_2");
         Return<void> ret = mDeviceV1_2->getSupportedOperations_1_2(
-            model, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
-                result = std::make_pair(error, supported);
-            });
+                model, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
+                    result = std::make_pair(error, supported);
+                });
         if (!ret.isOk()) {
             LOG(ERROR) << "getSupportedOperations_1_2 failure: " << ret.description();
             return {ErrorStatus::GENERAL_FAILURE, {}};
@@ -80,9 +110,9 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
         V1_1::Model model11 = convertToV1_1(model);
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_1");
         Return<void> ret = mDeviceV1_1->getSupportedOperations_1_1(
-            model11, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
-                result = std::make_pair(error, supported);
-            });
+                model11, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
+                    result = std::make_pair(error, supported);
+                });
         if (!ret.isOk()) {
             LOG(ERROR) << "getSupportedOperations_1_1 failure: " << ret.description();
             return {ErrorStatus::GENERAL_FAILURE, {}};
@@ -91,9 +121,9 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
         V1_0::Model model10 = convertToV1_0(model);
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_0");
         Return<void> ret = mDeviceV1_0->getSupportedOperations(
-            model10, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
-                result = std::make_pair(error, supported);
-            });
+                model10, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
+                    result = std::make_pair(error, supported);
+                });
         if (!ret.isOk()) {
             LOG(ERROR) << "getSupportedOperations failure: " << ret.description();
             return {ErrorStatus::GENERAL_FAILURE, {}};
@@ -226,11 +256,11 @@ std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionString() {
     }
 }
 
-bool VersionedIDevice::operator==(nullptr_t) {
+bool VersionedIDevice::operator==(nullptr_t) const {
     return mDeviceV1_0 == nullptr;
 }
 
-bool VersionedIDevice::operator!=(nullptr_t) {
+bool VersionedIDevice::operator!=(nullptr_t) const {
     return mDeviceV1_0 != nullptr;
 }
 

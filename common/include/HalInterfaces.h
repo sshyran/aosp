@@ -25,6 +25,9 @@
 #include <android/hardware/neuralnetworks/1.1/IDevice.h>
 #include <android/hardware/neuralnetworks/1.1/types.h>
 #include <android/hardware/neuralnetworks/1.2/IDevice.h>
+#include <android/hardware/neuralnetworks/1.2/IExecutionCallback.h>
+#include <android/hardware/neuralnetworks/1.2/IPreparedModel.h>
+#include <android/hardware/neuralnetworks/1.2/IPreparedModelCallback.h>
 #include <android/hardware/neuralnetworks/1.2/types.h>
 #include <android/hidl/allocator/1.0/IAllocator.h>
 #include <android/hidl/memory/1.0/IMemory.h>
@@ -39,9 +42,6 @@ using ::android::hardware::neuralnetworks::V1_0::DataLocation;
 using ::android::hardware::neuralnetworks::V1_0::DeviceStatus;
 using ::android::hardware::neuralnetworks::V1_0::ErrorStatus;
 using ::android::hardware::neuralnetworks::V1_0::FusedActivationFunc;
-using ::android::hardware::neuralnetworks::V1_0::IExecutionCallback;
-using ::android::hardware::neuralnetworks::V1_0::IPreparedModel;
-using ::android::hardware::neuralnetworks::V1_0::IPreparedModelCallback;
 using ::android::hardware::neuralnetworks::V1_0::OperandLifeTime;
 using ::android::hardware::neuralnetworks::V1_0::PerformanceInfo;
 using ::android::hardware::neuralnetworks::V1_0::Request;
@@ -49,6 +49,9 @@ using ::android::hardware::neuralnetworks::V1_0::RequestArgument;
 using ::android::hardware::neuralnetworks::V1_1::Capabilities;
 using ::android::hardware::neuralnetworks::V1_1::ExecutionPreference;
 using ::android::hardware::neuralnetworks::V1_2::IDevice;
+using ::android::hardware::neuralnetworks::V1_2::IExecutionCallback;
+using ::android::hardware::neuralnetworks::V1_2::IPreparedModel;
+using ::android::hardware::neuralnetworks::V1_2::IPreparedModelCallback;
 using ::android::hardware::neuralnetworks::V1_2::Model;
 using ::android::hardware::neuralnetworks::V1_2::Operand;
 using ::android::hardware::neuralnetworks::V1_2::OperandType;

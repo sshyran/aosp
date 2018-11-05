@@ -201,6 +201,7 @@ V1_1::Model convertToV1_1(const V1_1::Model& model);
 V1_1::Model convertToV1_1(const V1_2::Model& model);
 V1_2::Model convertToV1_2(const V1_0::Model& model);
 V1_2::Model convertToV1_2(const V1_1::Model& model);
+V1_2::Model convertToV1_2(const V1_2::Model& model);
 
 V1_2::Operand convertToV1_2(const V1_0::Operand& operand);
 V1_2::Operand convertToV1_2(const V1_2::Operand& operand);

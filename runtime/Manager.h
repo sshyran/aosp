@@ -19,7 +19,7 @@
 
 #include "HalInterfaces.h"
 #include "Utils.h"
-#include "VersionedIDevice.h"
+#include "VersionedInterfaces.h"
 
 #include <android-base/macros.h>
 #include <map>
