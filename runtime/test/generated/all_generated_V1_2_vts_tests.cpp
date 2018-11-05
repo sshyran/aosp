@@ -4905,6 +4905,21 @@ TEST_F(NeuralnetworksHidlTest, quantize_quant8_4) {
                            quantize::examples_quant8_4);
 }
 
+// Generated from: quantized_lstm.mod.py.
+namespace quantized_lstm {
+// Generated quantized_lstm test
+#include "examples/quantized_lstm.example.cpp"
+// Generated model constructor
+#include "vts_models/quantized_lstm.model.cpp"
+} // namespace quantized_lstm
+
+TEST_F(NeuralnetworksHidlTest, quantized_lstm) {
+  generated_tests::Execute(device,
+                           quantized_lstm::createTestModel,
+                           quantized_lstm::is_ignored,
+                           quantized_lstm::examples);
+}
+
 // Generated from: random_multinomial.mod.py.
 namespace random_multinomial {
 // Generated random_multinomial test
