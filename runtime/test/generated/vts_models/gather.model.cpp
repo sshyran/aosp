@@ -286,6 +286,77 @@ inline bool is_ignored_int32(int i) {
 }
 
 // Create the model
+Model createTestModel_float16() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 8},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GATHER,
+            .inputs = {0, 1, 2},
+            .outputs = {3},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {3};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_float16(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_2() {
     const std::vector<Operand> operands = {
         {
@@ -566,6 +637,77 @@ Model createTestModel_int32_2() {
 }
 
 inline bool is_ignored_int32_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_float16_2() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GATHER,
+            .inputs = {0, 1, 2},
+            .outputs = {3},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {3};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 1, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -856,6 +998,77 @@ inline bool is_ignored_int32_3(int i) {
 }
 
 // Create the model
+Model createTestModel_float16_3() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1},
+            .numberOfConsumers = 0,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GATHER,
+            .inputs = {0, 1, 2},
+            .outputs = {3},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {3};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 1, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_float16_3(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_4() {
     const std::vector<Operand> operands = {
         {
@@ -1136,6 +1349,77 @@ Model createTestModel_int32_4() {
 }
 
 inline bool is_ignored_int32_4(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_float16_4() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 8},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {2},
+            .numberOfConsumers = 0,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GATHER,
+            .inputs = {0, 1, 2},
+            .outputs = {3},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {3};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -1426,6 +1710,77 @@ inline bool is_ignored_int32_5(int i) {
 }
 
 // Create the model
+Model createTestModel_float16_5() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 8},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GATHER,
+            .inputs = {0, 1, 2},
+            .outputs = {3},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {3};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_float16_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_6() {
     const std::vector<Operand> operands = {
         {
@@ -1706,6 +2061,77 @@ Model createTestModel_int32_6() {
 }
 
 inline bool is_ignored_int32_6(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_float16_6() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {4, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 8},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {2, 1},
+            .numberOfConsumers = 0,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GATHER,
+            .inputs = {0, 1, 2},
+            .outputs = {3},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {3};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -1996,6 +2422,77 @@ inline bool is_ignored_int32_7(int i) {
 }
 
 // Create the model
+Model createTestModel_float16_7() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 2, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 8},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 2, 3},
+            .numberOfConsumers = 0,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GATHER,
+            .inputs = {0, 1, 2},
+            .outputs = {3},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {3};
+    std::vector<uint8_t> operandValues = {
+      1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_float16_7(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_8() {
     const std::vector<Operand> operands = {
         {
@@ -2276,6 +2773,77 @@ Model createTestModel_int32_8() {
 }
 
 inline bool is_ignored_int32_8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_float16_8() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 2, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 8},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GATHER,
+            .inputs = {0, 1, 2},
+            .outputs = {3},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {3};
+    std::vector<uint8_t> operandValues = {
+      255, 255, 255, 255, 2, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_float16_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
