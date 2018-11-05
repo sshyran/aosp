@@ -659,8 +659,10 @@ class DataTypeConverter(ModelVariation):
             self.name = "quant8"
         elif "TENSOR_INT32" in targetTypes:
             self.name = "int32"
+        elif "TENSOR_FLOAT16" in targetTypes:
+            self.name = "float16"
         else:
-            self.name = "float"
+            self.name = "float32"
         return self
 
     def TransformOperand(self, op, arg=None):
