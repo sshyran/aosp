@@ -395,14 +395,10 @@ class Operation:
 
     def SetInputs(self, ins):
         self.ins = [ImplicitParameter.ImplicitConvertion(i) for i in ins]
-        for i in self.ins:
-            i.outs.append(self)
         return self
 
     def SetOutputs(self, outs):
         self.outs = list(outs)
-        for o in self.outs:
-            o.ins.append(self)
         return self
 
     # For backward-compatibility with slicing.py
@@ -469,6 +465,9 @@ class Model:
         self.isRelaxed = isRelaxed
         return self
 
+    def GetTypes(self):
+        return sorted(list(set(op.type for op in self.operands)))
+
     def GetInputs(self):
         return [i for i in self.operands if isinstance(i, Input)]
 
@@ -498,6 +497,26 @@ class Model:
             self.operands[self.operands.index(t)] = t
         return self
 
+    def SetInputAndOutputIndex(self):
+        for ind, i in enumerate(self.GetInputs()):
+            i.index = ind
+        for ind, o in enumerate(self.GetOutputs()):
+            o.index = ind
+        return self
+
+    def SetOperandInsAndOuts(self):
+        for op in self.operands:
+            op.ins = list()
+            op.outs = list()
+        for op in self.operations:
+            op.ins = self.GetEquivalentOperands(op.ins)
+            op.outs = self.GetEquivalentOperands(op.outs)
+            for i in op.ins:
+                i.outs.append(op)
+            for o in op.outs:
+                o.ins.append(op)
+        return self
+
     def TopologicalSortHelper(self, op, deps, visited):
         if op in visited:
             assert op not in deps, "Cycle detected in the graph"
@@ -521,11 +540,8 @@ class Model:
     def Compile(self):
         if self.compiled:
             return self
-        # set input/output index for MixedTypedExample mapping
-        for ind, i in enumerate(self.GetInputs()):
-            i.index = ind
-        for ind, o in enumerate(self.GetOutputs()):
-            o.index = ind
+        self.SetInputAndOutputIndex()
+        self.SetOperandInsAndOuts()
         self.TopologicalSort()
         self.compiled = True
         return self
@@ -550,7 +566,6 @@ class ModelVariation:
 
     def __init__(self, name=None):
         self.targetOperands = {}
-        self.targetParameters = []
         self.name = name
 
     def ApplyToHelper(self, model, args, feedDicts, transform):
@@ -592,12 +607,9 @@ class ModelVariation:
         # get transformed operands and update feedDicts
         operandsVar = self.ApplyToHelper(
             model, self.targetOperands, feedDicts, self.TransformOperand)
-        parametersVar = self.TransformParameters(
-            model.GetEquivalentOperands(self.targetParameters))
 
         model = self.TransformModel(model)
         model.UpdateEquivalentOperands(operandsVar)
-        model.UpdateEquivalentOperands(parametersVar)
         return model, feedDicts
 
     def IdentifyOperands(self, args=None):
@@ -606,14 +618,8 @@ class ModelVariation:
         self.targetOperands = args if type(args) is dict else {i: None for i in args}
         return self
 
-    def IdentifyParameters(self, args=None):
-        if args is None:
-            return self
-        self.targetParameters = args
-        return self
-
     def Identify(self, operandArgs=None, paramArgs=None):
-        self.IdentifyOperands(operandArgs).IdentifyParameters(paramArgs)
+        self.IdentifyOperands(operandArgs)
         return self
 
     # Set variation to its default name
@@ -624,10 +630,6 @@ class ModelVariation:
     # Transform operands that are marked by IdentifyOperands()
     def TransformOperand(self, op, arg=None):
         return op
-
-    # Transform operands that are marked as parameters by IdentifyParameters()
-    def TransformParameters(self, parameters):
-        return parameters
 
     # Transform the model
     def TransformModel(self, model):
@@ -731,10 +733,64 @@ class DataLayoutConverter(ModelVariation, ImplicitVariation):
             assert False, "%s not supported by DataLayoutConverter"%op
         return op
 
-    def TransformParameters(self, parameters):
-        for p in parameters:
-            p.SetValue(self.param)
-        return parameters
+# Convert data by tansposing and removing axis
+class AxisConverter(ModelVariation):
+
+    def __init__(self, origin, target, dim, drop=[], name=None):
+        ModelVariation.__init__(self, name=name)
+        self.origin = origin
+        self.target = target
+        assert all(i >= -dim and i < dim for i in [self.origin, self.target])
+        self.dim = dim
+        self.perm = list(range(dim))
+        self.perm.insert(target if target >= 0 else target + dim, self.perm.pop(origin))
+        self.drop = [drop] if type(drop) is int else list(drop)
+        assert all(i >= -dim and i < dim for i in self.drop)
+        self.drop = [i if i >= 0 else i + dim for i in self.drop]
+        assert target not in self.drop and target + dim not in self.drop
+
+    def SetToDefaultName(self):
+        axis = self.target if self.target >= 0 else self.target + self.dim
+        axis -= sum(i < axis for i in self.drop)
+        neg = "" if self.target >= 0 else "_neg"
+        self.name = "dim%d_axis%d%s"%(self.dim - len(self.drop), axis, neg)
+        return self
+
+    def TransposeAxis(self, op):
+        if op.type.type == "INT32":
+            op.SetValue(self.target)
+        elif len(op.type.dimensions) == self.dim:
+            # To handle Internal operands
+            if op.value is not None:
+                op.SetValueFromNumpy(op.GetValueAsNumpy().transpose(self.perm))
+            newDim = [op.type.dimensions[i] for i in self.perm]
+            op.type = Type.GetType(op.type.type, newDim, op.type.scale, op.type.zeroPoint)
+        else:
+            assert False, "%s not supported by AxisConverter"%op
+        return op
+
+    def RemoveAxis(self, op):
+        if op.type.type == "INT32":
+            if op.value[0] >= 0:
+                op.SetValue(op.value[0] - sum(i < op.value[0] for i in self.drop))
+            else:
+                op.SetValue(op.value[0] + sum(i > (op.value[0] + self.dim) for i in self.drop))
+        elif len(op.type.dimensions) == self.dim:
+            if op.value is not None:
+                val = op.GetValueAsNumpy()
+                for i in sorted(self.drop, reverse=True):
+                    val = np.take(val, 0, axis=i)
+                op.SetValueFromNumpy(val)
+            newDim = [op.type.dimensions[i] for i in range(self.dim) if i not in self.drop]
+            op.type = Type.GetType(op.type.type, newDim, op.type.scale, op.type.zeroPoint)
+        else:
+            assert False, "%s not supported by AxisConverter"%op
+        return op
+
+    def TransformOperand(self, op, arg=None):
+        op = self.TransposeAxis(op)
+        op = self.RemoveAxis(op)
+        return op
 
 # Convert a Parameter to Input
 class ParameterAsInputConverter(ModelVariation, ImplicitVariation):
@@ -784,20 +840,18 @@ class ActivationConverter(ModelVariation, ImplicitVariation):
         return self
 
     def TransformOperand(self, op, arg=None):
-        assert isinstance(op, Output)
-        v = op.GetValueAsNumpy()
-        if self.low is not None:
-            low = Quantize(self.low, op.type)
-            v = np.maximum(v, low)
-        if self.high is not None:
-            high = Quantize(self.high, op.type)
-            v = np.minimum(v, high)
-        return op.SetValueFromNumpy(v)
-
-    def TransformParameters(self, parameters):
-        for p in parameters:
-            p.SetValue(self.enum)
-        return parameters
+        if op.type.type == "INT32": # activation enum
+            return op.SetValue(self.enum)
+        else:
+            assert isinstance(op, Output)
+            v = op.GetValueAsNumpy()
+            if self.low is not None:
+                low = Quantize(self.low, op.type)
+                v = np.maximum(v, low)
+            if self.high is not None:
+                high = Quantize(self.high, op.type)
+                v = np.minimum(v, high)
+            return op.SetValueFromNumpy(v)
 
 # An example is always attached to a model, and could have multiple variations
 class Example:
@@ -806,6 +860,7 @@ class Example:
     def __init__(self, *args, model=None, name=None):
         self.model = Model.models[-1] if model is None else model
         self.name = name
+        self.expectedMultinomialDistributionTolerance = None
         self.feedDicts = []
         for feedDict in args:
             if type(feedDict) is tuple or type(feedDict) is list:
@@ -848,8 +903,8 @@ class Example:
         self.variations[-1].extend(ImplicitVariation.ImplicitConvertion(i) for i in args)
         return self
 
-    def AddNchw(self, ops, params, includeDefault=True, defaultName="nhwc"):
-        var = DataLayoutConverter("nchw").Identify(ops, params)
+    def AddNchw(self, *args, includeDefault=True, defaultName="nhwc"):
+        var = DataLayoutConverter("nchw").Identify(args)
         self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
         return self
 
@@ -858,19 +913,85 @@ class Example:
         self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
         return self
 
-    def AddInput(self, ops, includeDefault=True, defaultName=None):
-        var = ParameterAsInputConverter().Identify(ops)
+    def AddInput(self, *args, includeDefault=True, defaultName=None):
+        var = ParameterAsInputConverter().Identify(args)
         self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
         return self
 
-    def AddRelu(self, ops, params, includeDefault=True, defaultName=None):
-        var = ActivationConverter("relu").Identify(ops, params)
+    def AddRelu(self, *args, includeDefault=True, defaultName=None):
+        var = ActivationConverter("relu").Identify(args)
         self.AddVariations(var, includeDefault=includeDefault, defaultName=defaultName)
         return self
 
-    def AddAllActivations(self, ops, params):
-        var = [ActivationConverter(i).Identify(ops, params)
+    def AddAllActivations(self, *args):
+        var = [ActivationConverter(i).Identify(args)
             for i in sorted(ActivationConverter.actMap.keys())]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
+    def GuessOriginalAxisAndDim(self, *args):
+        origin = None
+        dim = None
+        for arg in args:
+            if arg.type.type == "INT32":
+                origin = arg.value[0]
+            else:
+                if dim is None:
+                    dim = len(arg.type.dimensions)
+                else:
+                    assert dim == len(arg.type.dimensions)
+        assert dim is not None
+        origin = dim - 1 if origin is None else origin
+        origin = origin + dim if origin < 0 else origin
+        return origin, dim
+
+    def AddAxis(self, axis, *args, includeDefault=True, defaultName=None):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        axis = [axis] if type(axis) is int else list(axis)
+        var = [AxisConverter(origin, a, dim).Identify(args) for a in axis]
+        self.AddVariations(*var, includeDefault=includeDefault, defaultName=defaultName)
+        return self
+
+    def AddAllPositiveAxis(self, *args):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        var = [AxisConverter(origin, a, dim).Identify(args) for a in range(dim)]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
+    def AddAllAxis(self, *args):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        var = [AxisConverter(origin, a, dim).Identify(args) for a in range(-dim, dim)]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
+    def AddDims(self, dims, *args, includeDefault=True, defaultName=None):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        dims = [dims] if type(dims) is int else list(dims)
+        drop = list(range(dim))
+        drop.pop(origin)
+        var = [AxisConverter(origin, origin, dim, drop[0:(dim-i)]).Identify(args) for i in dims]
+        self.AddVariations(*var, includeDefault=includeDefault, defaultName=defaultName)
+        return self
+
+    def AddAllDims(self, *args):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        drop = list(range(dim))
+        drop.pop(origin)
+        var = [AxisConverter(origin, origin, dim, drop[0:i]).Identify(args) for i in range(dim)]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
+    def AddAllDimsAndPositiveAxis(self, *args):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        var = [AxisConverter(origin, j, dim, range(i)).Identify(args) \
+                for i in range(dim) for j in range(i, dim)]
+        self.AddVariations(*var, includeDefault=False)
+        return self
+
+    def AddAllDimsAndAxis(self, *args):
+        origin, dim = self.GuessOriginalAxisAndDim(*args)
+        var = [AxisConverter(origin, k, dim, range(i)).Identify(args) \
+                for i in range(dim) for j in range(i, dim) for k in [j, j - dim]]
         self.AddVariations(*var, includeDefault=False)
         return self
 
@@ -905,6 +1026,13 @@ class Example:
             self.model = modelOrigin
             self.feedDicts = feedDictsOrigin
         return self
+
+    # Specifies the RANDOM_MULTINOMIAL distribution tolerance.
+    # If set to greater than zero, the input is compared as log-probabilities
+    # to the output and must be within this tolerance to pass.
+    def WithMultinomialDistributionTolerance(self, expectedTolerance):
+      self.expectedMultinomialDistributionTolerance = expectedTolerance
+      return self
 
     # For backward-compatibility with slicing.py
     # Similar to dump_dict, but in python. Used by the slicing tool

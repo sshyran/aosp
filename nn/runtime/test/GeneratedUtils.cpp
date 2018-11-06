@@ -19,6 +19,7 @@
 #include "TestHarness.h"
 
 #include <gtest/gtest.h>
+
 #include <cassert>
 #include <cmath>
 #include <fstream>
@@ -94,8 +95,8 @@ void executeWithCompilation(Model* model, Compilation* compilation,
         SCOPED_TRACE(exampleNo);
         // TODO: We leave it as a copy here.
         // Should verify if the input gets modified by the test later.
-        MixedTyped inputs = example.first;
-        const MixedTyped& golden = example.second;
+        MixedTyped inputs = example.operands.first;
+        const MixedTyped& golden = example.operands.second;
 
         Execution execution(compilation);
         MixedTyped test;
@@ -137,6 +138,10 @@ void executeWithCompilation(Model* model, Compilation* compilation,
             compare(filteredGolden, filteredTest, fpAtol, fpRtol);
         }
         exampleNo++;
+
+        if (example.expectedMultinomialDistributionTolerance > 0) {
+            expectMultinomialDistributionWithinTolerance(test, example);
+        }
     }
 }
 
@@ -158,9 +163,8 @@ void executeMultithreadedOwnCompilation(std::function<void(Model*)> createModel,
     SCOPED_TRACE("MultithreadedOwnCompilation");
     std::vector<std::thread> threads;
     for (int i = 0; i < 10; i++) {
-        threads.push_back(std::thread([&]() {
-            executeOnce(createModel, isIgnored, examples, "");
-        }));
+        threads.push_back(
+                std::thread([&]() { executeOnce(createModel, isIgnored, examples, ""); }));
     }
     std::for_each(threads.begin(), threads.end(), [](std::thread& t) {
         t.join();

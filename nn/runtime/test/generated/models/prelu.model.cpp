@@ -49,8 +49,6 @@ inline bool is_ignored_relaxed(int i) {
 }
 
 void CreateModel_quant8(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 1, 3});
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {1, 1, 3}, 0.25f, 50);
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.25f, 128);
   OperandType type4(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.5f, 120);
@@ -77,9 +75,6 @@ inline bool is_ignored_quant8(int i) {
 void CreateModel_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 1, 3});
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {1, 1, 3}, 0.25f, 50);
-  OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.25f, 128);
-  OperandType type4(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.5f, 120);
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto alpha = model->addOperand(&type1);
@@ -101,9 +96,6 @@ inline bool is_ignored_weight_as_input(int i) {
 void CreateModel_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 1, 3});
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {1, 1, 3}, 0.25f, 50);
-  OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.25f, 128);
-  OperandType type4(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.5f, 120);
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto alpha = model->addOperand(&type1);
@@ -125,8 +117,6 @@ inline bool is_ignored_weight_as_input_relaxed(int i) {
 }
 
 void CreateModel_weight_as_input_quant8(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
-  OperandType type1(Type::TENSOR_FLOAT32, {1, 1, 3});
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {1, 1, 3}, 0.25f, 50);
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.25f, 128);
   OperandType type4(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.5f, 120);

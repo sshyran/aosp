@@ -14,10 +14,10 @@
 # limitations under the License.
 #
 
-# TEST 1: CHANNEL_SHUFFLE, g = 3
-i1 = Input("op1", "TENSOR_FLOAT32", "{2, 6}") # input 0
-o1 = Output("op2", "TENSOR_FLOAT32", "{2, 6}") # output 0
-Model().Operation("CHANNEL_SHUFFLE", i1, 3).To(o1)
+i1 = Input("op1", "TENSOR_FLOAT32", "{2, 2, 3, 12}") # input 0
+o1 = Output("op2", "TENSOR_FLOAT32", "{2, 2, 3, 12}") # output 0
+axis = Int32Scalar("axis", -1) # last axis
+Model().Operation("CHANNEL_SHUFFLE", i1, 3, axis).To(o1)
 
 # Additional data type
 quant8 = DataTypeConverter().Identify({
@@ -26,27 +26,8 @@ quant8 = DataTypeConverter().Identify({
 })
 
 Example({
-    i1: [0, 1, 2, 3, 4, 5,
-         6, 9, 6, 9, 6, 9],
-    o1: [0, 2, 4, 1, 3, 5,
-         6, 6, 6, 9, 9, 9]
-}).AddVariations("relaxed", quant8)
-
-
-# TEST 2: CHANNEL_SHUFFLE_2, g = 3
-i2 = Input("op1", "TENSOR_FLOAT32", "{2, 2, 3, 12}") # input 0
-o2 = Output("op2", "TENSOR_FLOAT32", "{2, 2, 3, 12}") # output 0
-Model().Operation("CHANNEL_SHUFFLE", i2, 3).To(o2)
-
-# Additional data type
-quant8 = DataTypeConverter().Identify({
-    i2: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
-    o2: ("TENSOR_QUANT8_ASYMM", 0.25, 128)
-})
-
-Example({
-    i2: list(range(2*2*3*12)),
-    o2: [  0,   4,   8,   1,   5,   9,   2,   6,  10,   3,   7,  11,
+    i1: list(range(2*2*3*12)),
+    o1: [  0,   4,   8,   1,   5,   9,   2,   6,  10,   3,   7,  11,
           12,  16,  20,  13,  17,  21,  14,  18,  22,  15,  19,  23,
           24,  28,  32,  25,  29,  33,  26,  30,  34,  27,  31,  35,
           36,  40,  44,  37,  41,  45,  38,  42,  46,  39,  43,  47,
@@ -58,4 +39,4 @@ Example({
          108, 112, 116, 109, 113, 117, 110, 114, 118, 111, 115, 119,
          120, 124, 128, 121, 125, 129, 122, 126, 130, 123, 127, 131,
          132, 136, 140, 133, 137, 141, 134, 138, 142, 135, 139, 143]
-}).AddVariations("relaxed", quant8)
+}).AddVariations("relaxed", quant8).AddAllDimsAndAxis(i1, o1, axis)

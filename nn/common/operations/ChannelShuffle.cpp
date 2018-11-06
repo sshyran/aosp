@@ -23,37 +23,39 @@ namespace android {
 namespace nn {
 
 template <typename T>
-inline bool channelShuffleGeneric(const T* inputData, const Shape& inputShape, int32_t numGroups,
-                                  T* outputData, const Shape& outputShape) {
-    uint32_t numDimensions = getNumberOfDimensions(inputShape);
-    uint32_t inDepth = getSizeOfDimension(inputShape, numDimensions - 1);
-    uint32_t groupSize = inDepth / numGroups;
-
-    const T* inputDataEnd = inputData + getNumberOfElements(inputShape);
-    T* outPtr = outputData;
-    for (const T* inputBase = inputData; inputBase < inputDataEnd; inputBase += inDepth) {
-        for (uint32_t j = 0; j < groupSize; j++) {
-            for (uint32_t k = 0; k < numGroups; k++) {
-                *outPtr = inputBase[j + k * groupSize];
-                outPtr++;
+inline bool channelShuffleImpl(const T* inputData, const Shape& inputShape, int32_t numGroups,
+                               int32_t axis, T* outputData, const Shape& outputShape) {
+    const uint32_t outerSize = getNumberOfElements(inputShape, 0, axis);
+    const uint32_t axisSize = getSizeOfDimension(inputShape, axis);
+    const uint32_t innerSize =
+            getNumberOfElements(inputShape, axis + 1, getNumberOfDimensions(inputShape));
+    const uint32_t groupSize = axisSize / numGroups;
+    for (uint32_t outer = 0; outer < outerSize; ++outer) {
+        for (uint32_t inner = 0; inner < innerSize; ++inner) {
+            const T* inputBase = inputData + outer * axisSize * innerSize + inner;
+            T* outputBase = outputData + outer * axisSize * innerSize + inner;
+            for (uint32_t i = 0; i < groupSize; i++) {
+                for (uint32_t j = 0; j < numGroups; j++, outputBase += innerSize) {
+                    *outputBase = inputBase[innerSize * (i + j * groupSize)];
+                }
             }
         }
     }
-
     return true;
 }
 
 bool channelShuffleGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t numGroups,
-                           uint8_t* outputData, const Shape& outputShape) {
+                           int32_t axis, uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("channelShuffleGeneric");
+    axis = getDimensionIndex(inputShape, axis);
     if (inputShape.type == OperandType::TENSOR_FLOAT32) {
-        return channelShuffleGeneric<float>(reinterpret_cast<const float*>(inputData), inputShape,
-                                            numGroups, reinterpret_cast<float*>(outputData),
-                                            outputShape);
+        return channelShuffleImpl<float>(reinterpret_cast<const float*>(inputData), inputShape,
+                                         numGroups, axis, reinterpret_cast<float*>(outputData),
+                                         outputShape);
     } else if (inputShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        return channelShuffleGeneric<uint8_t>(reinterpret_cast<const uint8_t*>(inputData),
-                                              inputShape, numGroups,
-                                              reinterpret_cast<uint8_t*>(outputData), outputShape);
+        return channelShuffleImpl<uint8_t>(reinterpret_cast<const uint8_t*>(inputData), inputShape,
+                                           numGroups, axis, reinterpret_cast<uint8_t*>(outputData),
+                                           outputShape);
     } else {
         LOG(ERROR) << "Unsupported data type";
         return false;
