@@ -114,6 +114,7 @@ You can add variations to the example so that the test generator can automatical
 - DefaultVariation, i.e. no variation
 - DataTypeConverter
 - DataLayoutConverter
+- AxisConverter
 - RelaxedModeConverter
 - ParameterAsInputConverter
 - ActivationConverter
@@ -136,8 +137,42 @@ Convert input/parameter/output between NHWC and NCHW. The caller need to provide
 
 ```Python
 converter = DataLayoutConverter(target_data_layout, name="variation_name").Identify(
-    [op1, op2, ...], [layout_parameter]
+    [op1, op2, ..., layout_parameter]
 )
+```
+
+#### AxisConverter
+
+Transpose a certain axis in input/output to target position, and optionally remove some axis. The caller need to provide a list of target operands to transform, and also the axis parameter to set.
+
+```Python
+converter = AxisConverter(originalAxis, targetAxis, dimension, drop=[], name="variation_name").Identify(
+    [op1, op2, ..., axis_parameter]
+)
+```
+
+This model variation is for ops that apply calculation along certain axis, such as L2_NORMALIZATION, SOFTMAX, and CHANNEL_SHUFFLE. For example, consider L2_NORMALIZATION with input of shape [2, 3, 4, 5] along the last axis, i.e. axis = -1. The output shape would be the same as input. We can create a new model which will do the calculation along axis 0 by transposing input and output shape to [5, 2, 3, 4] and modify the axis parameter to 0. Such converter can be defined as
+
+```Python
+toAxis0 = AxisConverter(-1, 0, 4).Identify([input, output, axis])
+```
+
+The target axis can also be negative to test the negative indexing
+
+```Python
+toAxis0 = AxisConverter(-1, -4, 4).Identify([input, output, axis])
+```
+
+Consider the same L2_NORMALIZATION example, we can also create a new model with input/output of 2D shape [4, 5] by removing the first two dimension. This is essentially doing `new_input = input[0,0,:,:]` in numpy. Such converter can be defined as
+
+```Python
+toDim2 = AxisConverter(-1, -1, 4, drop=[0, 1]).Identify([input, output, axis])
+```
+
+If transposition and removal are specified at the same time, the converter will do transposition first and then remove the axis. For example, the following converter will result in shape [5, 4] and axis 0.
+
+```Python
+toDim2Axis0 = AxisConverter(-1, 2, 4, drop=[0, 1]).Identify([input, output, axis])
 ```
 
 #### RelaxedModeConverter
@@ -164,7 +199,7 @@ Convert the output by certain activation, the original activation is assumed to 
 
 ```Python
 converter = ActivationConverter(name="variation_name").Identify(
-    [op1, op2, ...], [act_parameter]
+    [op1, op2, ..., act_parameter]
 )
 ```
 
@@ -201,31 +236,72 @@ The test generator provides several helper functions or shorthands to add common
 ```Python
 # Each following group of statements are equivalent
 
-example.AddVariations(DataLayoutConverter("nchw").Identify(op_list, parameters))
-example.AddVariations(("nchw", op_list, parameters))
-example.AddNchw(op_list, parameters)
+# DataLayoutConverter
+example.AddVariations(DataLayoutConverter("nchw").Identify(op_list))
+example.AddVariations(("nchw", op_list))
+example.AddNchw(*op_list)
 
+# AxisConverter
+# original axis and dim are deduced from the op_list
+example.AddVariations(*[AxisConverter(origin, t, dim).Identify(op_list) for t in targets])
+example.AddAxis(targets, *op_list)
+
+example.AddVariations(*[
+        AxisConverter(origin, t, dim).Identify(op_list) for t in range(dim)
+    ], includeDefault=False)
+example.AddAllPositiveAxis(*op_list)
+
+example.AddVariations(*[
+        AxisConverter(origin, t, dim).Identify(op_list) for t in range(-dim, dim)
+    ], includeDefault=False)
+example.AddAllAxis(*op_list)
+
+drop = list(range(dim))
+drop.pop(origin)
+example.AddVariations(*[
+    AxisConverter(origin, origin, dim, drop[0:(dim-i)]).Identify(op_list) for i in dims])
+example.AddDims(dims, *op_list)
+
+example.AddVariations(*[
+    AxisConverter(origin, origin, dim, drop[0:i]).Identify(op_list) for i in range(dim)])
+example.AddAllDims(dims, *op_list)
+
+example.AddVariations(*[
+        AxisConverter(origin, j, dim, range(i)).Identify(op_list) \
+                for i in range(dim) for j in range(i, dim)
+    ], includeDefault=False)
+example.AddAllDimsAndPositiveAxis(dims, *op_list)
+
+example.AddVariations(*[
+        AxisConverter(origin, k, dim, range(i)).Identify(op_list) \
+                for i in range(dim) for j in range(i, dim) for k in [j, j - dim]
+    ], includeDefault=False)
+example.AddAllDimsAndAxis(dims, *op_list)
+
+# ParameterAsInputConverter
 example.AddVariations(ParameterAsInputConverter().Identify(op_list))
 example.AddVariations(("as_input", op_list))
-example.AddInput(op_list)
+example.AddInput(*op_list)
 
+# RelaxedModeConverter
 example.Addvariations(RelaxedModeConverter(True))
 example.AddVariations("relaxed")
 example.AddRelaxed()
 
-example.AddVariations(ActivationConverter("relu").Identify(op_list, parameters))
-example.AddVariations(("relu", op_list, parameters))
-example.AddRelu(op_list, parameters)
+# ActivationConverter
+example.AddVariations(ActivationConverter("relu").Identify(op_list))
+example.AddVariations(("relu", op_list))
+example.AddRelu(*op_list)
 
 example.AddVariations(
-    ActivationConverter("relu").Identify(op_list, parameters),
-    ActivationConverter("relu1").Identify(op_list, parameters),
-    ActivationConverter("relu6").Identify(op_list, parameters))
+    ActivationConverter("relu").Identify(op_list),
+    ActivationConverter("relu1").Identify(op_list),
+    ActivationConverter("relu6").Identify(op_list))
 example.AddVariations(
-    ("relu", op_list, parameters),
-    ("relu1", op_list, parameters),
-    ("relu6", op_list, parameters))
-example.AddAllActivations()
+    ("relu", op_list),
+    ("relu1", op_list),
+    ("relu6", op_list))
+example.AddAllActivations(*op_list)
 ```
 
 ### A Complete Example
@@ -235,11 +311,12 @@ example.AddAllActivations()
 i1 = Input("op1", "TENSOR_FLOAT32", "{1, 3, 4, 1}")
 f1 = Parameter("op2", "TENSOR_FLOAT32", "{1, 3, 3, 1}", [1, 4, 7, 2, 5, 8, 3, 6, 9])
 b1 = Parameter("op3", "TENSOR_FLOAT32", "{1}", [-200])
+act = Int32Scalar("act", 0)
 o1 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 4, 1}")
 
 # Instantiate a model and add CONV_2D operation
-# Use implicit parameter for padding, stride, and activation
-Model().Operation("CONV_2D", i1, f1, b1, 1, 1, 1, 1, layout).To(o1)
+# Use implicit parameter for implicit padding and strides
+Model().Operation("CONV_2D", i1, f1, b1, 1, 1, 1, act, layout).To(o1)
 
 # Additional data type
 quant8 = DataTypeConverter().Identify({
@@ -256,13 +333,13 @@ example = Example({
 })
 
 # Only use NCHW data layout
-example.AddNchw([i1, f1, o1], [layout], includeDefault=False)
+example.AddNchw(i1, f1, o1, layout, includeDefault=False)
 
 # Add two more groups of variations
-example.AddInput([f1, b1]).AddVariations("relaxed", quant8)
+example.AddInput(f1, b1).AddVariations("relaxed", quant8).AddAllActivations(o1, act)
 ```
 
-The spec above will result in 6 tests.
+The spec above will result in 24 tests.
 
 ## Generate Tests
 

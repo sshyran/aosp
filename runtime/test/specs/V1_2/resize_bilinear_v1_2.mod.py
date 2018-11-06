@@ -27,7 +27,7 @@ example = Example({
     o1: [1.0, 1.0, 1.0,
          1.666666667, 1.666666667, 1.666666667,
          2.0, 2.0, 2.0]
-}).AddNchw([i1, o1], [layout], defaultName="nhwc").AddRelaxed()
+}).AddNchw(i1, o1, layout).AddRelaxed()
 
 
 # TEST 2: RESIZE_BILINEAR_NCHW_2, h = 3, w = 3
@@ -41,4 +41,4 @@ example = Example({
     o2: [3, 4, 5, 8, 6, 10,
          7, 8, 9, 12, 10, 14,
          9, 10, 11, 14, 12, 16,]
-}).AddNchw([i2, o2], [layout], defaultName="nhwc").AddRelaxed()
+}).AddNchw(i2, o2, layout).AddRelaxed()
