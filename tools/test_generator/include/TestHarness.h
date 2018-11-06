@@ -20,6 +20,7 @@
 #ifndef ANDROID_ML_NN_TOOLS_TEST_GENERATOR_TEST_HARNESS_H
 #define ANDROID_ML_NN_TOOLS_TEST_GENERATOR_TEST_HARNESS_H
 
+#include <gmock/gmock-matchers.h>
 #include <gtest/gtest.h>
 
 #include <cmath>
@@ -41,6 +42,15 @@ typedef std::tuple<Float32Operands,  // ANEURALNETWORKS_TENSOR_FLOAT32
                    >
         MixedTyped;
 typedef std::pair<MixedTyped, MixedTyped> MixedTypedExampleType;
+
+// Mixed-typed examples
+typedef struct {
+    MixedTypedExampleType operands;
+    // Specifies the RANDOM_MULTINOMIAL distribution tolerance.
+    // If set to greater than zero, the input is compared as log-probabilities
+    // to the output and must be within this tolerance to pass.
+    float expectedMultinomialDistributionTolerance = 0.0;
+} MixedTypedExample;
 
 template <typename T>
 struct MixedTypedIndex {};
@@ -205,6 +215,40 @@ inline void compare(const MixedTyped& golden, const MixedTyped& test,
         }
     });
     EXPECT_EQ(size_t{0}, totalNumberOfErrors);
+}
+
+// Calculates the expected probability from the unnormalized log-probability of
+// each class in the input and compares it to the actual ocurrence of that class
+// in the output.
+inline void expectMultinomialDistributionWithinTolerance(const MixedTyped& test,
+                                                         const MixedTypedExample& example) {
+    // TODO: These should be parameters but aren't currently preserved in the example.
+    const int kBatchSize = 1;
+    const int kNumClasses = 1024;
+    const int kNumSamples = 128;
+
+    std::vector<int32_t> output = std::get<1>(test).at(0);
+    std::vector<int> class_counts;
+    class_counts.resize(kNumClasses);
+    for (int index : output) {
+        class_counts[index]++;
+    }
+    std::vector<float> input = std::get<0>(example.operands.first).at(0);
+    for (int b = 0; b < kBatchSize; ++b) {
+        float probability_sum = 0;
+        const int batch_index = kBatchSize * b;
+        for (int i = 0; i < kNumClasses; ++i) {
+            probability_sum += expf(input[batch_index + i]);
+        }
+        for (int i = 0; i < kNumClasses; ++i) {
+            float probability =
+                    static_cast<float>(class_counts[i]) / static_cast<float>(kNumSamples);
+            float probability_expected = expf(input[batch_index + i]) / probability_sum;
+            EXPECT_THAT(probability,
+                        ::testing::FloatNear(probability_expected,
+                                             example.expectedMultinomialDistributionTolerance));
+        }
+    }
 }
 
 };  // namespace test_helper

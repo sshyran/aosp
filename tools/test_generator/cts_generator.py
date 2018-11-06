@@ -131,7 +131,7 @@ def DumpCtsModel(model, model_fd):
     print("void %s(Model *model) {"%(model.createFunctionName), file=model_fd)
 
     # Phase 0: types
-    for t in tg.Type.GetAllTypes():
+    for t in model.GetTypes():
         if t.scale == 0.0 and t.zeroPoint == 0:
             typeDef = "OperandType %s(Type::%s, %s);"%(t, t.type, t.GetDimensionsString())
         else:
@@ -195,11 +195,15 @@ def DumpCtsExample(example, example_fd):
     print("std::vector<MixedTypedExample> %s = {"%(example.examplesName), file=example_fd)
     for inputFeedDict, outputFeedDict in example.feedDicts:
         print ('// Begin of an example', file = example_fd)
-        print ('{', file = example_fd)
+        print ('{\n.operands = {', file = example_fd)
         inputs = DumpMixedType(example.model.GetInputs(), inputFeedDict)
         outputs = DumpMixedType(example.model.GetOutputs(), outputFeedDict)
         print ('//Input(s)\n%s,' % inputs , file = example_fd)
         print ('//Output(s)\n%s' % outputs, file = example_fd)
+        print ('},', file = example_fd)
+        if example.expectedMultinomialDistributionTolerance is not None:
+          print ('.expectedMultinomialDistributionTolerance = %f' %
+                 example.expectedMultinomialDistributionTolerance, file = example_fd)
         print ('}, // End of an example', file = example_fd)
     print("};\n", file=example_fd)
 

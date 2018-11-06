@@ -24,7 +24,7 @@ Model createTestModel_nhwc() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -95,7 +95,7 @@ Model createTestModel_nhwc_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -167,7 +167,7 @@ Model createTestModel_nhwc_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -238,7 +238,7 @@ Model createTestModel_nchw() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -309,7 +309,7 @@ Model createTestModel_nchw_relaxed() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -381,7 +381,7 @@ Model createTestModel_nchw_quant8() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -452,7 +452,7 @@ Model createTestModel_nhwc_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -523,7 +523,7 @@ Model createTestModel_nhwc_relaxed_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -595,7 +595,7 @@ Model createTestModel_nhwc_quant8_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -666,7 +666,7 @@ Model createTestModel_nchw_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -737,7 +737,7 @@ Model createTestModel_nchw_relaxed_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -809,7 +809,7 @@ Model createTestModel_nchw_quant8_2() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -880,7 +880,7 @@ Model createTestModel_nhwc_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -951,7 +951,7 @@ Model createTestModel_nhwc_relaxed_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1023,7 +1023,7 @@ Model createTestModel_nhwc_quant8_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1094,7 +1094,7 @@ Model createTestModel_nchw_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1165,7 +1165,7 @@ Model createTestModel_nchw_relaxed_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
@@ -1237,7 +1237,7 @@ Model createTestModel_nchw_quant8_3() {
         {
             .type = OperandType::BOOL,
             .dimensions = {},
-            .numberOfConsumers = 3,
+            .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
