@@ -25,6 +25,46 @@
 namespace android {
 namespace nn {
 
+namespace {
+
+bool validateOperandTypes(const std::vector<OperandType>& expectedTypes, const char* tag,
+                          uint32_t operandCount,
+                          std::function<OperandType(uint32_t)> getOperandType) {
+    NN_RET_CHECK_EQ(operandCount, expectedTypes.size());
+    for (uint32_t i = 0; i < operandCount; ++i) {
+        OperandType type = getOperandType(i);
+        NN_RET_CHECK(type == expectedTypes[i])
+                << "Invalid " << tag << " tensor type " << toString(type) << " for " << tag << " "
+                << i << ", expected " << toString(expectedTypes[i]);
+    }
+    return true;
+}
+
+}  // namespace
+
+bool validateInputTypes(const IOperationValidationContext* context,
+                        const std::vector<OperandType>& expectedTypes) {
+    return validateOperandTypes(expectedTypes, "input", context->getNumInputs(),
+                                [context](uint32_t index) { return context->getInputType(index); });
+}
+
+bool validateOutputTypes(const IOperationValidationContext* context,
+                         const std::vector<OperandType>& expectedTypes) {
+    return validateOperandTypes(
+            expectedTypes, "output", context->getNumOutputs(),
+            [context](uint32_t index) { return context->getOutputType(index); });
+}
+
+bool validateHalVersion(const IOperationValidationContext* context,
+                        HalVersion minSupportedHalVersion) {
+    if (context->getHalVersion() < minSupportedHalVersion) {
+        NN_RET_CHECK_FAIL() << "The given inputs and outputs are only supported in "
+                            << toString(minSupportedHalVersion) << " and later (validating using "
+                            << toString(context->getHalVersion()) << ")";
+    }
+    return true;
+}
+
 bool SameShape(const Shape& in1, const Shape& in2) {
     if (in1.type != in2.type || in1.dimensions.size() != in2.dimensions.size()) {
         return false;
