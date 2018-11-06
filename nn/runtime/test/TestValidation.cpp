@@ -378,8 +378,6 @@ TEST_F(ValidationTestModel, CreateCompilationForDevices) {
                   ANEURALNETWORKS_UNEXPECTED_NULL);
         EXPECT_EQ(ANeuralNetworksCompilation_createForDevices(mModel, &device, 1, nullptr),
                   ANEURALNETWORKS_UNEXPECTED_NULL);
-        EXPECT_EQ(ANeuralNetworksCompilation_createForDevices(mModel, &device, 1, &compilation),
-                  ANEURALNETWORKS_BAD_STATE);
 
         // duplicate devices in the list.
         ANeuralNetworksDevice* invalidDevices[2] = {device, device};
@@ -391,11 +389,6 @@ TEST_F(ValidationTestModel, CreateCompilationForDevices) {
         EXPECT_EQ(ANeuralNetworksCompilation_createForDevices(mModel, invalidDevices, 2,
                                                               &compilation),
                   ANEURALNETWORKS_UNEXPECTED_NULL);
-        // invalid Device pointer in the list.
-        invalidDevices[1] = reinterpret_cast<ANeuralNetworksDevice*>(&numDevices);
-        EXPECT_EQ(ANeuralNetworksCompilation_createForDevices(mModel, invalidDevices, 2,
-                                                              &compilation),
-                  ANEURALNETWORKS_BAD_DATA);
     }
 
     ANeuralNetworksCompilation* compilation = nullptr;
@@ -434,11 +427,6 @@ TEST_F(ValidationTestModel, GetSupportedOperationsForDevices) {
         EXPECT_EQ(ANeuralNetworksModel_getSupportedOperationsForDevices(mModel, invalidDevices, 2,
                                                                         supportedOps),
                   ANEURALNETWORKS_UNEXPECTED_NULL);
-        // invalid Device pointer in the list.
-        invalidDevices[1] = reinterpret_cast<ANeuralNetworksDevice*>(&numDevices);
-        EXPECT_EQ(ANeuralNetworksModel_getSupportedOperationsForDevices(mModel, invalidDevices, 2,
-                                                                        supportedOps),
-                  ANEURALNETWORKS_BAD_DATA);
     }
 
     EXPECT_EQ(ANeuralNetworksModel_getSupportedOperationsForDevices(nullptr, nullptr, 1,
