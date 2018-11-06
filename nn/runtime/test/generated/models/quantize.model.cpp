@@ -22,7 +22,6 @@ inline bool is_ignored_quant8(int i) {
 
 void CreateModel_quant8_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {300});
-  OperandType type1(Type::TENSOR_QUANT8_ASYMM, {300}, 1.0f, 0);
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {300}, 1.0f, 1);
   // Phase 1, operands
   auto input01 = model->addOperand(&type0);
@@ -43,8 +42,6 @@ inline bool is_ignored_quant8_2(int i) {
 
 void CreateModel_quant8_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {300});
-  OperandType type1(Type::TENSOR_QUANT8_ASYMM, {300}, 1.0f, 0);
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {300}, 1.0f, 1);
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {300}, 0.01f, 120);
   // Phase 1, operands
   auto input02 = model->addOperand(&type0);
@@ -65,9 +62,6 @@ inline bool is_ignored_quant8_3(int i) {
 
 void CreateModel_quant8_4(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {300});
-  OperandType type1(Type::TENSOR_QUANT8_ASYMM, {300}, 1.0f, 0);
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {300}, 1.0f, 1);
-  OperandType type3(Type::TENSOR_QUANT8_ASYMM, {300}, 0.01f, 120);
   OperandType type4(Type::TENSOR_QUANT8_ASYMM, {300}, 10.0f, 120);
   // Phase 1, operands
   auto input03 = model->addOperand(&type0);
