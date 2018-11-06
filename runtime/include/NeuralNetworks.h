@@ -687,21 +687,25 @@ typedef enum {
      *         input[batch, row, col, channel] /
      *         sqrt(sum_{c} pow(input[batch, row, col, c], 2))
      *
-     * For input tensor with more dimensions, independently normalizes each 1-D
-     * slice along dimension dim.
+     * For input tensor with rank less than 4, independently normalizes each
+     * 1-D slice along dimension dim.
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout (i.e., Num_samples,
-     * Height, Width, and Channels).
+     * Supported tensor rank: up to 4
+     * Tensors with rank less than 4 are only supported since API level 29.
      *
      * Inputs:
-     * * 0: A 4-D tensor, of shape [batches, height, width, depth].
+     * * 0: An n-D tensor, specifying the tensor to be normalized.
+     * * 1: An optional {@link ANEURALNETWORKS_INT32} scalar, default to -1,
+     *      specifying the dimension normalization would be performed on.
+     *      Negative index is used to specify axis from the end (e.g. -1 for
+     *      the last axis). Must be in the range [-n, n).
+     *      Available since API level 29.
      *
      * Outputs:
-     * * 0: The output 4-D tensor, of the same shape as input
-     *      [batches, height, width, depth].
+     * * 0: A tensor of the same {@link OperandCode} and same shape as input0.
      *
      * Available since API level 27.
      */
@@ -798,10 +802,14 @@ typedef enum {
      *         pow(input[a, b, c, d - depth_radius : d + depth_radius + 1], 2))
      *     output = input / pow((bias + alpha * sqr_sum), beta)
      *
+     * For input tensor with rank less than 4, independently normalizes each
+     * 1-D slice along specified dimension.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: up to 4
+     * Tensors with rank less than 4 are only supported since API level 29.
      *
      * Inputs:
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
@@ -814,6 +822,11 @@ typedef enum {
      *      factor, alpha.
      * * 4: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the exponent,
      *      beta.
+     * * 5: An optional {@link ANEURALNETWORKS_INT32} scalar, default to -1,
+     *      specifying the dimension normalization would be performed on.
+     *      Negative index is used to specify axis from the end (e.g. -1 for
+     *      the last axis). Must be in the range [-n, n).
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1407,16 +1420,25 @@ typedef enum {
      *         exp((input[batch, i] - max(input[batch, :])) * beta) /
      *         sum_{k}{exp((input[batch, k] - max(input[batch, :])) * beta)}
      *
+     * For input tensor with rank other than 2, the activation will be applied
+     * independently on each 1-D slice along specified dimension.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 2 or 4.
+     * Supported tensor rank: up to 4.
+     * Tensors with rank other than 2 or 4 are only supported since API level 29.
      *
      * Inputs:
      * * 0: A 2-D or 4-D tensor, specifying the tensor to be reshaped.
      * * 1: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the positive
      *      scaling factor for the exponent, beta.
+     * * 2: An optional {@link ANEURALNETWORKS_INT32} scalar, default to -1,
+     *      specifying the dimension the activation would be performed on.
+     *      Negative index is used to specify axis from the end (e.g. -1 for
+     *      the last axis). Must be in the range [-n, n).
+     *      Available since API level 29.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1991,23 +2013,83 @@ typedef enum {
      */
     ANEURALNETWORKS_PAD_V2 = 40,
 
+    /**
+     * Transform axis-aligned bounding box proposals using bounding box deltas.
+     *
+     * Given the positions of bounding box proposals and the corresponding
+     * bounding box deltas for each class, return the refined bounding box
+     * regions. The resulting bounding boxes are cliped against the edges of
+     * the image.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Inputs:
+     * * 0: A 2-D Tensor of shape [num_rois, 5 or 4], specifying the locations
+     *      of the bounding box proposals, each line with format
+     *      [<optional batch_id>, x1, y1, x2, y2]. The batch_id is optional if
+     *      there is only one batch.
+     * * 1: A 2-D Tensor of shape [num_rois, num_classes * 4], specifying the
+     *      bounding box delta for each region of interest and each class. The
+     *      bounding box deltas are organized in the following order
+     *      [dx, dy, dw, dh], where dx and dy is the relative correction factor
+     *      for the center position of the bounding box with respect to the width
+     *      and height, dw and dh is the log-scale relative correction factor
+     *      for the width and height.
+     * * 2: A 2-D Tensor of shape [batches, 3], specifying the information of
+     *      each image in the batch, each line with format
+     *      [image_height, image_width, image_scale].
+     * * 3: An 1-D Tensor of shape [4], specifying the weights for the deltas.
+     *      The weights are organized in the order of [wx, wy, ww, wh].
+     * * 4: An {@link ANEURALNETWORKS_BOOL} scalar, apply_scale. If true,
+     *      apply the image scale to the boxes after the transformation.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0, with shape
+     *      [num_rois, num_classes * 4], specifying the coordinates of each
+     *      output bounding box for each class, with format [x1, y1, x2, y2].
+     * * 1: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
+     *      [batches], specifying the number of output boxes for each batch.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM = 41,
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_LSTM = 42,
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_RNN = 43,
     ANEURALNETWORKS_BOX_WITH_NMS_LIMIT = 44,
+
+    /**
+     * Casts a tensor to a new type.
+     *
+     * This operation ignores the scale and zeroPoint of quanized tensors,
+     * e.g. it treats a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} input
+     * as a tensor of uint8 values.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: A tensor with the same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_CAST = 45,
 
     /**
      * Shuffle the channels of the input tensor.
      *
-     * Given an input tensor of shape [batches, height, width, num_channels]
-     * and a integer value of num_groups, CHANNEL_SHUFFLE divide the channels
-     * into num_groups groups, and reorganize the channels by grouping channels
-     * with the same index in each group.
+     * Given an input tensor and a integer value of num_groups, CHANNEL_SHUFFLE
+     * divide the channel dimension into num_groups groups, and reorganize the
+     * channels by grouping channels with the same index in each group.
      *
-     * The output is calculated using this formula:
+     * Along the channel dimension, the output is calculated using this formula:
      *
-     *     output[b, i, j, k * num_groups + g] = input[b, i, j, g * group_size + k]
+     *     output_channel[k * num_groups + g] = input_channel[g * group_size + k]
      *
      * where group_size = num_channels / num_groups
      *
@@ -2017,12 +2099,16 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout
+     * Supported tensor rank: up to 4
      *
      * Inputs:
-     * * 0: An 4-D tensor, specifying the tensor to be shuffled.
+     * * 0: An n-D tensor, specifying the tensor to be shuffled.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the number of
      *      groups.
+     * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the dimension
+     *      channel shuffle would be performed on. Negative index is used to
+     *      specify axis from the end (e.g. -1 for the last axis). Must be in
+     *      the range [-n, n).
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} and same shape as input0.
@@ -2060,7 +2146,41 @@ typedef enum {
      */
     ANEURALNETWORKS_EXPAND_DIMS = 50,
 
+    /**
+     * Gathers values along an axis.
+     *
+     * Produces an output tensor with shape
+     *     input0.dimension[:axis] + indices.dimension + input0.dimension[axis + 1:]
+     * where:
+     *     # Vector indices (output is rank(input0)).
+     *     output[a_0, ..., a_n, i, b_0, ..., b_n] =
+     *       input0[a_0, ..., a_n, indices[i], b_0, ..., b_n]
+     *
+     *     # Higher rank indices (output is rank(input0) + rank(indices) - 1).
+     *     output[a_0, ..., a_n, i, ..., j, b_0, ... b_n] =
+     *       input0[a_0, ..., a_n, indices[i, ..., j], b_0, ..., b_n]
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: An n-D tensor from which to gather values.
+     * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis.
+     *      Negative index is used to specify axis from the end
+     *      (e.g. -1 for the last axis). Must be in the range [-n, n).
+     * * 2: A k-D tensor {@link ANEURALNETWORKS_TENSOR_INT32} of indices.
+     *      The values must be in the bounds of the corresponding dimensions
+     *      of input0.
+     *
+     * Outputs:
+     * * 0: An (n + k - 1)-D tensor with the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_GATHER = 51,
+
     ANEURALNETWORKS_GENERATE_PROPOSALS = 52,
     ANEURALNETWORKS_GREATER = 53,
     ANEURALNETWORKS_GREATER_EQUAL = 54,
@@ -2098,7 +2218,10 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Both explicit padding and implicit padding are supported.
      *
@@ -2131,6 +2254,8 @@ typedef enum {
      * * 10: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *       {@link FuseCode} values. Specifies the activation to
      *       invoke on the result.
+     * * 11: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     *       NCHW data layout for input0 and output0. Set to false for NHWC.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
@@ -2156,6 +2281,8 @@ typedef enum {
      * * 7: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 8: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     *      NCHW data layout for input0 and output0. Set to false for NHWC.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -2181,6 +2308,11 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
+     *
      * Inputs:
      * * 0: A 4-D Tensor of shape
      *      [num_boxes, heatmap_size, heatmap_size, num_keypoints],
@@ -2188,11 +2320,14 @@ typedef enum {
      *      be the same, and must be greater than or equal to 2.
      * * 1: A 2-D Tensor of shape [num_boxes, 4], specifying the bounding boxes,
      *      each with format [x1, y1, x2, y2].
+     * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     *      NCHW data layout for input0. Set to false for NHWC.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
-     *      [num_boxes, num_keypoints, 3], specifying the location and score of
-     *      the keypoints, each with format [keypoint_x, keypoint_y, score].
+     *      [num_boxes, 3, num_keypoints], specifying the location and score of
+     *      the keypoints, the second dimension is organized as
+     *      [keypoint_x, keypoint_y, score].
      *
      * Available since API level 29.
      */
@@ -2269,8 +2404,85 @@ typedef enum {
      */
     ANEURALNETWORKS_QUANTIZE = 70,
 
+    /**
+     * A version of quantized LSTM, using 16 bit quantization for internal
+     * state.
+     *
+     * There is no projection layer, so cell state size is equal to the output
+     * size.
+     *
+     * Inputs:
+     * * 0: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [numBatches, inputSize] specifying the input to the LSTM
+     *      cell. Tensor is quantized with a fixed quantization range of
+     *      [-1, 127/128] (scale = 1/128, zeroPoint = 128).
+     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [numBathes, outputSize] specifying the output of the LSTM
+     *      cell from previous time-step. Tensor is quantized with a fixed
+     *      quantization range of [-1, 127/128] (scale = 1/128, zeroPoint =
+     *      128).
+     * * 2: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [4 * cellSize, inputSize + outputSize] specifying the
+     *      weights for the fully-connected layer inside the LSTM cell. Weights
+     *      have no additional restrictions on their quantization.
+     * * 3: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} and shape
+     *      [4 * cellSize] specifying the bias for the fully-connected layer
+     *      inside the LSTM cell. Bias is quantized with scale being a product
+     *      of input and weights scales and zeroPoint equal to 0.
+     * * 4: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     *      and shape [numBatches, cellSize] specifying the cell state from the
+     *      previous time step of the LSTM cell. It is quantized using a
+     *      quantization range of [-2^4, 2^4 * 32767/32768] (scale = 2^4 /
+     *      32768, zeroPoint = 0).
+     *
+     * Outputs:
+     * * 0: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [numBatches, inputSize + outputSize]. This tensor is a
+     *      scratch buffer used to store concatenation of the input and the
+     *      output from previous time step to pass it to the fully-connected
+     *      layer. Tensor is quantized with a fixed quantization range of
+     *      [-1, 127/128] (scale = 1/128, zeroPoint = 128).
+     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     *      and shape [numBatches, 4 * cellSize]. This tensor is a scratch
+     *      buffer used to store the result of the fully-connected layer.
+     * * 2: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [numBathes, outputSize] which contains a copy of the
+     *      output from the current time step. NN API requires this tensor to
+     *      pass the output value through time. Tensor is quantized with a fixed
+     *      quantization range of [-1, 127/128] (scale = 1/128, zeroPoint =
+     *      128).
+     * * 3: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     *      and shape [numBatches, cellSize] which contains a cell state from
+     *      the current time step. NN API requires this tensor to pass the cell
+     *      state value through time. Tensor is quantized using a quantization
+     *      range of [-2^4, 2^4 * 32767/32768] (scale = 2^4 / 32768, zeroPoint =
+     *      0).
+     * * 4: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [numBathes, outputSize] which contains the output value.
+     *      Tensor is quantized with a fixed quantization range of [-1, 127/128]
+     *      (scale = 1/128, zeroPoint = 128).
+     */
     ANEURALNETWORKS_QUANTIZED_16BIT_LSTM = 71,
+
+    /**
+     * Draws samples from a multinomial distribution.
+     *
+     * Inputs:
+     * * 0: A 2-D {@link ANEURALNETWORKS_TENSOR_FLOAT32} tensor with shape
+     *      [batches, classes], specifying the unnormalized log-probabilities
+     *      for all classes.
+     * * 1: A scalar {@link ANEURALNETWORKS_INT32}, specifying the number of
+     *      independent samples to draw for each row slice.
+     * * 2: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor with shape [2],
+     *      specifying seeds used to initialize the random distribution.
+     * Outputs:
+     * * 0: A 2-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor with shape
+     *      [batches, samples], containing the drawn samples.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_RANDOM_MULTINOMIAL = 72,
+
     ANEURALNETWORKS_REDUCE = 73,
 
     /**
@@ -2288,9 +2500,15 @@ typedef enum {
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Inputs:
-     * * 0: A 4-D tensor, specifying the feature map with "NHWC" data layout.
+     * * 0: A 4-D tensor, specifying the feature map.
      * * 1: A 2-D Tensor of shape [num_rois, 5 or 4], specifying the locations
      *      of the regions of interest, each line with format
      *      [<optional batch_id>, x1, y1, x2, y2]. The batch_id is optional if
@@ -2302,6 +2520,8 @@ typedef enum {
      * * 4: An {@link ANEURALNETWORKS_INT32} scalar, specifying the number of
      *      sampling points used to compute the output. Set to 0 for adaptive
      *      value of ceil(roi_width/out_width) and ceil(roi_height/out_height).
+     * * 5: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     *      NCHW data layout for input0 and output0. Set to false for NHWC.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0. The output
@@ -2380,7 +2600,10 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: 4, with "NHWC" data layout.
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
      *
      * Both explicit padding and implicit padding are supported.
      *
@@ -2411,6 +2634,8 @@ typedef enum {
      * * 9: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 10: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     *       NCHW data layout for input0 and output0. Set to false for NHWC.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
@@ -2436,6 +2661,8 @@ typedef enum {
      * * 7: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     * * 8: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     *      NCHW data layout for input0 and output0. Set to false for NHWC.
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
@@ -2448,6 +2675,66 @@ typedef enum {
     ANEURALNETWORKS_TRANSPOSE_CONV_2D = 84,
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM = 85,
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN = 86,
+
+    /**
+     * Transform rotated bounding box proposals using bounding box deltas.
+     *
+     * Given the positions and rotations of bounding box proposals and the
+     * corresponding bounding box deltas for each class, return the refined
+     * bounding box regions.
+     *
+     * Optionally, the angles can be bounded into a specified range due to the
+     * fact that rotations are the same if they are 180 degrees apart. Only
+     * boxes with angle less than a threshold are cliped.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Inputs:
+     * * 0: A 2-D Tensor of shape [num_rois, 6 or 5], specifying the locations
+     *      of the bounding box proposals, each line with format
+     *      [<optional batch_id>, center_x, center_y, width, height, angle].
+     *      The batch_id is optional if there is only one batch.
+     * * 1: A 2-D Tensor of shape [num_rois, num_classes * 5], specifying the
+     *      bounding box delta for each region of interest and each class. The
+     *      bounding box deltas are organized in the following order
+     *      [dx, dy, dw, dh, da], where dx and dy is the relative correction
+     *      factor for the center position of the bounding box with respect to
+     *      the width and height, dw and dh is the log-scale relative correction
+     *      factor for the width and height, da is the correction factor for
+     *      the angle in radix.
+     * * 2: A 2-D Tensor of shape [batches, 3], specifying the information of
+     *      each image in the batch, each line with format
+     *      [image_height, image_width, image_scale].
+     * * 3: An 1-D Tensor of shape [4], specifying the weights for the deltas.
+     *      The weights are organized in the order of [wx, wy, ww, wh].
+     * * 4: An {@link ANEURALNETWORKS_BOOL} scalar, apply_scale. If true,
+     *      apply the image scale to the boxes after the transformation.
+     * * 5: An {@link ANEURALNETWORKS_BOOL} scalar, angle_bound_on. If true,
+     *      normalized the angle into a specified bound.
+     * * 6: An {@link ANEURALNETWORKS_INT32} scalar, angle_bound_low, specifying
+     *      the lower bound of the angle in degree. If input5 is negative, this
+     *      field is ignored.
+     * * 7: An {@link ANEURALNETWORKS_INT32} scalar, angle_bound_high, specifying
+     *      the upper bound of the angle in degree. The bounded region
+     *      (angle_bound_high - angle_bound_low) should be a multiple of 180
+     *      degrees. If input5 is negative, this field is ignored.
+     * * 8: An {@link ANEURALNETWORKS_INT32} scalar, specifying the angle
+     *      threshold for box clipping. For all bounding boxes with absolute
+     *      value of angle less than the threshold, they are considered to be
+     *      almost upright and will be clipped against the image edges. Set
+     *      to a negative value to disbale all the clipping.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0, with shape
+     *      [num_rois, num_classes * 5], specifying the coordinates of each
+     *      output bounding box for each class, with format
+     *      [center_x, center_y, width, height, angle].
+     * * 1: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
+     *      [batches], specifying the number of output boxes for each batch.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_ROTATED_BBOX_TRANSFORM = 87,
 } OperationCode;
 

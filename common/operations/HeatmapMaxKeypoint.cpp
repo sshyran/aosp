@@ -71,7 +71,7 @@ bool heatmapMaxKeypoint(const float* heatmap, const Shape& heatmapShape, const f
     uint32_t heatmapSize = getSizeOfDimension(heatmapShape, 1);
     uint32_t numKeypoints = getSizeOfDimension(heatmapShape, 3);
     uint32_t boxInfoLength = getSizeOfDimension(boxesShape, 1);
-    uint32_t outputInfoLength = getSizeOfDimension(outputShape, 2);
+    uint32_t outputInfoLength = getSizeOfDimension(outputShape, 1);
 
     const float* heatmapBase = heatmap;
     const float* boxInfoBase = boxes;
@@ -124,13 +124,13 @@ bool heatmapMaxKeypoint(const float* heatmap, const Shape& heatmapShape, const f
                                  static_cast<float>(heatmapSize);
             float hRelativePos = (static_cast<float>(maxIndexHeight) + delta[1] + 0.5f) /
                                  static_cast<float>(heatmapSize);
-            outputBase[0] = wRelativePos * roiWidth + wRoiStart;
-            outputBase[1] = hRelativePos * roiHeight + hRoiStart;
-            outputBase[2] = deltaScore;
-            outputBase += outputInfoLength;
+            outputBase[j] = wRelativePos * roiWidth + wRoiStart;
+            outputBase[numKeypoints + j] = hRelativePos * roiHeight + hRoiStart;
+            outputBase[numKeypoints * 2 + j] = deltaScore;
         }
         boxInfoBase += boxInfoLength;
         heatmapBase += heatmapSize * heatmapSize * numKeypoints;
+        outputBase += numKeypoints * outputInfoLength;
     }
 
     return true;

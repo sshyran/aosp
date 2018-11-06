@@ -252,10 +252,6 @@ void activationOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
     EXPECT_TRUE(activationTest.testMutatingOutputOperandCounts());
 }
 
-TEST(OperationValidationTest, L2_NORMALIZATION_float32) {
-    activationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_FLOAT32);
-}
-
 TEST(OperationValidationTest, FLOOR_float32) {
     activationOpTest(ANEURALNETWORKS_FLOOR, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
@@ -315,11 +311,21 @@ void softmaxOpTest(int32_t operandCode) {
                                        .zeroPoint = 0};
 
     OperationTestBase softmaxTest(ANEURALNETWORKS_SOFTMAX, {input, beta}, {output});
-
     EXPECT_TRUE(softmaxTest.testMutatingInputOperandCode());
     EXPECT_TRUE(softmaxTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(softmaxTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(softmaxTest.testMutatingOutputOperandCounts());
+
+    ANeuralNetworksOperandType axis = {.type = ANEURALNETWORKS_INT32,
+                                       .dimensionCount = 0,
+                                       .dimensions = nullptr,
+                                       .scale = 0.0f,
+                                       .zeroPoint = 0};
+    OperationTestBase softmaxAxisTest(ANEURALNETWORKS_SOFTMAX, {input, beta, axis}, {output});
+    EXPECT_TRUE(softmaxAxisTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(softmaxAxisTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(softmaxAxisTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(softmaxAxisTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, SOFTMAX_float32) {
@@ -1111,6 +1117,31 @@ TEST(OperationValidationTest, LSTM_float32) {
     EXPECT_TRUE(lstmTest.testMutatingOutputOperandCounts());
 }
 
+TEST(OperationValidationTest, RANDOM_MULTINOMIAL_float32) {
+    uint32_t twoDimensional[2] = {5, 5};
+    ANeuralNetworksOperandType floatTensor2D = {.type = ANEURALNETWORKS_TENSOR_FLOAT32,
+                                                .dimensionCount = 2,
+                                                .dimensions = twoDimensional,
+                                                .scale = 0.0f,
+                                                .zeroPoint = 0};
+    ANeuralNetworksOperandType intScalar = {.type = ANEURALNETWORKS_INT32,
+                                            .dimensionCount = 0,
+                                            .dimensions = nullptr,
+                                            .scale = 0.0f,
+                                            .zeroPoint = 0};
+
+    ANeuralNetworksOperandType input = floatTensor2D;
+    ANeuralNetworksOperandType sample_count = intScalar;
+    ANeuralNetworksOperandType output = floatTensor2D;
+
+    OperationTestBase rnnTest(ANEURALNETWORKS_RNN, {input, sample_count}, {output});
+
+    EXPECT_TRUE(rnnTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(rnnTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCounts());
+}
+
 TEST(OperationValidationTest, RNN_float32) {
     uint32_t oneDimensional[1] = {5};
     uint32_t twoDimensional[2] = {5, 5};
@@ -1257,11 +1288,11 @@ TEST(OperationValidationTest, ROI_ALIGN_float32) {
 }
 
 TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
-    uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outDim[] = {6, 1, 3};
+    uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outDim[] = {6, 3, 1};
     OperationTestBase heatmapMaxKeypointTest(
             ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT,
             {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, heatmapDim),
-             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, boxDim)},
+             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, boxDim), getOpType(ANEURALNETWORKS_BOOL)},
             {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 3, outDim)});
 
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCode());
@@ -1277,11 +1308,12 @@ void groupedConvOpTest(int32_t operandCode) {
                                               ? getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, biasDim)
                                               : getOpType(operandCode, 1, biasDim);
     ANeuralNetworksOperandType scalar = getOpType(ANEURALNETWORKS_INT32);
+    ANeuralNetworksOperandType layout = getOpType(ANEURALNETWORKS_BOOL);
 
     OperationTestBase explicitGroupedConvTest(
             ANEURALNETWORKS_GROUPED_CONV_2D,
             {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
-             scalar, scalar, scalar, scalar, scalar, scalar, scalar},
+             scalar, scalar, scalar, scalar, scalar, scalar, scalar, layout},
             {getOpType(operandCode, 4, outDim)});
 
     EXPECT_TRUE(explicitGroupedConvTest.testMutatingInputOperandCode());
@@ -1292,7 +1324,7 @@ void groupedConvOpTest(int32_t operandCode) {
     OperationTestBase implicitGroupedConvTest(
             ANEURALNETWORKS_GROUPED_CONV_2D,
             {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
-             scalar, scalar, scalar, scalar},
+             scalar, scalar, scalar, scalar, layout},
             {getOpType(operandCode, 4, outDim)});
 
     EXPECT_TRUE(implicitGroupedConvTest.testMutatingInputOperandCode());
@@ -1316,11 +1348,12 @@ void transposeConvOpTest(int32_t operandCode) {
                                               ? getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, biasDim)
                                               : getOpType(operandCode, 1, biasDim);
     ANeuralNetworksOperandType scalar = getOpType(ANEURALNETWORKS_INT32);
+    ANeuralNetworksOperandType layout = getOpType(ANEURALNETWORKS_BOOL);
 
     OperationTestBase explicitTransposeConvTest(
             ANEURALNETWORKS_TRANSPOSE_CONV_2D,
             {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
-             scalar, scalar, scalar, scalar, scalar, scalar},
+             scalar, scalar, scalar, scalar, scalar, scalar, layout},
             {getOpType(operandCode, 4, outDim)});
 
     EXPECT_TRUE(explicitTransposeConvTest.testMutatingInputOperandCode());
@@ -1332,7 +1365,7 @@ void transposeConvOpTest(int32_t operandCode) {
             ANEURALNETWORKS_TRANSPOSE_CONV_2D,
             {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias,
              getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim), scalar, scalar, scalar,
-             scalar},
+             scalar, layout},
             {getOpType(operandCode, 4, outDim)});
 
     EXPECT_TRUE(implicitTransposeConvTest.testMutatingInputOperandCode());
@@ -1350,10 +1383,11 @@ TEST(OperationValidationTest, TRANSPOSE_CONV_2D_quant8) {
 }
 
 void channelShuffleOpTest(int32_t operandCode) {
-    uint32_t inoutDim[] = {2, 6};
+    uint32_t inoutDim[] = {2, 2, 3, 12};
     OperationTestBase channelShuffleTest(
             ANEURALNETWORKS_CHANNEL_SHUFFLE,
-            {getOpType(operandCode, 2, inoutDim), getOpType(ANEURALNETWORKS_INT32)},
+            {getOpType(operandCode, 2, inoutDim), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(ANEURALNETWORKS_INT32)},
             {getOpType(operandCode, 2, inoutDim)});
 
     EXPECT_TRUE(channelShuffleTest.testMutatingInputOperandCode());
@@ -1389,5 +1423,96 @@ TEST(OperationValidationTest, PRELU_float32) {
 
 TEST(OperationValidationTest, PRELU_quant8) {
     preluOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+void normalizationOpTest(ANeuralNetworksOperationType operationCode, int32_t operandCode) {
+    uint32_t inputDim[] = {2, 2, 2, 2};
+    OperationTestBase normalizationTest(operationCode, {getOpType(operandCode, 4, inputDim)},
+                                        {getOpType(operandCode, 4, inputDim)});
+    EXPECT_TRUE(normalizationTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(normalizationTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(normalizationTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(normalizationTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase normalizationAxisTest(
+            operationCode, {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32)},
+            {getOpType(operandCode, 4, inputDim)});
+    EXPECT_TRUE(normalizationAxisTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(normalizationAxisTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(normalizationAxisTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(normalizationAxisTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, L2_NORMALIZATION_float32) {
+    normalizationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+void localResponseNormOpTest(int32_t operandCode) {
+    uint32_t inputDim[] = {2, 2, 2, 6};
+    OperationTestBase lrnTest(
+            ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
+            {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(ANEURALNETWORKS_FLOAT32), getOpType(ANEURALNETWORKS_FLOAT32),
+             getOpType(ANEURALNETWORKS_FLOAT32)},
+            {getOpType(operandCode, 4, inputDim)});
+    EXPECT_TRUE(lrnTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(lrnTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(lrnTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(lrnTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase lrnAxisTest(
+            ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
+            {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(ANEURALNETWORKS_FLOAT32), getOpType(ANEURALNETWORKS_FLOAT32),
+             getOpType(ANEURALNETWORKS_FLOAT32), getOpType(ANEURALNETWORKS_INT32)},
+            {getOpType(operandCode, 4, inputDim)});
+    EXPECT_TRUE(lrnAxisTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(lrnAxisTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(lrnAxisTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(lrnAxisTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, LOCAL_RESPONSE_NORMALIZATION_float32) {
+    localResponseNormOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, AXIS_ALIGNED_BBOX_TRANSFORM_float32) {
+    uint32_t roiDim[] = {5, 5}, deltaDim[] = {5, 8}, imageDim[] = {5, 3}, weightDim[] = {4};
+    uint32_t outDim[] = {5, 8}, bsDim[] = {5};
+    OperationTestBase axisAlignedBBoxTransformTest(
+            ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM,
+            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, roiDim),
+             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, deltaDim),
+             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, imageDim),
+             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 1, weightDim),
+             getOpType(ANEURALNETWORKS_BOOL)},
+            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, outDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, bsDim)});
+
+    EXPECT_TRUE(axisAlignedBBoxTransformTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(axisAlignedBBoxTransformTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(axisAlignedBBoxTransformTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(axisAlignedBBoxTransformTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, ROTATED_BBOX_TRANSFORM_float32) {
+    uint32_t roiDim[] = {5, 5}, deltaDim[] = {5, 8}, imageDim[] = {5, 3}, weightDim[] = {4};
+    uint32_t outDim[] = {5, 8}, bsDim[] = {5};
+    OperationTestBase rotatedBBoxTransformTest(
+            ANEURALNETWORKS_ROTATED_BBOX_TRANSFORM,
+            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, roiDim),
+             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, deltaDim),
+             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, imageDim),
+             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 1, weightDim),
+             getOpType(ANEURALNETWORKS_BOOL), getOpType(ANEURALNETWORKS_BOOL),
+             getOpType(ANEURALNETWORKS_INT32), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(ANEURALNETWORKS_FLOAT32)},
+            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, outDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, bsDim)});
+
+    EXPECT_TRUE(rotatedBBoxTransformTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(rotatedBBoxTransformTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(rotatedBBoxTransformTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(rotatedBBoxTransformTest.testMutatingOutputOperandCounts());
 }
 }  // end namespace
