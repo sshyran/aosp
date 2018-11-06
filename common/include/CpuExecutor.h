@@ -178,9 +178,9 @@ namespace {
 
 template <typename T>
 T getScalarData(const RunTimeOperandInfo& info) {
-  // TODO: Check buffer is at least as long as size of data.
-  T* data = reinterpret_cast<T*>(info.buffer);
-  return data[0];
+    // TODO: Check buffer is at least as long as size of data.
+    T* data = reinterpret_cast<T*>(info.buffer);
+    return data[0];
 }
 
 inline bool IsNullInput(const RunTimeOperandInfo *input) {

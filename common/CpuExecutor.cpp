@@ -19,7 +19,9 @@
 #include "CpuExecutor.h"
 
 #include "NeuralNetworks.h"
+#include "OperationResolver.h"
 #include "Operations.h"
+#include "OperationsUtils.h"
 #include "Tracing.h"
 
 #include "Eigen/Core"
@@ -31,6 +33,115 @@
 
 namespace android {
 namespace nn {
+
+namespace {
+
+class OperationExecutionContext : public IOperationExecutionContext {
+    DISALLOW_IMPLICIT_CONSTRUCTORS(OperationExecutionContext);
+
+   public:
+    OperationExecutionContext(const Operation* operation, RunTimeOperandInfo* operands)
+        : operation(operation), operands(operands) {}
+
+    uint32_t getNumInputs() const override;
+    OperandType getInputType(uint32_t index) const override;
+    Shape getInputShape(uint32_t index) const override;
+    const void* getInputBuffer(uint32_t index) const override;
+
+    uint32_t getNumOutputs() const override;
+    OperandType getOutputType(uint32_t index) const override;
+    Shape getOutputShape(uint32_t index) const override;
+    void* getOutputBuffer(uint32_t index) override;
+
+    // Requests the output buffer to be resized. Updates the output shape.
+    bool resizeOutputTensor(uint32_t index, const Shape& shape) override;
+
+   private:
+    const RunTimeOperandInfo* getInputInfo(uint32_t index) const;
+    const RunTimeOperandInfo* getOutputInfo(uint32_t index) const;
+    RunTimeOperandInfo* getOutputInfo(uint32_t index);
+
+    const Operation* operation;
+    RunTimeOperandInfo* operands;
+};
+
+const RunTimeOperandInfo* OperationExecutionContext::getInputInfo(uint32_t index) const {
+    CHECK(index < operation->inputs.size());
+    return &operands[operation->inputs[index]];
+}
+
+const RunTimeOperandInfo* OperationExecutionContext::getOutputInfo(uint32_t index) const {
+    CHECK(index < operation->outputs.size());
+    return &operands[operation->outputs[index]];
+}
+
+RunTimeOperandInfo* OperationExecutionContext::getOutputInfo(uint32_t index) {
+    CHECK(index < operation->outputs.size());
+    return &operands[operation->outputs[index]];
+}
+
+OperandType OperationExecutionContext::getInputType(uint32_t index) const {
+    return getInputInfo(index)->type;
+}
+
+Shape OperationExecutionContext::getInputShape(uint32_t index) const {
+    return getInputInfo(index)->shape();
+}
+
+const void* OperationExecutionContext::getInputBuffer(uint32_t index) const {
+    return getInputInfo(index)->buffer;
+}
+
+OperandType OperationExecutionContext::getOutputType(uint32_t index) const {
+    return getOutputInfo(index)->type;
+}
+
+Shape OperationExecutionContext::getOutputShape(uint32_t index) const {
+    return getOutputInfo(index)->shape();
+}
+
+void* OperationExecutionContext::getOutputBuffer(uint32_t index) {
+    return getOutputInfo(index)->buffer;
+}
+
+uint32_t OperationExecutionContext::getNumInputs() const {
+    return operation->inputs.size();
+}
+
+uint32_t OperationExecutionContext::getNumOutputs() const {
+    return operation->outputs.size();
+}
+
+// Updates the RunTimeOperandInfo with the newly calculated shape.
+// Allocate the buffer if we need to.
+bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape) {
+    // For user-provided model output operands, the parameters must match the Shape
+    // calculated from the preparation step.
+    if (info->lifetime == OperandLifeTime::MODEL_OUTPUT) {
+        NN_RET_CHECK(info->type == shape.type) << "Invalid type for model output";
+        NN_RET_CHECK(info->dimensions == shape.dimensions) << "Invalid dimensions for model output";
+        if (info->type == OperandType::TENSOR_QUANT8_ASYMM) {
+            NN_RET_CHECK_EQ(info->scale, shape.scale) << "Invalid scale for model output";
+            NN_RET_CHECK_EQ(info->zeroPoint, shape.offset) << "Invalid zeroPoint for model output";
+        }
+    }
+    info->type = shape.type;
+    info->dimensions = shape.dimensions;
+    info->scale = shape.scale;
+    info->zeroPoint = shape.offset;
+    if (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info->buffer == nullptr) {
+        uint32_t length = sizeOfData(info->type, info->dimensions);
+        info->buffer = new uint8_t[length];
+        NN_RET_CHECK(info->buffer != nullptr);
+    }
+    return true;
+}
+
+bool OperationExecutionContext::resizeOutputTensor(uint32_t index, const Shape& shape) {
+    return setInfoAndAllocateIfNeeded(getOutputInfo(index), shape);
+}
+
+}  // namespace
 
 // TODO: short term, make share memory mapping and updating a utility function.
 // TODO: long term, implement mmap_fd as a hidl IMemory service.
@@ -156,32 +267,6 @@ bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos
     }
     return true;
 }
-
-// Updates the RunTimeOperandInfo with the newly calculated shape.
-// Allocate the buffer if we need to.
-static bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape) {
-    // For user-provided model output operands, the parameters must match the Shape
-    // calculated from the preparation step.
-    if (info->lifetime == OperandLifeTime::MODEL_OUTPUT) {
-        NN_RET_CHECK(info->type == shape.type) << "Invalid type for model output";
-        NN_RET_CHECK(info->dimensions == shape.dimensions) << "Invalid dimensions for model output";
-        if (info->type == OperandType::TENSOR_QUANT8_ASYMM) {
-            NN_RET_CHECK_EQ(info->scale, shape.scale) << "Invalid scale for model output";
-            NN_RET_CHECK_EQ(info->zeroPoint, shape.offset) << "Invalid zeroPoint for model output";
-        }
-    }
-    info->type = shape.type;
-    info->dimensions = shape.dimensions;
-    info->scale = shape.scale;
-    info->zeroPoint = shape.offset;
-    if (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info->buffer == nullptr) {
-        uint32_t length = sizeOfData(info->type, info->dimensions);
-        info->buffer = new uint8_t[length];
-        NN_RET_CHECK(info->buffer != nullptr);
-    }
-    return true;
-}
-
 template <typename T>
 inline bool convertToNhwcImpl(T* to, const T* from, const std::vector<uint32_t>& fromDim) {
     uint32_t spatialSize = fromDim[2] * fromDim[3];
@@ -2543,9 +2628,21 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       topk_v2::eval(input.buffer, input.shape(), k, values.buffer, valuesShape,
                                     indices.buffer, indicesShape);
         } break;
-        default:
-            nnAssert(false);
-            break;
+        default: {
+            const OperationRegistration* operationRegistration =
+                    OperationResolver::get()->findOperation(operation.type);
+            if (operationRegistration == nullptr) {
+                LOG(ERROR) << getOperationName(operation.type) << " not registered";
+            } else if (operationRegistration->prepare == nullptr ||
+                       operationRegistration->execute == nullptr) {
+                LOG(ERROR) << "Incomplete operation registration: "
+                           << getOperationName(operation.type);
+            } else {
+                OperationExecutionContext context(&operation, mOperands.data());
+                success = operationRegistration->prepare(&context) &&
+                          operationRegistration->execute(&context);
+            }
+        }
     }
     if (!success) {
         LOG(ERROR) << getOperationName(operation.type) << " failed.";
