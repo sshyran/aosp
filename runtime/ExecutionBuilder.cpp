@@ -616,10 +616,8 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
     if (DeviceManager::get()->syncExecHal()) {
         VLOG(EXECUTION) << "Before mPreparedModel->executeSynchronously() "
                         << SHOW_IF_DEBUG(toString(request));
-        Return<ErrorStatus> syncCallbackStatus = mPreparedModel->executeSynchronously(request);
-        executionCallback->notify(syncCallbackStatus.isOk()
-                                          ? static_cast<ErrorStatus>(syncCallbackStatus)
-                                          : ErrorStatus::GENERAL_FAILURE);
+        auto syncExecuteResult = mPreparedModel->executeSynchronously(request);
+        executionCallback->notify(syncExecuteResult.first, syncExecuteResult.second);
     } else {
         VLOG(EXECUTION) << "Before mPreparedModel->execute() " << SHOW_IF_DEBUG(toString(request));
         // Execute.
@@ -679,7 +677,7 @@ static void computeOnCpu(const Model& model, const Request& request,
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "computeOnCpu");
     CpuExecutor executor;
     int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
-    executionCallback->notify_1_2(convertResultCodeToErrorStatus(err));
+    executionCallback->notify_1_2(convertResultCodeToErrorStatus(err), {});
 }
 
 int StepExecutor::startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallback) {
