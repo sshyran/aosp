@@ -181,9 +181,9 @@ void asyncExecute(const Request& request, const Model& model,
     CpuExecutor executor;
     int n = executor.run(model, request, poolInfos, requestPoolInfos);
     VLOG(DRIVER) << "executor.run returned " << n;
-    ErrorStatus executionStatus =
-            n == ANEURALNETWORKS_NO_ERROR ? ErrorStatus::NONE : ErrorStatus::GENERAL_FAILURE;
-    Return<void> returned = notify(callback, executionStatus, {});
+    ErrorStatus executionStatus = convertResultCodeToErrorStatus(n);
+    hidl_vec<OutputShape> outputShapes = executor.getOutputShapes();
+    Return<void> returned = notify(callback, executionStatus, outputShapes);
     if (!returned.isOk()) {
         LOG(ERROR) << " hidl callback failed to return properly: " << returned.description();
     }
@@ -246,7 +246,9 @@ Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
     CpuExecutor executor;
     int n = executor.run(mModel, request, mPoolInfos, requestPoolInfos);
     VLOG(DRIVER) << "executor.run returned " << n;
-    cb(n == ANEURALNETWORKS_NO_ERROR ? ErrorStatus::NONE : ErrorStatus::GENERAL_FAILURE, {});
+    ErrorStatus executionStatus = convertResultCodeToErrorStatus(n);
+    hidl_vec<OutputShape> outputShapes = executor.getOutputShapes();
+    cb(executionStatus, outputShapes);
     return Void();
 }
 
