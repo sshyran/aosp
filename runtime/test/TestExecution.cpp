@@ -78,17 +78,21 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
         if (mErrorStatus == ErrorStatus::NONE) {
             return mPreparedModelV1_2->execute_1_2(request, callback);
         } else {
-            callback->notify_1_2(mErrorStatus);
+            callback->notify_1_2(mErrorStatus, {});
             return ErrorStatus::NONE;
         }
     }
 
-    Return<ErrorStatus> executeSynchronously(const Request& request) override {
+    Return<void> executeSynchronously(const Request& request, executeSynchronously_cb cb) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
-            return mPreparedModelV1_2->executeSynchronously(request);
+            return mPreparedModelV1_2->executeSynchronously(
+                    request, [&cb](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes) {
+                        cb(error, outputShapes);
+                    });
         } else {
-            return mErrorStatus;
+            cb(mErrorStatus, {});
+            return Void();
         }
     }
 
