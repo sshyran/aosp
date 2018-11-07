@@ -49,23 +49,29 @@ ErrorStatus VersionedIPreparedModel::execute(const Request& request,
     }
 }
 
-ErrorStatus VersionedIPreparedModel::executeSynchronously(const Request& request) {
+std::pair<ErrorStatus, hidl_vec<OutputShape>> VersionedIPreparedModel::executeSynchronously(
+        const Request& request) {
     if (mPreparedModelV1_2 != nullptr) {
-        Return<ErrorStatus> ret = mPreparedModelV1_2->executeSynchronously(request);
+        std::pair<ErrorStatus, hidl_vec<OutputShape>> result;
+        Return<void> ret = mPreparedModelV1_2->executeSynchronously(
+                request, [&result](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes) {
+                    result = {error, outputShapes};
+                });
         if (!ret.isOk()) {
             LOG(ERROR) << "executeSynchronously failure: " << ret.description();
-            return ErrorStatus::GENERAL_FAILURE;
+            return {ErrorStatus::GENERAL_FAILURE, {}};
         }
-        return static_cast<ErrorStatus>(ret);
+        return result;
     } else {
         // Simulate synchronous execution.
         sp<ExecutionCallback> callback = new ExecutionCallback();
         ErrorStatus ret = execute(request, callback);
         if (ret != ErrorStatus::NONE) {
-            return ret;
+            return {ret, {}};
         }
         callback->wait();
-        return callback->getStatus();
+        // callback->getOutputShapes() will always return an empty hidl vector.
+        return {callback->getStatus(), callback->getOutputShapes()};
     }
 }
 
