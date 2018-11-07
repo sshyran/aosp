@@ -55,7 +55,7 @@ bool evalGeneric(const T* aData, const Shape& aShape, const T* bData, const Shap
 }  // namespace
 
 bool prepare(const Shape& in1, const Shape& in2, Shape* out) {
-    NN_CHECK_EQ(in1.type, in2.type);
+    NN_CHECK(in1.type == in2.type);
     return calculateBroadcastedShape(in1, in2, out);
 }
 
