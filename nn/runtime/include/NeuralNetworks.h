@@ -3968,6 +3968,11 @@ typedef enum {
      * Mitigate by reading its content into memory.
      */
     ANEURALNETWORKS_UNMAPPABLE = 7,
+
+    /**
+     * Failure caused by insufficient buffer size provided to a model output.
+     */
+    ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE = 8,
 } ResultCode;
 
 /**
