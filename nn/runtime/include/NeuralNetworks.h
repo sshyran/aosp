@@ -983,6 +983,12 @@ typedef enum {
      *   matrix, each element of which is the product of the corresponding
      *   elements of the input matrices.
      *
+     * Since API level 29 LSTM supports layer normalization.
+     * In case layer normalization is used, the inputs to internal activation
+     * functions (sigmoid and \f$g\f$) are normalized, rescaled and recentered
+     * following an approach from section 3.1 from
+     * https://arxiv.org/pdf/1607.06450.pdf
+     *
      * The operation has the following independently optional inputs:
      * * The input-to-input weights (\f$W_{xi}\f$), recurrent-to-input weights
      *   (\f$W_{hi}\f$), cell-to-input (\f$W_{ci}\f$) weights, and input gate
@@ -1003,6 +1009,9 @@ typedef enum {
      * * The projection bias (\f$b_{proj}\f$) may (but not required to) have a
      *   value if the recurrent projection layer exists, and should otherwise
      *   have no value.
+     * * (API level >= 29) The four layer normalization weights either all have
+     *   values or none of them have values. Layer normalization is used when
+     *   values are present.
      *
      * References:
      *
@@ -1022,6 +1031,10 @@ typedef enum {
      * The coupling of input and forget gate (CIFG) is based on:
      * http://arxiv.org/pdf/1503.04069.pdf
      * Greff et al. "LSTM: A Search Space Odyssey"
+     *
+     * The layer normalization is based on:
+     * https://arxiv.org/pdf/1607.06450.pdf
+     * Jimmy Ba et al. "Layer Normalization"
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -1106,6 +1119,23 @@ typedef enum {
      * * 22:The clipping threshold (\f$t_{proj}\f$) for the output from the
      *      projection layer, such that values are bound within
      *      [-proj_clip, proj_clip]. If set to 0.0 then clipping is disabled.
+     * Since API level 29 there are additional inputs to this op:
+     * * 23:The input layer normalization weights.
+     *      A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, of shape
+     *      [num_units]. Used to rescale normalized inputs to activation at
+     *      input gate.
+     * * 24:The forget layer normalization weights.
+     *      A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, of shape
+     *      [num_units]. Used to rescale normalized inputs to activation at
+     *      forget gate.
+     * * 25:The cell layer normalization weights.
+     *      A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, of shape
+     *      [num_units]. Used to rescale normalized inputs to activation at
+     *      cell gate.
+     * * 26:The output layer normalization weights.
+     *      A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, of shape
+     *      [num_units]. Used to rescale normalized inputs to activation at
+     *      output gate.
      *
      * Outputs:
      * * 0: The scratch buffer.
