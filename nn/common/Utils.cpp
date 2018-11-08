@@ -184,7 +184,7 @@ const char* kTypeNames[kNumberOfDataTypes] = {
         "TENSOR_INT32",   "TENSOR_QUANT8_ASYMM",
         "BOOL",           "TENSOR_QUANT16_SYMM",
         "TENSOR_FLOAT16", "TENSOR_BOOL8",
-        "FLOAT16",
+        "FLOAT16",        "TENSOR_QUANT8_SYMM_PER_CHANNEL",
 };
 
 static_assert(COUNT(kTypeNames) == kNumberOfDataTypes, "kTypeNames is incorrect");
@@ -334,6 +334,7 @@ const uint32_t kSizeOfDataType[]{
         2,  // ANEURALNETWORKS_TENSOR_FLOAT16
         1,  // ANEURALNETWORKS_TENSOR_BOOL8
         2,  // ANEURALNETWORKS_FLOAT16
+        1,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
 };
 
 static_assert(COUNT(kSizeOfDataType) == kNumberOfDataTypes, "kSizeOfDataType is incorrect");
@@ -350,6 +351,7 @@ const bool kScalarDataType[]{
         false,  // ANEURALNETWORKS_TENSOR_FLOAT16
         false,  // ANEURALNETWORKS_TENSOR_BOOL8
         true,   // ANEURALNETWORKS_FLOAT16
+        false,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
 };
 
 static_assert(COUNT(kScalarDataType) == kNumberOfDataTypes, "kScalarDataType is incorrect");
@@ -436,6 +438,30 @@ void logModelToInfo(const V1_1::Model& model) {
     LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
 }
 
+bool validateOperandQuant8SymmPerChannel(const ANeuralNetworksOperandType& type, const char* tag) {
+    const auto& channelQuant = type.extraParams.channelQuant;
+
+    NN_RET_CHECK_EQ(type.zeroPoint, 0)
+            << tag << " OperandType invalid zeroPoint " << type.zeroPoint;
+    NN_RET_CHECK_EQ(type.scale, 0.f) << tag << " OperandType invalid scale " << type.scale;
+    NN_RET_CHECK_LT(channelQuant.channelDim, type.dimensionCount)
+            << tag << " OperandType invalid channelQuant.channelDim " << channelQuant.channelDim
+            << " should be in range[0, " << type.dimensionCount << ")";
+    NN_RET_CHECK(channelQuant.scales != nullptr)
+            << tag << " OperandType invalid channelQuant.scales " << channelQuant.scales;
+    NN_RET_CHECK_EQ(channelQuant.scaleCount, type.dimensions[channelQuant.channelDim])
+            << tag << " OperandType invalid channelQuant.scalesCount " << channelQuant.scaleCount
+            << ", expected " << type.dimensions[channelQuant.channelDim];
+    NN_RET_CHECK_NE(type.dimensions[channelQuant.channelDim], 0U)
+            << tag << " Channel dimension " << channelQuant.channelDim
+            << " is underspecified (can't be 0)";
+    for (uint32_t i = 0; i < type.dimensions[channelQuant.channelDim]; i++) {
+        NN_RET_CHECK_GT(channelQuant.scales[i], 0.0f)
+                << tag << " OperandType invalid scaleArray[" << i << "]=" << channelQuant.scales[i];
+    }
+    return true;
+}
+
 // Validates the type. The used dimensions can be underspecified.
 int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
                         bool allowPartial) {
@@ -487,6 +513,11 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
         type.type == ANEURALNETWORKS_BOOL || type.type == ANEURALNETWORKS_OEM_SCALAR) {
         if (type.dimensionCount != 0 || type.dimensions != nullptr) {
             LOG(ERROR) << tag << " Invalid dimensions for scalar type";
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+    }
+    if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        if (!validateOperandQuant8SymmPerChannel(type, tag)) {
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
@@ -798,6 +829,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
+
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
             if (inputType == OperandType::TENSOR_FLOAT32) {

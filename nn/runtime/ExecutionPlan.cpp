@@ -906,6 +906,7 @@ PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> d
         case OperandType::TENSOR_QUANT8_ASYMM:
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_BOOL8:
+        case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
             // For OEM, the real selection will be made from who can run the operand.
         case OperandType::OEM:
         case OperandType::TENSOR_OEM_BYTE:
