@@ -1459,26 +1459,20 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 lsh.Eval();
         } break;
         case OperationType::LSTM: {
-            RunTimeOperandInfo &scratch =
-                mOperands[outs[LSTMCell::kScratchBufferTensor]];
-            RunTimeOperandInfo &outputStateOut =
-                mOperands[outs[LSTMCell::kOutputStateOutTensor]];
-            RunTimeOperandInfo &cellStateOut =
-                mOperands[outs[LSTMCell::kCellStateOutTensor]];
-            RunTimeOperandInfo &output =
-                mOperands[outs[LSTMCell::kOutputTensor]];
+            RunTimeOperandInfo& scratch = mOperands[outs[LSTMCell::kScratchBufferTensor]];
+            RunTimeOperandInfo& outputStateOut = mOperands[outs[LSTMCell::kOutputStateOutTensor]];
+            RunTimeOperandInfo& cellStateOut = mOperands[outs[LSTMCell::kCellStateOutTensor]];
+            RunTimeOperandInfo& output = mOperands[outs[LSTMCell::kOutputTensor]];
 
             Shape scratchShape, outputStateShape, cellStateShape, outputShape;
             LSTMCell lstm_cell(operation, mOperands);
 
-            success = LSTMCell::Prepare(operation, mOperands,
-                                        &scratchShape, &outputStateShape,
+            success = lstm_cell.Prepare(operation, mOperands, &scratchShape, &outputStateShape,
                                         &cellStateShape, &outputShape) &&
-                setInfoAndAllocateIfNeeded(&scratch, scratchShape) &&
-                setInfoAndAllocateIfNeeded(&outputStateOut, outputStateShape) &&
-                setInfoAndAllocateIfNeeded(&cellStateOut, cellStateShape) &&
-                setInfoAndAllocateIfNeeded(&output, outputShape) &&
-                lstm_cell.Eval();
+                      setInfoAndAllocateIfNeeded(&scratch, scratchShape) &&
+                      setInfoAndAllocateIfNeeded(&outputStateOut, outputStateShape) &&
+                      setInfoAndAllocateIfNeeded(&cellStateOut, cellStateShape) &&
+                      setInfoAndAllocateIfNeeded(&output, outputShape) && lstm_cell.Eval();
         } break;
         case OperationType::RANDOM_MULTINOMIAL: {
             const RunTimeOperandInfo& lookups = mOperands[ins[HashtableLookup::kLookupTensor]];
