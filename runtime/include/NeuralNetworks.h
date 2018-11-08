@@ -72,7 +72,7 @@ typedef enum {
     /** A tensor of 32 bit integer values. */
     ANEURALNETWORKS_TENSOR_INT32 = 4,
     /**
-     * A tensor of 8 bit integers that represent real numbers.
+     * A tensor of 8 bit unsigned integers that represent real numbers.
      *
      * Attached to this tensor are two numbers that be used to convert the
      * 8 bit integer to the real value and vice versa. These two numbers are:
@@ -80,7 +80,7 @@ typedef enum {
      * - zeroPoint: a 32 bit integer, in range [0, 255].
      *
      * The formula is:
-     * real_value = (integer_value - zeroPoint) * scale.
+     *   real_value = (integer_value - zeroPoint) * scale.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_ASYMM = 5,
     /**
@@ -125,6 +125,31 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_FLOAT16 = 10,
+    /**
+     * A tensor of 8 bit signed integers that represent real numbers.
+     *
+     * This tensor is associated with additional fields that can
+     * be used to convert the 8 bit signed integer to the real value and vice versa.
+     * These fields are:
+     * - channelDim: a 32 bit unsigned integer indicating channel dimension.
+     * - scales: an array of positive 32 bit floating point values.
+     * The size of the scales array must be equal to dimensions[channelDim].
+     * These fields are located inside Operand's extraParams union, inside the
+     * {@link ANeuralNetworksSymmPerChannelQuantParams} struct.
+     *
+     * An Operand of this type must use 'channelQuant' field of its extraParams
+     * union.
+     *
+     * The channel dimension of this tensor must not be unknown (dimensions[channelDim] != 0).
+     *
+     * The formula is:
+     * realValue[..., C, ...] =
+     *     integerValue[..., C, ...] * scales[C]
+     * where C is an index in the Channel dimension.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL = 11,
 } OperandCode;
 
 /**
@@ -3755,6 +3780,18 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
 typedef struct ANeuralNetworksExecution ANeuralNetworksExecution;
 
 /**
+ * Parameters for ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL operand.
+ */
+typedef struct ANeuralNetworksSymmPerChannelQuantParams {
+    /** The array of scaling values for each channel. Each value must be greater than zero. */
+    const float* scales;
+    /** The size of the scale array. Should be equal to dimension[channelDim] of the Operand. */
+    uint32_t scaleCount;
+    /* The index of the channel dimension. */
+    uint32_t channelDim;
+} ANeuralNetworksSymmPerChannelQuantParams;
+
+/**
  * ANeuralNetworksOperandType describes the type of an operand.
  * This structure is used to describe both scalars and tensors.
  *
@@ -3810,6 +3847,36 @@ typedef struct ANeuralNetworksOperandType {
      */
     float scale;
     int32_t zeroPoint;
+
+    // This struct was extended with additional fields in API29, changing this struct
+    // size. For binary compatibility with pre-API29 code, fields below this comment
+    // must not be accessed by the runtime if there is no guarantee that client compiled
+    // against API29+.
+    // Usage of operand types that were added in API29 is a strong signal that this is
+    // true. Fields below this comment should be accessed only if tensor type is set to
+    // - ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
+    // - ANEURALNETWORKS_TENSOR_FLOAT16
+    // - ANEURALNETWORKS_TENSOR_QUANT16_SYMM
+    // - ANEURALNETWORKS_BOOL
+    // ExtraParams is aligned to a byte to prevent binary compatibility problems that may
+    // arise from extending it with new fields. In particular, we want to avoid altering
+    // ANeuralNetorksOperandType alignment.
+    /**
+     * Union of extra parameters, used by some types of Operands that need additional
+     * information for the complete definition of an Operand.
+     *
+     * Available since API level 29.
+     */
+    union ExtraParams {
+        /** Must be set to null if no extra params are expected
+         * (only if compiled against API level 29 and later). */
+        const void* none;
+
+        /** Used with {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL}
+         * operand type.
+         */
+        ANeuralNetworksSymmPerChannelQuantParams channelQuant;
+    } __attribute__((aligned(1))) extraParams;
 } ANeuralNetworksOperandType;
 
 typedef int32_t ANeuralNetworksOperationType;
