@@ -55,6 +55,7 @@ cc_library_static {
     srcs: [
         "CpuExecutor.cpp",
         "GraphDump.cpp",
+        "IndexedShapeWrapper.cpp",
         "OperationsUtils.cpp",
         "Utils.cpp",
         "ValidateHal.cpp",
@@ -75,9 +76,12 @@ cc_library_static {
         "operations/HeatmapMaxKeypoint.cpp",
         "operations/LSHProjection.cpp",
         "operations/LSTM.cpp",
+        "operations/MaximumMinimum.cpp",
         "operations/Multinomial.cpp",
         "operations/Normalization.cpp",
         "operations/Pooling.cpp",
+        "operations/Pow.cpp",
+	"operations/TopK_V2.cpp",
         "operations/QuantizedLSTM.cpp",
         "operations/Reshape.cpp",
         "operations/RNN.cpp",
@@ -158,6 +162,36 @@ cc_test {
     header_libs: [
         "libeigen",
         "philox_random_headers",
+        "tensorflow_headers",
+    ],
+}
+
+cc_test {
+    name: "NeuralNetworksTest_utils",
+    shared_libs: [
+        "libhidlmemory",
+        "libneuralnetworks",
+        "android.hardware.neuralnetworks@1.0",
+        "android.hardware.neuralnetworks@1.1",
+        "android.hardware.neuralnetworks@1.2",
+        "android.hidl.allocator@1.0",
+        "android.hidl.memory@1.0",
+    ],
+    static_libs: [
+        "libbase",
+        "libgmock",
+        "liblog",
+        "libneuralnetworks_common",
+    ],
+    cflags: [
+        "-Wno-extern-c-compat",
+        "-Wno-unused-variable",
+    ],
+    srcs: [
+        "UtilsTest.cpp",
+    ],
+    local_include_dirs: [ "include" ],
+    header_libs: [
         "tensorflow_headers",
     ],
 }

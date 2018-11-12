@@ -56,7 +56,7 @@ inline bool l2normFloat32Impl(const float* inputData, const Shape& inputShape, i
 bool l2normFloat32(const float* inputData, const Shape& inputShape, int32_t axis, float* outputData,
                    const Shape& outputShape) {
     int32_t ndim = getNumberOfDimensions(inputShape);
-    axis = getDimensionIndex(inputShape, axis);
+    NN_CHECK(handleNegativeAxis(inputShape, &axis));
     // TFLite optimized implementation only supports computation along the last axis
     if (axis == ndim - 1) {
         NNTRACE_COMP("optimized_ops::L2Normalization::float");
@@ -103,7 +103,7 @@ bool localResponseNormFloat32(const float* inputData, const Shape& inputShape, i
                               float bias, float alpha, float beta, int32_t axis, float* outputData,
                               const Shape& outputShape) {
     int32_t ndim = getNumberOfDimensions(inputShape);
-    axis = getDimensionIndex(inputShape, axis);
+    NN_CHECK(handleNegativeAxis(inputShape, &axis));
     // TFLite optimized implementation only supports computation along the last axis
     if (axis == ndim - 1) {
         NNTRACE_COMP("optimized_ops::LocalResponseNormalization::float");
