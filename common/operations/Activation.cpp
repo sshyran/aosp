@@ -110,7 +110,7 @@ inline bool softmaxFloat32Impl(const float* inputData, const Shape& inputShape, 
 bool softmaxFloat32(const float* inputData, const Shape& inputShape, const float beta, int32_t axis,
                     float* outputData, const Shape& outputShape) {
     int32_t ndim = getNumberOfDimensions(inputShape);
-    axis = getDimensionIndex(inputShape, axis);
+    NN_CHECK(handleNegativeAxis(inputShape, &axis));
     // TFLite optimized implementation only supports computation along the last axis
     if (axis == ndim - 1) {
         NNTRACE_COMP("optimized_ops::Softmax::float");
@@ -311,7 +311,7 @@ bool softmaxQuant8Impl(const uint8_t* inputData, const Shape& inputShape, const 
 bool softmaxQuant8(const uint8_t* inputData, const Shape& inputShape, const float beta,
                    int32_t axis, uint8_t* outputData, const Shape& outputShape) {
     int32_t ndim = getNumberOfDimensions(inputShape);
-    axis = getDimensionIndex(inputShape, axis);
+    NN_CHECK(handleNegativeAxis(inputShape, &axis));
 
     if (outputShape.offset != 0 || outputShape.scale != 1.f / 256) {
         LOG(ERROR) << "incorrect scale / offset for output";

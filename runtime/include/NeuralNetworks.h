@@ -549,6 +549,13 @@ typedef enum {
      * If a value in Lookups is out of bounds, the operation must fail
      * and an error must be reported.
      *
+     * Supported value tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported value tensor rank: from 2
+     *
      * Inputs:
      * * 0: Lookups. A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}.
      *      The values are indices into the first dimension of Values.
@@ -654,6 +661,13 @@ typedef enum {
      * If the sixth entry of Keys contains 123456, the sixth slice of Values
      * must be selected. If no entry in Keys has 123456, a slice of zeroes
      * must be concatenated.
+     *
+     * Supported value tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported value tensor rank: from 2
      *
      * Inputs:
      * * 0: Lookups. A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor with
@@ -862,6 +876,13 @@ typedef enum {
 
     /**
      * Projects an input to a bit vector via locality senstive hashing.
+     *
+     * Supported input tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported input tensor rank: from 1
      *
      * Inputs:
      * * 0: Hash functions. Dim.size == 2, DataType: Float.
@@ -1938,6 +1959,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
+     * Supported tensor rank: from 1
+     *
      * Inputs:
      * * 0: An n-D tensor specifying the input. Must be non-empty.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis to
@@ -1960,6 +1983,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: An n-D tensor specifying the input. Must be non-empty.
@@ -2070,6 +2095,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
+     * Supported tensor rank: from 1
+     *
      * Inputs:
      * * 0: A tensor.
      *
@@ -2133,6 +2160,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
+     * Supported tensor rank: from 1
+     *
      * Inputs:
      * * 0: An n-D tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar specifying the dimension
@@ -2164,6 +2193,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: An n-D tensor from which to gather values.
@@ -2339,9 +2370,77 @@ typedef enum {
     ANEURALNETWORKS_LOGICAL_NOT = 61,
     ANEURALNETWORKS_LOGICAL_OR = 62,
     ANEURALNETWORKS_LOG_SOFTMAX = 63,
+
+    /**
+     * Returns the element-wise maximum of two tensors.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: A tensor.
+     * * 1: A tensor of the same {@link OperandCode} and compatible dimensions
+     *      with input0.
+     *
+     * Outputs:
+     * * 0: The sum, a tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_MAXIMUM = 64,
+
+    /**
+     * Returns the element-wise minimum of two tensors.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: A tensor.
+     * * 1: A tensor of the same {@link OperandCode} and compatible dimensions
+     *      with input0.
+     *
+     * Outputs:
+     * * 0: The sum, a tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_MINIMUM = 65,
+
     ANEURALNETWORKS_NEG = 66,
+    /**
+     * Computes the power of one value to another.
+     *
+     * Given a tensor base and a tensor exponent, this operation computes
+     * base^exponent elementwise.
+     *
+     * This operations supports broadcasting. The size of the output is the
+     * maximum size along each dimension of the input operands. It starts with
+     * the trailing dimensions, and works its way forward.
+     *
+     * For example:
+     *     base.dimension     =    {4, 1, 2}
+     *     exponent.dimension = {5, 4, 3, 1}
+     *     output.dimension   = {5, 4, 3, 2}
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: from 1
+     *
+     * Inputs:
+     * * 0: A tensor specifying the base.
+     * * 1: A tensor specifying the exponent.
+     *
+     * Outputs:
+     * * 0: An output tensor.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_POW = 67,
 
     /**
@@ -2392,6 +2491,8 @@ typedef enum {
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}.
@@ -2535,6 +2636,7 @@ typedef enum {
     ANEURALNETWORKS_SIN = 77,
     ANEURALNETWORKS_SLICE = 78,
     ANEURALNETWORKS_SPARSE_TO_DENSE = 79,
+
     /**
      * Splits a tensor along a given axis into num_splits subtensors.
      *
@@ -2542,6 +2644,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: An n-D tensor to split.
@@ -2556,6 +2660,7 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_SPLIT = 80,
+
     ANEURALNETWORKS_SQRT = 81,
 
     /**
@@ -2572,6 +2677,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
+     * Supported tensor rank: from 1
+     *
      * Inputs:
      * * 0: input, an n-D tensor specifying the input.
      * * 1: multiples, a 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}.
@@ -2584,6 +2691,32 @@ typedef enum {
      */
     ANEURALNETWORKS_TILE = 82,
 
+    /**
+     * Finds values and indices of the k largest entries for the last dimension.
+     *
+     * Resulting values in each dimensions are sorted in descending order. If
+     * two values are equal, the one with larger index appears first.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
+     *
+     * Inputs:
+     * * 0: input, an n-D tensor specifying the input.
+     * * 1: k, an {@link ANEURALNETWORKS_INT32} scalar, specifying the number of
+     *      top elements to look for along the last dimension.
+     *
+     * Outputs:
+     * * 0: An n-D tensor of the same type as the input, containing the k
+     *      largest elements along each last dimensional slice.
+     * * 1: An n-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32}
+     *      containing the indices of values within the last dimension of input.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_TOPK_V2 = 83,
 
     /**
@@ -2673,6 +2806,7 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_TRANSPOSE_CONV_2D = 84,
+
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM = 85,
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN = 86,
 

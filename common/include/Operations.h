@@ -24,11 +24,14 @@
 #include "operations/HashtableLookup.h"
 #include "operations/LSHProjection.h"
 #include "operations/LSTM.h"
+#include "operations/MaximumMinimum.h"
 #include "operations/Multinomial.h"
+#include "operations/Pow.h"
 #include "operations/QuantizedLSTM.h"
 #include "operations/RNN.h"
 #include "operations/SVDF.h"
 #include "operations/Tile.h"
+#include "operations/TopK_V2.h"
 
 #include <stddef.h>
 
