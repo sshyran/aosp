@@ -1,6 +1,7 @@
 """ NNAPI systrace parser - getting data in from a systrace html output """
 
 import re
+import sys
 
 def get_trace_part(filename):
   """ Finds the text trace in the given html file, returns as a string. """
@@ -52,6 +53,7 @@ def parse_trace_part(trace):
   driver_tgids = {}
   pid_to_tgid = {}
   parsed = []
+  seen_nnapi_runtime = False
   for [line, lineno] in trace:
     m = MATCHER.match(line)
     m_old = MATCHER_FOR_OLD.match(line)
@@ -79,9 +81,13 @@ def parse_trace_part(trace):
     parsed.append( [task, pid, tgid, time, mark, line, lineno] )
     if "[NN" in mark:
       tracked_pids[pid] = tgid
+      if "NN_LR" in mark:
+        seen_nnapi_runtime = True
     if "HIDL::IDevice" in mark and "::server" in mark:
       tracked_pids[pid] = tgid
       driver_tgids[tgid] = True
 
+  if not seen_nnapi_runtime:
+    sys.stderr.write("\n*** No NNAPI Runtime trace present - check your systrace setup ***\n\n")
   return tracked_pids, driver_tgids, parsed
 

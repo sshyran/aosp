@@ -56,7 +56,9 @@ uint32_t getNumberOfElements(const Shape& shape) {
 uint32_t getNumberOfElements(const Shape& shape,
                              size_t firstAxisInclusive,
                              size_t lastAxisExclusive) {
-    NN_CHECK(lastAxisExclusive <= shape.dimensions.size());
+    nnAssert(0 <= firstAxisInclusive);
+    nnAssert(firstAxisInclusive <= lastAxisExclusive);
+    nnAssert(lastAxisExclusive <= shape.dimensions.size());
     uint32_t count = 1;
     for (size_t i = firstAxisInclusive; i < lastAxisExclusive; i++) {
         count *= shape.dimensions[i];
@@ -69,23 +71,16 @@ uint32_t getNumberOfDimensions(const Shape& shape) {
 }
 
 uint32_t getSizeOfDimension(const Shape& shape, uint32_t dimensionIdx) {
-    if (dimensionIdx >= shape.dimensions.size()) {
-        // TODO, log the error
-        return 0;
-    }
+    nnAssert(0 <= dimensionIdx && dimensionIdx < shape.dimensions.size());
     return shape.dimensions[dimensionIdx];
 }
 
-int32_t getDimensionIndex(int32_t numberOfDimensions, int32_t axis) {
-    NN_OPS_CHECK(-numberOfDimensions <= axis && axis < numberOfDimensions);
-    if (axis < 0) {
-        axis += numberOfDimensions;
+bool handleNegativeAxis(int32_t numberOfDimensions, int32_t* axis) {
+    NN_CHECK(-numberOfDimensions <= *axis && *axis < numberOfDimensions);
+    if (*axis < 0) {
+        *axis += numberOfDimensions;
     }
-    return axis;
-}
-
-int32_t getDimensionIndex(const Shape& shape, int32_t axis) {
-    return getDimensionIndex(getNumberOfDimensions(shape), axis);
+    return true;
 }
 
 bool QuantizeMultiplierSmallerThanOne(double double_multiplier,
@@ -209,34 +204,38 @@ int32_t CalculateInputRadius(int input_integer_bits, int input_left_shift) {
     return static_cast<int32_t>(std::floor(max_input_rescaled));
 }
 
+bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
+    uint32_t numberOfDims1 = getNumberOfDimensions(in1);
+    uint32_t numberOfDims2 = getNumberOfDimensions(in2);
+    uint32_t maxDims = std::max(numberOfDims1, numberOfDims2);
+    out->dimensions = std::vector<uint32_t>(maxDims);
+    for (uint32_t i = 1; i <= maxDims; i++) {
+        uint32_t dim1 = 1;
+        if (i <= numberOfDims1) {
+            dim1 = getSizeOfDimension(in1, numberOfDims1 - i);
+        }
+        uint32_t dim2 = 1;
+        if (i <= numberOfDims2) {
+            dim2 = getSizeOfDimension(in2, numberOfDims2 - i);
+        }
+        if (dim1 != dim2 && dim1 != 1 && dim2 != 1) {
+            LOG(ERROR) << "Dimensions mismatch for broadcast:\n"
+                       << "First tensor: dimension " << numberOfDims1 - i << " of size " << dim1
+                       << "\nSecond tensor: dimension " << numberOfDims2 - i << "of size " << dim2;
+            return false;
+        }
+        out->dimensions[maxDims - i] = std::max(dim1, dim2);
+    }
+    return true;
+}
+
 bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out) {
     NN_OPS_CHECK(getNumberOfDimensions(in1) <= 4 && getNumberOfDimensions(in2) <= 4);
     NN_OPS_CHECK(in1.type == in2.type);
     if (SameShape(in1, in2)) {
         return SetShape(in1, out);
-    } else {
-        // BroadcastAdd needed
-        uint32_t numberOfDims1 = getNumberOfDimensions(in1);
-        uint32_t numberOfDims2 = getNumberOfDimensions(in2);
-        uint32_t maxDims = std::max(numberOfDims1, numberOfDims2);
-        out->dimensions = std::vector<uint32_t>(maxDims);
-        for (uint32_t i = 1; i <= maxDims; i++) {
-            uint32_t dim1 = 1;
-            if (i <= numberOfDims1) {
-                dim1 = getSizeOfDimension(in1, numberOfDims1 - i);
-            }
-            uint32_t dim2 = 1;
-            if (i <= numberOfDims2) {
-                dim2 = getSizeOfDimension(in2, numberOfDims2 - i);
-            }
-            if (dim1 != dim2 && dim1 != 1 && dim2 != 1) {
-                LOG(ERROR) << "Dimensions mismatch for BroadcastAdd";
-                return false;
-            }
-            out->dimensions[maxDims - i] = std::max(dim1, dim2);
-        }
     }
-    return true;
+    return calculateBroadcastedShape(in1, in2, out);
 }
 
 bool floorPrepare(const Shape& input, Shape* output) {
@@ -921,7 +920,7 @@ bool stridedSlicePrepare(const Shape& input,
 }
 
 bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output) {
-    axis = getDimensionIndex(input, axis);
+    NN_CHECK(handleNegativeAxis(input, &axis));
 
     output->type = OperandType::TENSOR_INT32;
 
@@ -940,7 +939,7 @@ bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output) {
 
 bool splitPrepare(const Shape& input, int32_t axis, int32_t numOutputs,
                   std::vector<Shape>* output) {
-    axis = getDimensionIndex(input, axis);
+    NN_CHECK(handleNegativeAxis(input, &axis));
 
     const int32_t sizeOfAxisToSplit = input.dimensions[axis];
     NN_OPS_CHECK(sizeOfAxisToSplit % numOutputs == 0);
@@ -1071,7 +1070,7 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
 }
 
 bool channelShufflePrepare(const Shape& input, int32_t numGroups, int32_t axis, Shape* output) {
-    axis = getDimensionIndex(input, axis);
+    NN_CHECK(handleNegativeAxis(input, &axis));
     NN_OPS_CHECK(numGroups > 0);
     NN_OPS_CHECK(getSizeOfDimension(input, axis) % numGroups == 0);
     output->type = input.type;
