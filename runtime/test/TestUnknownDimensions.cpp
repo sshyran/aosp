@@ -280,6 +280,11 @@ TEST_P(UnknownDimensionsTest, Quantized) {
     TestAll<uint8_t, Type::TENSOR_QUANT8_ASYMM>();
 }
 
+// TODO: Enable when float16 support is added to the ADD operation.
+// TEST_P(UnknownDimensionsTest, Float16) {
+//     TestAll<_Float16, Type::TENSOR_FLOAT16>();
+// }
+
 INSTANTIATE_TEST_CASE_P(UnknownCombinationsTest, UnknownDimensionsTest,
                         ::testing::ValuesIn(ioValues));
 }  // end namespace

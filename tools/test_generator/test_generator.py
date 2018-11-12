@@ -142,6 +142,7 @@ class Type(NamedVariable):
         "UINT32": "uint32_t",
         "FLOAT32": "float",
         "TENSOR_INT32": "int32_t",
+        "TENSOR_FLOAT16": "_Float16",
         "TENSOR_FLOAT32": "float",
         "TENSOR_QUANT8_ASYMM": "uint8_t",
         "BOOL": "bool",
@@ -206,7 +207,7 @@ class Type(NamedVariable):
         return Type.typeLookup[self.type]
 
     def IsFloat(self):
-        return self.GetCppTypeString() == "float"
+        return self.GetCppTypeString() in ["float", "_Float16"]
 
     def IsBool(self):
         return self.GetCppTypeString() == "bool"
@@ -215,7 +216,7 @@ class Type(NamedVariable):
         cppTypeString = self.GetCppTypeString()
         if cppTypeString in ["uint8_t", "bool"]:
             return 1
-        elif cppTypeString == "int16_t":
+        elif cppTypeString in ["int16_t", "_Float16"]:
             return 2
         else:
             return 4

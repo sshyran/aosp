@@ -13,7 +13,9 @@ std::vector<MixedTypedExample> examples_nhwc = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -24,7 +26,9 @@ std::vector<MixedTypedExample> examples_nhwc = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -43,7 +47,9 @@ std::vector<MixedTypedExample> examples_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -54,7 +60,9 @@ std::vector<MixedTypedExample> examples_nhwc_relaxed = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -73,7 +81,9 @@ std::vector<MixedTypedExample> examples_nhwc_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {14, 23, 32, 41, 54, 63, 72, 81}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -84,7 +94,9 @@ std::vector<MixedTypedExample> examples_nhwc_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {14, 23, 32, 41, 54, 63, 72, 81}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -103,7 +115,9 @@ std::vector<MixedTypedExample> examples_nchw = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -114,7 +128,9 @@ std::vector<MixedTypedExample> examples_nchw = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -133,7 +149,9 @@ std::vector<MixedTypedExample> examples_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -144,7 +162,9 @@ std::vector<MixedTypedExample> examples_nchw_relaxed = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -163,7 +183,9 @@ std::vector<MixedTypedExample> examples_nchw_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {14, 23, 32, 41, 54, 63, 72, 81}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -174,7 +196,9 @@ std::vector<MixedTypedExample> examples_nchw_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {14, 32, 54, 72, 23, 41, 63, 81}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -193,7 +217,9 @@ std::vector<MixedTypedExample> examples_nhwc_2 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -204,7 +230,9 @@ std::vector<MixedTypedExample> examples_nhwc_2 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -223,7 +251,9 @@ std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -234,7 +264,9 @@ std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -253,7 +285,9 @@ std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
   // int -> QUANT8_ASYMM map
   {{0, {130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -264,7 +298,9 @@ std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
   // int -> QUANT8_ASYMM map
   {{0, {130, 138, 132, 140, 146, 154, 148, 156, 134, 142, 136, 144, 150, 158, 152, 160}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -283,7 +319,9 @@ std::vector<MixedTypedExample> examples_nchw_2 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -294,7 +332,9 @@ std::vector<MixedTypedExample> examples_nchw_2 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -313,7 +353,9 @@ std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -324,7 +366,9 @@ std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -343,7 +387,9 @@ std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
   // int -> QUANT8_ASYMM map
   {{0, {130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -354,7 +400,9 @@ std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
   // int -> QUANT8_ASYMM map
   {{0, {130, 138, 132, 140, 146, 154, 148, 156, 134, 142, 136, 144, 150, 158, 152, 160}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example

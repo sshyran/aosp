@@ -42,8 +42,9 @@ namespace generated_tests {
 using namespace android::nn::wrapper;
 using namespace test_helper;
 
+namespace {
 template <typename T>
-static void print(std::ostream& os, const MixedTyped& test) {
+void print(std::ostream& os, const MixedTyped& test) {
     // dump T-typed inputs
     for_each<T>(test, [&os](int idx, const std::vector<T>& f) {
         os << "    aliased_output" << idx << ": [";
@@ -54,12 +55,26 @@ static void print(std::ostream& os, const MixedTyped& test) {
     });
 }
 
+// Specialized for _Float16 because it requires explicit conversion.
+template <>
+void print<_Float16>(std::ostream& os, const MixedTyped& test) {
+    for_each<_Float16>(test, [&os](int idx, const std::vector<_Float16>& f) {
+        os << "    aliased_output" << idx << ": [";
+        for (size_t i = 0; i < f.size(); ++i) {
+            os << (i == 0 ? "" : ", ") << +static_cast<float>(f[i]);
+        }
+        os << "],\n";
+    });
+}
+}  // namespace
+
 static void printAll(std::ostream& os, const MixedTyped& test) {
     print<float>(os, test);
     print<int32_t>(os, test);
     print<uint8_t>(os, test);
     print<int16_t>(os, test);
-    static_assert(4 == std::tuple_size<MixedTyped>::value,
+    print<_Float16>(os, test);
+    static_assert(5 == std::tuple_size<MixedTyped>::value,
                   "Number of types in MixedTyped changed, but printAll function wasn't updated");
 }
 
@@ -88,11 +103,8 @@ void executeWithCompilation(Model* model, Compilation* compilation,
     }
 
     int exampleNo = 0;
-    // TODO: Adjust the error limit based on testing.
-    // If in relaxed mode, set the absolute tolerance to be 5ULP of FP16.
-    float fpAtol = !model->isRelaxed() ? 1e-5f : 5.0f * 0.0009765625f;
-    // Set the relative tolerance to be 5ULP of the corresponding FP precision.
-    float fpRtol = !model->isRelaxed() ? 5.0f * 1.1920928955078125e-7f : 5.0f * 0.0009765625f;
+    float fpAtol = 1e-5f;
+    float fpRtol = 5.0f * 1.1920928955078125e-7f;
     for (auto& example : examples) {
         NNTRACE_APP(NNTRACE_PHASE_EXECUTION, "executeWithCompilation example");
         SCOPED_TRACE(exampleNo);
@@ -101,9 +113,17 @@ void executeWithCompilation(Model* model, Compilation* compilation,
         MixedTyped inputs = example.operands.first;
         const MixedTyped& golden = example.operands.second;
 
+        const bool hasFloat16Inputs = !std::get<MixedTypedIndex<_Float16>::index>(inputs).empty();
+        if (model->isRelaxed() || hasFloat16Inputs) {
+            // TODO: Adjust the error limit based on testing.
+            // If in relaxed mode, set the absolute tolerance to be 5ULP of FP16.
+            fpAtol = 5.0f * 0.0009765625f;
+            // Set the relative tolerance to be 5ULP of the corresponding FP precision.
+            fpRtol = 5.0f * 0.0009765625f;
+        }
+
         Execution execution(compilation);
         MixedTyped test;
-
         {
             NNTRACE_APP(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "executeWithCompilation example");
             // Set all inputs
@@ -122,7 +142,6 @@ void executeWithCompilation(Model* model, Compilation* compilation,
 
         Result r = execution.compute();
         ASSERT_EQ(Result::NO_ERROR, r);
-
         {
             NNTRACE_APP(NNTRACE_PHASE_RESULTS, "executeWithCompilation example");
             // Dump all outputs for the slicing tool
