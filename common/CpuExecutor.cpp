@@ -1841,6 +1841,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
         } break;
         case OperationType::SPLIT: {
             if (ins.size() != 3) {
+                LOG(ERROR) << "Wrong input count";
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
@@ -1972,6 +1973,23 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                   input_tmp.shape(), reinterpret_cast<const float*>(boxes.buffer),
                                   boxes.shape(), reinterpret_cast<float*>(out.buffer), outShape);
             }
+        } break;
+        case OperationType::MAXIMUM:
+        case OperationType::MINIMUM: {
+            if (!allParametersPresent(2, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& in1 = mOperands[ins[0]];
+            const RunTimeOperandInfo& in2 = mOperands[ins[1]];
+
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outputShape = output.shape();
+
+            const bool isMinimum = operation.type == OperationType::MINIMUM;
+            success = maximum_minimum::prepare(in1.shape(), in2.shape(), &outputShape) &&
+                      setInfoAndAllocateIfNeeded(&output, outputShape) &&
+                      maximum_minimum::eval(in1.buffer, in1.shape(), in2.buffer, in2.shape(),
+                                            isMinimum, output.buffer, outputShape);
         } break;
         case OperationType::GROUPED_CONV_2D: {
             const size_t inCount = ins.size();
@@ -2308,6 +2326,39 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                 clipAngleThreshold, reinterpret_cast<float*>(out.buffer), outShape,
                                 reinterpret_cast<int32_t*>(batchSplit.buffer), batchSplitShape);
             }
+        } break;
+        case OperationType::POW: {
+            if (!allParametersPresent(2, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& base = mOperands[ins[0]];
+            const RunTimeOperandInfo& exponent = mOperands[ins[1]];
+
+            RunTimeOperandInfo& output = mOperands[outs[0]];
+            Shape outShape = output.shape();
+
+            success = pow::prepare(base.shape(), exponent.shape(), &outShape) &&
+                      setInfoAndAllocateIfNeeded(&output, outShape) &&
+                      pow::eval(base.buffer, base.shape(), exponent.buffer, exponent.shape(),
+                                output.buffer, outShape);
+        } break;
+        case OperationType::TOPK_V2: {
+            if (!allParametersPresent(2, 2)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            int32_t k = getScalarData<int32_t>(mOperands[ins[1]]);
+
+            RunTimeOperandInfo& values = mOperands[outs[0]];
+            Shape valuesShape = values.shape();
+            RunTimeOperandInfo& indices = mOperands[outs[1]];
+            Shape indicesShape = indices.shape();
+
+            success = topk_v2::prepare(input.shape(), k, &valuesShape, &indicesShape) &&
+                      setInfoAndAllocateIfNeeded(&values, valuesShape) &&
+                      setInfoAndAllocateIfNeeded(&indices, indicesShape) &&
+                      topk_v2::eval(input.buffer, input.shape(), k, values.buffer, valuesShape,
+                                    indices.buffer, indicesShape);
         } break;
         default:
             nnAssert(false);

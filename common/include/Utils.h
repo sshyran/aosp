@@ -76,15 +76,8 @@ void initVLogMask();
 #define SHOW_IF_DEBUG(msg) ""
 #endif
 
-// Assert macro, as Android does not generally support assert.
-#define nnAssert(v)                                                                            \
-    do {                                                                                       \
-        if (!(v)) {                                                                            \
-            LOG(ERROR) << "nnAssert failed at " << __FILE__ << ":" << __LINE__ << " - '" << #v \
-                       << "'\n";                                                               \
-            abort();                                                                           \
-        }                                                                                      \
-    } while (0)
+// DEPRECATED(b/118737105). Use CHECK.
+#define nnAssert(v) CHECK(v)
 
 // Returns the amount of space needed to store a value of the specified
 // dimensions and type.

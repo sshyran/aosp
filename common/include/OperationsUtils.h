@@ -34,6 +34,7 @@
 #define NN_CHECK_EQ(actual, expected)           \
   NN_CHECK((actual) == (expected))
 
+// DEPRECATED. Use NN_CHECK instead.
 #define NN_OPS_CHECK NN_CHECK
 
 namespace android {
@@ -71,8 +72,11 @@ uint32_t getNumberOfDimensions(const Shape& shape);
 uint32_t getSizeOfDimension(const Shape& shape, uint32_t dimensionIdx);
 
 // Converts an axis index from the range [-dims, dims) into the range [0, dims).
-int32_t getDimensionIndex(const Shape& shape, int32_t axis);
-int32_t getDimensionIndex(int32_t numberOfDimensions, int32_t axis);
+bool handleNegativeAxis(int32_t numberOfDimensions, int32_t* axis);
+
+inline bool handleNegativeAxis(const Shape& shape, int32_t* axis) {
+    return handleNegativeAxis(getNumberOfDimensions(shape), axis);
+}
 
 inline uint32_t computeOutSize(uint32_t imageSize, uint32_t filterSize, uint32_t stride,
                                uint32_t paddingHead, uint32_t paddingTail) {
@@ -181,6 +185,10 @@ inline int32_t ClampedIndex(int32_t index, int dim, bool pos_stride) {
                     : PositiveRemainder(
                           std::min(std::max(index, -dim), dim - 1), dim));
 }
+
+// Broadcasts input shape against one another and puts the result into output
+// shape. Returns true on success and false on error.
+bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out);
 
 // Preparation functions for the corresponding ops
 bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out1);
