@@ -58,6 +58,9 @@ static void printAll(std::ostream& os, const MixedTyped& test) {
     print<float>(os, test);
     print<int32_t>(os, test);
     print<uint8_t>(os, test);
+    print<int16_t>(os, test);
+    static_assert(4 == std::tuple_size<MixedTyped>::value,
+                  "Number of types in MixedTyped changed, but printAll function wasn't updated");
 }
 
 Compilation createAndCompileModel(Model* model, std::function<void(Model*)> createModel) {
