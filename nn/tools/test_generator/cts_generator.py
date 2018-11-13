@@ -173,6 +173,7 @@ def DumpCtsModel(model, model_fd):
 
 def DumpMixedType(operands, feedDict):
     supportedTensors = [
+        "TENSOR_FLOAT16",
         "TENSOR_FLOAT32",
         "TENSOR_INT32",
         "TENSOR_QUANT8_ASYMM",
