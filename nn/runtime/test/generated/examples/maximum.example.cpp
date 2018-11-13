@@ -12,7 +12,7 @@ std::vector<MixedTypedExample> examples_simple = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -25,7 +25,7 @@ std::vector<MixedTypedExample> examples_simple = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -46,7 +46,7 @@ std::vector<MixedTypedExample> examples_simple_relaxed = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -59,7 +59,7 @@ std::vector<MixedTypedExample> examples_simple_relaxed = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -80,7 +80,7 @@ std::vector<MixedTypedExample> examples_simple_quant8 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {129, 127, 125, 149, 123, 124}}, {1, {125, 127, 129, 151, 121, 124}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -93,7 +93,7 @@ std::vector<MixedTypedExample> examples_simple_quant8 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {129, 127, 129, 151, 123, 124}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -114,7 +114,7 @@ std::vector<MixedTypedExample> examples_simple_int32 = {
   {{0, {1, 0, -1, 11, -2, -1}}, {1, {-1, 0, 1, 12, -3, -1}}},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -127,7 +127,7 @@ std::vector<MixedTypedExample> examples_simple_int32 = {
   {{0, {1, 0, 1, 12, -2, -1}}},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -182,7 +182,7 @@ std::vector<MixedTypedExample> examples_broadcast = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -195,7 +195,7 @@ std::vector<MixedTypedExample> examples_broadcast = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -216,7 +216,7 @@ std::vector<MixedTypedExample> examples_broadcast_relaxed = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -229,7 +229,7 @@ std::vector<MixedTypedExample> examples_broadcast_relaxed = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -250,7 +250,7 @@ std::vector<MixedTypedExample> examples_broadcast_quant8 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {129, 127, 125, 123, 124, 149}}, {1, {128, 131}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -263,7 +263,7 @@ std::vector<MixedTypedExample> examples_broadcast_quant8 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {129, 131, 128, 131, 128, 149}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -284,7 +284,7 @@ std::vector<MixedTypedExample> examples_broadcast_int32 = {
   {{0, {1, 0, -1, -2, -1, 11}}, {1, {0, 2}}},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -297,7 +297,7 @@ std::vector<MixedTypedExample> examples_broadcast_int32 = {
   {{0, {1, 2, 0, 2, 0, 11}}},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},

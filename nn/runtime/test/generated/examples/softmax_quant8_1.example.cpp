@@ -12,7 +12,7 @@ std::vector<MixedTypedExample> examples = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {1, 2, 10, 20}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -25,7 +25,7 @@ std::vector<MixedTypedExample> examples = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {64, 64, 64, 64}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
