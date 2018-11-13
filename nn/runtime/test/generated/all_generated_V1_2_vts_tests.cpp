@@ -2535,6 +2535,44 @@ TEST_F(ValidationTest, concat_float16_3) {
 }
 
 
+// Generated from: concat_mixed_quant.mod.py.
+namespace concat_mixed_quant {
+// Generated concat_mixed_quant test
+#include "examples/concat_mixed_quant.example.cpp"
+// Generated model constructor
+#include "vts_models/concat_mixed_quant.model.cpp"
+} // namespace concat_mixed_quant
+
+TEST_F(NeuralnetworksHidlTest, concat_mixed_quant_quant8) {
+  generated_tests::Execute(device,
+                           concat_mixed_quant::createTestModel_quant8,
+                           concat_mixed_quant::is_ignored_quant8,
+                           concat_mixed_quant::examples_quant8);
+}
+
+TEST_F(ValidationTest, concat_mixed_quant_quant8) {
+  const Model model = concat_mixed_quant::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(concat_mixed_quant::examples_quant8);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, concat_mixed_quant_quant8_2) {
+  generated_tests::Execute(device,
+                           concat_mixed_quant::createTestModel_quant8_2,
+                           concat_mixed_quant::is_ignored_quant8_2,
+                           concat_mixed_quant::examples_quant8_2);
+}
+
+TEST_F(ValidationTest, concat_mixed_quant_quant8_2) {
+  const Model model = concat_mixed_quant::createTestModel_quant8_2();
+  const std::vector<Request> requests = createRequests(concat_mixed_quant::examples_quant8_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: conv2d_v1_2.mod.py.
 namespace conv2d_v1_2 {
 // Generated conv2d_v1_2 test
