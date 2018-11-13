@@ -163,15 +163,11 @@ static bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& sh
     // For user-provided model output operands, the parameters must match the Shape
     // calculated from the preparation step.
     if (info->lifetime == OperandLifeTime::MODEL_OUTPUT) {
-        if (info->type != shape.type ||
-            info->dimensions != shape.dimensions) {
-            LOG(ERROR) << "Invalid type or dimensions for model output";
-            return false;
-        }
-        if (info->type == OperandType::TENSOR_QUANT8_ASYMM &&
-            (info->scale != shape.scale || info->zeroPoint != shape.offset)) {
-            LOG(ERROR) << "Invalid scale or zeroPoint for model output";
-            return false;
+        NN_RET_CHECK(info->type == shape.type) << "Invalid type for model output";
+        NN_RET_CHECK(info->dimensions == shape.dimensions) << "Invalid dimensions for model output";
+        if (info->type == OperandType::TENSOR_QUANT8_ASYMM) {
+            NN_RET_CHECK_EQ(info->scale, shape.scale) << "Invalid scale for model output";
+            NN_RET_CHECK_EQ(info->zeroPoint, shape.offset) << "Invalid zeroPoint for model output";
         }
     }
     info->type = shape.type;
@@ -181,9 +177,7 @@ static bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& sh
     if (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info->buffer == nullptr) {
         uint32_t length = sizeOfData(info->type, info->dimensions);
         info->buffer = new uint8_t[length];
-        if (info->buffer == nullptr) {
-            return false;
-        }
+        NN_RET_CHECK(info->buffer != nullptr);
     }
     return true;
 }
