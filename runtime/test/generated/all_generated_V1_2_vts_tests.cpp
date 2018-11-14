@@ -16676,6 +16676,29 @@ TEST_F(ValidationTest, random_multinomial) {
 }
 
 
+// Generated from: random_multinomial_float16.mod.py.
+namespace random_multinomial_float16 {
+// Generated random_multinomial_float16 test
+#include "examples/random_multinomial_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/random_multinomial_float16.model.cpp"
+} // namespace random_multinomial_float16
+
+TEST_F(NeuralnetworksHidlTest, random_multinomial_float16) {
+  generated_tests::Execute(device,
+                           random_multinomial_float16::createTestModel,
+                           random_multinomial_float16::is_ignored,
+                           random_multinomial_float16::get_examples());
+}
+
+TEST_F(ValidationTest, random_multinomial_float16) {
+  const Model model = random_multinomial_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(random_multinomial_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: relu1_float16_1.mod.py.
 namespace relu1_float16_1 {
 // Generated relu1_float16_1 test

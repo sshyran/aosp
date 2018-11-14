@@ -55,12 +55,15 @@ inline tflite::RuntimeShape convertShapeToTflshape(const Shape& shape) {
 }
 
 inline void convertFloat16ToFloat32(const _Float16* input, std::vector<float>* output) {
+    CHECK(input != nullptr);
+    CHECK(output != nullptr);
     for (int i = 0; i < output->size(); ++i) {
         (*output)[i] = static_cast<float>(input[i]);
     }
 }
 
 inline void convertFloat32ToFloat16(const std::vector<float>& input, _Float16* output) {
+    CHECK(output != nullptr);
     for (int i = 0; i < input.size(); ++i) {
         output[i] = input[i];
     }
