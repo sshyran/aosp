@@ -274,6 +274,7 @@ namespace {spec_name} {{
 if __name__ == "__main__":
     ParseCmdLine()
     while tg.FileNames.NextFile():
+        print("Generating test(s) from spec: %s" % tg.FileNames.specFile, file=sys.stderr)
         exec (open(tg.FileNames.specFile, "r").read())
         print("Output VTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
         print("Output example:" + tg.FileNames.exampleFile, file=sys.stderr)
