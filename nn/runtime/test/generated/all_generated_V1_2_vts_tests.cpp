@@ -1167,211 +1167,346 @@ namespace cast {
 #include "vts_models/cast.model.cpp"
 } // namespace cast
 
-TEST_F(NeuralnetworksHidlTest, cast) {
+TEST_F(NeuralnetworksHidlTest, cast_float16_to_float16) {
   generated_tests::Execute(device,
                            cast::createTestModel,
                            cast::is_ignored,
-                           cast::examples);
+                           cast::examples_float16_to_float16);
 }
 
-TEST_F(ValidationTest, cast) {
+TEST_F(ValidationTest, cast_float16_to_float16) {
   const Model model = cast::createTestModel();
-  const std::vector<Request> requests = createRequests(cast::examples);
+  const std::vector<Request> requests = createRequests(cast::examples_float16_to_float16);
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, cast_relaxed) {
-  generated_tests::Execute(device,
-                           cast::createTestModel_relaxed,
-                           cast::is_ignored_relaxed,
-                           cast::examples_relaxed);
-}
-
-TEST_F(ValidationTest, cast_relaxed) {
-  const Model model = cast::createTestModel_relaxed();
-  const std::vector<Request> requests = createRequests(cast::examples_relaxed);
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, cast_2) {
+TEST_F(NeuralnetworksHidlTest, cast_float16_to_float32) {
   generated_tests::Execute(device,
                            cast::createTestModel_2,
                            cast::is_ignored_2,
-                           cast::examples_2);
+                           cast::examples_float16_to_float32);
 }
 
-TEST_F(ValidationTest, cast_2) {
+TEST_F(ValidationTest, cast_float16_to_float32) {
   const Model model = cast::createTestModel_2();
-  const std::vector<Request> requests = createRequests(cast::examples_2);
+  const std::vector<Request> requests = createRequests(cast::examples_float16_to_float32);
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, cast_relaxed_2) {
+TEST_F(NeuralnetworksHidlTest, cast_float16_to_float32_relaxed) {
   generated_tests::Execute(device,
-                           cast::createTestModel_relaxed_2,
-                           cast::is_ignored_relaxed_2,
-                           cast::examples_relaxed_2);
+                           cast::createTestModel_relaxed,
+                           cast::is_ignored_relaxed,
+                           cast::examples_float16_to_float32_relaxed);
 }
 
-TEST_F(ValidationTest, cast_relaxed_2) {
-  const Model model = cast::createTestModel_relaxed_2();
-  const std::vector<Request> requests = createRequests(cast::examples_relaxed_2);
+TEST_F(ValidationTest, cast_float16_to_float32_relaxed) {
+  const Model model = cast::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(cast::examples_float16_to_float32_relaxed);
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, cast_3) {
+TEST_F(NeuralnetworksHidlTest, cast_float16_to_int32) {
   generated_tests::Execute(device,
                            cast::createTestModel_3,
                            cast::is_ignored_3,
-                           cast::examples_3);
+                           cast::examples_float16_to_int32);
 }
 
-TEST_F(ValidationTest, cast_3) {
+TEST_F(ValidationTest, cast_float16_to_int32) {
   const Model model = cast::createTestModel_3();
-  const std::vector<Request> requests = createRequests(cast::examples_3);
+  const std::vector<Request> requests = createRequests(cast::examples_float16_to_int32);
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, cast_relaxed_3) {
-  generated_tests::Execute(device,
-                           cast::createTestModel_relaxed_3,
-                           cast::is_ignored_relaxed_3,
-                           cast::examples_relaxed_3);
-}
-
-TEST_F(ValidationTest, cast_relaxed_3) {
-  const Model model = cast::createTestModel_relaxed_3();
-  const std::vector<Request> requests = createRequests(cast::examples_relaxed_3);
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, cast_4) {
+TEST_F(NeuralnetworksHidlTest, cast_float16_to_quant8) {
   generated_tests::Execute(device,
                            cast::createTestModel_4,
                            cast::is_ignored_4,
-                           cast::examples_4);
+                           cast::examples_float16_to_quant8);
 }
 
-TEST_F(ValidationTest, cast_4) {
+TEST_F(ValidationTest, cast_float16_to_quant8) {
   const Model model = cast::createTestModel_4();
-  const std::vector<Request> requests = createRequests(cast::examples_4);
+  const std::vector<Request> requests = createRequests(cast::examples_float16_to_quant8);
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, cast_relaxed_4) {
-  generated_tests::Execute(device,
-                           cast::createTestModel_relaxed_4,
-                           cast::is_ignored_relaxed_4,
-                           cast::examples_relaxed_4);
-}
-
-TEST_F(ValidationTest, cast_relaxed_4) {
-  const Model model = cast::createTestModel_relaxed_4();
-  const std::vector<Request> requests = createRequests(cast::examples_relaxed_4);
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, cast_5) {
+TEST_F(NeuralnetworksHidlTest, cast_float32_to_float16) {
   generated_tests::Execute(device,
                            cast::createTestModel_5,
                            cast::is_ignored_5,
-                           cast::examples_5);
+                           cast::examples_float32_to_float16);
 }
 
-TEST_F(ValidationTest, cast_5) {
+TEST_F(ValidationTest, cast_float32_to_float16) {
   const Model model = cast::createTestModel_5();
-  const std::vector<Request> requests = createRequests(cast::examples_5);
+  const std::vector<Request> requests = createRequests(cast::examples_float32_to_float16);
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, cast_6) {
+TEST_F(NeuralnetworksHidlTest, cast_float32_to_float16_relaxed) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_relaxed_2,
+                           cast::is_ignored_relaxed_2,
+                           cast::examples_float32_to_float16_relaxed);
+}
+
+TEST_F(ValidationTest, cast_float32_to_float16_relaxed) {
+  const Model model = cast::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(cast::examples_float32_to_float16_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_float32_to_float32) {
   generated_tests::Execute(device,
                            cast::createTestModel_6,
                            cast::is_ignored_6,
-                           cast::examples_6);
+                           cast::examples_float32_to_float32);
 }
 
-TEST_F(ValidationTest, cast_6) {
+TEST_F(ValidationTest, cast_float32_to_float32) {
   const Model model = cast::createTestModel_6();
-  const std::vector<Request> requests = createRequests(cast::examples_6);
+  const std::vector<Request> requests = createRequests(cast::examples_float32_to_float32);
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, cast_7) {
+TEST_F(NeuralnetworksHidlTest, cast_float32_to_float32_relaxed) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_relaxed_3,
+                           cast::is_ignored_relaxed_3,
+                           cast::examples_float32_to_float32_relaxed);
+}
+
+TEST_F(ValidationTest, cast_float32_to_float32_relaxed) {
+  const Model model = cast::createTestModel_relaxed_3();
+  const std::vector<Request> requests = createRequests(cast::examples_float32_to_float32_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_float32_to_int32) {
   generated_tests::Execute(device,
                            cast::createTestModel_7,
                            cast::is_ignored_7,
-                           cast::examples_7);
+                           cast::examples_float32_to_int32);
 }
 
-TEST_F(ValidationTest, cast_7) {
+TEST_F(ValidationTest, cast_float32_to_int32) {
   const Model model = cast::createTestModel_7();
-  const std::vector<Request> requests = createRequests(cast::examples_7);
+  const std::vector<Request> requests = createRequests(cast::examples_float32_to_int32);
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, cast_relaxed_5) {
+TEST_F(NeuralnetworksHidlTest, cast_float32_to_int32_relaxed) {
   generated_tests::Execute(device,
-                           cast::createTestModel_relaxed_5,
-                           cast::is_ignored_relaxed_5,
-                           cast::examples_relaxed_5);
+                           cast::createTestModel_relaxed_4,
+                           cast::is_ignored_relaxed_4,
+                           cast::examples_float32_to_int32_relaxed);
 }
 
-TEST_F(ValidationTest, cast_relaxed_5) {
-  const Model model = cast::createTestModel_relaxed_5();
-  const std::vector<Request> requests = createRequests(cast::examples_relaxed_5);
+TEST_F(ValidationTest, cast_float32_to_int32_relaxed) {
+  const Model model = cast::createTestModel_relaxed_4();
+  const std::vector<Request> requests = createRequests(cast::examples_float32_to_int32_relaxed);
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, cast_8) {
+TEST_F(NeuralnetworksHidlTest, cast_float32_to_quant8) {
   generated_tests::Execute(device,
                            cast::createTestModel_8,
                            cast::is_ignored_8,
-                           cast::examples_8);
+                           cast::examples_float32_to_quant8);
 }
 
-TEST_F(ValidationTest, cast_8) {
+TEST_F(ValidationTest, cast_float32_to_quant8) {
   const Model model = cast::createTestModel_8();
-  const std::vector<Request> requests = createRequests(cast::examples_8);
+  const std::vector<Request> requests = createRequests(cast::examples_float32_to_quant8);
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, cast_9) {
+TEST_F(NeuralnetworksHidlTest, cast_float32_to_quant8_relaxed) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_relaxed_5,
+                           cast::is_ignored_relaxed_5,
+                           cast::examples_float32_to_quant8_relaxed);
+}
+
+TEST_F(ValidationTest, cast_float32_to_quant8_relaxed) {
+  const Model model = cast::createTestModel_relaxed_5();
+  const std::vector<Request> requests = createRequests(cast::examples_float32_to_quant8_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_int32_to_float16) {
   generated_tests::Execute(device,
                            cast::createTestModel_9,
                            cast::is_ignored_9,
-                           cast::examples_9);
+                           cast::examples_int32_to_float16);
 }
 
-TEST_F(ValidationTest, cast_9) {
+TEST_F(ValidationTest, cast_int32_to_float16) {
   const Model model = cast::createTestModel_9();
-  const std::vector<Request> requests = createRequests(cast::examples_9);
+  const std::vector<Request> requests = createRequests(cast::examples_int32_to_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_int32_to_float32) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_10,
+                           cast::is_ignored_10,
+                           cast::examples_int32_to_float32);
+}
+
+TEST_F(ValidationTest, cast_int32_to_float32) {
+  const Model model = cast::createTestModel_10();
+  const std::vector<Request> requests = createRequests(cast::examples_int32_to_float32);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_int32_to_float32_relaxed) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_relaxed_6,
+                           cast::is_ignored_relaxed_6,
+                           cast::examples_int32_to_float32_relaxed);
+}
+
+TEST_F(ValidationTest, cast_int32_to_float32_relaxed) {
+  const Model model = cast::createTestModel_relaxed_6();
+  const std::vector<Request> requests = createRequests(cast::examples_int32_to_float32_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_int32_to_int32) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_11,
+                           cast::is_ignored_11,
+                           cast::examples_int32_to_int32);
+}
+
+TEST_F(ValidationTest, cast_int32_to_int32) {
+  const Model model = cast::createTestModel_11();
+  const std::vector<Request> requests = createRequests(cast::examples_int32_to_int32);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_int32_to_quant8) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_12,
+                           cast::is_ignored_12,
+                           cast::examples_int32_to_quant8);
+}
+
+TEST_F(ValidationTest, cast_int32_to_quant8) {
+  const Model model = cast::createTestModel_12();
+  const std::vector<Request> requests = createRequests(cast::examples_int32_to_quant8);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_quant8_to_float16) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_13,
+                           cast::is_ignored_13,
+                           cast::examples_quant8_to_float16);
+}
+
+TEST_F(ValidationTest, cast_quant8_to_float16) {
+  const Model model = cast::createTestModel_13();
+  const std::vector<Request> requests = createRequests(cast::examples_quant8_to_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_quant8_to_float32) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_14,
+                           cast::is_ignored_14,
+                           cast::examples_quant8_to_float32);
+}
+
+TEST_F(ValidationTest, cast_quant8_to_float32) {
+  const Model model = cast::createTestModel_14();
+  const std::vector<Request> requests = createRequests(cast::examples_quant8_to_float32);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_quant8_to_float32_relaxed) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_relaxed_7,
+                           cast::is_ignored_relaxed_7,
+                           cast::examples_quant8_to_float32_relaxed);
+}
+
+TEST_F(ValidationTest, cast_quant8_to_float32_relaxed) {
+  const Model model = cast::createTestModel_relaxed_7();
+  const std::vector<Request> requests = createRequests(cast::examples_quant8_to_float32_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_quant8_to_int32) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_15,
+                           cast::is_ignored_15,
+                           cast::examples_quant8_to_int32);
+}
+
+TEST_F(ValidationTest, cast_quant8_to_int32) {
+  const Model model = cast::createTestModel_15();
+  const std::vector<Request> requests = createRequests(cast::examples_quant8_to_int32);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, cast_quant8_to_quant8) {
+  generated_tests::Execute(device,
+                           cast::createTestModel_16,
+                           cast::is_ignored_16,
+                           cast::examples_quant8_to_quant8);
+}
+
+TEST_F(ValidationTest, cast_quant8_to_quant8) {
+  const Model model = cast::createTestModel_16();
+  const std::vector<Request> requests = createRequests(cast::examples_quant8_to_quant8);
   validateModel(model);
   validateRequests(model, requests);
 }
