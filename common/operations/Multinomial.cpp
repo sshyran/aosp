@@ -17,8 +17,8 @@
 #include "Multinomial.h"
 
 #include "CpuExecutor.h"
+#include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
-
 #include "Tracing.h"
 
 #include "guarded_philox_random.h"
@@ -76,13 +76,31 @@ bool Multinomial::Prepare(const Operation& operation, std::vector<RunTimeOperand
 
 bool Multinomial::Eval() {
     NNTRACE_COMP("Multinomial::Eval");
+    switch (input_->type) {
+        case OperandType::TENSOR_FLOAT16: {
+            std::vector<float> inputDataFloat32(getNumberOfElements(input_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(input_), &inputDataFloat32);
+            EvalFloat32(inputDataFloat32.data());
+            break;
+        }
+        case OperandType::TENSOR_FLOAT32: {
+            EvalFloat32(GetBuffer<float>(input_));
+            break;
+        }
+        default: {
+            LOG(ERROR) << "Unsupported data type: " << static_cast<int>(input_->type);
+            return false;
+        }
+    }
+    return true;
+}
 
+void Multinomial::EvalFloat32(const float* inputData) {
     const int batch_size = SizeOfDimension(input_, 0);
     const int class_size = SizeOfDimension(input_, 1);
-    tflite::tensor_utils::ZeroVector(GetBuffer<float>(output_), batch_size * sample_count_);
 
     tensorflow::GuardedPhiloxRandom random_generator;
-    uint32_t* seeds = GetBuffer<uint32_t>(random_seeds_);
+    int32_t* seeds = GetBuffer<int32_t>(random_seeds_);
     random_generator.Init(seeds[0], seeds[1]);
 
     // PhiloxRandom produces results as 4 32-bit integers.
@@ -94,7 +112,7 @@ bool Multinomial::Eval() {
     tensorflow::random::SimplePhilox simple_philox(&random_generator_reserved);
 
     for (uint64_t b = 0; b < batch_size; ++b) {
-        float* input_ptr_batch = GetBuffer<float>(input_) + b * class_size;
+        const float* input_ptr_batch = inputData + b * class_size;
         float max = std::numeric_limits<float>::lowest();
         for (uint64_t j = 0; j < class_size; ++j) {
             if (Eigen::numext::isfinite(input_ptr_batch[j])) {
@@ -106,21 +124,19 @@ bool Multinomial::Eval() {
         std::vector<double> cdf;
         cdf.resize(class_size);
         for (uint64_t j = 0; j < class_size; ++j) {
-            if (Eigen::numext::isfinite(input_ptr_batch[j])) {
+            if (Eigen::numext::isfinite(static_cast<float>(input_ptr_batch[j]))) {
                 total += exp(static_cast<double>(input_ptr_batch[j]) - batch_max);
             }
             cdf[j] = total;
         }
 
-        auto* output_ptr_batch = GetBuffer<uint32_t>(output_) + b * sample_count_;
+        auto* output_ptr_batch = GetBuffer<int32_t>(output_) + b * sample_count_;
         for (uint64_t j = 0; j < sample_count_; ++j) {
             const double target = simple_philox.RandDouble() * total;
             auto found_iter = std::upper_bound(cdf.begin(), cdf.end(), target);
             output_ptr_batch[j] = std::distance(cdf.begin(), found_iter);
         }
     }
-
-    return true;
 }
 
 }  // namespace nn

@@ -33,6 +33,13 @@ namespace test_helper {
 
 constexpr const size_t gMaximumNumberOfErrorMessages = 10;
 
+// TODO: Figure out the build dependency to make including "CpuOperationUtils.h" work.
+inline void convertFloat16ToFloat32(const _Float16* input, std::vector<float>* output) {
+    for (size_t i = 0; i < output->size(); ++i) {
+        (*output)[i] = static_cast<float>(input[i]);
+    }
+}
+
 // This class is a workaround for two issues our code relies on:
 // 1. sizeof(bool) is implementation defined.
 // 2. vector<bool> does not allow direct pointer access via the data() method.
@@ -311,13 +318,23 @@ inline void expectMultinomialDistributionWithinTolerance(const MixedTyped& test,
     const int kNumClasses = 1024;
     const int kNumSamples = 128;
 
-    std::vector<int32_t> output = std::get<1>(test).at(0);
+    std::vector<int32_t> output = std::get<MixedTypedIndex<int32_t>::index>(test).at(0);
     std::vector<int> class_counts;
     class_counts.resize(kNumClasses);
     for (int index : output) {
         class_counts[index]++;
     }
-    std::vector<float> input = std::get<0>(example.operands.first).at(0);
+    std::vector<float> input;
+    Float32Operands float32Operands =
+            std::get<MixedTypedIndex<float>::index>(example.operands.first);
+    if (!float32Operands.empty()) {
+        input = std::get<MixedTypedIndex<float>::index>(example.operands.first).at(0);
+    } else {
+        std::vector<_Float16> inputFloat16 =
+                std::get<MixedTypedIndex<_Float16>::index>(example.operands.first).at(0);
+        input.resize(inputFloat16.size());
+        convertFloat16ToFloat32(inputFloat16.data(), &input);
+    }
     for (int b = 0; b < kBatchSize; ++b) {
         float probability_sum = 0;
         const int batch_index = kBatchSize * b;
