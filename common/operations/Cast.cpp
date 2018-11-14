@@ -41,11 +41,12 @@ bool copyToTensor(const FromT* inputData, int numElements, uint8_t* outputData,
     }
 
     switch (outputShape.type) {
+        ANDROID_NN_COPY_CAST(OperandType::TENSOR_FLOAT16, _Float16);
         ANDROID_NN_COPY_CAST(OperandType::TENSOR_FLOAT32, float);
         ANDROID_NN_COPY_CAST(OperandType::TENSOR_INT32, int32_t);
         ANDROID_NN_COPY_CAST(OperandType::TENSOR_QUANT8_ASYMM, uint8_t);
         default:
-            LOG(ERROR) << "Unsupported CAST input type";
+            LOG(ERROR) << "Unsupported CAST output type";
             return false;
     }
 #undef ANDROID_NN_COPY_CAST
@@ -75,11 +76,12 @@ bool eval(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData
     }
 
     switch (inputShape.type) {
+        ANDROID_NN_COPY_TO_TENSOR(OperandType::TENSOR_FLOAT16, _Float16);
         ANDROID_NN_COPY_TO_TENSOR(OperandType::TENSOR_FLOAT32, float);
         ANDROID_NN_COPY_TO_TENSOR(OperandType::TENSOR_INT32, int32_t);
         ANDROID_NN_COPY_TO_TENSOR(OperandType::TENSOR_QUANT8_ASYMM, uint8_t);
         default:
-            LOG(ERROR) << "Unsupported CAST output type";
+            LOG(ERROR) << "Unsupported CAST input type";
             return false;
     }
 #undef ANDROID_NN_COPY_TO_TENSOR
