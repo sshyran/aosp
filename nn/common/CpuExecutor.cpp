@@ -507,6 +507,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 success = mulFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
                                      reinterpret_cast<const float*>(in2.buffer), in2.shape(),
                                      activation, reinterpret_cast<float*>(out.buffer), outShape);
+            } else if (in1.type == OperandType::TENSOR_FLOAT16) {
+                success = mulFloat16(reinterpret_cast<const _Float16*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const _Float16*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<_Float16*>(out.buffer), outShape);
             } else if (in1.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = mulQuant8(reinterpret_cast<const uint8_t*>(in1.buffer), in1.shape(),
                                     reinterpret_cast<const uint8_t*>(in2.buffer), in2.shape(),
@@ -1730,16 +1734,18 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& out = mOperands[outs[0]];
             Shape outShape = out.shape();
 
+            if (!addMulPrepare(in1.shape(), in2.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&out, outShape)) {
+                break;
+            }
             if (in1.type == OperandType::TENSOR_FLOAT32) {
-                success = addMulPrepare(in1.shape(), in2.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&out, outShape) &&
-                          divFloat32(reinterpret_cast<const float*>(in1.buffer),
-                                     in1.shape(),
-                                     reinterpret_cast<const float*>(in2.buffer),
-                                     in2.shape(),
-                                     activation,
-                                     reinterpret_cast<float*>(out.buffer),
-                                     outShape);
+                success = divFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const float*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<float*>(out.buffer), outShape);
+            } else if (in1.type == OperandType::TENSOR_FLOAT16) {
+                success = divFloat16(reinterpret_cast<const _Float16*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const _Float16*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<_Float16*>(out.buffer), outShape);
             }
         } break;
         case OperationType::SUB: {
