@@ -10519,6 +10519,144 @@ TEST_F(ValidationTest, random_multinomial) {
 }
 
 
+// Generated from: relu1_float16_1.mod.py.
+namespace relu1_float16_1 {
+// Generated relu1_float16_1 test
+#include "examples/relu1_float16_1.example.cpp"
+// Generated model constructor
+#include "vts_models/relu1_float16_1.model.cpp"
+} // namespace relu1_float16_1
+
+TEST_F(NeuralnetworksHidlTest, relu1_float16_1) {
+  generated_tests::Execute(device,
+                           relu1_float16_1::createTestModel,
+                           relu1_float16_1::is_ignored,
+                           relu1_float16_1::examples);
+}
+
+TEST_F(ValidationTest, relu1_float16_1) {
+  const Model model = relu1_float16_1::createTestModel();
+  const std::vector<Request> requests = createRequests(relu1_float16_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: relu1_float16_2.mod.py.
+namespace relu1_float16_2 {
+// Generated relu1_float16_2 test
+#include "examples/relu1_float16_2.example.cpp"
+// Generated model constructor
+#include "vts_models/relu1_float16_2.model.cpp"
+} // namespace relu1_float16_2
+
+TEST_F(NeuralnetworksHidlTest, relu1_float16_2) {
+  generated_tests::Execute(device,
+                           relu1_float16_2::createTestModel,
+                           relu1_float16_2::is_ignored,
+                           relu1_float16_2::examples);
+}
+
+TEST_F(ValidationTest, relu1_float16_2) {
+  const Model model = relu1_float16_2::createTestModel();
+  const std::vector<Request> requests = createRequests(relu1_float16_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: relu6_float16_1.mod.py.
+namespace relu6_float16_1 {
+// Generated relu6_float16_1 test
+#include "examples/relu6_float16_1.example.cpp"
+// Generated model constructor
+#include "vts_models/relu6_float16_1.model.cpp"
+} // namespace relu6_float16_1
+
+TEST_F(NeuralnetworksHidlTest, relu6_float16_1) {
+  generated_tests::Execute(device,
+                           relu6_float16_1::createTestModel,
+                           relu6_float16_1::is_ignored,
+                           relu6_float16_1::examples);
+}
+
+TEST_F(ValidationTest, relu6_float16_1) {
+  const Model model = relu6_float16_1::createTestModel();
+  const std::vector<Request> requests = createRequests(relu6_float16_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: relu6_float16_2.mod.py.
+namespace relu6_float16_2 {
+// Generated relu6_float16_2 test
+#include "examples/relu6_float16_2.example.cpp"
+// Generated model constructor
+#include "vts_models/relu6_float16_2.model.cpp"
+} // namespace relu6_float16_2
+
+TEST_F(NeuralnetworksHidlTest, relu6_float16_2) {
+  generated_tests::Execute(device,
+                           relu6_float16_2::createTestModel,
+                           relu6_float16_2::is_ignored,
+                           relu6_float16_2::examples);
+}
+
+TEST_F(ValidationTest, relu6_float16_2) {
+  const Model model = relu6_float16_2::createTestModel();
+  const std::vector<Request> requests = createRequests(relu6_float16_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: relu_float16_1.mod.py.
+namespace relu_float16_1 {
+// Generated relu_float16_1 test
+#include "examples/relu_float16_1.example.cpp"
+// Generated model constructor
+#include "vts_models/relu_float16_1.model.cpp"
+} // namespace relu_float16_1
+
+TEST_F(NeuralnetworksHidlTest, relu_float16_1) {
+  generated_tests::Execute(device,
+                           relu_float16_1::createTestModel,
+                           relu_float16_1::is_ignored,
+                           relu_float16_1::examples);
+}
+
+TEST_F(ValidationTest, relu_float16_1) {
+  const Model model = relu_float16_1::createTestModel();
+  const std::vector<Request> requests = createRequests(relu_float16_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: relu_float16_2.mod.py.
+namespace relu_float16_2 {
+// Generated relu_float16_2 test
+#include "examples/relu_float16_2.example.cpp"
+// Generated model constructor
+#include "vts_models/relu_float16_2.model.cpp"
+} // namespace relu_float16_2
+
+TEST_F(NeuralnetworksHidlTest, relu_float16_2) {
+  generated_tests::Execute(device,
+                           relu_float16_2::createTestModel,
+                           relu_float16_2::is_ignored,
+                           relu_float16_2::examples);
+}
+
+TEST_F(ValidationTest, relu_float16_2) {
+  const Model model = relu_float16_2::createTestModel();
+  const std::vector<Request> requests = createRequests(relu_float16_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: resize_bilinear_v1_2.mod.py.
 namespace resize_bilinear_v1_2 {
 // Generated resize_bilinear_v1_2 test
