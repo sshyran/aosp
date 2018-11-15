@@ -63,6 +63,11 @@ bool eval(const void* in1, const Shape& shape1, const void* in2, const Shape& sh
           bool isMinimum, void* output, const Shape& outputShape) {
     NNTRACE_COMP("maximum_minimum::eval");
     switch (shape1.type) {
+        case OperandType::TENSOR_FLOAT16: {
+            return evalGeneric(reinterpret_cast<const _Float16*>(in1), shape1,
+                               reinterpret_cast<const _Float16*>(in2), shape2, isMinimum,
+                               reinterpret_cast<_Float16*>(output), outputShape);
+        }
         case OperandType::TENSOR_FLOAT32: {
             return evalGeneric(reinterpret_cast<const float*>(in1), shape1,
                                reinterpret_cast<const float*>(in2), shape2, isMinimum,
