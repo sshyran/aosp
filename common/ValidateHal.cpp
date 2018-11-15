@@ -273,22 +273,14 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
     // model outputs will be written to.
     std::vector<bool> writtenTo(operandCount, false);
     for (auto& op : operations) {
-        HalVersion minSupportedHalVersion;
         // TODO Validate the shapes and any known values. This is currently
         // done in CpuExecutor but should be done here for all drivers.
-        int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
-                                      op.inputs.size() > 0 ? op.inputs.data() : nullptr,
-                                      op.outputs.size(),
-                                      op.outputs.size() > 0 ? op.outputs.data() : nullptr, operands,
-                                      &minSupportedHalVersion);
+        int error = validateOperation(
+                static_cast<int32_t>(op.type), op.inputs.size(),
+                op.inputs.size() > 0 ? op.inputs.data() : nullptr, op.outputs.size(),
+                op.outputs.size() > 0 ? op.outputs.data() : nullptr, operands, getHalVersion(op));
         if (error != ANEURALNETWORKS_NO_ERROR) {
             LOG(ERROR) << "Invalid operation " << toString(op.type);
-            return false;
-        }
-        if (getHalVersion(op) < minSupportedHalVersion) {
-            LOG(ERROR) << "Operation " << toString(op.type)
-                       << " with the given operand types is only supported"
-                       << " in later HAL versions";
             return false;
         }
 
