@@ -78,4 +78,4 @@ for test_case in test_cases:
       test_case.inp: test_case.inp_data,
       test_case.out_values: test_case.out_values_data,
       test_case.out_indices: test_case.out_indices_data
-  }, model=model).AddVariations("relaxed")
+  }, model=model).AddVariations("relaxed", "float16")
