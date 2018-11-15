@@ -426,8 +426,9 @@ protected:
     };
 #endif
 
-private:
     std::mt19937 mRandNumEng;
+
+   private:
     std::uniform_real_distribution<double> mRandNumUnitDist;
 };
 
@@ -1037,8 +1038,7 @@ TEST_P(RandomPartitioningTest, Test) {
     //     out in that memory; and when we have inputs and outputs
     //     within the same Memory, we want the possibility that
     //     they'll be interleaved.
-    std::random_shuffle(ioDescriptors.begin(), ioDescriptors.end(),
-                        [this](unsigned n) { return randUInt(n); });
+    std::shuffle(ioDescriptors.begin(), ioDescriptors.end(), mRandNumEng);
     TestMemories ioMemories;
     for (auto &desc : ioDescriptors) {
         if (randFrac() < 0.5) {
