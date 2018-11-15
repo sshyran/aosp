@@ -67,6 +67,11 @@ bool prepare(const Shape& input, int32_t k, Shape* values, Shape* indices) {
 bool eval(const void* inputData, const Shape& inputShape, const int32_t k, void* valuesData,
           const Shape& valuesShape, void* indicesData, const Shape& indicesShape) {
     switch (inputShape.type) {
+        case OperandType::TENSOR_FLOAT16: {
+            return evalGeneric(reinterpret_cast<const _Float16*>(inputData), inputShape, k,
+                               reinterpret_cast<_Float16*>(valuesData), valuesShape,
+                               reinterpret_cast<int32_t*>(indicesData), indicesShape);
+        } break;
         case OperandType::TENSOR_FLOAT32: {
             return evalGeneric(reinterpret_cast<const float*>(inputData), inputShape, k,
                                reinterpret_cast<float*>(valuesData), valuesShape,
