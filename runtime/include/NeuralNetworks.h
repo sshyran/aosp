@@ -2870,6 +2870,9 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_ROTATED_BBOX_TRANSFORM = 87,
+
+    ANEURALNETWORKS_ABS = 88,
+    ANEURALNETWORKS_ROI_POOLING = 89,
 } OperationCode;
 
 /**
