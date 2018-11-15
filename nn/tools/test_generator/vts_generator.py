@@ -58,6 +58,7 @@ from test_generator import Parameter
 from test_generator import ParameterAsInputConverter
 from test_generator import RelaxedModeConverter
 from test_generator import SmartOpen
+from test_generator import SymmPerChannelQuantParams
 
 # Dumping methods that shared with CTS generator
 from cts_generator import DumpCtsExample
@@ -88,11 +89,12 @@ def generate_vts_operands(model):
             .scale = {scale},
             .zeroPoint = {zero_point},
             .lifetime = OperandLifeTime::{lifetime},
-            .location = {{.poolIndex = 0, .offset = {offset}, .length = {length}}},
+            .location = {{.poolIndex = 0, .offset = {offset}, .length = {length}}},{extraParams}
         }}"""
   offset = 0
   op_definitions = []
-  for o in model.operands:
+  extra_params_definitions = []
+  for index, o in enumerate(model.operands):
     length = o.type.GetByteSize() if isinstance(o, Parameter) else 0
     op = {
         "operand_type": o.type.type,
@@ -102,15 +104,30 @@ def generate_vts_operands(model):
         "zero_point": str(int(o.type.zeroPoint)),
         "lifetime": o.lifetime,
         "offset": offset if isinstance(o, Parameter) else 0,
-        "length": length
+        "length": length,
+        "extraParams": "" if o.type.extraParams is None else "\n            .extraParams = std::move(extraParams%d)," % (index,),
     }
     offset += length
     op_definitions.append(op_def.format(**op))
 
-  op_vec = """\
+    extra_params_def = """\
+    Operand::ExtraParams extraParams{index};
+    extraParams{index}.{setMethodName}({param});
+"""
+
+    ep = o.type.extraParams
+    if ep is not None:
+      op = {
+          "index": index,
+          "setMethodName": ep.GetVtsSetter(),
+          "param": ep.GetVtsConstructor(),
+      }
+      extra_params_definitions.append(extra_params_def.format(**op))
+
+  op_vec = """{0}\
     const std::vector<Operand> operands = {{
-{0}
-    }};""".format(",\n".join(op_definitions))
+{1}
+    }};""".format(",\n".join(extra_params_definitions), ",\n".join(op_definitions))
   return op_vec
 
 # Generate VTS operand values
@@ -119,7 +136,7 @@ def generate_vts_operand_values(operands):
     binit = []
     for w in weights:
         ty = w.type.type
-        if ty == "TENSOR_QUANT8_ASYMM":
+        if ty in ("TENSOR_QUANT8_ASYMM", "TENSOR_QUANT8_SYMM_PER_CHANNEL"):
             binit += w.value
         elif ty == "BOOL" or ty == "TENSOR_BOOL8":
             binit += [1 if x else 0 for x in w.value]
