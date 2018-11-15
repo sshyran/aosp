@@ -17,23 +17,19 @@
 # model
 model = Model()
 
-d0 = 2
-d1 = 26
-d2 = 40
-d3 = 2
-
-i0 = Input("input", "TENSOR_FLOAT16", "{%d, %d, %d, %d}" % (d0, d1, d2, d3))
-
-output = Output("output", "TENSOR_FLOAT16", "{%d, %d, %d, %d}" % (d0, d1, d2, d3))
-
-model = model.Operation("RELU6", i0).To(output)
+i1 = Input("op1", "TENSOR_FLOAT16", "{1, 2, 2, 1}")
+i3 = Output("op3", "TENSOR_FLOAT16", "{1, 2, 2, 1}")
+model = model.Operation("LOGISTIC", i1).To(i3)
 
 # Example 1. Input in operand 0,
-rng = d0 * d1 * d2 * d3
-input_values = (lambda r = rng: [x * (x % 2 - .5) * .002 for x in range(r)])()
-input0 = {i0: input_values}
-output_values = [0 if x < 0 else 6 if x > 6 else x for x in input_values]
-output0 = {output: output_values}
+input0 = {i1: # input 0
+          [1.0, 2.0, 4.0, 8.0]}
+
+output0 = {i3: # output 0
+           [0.73105859756469727,
+            0.88079702854156494,
+            0.9820137619972229,
+            0.99966466426849365]}
 
 # Instantiate an example
 Example((input0, output0))
