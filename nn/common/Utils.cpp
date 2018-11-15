@@ -1881,7 +1881,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
-            if (inputType != OperandType::TENSOR_FLOAT32 &&
+            if (inputType != OperandType::TENSOR_FLOAT16 &&
+                inputType != OperandType::TENSOR_FLOAT32 &&
                 inputType != OperandType::TENSOR_INT32 &&
                 inputType != OperandType::TENSOR_QUANT8_ASYMM) {
                 LOG(ERROR) << "Unsupported input tensor type for operation "

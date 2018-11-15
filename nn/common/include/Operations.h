@@ -228,6 +228,10 @@ bool stridedSliceGeneric(const uint8_t* inputData, const Shape& inputShape,
 bool argMinMaxGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t axis,
                       bool isArgMin, uint8_t* outputData, const Shape& outputShape);
 
+bool splitFloat16(const _Float16* inputData, const Shape& inputShape, int32_t axis,
+                  const std::vector<_Float16*>* outputDataPtrs,
+                  const std::vector<Shape>& outputShapes);
+
 bool splitFloat32(const float* inputData, const Shape& inputShape, const int32_t axis,
                   const std::vector<float*>* outputDataPtrs,
                   const std::vector<Shape>& outputShapes);
