@@ -392,6 +392,8 @@
 #include "../generated/tests/split_quant8_2.mod.py.cpp"
 #include "../generated/tests/split_quant8_3.mod.py.cpp"
 #include "../generated/tests/split_quant8_4.mod.py.cpp"
+#include "../generated/tests/sub_float16.mod.py.cpp"
+#include "../generated/tests/sub_float16_broadcast.mod.py.cpp"
 #include "../generated/tests/sub_quantized.mod.py.cpp"
 #include "../generated/tests/sub_quantized_broadcast.mod.py.cpp"
 #include "../generated/tests/sub_quantized_different_scales.mod.py.cpp"
