@@ -58,3 +58,31 @@ inline bool is_ignored_relaxed(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_float16(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type3(Type::TENSOR_FLOAT16, {2, 2, 2});
+  OperandType type4(Type::TENSOR_FLOAT16, {2, 1, 2});
+  // Phase 1, operands
+  auto input0 = model->addOperand(&type3);
+  auto axis = model->addOperand(&type1);
+  auto num_splits = model->addOperand(&type1);
+  auto output0 = model->addOperand(&type4);
+  auto output1 = model->addOperand(&type4);
+  // Phase 2, operations
+  static int32_t axis_init[] = {1};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  static int32_t num_splits_init[] = {2};
+  model->setOperandValue(num_splits, num_splits_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_SPLIT, {input0, axis, num_splits}, {output0, output1});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input0},
+    {output0, output1});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
