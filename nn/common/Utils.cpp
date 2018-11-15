@@ -1363,38 +1363,48 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_LSTM: {
-            if (inputCount != 23 || outputCount != 4) {
-                logInvalidInOutNumber(23, 4);
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            if (inputCount == 23 && outputCount == 4) {
+                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::INT32,          OperandType::FLOAT32,
+                                   OperandType::FLOAT32};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                    OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32};
+                *minSupportedHalVersion = HalVersion::V1_0;
+            } else if (inputCount == 27 && outputCount == 4) {
+                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::INT32,          OperandType::FLOAT32,
+                                   OperandType::FLOAT32,        OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                    OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32};
+                *minSupportedHalVersion = HalVersion::V1_2;
+            } else {
+                LOG(ERROR) << "Invalid number of input operands (" << inputCount
+                           << ", expected 23 or 27) or output operands (" << outputCount
+                           << ", expected 4) for operation " << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::INT32,
-                                                        OperandType::FLOAT32,
-                                                        OperandType::FLOAT32};
-            std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_FLOAT32,
-                                                         OperandType::TENSOR_FLOAT32,
-                                                         OperandType::TENSOR_FLOAT32,
-                                                         OperandType::TENSOR_FLOAT32};
-            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
