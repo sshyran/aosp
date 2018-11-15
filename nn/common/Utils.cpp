@@ -215,6 +215,8 @@ const char* kOperationNames[kNumberOfOperationTypes] = {
         "UNIDIRECTIONAL_SEQUENCE_LSTM",
         "UNIDIRECTIONAL_SEQUENCE_RNN",
         "ROTATED_BBOX_TRANSFORM",
+        "ABS",
+        "ROI_POOLING",
 };
 
 static_assert(COUNT(kOperationNames) == kNumberOfOperationTypes, "kOperationNames is incorrect");
