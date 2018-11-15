@@ -21,3 +21,9 @@ TEST_F(GeneratedTests, split_float_2_relaxed) {
             split_float_2::examples_relaxed);
 }
 
+TEST_F(GeneratedTests, split_float_2_float16) {
+    execute(split_float_2::CreateModel_float16,
+            split_float_2::is_ignored_float16,
+            split_float_2::examples_float16);
+}
+

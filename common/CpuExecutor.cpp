@@ -1892,6 +1892,15 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                           setInfoAndAllocateIfNeeded(&(mOperands[outs[i]]), outputShapes[i]);
             }
             switch (input.type) {
+                case OperandType::TENSOR_FLOAT16: {
+                    std::vector<_Float16*> outputDataPtrs(numOutputs);
+                    for (int i = 0; i < numOutputs; ++i) {
+                        outputDataPtrs[i] = reinterpret_cast<_Float16*>(mOperands[outs[i]].buffer);
+                    }
+                    success = success &&
+                              splitFloat16(reinterpret_cast<const _Float16*>(input.buffer),
+                                           input.shape(), axis, &outputDataPtrs, outputShapes);
+                } break;
                 case OperandType::TENSOR_FLOAT32: {
                     std::vector<float*> outputDataPtrs(numOutputs);
                     for (int i = 0; i < numOutputs; ++i) {
