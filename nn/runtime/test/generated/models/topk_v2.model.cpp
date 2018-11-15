@@ -52,6 +52,31 @@ inline bool is_ignored_relaxed(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_float16(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type11(Type::TENSOR_FLOAT16, {2, 2});
+  OperandType type2(Type::TENSOR_INT32, {2, 2});
+  // Phase 1, operands
+  auto input = model->addOperand(&type11);
+  auto k = model->addOperand(&type1);
+  auto out_values = model->addOperand(&type11);
+  auto out_indices = model->addOperand(&type2);
+  // Phase 2, operations
+  static int32_t k_init[] = {2};
+  model->setOperandValue(k, k_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_TOPK_V2, {input, k}, {out_values, out_indices});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input},
+    {out_values, out_indices});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
 void CreateModel_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2});
   OperandType type1(Type::INT32, {});
@@ -102,6 +127,32 @@ void CreateModel_relaxed_2(Model *model) {
 }
 
 inline bool is_ignored_relaxed_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_2(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type11(Type::TENSOR_FLOAT16, {2, 2});
+  OperandType type12(Type::TENSOR_FLOAT16, {2, 3});
+  OperandType type2(Type::TENSOR_INT32, {2, 2});
+  // Phase 1, operands
+  auto input1 = model->addOperand(&type12);
+  auto k1 = model->addOperand(&type1);
+  auto out_values1 = model->addOperand(&type11);
+  auto out_indices1 = model->addOperand(&type2);
+  // Phase 2, operations
+  static int32_t k1_init[] = {2};
+  model->setOperandValue(k1, k1_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_TOPK_V2, {input1, k1}, {out_values1, out_indices1});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input1},
+    {out_values1, out_indices1});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -160,6 +211,32 @@ inline bool is_ignored_relaxed_3(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_float16_3(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type11(Type::TENSOR_FLOAT16, {2, 2});
+  OperandType type13(Type::TENSOR_FLOAT16, {2, 4});
+  OperandType type2(Type::TENSOR_INT32, {2, 2});
+  // Phase 1, operands
+  auto input2 = model->addOperand(&type13);
+  auto k2 = model->addOperand(&type1);
+  auto out_values2 = model->addOperand(&type11);
+  auto out_indices2 = model->addOperand(&type2);
+  // Phase 2, operations
+  static int32_t k2_init[] = {2};
+  model->setOperandValue(k2, k2_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_TOPK_V2, {input2, k2}, {out_values2, out_indices2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input2},
+    {out_values2, out_indices2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_3(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
 void CreateModel_4(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type5(Type::TENSOR_FLOAT32, {8});
@@ -210,6 +287,32 @@ void CreateModel_relaxed_4(Model *model) {
 }
 
 inline bool is_ignored_relaxed_4(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_4(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type14(Type::TENSOR_FLOAT16, {8});
+  OperandType type15(Type::TENSOR_FLOAT16, {2});
+  OperandType type7(Type::TENSOR_INT32, {2});
+  // Phase 1, operands
+  auto input3 = model->addOperand(&type14);
+  auto k3 = model->addOperand(&type1);
+  auto out_values3 = model->addOperand(&type15);
+  auto out_indices3 = model->addOperand(&type7);
+  // Phase 2, operations
+  static int32_t k3_init[] = {2};
+  model->setOperandValue(k3, k3_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_TOPK_V2, {input3, k3}, {out_values3, out_indices3});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input3},
+    {out_values3, out_indices3});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -268,6 +371,32 @@ inline bool is_ignored_relaxed_5(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_float16_5(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type2(Type::TENSOR_INT32, {2, 2});
+  OperandType type8(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 2.0f, 128);
+  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {2, 2}, 2.0f, 128);
+  // Phase 1, operands
+  auto input4 = model->addOperand(&type8);
+  auto k4 = model->addOperand(&type1);
+  auto out_values4 = model->addOperand(&type9);
+  auto out_indices4 = model->addOperand(&type2);
+  // Phase 2, operations
+  static int32_t k4_init[] = {2};
+  model->setOperandValue(k4, k4_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_TOPK_V2, {input4, k4}, {out_values4, out_indices4});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input4},
+    {out_values4, out_indices4});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
 void CreateModel_6(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type10(Type::TENSOR_INT32, {2, 3});
@@ -316,6 +445,31 @@ void CreateModel_relaxed_6(Model *model) {
 }
 
 inline bool is_ignored_relaxed_6(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_6(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type10(Type::TENSOR_INT32, {2, 3});
+  OperandType type2(Type::TENSOR_INT32, {2, 2});
+  // Phase 1, operands
+  auto input5 = model->addOperand(&type10);
+  auto k5 = model->addOperand(&type1);
+  auto out_values5 = model->addOperand(&type2);
+  auto out_indices5 = model->addOperand(&type2);
+  // Phase 2, operations
+  static int32_t k5_init[] = {2};
+  model->setOperandValue(k5, k5_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_TOPK_V2, {input5, k5}, {out_values5, out_indices5});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input5},
+    {out_values5, out_indices5});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
