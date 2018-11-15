@@ -45,6 +45,24 @@ TEST_F(GeneratedTests, softmax_v1_2_relaxed_dim3_axis2) {
             softmax_v1_2::examples_relaxed_dim3_axis2);
 }
 
+TEST_F(GeneratedTests, softmax_v1_2_float16) {
+    execute(softmax_v1_2::CreateModel_float16,
+            softmax_v1_2::is_ignored_float16,
+            softmax_v1_2::examples_float16);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_float16_dim1_axis0) {
+    execute(softmax_v1_2::CreateModel_float16_dim1_axis0,
+            softmax_v1_2::is_ignored_float16_dim1_axis0,
+            softmax_v1_2::examples_float16_dim1_axis0);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_float16_dim3_axis2) {
+    execute(softmax_v1_2::CreateModel_float16_dim3_axis2,
+            softmax_v1_2::is_ignored_float16_dim3_axis2,
+            softmax_v1_2::examples_float16_dim3_axis2);
+}
+
 TEST_F(GeneratedTests, softmax_v1_2_quant8) {
     execute(softmax_v1_2::CreateModel_quant8,
             softmax_v1_2::is_ignored_quant8,
@@ -97,6 +115,24 @@ TEST_F(GeneratedTests, softmax_v1_2_relaxed_dim3_axis2_2) {
     execute(softmax_v1_2::CreateModel_relaxed_dim3_axis2_2,
             softmax_v1_2::is_ignored_relaxed_dim3_axis2_2,
             softmax_v1_2::examples_relaxed_dim3_axis2_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_float16_2) {
+    execute(softmax_v1_2::CreateModel_float16_2,
+            softmax_v1_2::is_ignored_float16_2,
+            softmax_v1_2::examples_float16_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_float16_dim1_axis0_2) {
+    execute(softmax_v1_2::CreateModel_float16_dim1_axis0_2,
+            softmax_v1_2::is_ignored_float16_dim1_axis0_2,
+            softmax_v1_2::examples_float16_dim1_axis0_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_float16_dim3_axis2_2) {
+    execute(softmax_v1_2::CreateModel_float16_dim3_axis2_2,
+            softmax_v1_2::is_ignored_float16_dim3_axis2_2,
+            softmax_v1_2::examples_float16_dim3_axis2_2);
 }
 
 TEST_F(GeneratedTests, softmax_v1_2_quant8_2) {
@@ -355,6 +391,126 @@ TEST_F(GeneratedTests, softmax_v1_2_axis_relaxed_dim1_axis0_neg) {
     execute(softmax_v1_2::CreateModel_axis_relaxed_dim1_axis0_neg,
             softmax_v1_2::is_ignored_axis_relaxed_dim1_axis0_neg,
             softmax_v1_2::examples_axis_relaxed_dim1_axis0_neg);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis0,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis0,
+            softmax_v1_2::examples_axis_float16_dim4_axis0);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis0_neg,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis0_neg,
+            softmax_v1_2::examples_axis_float16_dim4_axis0_neg);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis1,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis1,
+            softmax_v1_2::examples_axis_float16_dim4_axis1);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis1_neg,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis1_neg,
+            softmax_v1_2::examples_axis_float16_dim4_axis1_neg);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis2,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis2,
+            softmax_v1_2::examples_axis_float16_dim4_axis2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis2_neg) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis2_neg,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis2_neg,
+            softmax_v1_2::examples_axis_float16_dim4_axis2_neg);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis3) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis3,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis3,
+            softmax_v1_2::examples_axis_float16_dim4_axis3);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis3_neg) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis3_neg,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis3_neg,
+            softmax_v1_2::examples_axis_float16_dim4_axis3_neg);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis0,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis0,
+            softmax_v1_2::examples_axis_float16_dim3_axis0);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis0_neg,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis0_neg,
+            softmax_v1_2::examples_axis_float16_dim3_axis0_neg);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis1,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis1,
+            softmax_v1_2::examples_axis_float16_dim3_axis1);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis1_neg,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis1_neg,
+            softmax_v1_2::examples_axis_float16_dim3_axis1_neg);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis2,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis2,
+            softmax_v1_2::examples_axis_float16_dim3_axis2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis2_neg) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis2_neg,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis2_neg,
+            softmax_v1_2::examples_axis_float16_dim3_axis2_neg);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim2_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim2_axis0,
+            softmax_v1_2::is_ignored_axis_float16_dim2_axis0,
+            softmax_v1_2::examples_axis_float16_dim2_axis0);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim2_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim2_axis0_neg,
+            softmax_v1_2::is_ignored_axis_float16_dim2_axis0_neg,
+            softmax_v1_2::examples_axis_float16_dim2_axis0_neg);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim2_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim2_axis1,
+            softmax_v1_2::is_ignored_axis_float16_dim2_axis1,
+            softmax_v1_2::examples_axis_float16_dim2_axis1);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim2_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim2_axis1_neg,
+            softmax_v1_2::is_ignored_axis_float16_dim2_axis1_neg,
+            softmax_v1_2::examples_axis_float16_dim2_axis1_neg);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim1_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim1_axis0,
+            softmax_v1_2::is_ignored_axis_float16_dim1_axis0,
+            softmax_v1_2::examples_axis_float16_dim1_axis0);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim1_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim1_axis0_neg,
+            softmax_v1_2::is_ignored_axis_float16_dim1_axis0_neg,
+            softmax_v1_2::examples_axis_float16_dim1_axis0_neg);
 }
 
 TEST_F(GeneratedTests, softmax_v1_2_axis_quant8_dim4_axis0) {
@@ -715,6 +871,126 @@ TEST_F(GeneratedTests, softmax_v1_2_axis_relaxed_dim1_axis0_neg_2) {
     execute(softmax_v1_2::CreateModel_axis_relaxed_dim1_axis0_neg_2,
             softmax_v1_2::is_ignored_axis_relaxed_dim1_axis0_neg_2,
             softmax_v1_2::examples_axis_relaxed_dim1_axis0_neg_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis0_2,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis0_2,
+            softmax_v1_2::examples_axis_float16_dim4_axis0_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis0_neg_2,
+            softmax_v1_2::examples_axis_float16_dim4_axis0_neg_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis1_2,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis1_2,
+            softmax_v1_2::examples_axis_float16_dim4_axis1_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis1_neg_2,
+            softmax_v1_2::examples_axis_float16_dim4_axis1_neg_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis2_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis2_2,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis2_2,
+            softmax_v1_2::examples_axis_float16_dim4_axis2_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis2_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis2_neg_2,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis2_neg_2,
+            softmax_v1_2::examples_axis_float16_dim4_axis2_neg_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis3_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis3_2,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis3_2,
+            softmax_v1_2::examples_axis_float16_dim4_axis3_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim4_axis3_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim4_axis3_neg_2,
+            softmax_v1_2::is_ignored_axis_float16_dim4_axis3_neg_2,
+            softmax_v1_2::examples_axis_float16_dim4_axis3_neg_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis0_2,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis0_2,
+            softmax_v1_2::examples_axis_float16_dim3_axis0_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis0_neg_2,
+            softmax_v1_2::examples_axis_float16_dim3_axis0_neg_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis1_2,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis1_2,
+            softmax_v1_2::examples_axis_float16_dim3_axis1_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis1_neg_2,
+            softmax_v1_2::examples_axis_float16_dim3_axis1_neg_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis2_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis2_2,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis2_2,
+            softmax_v1_2::examples_axis_float16_dim3_axis2_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim3_axis2_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim3_axis2_neg_2,
+            softmax_v1_2::is_ignored_axis_float16_dim3_axis2_neg_2,
+            softmax_v1_2::examples_axis_float16_dim3_axis2_neg_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim2_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim2_axis0_2,
+            softmax_v1_2::is_ignored_axis_float16_dim2_axis0_2,
+            softmax_v1_2::examples_axis_float16_dim2_axis0_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim2_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim2_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_float16_dim2_axis0_neg_2,
+            softmax_v1_2::examples_axis_float16_dim2_axis0_neg_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim2_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim2_axis1_2,
+            softmax_v1_2::is_ignored_axis_float16_dim2_axis1_2,
+            softmax_v1_2::examples_axis_float16_dim2_axis1_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim2_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim2_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_float16_dim2_axis1_neg_2,
+            softmax_v1_2::examples_axis_float16_dim2_axis1_neg_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim1_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim1_axis0_2,
+            softmax_v1_2::is_ignored_axis_float16_dim1_axis0_2,
+            softmax_v1_2::examples_axis_float16_dim1_axis0_2);
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_axis_float16_dim1_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_float16_dim1_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_float16_dim1_axis0_neg_2,
+            softmax_v1_2::examples_axis_float16_dim1_axis0_neg_2);
 }
 
 TEST_F(GeneratedTests, softmax_v1_2_axis_quant8_dim4_axis0_2) {

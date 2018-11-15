@@ -129,10 +129,16 @@ bool tanhFloat32(const float* inputData, const Shape& inputShape, float* outputD
                  const Shape& outputShape);
 bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
                 const Shape& outputShape);
-bool logisticFloat32(const float* inputData, const Shape& inputShape, float* outputData,
-                     const Shape& outputShape);
+
+template <typename T>
+bool logisticFloat(const T* inputData, const Shape& inputShape, T* outputData,
+                   const Shape& outputShape);
+
+bool softmaxFloat16(const _Float16* inputData, const Shape& inputShape, const float beta,
+                    int32_t axis, _Float16* outputData, const Shape& outputShape);
 bool softmaxFloat32(const float* inputData, const Shape& inputShape, const float beta, int32_t axis,
                     float* outputData, const Shape& outputShape);
+
 bool reluQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
                 const Shape& outputShape);
 bool relu1Quant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,

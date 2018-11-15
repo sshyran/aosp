@@ -9433,6 +9433,52 @@ TEST_F(ValidationTest, local_response_normalization_v1_2_relaxed_dim3_axis2) {
 }
 
 
+// Generated from: logistic_float16_1.mod.py.
+namespace logistic_float16_1 {
+// Generated logistic_float16_1 test
+#include "examples/logistic_float16_1.example.cpp"
+// Generated model constructor
+#include "vts_models/logistic_float16_1.model.cpp"
+} // namespace logistic_float16_1
+
+TEST_F(NeuralnetworksHidlTest, logistic_float16_1) {
+  generated_tests::Execute(device,
+                           logistic_float16_1::createTestModel,
+                           logistic_float16_1::is_ignored,
+                           logistic_float16_1::examples);
+}
+
+TEST_F(ValidationTest, logistic_float16_1) {
+  const Model model = logistic_float16_1::createTestModel();
+  const std::vector<Request> requests = createRequests(logistic_float16_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: logistic_float16_2.mod.py.
+namespace logistic_float16_2 {
+// Generated logistic_float16_2 test
+#include "examples/logistic_float16_2.example.cpp"
+// Generated model constructor
+#include "vts_models/logistic_float16_2.model.cpp"
+} // namespace logistic_float16_2
+
+TEST_F(NeuralnetworksHidlTest, logistic_float16_2) {
+  generated_tests::Execute(device,
+                           logistic_float16_2::createTestModel,
+                           logistic_float16_2::is_ignored,
+                           logistic_float16_2::examples);
+}
+
+TEST_F(ValidationTest, logistic_float16_2) {
+  const Model model = logistic_float16_2::createTestModel();
+  const std::vector<Request> requests = createRequests(logistic_float16_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: lsh_projection_3_relaxed.mod.py.
 namespace lsh_projection_3_relaxed {
 // Generated lsh_projection_3_relaxed test
@@ -11381,6 +11427,51 @@ TEST_F(ValidationTest, softmax_v1_2_relaxed_dim3_axis2) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_float16) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_float16,
+                           softmax_v1_2::is_ignored_float16,
+                           softmax_v1_2::examples_float16);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_float16) {
+  const Model model = softmax_v1_2::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_float16_dim1_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_float16_dim1_axis0,
+                           softmax_v1_2::is_ignored_float16_dim1_axis0,
+                           softmax_v1_2::examples_float16_dim1_axis0);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_float16_dim1_axis0) {
+  const Model model = softmax_v1_2::createTestModel_float16_dim1_axis0();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_float16_dim1_axis0);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_float16_dim3_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_float16_dim3_axis2,
+                           softmax_v1_2::is_ignored_float16_dim3_axis2,
+                           softmax_v1_2::examples_float16_dim3_axis2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_float16_dim3_axis2) {
+  const Model model = softmax_v1_2::createTestModel_float16_dim3_axis2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_float16_dim3_axis2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, softmax_v1_2_quant8) {
   generated_tests::Execute(device,
                            softmax_v1_2::createTestModel_quant8,
@@ -11511,6 +11602,51 @@ TEST_F(NeuralnetworksHidlTest, softmax_v1_2_relaxed_dim3_axis2_2) {
 TEST_F(ValidationTest, softmax_v1_2_relaxed_dim3_axis2_2) {
   const Model model = softmax_v1_2::createTestModel_relaxed_dim3_axis2_2();
   const std::vector<Request> requests = createRequests(softmax_v1_2::examples_relaxed_dim3_axis2_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_float16_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_float16_2,
+                           softmax_v1_2::is_ignored_float16_2,
+                           softmax_v1_2::examples_float16_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_float16_2) {
+  const Model model = softmax_v1_2::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_float16_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_float16_dim1_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_float16_dim1_axis0_2,
+                           softmax_v1_2::is_ignored_float16_dim1_axis0_2,
+                           softmax_v1_2::examples_float16_dim1_axis0_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_float16_dim1_axis0_2) {
+  const Model model = softmax_v1_2::createTestModel_float16_dim1_axis0_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_float16_dim1_axis0_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_float16_dim3_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_float16_dim3_axis2_2,
+                           softmax_v1_2::is_ignored_float16_dim3_axis2_2,
+                           softmax_v1_2::examples_float16_dim3_axis2_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_float16_dim3_axis2_2) {
+  const Model model = softmax_v1_2::createTestModel_float16_dim3_axis2_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_float16_dim3_axis2_2);
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -12156,6 +12292,306 @@ TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim1_axis0_neg) {
 TEST_F(ValidationTest, softmax_v1_2_axis_relaxed_dim1_axis0_neg) {
   const Model model = softmax_v1_2::createTestModel_axis_relaxed_dim1_axis0_neg();
   const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_relaxed_dim1_axis0_neg);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis0,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis0,
+                           softmax_v1_2::examples_axis_float16_dim4_axis0);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis0) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis0();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis0);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis0_neg,
+                           softmax_v1_2::examples_axis_float16_dim4_axis0_neg);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis0_neg) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis0_neg();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis0_neg);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis1,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis1,
+                           softmax_v1_2::examples_axis_float16_dim4_axis1);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis1) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis1();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis1);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis1_neg,
+                           softmax_v1_2::examples_axis_float16_dim4_axis1_neg);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis1_neg) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis1_neg();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis1_neg);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis2,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis2,
+                           softmax_v1_2::examples_axis_float16_dim4_axis2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis2_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis2_neg,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis2_neg,
+                           softmax_v1_2::examples_axis_float16_dim4_axis2_neg);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis2_neg) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis2_neg();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis2_neg);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis3) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis3,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis3,
+                           softmax_v1_2::examples_axis_float16_dim4_axis3);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis3) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis3();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis3);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis3_neg,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis3_neg,
+                           softmax_v1_2::examples_axis_float16_dim4_axis3_neg);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis3_neg) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis3_neg();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis3_neg);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis0,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis0,
+                           softmax_v1_2::examples_axis_float16_dim3_axis0);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis0) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis0();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis0);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis0_neg,
+                           softmax_v1_2::examples_axis_float16_dim3_axis0_neg);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis0_neg) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis0_neg();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis0_neg);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis1,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis1,
+                           softmax_v1_2::examples_axis_float16_dim3_axis1);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis1) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis1();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis1);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis1_neg,
+                           softmax_v1_2::examples_axis_float16_dim3_axis1_neg);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis1_neg) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis1_neg();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis1_neg);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis2,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis2,
+                           softmax_v1_2::examples_axis_float16_dim3_axis2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis2_neg,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis2_neg,
+                           softmax_v1_2::examples_axis_float16_dim3_axis2_neg);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis2_neg) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis2_neg();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis2_neg);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim2_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim2_axis0,
+                           softmax_v1_2::is_ignored_axis_float16_dim2_axis0,
+                           softmax_v1_2::examples_axis_float16_dim2_axis0);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim2_axis0) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim2_axis0();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim2_axis0);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim2_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_float16_dim2_axis0_neg,
+                           softmax_v1_2::examples_axis_float16_dim2_axis0_neg);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim2_axis0_neg) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim2_axis0_neg();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim2_axis0_neg);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim2_axis1) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim2_axis1,
+                           softmax_v1_2::is_ignored_axis_float16_dim2_axis1,
+                           softmax_v1_2::examples_axis_float16_dim2_axis1);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim2_axis1) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim2_axis1();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim2_axis1);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim2_axis1_neg,
+                           softmax_v1_2::is_ignored_axis_float16_dim2_axis1_neg,
+                           softmax_v1_2::examples_axis_float16_dim2_axis1_neg);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim2_axis1_neg) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim2_axis1_neg();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim2_axis1_neg);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim1_axis0) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim1_axis0,
+                           softmax_v1_2::is_ignored_axis_float16_dim1_axis0,
+                           softmax_v1_2::examples_axis_float16_dim1_axis0);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim1_axis0) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim1_axis0();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim1_axis0);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim1_axis0_neg,
+                           softmax_v1_2::is_ignored_axis_float16_dim1_axis0_neg,
+                           softmax_v1_2::examples_axis_float16_dim1_axis0_neg);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim1_axis0_neg) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim1_axis0_neg();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim1_axis0_neg);
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -13056,6 +13492,306 @@ TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_relaxed_dim1_axis0_neg_2) {
 TEST_F(ValidationTest, softmax_v1_2_axis_relaxed_dim1_axis0_neg_2) {
   const Model model = softmax_v1_2::createTestModel_axis_relaxed_dim1_axis0_neg_2();
   const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_relaxed_dim1_axis0_neg_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis0_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis0_2,
+                           softmax_v1_2::examples_axis_float16_dim4_axis0_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis0_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis0_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis0_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis0_neg_2,
+                           softmax_v1_2::examples_axis_float16_dim4_axis0_neg_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis0_neg_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis0_neg_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis0_neg_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis1_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis1_2,
+                           softmax_v1_2::examples_axis_float16_dim4_axis1_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis1_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis1_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis1_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis1_neg_2,
+                           softmax_v1_2::examples_axis_float16_dim4_axis1_neg_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis1_neg_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis1_neg_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis1_neg_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis2_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis2_2,
+                           softmax_v1_2::examples_axis_float16_dim4_axis2_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis2_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis2_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis2_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis2_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis2_neg_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis2_neg_2,
+                           softmax_v1_2::examples_axis_float16_dim4_axis2_neg_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis2_neg_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis2_neg_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis2_neg_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis3_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis3_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis3_2,
+                           softmax_v1_2::examples_axis_float16_dim4_axis3_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis3_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis3_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis3_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim4_axis3_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim4_axis3_neg_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim4_axis3_neg_2,
+                           softmax_v1_2::examples_axis_float16_dim4_axis3_neg_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim4_axis3_neg_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim4_axis3_neg_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim4_axis3_neg_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis0_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis0_2,
+                           softmax_v1_2::examples_axis_float16_dim3_axis0_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis0_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis0_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis0_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis0_neg_2,
+                           softmax_v1_2::examples_axis_float16_dim3_axis0_neg_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis0_neg_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis0_neg_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis0_neg_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis1_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis1_2,
+                           softmax_v1_2::examples_axis_float16_dim3_axis1_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis1_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis1_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis1_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis1_neg_2,
+                           softmax_v1_2::examples_axis_float16_dim3_axis1_neg_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis1_neg_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis1_neg_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis1_neg_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis2_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis2_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis2_2,
+                           softmax_v1_2::examples_axis_float16_dim3_axis2_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis2_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis2_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis2_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim3_axis2_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim3_axis2_neg_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim3_axis2_neg_2,
+                           softmax_v1_2::examples_axis_float16_dim3_axis2_neg_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim3_axis2_neg_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim3_axis2_neg_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim3_axis2_neg_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim2_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim2_axis0_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim2_axis0_2,
+                           softmax_v1_2::examples_axis_float16_dim2_axis0_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim2_axis0_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim2_axis0_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim2_axis0_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim2_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim2_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim2_axis0_neg_2,
+                           softmax_v1_2::examples_axis_float16_dim2_axis0_neg_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim2_axis0_neg_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim2_axis0_neg_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim2_axis0_neg_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim2_axis1_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim2_axis1_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim2_axis1_2,
+                           softmax_v1_2::examples_axis_float16_dim2_axis1_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim2_axis1_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim2_axis1_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim2_axis1_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim2_axis1_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim2_axis1_neg_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim2_axis1_neg_2,
+                           softmax_v1_2::examples_axis_float16_dim2_axis1_neg_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim2_axis1_neg_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim2_axis1_neg_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim2_axis1_neg_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim1_axis0_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim1_axis0_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim1_axis0_2,
+                           softmax_v1_2::examples_axis_float16_dim1_axis0_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim1_axis0_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim1_axis0_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim1_axis0_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, softmax_v1_2_axis_float16_dim1_axis0_neg_2) {
+  generated_tests::Execute(device,
+                           softmax_v1_2::createTestModel_axis_float16_dim1_axis0_neg_2,
+                           softmax_v1_2::is_ignored_axis_float16_dim1_axis0_neg_2,
+                           softmax_v1_2::examples_axis_float16_dim1_axis0_neg_2);
+}
+
+TEST_F(ValidationTest, softmax_v1_2_axis_float16_dim1_axis0_neg_2) {
+  const Model model = softmax_v1_2::createTestModel_axis_float16_dim1_axis0_neg_2();
+  const std::vector<Request> requests = createRequests(softmax_v1_2::examples_axis_float16_dim1_axis0_neg_2);
   validateModel(model);
   validateRequests(model, requests);
 }

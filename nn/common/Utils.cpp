@@ -942,6 +942,10 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if (inputType == OperandType::TENSOR_FLOAT32) {
                 inExpectedTypes = {OperandType::TENSOR_FLOAT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
+                inExpectedTypes = {OperandType::TENSOR_FLOAT16};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
@@ -971,6 +975,10 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes = {OperandType::TENSOR_FLOAT32,
                                    OperandType::FLOAT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+                inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::FLOAT32};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
                                    OperandType::FLOAT32};
@@ -985,9 +993,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
                 const size_t ndim = operands[inputIndexes[0]].dimensions.size();
-                if (ndim == 4 || ndim == 2) {
-                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
-                } else {
+                if (ndim != 4 && ndim != 2) {
                     NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
                 }
             }
