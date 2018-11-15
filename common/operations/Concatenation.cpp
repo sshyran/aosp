@@ -24,46 +24,35 @@
 namespace android {
 namespace nn {
 
-bool concatenationFloat32(const std::vector<const float*>& inputDataPtrs,
-                          const std::vector<Shape>& inputShapes, int32_t axis,
-                          float* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("concatenationFloat32");
+template <typename T>
+bool concatenation(const std::vector<const T*>& inputDataPtrs,
+                   const std::vector<Shape>& inputShapes, int32_t axis, T* outputData,
+                   const Shape& outputShape) {
+    NNTRACE_TRANS("concatenation");
     int num_inputs = inputShapes.size();
     std::vector<tflite::Dims<4>*> inputDimsPtr(num_inputs);
     std::vector<tflite::Dims<4> > inputDims(num_inputs);
-    for (int i=0; i<num_inputs; i++) {
+    for (int i = 0; i < num_inputs; i++) {
         inputDims[i] = convertShapeToDims(inputShapes[i]);
         inputDimsPtr[i] = &inputDims[i];
     }
-
     NNTRACE_COMP_SWITCH("optimized_ops::Concatenation");
-    tflite::optimized_ops::Concatenation<tflite::FusedActivationFunctionType::kNone, float>(
-            getNumberOfDimensions(outputShape) - axis - 1,
-            inputDataPtrs.data(), inputDimsPtr.data(), num_inputs,
-            outputData, convertShapeToDims(outputShape));
+    tflite::optimized_ops::Concatenation<tflite::FusedActivationFunctionType::kNone, T>(
+            getNumberOfDimensions(outputShape) - axis - 1, inputDataPtrs.data(),
+            inputDimsPtr.data(), num_inputs, outputData, convertShapeToDims(outputShape));
 
     return true;
 }
 
-bool concatenationQuant8(const std::vector<const uint8_t*>& inputDataPtrs,
-                         const std::vector<Shape>& inputShapes, int32_t axis,
-                         uint8_t* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("concatenationQuant8");
-    int num_inputs = inputShapes.size();
-    std::vector<tflite::Dims<4>*> inputDimsPtr(num_inputs);
-    std::vector<tflite::Dims<4> > inputDims(num_inputs);
-    for (int i=0; i<num_inputs; i++) {
-        inputDims[i] = convertShapeToDims(inputShapes[i]);
-        inputDimsPtr[i] = &inputDims[i];
-    }
+template bool concatenation<float>(const std::vector<const float*>& inputDataPtrs,
+                                   const std::vector<Shape>& inputShapes, int32_t axis,
+                                   float* outputData, const Shape& outputShape);
+template bool concatenation<_Float16>(const std::vector<const _Float16*>& inputDataPtrs,
+                                      const std::vector<Shape>& inputShapes, int32_t axis,
+                                      _Float16* outputData, const Shape& outputShape);
+template bool concatenation<uint8_t>(const std::vector<const uint8_t*>& inputDataPtrs,
+                                     const std::vector<Shape>& inputShapes, int32_t axis,
+                                     uint8_t* outputData, const Shape& outputShape);
 
-    NNTRACE_COMP_SWITCH("optimized_ops::Concatenation");
-    tflite::optimized_ops::Concatenation<tflite::FusedActivationFunctionType::kNone, uint8_t>(
-            getNumberOfDimensions(outputShape) - axis - 1,
-            inputDataPtrs.data(), inputDimsPtr.data(), num_inputs,
-            outputData, convertShapeToDims(outputShape));
-
-    return true;
-}
 }  // namespace nn
 }  // namespace android
