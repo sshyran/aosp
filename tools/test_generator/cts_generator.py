@@ -241,7 +241,8 @@ if __name__ == '__main__':
     ParseCmdLine()
     while tg.FileNames.NextFile():
         if Configuration.force_regenerate or NeedRegenerate():
-            exec (open(tg.FileNames.specFile, "r").read())
+            print("Generating test(s) from spec: %s" % tg.FileNames.specFile, file=sys.stderr)
+            exec(open(tg.FileNames.specFile, "r").read())
             print("Output CTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
             print("Output example:%s" % tg.FileNames.exampleFile, file=sys.stderr)
             print("Output CTS test: %s" % tg.FileNames.testFile, file=sys.stderr)
