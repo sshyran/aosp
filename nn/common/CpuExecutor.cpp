@@ -1683,7 +1683,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                      outShape);
         } break;
         case OperationType::TRANSPOSE: {
-            if (!allParametersPresent(2, 1)) {
+            if (ins.size() != 2 || outs.size() != 1 ||
+                mOperands[ins[0]].lifetime == OperandLifeTime::NO_VALUE ||
+                mOperands[outs[0]].lifetime == OperandLifeTime::NO_VALUE) {
+                LOG(ERROR) << "Wrong input/output count or lifetime for TRANSPOSE op.";
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
