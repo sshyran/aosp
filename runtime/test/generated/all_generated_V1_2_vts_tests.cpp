@@ -15596,6 +15596,21 @@ TEST_F(ValidationTest, topk_v2_relaxed) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, topk_v2_float16) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_float16,
+                           topk_v2::is_ignored_float16,
+                           topk_v2::examples_float16);
+}
+
+TEST_F(ValidationTest, topk_v2_float16) {
+  const Model model = topk_v2::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(topk_v2::examples_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, topk_v2_2) {
   generated_tests::Execute(device,
                            topk_v2::createTestModel_2,
@@ -15621,6 +15636,21 @@ TEST_F(NeuralnetworksHidlTest, topk_v2_relaxed_2) {
 TEST_F(ValidationTest, topk_v2_relaxed_2) {
   const Model model = topk_v2::createTestModel_relaxed_2();
   const std::vector<Request> requests = createRequests(topk_v2::examples_relaxed_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_float16_2) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_float16_2,
+                           topk_v2::is_ignored_float16_2,
+                           topk_v2::examples_float16_2);
+}
+
+TEST_F(ValidationTest, topk_v2_float16_2) {
+  const Model model = topk_v2::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(topk_v2::examples_float16_2);
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -15656,6 +15686,21 @@ TEST_F(ValidationTest, topk_v2_relaxed_3) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, topk_v2_float16_3) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_float16_3,
+                           topk_v2::is_ignored_float16_3,
+                           topk_v2::examples_float16_3);
+}
+
+TEST_F(ValidationTest, topk_v2_float16_3) {
+  const Model model = topk_v2::createTestModel_float16_3();
+  const std::vector<Request> requests = createRequests(topk_v2::examples_float16_3);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, topk_v2_4) {
   generated_tests::Execute(device,
                            topk_v2::createTestModel_4,
@@ -15681,6 +15726,21 @@ TEST_F(NeuralnetworksHidlTest, topk_v2_relaxed_4) {
 TEST_F(ValidationTest, topk_v2_relaxed_4) {
   const Model model = topk_v2::createTestModel_relaxed_4();
   const std::vector<Request> requests = createRequests(topk_v2::examples_relaxed_4);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_float16_4) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_float16_4,
+                           topk_v2::is_ignored_float16_4,
+                           topk_v2::examples_float16_4);
+}
+
+TEST_F(ValidationTest, topk_v2_float16_4) {
+  const Model model = topk_v2::createTestModel_float16_4();
+  const std::vector<Request> requests = createRequests(topk_v2::examples_float16_4);
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -15716,6 +15776,21 @@ TEST_F(ValidationTest, topk_v2_relaxed_5) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, topk_v2_float16_5) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_float16_5,
+                           topk_v2::is_ignored_float16_5,
+                           topk_v2::examples_float16_5);
+}
+
+TEST_F(ValidationTest, topk_v2_float16_5) {
+  const Model model = topk_v2::createTestModel_float16_5();
+  const std::vector<Request> requests = createRequests(topk_v2::examples_float16_5);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, topk_v2_6) {
   generated_tests::Execute(device,
                            topk_v2::createTestModel_6,
@@ -15741,6 +15816,21 @@ TEST_F(NeuralnetworksHidlTest, topk_v2_relaxed_6) {
 TEST_F(ValidationTest, topk_v2_relaxed_6) {
   const Model model = topk_v2::createTestModel_relaxed_6();
   const std::vector<Request> requests = createRequests(topk_v2::examples_relaxed_6);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, topk_v2_float16_6) {
+  generated_tests::Execute(device,
+                           topk_v2::createTestModel_float16_6,
+                           topk_v2::is_ignored_float16_6,
+                           topk_v2::examples_float16_6);
+}
+
+TEST_F(ValidationTest, topk_v2_float16_6) {
+  const Model model = topk_v2::createTestModel_float16_6();
+  const std::vector<Request> requests = createRequests(topk_v2::examples_float16_6);
   validateModel(model);
   validateRequests(model, requests);
 }
