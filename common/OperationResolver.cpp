@@ -24,9 +24,11 @@ namespace android {
 namespace nn {
 
 // TODO(b/119608412): Find a way to not reference every operation here.
+const OperationRegistration* register_ABS();
 const OperationRegistration* register_GATHER();
 
 OperationResolver::OperationResolver() {
+    registerOperation(register_ABS());
     registerOperation(register_GATHER());
 }
 
