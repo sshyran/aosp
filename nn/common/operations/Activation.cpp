@@ -82,19 +82,24 @@ bool tanhFloat32(const float* inputData, const Shape& inputShape,
     return true;
 }
 
-bool logisticFloat32(const float* inputData, const Shape& inputShape,
-                     float* outputData, const Shape& outputShape) {
-    NNTRACE_COMP("logisticFloat32");
+template <typename T>
+bool logisticFloat(const T* inputData, const Shape& inputShape, T* outputData,
+                   const Shape& outputShape) {
+    NNTRACE_COMP("logisticFloat");
     int numElements = getNumberOfElements(inputShape);
-    for (int i=0; i<numElements; i++, inputData++, outputData++) {
-        *outputData = 1.f / (1.f + std::exp(-*inputData));
+    for (int i = 0; i < numElements; i++, inputData++, outputData++) {
+        *outputData = static_cast<T>(1.f / (1.f + std::exp(static_cast<float>(-*inputData))));
     }
     return true;
 }
+template bool logisticFloat<float>(const float* inputData, const Shape& inputShape,
+                                   float* outputData, const Shape& outputShape);
+template bool logisticFloat<_Float16>(const _Float16* inputData, const Shape& inputShape,
+                                      _Float16* outputData, const Shape& outputShape);
 
-inline bool softmaxFloat32Impl(const float* inputData, const Shape& inputShape, const float beta,
+inline bool softmaxSlowFloat32(const float* inputData, const Shape& inputShape, const float beta,
                                int32_t axis, float* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("softmaxFloat32");
+    NNTRACE_TRANS("softmaxFloatSlow32");
     const uint32_t outerSize = getNumberOfElements(inputShape, 0, axis);
     const uint32_t axisSize = getSizeOfDimension(inputShape, axis);
     const uint32_t innerSize =
@@ -124,6 +129,20 @@ inline bool softmaxFloat32Impl(const float* inputData, const Shape& inputShape, 
     return true;
 }
 
+bool softmaxFloat16(const _Float16* inputData, const Shape& inputShape, const float beta,
+                    int32_t axis, _Float16* outputData, const Shape& outputShape) {
+    NNTRACE_TRANS("softmaxFloat16");
+    std::vector<float> inputData_float32(getNumberOfElements(inputShape));
+    convertFloat16ToFloat32(inputData, &inputData_float32);
+    std::vector<float> outputData_float32(getNumberOfElements(outputShape));
+
+    softmaxFloat32(inputData_float32.data(), inputShape, beta, axis, outputData_float32.data(),
+                   outputShape);
+    convertFloat32ToFloat16(outputData_float32, outputData);
+
+    return true;
+}
+
 bool softmaxFloat32(const float* inputData, const Shape& inputShape, const float beta, int32_t axis,
                     float* outputData, const Shape& outputShape) {
     int32_t ndim = getNumberOfDimensions(inputShape);
@@ -136,7 +155,7 @@ bool softmaxFloat32(const float* inputData, const Shape& inputShape, const float
                                        convertShapeToTflshape(outputShape), outputData);
         return true;
     } else {
-        return softmaxFloat32Impl(inputData, inputShape, beta, axis, outputData, outputShape);
+        return softmaxSlowFloat32(inputData, inputShape, beta, axis, outputData, outputShape);
     }
 }
 

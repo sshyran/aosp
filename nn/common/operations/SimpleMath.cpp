@@ -101,20 +101,6 @@ inline bool broadcastOpBase(const T* in1, const Shape& shape1, const T* in2, con
             return false;                                                   \
     }
 
-namespace {
-inline void convertFloat16ToFloat32(const _Float16* input, std::vector<float>* output) {
-    for (int i = 0; i < output->size(); ++i) {
-        (*output)[i] = static_cast<float>(input[i]);
-    }
-}
-
-inline void convertFloat32ToFloat16(const std::vector<float>& input, _Float16* output) {
-    for (int i = 0; i < input.size(); ++i) {
-        output[i] = input[i];
-    }
-}
-}  // namespace
-
 using binaryFunctionFloat32 = std::function<bool(
         const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
         int32_t activation, float* out, const Shape& shapeOut)>;

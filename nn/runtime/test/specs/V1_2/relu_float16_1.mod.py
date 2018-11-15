@@ -16,8 +16,8 @@
 
 # model
 model = Model()
-i1 = Input("op1", "TENSOR_FLOAT32", "{1, 2, 2, 1}") # input 0
-i2 = Output("op2", "TENSOR_FLOAT32", "{1, 2, 2, 1}") # output 0
+i1 = Input("op1", "TENSOR_FLOAT16", "{1, 2, 2, 1}") # input 0
+i2 = Output("op2", "TENSOR_FLOAT16", "{1, 2, 2, 1}") # output 0
 model = model.Operation("RELU", i1).To(i2)
 # Example 1. Input in operand 0,
 input0 = {i1: # input 0

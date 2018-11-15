@@ -1,11 +1,11 @@
 // clang-format off
-// Generated file (from: relu6_float16_2.mod.py). Do not edit
+// Generated file (from: logistic_float16_2.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {2, 26, 40, 2},
+            .dimensions = {2, 32, 40, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -14,7 +14,7 @@ Model createTestModel() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {2, 26, 40, 2},
+            .dimensions = {2, 32, 40, 2},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -25,7 +25,7 @@ Model createTestModel() {
 
     const std::vector<Operation> operations = {
         {
-            .type = OperationType::RELU6,
+            .type = OperationType::LOGISTIC,
             .inputs = {0},
             .outputs = {1},
         }
