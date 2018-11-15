@@ -1,11 +1,11 @@
 // clang-format off
-// Generated file (from: div_broadcast_float16.mod.py). Do not edit
+// Generated file (from: concat_float16_2.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {2, 2},
+            .dimensions = {52, 230},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -14,7 +14,7 @@ Model createTestModel() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2},
+            .dimensions = {40, 230},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -32,7 +32,7 @@ Model createTestModel() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {2, 2},
+            .dimensions = {92, 230},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -43,7 +43,7 @@ Model createTestModel() {
 
     const std::vector<Operation> operations = {
         {
-            .type = OperationType::DIV,
+            .type = OperationType::CONCATENATION,
             .inputs = {0, 1, 2},
             .outputs = {3},
         }
