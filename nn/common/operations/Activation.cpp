@@ -25,35 +25,42 @@
 namespace android {
 namespace nn {
 
-bool reluFloat32(const float* inputData, const Shape& inputShape,
-                 float* outputData, const Shape& outputShape) {
-    NNTRACE_COMP("reluFloat32");
+template <typename T>
+bool reluFloat(const T* inputData, const Shape& inputShape, T* outputData, const Shape& outputShape,
+               float reluMin, float reluMax) {
+    NNTRACE_COMP("reluX");
     int numElements = getNumberOfElements(inputShape);
-    for (int i=0; i<numElements; i++, inputData++, outputData++) {
-        *outputData = std::max(0.f, *inputData);
+    for (int i = 0; i < numElements; i++, inputData++, outputData++) {
+        *outputData = static_cast<T>(
+                std::min(std::max(reluMin, static_cast<float>(*inputData)), reluMax));
     }
     return true;
 }
+template bool reluFloat<float>(const float* inputData, const Shape& inputShape, float* outputData,
+                               const Shape& outputShape, float reluMin, float reluMax);
+template bool reluFloat<_Float16>(const _Float16* inputData, const Shape& inputShape,
+                                  _Float16* outputData, const Shape& outputShape, float reluMin,
+                                  float reluMax);
 
-bool relu1Float32(const float* inputData, const Shape& inputShape,
-                  float* outputData, const Shape& outputShape) {
-    NNTRACE_COMP("relu1Float32");
-    int numElements = getNumberOfElements(inputShape);
-    for (int i=0; i<numElements; i++, inputData++, outputData++) {
-        *outputData = std::min(std::max(-1.f, *inputData), 1.f);
-    }
-    return true;
+template <typename T>
+bool relu1Float(const T* inputData, const Shape& inputShape, T* outputData,
+                const Shape& outputShape) {
+    return reluFloat(inputData, inputShape, outputData, outputShape, -1.f, 1.f);
 }
+template bool relu1Float<float>(const float* inputData, const Shape& inputShape, float* outputData,
+                                const Shape& outputShape);
+template bool relu1Float<_Float16>(const _Float16* inputData, const Shape& inputShape,
+                                   _Float16* outputData, const Shape& outputShape);
 
-bool relu6Float32(const float* inputData, const Shape& inputShape,
-                  float* outputData, const Shape& outputShape) {
-    NNTRACE_COMP("relu6Float32");
-    int numElements = getNumberOfElements(inputShape);
-    for (int i=0; i<numElements; i++, inputData++, outputData++) {
-        *outputData = std::min(std::max(0.f, *inputData), 6.f);
-    }
-    return true;
+template <typename T>
+bool relu6Float(const T* inputData, const Shape& inputShape, T* outputData,
+                const Shape& outputShape) {
+    return reluFloat(inputData, inputShape, outputData, outputShape, 0.f, 6.f);
 }
+template bool relu6Float<float>(const float* inputData, const Shape& inputShape, float* outputData,
+                                const Shape& outputShape);
+template bool relu6Float<_Float16>(const _Float16* inputData, const Shape& inputShape,
+                                   _Float16* outputData, const Shape& outputShape);
 
 bool tanhFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* outputData,
                  const Shape& outputShape) {
