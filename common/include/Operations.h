@@ -111,12 +111,16 @@ bool maxPoolQuant8(const uint8_t* inputData, const Shape& inputShape, int32_t pa
                    int32_t filter_height, int32_t activation, uint8_t* outputData,
                    const Shape& outputShape);
 
-bool reluFloat32(const float* inputData, const Shape& inputShape, float* outputData,
-                 const Shape& outputShape);
-bool relu1Float32(const float* inputData, const Shape& inputShape, float* outputData,
-                  const Shape& outputShape);
-bool relu6Float32(const float* inputData, const Shape& inputShape, float* outputData,
-                  const Shape& outputShape);
+template <typename T>
+bool reluFloat(const T* inputData, const Shape& inputShape, T* outputData, const Shape& outputShape,
+               float reluMin = 0.f, float reluMax = std::numeric_limits<float>::max());
+template <typename T>
+bool relu1Float(const T* inputData, const Shape& inputShape, T* outputData,
+                const Shape& outputShape);
+template <typename T>
+bool relu6Float(const T* inputData, const Shape& inputShape, T* outputData,
+                const Shape& outputShape);
+
 bool tanhFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* outputData,
                  const Shape& outputShape);
 bool tanhFloat32(const float* inputData, const Shape& inputShape, float* outputData,
