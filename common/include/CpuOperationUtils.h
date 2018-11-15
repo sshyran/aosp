@@ -53,6 +53,19 @@ inline tflite::RuntimeShape convertShapeToTflshape(const Shape& shape) {
   std::vector<int32_t> tflShapeDim(shape.dimensions.begin(), shape.dimensions.end());
   return tflite::RuntimeShape(tflShapeDim.size(), tflShapeDim.data());
 }
+
+inline void convertFloat16ToFloat32(const _Float16* input, std::vector<float>* output) {
+    for (int i = 0; i < output->size(); ++i) {
+        (*output)[i] = static_cast<float>(input[i]);
+    }
+}
+
+inline void convertFloat32ToFloat16(const std::vector<float>& input, _Float16* output) {
+    for (int i = 0; i < input.size(); ++i) {
+        output[i] = input[i];
+    }
+}
+
 } // nn
 } // android
 
