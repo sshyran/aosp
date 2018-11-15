@@ -325,6 +325,7 @@
 #include "../generated/tests/transpose_float_1_relaxed.mod.py.cpp"
 #include "../generated/tests/transpose_quant8_1.mod.py.cpp"
 #include "../generated/tests/transpose_relaxed.mod.py.cpp"
+#include "../generated/tests/abs.mod.py.cpp"
 #include "../generated/tests/add_broadcast_float16.mod.py.cpp"
 #include "../generated/tests/add_float16.mod.py.cpp"
 #include "../generated/tests/argmax_1_float.mod.py.cpp"
