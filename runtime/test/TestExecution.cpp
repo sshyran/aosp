@@ -161,10 +161,9 @@ private:
     TestDriver11 m11Driver;
 };
 
-// This class adds some simple utilities on top of
-// ::android::nn::wrapper::Compilation in order to provide access to
-// certain features from CompilationBuilder that are not exposed by
-// the base class.
+// This class adds some simple utilities on top of WrapperCompilation in order
+// to provide access to certain features from CompilationBuilder that are not
+// exposed by the base class.
 template<typename DriverClass>
 class TestCompilation : public WrapperCompilation {
 public:
@@ -226,12 +225,16 @@ protected:
     TestCompilation<DriverClass> mCompilation;
 
     void setInputOutput(WrapperExecution* execution) {
+        mInputBuffer = kInputBuffer;
+        mOutputBuffer = kOutputBufferInitial;
         ASSERT_EQ(execution->setInput(0, &mInputBuffer, sizeof(mInputBuffer)), Result::NO_ERROR);
         ASSERT_EQ(execution->setOutput(0, &mOutputBuffer, sizeof(mOutputBuffer)), Result::NO_ERROR);
     }
 
-    float mInputBuffer  = 3.14;
-    float mOutputBuffer = 0;
+    const float kInputBuffer = 3.14;
+    const float kOutputBufferInitial = 0;
+    float mInputBuffer;
+    float mOutputBuffer;
     const float kOutputBufferExpected = 3;
 
 private:
@@ -252,13 +255,26 @@ private:
 template<class DriverClass> void ExecutionTestTemplate<DriverClass>::TestWait() {
     SCOPED_TRACE(kName);
     ASSERT_EQ(mCompilation.finish(), Result::NO_ERROR);
-    WrapperExecution execution(&mCompilation);
-    ASSERT_NO_FATAL_FAILURE(setInputOutput(&execution));
-    WrapperEvent event;
-    ASSERT_EQ(execution.startCompute(&event), Result::NO_ERROR);
-    ASSERT_EQ(event.wait(), kExpectResult);
-    if (kExpectResult == Result::NO_ERROR) {
-        ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
+
+    {
+        SCOPED_TRACE("startCompute");
+        WrapperExecution execution(&mCompilation);
+        ASSERT_NO_FATAL_FAILURE(setInputOutput(&execution));
+        WrapperEvent event;
+        ASSERT_EQ(execution.startCompute(&event), Result::NO_ERROR);
+        ASSERT_EQ(event.wait(), kExpectResult);
+        if (kExpectResult == Result::NO_ERROR) {
+            ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
+        }
+    }
+    {
+        SCOPED_TRACE("compute");
+        WrapperExecution execution(&mCompilation);
+        ASSERT_NO_FATAL_FAILURE(setInputOutput(&execution));
+        ASSERT_EQ(execution.compute(), kExpectResult);
+        if (kExpectResult == Result::NO_ERROR) {
+            ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
+        }
     }
 }
 

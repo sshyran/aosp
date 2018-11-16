@@ -354,21 +354,9 @@ public:
         return result;
     }
 
-    Result compute() {
-        ANeuralNetworksEvent* event = nullptr;
-        Result result =
-                    static_cast<Result>(ANeuralNetworksExecution_startCompute(mExecution, &event));
-        if (result != Result::NO_ERROR) {
-            return result;
-        }
-        // TODO how to manage the lifetime of events when multiple waiters is not
-        // clear.
-        result = static_cast<Result>(ANeuralNetworksEvent_wait(event));
-        ANeuralNetworksEvent_free(event);
-        return result;
-    }
+    Result compute() { return static_cast<Result>(ANeuralNetworksExecution_compute(mExecution)); }
 
-private:
+   private:
     ANeuralNetworksExecution* mExecution = nullptr;
 };
 

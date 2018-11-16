@@ -138,10 +138,9 @@ static const bool kAllWeightsInOnePool = false;
 // operation type for which the activation function is inapplicable).
 typedef std::pair<ANeuralNetworksOperationType, int> Signature;
 
-// This class adds some simple utilities on top of
-// ::android::nn::wrapper::Model.  For example, it provides access to
-// certain features from ModelBuilder that are not exposed by the base
-// class (such as inputCount() and operation index).
+// This class adds some simple utilities on top of WrapperModel.  For example,
+// it provides access to certain features from ModelBuilder that are not exposed
+// by the base class (such as inputCount() and operation index).
 class TestModel : public WrapperModel {
 public:
 
@@ -202,10 +201,9 @@ private:
     std::vector<std::vector<float>> mOperandValues;
 };
 
-// This class adds some simple utilities on top of
-// ::android::nn::wrapper::Compilation in order to provide access to
-// certain features from CompilationBuilder that are not exposed by
-// the base class.
+// This class adds some simple utilities on top of WrapperCompilation in order
+// to provide access to certain features from CompilationBuilder that are not
+// exposed by the base class.
 class TestCompilation : public WrapperCompilation {
 public:
     TestCompilation(const WrapperModel* model) : WrapperCompilation(model) {}
