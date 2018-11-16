@@ -12,7 +12,7 @@ std::vector<MixedTypedExample> examples = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -25,7 +25,7 @@ std::vector<MixedTypedExample> examples = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -46,7 +46,7 @@ std::vector<MixedTypedExample> examples_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -59,7 +59,7 @@ std::vector<MixedTypedExample> examples_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -80,7 +80,7 @@ std::vector<MixedTypedExample> examples_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -93,7 +93,7 @@ std::vector<MixedTypedExample> examples_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -114,7 +114,7 @@ std::vector<MixedTypedExample> examples_relaxed = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -127,7 +127,7 @@ std::vector<MixedTypedExample> examples_relaxed = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -148,7 +148,7 @@ std::vector<MixedTypedExample> examples_relaxed_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -161,7 +161,7 @@ std::vector<MixedTypedExample> examples_relaxed_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -182,7 +182,7 @@ std::vector<MixedTypedExample> examples_relaxed_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -195,7 +195,7 @@ std::vector<MixedTypedExample> examples_relaxed_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -216,7 +216,7 @@ std::vector<MixedTypedExample> examples_quant8 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -229,7 +229,7 @@ std::vector<MixedTypedExample> examples_quant8 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -250,7 +250,7 @@ std::vector<MixedTypedExample> examples_quant8_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -263,7 +263,7 @@ std::vector<MixedTypedExample> examples_quant8_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -284,7 +284,7 @@ std::vector<MixedTypedExample> examples_quant8_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -297,7 +297,7 @@ std::vector<MixedTypedExample> examples_quant8_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -318,7 +318,7 @@ std::vector<MixedTypedExample> examples_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -331,7 +331,7 @@ std::vector<MixedTypedExample> examples_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -352,7 +352,7 @@ std::vector<MixedTypedExample> examples_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -365,7 +365,7 @@ std::vector<MixedTypedExample> examples_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -386,7 +386,7 @@ std::vector<MixedTypedExample> examples_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -399,7 +399,7 @@ std::vector<MixedTypedExample> examples_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -420,7 +420,7 @@ std::vector<MixedTypedExample> examples_relaxed_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -433,7 +433,7 @@ std::vector<MixedTypedExample> examples_relaxed_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -454,7 +454,7 @@ std::vector<MixedTypedExample> examples_relaxed_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -467,7 +467,7 @@ std::vector<MixedTypedExample> examples_relaxed_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -488,7 +488,7 @@ std::vector<MixedTypedExample> examples_relaxed_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -501,7 +501,7 @@ std::vector<MixedTypedExample> examples_relaxed_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -522,7 +522,7 @@ std::vector<MixedTypedExample> examples_quant8_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -535,7 +535,7 @@ std::vector<MixedTypedExample> examples_quant8_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -556,7 +556,7 @@ std::vector<MixedTypedExample> examples_quant8_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -569,7 +569,7 @@ std::vector<MixedTypedExample> examples_quant8_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -590,7 +590,7 @@ std::vector<MixedTypedExample> examples_quant8_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -603,7 +603,7 @@ std::vector<MixedTypedExample> examples_quant8_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -624,7 +624,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -637,7 +637,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -658,7 +658,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -671,7 +671,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -692,7 +692,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -705,7 +705,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -726,7 +726,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -739,7 +739,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -760,7 +760,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -773,7 +773,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -794,7 +794,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -807,7 +807,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -828,7 +828,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis3 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -841,7 +841,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis3 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -862,7 +862,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis3_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -875,7 +875,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis3_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -896,7 +896,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -909,7 +909,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -930,7 +930,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -943,7 +943,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -964,7 +964,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -977,7 +977,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -998,7 +998,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1011,7 +1011,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1032,7 +1032,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1045,7 +1045,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1066,7 +1066,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1079,7 +1079,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1100,7 +1100,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1113,7 +1113,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1134,7 +1134,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1147,7 +1147,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1168,7 +1168,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1181,7 +1181,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1202,7 +1202,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1215,7 +1215,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1236,7 +1236,7 @@ std::vector<MixedTypedExample> examples_axis_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1249,7 +1249,7 @@ std::vector<MixedTypedExample> examples_axis_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1270,7 +1270,7 @@ std::vector<MixedTypedExample> examples_axis_dim1_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1283,7 +1283,7 @@ std::vector<MixedTypedExample> examples_axis_dim1_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1304,7 +1304,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1317,7 +1317,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1338,7 +1338,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1351,7 +1351,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1372,7 +1372,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1385,7 +1385,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1406,7 +1406,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1419,7 +1419,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1440,7 +1440,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1453,7 +1453,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1474,7 +1474,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1487,7 +1487,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1508,7 +1508,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis3 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1521,7 +1521,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis3 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1542,7 +1542,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis3_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1555,7 +1555,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis3_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1576,7 +1576,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1589,7 +1589,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1610,7 +1610,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1623,7 +1623,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1644,7 +1644,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1657,7 +1657,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1678,7 +1678,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1691,7 +1691,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1712,7 +1712,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1725,7 +1725,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1746,7 +1746,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1759,7 +1759,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1780,7 +1780,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1793,7 +1793,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1814,7 +1814,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1827,7 +1827,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1848,7 +1848,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1861,7 +1861,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1882,7 +1882,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1895,7 +1895,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1916,7 +1916,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1929,7 +1929,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1950,7 +1950,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim1_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1963,7 +1963,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim1_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1984,7 +1984,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 132, 124, 132, 124, 136, 120, 136, 120, 136, 120, 136, 120, 140, 116, 140, 116, 140, 116, 140, 116, 144, 112, 144, 112, 144, 112, 144, 112, 148, 108, 148, 108, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -1997,7 +1997,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 3, 163, 3, 163, 3, 163, 8, 60, 8, 60, 8, 60, 8, 60, 22, 22, 22, 22, 22, 22, 22, 22, 60, 8, 60, 8, 60, 8, 60, 8, 163, 3, 163, 3, 163, 3, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2018,7 +2018,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 132, 124, 132, 124, 136, 120, 136, 120, 136, 120, 136, 120, 140, 116, 140, 116, 140, 116, 140, 116, 144, 112, 144, 112, 144, 112, 144, 112, 148, 108, 148, 108, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2031,7 +2031,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 3, 163, 3, 163, 3, 163, 8, 60, 8, 60, 8, 60, 8, 60, 22, 22, 22, 22, 22, 22, 22, 22, 60, 8, 60, 8, 60, 8, 60, 8, 163, 3, 163, 3, 163, 3, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2052,7 +2052,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108, 132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2065,7 +2065,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 3, 163, 8, 60, 8, 60, 22, 22, 22, 22, 60, 8, 60, 8, 163, 3, 163, 3, 3, 163, 3, 163, 8, 60, 8, 60, 22, 22, 22, 22, 60, 8, 60, 8, 163, 3, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2086,7 +2086,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108, 132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2099,7 +2099,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 3, 163, 8, 60, 8, 60, 22, 22, 22, 22, 60, 8, 60, 8, 163, 3, 163, 3, 3, 163, 3, 163, 8, 60, 8, 60, 22, 22, 22, 22, 60, 8, 60, 8, 163, 3, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2120,7 +2120,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2133,7 +2133,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 8, 60, 22, 22, 60, 8, 163, 3, 3, 163, 8, 60, 22, 22, 60, 8, 163, 3, 3, 163, 8, 60, 22, 22, 60, 8, 163, 3, 3, 163, 8, 60, 22, 22, 60, 8, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2154,7 +2154,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2167,7 +2167,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 8, 60, 22, 22, 60, 8, 163, 3, 3, 163, 8, 60, 22, 22, 60, 8, 163, 3, 3, 163, 8, 60, 22, 22, 60, 8, 163, 3, 3, 163, 8, 60, 22, 22, 60, 8, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2188,7 +2188,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis3 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2201,7 +2201,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis3 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2222,7 +2222,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis3_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2235,7 +2235,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis3_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2256,7 +2256,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2269,7 +2269,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 3, 163, 8, 60, 8, 60, 22, 22, 22, 22, 60, 8, 60, 8, 163, 3, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2290,7 +2290,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2303,7 +2303,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 3, 163, 8, 60, 8, 60, 22, 22, 22, 22, 60, 8, 60, 8, 163, 3, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2324,7 +2324,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2337,7 +2337,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 8, 60, 22, 22, 60, 8, 163, 3, 3, 163, 8, 60, 22, 22, 60, 8, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2358,7 +2358,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2371,7 +2371,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 8, 60, 22, 22, 60, 8, 163, 3, 3, 163, 8, 60, 22, 22, 60, 8, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2392,7 +2392,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2405,7 +2405,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2426,7 +2426,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2439,7 +2439,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis2_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163, 163, 60, 22, 8, 3, 3, 8, 22, 60, 163, 163, 60, 22, 8, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2460,7 +2460,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2473,7 +2473,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 8, 60, 22, 22, 60, 8, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2494,7 +2494,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2507,7 +2507,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 163, 8, 60, 22, 22, 60, 8, 163, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2528,7 +2528,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2541,7 +2541,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis1 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163, 163, 60, 22, 8, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2562,7 +2562,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2575,7 +2575,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis1_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163, 163, 60, 22, 8, 3}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2596,7 +2596,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2609,7 +2609,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim1_axis0 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2630,7 +2630,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim1_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2643,7 +2643,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim1_axis0_neg = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {3, 8, 22, 60, 163}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2664,7 +2664,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2677,7 +2677,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2698,7 +2698,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2711,7 +2711,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2732,7 +2732,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2745,7 +2745,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2766,7 +2766,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2779,7 +2779,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2800,7 +2800,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2813,7 +2813,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2834,7 +2834,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2847,7 +2847,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2868,7 +2868,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis3_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2881,7 +2881,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis3_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2902,7 +2902,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis3_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2915,7 +2915,7 @@ std::vector<MixedTypedExample> examples_axis_dim4_axis3_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2936,7 +2936,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2949,7 +2949,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2970,7 +2970,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -2983,7 +2983,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3004,7 +3004,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3017,7 +3017,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3038,7 +3038,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3051,7 +3051,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3072,7 +3072,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3085,7 +3085,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3106,7 +3106,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3119,7 +3119,7 @@ std::vector<MixedTypedExample> examples_axis_dim3_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3140,7 +3140,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3153,7 +3153,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3174,7 +3174,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3187,7 +3187,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3208,7 +3208,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3221,7 +3221,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3242,7 +3242,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3255,7 +3255,7 @@ std::vector<MixedTypedExample> examples_axis_dim2_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3276,7 +3276,7 @@ std::vector<MixedTypedExample> examples_axis_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3289,7 +3289,7 @@ std::vector<MixedTypedExample> examples_axis_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3310,7 +3310,7 @@ std::vector<MixedTypedExample> examples_axis_dim1_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3323,7 +3323,7 @@ std::vector<MixedTypedExample> examples_axis_dim1_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3344,7 +3344,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3357,7 +3357,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3378,7 +3378,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3391,7 +3391,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3412,7 +3412,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3425,7 +3425,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3446,7 +3446,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3459,7 +3459,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3480,7 +3480,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3493,7 +3493,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3514,7 +3514,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3527,7 +3527,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3548,7 +3548,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis3_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3561,7 +3561,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis3_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3582,7 +3582,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis3_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3595,7 +3595,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim4_axis3_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3616,7 +3616,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3629,7 +3629,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3650,7 +3650,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3663,7 +3663,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3684,7 +3684,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3697,7 +3697,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3718,7 +3718,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3731,7 +3731,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3752,7 +3752,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3765,7 +3765,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3786,7 +3786,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3799,7 +3799,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim3_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3820,7 +3820,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3833,7 +3833,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3854,7 +3854,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3867,7 +3867,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3888,7 +3888,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3901,7 +3901,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3922,7 +3922,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3935,7 +3935,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim2_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3956,7 +3956,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3969,7 +3969,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -3990,7 +3990,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim1_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4003,7 +4003,7 @@ std::vector<MixedTypedExample> examples_axis_relaxed_dim1_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4024,7 +4024,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 132, 124, 132, 124, 136, 120, 136, 120, 136, 120, 136, 120, 140, 116, 140, 116, 140, 116, 140, 116, 144, 112, 144, 112, 144, 112, 144, 112, 148, 108, 148, 108, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4037,7 +4037,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4058,7 +4058,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 132, 124, 132, 124, 136, 120, 136, 120, 136, 120, 136, 120, 140, 116, 140, 116, 140, 116, 140, 116, 144, 112, 144, 112, 144, 112, 144, 112, 148, 108, 148, 108, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4071,7 +4071,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4092,7 +4092,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108, 132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4105,7 +4105,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4126,7 +4126,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108, 132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4139,7 +4139,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4160,7 +4160,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4173,7 +4173,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4194,7 +4194,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4207,7 +4207,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4228,7 +4228,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis3_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4241,7 +4241,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis3_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4262,7 +4262,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis3_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4275,7 +4275,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim4_axis3_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4296,7 +4296,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4309,7 +4309,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4330,7 +4330,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4343,7 +4343,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4364,7 +4364,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4377,7 +4377,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4398,7 +4398,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4411,7 +4411,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4432,7 +4432,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4445,7 +4445,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis2_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4466,7 +4466,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4479,7 +4479,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim3_axis2_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4500,7 +4500,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4513,7 +4513,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4534,7 +4534,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 124, 136, 120, 140, 116, 144, 112, 148, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4547,7 +4547,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4568,7 +4568,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4581,7 +4581,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis1_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4602,7 +4602,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148, 124, 120, 116, 112, 108}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4615,7 +4615,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim2_axis1_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51, 51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4636,7 +4636,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4649,7 +4649,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim1_axis0_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4670,7 +4670,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim1_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {132, 136, 140, 144, 148}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},
@@ -4683,7 +4683,7 @@ std::vector<MixedTypedExample> examples_axis_quant8_dim1_axis0_neg_2 = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {51, 51, 51, 51, 51}}},
-  // int -> QUANT16_ASYMM map
+  // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
   {},

@@ -104,7 +104,7 @@ const char* kTypeNames[kNumberOfDataTypes] = {
         "FLOAT32",        "INT32",
         "UINT32",         "TENSOR_FLOAT32",
         "TENSOR_INT32",   "TENSOR_QUANT8_ASYMM",
-        "BOOL",           "TENSOR_QUANT16_ASYMM",
+        "BOOL",           "TENSOR_QUANT16_SYMM",
         "TENSOR_FLOAT16",
 };
 
@@ -241,7 +241,7 @@ const uint32_t kSizeOfDataType[]{
         4,  // ANEURALNETWORKS_TENSOR_INT32
         1,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
         1,  // ANEURALNETWORKS_BOOL
-        2,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+        2,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
         2,  // ANEURALNETWORKS_TENSOR_FLOAT16
 };
 
@@ -255,7 +255,7 @@ const bool kScalarDataType[]{
         false,  // ANEURALNETWORKS_TENSOR_INT32
         false,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
         true,   // ANEURALNETWORKS_BOOL
-        false,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+        false,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
         false,  // ANEURALNETWORKS_TENSOR_FLOAT16
 };
 
@@ -369,9 +369,9 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
-    if (type.type == ANEURALNETWORKS_TENSOR_QUANT16_ASYMM) {
-        if (type.zeroPoint < -32768 || type.zeroPoint > 32767) {
-            LOG(ERROR) << tag << " OperandType invalid zeroPoint " << type.zeroPoint;
+    if (type.type == ANEURALNETWORKS_TENSOR_QUANT16_SYMM) {
+        if (type.zeroPoint != 0) {
+            LOG(ERROR) << tag << " OperandType zeroPoint is not zero:" << type.zeroPoint;
             return ANEURALNETWORKS_BAD_DATA;
         }
         if (type.scale <= 0.f) {
@@ -1383,10 +1383,10 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             std::vector<OperandType> inExpectedTypes = {
                     OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
                     OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_INT32,
-                    OperandType::TENSOR_QUANT16_ASYMM};
+                    OperandType::TENSOR_QUANT16_SYMM};
             std::vector<OperandType> outExpectedTypes = {
-                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM,
-                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM,
+                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_SYMM,
+                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_SYMM,
                     OperandType::TENSOR_QUANT8_ASYMM};
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
