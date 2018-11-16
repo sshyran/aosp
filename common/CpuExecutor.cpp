@@ -1054,13 +1054,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = reluFloat<float>(reinterpret_cast<const float*>(input.buffer),
-                                           input.shape(), reinterpret_cast<float*>(output.buffer),
-                                           outShape);
+                success = reluFloat(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                    reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_FLOAT16) {
-                success = reluFloat<_Float16>(reinterpret_cast<const _Float16*>(input.buffer),
-                                              input.shape(),
-                                              reinterpret_cast<_Float16*>(output.buffer), outShape);
+                success = reluFloat(reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
+                                    reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = reluQuant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
                                      reinterpret_cast<uint8_t*>(output.buffer), outShape);
@@ -1079,13 +1077,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = relu1Float<float>(reinterpret_cast<const float*>(input.buffer),
-                                            input.shape(), reinterpret_cast<float*>(output.buffer),
-                                            outShape);
+                success = relu1Float(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                     reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_FLOAT16) {
-                success = relu1Float<_Float16>(
-                        reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
-                        reinterpret_cast<_Float16*>(output.buffer), outShape);
+                success = relu1Float(reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
+                                     reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = relu1Quant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
                                       reinterpret_cast<uint8_t*>(output.buffer), outShape);
@@ -1104,13 +1100,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = relu6Float<float>(reinterpret_cast<const float*>(input.buffer),
-                                            input.shape(), reinterpret_cast<float*>(output.buffer),
-                                            outShape);
+                success = relu6Float(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                     reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_FLOAT16) {
-                success = relu6Float<_Float16>(
-                        reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
-                        reinterpret_cast<_Float16*>(output.buffer), outShape);
+                success = relu6Float(reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
+                                     reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = relu6Quant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
                                       reinterpret_cast<uint8_t*>(output.buffer), outShape);
@@ -1153,9 +1147,12 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success =
-                        logisticFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                success = logisticFloat(reinterpret_cast<const float*>(input.buffer), input.shape(),
                                         reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = logisticFloat(reinterpret_cast<const _Float16*>(input.buffer),
+                                        input.shape(), reinterpret_cast<_Float16*>(output.buffer),
+                                        outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = logisticQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
                                          input.shape(), reinterpret_cast<uint8_t*>(output.buffer),
@@ -1186,6 +1183,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 success = softmaxFloat32(reinterpret_cast<const float*>(input.buffer),
                                          input.shape(), beta, axis,
                                          reinterpret_cast<float*>(output.buffer), output.shape());
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = softmaxFloat16(
+                        reinterpret_cast<const _Float16*>(input.buffer), input.shape(), beta, axis,
+                        reinterpret_cast<_Float16*>(output.buffer), output.shape());
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = softmaxQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
                                         input.shape(), beta, axis,
@@ -2428,21 +2429,6 @@ ScopedOpenmpSettings::~ScopedOpenmpSettings() {
 #endif
 }
 #endif  // NNAPI_OPENMP
-
-extern template bool reluFloat<float>(const float* inputData, const Shape& inputShape,
-                                      float* outputData, const Shape& outputShape, float reluMin,
-                                      float reluMax);
-extern template bool reluFloat<_Float16>(const _Float16* inputData, const Shape& inputShape,
-                                         _Float16* outputData, const Shape& outputShape,
-                                         float reluMin, float reluMax);
-extern template bool relu1Float<float>(const float* inputData, const Shape& inputShape,
-                                       float* outputData, const Shape& outputShape);
-extern template bool relu1Float<_Float16>(const _Float16* inputData, const Shape& inputShape,
-                                          _Float16* outputData, const Shape& outputShape);
-extern template bool relu6Float<float>(const float* inputData, const Shape& inputShape,
-                                       float* outputData, const Shape& outputShape);
-extern template bool relu6Float<_Float16>(const _Float16* inputData, const Shape& inputShape,
-                                          _Float16* outputData, const Shape& outputShape);
 
 } // namespace nn
 } // namespace android
