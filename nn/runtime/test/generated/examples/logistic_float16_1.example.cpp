@@ -1,5 +1,5 @@
 // clang-format off
-// Generated file (from: relu1_float16_1.mod.py). Do not edit
+// Generated file (from: logistic_float16_1.mod.py). Do not edit
 std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
@@ -15,7 +15,7 @@ std::vector<MixedTypedExample> examples = {
   // int -> QUANT16_ASYMM map
   {},
   // int -> FLOAT16 map
-  {{0, {-10.0f, -0.5f, 0.5f, 10.0f}}},
+  {{0, {1.0f, 2.0f, 4.0f, 8.0f}}},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -28,7 +28,7 @@ std::vector<MixedTypedExample> examples = {
   // int -> QUANT16_ASYMM map
   {},
   // int -> FLOAT16 map
-  {{0, {-1.0f, -0.5f, 0.5f, 1.0f}}},
+  {{0, {0.7310585975646973f, 0.8807970285415649f, 0.9820137619972229f, 0.9996646642684937f}}},
 }
 },
 }, // End of an example

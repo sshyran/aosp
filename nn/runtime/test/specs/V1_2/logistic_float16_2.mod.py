@@ -18,7 +18,7 @@
 model = Model()
 
 d0 = 2
-d1 = 26
+d1 = 32
 d2 = 40
 d3 = 2
 
@@ -26,13 +26,13 @@ i0 = Input("input", "TENSOR_FLOAT16", "{%d, %d, %d, %d}" % (d0, d1, d2, d3))
 
 output = Output("output", "TENSOR_FLOAT16", "{%d, %d, %d, %d}" % (d0, d1, d2, d3))
 
-model = model.Operation("RELU6", i0).To(output)
+model = model.Operation("LOGISTIC", i0).To(output)
 
 # Example 1. Input in operand 0,
 rng = d0 * d1 * d2 * d3
-input_values = (lambda r = rng: [x * (x % 2 - .5) * .002 for x in range(r)])()
+input_values = (lambda r = rng: [x * (x % 2 - .5) * 2 % 512 for x in range(r)])()
 input0 = {i0: input_values}
-output_values = [0 if x < 0 else 6 if x > 6 else x for x in input_values]
+output_values = [1. / (1. + math.exp(-x)) for x in input_values]
 output0 = {output: output_values}
 
 # Instantiate an example
