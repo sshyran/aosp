@@ -407,6 +407,18 @@ int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
     return result;
 }
 
+int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_compute");
+    if (!execution) {
+        LOG(ERROR) << "ANeuralNetworksExecution_compute passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    // TODO validate the rest
+
+    ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
+    return r->computeSynchronously();
+}
+
 int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd, size_t offset,
                                        ANeuralNetworksMemory** memory) {
     NNTRACE_RT(NNTRACE_PHASE_PREPARATION, "ANeuralNetworksMemory_createFromFd");
@@ -675,7 +687,7 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
     std::unique_ptr<sp<ExecutionCallback>> e = std::make_unique<sp<ExecutionCallback>>();
     *event = nullptr;
 
-    int n = r->startCompute(e.get());
+    int n = r->computeAsynchronously(e.get());
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return n;
     }

@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-#include "NeuralNetworksWrapper.h"
 #include "TestHarness.h"
+#include "TestNeuralNetworksWrapper.h"
 
 #include <gtest/gtest.h>
 
 #include <tuple>
 #include <vector>
 
-using namespace android::nn::wrapper;
+using namespace android::nn::test_wrapper;
 using namespace test_helper;
 
 namespace {

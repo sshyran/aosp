@@ -39,7 +39,7 @@
 #endif
 
 namespace generated_tests {
-using namespace android::nn::wrapper;
+using namespace android::nn::test_wrapper;
 using namespace test_helper;
 
 template <typename T>
