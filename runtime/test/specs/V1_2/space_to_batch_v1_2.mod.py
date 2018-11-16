@@ -32,7 +32,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i1: [1.4, 2.3, 3.2, 4.1, 5.4, 6.3, 7.2, 8.1],
     o1: [1.4, 2.3, 3.2, 4.1, 5.4, 6.3, 7.2, 8.1]
-}).AddNchw(i1, o1, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i1, o1, layout).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 2: SPACE_TO_BATCH_NCHW_2, block_size = [2, 2]
@@ -50,7 +50,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
     o2: [1, 3, 9, 11, 2, 4, 10, 12, 5, 7, 13, 15, 6, 8, 14, 16]
-}).AddNchw(i2, o2, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i2, o2, layout).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 3: SPACE_TO_BATCH_NCHW_3, block_size = [3, 2]
@@ -70,7 +70,7 @@ example = Example({
     i3: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     o3: [0, 0, 0, 5, 0, 0, 0, 6, 0, 1, 0, 7,
          0, 2, 0, 8, 0, 3, 0, 9, 0, 4, 0, 10]
-}).AddNchw(i3, o3, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i3, o3, layout).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 4: SPACE_TO_BATCH_NCHW_4, block_size = [3, 2]
@@ -91,4 +91,4 @@ example = Example({
     o4: [0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0,
          0, 1, 0, 0, 0, 7, 0, 0, 0, 2, 0, 0, 0, 8, 0, 0,
          0, 3, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0]
-}).AddNchw(i4, o4, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i4, o4, layout).AddVariations("relaxed", "float16", quant8)
