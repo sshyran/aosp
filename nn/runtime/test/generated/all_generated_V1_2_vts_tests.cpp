@@ -12084,6 +12084,374 @@ TEST_F(ValidationTest, rotated_bbox_transform_single_batch_relaxed) {
 }
 
 
+// Generated from: slice.mod.py.
+namespace slice {
+// Generated slice test
+#include "examples/slice.example.cpp"
+// Generated model constructor
+#include "vts_models/slice.model.cpp"
+} // namespace slice
+
+TEST_F(NeuralnetworksHidlTest, slice) {
+  generated_tests::Execute(device,
+                           slice::createTestModel,
+                           slice::is_ignored,
+                           slice::examples);
+}
+
+TEST_F(ValidationTest, slice) {
+  const Model model = slice::createTestModel();
+  const std::vector<Request> requests = createRequests(slice::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_relaxed) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_relaxed,
+                           slice::is_ignored_relaxed,
+                           slice::examples_relaxed);
+}
+
+TEST_F(ValidationTest, slice_relaxed) {
+  const Model model = slice::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(slice::examples_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_float16) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_float16,
+                           slice::is_ignored_float16,
+                           slice::examples_float16);
+}
+
+TEST_F(ValidationTest, slice_float16) {
+  const Model model = slice::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(slice::examples_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_2) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_2,
+                           slice::is_ignored_2,
+                           slice::examples_2);
+}
+
+TEST_F(ValidationTest, slice_2) {
+  const Model model = slice::createTestModel_2();
+  const std::vector<Request> requests = createRequests(slice::examples_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_relaxed_2) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_relaxed_2,
+                           slice::is_ignored_relaxed_2,
+                           slice::examples_relaxed_2);
+}
+
+TEST_F(ValidationTest, slice_relaxed_2) {
+  const Model model = slice::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(slice::examples_relaxed_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_float16_2) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_float16_2,
+                           slice::is_ignored_float16_2,
+                           slice::examples_float16_2);
+}
+
+TEST_F(ValidationTest, slice_float16_2) {
+  const Model model = slice::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(slice::examples_float16_2);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_3) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_3,
+                           slice::is_ignored_3,
+                           slice::examples_3);
+}
+
+TEST_F(ValidationTest, slice_3) {
+  const Model model = slice::createTestModel_3();
+  const std::vector<Request> requests = createRequests(slice::examples_3);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_relaxed_3) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_relaxed_3,
+                           slice::is_ignored_relaxed_3,
+                           slice::examples_relaxed_3);
+}
+
+TEST_F(ValidationTest, slice_relaxed_3) {
+  const Model model = slice::createTestModel_relaxed_3();
+  const std::vector<Request> requests = createRequests(slice::examples_relaxed_3);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_float16_3) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_float16_3,
+                           slice::is_ignored_float16_3,
+                           slice::examples_float16_3);
+}
+
+TEST_F(ValidationTest, slice_float16_3) {
+  const Model model = slice::createTestModel_float16_3();
+  const std::vector<Request> requests = createRequests(slice::examples_float16_3);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_4) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_4,
+                           slice::is_ignored_4,
+                           slice::examples_4);
+}
+
+TEST_F(ValidationTest, slice_4) {
+  const Model model = slice::createTestModel_4();
+  const std::vector<Request> requests = createRequests(slice::examples_4);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_relaxed_4) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_relaxed_4,
+                           slice::is_ignored_relaxed_4,
+                           slice::examples_relaxed_4);
+}
+
+TEST_F(ValidationTest, slice_relaxed_4) {
+  const Model model = slice::createTestModel_relaxed_4();
+  const std::vector<Request> requests = createRequests(slice::examples_relaxed_4);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_float16_4) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_float16_4,
+                           slice::is_ignored_float16_4,
+                           slice::examples_float16_4);
+}
+
+TEST_F(ValidationTest, slice_float16_4) {
+  const Model model = slice::createTestModel_float16_4();
+  const std::vector<Request> requests = createRequests(slice::examples_float16_4);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_5) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_5,
+                           slice::is_ignored_5,
+                           slice::examples_5);
+}
+
+TEST_F(ValidationTest, slice_5) {
+  const Model model = slice::createTestModel_5();
+  const std::vector<Request> requests = createRequests(slice::examples_5);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_relaxed_5) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_relaxed_5,
+                           slice::is_ignored_relaxed_5,
+                           slice::examples_relaxed_5);
+}
+
+TEST_F(ValidationTest, slice_relaxed_5) {
+  const Model model = slice::createTestModel_relaxed_5();
+  const std::vector<Request> requests = createRequests(slice::examples_relaxed_5);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_float16_5) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_float16_5,
+                           slice::is_ignored_float16_5,
+                           slice::examples_float16_5);
+}
+
+TEST_F(ValidationTest, slice_float16_5) {
+  const Model model = slice::createTestModel_float16_5();
+  const std::vector<Request> requests = createRequests(slice::examples_float16_5);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_6) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_6,
+                           slice::is_ignored_6,
+                           slice::examples_6);
+}
+
+TEST_F(ValidationTest, slice_6) {
+  const Model model = slice::createTestModel_6();
+  const std::vector<Request> requests = createRequests(slice::examples_6);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_relaxed_6) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_relaxed_6,
+                           slice::is_ignored_relaxed_6,
+                           slice::examples_relaxed_6);
+}
+
+TEST_F(ValidationTest, slice_relaxed_6) {
+  const Model model = slice::createTestModel_relaxed_6();
+  const std::vector<Request> requests = createRequests(slice::examples_relaxed_6);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_float16_6) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_float16_6,
+                           slice::is_ignored_float16_6,
+                           slice::examples_float16_6);
+}
+
+TEST_F(ValidationTest, slice_float16_6) {
+  const Model model = slice::createTestModel_float16_6();
+  const std::vector<Request> requests = createRequests(slice::examples_float16_6);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_7) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_7,
+                           slice::is_ignored_7,
+                           slice::examples_7);
+}
+
+TEST_F(ValidationTest, slice_7) {
+  const Model model = slice::createTestModel_7();
+  const std::vector<Request> requests = createRequests(slice::examples_7);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_relaxed_7) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_relaxed_7,
+                           slice::is_ignored_relaxed_7,
+                           slice::examples_relaxed_7);
+}
+
+TEST_F(ValidationTest, slice_relaxed_7) {
+  const Model model = slice::createTestModel_relaxed_7();
+  const std::vector<Request> requests = createRequests(slice::examples_relaxed_7);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_float16_7) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_float16_7,
+                           slice::is_ignored_float16_7,
+                           slice::examples_float16_7);
+}
+
+TEST_F(ValidationTest, slice_float16_7) {
+  const Model model = slice::createTestModel_float16_7();
+  const std::vector<Request> requests = createRequests(slice::examples_float16_7);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_8) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_8,
+                           slice::is_ignored_8,
+                           slice::examples_8);
+}
+
+TEST_F(ValidationTest, slice_8) {
+  const Model model = slice::createTestModel_8();
+  const std::vector<Request> requests = createRequests(slice::examples_8);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_relaxed_8) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_relaxed_8,
+                           slice::is_ignored_relaxed_8,
+                           slice::examples_relaxed_8);
+}
+
+TEST_F(ValidationTest, slice_relaxed_8) {
+  const Model model = slice::createTestModel_relaxed_8();
+  const std::vector<Request> requests = createRequests(slice::examples_relaxed_8);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, slice_float16_8) {
+  generated_tests::Execute(device,
+                           slice::createTestModel_float16_8,
+                           slice::is_ignored_float16_8,
+                           slice::examples_float16_8);
+}
+
+TEST_F(ValidationTest, slice_float16_8) {
+  const Model model = slice::createTestModel_float16_8();
+  const std::vector<Request> requests = createRequests(slice::examples_float16_8);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: softmax_v1_2.mod.py.
 namespace softmax_v1_2 {
 // Generated softmax_v1_2 test
