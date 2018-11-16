@@ -15,3 +15,9 @@ TEST_F(GeneratedTests, pad_v2_1_float) {
             pad_v2_1_float::examples);
 }
 
+TEST_F(GeneratedTests, pad_v2_1_float_float16) {
+    execute(pad_v2_1_float::CreateModel_float16,
+            pad_v2_1_float::is_ignored_float16,
+            pad_v2_1_float::examples_float16);
+}
+
