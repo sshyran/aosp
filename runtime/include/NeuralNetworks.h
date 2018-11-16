@@ -93,15 +93,13 @@ typedef enum {
     /**
      * A tensor of 16 bit signed integers that represent real numbers.
      *
-     * Attached to this tensor are two numbers that are used to convert the 16
-     * bit integer to the real value and vice versa. These two numbers are:
-     * - scale: a 32 bit floating point value greater than zero.
-     * - zeroPoint: a 32 bit integer, in range [-32768, 32767].
+     * Attached to this tensor is a number representing real value scale that is
+     * used to convert the 16 bit number to a real value in the following way:
+     * realValue = integerValue * scale.
      *
-     * The formula is:
-     * realValue = (integerValue - zeroPoint) * scale.
+     * scale is a 32 bit floating point with value greater then zero.
      */
-    ANEURALNETWORKS_TENSOR_QUANT16_ASYMM = 7,
+    ANEURALNETWORKS_TENSOR_QUANT16_SYMM = 7,
 
     /** A tensor of 16 bit floating point values. */
     ANEURALNETWORKS_TENSOR_FLOAT16 = 8,
@@ -2569,7 +2567,7 @@ typedef enum {
      *      [4 * cellSize] specifying the bias for the fully-connected layer
      *      inside the LSTM cell. Bias is quantized with scale being a product
      *      of input and weights scales and zeroPoint equal to 0.
-     * * 4: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     * * 4: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
      *      and shape [numBatches, cellSize] specifying the cell state from the
      *      previous time step of the LSTM cell. It is quantized using a
      *      quantization range of [-2^4, 2^4 * 32767/32768] (scale = 2^4 /
@@ -2582,7 +2580,7 @@ typedef enum {
      *      output from previous time step to pass it to the fully-connected
      *      layer. Tensor is quantized with a fixed quantization range of
      *      [-1, 127/128] (scale = 1/128, zeroPoint = 128).
-     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
      *      and shape [numBatches, 4 * cellSize]. This tensor is a scratch
      *      buffer used to store the result of the fully-connected layer.
      * * 2: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2591,7 +2589,7 @@ typedef enum {
      *      pass the output value through time. Tensor is quantized with a fixed
      *      quantization range of [-1, 127/128] (scale = 1/128, zeroPoint =
      *      128).
-     * * 3: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     * * 3: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
      *      and shape [numBatches, cellSize] which contains a cell state from
      *      the current time step. NN API requires this tensor to pass the cell
      *      state value through time. Tensor is quantized using a quantization
