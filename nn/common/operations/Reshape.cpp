@@ -301,7 +301,12 @@ bool transposeGeneric(const uint8_t* inputData, const Shape& inputShape,
     // constructed.
     const int32_t kOutputDimensionNum = 4;
 
-    int32_t permSize = static_cast<int32_t>(getSizeOfDimension(permShape, 0));
+    // permData can be NO_VALUE representing a regular 2D matrix transpose
+    int32_t permSize = perm == nullptr ? 2 : static_cast<int32_t>(getSizeOfDimension(permShape, 0));
+    int32_t perm_tmp[2] = {1, 0};
+    if (perm == nullptr) {
+        perm = perm_tmp;
+    }
     int32_t reversed_perm[kOutputDimensionNum];
     for (int32_t output_k = 0, input_k = permSize - 1; output_k < permSize;
              ++output_k, --input_k) {
