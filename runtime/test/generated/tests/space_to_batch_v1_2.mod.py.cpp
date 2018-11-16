@@ -21,6 +21,12 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_relaxed) {
             space_to_batch_v1_2::examples_nhwc_relaxed);
 }
 
+TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_float16) {
+    execute(space_to_batch_v1_2::CreateModel_nhwc_float16,
+            space_to_batch_v1_2::is_ignored_nhwc_float16,
+            space_to_batch_v1_2::examples_nhwc_float16);
+}
+
 TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_quant8) {
     execute(space_to_batch_v1_2::CreateModel_nhwc_quant8,
             space_to_batch_v1_2::is_ignored_nhwc_quant8,
@@ -37,6 +43,12 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_relaxed) {
     execute(space_to_batch_v1_2::CreateModel_nchw_relaxed,
             space_to_batch_v1_2::is_ignored_nchw_relaxed,
             space_to_batch_v1_2::examples_nchw_relaxed);
+}
+
+TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_float16) {
+    execute(space_to_batch_v1_2::CreateModel_nchw_float16,
+            space_to_batch_v1_2::is_ignored_nchw_float16,
+            space_to_batch_v1_2::examples_nchw_float16);
 }
 
 TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_quant8) {
@@ -57,6 +69,12 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_relaxed_2) {
             space_to_batch_v1_2::examples_nhwc_relaxed_2);
 }
 
+TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_float16_2) {
+    execute(space_to_batch_v1_2::CreateModel_nhwc_float16_2,
+            space_to_batch_v1_2::is_ignored_nhwc_float16_2,
+            space_to_batch_v1_2::examples_nhwc_float16_2);
+}
+
 TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_quant8_2) {
     execute(space_to_batch_v1_2::CreateModel_nhwc_quant8_2,
             space_to_batch_v1_2::is_ignored_nhwc_quant8_2,
@@ -73,6 +91,12 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_relaxed_2) {
     execute(space_to_batch_v1_2::CreateModel_nchw_relaxed_2,
             space_to_batch_v1_2::is_ignored_nchw_relaxed_2,
             space_to_batch_v1_2::examples_nchw_relaxed_2);
+}
+
+TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_float16_2) {
+    execute(space_to_batch_v1_2::CreateModel_nchw_float16_2,
+            space_to_batch_v1_2::is_ignored_nchw_float16_2,
+            space_to_batch_v1_2::examples_nchw_float16_2);
 }
 
 TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_quant8_2) {
@@ -93,6 +117,12 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_relaxed_3) {
             space_to_batch_v1_2::examples_nhwc_relaxed_3);
 }
 
+TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_float16_3) {
+    execute(space_to_batch_v1_2::CreateModel_nhwc_float16_3,
+            space_to_batch_v1_2::is_ignored_nhwc_float16_3,
+            space_to_batch_v1_2::examples_nhwc_float16_3);
+}
+
 TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_quant8_3) {
     execute(space_to_batch_v1_2::CreateModel_nhwc_quant8_3,
             space_to_batch_v1_2::is_ignored_nhwc_quant8_3,
@@ -109,6 +139,12 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_relaxed_3) {
     execute(space_to_batch_v1_2::CreateModel_nchw_relaxed_3,
             space_to_batch_v1_2::is_ignored_nchw_relaxed_3,
             space_to_batch_v1_2::examples_nchw_relaxed_3);
+}
+
+TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_float16_3) {
+    execute(space_to_batch_v1_2::CreateModel_nchw_float16_3,
+            space_to_batch_v1_2::is_ignored_nchw_float16_3,
+            space_to_batch_v1_2::examples_nchw_float16_3);
 }
 
 TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_quant8_3) {
@@ -129,6 +165,12 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_relaxed_4) {
             space_to_batch_v1_2::examples_nhwc_relaxed_4);
 }
 
+TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_float16_4) {
+    execute(space_to_batch_v1_2::CreateModel_nhwc_float16_4,
+            space_to_batch_v1_2::is_ignored_nhwc_float16_4,
+            space_to_batch_v1_2::examples_nhwc_float16_4);
+}
+
 TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_quant8_4) {
     execute(space_to_batch_v1_2::CreateModel_nhwc_quant8_4,
             space_to_batch_v1_2::is_ignored_nhwc_quant8_4,
@@ -145,6 +187,12 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_relaxed_4) {
     execute(space_to_batch_v1_2::CreateModel_nchw_relaxed_4,
             space_to_batch_v1_2::is_ignored_nchw_relaxed_4,
             space_to_batch_v1_2::examples_nchw_relaxed_4);
+}
+
+TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_float16_4) {
+    execute(space_to_batch_v1_2::CreateModel_nchw_float16_4,
+            space_to_batch_v1_2::is_ignored_nchw_float16_4,
+            space_to_batch_v1_2::examples_nchw_float16_4);
 }
 
 TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_quant8_4) {
