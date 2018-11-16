@@ -2466,6 +2466,75 @@ TEST_F(ValidationTest, channel_shuffle_quant8_dim1_axis0_neg) {
 }
 
 
+// Generated from: concat_float16_1.mod.py.
+namespace concat_float16_1 {
+// Generated concat_float16_1 test
+#include "examples/concat_float16_1.example.cpp"
+// Generated model constructor
+#include "vts_models/concat_float16_1.model.cpp"
+} // namespace concat_float16_1
+
+TEST_F(NeuralnetworksHidlTest, concat_float16_1) {
+  generated_tests::Execute(device,
+                           concat_float16_1::createTestModel,
+                           concat_float16_1::is_ignored,
+                           concat_float16_1::examples);
+}
+
+TEST_F(ValidationTest, concat_float16_1) {
+  const Model model = concat_float16_1::createTestModel();
+  const std::vector<Request> requests = createRequests(concat_float16_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: concat_float16_2.mod.py.
+namespace concat_float16_2 {
+// Generated concat_float16_2 test
+#include "examples/concat_float16_2.example.cpp"
+// Generated model constructor
+#include "vts_models/concat_float16_2.model.cpp"
+} // namespace concat_float16_2
+
+TEST_F(NeuralnetworksHidlTest, concat_float16_2) {
+  generated_tests::Execute(device,
+                           concat_float16_2::createTestModel,
+                           concat_float16_2::is_ignored,
+                           concat_float16_2::examples);
+}
+
+TEST_F(ValidationTest, concat_float16_2) {
+  const Model model = concat_float16_2::createTestModel();
+  const std::vector<Request> requests = createRequests(concat_float16_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: concat_float16_3.mod.py.
+namespace concat_float16_3 {
+// Generated concat_float16_3 test
+#include "examples/concat_float16_3.example.cpp"
+// Generated model constructor
+#include "vts_models/concat_float16_3.model.cpp"
+} // namespace concat_float16_3
+
+TEST_F(NeuralnetworksHidlTest, concat_float16_3) {
+  generated_tests::Execute(device,
+                           concat_float16_3::createTestModel,
+                           concat_float16_3::is_ignored,
+                           concat_float16_3::examples);
+}
+
+TEST_F(ValidationTest, concat_float16_3) {
+  const Model model = concat_float16_3::createTestModel();
+  const std::vector<Request> requests = createRequests(concat_float16_3::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: conv2d_v1_2.mod.py.
 namespace conv2d_v1_2 {
 // Generated conv2d_v1_2 test

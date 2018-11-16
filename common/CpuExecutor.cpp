@@ -1239,29 +1239,41 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 std::vector<Shape> inputShapes(numInputTensors);
                 std::vector<const float*> inputDataPtrs(numInputTensors);
 
-                for (int i=0; i<numInputTensors; i++) {
+                for (int i = 0; i < numInputTensors; i++) {
                     RunTimeOperandInfo& input = mOperands[ins[i]];
                     inputShapes[i] = input.shape();
                     inputDataPtrs[i] = reinterpret_cast<const float*>(input.buffer);
                 }
                 success = concatenationPrepare(inputShapes, axis, &outShape) &&
                           setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          concatenationFloat32(inputDataPtrs, inputShapes, axis,
-                                               reinterpret_cast<float*>(output.buffer), outShape);
+                          concatenation(inputDataPtrs, inputShapes, axis,
+                                        reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (firstInput.type == OperandType::TENSOR_FLOAT16) {
+                std::vector<Shape> inputShapes(numInputTensors);
+                std::vector<const _Float16*> inputDataPtrs(numInputTensors);
+
+                for (int i = 0; i < numInputTensors; i++) {
+                    RunTimeOperandInfo& input = mOperands[ins[i]];
+                    inputShapes[i] = input.shape();
+                    inputDataPtrs[i] = reinterpret_cast<const _Float16*>(input.buffer);
+                }
+                success = concatenationPrepare(inputShapes, axis, &outShape) &&
+                          setInfoAndAllocateIfNeeded(&output, outShape) &&
+                          concatenation(inputDataPtrs, inputShapes, axis,
+                                        reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (firstInput.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 std::vector<Shape> inputShapes(numInputTensors);
                 std::vector<const uint8_t*> inputDataPtrs(numInputTensors);
 
-                for (int i=0; i<numInputTensors; i++) {
+                for (int i = 0; i < numInputTensors; i++) {
                     RunTimeOperandInfo& input = mOperands[ins[i]];
                     inputShapes[i] = input.shape();
                     inputDataPtrs[i] = reinterpret_cast<const uint8_t*>(input.buffer);
                 }
                 success = concatenationPrepare(inputShapes, axis, &outShape) &&
                           setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          concatenationQuant8(inputDataPtrs, inputShapes, axis,
-                                              reinterpret_cast<uint8_t*>(output.buffer),
-                                              outShape);
+                          concatenation(inputDataPtrs, inputShapes, axis,
+                                        reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::L2_NORMALIZATION: {
