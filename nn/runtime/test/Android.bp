@@ -45,6 +45,8 @@ cc_defaults {
     name: "NeuralNetworksTest_defaults",
     defaults: ["NeuralNetworksTest_default_libs"],
     srcs: [
+        "TestNeuralNetworksWrapper.cpp",
+
         // Subset of tests that rely only on public functionality.
         //
         // Changes to this list must be reflected in cts/tests/tests/neuralnetworks/Android.mk
@@ -139,6 +141,7 @@ cc_defaults {
     name: "NeuralNetworksTest_mt_defaults",
     defaults: ["NeuralNetworksTest_default_libs"],
     srcs: [
+        "TestNeuralNetworksWrapper.cpp",
         "TestMain.cpp",
         "generated/tests/*.cpp",
         "GeneratedUtils.cpp",
