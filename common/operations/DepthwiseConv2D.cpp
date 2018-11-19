@@ -25,55 +25,70 @@
 namespace android {
 namespace nn {
 
-#define ANDROID_NN_DEPTHWISE_CONV_PARAMETERS                                    \
-    uint32_t height       = getSizeOfDimension(inputShape, 1);                  \
-    uint32_t width        = getSizeOfDimension(inputShape, 2);                  \
-    uint32_t filterHeight = getSizeOfDimension(filterShape, 1);                 \
-    uint32_t filterWidth  = getSizeOfDimension(filterShape, 2);                 \
-    uint32_t outHeight    = getSizeOfDimension(outputShape, 1);                 \
-    uint32_t outWidth     = getSizeOfDimension(outputShape, 2);                 \
-                                                                                \
-    uint32_t paddingHeight = (uint32_t)padding_top;                             \
-    uint32_t paddingWidth = (uint32_t)padding_left;
+bool depthwiseConvFloat16(const _Float16* inputData, const Shape& inputShape,
+                          const _Float16* filterData, const Shape& filterShape,
+                          const _Float16* biasData, const Shape& biasShape, int32_t paddingLeft,
+                          int32_t paddingRight, int32_t paddingTop, int32_t paddingBottom,
+                          int32_t strideWidth, int32_t strideHeight, int32_t depthMultiplier,
+                          int32_t activation, _Float16* outputData, const Shape& outputShape) {
+    NNTRACE_TRANS("depthwiseConvFloat16");
+    std::vector<float> inputDataFloat32(getNumberOfElements(inputShape));
+    convertFloat16ToFloat32(inputData, &inputDataFloat32);
+    std::vector<float> filterDataFloat32(getNumberOfElements(filterShape));
+    convertFloat16ToFloat32(filterData, &filterDataFloat32);
+    std::vector<float> biasDataFloat32(getNumberOfElements(biasShape));
+    convertFloat16ToFloat32(biasData, &biasDataFloat32);
 
-bool depthwiseConvFloat32(const float* inputData, const Shape& inputShape,
-                          const float* filterData, const Shape& filterShape,
-                          const float* biasData, const Shape& biasShape,
-                          int32_t padding_left, int32_t padding_right,
-                          int32_t padding_top, int32_t padding_bottom,
-                          int32_t stride_width, int32_t stride_height,
-                          int32_t depth_multiplier, int32_t activation,
-                          float* outputData, const Shape& outputShape) {
+    std::vector<float> outputDataFloat32(getNumberOfElements(outputShape));
+    depthwiseConvFloat32(inputDataFloat32.data(), inputShape, filterDataFloat32.data(), filterShape,
+                         biasDataFloat32.data(), biasShape, paddingLeft, paddingRight, paddingTop,
+                         paddingBottom, strideWidth, strideHeight, depthMultiplier, activation,
+                         outputDataFloat32.data(), outputShape);
+
+    convertFloat32ToFloat16(outputDataFloat32, outputData);
+    return true;
+}
+
+#define ANDROID_NN_DEPTHWISE_CONV_PARAMETERS                    \
+    uint32_t height = getSizeOfDimension(inputShape, 1);        \
+    uint32_t width = getSizeOfDimension(inputShape, 2);         \
+    uint32_t filterHeight = getSizeOfDimension(filterShape, 1); \
+    uint32_t filterWidth = getSizeOfDimension(filterShape, 2);  \
+    uint32_t outHeight = getSizeOfDimension(outputShape, 1);    \
+    uint32_t outWidth = getSizeOfDimension(outputShape, 2);     \
+                                                                \
+    uint32_t paddingHeight = (uint32_t)paddingTop;              \
+    uint32_t paddingWidth = (uint32_t)paddingLeft;
+
+bool depthwiseConvFloat32(const float* inputData, const Shape& inputShape, const float* filterData,
+                          const Shape& filterShape, const float* biasData, const Shape& biasShape,
+                          int32_t paddingLeft, int32_t paddingRight, int32_t paddingTop,
+                          int32_t paddingBottom, int32_t strideWidth, int32_t strideHeight,
+                          int32_t depthMultiplier, int32_t activation, float* outputData,
+                          const Shape& outputShape) {
     NNTRACE_TRANS("depthwiseConvFloat32");
 
     ANDROID_NN_DEPTHWISE_CONV_PARAMETERS
 
     float output_activation_min, output_activation_max;
-    CalculateActivationRangeFloat(activation, &output_activation_min,
-                                  &output_activation_max);
+    CalculateActivationRangeFloat(activation, &output_activation_min, &output_activation_max);
 
     NNTRACE_COMP_SWITCH("optimized_ops::DepthwiseConv");
     tflite::optimized_ops::DepthwiseConv(
-            inputData, convertShapeToDims(inputShape),
-            filterData, convertShapeToDims(filterShape),
-            biasData, convertShapeToDims(biasShape),
-            stride_width, stride_height,
-            paddingWidth, paddingHeight, depth_multiplier,
-            output_activation_min, output_activation_max,
+            inputData, convertShapeToDims(inputShape), filterData, convertShapeToDims(filterShape),
+            biasData, convertShapeToDims(biasShape), strideWidth, strideHeight, paddingWidth,
+            paddingHeight, depthMultiplier, output_activation_min, output_activation_max,
             outputData, convertShapeToDims(outputShape));
 
     return true;
 }
 
-
 bool depthwiseConvQuant8(const uint8_t* inputData, const Shape& inputShape,
                          const uint8_t* filterData, const Shape& filterShape,
-                         const int32_t* biasData, const Shape& biasShape,
-                         int32_t padding_left, int32_t padding_right,
-                         int32_t padding_top, int32_t padding_bottom,
-                         int32_t stride_width, int32_t stride_height,
-                         int32_t depth_multiplier, int32_t activation,
-                         uint8_t* outputData, const Shape& outputShape) {
+                         const int32_t* biasData, const Shape& biasShape, int32_t paddingLeft,
+                         int32_t paddingRight, int32_t paddingTop, int32_t paddingBottom,
+                         int32_t strideWidth, int32_t strideHeight, int32_t depthMultiplier,
+                         int32_t activation, uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("depthwiseConvQuant8");
 
     ANDROID_NN_DEPTHWISE_CONV_PARAMETERS
@@ -101,13 +116,10 @@ bool depthwiseConvQuant8(const uint8_t* inputData, const Shape& inputShape,
 
     NNTRACE_COMP_SWITCH("optimized_ops::DepthwiseConv");
     tflite::optimized_ops::DepthwiseConv(
-            inputData, convertShapeToDims(inputShape), inputOffset,
-            filterData, convertShapeToDims(filterShape), filterOffset,
-            biasData, convertShapeToDims(biasShape),
-            stride_width, stride_height,
-            paddingWidth, paddingHeight, depth_multiplier,
-            outputOffset, output_multiplier, output_shift,
-            output_activation_min, output_activation_max,
+            inputData, convertShapeToDims(inputShape), inputOffset, filterData,
+            convertShapeToDims(filterShape), filterOffset, biasData, convertShapeToDims(biasShape),
+            strideWidth, strideHeight, paddingWidth, paddingHeight, depthMultiplier, outputOffset,
+            output_multiplier, output_shift, output_activation_min, output_activation_max,
             outputData, convertShapeToDims(outputShape));
 
     return true;

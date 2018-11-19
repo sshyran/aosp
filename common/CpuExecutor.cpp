@@ -655,6 +655,14 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                         padding_right, padding_top, padding_bottom, stride_width, stride_height,
                         depth_multiplier, activation, reinterpret_cast<float*>(output_tmp.buffer),
                         outShape);
+            } else if (input_tmp.type == OperandType::TENSOR_FLOAT16) {
+                success = depthwiseConvFloat16(
+                        reinterpret_cast<const _Float16*>(input_tmp.buffer), input_tmp.shape(),
+                        reinterpret_cast<const _Float16*>(filter.buffer), filter.shape(),
+                        reinterpret_cast<const _Float16*>(bias.buffer), bias.shape(), padding_left,
+                        padding_right, padding_top, padding_bottom, stride_width, stride_height,
+                        depth_multiplier, activation,
+                        reinterpret_cast<_Float16*>(output_tmp.buffer), outShape);
             } else if (input_tmp.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = depthwiseConvQuant8(
                         reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
@@ -664,7 +672,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                         depth_multiplier, activation, reinterpret_cast<uint8_t*>(output_tmp.buffer),
                         outShape);
             }
-
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
