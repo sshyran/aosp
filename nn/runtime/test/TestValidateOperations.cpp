@@ -801,6 +801,10 @@ TEST(OperationValidationTest, DEPTHWISE_CONV_2D_float32) {
     depthwiseConvOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+TEST(OperationValidationTest, DEPTHWISE_CONV_2D_float16) {
+    depthwiseConvOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 TEST(OperationValidationTest, DEPTHWISE_CONV_2D_quant8) {
     depthwiseConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
