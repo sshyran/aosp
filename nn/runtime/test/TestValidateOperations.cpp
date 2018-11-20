@@ -1540,6 +1540,10 @@ void normalizationOpTest(ANeuralNetworksOperationType operationCode, int32_t ope
     EXPECT_TRUE(normalizationAxisTest.testMutatingOutputOperandCounts());
 }
 
+TEST(OperationValidationTest, L2_NORMALIZATION_float16) {
+    normalizationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 TEST(OperationValidationTest, L2_NORMALIZATION_float32) {
     normalizationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
@@ -1567,6 +1571,10 @@ void localResponseNormOpTest(int32_t operandCode) {
     EXPECT_TRUE(lrnAxisTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(lrnAxisTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(lrnAxisTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, LOCAL_RESPONSE_NORMALIZATION_float16) {
+    localResponseNormOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, LOCAL_RESPONSE_NORMALIZATION_float32) {
