@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, transpose) {
             transpose::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_dynamic_output_shape) {
+    execute(transpose::CreateModel_dynamic_output_shape,
+            transpose::is_ignored_dynamic_output_shape,
+            transpose::get_examples_dynamic_output_shape());
+}
+
+#endif

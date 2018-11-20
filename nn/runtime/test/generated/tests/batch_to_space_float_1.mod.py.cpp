@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, batch_to_space_float_1) {
             batch_to_space_float_1::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, batch_to_space_float_1_dynamic_output_shape) {
+    execute(batch_to_space_float_1::CreateModel_dynamic_output_shape,
+            batch_to_space_float_1::is_ignored_dynamic_output_shape,
+            batch_to_space_float_1::get_examples_dynamic_output_shape());
+}
+
+#endif

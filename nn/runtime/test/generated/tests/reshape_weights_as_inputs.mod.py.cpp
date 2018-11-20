@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, reshape_weights_as_inputs) {
             reshape_weights_as_inputs::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, reshape_weights_as_inputs_dynamic_output_shape) {
+    execute(reshape_weights_as_inputs::CreateModel_dynamic_output_shape,
+            reshape_weights_as_inputs::is_ignored_dynamic_output_shape,
+            reshape_weights_as_inputs::get_examples_dynamic_output_shape());
+}
+
+#endif

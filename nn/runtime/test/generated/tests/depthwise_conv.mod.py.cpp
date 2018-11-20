@@ -15,3 +15,25 @@ TEST_F(GeneratedTests, depthwise_conv) {
             depthwise_conv::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, depthwise_conv_dynamic_output_shape) {
+    execute(depthwise_conv::CreateModel_dynamic_output_shape,
+            depthwise_conv::is_ignored_dynamic_output_shape,
+            depthwise_conv::get_examples_dynamic_output_shape());
+}
+
+#endif
+TEST_F(GeneratedTests, depthwise_conv_2) {
+    execute(depthwise_conv::CreateModel_2,
+            depthwise_conv::is_ignored_2,
+            depthwise_conv::get_examples_2());
+}
+
+#if 0
+TEST_F(DynamicOutputShapeTests, depthwise_conv_dynamic_output_shape_2) {
+    execute(depthwise_conv::CreateModel_dynamic_output_shape_2,
+            depthwise_conv::is_ignored_dynamic_output_shape_2,
+            depthwise_conv::get_examples_dynamic_output_shape_2());
+}
+
+#endif
