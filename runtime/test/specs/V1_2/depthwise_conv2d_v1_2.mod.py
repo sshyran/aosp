@@ -40,7 +40,7 @@ example = Example({
          11, 3, 7.4, 10.9,
          11, 3, 7.8, 11.5,
          11, 3, 8.0, 11.8]
-}).AddNchw(i1, o1, layout).AddInput(f1, b1).AddVariations("relaxed", quant8)
+}).AddNchw(i1, o1, layout).AddInput(f1, b1).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 2: DEPTHWISE_CONV2D_NCHW_2, pad = valid, stride = 1, cm = 2, act = none
@@ -62,7 +62,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i2: [1, 2, 7, 8, 3, 4, 9, 10, 5, 6, 11, 12],
     o2: [71, -34, 99, -20, 91, -26, 127, -4]
-}).AddNchw(i2, o2, layout).AddInput(f2, b2).AddVariations("relaxed", quant8)
+}).AddNchw(i2, o2, layout).AddInput(f2, b2).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 3: DEPTHWISE_CONV2D_NCHW_LARGE, pad = 0, stride = 1, cm = 1, act = none
@@ -84,7 +84,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i3: [10, 21, 10, 22, 10, 23, 10, 24],
     o3: [110, 246]
-}).AddNchw(i3, o3, layout).AddInput(f3, b3).AddVariations("relaxed", quant8)
+}).AddNchw(i3, o3, layout).AddInput(f3, b3).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 4: DEPTHWISE_CONV2D_NCHW_LARGE, pad = 0, stride = 1, cm = 1, act = none
@@ -109,4 +109,4 @@ example = Example({
          10, 23, 30, 0,
          10, 24, 40, 0],
     o4: [6010, 7046, 11000, 9000]
-}).AddNchw(i4, o4, layout).AddInput(f4, b4).AddVariations("relaxed", quant8)
+}).AddNchw(i4, o4, layout).AddInput(f4, b4).AddVariations("relaxed", "float16", quant8)
