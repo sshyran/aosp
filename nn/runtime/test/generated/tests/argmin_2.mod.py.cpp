@@ -39,3 +39,43 @@ TEST_F(GeneratedTests, argmin_2_quant8) {
             argmin_2::get_examples_quant8());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, argmin_2_dynamic_output_shape) {
+    execute(argmin_2::CreateModel_dynamic_output_shape,
+            argmin_2::is_ignored_dynamic_output_shape,
+            argmin_2::get_examples_dynamic_output_shape());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, argmin_2_dynamic_output_shape_relaxed) {
+    execute(argmin_2::CreateModel_dynamic_output_shape_relaxed,
+            argmin_2::is_ignored_dynamic_output_shape_relaxed,
+            argmin_2::get_examples_dynamic_output_shape_relaxed());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, argmin_2_dynamic_output_shape_float16) {
+    execute(argmin_2::CreateModel_dynamic_output_shape_float16,
+            argmin_2::is_ignored_dynamic_output_shape_float16,
+            argmin_2::get_examples_dynamic_output_shape_float16());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, argmin_2_dynamic_output_shape_int32) {
+    execute(argmin_2::CreateModel_dynamic_output_shape_int32,
+            argmin_2::is_ignored_dynamic_output_shape_int32,
+            argmin_2::get_examples_dynamic_output_shape_int32());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, argmin_2_dynamic_output_shape_quant8) {
+    execute(argmin_2::CreateModel_dynamic_output_shape_quant8,
+            argmin_2::is_ignored_dynamic_output_shape_quant8,
+            argmin_2::get_examples_dynamic_output_shape_quant8());
+}
+
+#endif

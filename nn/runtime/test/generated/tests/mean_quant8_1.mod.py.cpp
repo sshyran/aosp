@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, mean_quant8_1) {
             mean_quant8_1::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, mean_quant8_1_dynamic_output_shape) {
+    execute(mean_quant8_1::CreateModel_dynamic_output_shape,
+            mean_quant8_1::is_ignored_dynamic_output_shape,
+            mean_quant8_1::get_examples_dynamic_output_shape());
+}
+
+#endif
