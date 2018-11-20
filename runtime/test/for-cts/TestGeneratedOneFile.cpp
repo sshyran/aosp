@@ -413,6 +413,7 @@
 #include "../generated/tests/split_quant8_3.mod.py.cpp"
 #include "../generated/tests/split_quant8_4.mod.py.cpp"
 #include "../generated/tests/squeeze_float16.mod.py.cpp"
+#include "../generated/tests/strided_slice_float16.mod.py.cpp"
 #include "../generated/tests/sub_float16.mod.py.cpp"
 #include "../generated/tests/sub_float16_broadcast.mod.py.cpp"
 #include "../generated/tests/sub_quantized.mod.py.cpp"
