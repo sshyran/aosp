@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, depthwise_conv2d_float_2) {
             depthwise_conv2d_float_2::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, depthwise_conv2d_float_2_dynamic_output_shape) {
+    execute(depthwise_conv2d_float_2::CreateModel_dynamic_output_shape,
+            depthwise_conv2d_float_2::is_ignored_dynamic_output_shape,
+            depthwise_conv2d_float_2::get_examples_dynamic_output_shape());
+}
+
+#endif

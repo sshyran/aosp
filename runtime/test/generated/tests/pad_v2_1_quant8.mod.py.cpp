@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, pad_v2_1_quant8) {
             pad_v2_1_quant8::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, pad_v2_1_quant8_dynamic_output_shape) {
+    execute(pad_v2_1_quant8::CreateModel_dynamic_output_shape,
+            pad_v2_1_quant8::is_ignored_dynamic_output_shape,
+            pad_v2_1_quant8::get_examples_dynamic_output_shape());
+}
+
+#endif

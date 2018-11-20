@@ -15,9 +15,25 @@ TEST_F(GeneratedTests, concat_mixed_quant_quant8) {
             concat_mixed_quant::get_examples_quant8());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, concat_mixed_quant_dynamic_output_shape_quant8) {
+    execute(concat_mixed_quant::CreateModel_dynamic_output_shape_quant8,
+            concat_mixed_quant::is_ignored_dynamic_output_shape_quant8,
+            concat_mixed_quant::get_examples_dynamic_output_shape_quant8());
+}
+
+#endif
 TEST_F(GeneratedTests, concat_mixed_quant_quant8_2) {
     execute(concat_mixed_quant::CreateModel_quant8_2,
             concat_mixed_quant::is_ignored_quant8_2,
             concat_mixed_quant::get_examples_quant8_2());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, concat_mixed_quant_dynamic_output_shape_quant8_2) {
+    execute(concat_mixed_quant::CreateModel_dynamic_output_shape_quant8_2,
+            concat_mixed_quant::is_ignored_dynamic_output_shape_quant8_2,
+            concat_mixed_quant::get_examples_dynamic_output_shape_quant8_2());
+}
+
+#endif

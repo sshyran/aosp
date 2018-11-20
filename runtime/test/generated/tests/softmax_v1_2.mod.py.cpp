@@ -81,6 +81,102 @@ TEST_F(GeneratedTests, softmax_v1_2_quant8_dim3_axis2) {
             softmax_v1_2::get_examples_quant8_dim3_axis2());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape,
+            softmax_v1_2::is_ignored_dynamic_output_shape,
+            softmax_v1_2::get_examples_dynamic_output_shape());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_dim1_axis0) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_dim1_axis0,
+            softmax_v1_2::is_ignored_dynamic_output_shape_dim1_axis0,
+            softmax_v1_2::get_examples_dynamic_output_shape_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_dim3_axis2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_dim3_axis2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_dim3_axis2,
+            softmax_v1_2::get_examples_dynamic_output_shape_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_relaxed) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_relaxed,
+            softmax_v1_2::is_ignored_dynamic_output_shape_relaxed,
+            softmax_v1_2::get_examples_dynamic_output_shape_relaxed());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_relaxed_dim1_axis0) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_relaxed_dim1_axis0,
+            softmax_v1_2::is_ignored_dynamic_output_shape_relaxed_dim1_axis0,
+            softmax_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_relaxed_dim3_axis2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_relaxed_dim3_axis2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_relaxed_dim3_axis2,
+            softmax_v1_2::get_examples_dynamic_output_shape_relaxed_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_float16) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_float16,
+            softmax_v1_2::is_ignored_dynamic_output_shape_float16,
+            softmax_v1_2::get_examples_dynamic_output_shape_float16());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_float16_dim1_axis0) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_float16_dim1_axis0,
+            softmax_v1_2::is_ignored_dynamic_output_shape_float16_dim1_axis0,
+            softmax_v1_2::get_examples_dynamic_output_shape_float16_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_float16_dim3_axis2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_float16_dim3_axis2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_float16_dim3_axis2,
+            softmax_v1_2::get_examples_dynamic_output_shape_float16_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_quant8) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_quant8,
+            softmax_v1_2::is_ignored_dynamic_output_shape_quant8,
+            softmax_v1_2::get_examples_dynamic_output_shape_quant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_quant8_dim1_axis0) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_quant8_dim1_axis0,
+            softmax_v1_2::is_ignored_dynamic_output_shape_quant8_dim1_axis0,
+            softmax_v1_2::get_examples_dynamic_output_shape_quant8_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_quant8_dim3_axis2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_quant8_dim3_axis2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_quant8_dim3_axis2,
+            softmax_v1_2::get_examples_dynamic_output_shape_quant8_dim3_axis2());
+}
+
+#endif
 TEST_F(GeneratedTests, softmax_v1_2_2) {
     execute(softmax_v1_2::CreateModel_2,
             softmax_v1_2::is_ignored_2,
@@ -153,6 +249,102 @@ TEST_F(GeneratedTests, softmax_v1_2_quant8_dim3_axis2_2) {
             softmax_v1_2::get_examples_quant8_dim3_axis2_2());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_dim1_axis0_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_dim1_axis0_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_dim1_axis0_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_dim1_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_dim3_axis2_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_dim3_axis2_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_dim3_axis2_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_dim3_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_relaxed_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_relaxed_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_relaxed_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_relaxed_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_relaxed_dim1_axis0_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_relaxed_dim1_axis0_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_relaxed_dim3_axis2_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_relaxed_dim3_axis2_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_relaxed_dim3_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_float16_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_float16_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_float16_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_float16_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_float16_dim1_axis0_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_float16_dim1_axis0_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_float16_dim1_axis0_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_float16_dim1_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_float16_dim3_axis2_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_float16_dim3_axis2_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_float16_dim3_axis2_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_float16_dim3_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_quant8_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_quant8_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_quant8_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_quant8_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_quant8_dim1_axis0_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_quant8_dim1_axis0_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_quant8_dim1_axis0_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_quant8_dim1_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_dynamic_output_shape_quant8_dim3_axis2_2) {
+    execute(softmax_v1_2::CreateModel_dynamic_output_shape_quant8_dim3_axis2_2,
+            softmax_v1_2::is_ignored_dynamic_output_shape_quant8_dim3_axis2_2,
+            softmax_v1_2::get_examples_dynamic_output_shape_quant8_dim3_axis2_2());
+}
+
+#endif
 TEST_F(GeneratedTests, softmax_v1_2_axis_dim4_axis0) {
     execute(softmax_v1_2::CreateModel_axis_dim4_axis0,
             softmax_v1_2::is_ignored_axis_dim4_axis0,
@@ -633,6 +825,646 @@ TEST_F(GeneratedTests, softmax_v1_2_axis_quant8_dim1_axis0_neg) {
             softmax_v1_2::get_examples_axis_quant8_dim1_axis0_neg());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis2_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis2_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis3) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis3,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis3_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis3_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis2_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis2_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim2_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim2_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim2_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim2_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim1_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim1_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim1_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim1_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis2_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis2_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis2_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis3) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis3,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis3,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis3());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis3_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis3_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis3_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis3_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis2_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis2_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis2_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim2_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim2_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim2_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim2_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim2_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim2_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim2_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim2_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim2_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim2_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim2_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim2_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim2_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim2_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim2_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim2_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim1_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim1_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim1_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim1_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim1_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim1_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim1_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis2_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis3) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis3());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis3_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis3_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis2_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim2_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim2_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim2_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim2_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim2_axis1) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim2_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim2_axis1_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim2_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim1_axis0) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim1_axis0_neg) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0_neg,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0_neg,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim1_axis0_neg());
+}
+
+#endif
 TEST_F(GeneratedTests, softmax_v1_2_axis_dim4_axis0_2) {
     execute(softmax_v1_2::CreateModel_axis_dim4_axis0_2,
             softmax_v1_2::is_ignored_axis_dim4_axis0_2,
@@ -1113,3 +1945,643 @@ TEST_F(GeneratedTests, softmax_v1_2_axis_quant8_dim1_axis0_neg_2) {
             softmax_v1_2::get_examples_axis_quant8_dim1_axis0_neg_2());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis2_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis2_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis2_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis3_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis3_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim4_axis3_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis2_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis2_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim3_axis2_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim2_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim2_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim2_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim2_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim1_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim1_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_dim1_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis2_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis2_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis2_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis2_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis2_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis2_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis2_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis3_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis3_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis3_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis3_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim4_axis3_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim4_axis3_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim4_axis3_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim4_axis3_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis2_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis2_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis2_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim3_axis2_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim3_axis2_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim3_axis2_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim3_axis2_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim2_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim2_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim2_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim2_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim2_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim2_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim2_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim2_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim2_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim2_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim2_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim2_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim2_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim2_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim2_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim2_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim1_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim1_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim1_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim1_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_float16_dim1_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_float16_dim1_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_float16_dim1_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_float16_dim1_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis2_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis2_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis2_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis3_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis3_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim4_axis3_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim4_axis3_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis2_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis2_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim3_axis2_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim3_axis2_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim2_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim2_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim2_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim2_axis0_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim2_axis1_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim2_axis1_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim2_axis1_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim2_axis1_neg_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim1_axis0_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim1_axis0_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_v1_2_axis_dynamic_output_shape_quant8_dim1_axis0_neg_2) {
+    execute(softmax_v1_2::CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0_neg_2,
+            softmax_v1_2::is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0_neg_2,
+            softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim1_axis0_neg_2());
+}
+
+#endif

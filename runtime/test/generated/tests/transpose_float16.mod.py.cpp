@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, transpose_float16) {
             transpose_float16::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_float16_dynamic_output_shape) {
+    execute(transpose_float16::CreateModel_dynamic_output_shape,
+            transpose_float16::is_ignored_dynamic_output_shape,
+            transpose_float16::get_examples_dynamic_output_shape());
+}
+
+#endif
