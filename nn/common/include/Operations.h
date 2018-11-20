@@ -256,6 +256,10 @@ bool roiAlignQuant8(const uint8_t* inputData, const Shape& inputShape, const flo
                     const Shape& roiShape, float spatialScale, int32_t samplingRatio,
                     uint8_t* outputData, const Shape& outputShape);
 
+bool roiPoolingGeneric(const uint8_t* inputData, const Shape& inputShape, const uint8_t* roiData,
+                       const Shape& roiShape, float spatialScale, uint8_t* outputData,
+                       const Shape& outputShape);
+
 bool heatmapMaxKeypoint(const float* heatmap, const Shape& heatmapShape, const float* boxes,
                         const Shape& boxesShape, float* outputData, const Shape& outputShape);
 
