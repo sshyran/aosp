@@ -89,15 +89,58 @@ class UnknownDimensionsTest : public ::testing::TestWithParam<OperandParams> {
                         std::map<int, std::vector<T>>& actual);
 };
 
-template <typename T>
-void UnknownDimensionsTest::CompareResults(std::map<int, std::vector<T>>& expected,
-                                           std::map<int, std::vector<T>>& actual) {
-    // Uint8_t operands last in MixedType
-    MixedTyped expectedMixedTyped;
-    std::get<MixedTypedIndex<T>::index>(expectedMixedTyped) = expected;
-    MixedTyped actualMixedTyped;
-    std::get<MixedTypedIndex<T>::index>(actualMixedTyped) = actual;
-    compare(expectedMixedTyped, actualMixedTyped);
+template <>
+void UnknownDimensionsTest::CompareResults<float>(std::map<int, std::vector<float>>& golden,
+                                                  std::map<int, std::vector<float>>& test) {
+    size_t totalNumberOfErrors = 0;
+    float fpAtol = 1e-5f, fpRtol = 1e-5f;
+    compare_<float>(golden, test,
+                    [&totalNumberOfErrors, fpAtol, fpRtol](float expected, float actual) {
+                        // Compute the range based on both absolute tolerance and relative tolerance
+                        float fpRange = fpAtol + fpRtol * std::abs(expected);
+                        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                            EXPECT_NEAR(expected, actual, fpRange);
+                        }
+                        if (std::abs(expected - actual) > fpRange) {
+                            totalNumberOfErrors++;
+                        }
+                    });
+    EXPECT_EQ(size_t{0}, totalNumberOfErrors);
+}
+
+template <>
+void UnknownDimensionsTest::CompareResults<uint8_t>(std::map<int, std::vector<uint8_t>>& golden,
+                                                    std::map<int, std::vector<uint8_t>>& test) {
+    size_t totalNumberOfErrors = 0;
+    compare_<uint8_t>(golden, test, [&totalNumberOfErrors](uint8_t expected, uint8_t actual) {
+        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+            EXPECT_NEAR(expected, actual, 1);
+        }
+        if (std::abs(expected - actual) > 1) {
+            totalNumberOfErrors++;
+        }
+    });
+    EXPECT_EQ(size_t{0}, totalNumberOfErrors);
+}
+
+template <>
+void UnknownDimensionsTest::CompareResults<_Float16>(std::map<int, std::vector<_Float16>>& golden,
+                                                     std::map<int, std::vector<_Float16>>& test) {
+    size_t totalNumberOfErrors = 0;
+    float fpAtol = 5.0f * 0.0009765625f, fpRtol = 5.0f * 0.0009765625f;
+    compare_<_Float16>(golden, test,
+                       [&totalNumberOfErrors, fpAtol, fpRtol](_Float16 expected, _Float16 actual) {
+                           // Compute the range based on both absolute tolerance and relative
+                           // tolerance
+                           float fpRange = fpAtol + fpRtol * std::abs(static_cast<float>(expected));
+                           if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                               EXPECT_NEAR(expected, actual, fpRange);
+                           }
+                           if (std::abs(static_cast<float>(expected - actual)) > fpRange) {
+                               totalNumberOfErrors++;
+                           }
+                       });
+    EXPECT_EQ(size_t{0}, totalNumberOfErrors);
 }
 
 template<class T, Type TensorType> void UnknownDimensionsTest::TestOne(

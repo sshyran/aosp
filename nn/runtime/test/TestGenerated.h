@@ -30,6 +30,9 @@ protected:
     virtual void SetUp() {}
 };
 
+// Tag for the dynamic output shape tests
+class DynamicOutputShapeTest : public GeneratedTests {};
+
 }  // namespace generated_tests
 
 using namespace test_helper;
