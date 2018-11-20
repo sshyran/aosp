@@ -1363,6 +1363,10 @@ TEST(OperationValidationTest, STRIDED_SLICE_float32) {
     stridedSliceOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+TEST(OperationValidationTest, STRIDED_SLICE_float16) {
+    stridedSliceOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 TEST(OperationValidationTest, STRIDED_SLICE_quant8) {
     stridedSliceOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }

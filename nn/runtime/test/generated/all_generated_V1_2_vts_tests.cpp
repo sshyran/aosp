@@ -15893,6 +15893,29 @@ TEST_F(ValidationTest, squeeze_float16) {
 }
 
 
+// Generated from: strided_slice_float16.mod.py.
+namespace strided_slice_float16 {
+// Generated strided_slice_float16 test
+#include "examples/strided_slice_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/strided_slice_float16.model.cpp"
+} // namespace strided_slice_float16
+
+TEST_F(NeuralnetworksHidlTest, strided_slice_float16) {
+  generated_tests::Execute(device,
+                           strided_slice_float16::createTestModel,
+                           strided_slice_float16::is_ignored,
+                           strided_slice_float16::examples);
+}
+
+TEST_F(ValidationTest, strided_slice_float16) {
+  const Model model = strided_slice_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float16::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: sub_float16.mod.py.
 namespace sub_float16 {
 // Generated sub_float16 test
