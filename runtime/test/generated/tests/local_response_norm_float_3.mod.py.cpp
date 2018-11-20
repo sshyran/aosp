@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, local_response_norm_float_3) {
             local_response_norm_float_3::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, local_response_norm_float_3_dynamic_output_shape) {
+    execute(local_response_norm_float_3::CreateModel_dynamic_output_shape,
+            local_response_norm_float_3::is_ignored_dynamic_output_shape,
+            local_response_norm_float_3::get_examples_dynamic_output_shape());
+}
+
+#endif

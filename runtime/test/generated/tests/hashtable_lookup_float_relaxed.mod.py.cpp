@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, hashtable_lookup_float_relaxed) {
             hashtable_lookup_float_relaxed::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, hashtable_lookup_float_relaxed_dynamic_output_shape) {
+    execute(hashtable_lookup_float_relaxed::CreateModel_dynamic_output_shape,
+            hashtable_lookup_float_relaxed::is_ignored_dynamic_output_shape,
+            hashtable_lookup_float_relaxed::get_examples_dynamic_output_shape());
+}
+
+#endif

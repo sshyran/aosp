@@ -27,6 +27,30 @@ TEST_F(GeneratedTests, axis_aligned_bbox_transform_float16) {
             axis_aligned_bbox_transform::get_examples_float16());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, axis_aligned_bbox_transform_dynamic_output_shape) {
+    execute(axis_aligned_bbox_transform::CreateModel_dynamic_output_shape,
+            axis_aligned_bbox_transform::is_ignored_dynamic_output_shape,
+            axis_aligned_bbox_transform::get_examples_dynamic_output_shape());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, axis_aligned_bbox_transform_dynamic_output_shape_relaxed) {
+    execute(axis_aligned_bbox_transform::CreateModel_dynamic_output_shape_relaxed,
+            axis_aligned_bbox_transform::is_ignored_dynamic_output_shape_relaxed,
+            axis_aligned_bbox_transform::get_examples_dynamic_output_shape_relaxed());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, axis_aligned_bbox_transform_dynamic_output_shape_float16) {
+    execute(axis_aligned_bbox_transform::CreateModel_dynamic_output_shape_float16,
+            axis_aligned_bbox_transform::is_ignored_dynamic_output_shape_float16,
+            axis_aligned_bbox_transform::get_examples_dynamic_output_shape_float16());
+}
+
+#endif
 TEST_F(GeneratedTests, axis_aligned_bbox_transform_2) {
     execute(axis_aligned_bbox_transform::CreateModel_2,
             axis_aligned_bbox_transform::is_ignored_2,
@@ -45,3 +69,27 @@ TEST_F(GeneratedTests, axis_aligned_bbox_transform_float16_2) {
             axis_aligned_bbox_transform::get_examples_float16_2());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, axis_aligned_bbox_transform_dynamic_output_shape_2) {
+    execute(axis_aligned_bbox_transform::CreateModel_dynamic_output_shape_2,
+            axis_aligned_bbox_transform::is_ignored_dynamic_output_shape_2,
+            axis_aligned_bbox_transform::get_examples_dynamic_output_shape_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, axis_aligned_bbox_transform_dynamic_output_shape_relaxed_2) {
+    execute(axis_aligned_bbox_transform::CreateModel_dynamic_output_shape_relaxed_2,
+            axis_aligned_bbox_transform::is_ignored_dynamic_output_shape_relaxed_2,
+            axis_aligned_bbox_transform::get_examples_dynamic_output_shape_relaxed_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, axis_aligned_bbox_transform_dynamic_output_shape_float16_2) {
+    execute(axis_aligned_bbox_transform::CreateModel_dynamic_output_shape_float16_2,
+            axis_aligned_bbox_transform::is_ignored_dynamic_output_shape_float16_2,
+            axis_aligned_bbox_transform::get_examples_dynamic_output_shape_float16_2());
+}
+
+#endif

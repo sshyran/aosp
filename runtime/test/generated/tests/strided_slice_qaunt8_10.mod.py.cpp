@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, strided_slice_qaunt8_10) {
             strided_slice_qaunt8_10::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, strided_slice_qaunt8_10_dynamic_output_shape) {
+    execute(strided_slice_qaunt8_10::CreateModel_dynamic_output_shape,
+            strided_slice_qaunt8_10::is_ignored_dynamic_output_shape,
+            strided_slice_qaunt8_10::get_examples_dynamic_output_shape());
+}
+
+#endif

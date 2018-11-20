@@ -15,3 +15,25 @@ TEST_F(GeneratedTests, conv_1_h3_w2_SAME_relaxed) {
             conv_1_h3_w2_SAME_relaxed::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, conv_1_h3_w2_SAME_relaxed_dynamic_output_shape) {
+    execute(conv_1_h3_w2_SAME_relaxed::CreateModel_dynamic_output_shape,
+            conv_1_h3_w2_SAME_relaxed::is_ignored_dynamic_output_shape,
+            conv_1_h3_w2_SAME_relaxed::get_examples_dynamic_output_shape());
+}
+
+#endif
+TEST_F(GeneratedTests, conv_1_h3_w2_SAME_relaxed_2) {
+    execute(conv_1_h3_w2_SAME_relaxed::CreateModel_2,
+            conv_1_h3_w2_SAME_relaxed::is_ignored_2,
+            conv_1_h3_w2_SAME_relaxed::get_examples_2());
+}
+
+#if 0
+TEST_F(DynamicOutputShapeTests, conv_1_h3_w2_SAME_relaxed_dynamic_output_shape_2) {
+    execute(conv_1_h3_w2_SAME_relaxed::CreateModel_dynamic_output_shape_2,
+            conv_1_h3_w2_SAME_relaxed::is_ignored_dynamic_output_shape_2,
+            conv_1_h3_w2_SAME_relaxed::get_examples_dynamic_output_shape_2());
+}
+
+#endif
