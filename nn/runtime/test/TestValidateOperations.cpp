@@ -1383,21 +1383,52 @@ TEST(OperationValidationTest, STRIDED_SLICE_quant8) {
     stridedSliceOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
-TEST(OperationValidationTest, ROI_ALIGN_float32) {
+void roiAlignOpTest(int32_t operandCode) {
     uint32_t inDim[] = {1, 4, 4, 1}, roiDim[] = {4, 4}, outShapeDim[] = {2};
     uint32_t outDim[] = {4, 2, 2, 1};
     OperationTestBase roiAlignTest(
             ANEURALNETWORKS_ROI_ALIGN,
-            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, inDim),
-             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, roiDim),
+            {getOpType(operandCode, 4, inDim), getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, roiDim),
              getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim),
              getOpType(ANEURALNETWORKS_FLOAT32), getOpType(ANEURALNETWORKS_INT32)},
-            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, outDim)});
+            {getOpType(operandCode, 4, outDim)});
 
     EXPECT_TRUE(roiAlignTest.testMutatingInputOperandCode());
     EXPECT_TRUE(roiAlignTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(roiAlignTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(roiAlignTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, ROI_ALIGN_float32) {
+    roiAlignOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, ROI_ALIGN_quant8) {
+    roiAlignOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+void roiPoolingOpTest(int32_t operandCode) {
+    uint32_t inDim[] = {1, 4, 4, 1}, roiDim[] = {4, 4}, outShapeDim[] = {2};
+    uint32_t outDim[] = {4, 2, 2, 1};
+    OperationTestBase roiPoolingTest(
+            ANEURALNETWORKS_ROI_POOLING,
+            {getOpType(operandCode, 4, inDim), getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, roiDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim),
+             getOpType(ANEURALNETWORKS_FLOAT32)},
+            {getOpType(operandCode, 4, outDim)});
+
+    EXPECT_TRUE(roiPoolingTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(roiPoolingTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(roiPoolingTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(roiPoolingTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, ROI_POOLING_float32) {
+    roiPoolingOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, ROI_POOLING_quant8) {
+    roiPoolingOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
 TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
