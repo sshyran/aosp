@@ -618,6 +618,9 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (input.type == OperandType::TENSOR_FLOAT32) {
                 success = floorFloat32(reinterpret_cast<const float*>(input.buffer),
                                        reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = floorFloat16(reinterpret_cast<const _Float16*>(input.buffer),
+                                       reinterpret_cast<_Float16*>(output.buffer), outShape);
             }
         } break;
         case OperationType::DEQUANTIZE: {
@@ -632,9 +635,13 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 !setInfoAndAllocateIfNeeded(&output, outShape)) {
                 break;
             }
-            if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+            if (output.type == OperandType::TENSOR_FLOAT32) {
                 success = dequantizeQuant8ToFloat32(reinterpret_cast<const uint8_t*>(input.buffer),
                                                     reinterpret_cast<float*>(output.buffer),
+                                                    input.shape());
+            } else if (output.type == OperandType::TENSOR_FLOAT16) {
+                success = dequantizeQuant8ToFloat16(reinterpret_cast<const uint8_t*>(input.buffer),
+                                                    reinterpret_cast<_Float16*>(output.buffer),
                                                     input.shape());
             }
         } break;
@@ -2050,19 +2057,27 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& output = mOperands[outs[0]];
             Shape outShape = output.shape();
 
-            success = meanPrepare(input.shape(),
-                                  reinterpret_cast<const int32_t*>(axis.buffer),
-                                  axis.shape(),
-                                  keepDims > 0,
-                                  &outShape) &&
-                      setInfoAndAllocateIfNeeded(&output, outShape) &&
-                      meanGeneric(input.buffer,
-                                  input.shape(),
-                                  reinterpret_cast<const int32_t*>(axis.buffer),
-                                  axis.shape(),
-                                  keepDims > 0,
-                                  output.buffer,
-                                  outShape);
+            if (!meanPrepare(input.shape(), reinterpret_cast<const int32_t*>(axis.buffer),
+                             axis.shape(), keepDims > 0, &outShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outShape)) {
+                break;
+            }
+            if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = meanFloat16(reinterpret_cast<_Float16*>(input.buffer), input.shape(),
+                                      reinterpret_cast<const int32_t*>(axis.buffer), axis.shape(),
+                                      keepDims > 0, reinterpret_cast<_Float16*>(output.buffer),
+                                      outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT32) {
+                success = meanGeneric<float, float>(
+                        reinterpret_cast<float*>(input.buffer), input.shape(),
+                        reinterpret_cast<const int32_t*>(axis.buffer), axis.shape(), keepDims > 0,
+                        reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                success = meanGeneric<uint8_t, int32_t>(
+                        reinterpret_cast<uint8_t*>(input.buffer), input.shape(),
+                        reinterpret_cast<const int32_t*>(axis.buffer), axis.shape(), keepDims > 0,
+                        reinterpret_cast<uint8_t*>(output.buffer), outShape);
+            }
         } break;
         case OperationType::ARGMAX:
         case OperationType::ARGMIN: {
