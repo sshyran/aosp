@@ -284,7 +284,8 @@ bool floorPrepare(const Shape& input, Shape* output) {
 
 bool dequantizePrepare(const Shape& input, Shape* output) {
     if (input.type != OperandType::TENSOR_QUANT8_ASYMM ||
-            output->type != OperandType::TENSOR_FLOAT32) {
+        (output->type != OperandType::TENSOR_FLOAT16 &&
+         output->type != OperandType::TENSOR_FLOAT32)) {
         LOG(ERROR) << "bad input / output operand type.";
         return false;
     }
