@@ -24,11 +24,18 @@ using namespace android::nn::wrapper;
 namespace {
 
 static const int32_t kAvailableOperandCodes[] = {
-        ANEURALNETWORKS_FLOAT32,      ANEURALNETWORKS_INT32,
-        ANEURALNETWORKS_UINT32,       ANEURALNETWORKS_TENSOR_FLOAT32,
-        ANEURALNETWORKS_TENSOR_INT32, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
-        ANEURALNETWORKS_BOOL,         ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
-        ANEURALNETWORKS_TENSOR_BOOL8, ANEURALNETWORKS_TENSOR_OEM_BYTE};
+        ANEURALNETWORKS_FLOAT32,
+        ANEURALNETWORKS_INT32,
+        ANEURALNETWORKS_UINT32,
+        ANEURALNETWORKS_TENSOR_FLOAT32,
+        ANEURALNETWORKS_TENSOR_INT32,
+        ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+        ANEURALNETWORKS_BOOL,
+        ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
+        ANEURALNETWORKS_TENSOR_FLOAT16,
+        ANEURALNETWORKS_TENSOR_BOOL8,
+        ANEURALNETWORKS_TENSOR_OEM_BYTE,
+};
 
 ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0, uint32_t* dim = nullptr,
                                      float scale = 0.0f, int32_t zeroPoint = 0) {
@@ -120,6 +127,12 @@ public:
                 if (newOperandCode == originalOperandCode) {
                     continue;
                 }
+                // DEQUANTIZE's output can be either TENSOR_FLOAT16 or TENSOR_FLOAT32.
+                if (mOpCode == ANEURALNETWORKS_DEQUANTIZE &&
+                    (newOperandCode == ANEURALNETWORKS_TENSOR_FLOAT16 ||
+                     newOperandCode == ANEURALNETWORKS_TENSOR_FLOAT32)) {
+                    continue;
+                }
                 newType.type = newOperandCode;
                 std::vector<ANeuralNetworksOperandType> outputs = mValidOutputs;
                 outputs[i] = newType;
@@ -160,6 +173,26 @@ private:
     std::vector<ANeuralNetworksOperandType> mValidInputs;
     std::vector<ANeuralNetworksOperandType> mValidOutputs;
 };
+
+TEST(OperationValidationTest, DEQUANTIZE_float16) {
+    uint32_t inputDimensions[4] = {2, 2, 2, 2};
+    ANeuralNetworksOperandType input = {.type = ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                                        .dimensionCount = 4,
+                                        .dimensions = inputDimensions,
+                                        .scale = 1.0f,
+                                        .zeroPoint = 0};
+    ANeuralNetworksOperandType output = {.type = ANEURALNETWORKS_TENSOR_FLOAT16,
+                                         .dimensionCount = 4,
+                                         .dimensions = inputDimensions,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+    OperationTestBase dequantizeTest(ANEURALNETWORKS_DEQUANTIZE, {input}, {output});
+
+    EXPECT_TRUE(dequantizeTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(dequantizeTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(dequantizeTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(dequantizeTest.testMutatingOutputOperandCounts());
+}
 
 TEST(OperationValidationTest, DEQUANTIZE_float32) {
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
@@ -318,12 +351,24 @@ TEST(OperationValidationTest, ABS_float32) {
     activationOpTest(ANEURALNETWORKS_ABS, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
-TEST(OperationValidationTest, LOGICAL_NOT_bool) {
-    activationOpTest(ANEURALNETWORKS_LOGICAL_NOT, ANEURALNETWORKS_TENSOR_BOOL8);
+TEST(OperationValidationTest, FLOOR_float16) {
+    activationOpTest(ANEURALNETWORKS_FLOOR, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, FLOOR_float32) {
     activationOpTest(ANEURALNETWORKS_FLOOR, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, LOGICAL_NOT_bool) {
+    activationOpTest(ANEURALNETWORKS_LOGICAL_NOT, ANEURALNETWORKS_TENSOR_BOOL8);
+}
+
+TEST(OperationValidationTest, MEAN_float16) {
+    activationOpTest(ANEURALNETWORKS_MEAN, ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, MEAN_float32) {
+    activationOpTest(ANEURALNETWORKS_MEAN, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
 TEST(OperationValidationTest, TANH_float32) {

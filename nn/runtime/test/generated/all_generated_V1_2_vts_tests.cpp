@@ -5734,6 +5734,29 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_large_nchw_weight_as_input_quant8_2
 }
 
 
+// Generated from: dequantize_float16.mod.py.
+namespace dequantize_float16 {
+// Generated dequantize_float16 test
+#include "examples/dequantize_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/dequantize_float16.model.cpp"
+} // namespace dequantize_float16
+
+TEST_F(NeuralnetworksHidlTest, dequantize_float16) {
+  generated_tests::Execute(device,
+                           dequantize_float16::createTestModel,
+                           dequantize_float16::is_ignored,
+                           dequantize_float16::get_examples());
+}
+
+TEST_F(ValidationTest, dequantize_float16) {
+  const Model model = dequantize_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(dequantize_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: div_broadcast_float16.mod.py.
 namespace div_broadcast_float16 {
 // Generated div_broadcast_float16 test
@@ -6241,6 +6264,29 @@ TEST_F(NeuralnetworksHidlTest, expand_dims_float16_4) {
 TEST_F(ValidationTest, expand_dims_float16_4) {
   const Model model = expand_dims::createTestModel_float16_4();
   const std::vector<Request> requests = createRequests(expand_dims::get_examples_float16_4());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: floor_float16.mod.py.
+namespace floor_float16 {
+// Generated floor_float16 test
+#include "examples/floor_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/floor_float16.model.cpp"
+} // namespace floor_float16
+
+TEST_F(NeuralnetworksHidlTest, floor_float16) {
+  generated_tests::Execute(device,
+                           floor_float16::createTestModel,
+                           floor_float16::is_ignored,
+                           floor_float16::get_examples());
+}
+
+TEST_F(ValidationTest, floor_float16) {
+  const Model model = floor_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(floor_float16::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -15440,6 +15486,29 @@ TEST_F(NeuralnetworksHidlTest, maximum_broadcast_quant8) {
 TEST_F(ValidationTest, maximum_broadcast_quant8) {
   const Model model = maximum::createTestModel_quant8_2();
   const std::vector<Request> requests = createRequests(maximum::get_examples_broadcast_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: mean_float16.mod.py.
+namespace mean_float16 {
+// Generated mean_float16 test
+#include "examples/mean_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/mean_float16.model.cpp"
+} // namespace mean_float16
+
+TEST_F(NeuralnetworksHidlTest, mean_float16) {
+  generated_tests::Execute(device,
+                           mean_float16::createTestModel,
+                           mean_float16::is_ignored,
+                           mean_float16::get_examples());
+}
+
+TEST_F(ValidationTest, mean_float16) {
+  const Model model = mean_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(mean_float16::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
