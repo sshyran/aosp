@@ -53,19 +53,6 @@ inline bool l2normFloat32Impl(const float* inputData, const Shape& inputShape, i
     return true;
 }
 
-bool l2normFloat16(const _Float16* inputData, const Shape& inputShape, int32_t axis,
-                   _Float16* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("l2normFloat16");
-    std::vector<float> inputDataFloat32(getNumberOfElements(inputShape));
-    convertFloat16ToFloat32(inputData, &inputDataFloat32);
-    std::vector<float> outputDataFloat32(getNumberOfElements(outputShape));
-
-    l2normFloat32(inputDataFloat32.data(), inputShape, axis, outputDataFloat32.data(), outputShape);
-    convertFloat32ToFloat16(outputDataFloat32, outputData);
-
-    return true;
-}
-
 bool l2normFloat32(const float* inputData, const Shape& inputShape, int32_t axis, float* outputData,
                    const Shape& outputShape) {
     int32_t ndim = getNumberOfDimensions(inputShape);
@@ -109,21 +96,6 @@ inline bool localResponseNormFloat32Impl(const float* inputData, const Shape& in
             }
         }
     }
-    return true;
-}
-
-bool localResponseNormFloat16(const _Float16* inputData, const Shape& inputShape, int32_t radius,
-                              float bias, float alpha, float beta, int32_t axis,
-                              _Float16* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("localResponseNormFloat16");
-    std::vector<float> inputDataFloat32(getNumberOfElements(inputShape));
-    convertFloat16ToFloat32(inputData, &inputDataFloat32);
-    std::vector<float> outputDataFloat32(getNumberOfElements(outputShape));
-
-    localResponseNormFloat32(inputDataFloat32.data(), inputShape, radius, bias, alpha, beta, axis,
-                             outputDataFloat32.data(), outputShape);
-    convertFloat32ToFloat16(outputDataFloat32, outputData);
-
     return true;
 }
 
