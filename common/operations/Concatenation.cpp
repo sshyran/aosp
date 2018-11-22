@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-#include "Operations.h"
 #include "CpuOperationUtils.h"
+#include "Operations.h"
 
 #include "tensorflow/contrib/lite/kernels/internal/optimized/optimized_ops.h"
+#include "tensorflow/contrib/lite/kernels/internal/reference/legacy_reference_ops.h"
 
 #include "Tracing.h"
 
@@ -50,9 +51,32 @@ template bool concatenation<float>(const std::vector<const float*>& inputDataPtr
 template bool concatenation<_Float16>(const std::vector<const _Float16*>& inputDataPtrs,
                                       const std::vector<Shape>& inputShapes, int32_t axis,
                                       _Float16* outputData, const Shape& outputShape);
-template bool concatenation<uint8_t>(const std::vector<const uint8_t*>& inputDataPtrs,
-                                     const std::vector<Shape>& inputShapes, int32_t axis,
-                                     uint8_t* outputData, const Shape& outputShape);
+
+template <>
+bool concatenation<uint8_t>(const std::vector<const uint8_t*>& inputDataPtrs,
+                            const std::vector<Shape>& inputShapes, int32_t axis,
+                            uint8_t* outputData, const Shape& outputShape) {
+    NNTRACE_TRANS("concatenationQuant8");
+    int num_inputs = inputShapes.size();
+    std::vector<float> inputScales(num_inputs);
+    std::vector<int32> inputOffsets(num_inputs);
+    std::vector<tflite::Dims<4>*> inputDimsPtr(num_inputs);
+    std::vector<tflite::Dims<4> > inputDims(num_inputs);
+    for (int i = 0; i < num_inputs; i++) {
+        inputScales[i] = inputShapes[i].scale;
+        inputOffsets[i] = inputShapes[i].offset;
+        inputDims[i] = convertShapeToDims(inputShapes[i]);
+        inputDimsPtr[i] = &inputDims[i];
+    }
+
+    NNTRACE_COMP_SWITCH("reference_ops::Concatenation");
+    tflite::reference_ops::Concatenation(
+            getNumberOfDimensions(outputShape) - axis - 1, inputDataPtrs.data(),
+            inputDimsPtr.data(), inputOffsets.data(), inputScales.data(), num_inputs, outputData,
+            convertShapeToDims(outputShape), outputShape.offset, outputShape.scale);
+
+    return true;
+}
 
 }  // namespace nn
 }  // namespace android

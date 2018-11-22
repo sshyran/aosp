@@ -1069,6 +1069,16 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
+
+                const Operand& output = operands[outputIndexes[0]];
+                for (uint32_t i = 0; i < inputCount; ++i) {
+                    const Operand& input = operands[inputIndexes[i]];
+                    if (input.scale != output.scale || input.zeroPoint != output.zeroPoint) {
+                        NN_RETURN_IF_ERROR(
+                                validateHalVersion(opType, halVersion, HalVersion::V1_2));
+                        break;
+                    }
+                }
             } else {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
                            << kOperationNames[opType];
