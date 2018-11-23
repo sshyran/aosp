@@ -34,8 +34,9 @@ OperationResolver::OperationResolver() {
 
 const OperationRegistration* OperationResolver::findOperation(OperationType operationType) const {
     auto index = static_cast<int32_t>(operationType);
-    CHECK_LE(0, index);
-    CHECK_LT(index, kNumberOfOperationTypes);
+    if (index < 0 || index >= kNumberOfOperationTypes) {
+        return nullptr;
+    }
     return mRegistrations[index];
 }
 
