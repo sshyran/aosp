@@ -2377,7 +2377,11 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             const OperationRegistration* operationRegistration =
                     OperationResolver::get()->findOperation(static_cast<OperationType>(opType));
             if (operationRegistration == nullptr) {
-                LOG(ERROR) << kOperationNames[opType] << " not registered";
+                if (opType >= 0 && opType < kNumberOfOperationTypes) {
+                    LOG(ERROR) << kOperationNames[opType] << " not registered";
+                } else {
+                    LOG(ERROR) << "Operation type " << opType << " not registered";
+                }
                 return ANEURALNETWORKS_UNEXPECTED_NULL;
             }
             if (operationRegistration->validate == nullptr) {
