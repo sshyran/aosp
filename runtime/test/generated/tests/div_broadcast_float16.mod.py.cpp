@@ -12,6 +12,6 @@ namespace div_broadcast_float16 {
 TEST_F(GeneratedTests, div_broadcast_float16) {
     execute(div_broadcast_float16::CreateModel,
             div_broadcast_float16::is_ignored,
-            div_broadcast_float16::examples);
+            div_broadcast_float16::get_examples());
 }
 

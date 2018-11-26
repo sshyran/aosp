@@ -12,6 +12,6 @@ namespace depthwise_conv {
 TEST_F(GeneratedTests, depthwise_conv) {
     execute(depthwise_conv::CreateModel,
             depthwise_conv::is_ignored,
-            depthwise_conv::examples);
+            depthwise_conv::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace add {
 TEST_F(GeneratedTests, add) {
     execute(add::CreateModel,
             add::is_ignored,
-            add::examples);
+            add::get_examples());
 }
 

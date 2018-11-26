@@ -12,6 +12,6 @@ namespace tanh {
 TEST_F(GeneratedTests, tanh) {
     execute(tanh::CreateModel,
             tanh::is_ignored,
-            tanh::examples);
+            tanh::get_examples());
 }
 

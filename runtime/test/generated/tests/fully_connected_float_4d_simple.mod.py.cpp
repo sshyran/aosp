@@ -12,6 +12,6 @@ namespace fully_connected_float_4d_simple {
 TEST_F(GeneratedTests, fully_connected_float_4d_simple) {
     execute(fully_connected_float_4d_simple::CreateModel,
             fully_connected_float_4d_simple::is_ignored,
-            fully_connected_float_4d_simple::examples);
+            fully_connected_float_4d_simple::get_examples());
 }
 

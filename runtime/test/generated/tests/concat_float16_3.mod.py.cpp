@@ -12,6 +12,6 @@ namespace concat_float16_3 {
 TEST_F(GeneratedTests, concat_float16_3) {
     execute(concat_float16_3::CreateModel,
             concat_float16_3::is_ignored,
-            concat_float16_3::examples);
+            concat_float16_3::get_examples());
 }
 

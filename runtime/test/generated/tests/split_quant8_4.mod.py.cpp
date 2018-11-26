@@ -12,6 +12,6 @@ namespace split_quant8_4 {
 TEST_F(GeneratedTests, split_quant8_4) {
     execute(split_quant8_4::CreateModel,
             split_quant8_4::is_ignored,
-            split_quant8_4::examples);
+            split_quant8_4::get_examples());
 }
 

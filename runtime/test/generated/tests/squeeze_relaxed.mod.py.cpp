@@ -12,6 +12,6 @@ namespace squeeze_relaxed {
 TEST_F(GeneratedTests, squeeze_relaxed) {
     execute(squeeze_relaxed::CreateModel,
             squeeze_relaxed::is_ignored,
-            squeeze_relaxed::examples);
+            squeeze_relaxed::get_examples());
 }
 

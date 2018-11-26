@@ -12,24 +12,24 @@ namespace tile_1 {
 TEST_F(GeneratedTests, tile_1) {
     execute(tile_1::CreateModel,
             tile_1::is_ignored,
-            tile_1::examples);
+            tile_1::get_examples());
 }
 
 TEST_F(GeneratedTests, tile_1_relaxed) {
     execute(tile_1::CreateModel_relaxed,
             tile_1::is_ignored_relaxed,
-            tile_1::examples_relaxed);
+            tile_1::get_examples_relaxed());
 }
 
 TEST_F(GeneratedTests, tile_1_float16) {
     execute(tile_1::CreateModel_float16,
             tile_1::is_ignored_float16,
-            tile_1::examples_float16);
+            tile_1::get_examples_float16());
 }
 
 TEST_F(GeneratedTests, tile_1_quant8) {
     execute(tile_1::CreateModel_quant8,
             tile_1::is_ignored_quant8,
-            tile_1::examples_quant8);
+            tile_1::get_examples_quant8());
 }
 

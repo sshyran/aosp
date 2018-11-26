@@ -12,6 +12,6 @@ namespace depthwise_conv2d_float {
 TEST_F(GeneratedTests, depthwise_conv2d_float) {
     execute(depthwise_conv2d_float::CreateModel,
             depthwise_conv2d_float::is_ignored,
-            depthwise_conv2d_float::examples);
+            depthwise_conv2d_float::get_examples());
 }
 

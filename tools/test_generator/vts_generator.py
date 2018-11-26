@@ -247,11 +247,11 @@ TEST_F(NeuralnetworksHidlTest, {test_name}) {{
   generated_tests::Execute(device,
                            {namespace}::{create_model_name},
                            {namespace}::{is_ignored_name},
-                           {namespace}::{examples_name});\n}}
+                           {namespace}::get_{examples_name}());\n}}
 
 TEST_F(ValidationTest, {test_name}) {{
   const Model model = {namespace}::{create_model_name}();
-  const std::vector<Request> requests = createRequests({namespace}::{examples_name});
+  const std::vector<Request> requests = createRequests({namespace}::get_{examples_name}());
   validateModel(model);
   validateRequests(model, requests);
 }}\n

@@ -12,6 +12,6 @@ namespace transpose_float16 {
 TEST_F(GeneratedTests, transpose_float16) {
     execute(transpose_float16::CreateModel,
             transpose_float16::is_ignored,
-            transpose_float16::examples);
+            transpose_float16::get_examples());
 }
 
