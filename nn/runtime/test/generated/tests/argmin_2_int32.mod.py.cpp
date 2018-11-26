@@ -12,6 +12,6 @@ namespace argmin_2_int32 {
 TEST_F(GeneratedTests, argmin_2_int32) {
     execute(argmin_2_int32::CreateModel,
             argmin_2_int32::is_ignored,
-            argmin_2_int32::examples);
+            argmin_2_int32::get_examples());
 }
 

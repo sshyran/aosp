@@ -12,6 +12,6 @@ namespace fully_connected_quant8 {
 TEST_F(GeneratedTests, fully_connected_quant8) {
     execute(fully_connected_quant8::CreateModel,
             fully_connected_quant8::is_ignored,
-            fully_connected_quant8::examples);
+            fully_connected_quant8::get_examples());
 }
 

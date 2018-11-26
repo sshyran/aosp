@@ -12,6 +12,6 @@ namespace fully_connected_float_relaxed {
 TEST_F(GeneratedTests, fully_connected_float_relaxed) {
     execute(fully_connected_float_relaxed::CreateModel,
             fully_connected_float_relaxed::is_ignored,
-            fully_connected_float_relaxed::examples);
+            fully_connected_float_relaxed::get_examples());
 }
 

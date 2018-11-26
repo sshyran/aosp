@@ -12,12 +12,12 @@ namespace split_quant8_1 {
 TEST_F(GeneratedTests, split_quant8_1) {
     execute(split_quant8_1::CreateModel,
             split_quant8_1::is_ignored,
-            split_quant8_1::examples);
+            split_quant8_1::get_examples());
 }
 
 TEST_F(GeneratedTests, split_quant8_1_relaxed) {
     execute(split_quant8_1::CreateModel_relaxed,
             split_quant8_1::is_ignored_relaxed,
-            split_quant8_1::examples_relaxed);
+            split_quant8_1::get_examples_relaxed());
 }
 

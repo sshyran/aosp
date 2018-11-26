@@ -12,6 +12,6 @@ namespace lsh_projection_2_relaxed {
 TEST_F(GeneratedTests, lsh_projection_2_relaxed) {
     execute(lsh_projection_2_relaxed::CreateModel,
             lsh_projection_2_relaxed::is_ignored,
-            lsh_projection_2_relaxed::examples);
+            lsh_projection_2_relaxed::get_examples());
 }
 

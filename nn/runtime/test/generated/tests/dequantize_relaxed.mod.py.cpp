@@ -12,6 +12,6 @@ namespace dequantize_relaxed {
 TEST_F(GeneratedTests, dequantize_relaxed) {
     execute(dequantize_relaxed::CreateModel,
             dequantize_relaxed::is_ignored,
-            dequantize_relaxed::examples);
+            dequantize_relaxed::get_examples());
 }
 

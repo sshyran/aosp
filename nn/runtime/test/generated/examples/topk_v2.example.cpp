@@ -1,6 +1,7 @@
 // clang-format off
 // Generated file (from: topk_v2.mod.py). Do not edit
-std::vector<MixedTypedExample> examples = {
+std::vector<MixedTypedExample>& get_examples() {
+static std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 .operands = {
@@ -33,8 +34,11 @@ std::vector<MixedTypedExample> examples = {
 },
 }, // End of an example
 };
+return examples;
+};
 
-std::vector<MixedTypedExample> examples_relaxed = {
+std::vector<MixedTypedExample>& get_examples_relaxed() {
+static std::vector<MixedTypedExample> examples_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -67,8 +71,11 @@ std::vector<MixedTypedExample> examples_relaxed = {
 },
 }, // End of an example
 };
+return examples_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_float16 = {
+std::vector<MixedTypedExample>& get_examples_float16() {
+static std::vector<MixedTypedExample> examples_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -101,8 +108,11 @@ std::vector<MixedTypedExample> examples_float16 = {
 },
 }, // End of an example
 };
+return examples_float16;
+};
 
-std::vector<MixedTypedExample> examples_2 = {
+std::vector<MixedTypedExample>& get_examples_2() {
+static std::vector<MixedTypedExample> examples_2 = {
 // Begin of an example
 {
 .operands = {
@@ -135,8 +145,11 @@ std::vector<MixedTypedExample> examples_2 = {
 },
 }, // End of an example
 };
+return examples_2;
+};
 
-std::vector<MixedTypedExample> examples_relaxed_2 = {
+std::vector<MixedTypedExample>& get_examples_relaxed_2() {
+static std::vector<MixedTypedExample> examples_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -169,8 +182,11 @@ std::vector<MixedTypedExample> examples_relaxed_2 = {
 },
 }, // End of an example
 };
+return examples_relaxed_2;
+};
 
-std::vector<MixedTypedExample> examples_float16_2 = {
+std::vector<MixedTypedExample>& get_examples_float16_2() {
+static std::vector<MixedTypedExample> examples_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -203,8 +219,11 @@ std::vector<MixedTypedExample> examples_float16_2 = {
 },
 }, // End of an example
 };
+return examples_float16_2;
+};
 
-std::vector<MixedTypedExample> examples_3 = {
+std::vector<MixedTypedExample>& get_examples_3() {
+static std::vector<MixedTypedExample> examples_3 = {
 // Begin of an example
 {
 .operands = {
@@ -237,8 +256,11 @@ std::vector<MixedTypedExample> examples_3 = {
 },
 }, // End of an example
 };
+return examples_3;
+};
 
-std::vector<MixedTypedExample> examples_relaxed_3 = {
+std::vector<MixedTypedExample>& get_examples_relaxed_3() {
+static std::vector<MixedTypedExample> examples_relaxed_3 = {
 // Begin of an example
 {
 .operands = {
@@ -271,8 +293,11 @@ std::vector<MixedTypedExample> examples_relaxed_3 = {
 },
 }, // End of an example
 };
+return examples_relaxed_3;
+};
 
-std::vector<MixedTypedExample> examples_float16_3 = {
+std::vector<MixedTypedExample>& get_examples_float16_3() {
+static std::vector<MixedTypedExample> examples_float16_3 = {
 // Begin of an example
 {
 .operands = {
@@ -305,8 +330,11 @@ std::vector<MixedTypedExample> examples_float16_3 = {
 },
 }, // End of an example
 };
+return examples_float16_3;
+};
 
-std::vector<MixedTypedExample> examples_4 = {
+std::vector<MixedTypedExample>& get_examples_4() {
+static std::vector<MixedTypedExample> examples_4 = {
 // Begin of an example
 {
 .operands = {
@@ -339,8 +367,11 @@ std::vector<MixedTypedExample> examples_4 = {
 },
 }, // End of an example
 };
+return examples_4;
+};
 
-std::vector<MixedTypedExample> examples_relaxed_4 = {
+std::vector<MixedTypedExample>& get_examples_relaxed_4() {
+static std::vector<MixedTypedExample> examples_relaxed_4 = {
 // Begin of an example
 {
 .operands = {
@@ -373,8 +404,11 @@ std::vector<MixedTypedExample> examples_relaxed_4 = {
 },
 }, // End of an example
 };
+return examples_relaxed_4;
+};
 
-std::vector<MixedTypedExample> examples_float16_4 = {
+std::vector<MixedTypedExample>& get_examples_float16_4() {
+static std::vector<MixedTypedExample> examples_float16_4 = {
 // Begin of an example
 {
 .operands = {
@@ -407,8 +441,11 @@ std::vector<MixedTypedExample> examples_float16_4 = {
 },
 }, // End of an example
 };
+return examples_float16_4;
+};
 
-std::vector<MixedTypedExample> examples_5 = {
+std::vector<MixedTypedExample>& get_examples_5() {
+static std::vector<MixedTypedExample> examples_5 = {
 // Begin of an example
 {
 .operands = {
@@ -441,8 +478,11 @@ std::vector<MixedTypedExample> examples_5 = {
 },
 }, // End of an example
 };
+return examples_5;
+};
 
-std::vector<MixedTypedExample> examples_relaxed_5 = {
+std::vector<MixedTypedExample>& get_examples_relaxed_5() {
+static std::vector<MixedTypedExample> examples_relaxed_5 = {
 // Begin of an example
 {
 .operands = {
@@ -475,8 +515,11 @@ std::vector<MixedTypedExample> examples_relaxed_5 = {
 },
 }, // End of an example
 };
+return examples_relaxed_5;
+};
 
-std::vector<MixedTypedExample> examples_float16_5 = {
+std::vector<MixedTypedExample>& get_examples_float16_5() {
+static std::vector<MixedTypedExample> examples_float16_5 = {
 // Begin of an example
 {
 .operands = {
@@ -509,8 +552,11 @@ std::vector<MixedTypedExample> examples_float16_5 = {
 },
 }, // End of an example
 };
+return examples_float16_5;
+};
 
-std::vector<MixedTypedExample> examples_6 = {
+std::vector<MixedTypedExample>& get_examples_6() {
+static std::vector<MixedTypedExample> examples_6 = {
 // Begin of an example
 {
 .operands = {
@@ -543,8 +589,11 @@ std::vector<MixedTypedExample> examples_6 = {
 },
 }, // End of an example
 };
+return examples_6;
+};
 
-std::vector<MixedTypedExample> examples_relaxed_6 = {
+std::vector<MixedTypedExample>& get_examples_relaxed_6() {
+static std::vector<MixedTypedExample> examples_relaxed_6 = {
 // Begin of an example
 {
 .operands = {
@@ -577,8 +626,11 @@ std::vector<MixedTypedExample> examples_relaxed_6 = {
 },
 }, // End of an example
 };
+return examples_relaxed_6;
+};
 
-std::vector<MixedTypedExample> examples_float16_6 = {
+std::vector<MixedTypedExample>& get_examples_float16_6() {
+static std::vector<MixedTypedExample> examples_float16_6 = {
 // Begin of an example
 {
 .operands = {
@@ -610,5 +662,7 @@ std::vector<MixedTypedExample> examples_float16_6 = {
 }
 },
 }, // End of an example
+};
+return examples_float16_6;
 };
 

@@ -12,18 +12,18 @@ namespace split_float_2 {
 TEST_F(GeneratedTests, split_float_2) {
     execute(split_float_2::CreateModel,
             split_float_2::is_ignored,
-            split_float_2::examples);
+            split_float_2::get_examples());
 }
 
 TEST_F(GeneratedTests, split_float_2_relaxed) {
     execute(split_float_2::CreateModel_relaxed,
             split_float_2::is_ignored_relaxed,
-            split_float_2::examples_relaxed);
+            split_float_2::get_examples_relaxed());
 }
 
 TEST_F(GeneratedTests, split_float_2_float16) {
     execute(split_float_2::CreateModel_float16,
             split_float_2::is_ignored_float16,
-            split_float_2::examples_float16);
+            split_float_2::get_examples_float16());
 }
 

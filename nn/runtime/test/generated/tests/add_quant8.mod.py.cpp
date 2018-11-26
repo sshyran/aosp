@@ -12,6 +12,6 @@ namespace add_quant8 {
 TEST_F(GeneratedTests, add_quant8) {
     execute(add_quant8::CreateModel,
             add_quant8::is_ignored,
-            add_quant8::examples);
+            add_quant8::get_examples());
 }
 

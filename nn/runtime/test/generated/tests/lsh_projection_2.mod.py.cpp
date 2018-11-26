@@ -12,6 +12,6 @@ namespace lsh_projection_2 {
 TEST_F(GeneratedTests, lsh_projection_2) {
     execute(lsh_projection_2::CreateModel,
             lsh_projection_2::is_ignored,
-            lsh_projection_2::examples);
+            lsh_projection_2::get_examples());
 }
 

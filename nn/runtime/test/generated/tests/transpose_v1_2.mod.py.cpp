@@ -12,18 +12,18 @@ namespace transpose_v1_2 {
 TEST_F(GeneratedTests, transpose_v1_2) {
     execute(transpose_v1_2::CreateModel,
             transpose_v1_2::is_ignored,
-            transpose_v1_2::examples);
+            transpose_v1_2::get_examples());
 }
 
 TEST_F(GeneratedTests, transpose_v1_2_relaxed) {
     execute(transpose_v1_2::CreateModel_relaxed,
             transpose_v1_2::is_ignored_relaxed,
-            transpose_v1_2::examples_relaxed);
+            transpose_v1_2::get_examples_relaxed());
 }
 
 TEST_F(GeneratedTests, transpose_v1_2_quant8) {
     execute(transpose_v1_2::CreateModel_quant8,
             transpose_v1_2::is_ignored_quant8,
-            transpose_v1_2::examples_quant8);
+            transpose_v1_2::get_examples_quant8());
 }
 

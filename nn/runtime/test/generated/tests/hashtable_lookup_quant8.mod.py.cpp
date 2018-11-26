@@ -12,6 +12,6 @@ namespace hashtable_lookup_quant8 {
 TEST_F(GeneratedTests, hashtable_lookup_quant8) {
     execute(hashtable_lookup_quant8::CreateModel,
             hashtable_lookup_quant8::is_ignored,
-            hashtable_lookup_quant8::examples);
+            hashtable_lookup_quant8::get_examples());
 }
 

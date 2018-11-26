@@ -12,6 +12,6 @@ namespace lstm {
 TEST_F(GeneratedTests, lstm) {
     execute(lstm::CreateModel,
             lstm::is_ignored,
-            lstm::examples);
+            lstm::get_examples());
 }
 
