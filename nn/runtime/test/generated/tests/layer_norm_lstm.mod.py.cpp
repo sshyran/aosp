@@ -12,6 +12,6 @@ namespace layer_norm_lstm {
 TEST_F(GeneratedTests, layer_norm_lstm) {
     execute(layer_norm_lstm::CreateModel,
             layer_norm_lstm::is_ignored,
-            layer_norm_lstm::examples);
+            layer_norm_lstm::get_examples());
 }
 

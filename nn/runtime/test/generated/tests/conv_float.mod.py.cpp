@@ -12,6 +12,6 @@ namespace conv_float {
 TEST_F(GeneratedTests, conv_float) {
     execute(conv_float::CreateModel,
             conv_float::is_ignored,
-            conv_float::examples);
+            conv_float::get_examples());
 }
 

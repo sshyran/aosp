@@ -12,6 +12,6 @@ namespace pad {
 TEST_F(GeneratedTests, pad) {
     execute(pad::CreateModel,
             pad::is_ignored,
-            pad::examples);
+            pad::get_examples());
 }
 

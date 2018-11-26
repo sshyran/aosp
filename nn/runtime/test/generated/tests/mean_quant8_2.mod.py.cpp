@@ -12,6 +12,6 @@ namespace mean_quant8_2 {
 TEST_F(GeneratedTests, mean_quant8_2) {
     execute(mean_quant8_2::CreateModel,
             mean_quant8_2::is_ignored,
-            mean_quant8_2::examples);
+            mean_quant8_2::get_examples());
 }
 

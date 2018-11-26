@@ -12,6 +12,6 @@ namespace tanh_quantized {
 TEST_F(GeneratedTests, tanh_quantized) {
     execute(tanh_quantized::CreateModel,
             tanh_quantized::is_ignored,
-            tanh_quantized::examples);
+            tanh_quantized::get_examples());
 }
 

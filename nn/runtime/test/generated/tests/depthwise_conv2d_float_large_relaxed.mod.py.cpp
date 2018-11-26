@@ -12,6 +12,6 @@ namespace depthwise_conv2d_float_large_relaxed {
 TEST_F(GeneratedTests, depthwise_conv2d_float_large_relaxed) {
     execute(depthwise_conv2d_float_large_relaxed::CreateModel,
             depthwise_conv2d_float_large_relaxed::is_ignored,
-            depthwise_conv2d_float_large_relaxed::examples);
+            depthwise_conv2d_float_large_relaxed::get_examples());
 }
 

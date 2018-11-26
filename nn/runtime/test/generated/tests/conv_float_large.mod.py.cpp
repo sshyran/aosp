@@ -12,6 +12,6 @@ namespace conv_float_large {
 TEST_F(GeneratedTests, conv_float_large) {
     execute(conv_float_large::CreateModel,
             conv_float_large::is_ignored,
-            conv_float_large::examples);
+            conv_float_large::get_examples());
 }
 

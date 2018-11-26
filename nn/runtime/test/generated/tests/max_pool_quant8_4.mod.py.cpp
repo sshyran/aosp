@@ -12,6 +12,6 @@ namespace max_pool_quant8_4 {
 TEST_F(GeneratedTests, max_pool_quant8_4) {
     execute(max_pool_quant8_4::CreateModel,
             max_pool_quant8_4::is_ignored,
-            max_pool_quant8_4::examples);
+            max_pool_quant8_4::get_examples());
 }
 

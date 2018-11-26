@@ -12,6 +12,6 @@ namespace concat_quant8_3 {
 TEST_F(GeneratedTests, concat_quant8_3) {
     execute(concat_quant8_3::CreateModel,
             concat_quant8_3::is_ignored,
-            concat_quant8_3::examples);
+            concat_quant8_3::get_examples());
 }
 
