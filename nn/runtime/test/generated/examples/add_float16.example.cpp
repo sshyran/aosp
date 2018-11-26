@@ -17,6 +17,8 @@ static std::vector<MixedTypedExample> examples = {
   {},
   // int -> FLOAT16 map
   {{0, {1.0009765625f, 1.0f, 2.5f}}, {1, {2e-23f, 0.0001f, 3.5f}}},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -30,6 +32,8 @@ static std::vector<MixedTypedExample> examples = {
   {},
   // int -> FLOAT16 map
   {{0, {1.0009765625f, 1.0f, 6.0f}}},
+  // int -> BOOL8 map
+  {},
 }
 },
 }, // End of an example
