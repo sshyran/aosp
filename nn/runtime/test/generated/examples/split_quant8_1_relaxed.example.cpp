@@ -9,8 +9,13 @@ std::vector<MixedTypedExample> examples = {
   {},
   // int -> INT32 map
   {},
+<<<<<<< HEAD:nn/runtime/test/generated/examples/split_quant8_1_relaxed.example.cpp
   // int -> QUANT8_ASYMM map
   {{0, {1, 2, 3, 4, 5, 6}}}
+=======
+  // int -> BOOL map
+  {},
+>>>>>>> Add new type TENSOR_BOOL:nn/runtime/test/generated/examples/argmax_2_int32.example.cpp
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -18,8 +23,13 @@ std::vector<MixedTypedExample> examples = {
   {},
   // int -> INT32 map
   {},
+<<<<<<< HEAD:nn/runtime/test/generated/examples/split_quant8_1_relaxed.example.cpp
   // int -> QUANT8_ASYMM map
   {{0, {1, 2}}, {1, {3, 4}}, {2, {5, 6}}}
+=======
+  // int -> BOOL map
+  {},
+>>>>>>> Add new type TENSOR_BOOL:nn/runtime/test/generated/examples/argmax_2_int32.example.cpp
 }
 }, // End of an example
 };

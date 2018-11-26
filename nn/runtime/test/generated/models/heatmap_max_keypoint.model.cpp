@@ -11,8 +11,8 @@ void CreateModel_nhwc(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out = model->addOperand(&type3);
   // Phase 2, operations
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap, boxes, layout}, {out});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -37,8 +37,8 @@ void CreateModel_nhwc_relaxed(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out = model->addOperand(&type3);
   // Phase 2, operations
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap, boxes, layout}, {out});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -65,8 +65,8 @@ void CreateModel_nchw(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out = model->addOperand(&type3);
   // Phase 2, operations
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap, boxes, layout}, {out});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -91,8 +91,8 @@ void CreateModel_nchw_relaxed(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out = model->addOperand(&type3);
   // Phase 2, operations
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap, boxes, layout}, {out});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -119,8 +119,8 @@ void CreateModel_nhwc_2(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out1 = model->addOperand(&type6);
   // Phase 2, operations
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap1, boxes1, layout}, {out1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -145,8 +145,8 @@ void CreateModel_nhwc_relaxed_2(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out1 = model->addOperand(&type6);
   // Phase 2, operations
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap1, boxes1, layout}, {out1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -173,8 +173,8 @@ void CreateModel_nchw_2(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out1 = model->addOperand(&type6);
   // Phase 2, operations
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap1, boxes1, layout}, {out1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -199,8 +199,8 @@ void CreateModel_nchw_relaxed_2(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out1 = model->addOperand(&type6);
   // Phase 2, operations
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap1, boxes1, layout}, {out1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
