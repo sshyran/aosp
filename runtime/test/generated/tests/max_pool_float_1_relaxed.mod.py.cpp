@@ -12,6 +12,6 @@ namespace max_pool_float_1_relaxed {
 TEST_F(GeneratedTests, max_pool_float_1_relaxed) {
     execute(max_pool_float_1_relaxed::CreateModel,
             max_pool_float_1_relaxed::is_ignored,
-            max_pool_float_1_relaxed::examples);
+            max_pool_float_1_relaxed::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace fully_connected_quant8_weights_as_inputs {
 TEST_F(GeneratedTests, fully_connected_quant8_weights_as_inputs) {
     execute(fully_connected_quant8_weights_as_inputs::CreateModel,
             fully_connected_quant8_weights_as_inputs::is_ignored,
-            fully_connected_quant8_weights_as_inputs::examples);
+            fully_connected_quant8_weights_as_inputs::get_examples());
 }
 

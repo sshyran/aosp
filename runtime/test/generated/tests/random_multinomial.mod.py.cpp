@@ -12,6 +12,6 @@ namespace random_multinomial {
 TEST_F(GeneratedTests, random_multinomial) {
     execute(random_multinomial::CreateModel,
             random_multinomial::is_ignored,
-            random_multinomial::examples);
+            random_multinomial::get_examples());
 }
 

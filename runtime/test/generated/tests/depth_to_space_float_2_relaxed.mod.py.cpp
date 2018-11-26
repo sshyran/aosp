@@ -12,6 +12,6 @@ namespace depth_to_space_float_2_relaxed {
 TEST_F(GeneratedTests, depth_to_space_float_2_relaxed) {
     execute(depth_to_space_float_2_relaxed::CreateModel,
             depth_to_space_float_2_relaxed::is_ignored,
-            depth_to_space_float_2_relaxed::examples);
+            depth_to_space_float_2_relaxed::get_examples());
 }
 

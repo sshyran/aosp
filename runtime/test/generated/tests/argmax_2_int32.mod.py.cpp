@@ -12,6 +12,6 @@ namespace argmax_2_int32 {
 TEST_F(GeneratedTests, argmax_2_int32) {
     execute(argmax_2_int32::CreateModel,
             argmax_2_int32::is_ignored,
-            argmax_2_int32::examples);
+            argmax_2_int32::get_examples());
 }
 

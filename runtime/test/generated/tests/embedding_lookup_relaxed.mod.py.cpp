@@ -12,6 +12,6 @@ namespace embedding_lookup_relaxed {
 TEST_F(GeneratedTests, embedding_lookup_relaxed) {
     execute(embedding_lookup_relaxed::CreateModel,
             embedding_lookup_relaxed::is_ignored,
-            embedding_lookup_relaxed::examples);
+            embedding_lookup_relaxed::get_examples());
 }
 

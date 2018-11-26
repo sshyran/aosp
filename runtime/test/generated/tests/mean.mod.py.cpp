@@ -12,6 +12,6 @@ namespace mean {
 TEST_F(GeneratedTests, mean) {
     execute(mean::CreateModel,
             mean::is_ignored,
-            mean::examples);
+            mean::get_examples());
 }
 

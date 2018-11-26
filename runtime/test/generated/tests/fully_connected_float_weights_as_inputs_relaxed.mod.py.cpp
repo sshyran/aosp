@@ -12,6 +12,6 @@ namespace fully_connected_float_weights_as_inputs_relaxed {
 TEST_F(GeneratedTests, fully_connected_float_weights_as_inputs_relaxed) {
     execute(fully_connected_float_weights_as_inputs_relaxed::CreateModel,
             fully_connected_float_weights_as_inputs_relaxed::is_ignored,
-            fully_connected_float_weights_as_inputs_relaxed::examples);
+            fully_connected_float_weights_as_inputs_relaxed::get_examples());
 }
 

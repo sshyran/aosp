@@ -12,6 +12,6 @@ namespace sub_float16 {
 TEST_F(GeneratedTests, sub_float16) {
     execute(sub_float16::CreateModel,
             sub_float16::is_ignored,
-            sub_float16::examples);
+            sub_float16::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace l2_normalization_2 {
 TEST_F(GeneratedTests, l2_normalization_2) {
     execute(l2_normalization_2::CreateModel,
             l2_normalization_2::is_ignored,
-            l2_normalization_2::examples);
+            l2_normalization_2::get_examples());
 }
 

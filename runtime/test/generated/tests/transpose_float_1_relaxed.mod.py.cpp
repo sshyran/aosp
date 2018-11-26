@@ -12,6 +12,6 @@ namespace transpose_float_1_relaxed {
 TEST_F(GeneratedTests, transpose_float_1_relaxed) {
     execute(transpose_float_1_relaxed::CreateModel,
             transpose_float_1_relaxed::is_ignored,
-            transpose_float_1_relaxed::examples);
+            transpose_float_1_relaxed::get_examples());
 }
 

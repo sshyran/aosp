@@ -12,6 +12,6 @@ namespace depthwise_conv2d_quant8_2 {
 TEST_F(GeneratedTests, depthwise_conv2d_quant8_2) {
     execute(depthwise_conv2d_quant8_2::CreateModel,
             depthwise_conv2d_quant8_2::is_ignored,
-            depthwise_conv2d_quant8_2::examples);
+            depthwise_conv2d_quant8_2::get_examples());
 }
 

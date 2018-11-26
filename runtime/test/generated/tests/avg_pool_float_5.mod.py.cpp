@@ -12,6 +12,6 @@ namespace avg_pool_float_5 {
 TEST_F(GeneratedTests, avg_pool_float_5) {
     execute(avg_pool_float_5::CreateModel,
             avg_pool_float_5::is_ignored,
-            avg_pool_float_5::examples);
+            avg_pool_float_5::get_examples());
 }
 

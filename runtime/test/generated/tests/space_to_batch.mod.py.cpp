@@ -12,6 +12,6 @@ namespace space_to_batch {
 TEST_F(GeneratedTests, space_to_batch) {
     execute(space_to_batch::CreateModel,
             space_to_batch::is_ignored,
-            space_to_batch::examples);
+            space_to_batch::get_examples());
 }
 
