@@ -17,6 +17,8 @@ static std::vector<MixedTypedExample> examples = {
   {{4, {876, 1034, 955, -909, 761, 1029, 796, -1036}}},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -29,6 +31,8 @@ static std::vector<MixedTypedExample> examples = {
   // int -> QUANT16_SYMM map
   {{1, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}, {3, {1485, 1177, 1373, -1023, 1019, 1355, 1097, -1235}}},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
