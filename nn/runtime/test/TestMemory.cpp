@@ -16,20 +16,20 @@
 
 #include "TestMemory.h"
 
-#include "NeuralNetworksWrapper.h"
+#include "TestNeuralNetworksWrapper.h"
 
 #include <gtest/gtest.h>
 #include <sys/mman.h>
 #include <sys/types.h>
 #include <unistd.h>
 
-using WrapperCompilation = ::android::nn::wrapper::Compilation;
-using WrapperExecution = ::android::nn::wrapper::Execution;
-using WrapperMemory = ::android::nn::wrapper::Memory;
-using WrapperModel = ::android::nn::wrapper::Model;
-using WrapperOperandType = ::android::nn::wrapper::OperandType;
-using WrapperResult = ::android::nn::wrapper::Result;
-using WrapperType = ::android::nn::wrapper::Type;
+using WrapperCompilation = ::android::nn::test_wrapper::Compilation;
+using WrapperExecution = ::android::nn::test_wrapper::Execution;
+using WrapperMemory = ::android::nn::test_wrapper::Memory;
+using WrapperModel = ::android::nn::test_wrapper::Model;
+using WrapperOperandType = ::android::nn::test_wrapper::OperandType;
+using WrapperResult = ::android::nn::test_wrapper::Result;
+using WrapperType = ::android::nn::test_wrapper::Type;
 
 namespace {
 

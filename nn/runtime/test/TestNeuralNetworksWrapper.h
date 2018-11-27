@@ -36,6 +36,9 @@ enum class Type {
     TENSOR_FLOAT32 = ANEURALNETWORKS_TENSOR_FLOAT32,
     TENSOR_INT32 = ANEURALNETWORKS_TENSOR_INT32,
     TENSOR_QUANT8_ASYMM = ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+    BOOL = ANEURALNETWORKS_BOOL,
+    TENSOR_QUANT16_SYMM = ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
+    TENSOR_FLOAT16 = ANEURALNETWORKS_TENSOR_FLOAT16,
 };
 
 enum class ExecutePreference {
@@ -355,21 +358,34 @@ class Execution {
     }
 
     Result compute() {
-        ANeuralNetworksEvent* event = nullptr;
-        Result result =
-                static_cast<Result>(ANeuralNetworksExecution_startCompute(mExecution, &event));
-        if (result != Result::NO_ERROR) {
+        if (!mComputeUsesSychronousAPI) {
+            ANeuralNetworksEvent* event = nullptr;
+            Result result =
+                    static_cast<Result>(ANeuralNetworksExecution_startCompute(mExecution, &event));
+            if (result != Result::NO_ERROR) {
+                return result;
+            }
+            // TODO how to manage the lifetime of events when multiple waiters is not
+            // clear.
+            result = static_cast<Result>(ANeuralNetworksEvent_wait(event));
+            ANeuralNetworksEvent_free(event);
             return result;
         }
-        // TODO how to manage the lifetime of events when multiple waiters is not
-        // clear.
-        result = static_cast<Result>(ANeuralNetworksEvent_wait(event));
-        ANeuralNetworksEvent_free(event);
-        return result;
+
+        return static_cast<Result>(ANeuralNetworksExecution_compute(mExecution));
     }
+
+    // By default, compute() uses the synchronous API.
+    // setComputeUsesSynchronousAPI() can be used to change the behavior of
+    // compute() to instead use the asynchronous API and then wait for
+    // computation to complete.
+    static void setComputeUsesSynchronousAPI(bool val) { mComputeUsesSychronousAPI = val; }
 
    private:
     ANeuralNetworksExecution* mExecution = nullptr;
+
+    // Initialized to true in TestNeuralNetworksWrapper.cpp.
+    static bool mComputeUsesSychronousAPI;
 };
 
 }  // namespace test_wrapper
