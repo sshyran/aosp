@@ -12,6 +12,6 @@ namespace conv_quant8_channels {
 TEST_F(GeneratedTests, conv_quant8_channels) {
     execute(conv_quant8_channels::CreateModel,
             conv_quant8_channels::is_ignored,
-            conv_quant8_channels::examples);
+            conv_quant8_channels::get_examples());
 }
 

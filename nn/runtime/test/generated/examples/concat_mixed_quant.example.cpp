@@ -1,6 +1,7 @@
 // clang-format off
 // Generated file (from: concat_mixed_quant.mod.py). Do not edit
-std::vector<MixedTypedExample> examples_quant8 = {
+std::vector<MixedTypedExample>& get_examples_quant8() {
+static std::vector<MixedTypedExample> examples_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -33,8 +34,11 @@ std::vector<MixedTypedExample> examples_quant8 = {
 },
 }, // End of an example
 };
+return examples_quant8;
+};
 
-std::vector<MixedTypedExample> examples_quant8_2 = {
+std::vector<MixedTypedExample>& get_examples_quant8_2() {
+static std::vector<MixedTypedExample> examples_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -66,5 +70,7 @@ std::vector<MixedTypedExample> examples_quant8_2 = {
 }
 },
 }, // End of an example
+};
+return examples_quant8_2;
 };
 

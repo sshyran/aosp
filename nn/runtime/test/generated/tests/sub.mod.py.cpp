@@ -12,6 +12,6 @@ namespace sub {
 TEST_F(GeneratedTests, sub) {
     execute(sub::CreateModel,
             sub::is_ignored,
-            sub::examples);
+            sub::get_examples());
 }
 

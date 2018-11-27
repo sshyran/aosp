@@ -12,6 +12,6 @@ namespace add_float16 {
 TEST_F(GeneratedTests, add_float16) {
     execute(add_float16::CreateModel,
             add_float16::is_ignored,
-            add_float16::examples);
+            add_float16::get_examples());
 }
 

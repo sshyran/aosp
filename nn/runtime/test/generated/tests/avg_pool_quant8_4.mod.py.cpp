@@ -12,6 +12,6 @@ namespace avg_pool_quant8_4 {
 TEST_F(GeneratedTests, avg_pool_quant8_4) {
     execute(avg_pool_quant8_4::CreateModel,
             avg_pool_quant8_4::is_ignored,
-            avg_pool_quant8_4::examples);
+            avg_pool_quant8_4::get_examples());
 }
 

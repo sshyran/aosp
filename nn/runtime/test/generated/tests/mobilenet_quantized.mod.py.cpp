@@ -12,6 +12,6 @@ namespace mobilenet_quantized {
 TEST_F(GeneratedTests, mobilenet_quantized) {
     execute(mobilenet_quantized::CreateModel,
             mobilenet_quantized::is_ignored,
-            mobilenet_quantized::examples);
+            mobilenet_quantized::get_examples());
 }
 

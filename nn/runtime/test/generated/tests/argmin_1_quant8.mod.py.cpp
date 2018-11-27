@@ -12,6 +12,6 @@ namespace argmin_1_quant8 {
 TEST_F(GeneratedTests, argmin_1_quant8) {
     execute(argmin_1_quant8::CreateModel,
             argmin_1_quant8::is_ignored,
-            argmin_1_quant8::examples);
+            argmin_1_quant8::get_examples());
 }
 

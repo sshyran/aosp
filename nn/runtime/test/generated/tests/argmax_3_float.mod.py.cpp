@@ -12,6 +12,6 @@ namespace argmax_3_float {
 TEST_F(GeneratedTests, argmax_3_float) {
     execute(argmax_3_float::CreateModel,
             argmax_3_float::is_ignored,
-            argmax_3_float::examples);
+            argmax_3_float::get_examples());
 }
 

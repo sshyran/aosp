@@ -1,6 +1,7 @@
 // clang-format off
 // Generated file (from: l2_pool_float_large_relaxed.mod.py). Do not edit
-std::vector<MixedTypedExample> examples = {
+std::vector<MixedTypedExample>& get_examples() {
+static std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 .operands = {
@@ -32,5 +33,7 @@ std::vector<MixedTypedExample> examples = {
 }
 },
 }, // End of an example
+};
+return examples;
 };
 

@@ -12,6 +12,6 @@ namespace reshape_float16 {
 TEST_F(GeneratedTests, reshape_float16) {
     execute(reshape_float16::CreateModel,
             reshape_float16::is_ignored,
-            reshape_float16::examples);
+            reshape_float16::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace sub_quantized {
 TEST_F(GeneratedTests, sub_quantized) {
     execute(sub_quantized::CreateModel,
             sub_quantized::is_ignored,
-            sub_quantized::examples);
+            sub_quantized::get_examples());
 }
 

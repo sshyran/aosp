@@ -1,6 +1,7 @@
 // clang-format off
 // Generated file (from: minimum.mod.py). Do not edit
-std::vector<MixedTypedExample> examples_simple = {
+std::vector<MixedTypedExample>& get_examples_simple() {
+static std::vector<MixedTypedExample> examples_simple = {
 // Begin of an example
 {
 .operands = {
@@ -33,8 +34,11 @@ std::vector<MixedTypedExample> examples_simple = {
 },
 }, // End of an example
 };
+return examples_simple;
+};
 
-std::vector<MixedTypedExample> examples_simple_relaxed = {
+std::vector<MixedTypedExample>& get_examples_simple_relaxed() {
+static std::vector<MixedTypedExample> examples_simple_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -67,8 +71,11 @@ std::vector<MixedTypedExample> examples_simple_relaxed = {
 },
 }, // End of an example
 };
+return examples_simple_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_simple_quant8 = {
+std::vector<MixedTypedExample>& get_examples_simple_quant8() {
+static std::vector<MixedTypedExample> examples_simple_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -101,8 +108,11 @@ std::vector<MixedTypedExample> examples_simple_quant8 = {
 },
 }, // End of an example
 };
+return examples_simple_quant8;
+};
 
-std::vector<MixedTypedExample> examples_simple_int32 = {
+std::vector<MixedTypedExample>& get_examples_simple_int32() {
+static std::vector<MixedTypedExample> examples_simple_int32 = {
 // Begin of an example
 {
 .operands = {
@@ -135,8 +145,11 @@ std::vector<MixedTypedExample> examples_simple_int32 = {
 },
 }, // End of an example
 };
+return examples_simple_int32;
+};
 
-std::vector<MixedTypedExample> examples_simple_float16 = {
+std::vector<MixedTypedExample>& get_examples_simple_float16() {
+static std::vector<MixedTypedExample> examples_simple_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -169,8 +182,11 @@ std::vector<MixedTypedExample> examples_simple_float16 = {
 },
 }, // End of an example
 };
+return examples_simple_float16;
+};
 
-std::vector<MixedTypedExample> examples_broadcast = {
+std::vector<MixedTypedExample>& get_examples_broadcast() {
+static std::vector<MixedTypedExample> examples_broadcast = {
 // Begin of an example
 {
 .operands = {
@@ -203,8 +219,11 @@ std::vector<MixedTypedExample> examples_broadcast = {
 },
 }, // End of an example
 };
+return examples_broadcast;
+};
 
-std::vector<MixedTypedExample> examples_broadcast_relaxed = {
+std::vector<MixedTypedExample>& get_examples_broadcast_relaxed() {
+static std::vector<MixedTypedExample> examples_broadcast_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -237,8 +256,11 @@ std::vector<MixedTypedExample> examples_broadcast_relaxed = {
 },
 }, // End of an example
 };
+return examples_broadcast_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_broadcast_quant8 = {
+std::vector<MixedTypedExample>& get_examples_broadcast_quant8() {
+static std::vector<MixedTypedExample> examples_broadcast_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -271,8 +293,11 @@ std::vector<MixedTypedExample> examples_broadcast_quant8 = {
 },
 }, // End of an example
 };
+return examples_broadcast_quant8;
+};
 
-std::vector<MixedTypedExample> examples_broadcast_int32 = {
+std::vector<MixedTypedExample>& get_examples_broadcast_int32() {
+static std::vector<MixedTypedExample> examples_broadcast_int32 = {
 // Begin of an example
 {
 .operands = {
@@ -305,8 +330,11 @@ std::vector<MixedTypedExample> examples_broadcast_int32 = {
 },
 }, // End of an example
 };
+return examples_broadcast_int32;
+};
 
-std::vector<MixedTypedExample> examples_broadcast_float16 = {
+std::vector<MixedTypedExample>& get_examples_broadcast_float16() {
+static std::vector<MixedTypedExample> examples_broadcast_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -338,5 +366,7 @@ std::vector<MixedTypedExample> examples_broadcast_float16 = {
 }
 },
 }, // End of an example
+};
+return examples_broadcast_float16;
 };
 

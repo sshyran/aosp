@@ -12,6 +12,6 @@ namespace conv_float_channels_relaxed {
 TEST_F(GeneratedTests, conv_float_channels_relaxed) {
     execute(conv_float_channels_relaxed::CreateModel,
             conv_float_channels_relaxed::is_ignored,
-            conv_float_channels_relaxed::examples);
+            conv_float_channels_relaxed::get_examples());
 }
 
