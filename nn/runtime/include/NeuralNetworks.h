@@ -303,6 +303,7 @@ typedef enum {
      *         ) + bias[channel]
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -319,12 +320,13 @@ typedef enum {
      * * 1: A 4-D tensor, of shape
      *      [depth_out, filter_height, filter_width, depth_in], specifying the
      *      filter.
-     * * 2: A 1-D tensor, of shape [depth_out], specifying the bias.
-     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the bias
-     *      should also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}. For input
-     *      tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias
-     *      should be of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of
-     *      0 and bias_scale == input_scale * filter_scale.
+     * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
+     *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
+     *      {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the bias must be of the same
+     *      type. For input tensor of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias must be
+     *      of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of 0 and
+     *      bias_scale == input_scale * filter_scale.
      * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
      *      the left, in the ‘width’ dimension.
      * * 4: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
@@ -351,9 +353,10 @@ typedef enum {
      *      [depth_out, filter_height, filter_width, depth_in], specifying the
      *      filter.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
-     *      tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the bias should
-     *      also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}. For input tensor
-     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias should be
+     *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
+     *      {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the bias must be of the same
+     *      type. For input tensor of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias must be
      *      of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of 0 and
      *      bias_scale == input_scale * filter_scale.
      * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the implicit
