@@ -12,6 +12,6 @@ namespace argmin_3_float {
 TEST_F(GeneratedTests, argmin_3_float) {
     execute(argmin_3_float::CreateModel,
             argmin_3_float::is_ignored,
-            argmin_3_float::examples);
+            argmin_3_float::get_examples());
 }
 

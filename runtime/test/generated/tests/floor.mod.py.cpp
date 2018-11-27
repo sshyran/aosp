@@ -12,6 +12,6 @@ namespace floor {
 TEST_F(GeneratedTests, floor) {
     execute(floor::CreateModel,
             floor::is_ignored,
-            floor::examples);
+            floor::get_examples());
 }
 

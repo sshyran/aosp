@@ -12,6 +12,6 @@ namespace reshape_relaxed {
 TEST_F(GeneratedTests, reshape_relaxed) {
     execute(reshape_relaxed::CreateModel,
             reshape_relaxed::is_ignored,
-            reshape_relaxed::examples);
+            reshape_relaxed::get_examples());
 }
 

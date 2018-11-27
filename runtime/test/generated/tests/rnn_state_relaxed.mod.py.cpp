@@ -12,6 +12,6 @@ namespace rnn_state_relaxed {
 TEST_F(GeneratedTests, rnn_state_relaxed) {
     execute(rnn_state_relaxed::CreateModel,
             rnn_state_relaxed::is_ignored,
-            rnn_state_relaxed::examples);
+            rnn_state_relaxed::get_examples());
 }
 

@@ -12,12 +12,12 @@ namespace concat_mixed_quant {
 TEST_F(GeneratedTests, concat_mixed_quant_quant8) {
     execute(concat_mixed_quant::CreateModel_quant8,
             concat_mixed_quant::is_ignored_quant8,
-            concat_mixed_quant::examples_quant8);
+            concat_mixed_quant::get_examples_quant8());
 }
 
 TEST_F(GeneratedTests, concat_mixed_quant_quant8_2) {
     execute(concat_mixed_quant::CreateModel_quant8_2,
             concat_mixed_quant::is_ignored_quant8_2,
-            concat_mixed_quant::examples_quant8_2);
+            concat_mixed_quant::get_examples_quant8_2());
 }
 

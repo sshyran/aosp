@@ -12,6 +12,6 @@ namespace argmin_2_float_relaxed {
 TEST_F(GeneratedTests, argmin_2_float_relaxed) {
     execute(argmin_2_float_relaxed::CreateModel,
             argmin_2_float_relaxed::is_ignored,
-            argmin_2_float_relaxed::examples);
+            argmin_2_float_relaxed::get_examples());
 }
 

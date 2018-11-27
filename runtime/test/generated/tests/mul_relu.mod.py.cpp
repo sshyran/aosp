@@ -12,6 +12,6 @@ namespace mul_relu {
 TEST_F(GeneratedTests, mul_relu) {
     execute(mul_relu::CreateModel,
             mul_relu::is_ignored,
-            mul_relu::examples);
+            mul_relu::get_examples());
 }
 

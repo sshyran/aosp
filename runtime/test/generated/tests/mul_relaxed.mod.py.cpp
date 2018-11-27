@@ -12,6 +12,6 @@ namespace mul_relaxed {
 TEST_F(GeneratedTests, mul_relaxed) {
     execute(mul_relaxed::CreateModel,
             mul_relaxed::is_ignored,
-            mul_relaxed::examples);
+            mul_relaxed::get_examples());
 }
 

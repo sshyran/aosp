@@ -12,6 +12,6 @@ namespace transpose_quant8_1 {
 TEST_F(GeneratedTests, transpose_quant8_1) {
     execute(transpose_quant8_1::CreateModel,
             transpose_quant8_1::is_ignored,
-            transpose_quant8_1::examples);
+            transpose_quant8_1::get_examples());
 }
 

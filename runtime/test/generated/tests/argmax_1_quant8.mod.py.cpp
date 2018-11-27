@@ -12,6 +12,6 @@ namespace argmax_1_quant8 {
 TEST_F(GeneratedTests, argmax_1_quant8) {
     execute(argmax_1_quant8::CreateModel,
             argmax_1_quant8::is_ignored,
-            argmax_1_quant8::examples);
+            argmax_1_quant8::get_examples());
 }
 

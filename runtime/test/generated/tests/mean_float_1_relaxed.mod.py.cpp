@@ -12,6 +12,6 @@ namespace mean_float_1_relaxed {
 TEST_F(GeneratedTests, mean_float_1_relaxed) {
     execute(mean_float_1_relaxed::CreateModel,
             mean_float_1_relaxed::is_ignored,
-            mean_float_1_relaxed::examples);
+            mean_float_1_relaxed::get_examples());
 }
 

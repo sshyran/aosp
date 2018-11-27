@@ -12,6 +12,6 @@ namespace lstm3_state2 {
 TEST_F(GeneratedTests, lstm3_state2) {
     execute(lstm3_state2::CreateModel,
             lstm3_state2::is_ignored,
-            lstm3_state2::examples);
+            lstm3_state2::get_examples());
 }
 
