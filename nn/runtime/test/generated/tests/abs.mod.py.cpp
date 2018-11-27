@@ -12,18 +12,18 @@ namespace abs {
 TEST_F(GeneratedTests, abs) {
     execute(abs::CreateModel,
             abs::is_ignored,
-            abs::examples);
+            abs::get_examples());
 }
 
 TEST_F(GeneratedTests, abs_relaxed) {
     execute(abs::CreateModel_relaxed,
             abs::is_ignored_relaxed,
-            abs::examples_relaxed);
+            abs::get_examples_relaxed());
 }
 
 TEST_F(GeneratedTests, abs_float16) {
     execute(abs::CreateModel_float16,
             abs::is_ignored_float16,
-            abs::examples_float16);
+            abs::get_examples_float16());
 }
 
