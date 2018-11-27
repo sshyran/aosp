@@ -282,10 +282,10 @@ private:
 };
 
 // This class adds some simple abstractions and utilities on top of
-// ::android::nn::wrapper::Model.  For example, it provides methods
-// that work in terms of operation kind (0..7); and because we care
-// about graph topology rather than details of operand types and
-// values, it greatly simplifies the process of creating operands.
+// WrapperModel.  For example, it provides methods that work in terms of
+// operation kind (0..7); and because we care about graph topology rather than
+// details of operand types and values, it greatly simplifies the process of
+// creating operands.
 class PartitioningModel : public WrapperModel {
 public:
     // Create a tensor operand of the specified type, and return the
@@ -365,7 +365,7 @@ private:
     }
 };
 
-// This class adds some utilities on top of ::android::nn::wrapper::Compilation.
+// This class adds some utilities on top of WrapperCompilation.
 class PartitioningCompilation : public WrapperCompilation {
 public:
  PartitioningCompilation(const WrapperModel* model,
