@@ -13495,6 +13495,82 @@ TEST_F(ValidationTest, log_softmax_float16_4) {
 }
 
 
+// Generated from: logical_and.mod.py.
+namespace logical_and {
+// Generated logical_and test
+#include "examples/logical_and.example.cpp"
+// Generated model constructor
+#include "vts_models/logical_and.model.cpp"
+} // namespace logical_and
+
+TEST_F(NeuralnetworksHidlTest, logical_and_simple) {
+  generated_tests::Execute(device,
+                           logical_and::createTestModel,
+                           logical_and::is_ignored,
+                           logical_and::get_examples_simple());
+}
+
+TEST_F(ValidationTest, logical_and_simple) {
+  const Model model = logical_and::createTestModel();
+  const std::vector<Request> requests = createRequests(logical_and::get_examples_simple());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, logical_and_broadcast) {
+  generated_tests::Execute(device,
+                           logical_and::createTestModel_2,
+                           logical_and::is_ignored_2,
+                           logical_and::get_examples_broadcast());
+}
+
+TEST_F(ValidationTest, logical_and_broadcast) {
+  const Model model = logical_and::createTestModel_2();
+  const std::vector<Request> requests = createRequests(logical_and::get_examples_broadcast());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: logical_or.mod.py.
+namespace logical_or {
+// Generated logical_or test
+#include "examples/logical_or.example.cpp"
+// Generated model constructor
+#include "vts_models/logical_or.model.cpp"
+} // namespace logical_or
+
+TEST_F(NeuralnetworksHidlTest, logical_or_simple) {
+  generated_tests::Execute(device,
+                           logical_or::createTestModel,
+                           logical_or::is_ignored,
+                           logical_or::get_examples_simple());
+}
+
+TEST_F(ValidationTest, logical_or_simple) {
+  const Model model = logical_or::createTestModel();
+  const std::vector<Request> requests = createRequests(logical_or::get_examples_simple());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, logical_or_broadcast) {
+  generated_tests::Execute(device,
+                           logical_or::createTestModel_2,
+                           logical_or::is_ignored_2,
+                           logical_or::get_examples_broadcast());
+}
+
+TEST_F(ValidationTest, logical_or_broadcast) {
+  const Model model = logical_or::createTestModel_2();
+  const std::vector<Request> requests = createRequests(logical_or::get_examples_broadcast());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: logistic_float16_1.mod.py.
 namespace logistic_float16_1 {
 // Generated logistic_float16_1 test
