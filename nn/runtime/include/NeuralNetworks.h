@@ -2442,8 +2442,51 @@ typedef enum {
     ANEURALNETWORKS_LESS = 57,
     ANEURALNETWORKS_LESS_EQUAL = 58,
     ANEURALNETWORKS_LOG = 59,
+
+    /**
+     * Returns the truth value of x AND y element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     *
+     * Supported tensor rank: from 1
+     *
+     * This operation supports broadcasting.
+     *
+     * Inputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     * * 1: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8} and dimensions
+     *      compatible with input0.
+     *
+     * Outputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_LOGICAL_AND = 60,
+
     ANEURALNETWORKS_LOGICAL_NOT = 61,
+
+    /**
+     * Returns the truth value of x OR y element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     *
+     * Supported tensor rank: from 1
+     *
+     * This operation supports broadcasting.
+     *
+     * Inputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     * * 1: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8} and dimensions
+     *      compatible with input0.
+     *
+     * Outputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_LOGICAL_OR = 62,
 
     /**
