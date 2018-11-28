@@ -359,6 +359,7 @@
 #include "../generated/tests/local_response_normalization_v1_2.mod.py.cpp"
 #include "../generated/tests/log_softmax.mod.py.cpp"
 #include "../generated/tests/logical_and.mod.py.cpp"
+#include "../generated/tests/logical_not.mod.py.cpp"
 #include "../generated/tests/logical_or.mod.py.cpp"
 #include "../generated/tests/logistic_float16_1.mod.py.cpp"
 #include "../generated/tests/logistic_float16_2.mod.py.cpp"
