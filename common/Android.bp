@@ -27,6 +27,7 @@ cc_defaults {
         "operations/Abs.cpp",
         "operations/ChannelShuffle.cpp",
         "operations/Gather.cpp",
+        "operations/LogSoftmax.cpp",
     ],
 }
 
