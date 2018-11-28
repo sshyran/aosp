@@ -13533,6 +13533,29 @@ TEST_F(ValidationTest, logical_and_broadcast) {
 }
 
 
+// Generated from: logical_not.mod.py.
+namespace logical_not {
+// Generated logical_not test
+#include "examples/logical_not.example.cpp"
+// Generated model constructor
+#include "vts_models/logical_not.model.cpp"
+} // namespace logical_not
+
+TEST_F(NeuralnetworksHidlTest, logical_not) {
+  generated_tests::Execute(device,
+                           logical_not::createTestModel,
+                           logical_not::is_ignored,
+                           logical_not::get_examples());
+}
+
+TEST_F(ValidationTest, logical_not) {
+  const Model model = logical_not::createTestModel();
+  const std::vector<Request> requests = createRequests(logical_not::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: logical_or.mod.py.
 namespace logical_or {
 // Generated logical_or test
