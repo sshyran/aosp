@@ -13,12 +13,12 @@ TEST_F(NeuralnetworksHidlTest, abs) {
   generated_tests::Execute(device,
                            abs::createTestModel,
                            abs::is_ignored,
-                           abs::examples);
+                           abs::get_examples());
 }
 
 TEST_F(ValidationTest, abs) {
   const Model model = abs::createTestModel();
-  const std::vector<Request> requests = createRequests(abs::examples);
+  const std::vector<Request> requests = createRequests(abs::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -28,12 +28,12 @@ TEST_F(NeuralnetworksHidlTest, abs_relaxed) {
   generated_tests::Execute(device,
                            abs::createTestModel_relaxed,
                            abs::is_ignored_relaxed,
-                           abs::examples_relaxed);
+                           abs::get_examples_relaxed());
 }
 
 TEST_F(ValidationTest, abs_relaxed) {
   const Model model = abs::createTestModel_relaxed();
-  const std::vector<Request> requests = createRequests(abs::examples_relaxed);
+  const std::vector<Request> requests = createRequests(abs::get_examples_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -43,12 +43,12 @@ TEST_F(NeuralnetworksHidlTest, abs_float16) {
   generated_tests::Execute(device,
                            abs::createTestModel_float16,
                            abs::is_ignored_float16,
-                           abs::examples_float16);
+                           abs::get_examples_float16());
 }
 
 TEST_F(ValidationTest, abs_float16) {
   const Model model = abs::createTestModel_float16();
-  const std::vector<Request> requests = createRequests(abs::examples_float16);
+  const std::vector<Request> requests = createRequests(abs::get_examples_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -100,415 +100,499 @@ TEST_F(ValidationTest, add_float16) {
 }
 
 
-// Generated from: argmax_1_float.mod.py.
-namespace argmax_1_float {
-// Generated argmax_1_float test
-#include "examples/argmax_1_float.example.cpp"
+// Generated from: argmax_1.mod.py.
+namespace argmax_1 {
+// Generated argmax_1 test
+#include "examples/argmax_1.example.cpp"
 // Generated model constructor
-#include "vts_models/argmax_1_float.model.cpp"
-} // namespace argmax_1_float
+#include "vts_models/argmax_1.model.cpp"
+} // namespace argmax_1
 
-TEST_F(NeuralnetworksHidlTest, argmax_1_float) {
+TEST_F(NeuralnetworksHidlTest, argmax_1) {
   generated_tests::Execute(device,
-                           argmax_1_float::createTestModel,
-                           argmax_1_float::is_ignored,
-                           argmax_1_float::get_examples());
+                           argmax_1::createTestModel,
+                           argmax_1::is_ignored,
+                           argmax_1::get_examples());
 }
 
-TEST_F(ValidationTest, argmax_1_float) {
-  const Model model = argmax_1_float::createTestModel();
-  const std::vector<Request> requests = createRequests(argmax_1_float::get_examples());
+TEST_F(ValidationTest, argmax_1) {
+  const Model model = argmax_1::createTestModel();
+  const std::vector<Request> requests = createRequests(argmax_1::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmax_1_float_relaxed.mod.py.
-namespace argmax_1_float_relaxed {
-// Generated argmax_1_float_relaxed test
-#include "examples/argmax_1_float_relaxed.example.cpp"
-// Generated model constructor
-#include "vts_models/argmax_1_float_relaxed.model.cpp"
-} // namespace argmax_1_float_relaxed
-
-TEST_F(NeuralnetworksHidlTest, argmax_1_float_relaxed) {
+TEST_F(NeuralnetworksHidlTest, argmax_1_relaxed) {
   generated_tests::Execute(device,
-                           argmax_1_float_relaxed::createTestModel,
-                           argmax_1_float_relaxed::is_ignored,
-                           argmax_1_float_relaxed::get_examples());
+                           argmax_1::createTestModel_relaxed,
+                           argmax_1::is_ignored_relaxed,
+                           argmax_1::get_examples_relaxed());
 }
 
-TEST_F(ValidationTest, argmax_1_float_relaxed) {
-  const Model model = argmax_1_float_relaxed::createTestModel();
-  const std::vector<Request> requests = createRequests(argmax_1_float_relaxed::get_examples());
+TEST_F(ValidationTest, argmax_1_relaxed) {
+  const Model model = argmax_1::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(argmax_1::get_examples_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmax_1_int32.mod.py.
-namespace argmax_1_int32 {
-// Generated argmax_1_int32 test
-#include "examples/argmax_1_int32.example.cpp"
-// Generated model constructor
-#include "vts_models/argmax_1_int32.model.cpp"
-} // namespace argmax_1_int32
+TEST_F(NeuralnetworksHidlTest, argmax_1_float16) {
+  generated_tests::Execute(device,
+                           argmax_1::createTestModel_float16,
+                           argmax_1::is_ignored_float16,
+                           argmax_1::get_examples_float16());
+}
+
+TEST_F(ValidationTest, argmax_1_float16) {
+  const Model model = argmax_1::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(argmax_1::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 TEST_F(NeuralnetworksHidlTest, argmax_1_int32) {
   generated_tests::Execute(device,
-                           argmax_1_int32::createTestModel,
-                           argmax_1_int32::is_ignored,
-                           argmax_1_int32::get_examples());
+                           argmax_1::createTestModel_int32,
+                           argmax_1::is_ignored_int32,
+                           argmax_1::get_examples_int32());
 }
 
 TEST_F(ValidationTest, argmax_1_int32) {
-  const Model model = argmax_1_int32::createTestModel();
-  const std::vector<Request> requests = createRequests(argmax_1_int32::get_examples());
+  const Model model = argmax_1::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(argmax_1::get_examples_int32());
   validateModel(model);
   validateRequests(model, requests);
 }
 
-
-// Generated from: argmax_1_quant8.mod.py.
-namespace argmax_1_quant8 {
-// Generated argmax_1_quant8 test
-#include "examples/argmax_1_quant8.example.cpp"
-// Generated model constructor
-#include "vts_models/argmax_1_quant8.model.cpp"
-} // namespace argmax_1_quant8
 
 TEST_F(NeuralnetworksHidlTest, argmax_1_quant8) {
   generated_tests::Execute(device,
-                           argmax_1_quant8::createTestModel,
-                           argmax_1_quant8::is_ignored,
-                           argmax_1_quant8::get_examples());
+                           argmax_1::createTestModel_quant8,
+                           argmax_1::is_ignored_quant8,
+                           argmax_1::get_examples_quant8());
 }
 
 TEST_F(ValidationTest, argmax_1_quant8) {
-  const Model model = argmax_1_quant8::createTestModel();
-  const std::vector<Request> requests = createRequests(argmax_1_quant8::get_examples());
+  const Model model = argmax_1::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(argmax_1::get_examples_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmax_2_float.mod.py.
-namespace argmax_2_float {
-// Generated argmax_2_float test
-#include "examples/argmax_2_float.example.cpp"
+// Generated from: argmax_2.mod.py.
+namespace argmax_2 {
+// Generated argmax_2 test
+#include "examples/argmax_2.example.cpp"
 // Generated model constructor
-#include "vts_models/argmax_2_float.model.cpp"
-} // namespace argmax_2_float
+#include "vts_models/argmax_2.model.cpp"
+} // namespace argmax_2
 
-TEST_F(NeuralnetworksHidlTest, argmax_2_float) {
+TEST_F(NeuralnetworksHidlTest, argmax_2) {
   generated_tests::Execute(device,
-                           argmax_2_float::createTestModel,
-                           argmax_2_float::is_ignored,
-                           argmax_2_float::get_examples());
+                           argmax_2::createTestModel,
+                           argmax_2::is_ignored,
+                           argmax_2::get_examples());
 }
 
-TEST_F(ValidationTest, argmax_2_float) {
-  const Model model = argmax_2_float::createTestModel();
-  const std::vector<Request> requests = createRequests(argmax_2_float::get_examples());
+TEST_F(ValidationTest, argmax_2) {
+  const Model model = argmax_2::createTestModel();
+  const std::vector<Request> requests = createRequests(argmax_2::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmax_2_float_relaxed.mod.py.
-namespace argmax_2_float_relaxed {
-// Generated argmax_2_float_relaxed test
-#include "examples/argmax_2_float_relaxed.example.cpp"
-// Generated model constructor
-#include "vts_models/argmax_2_float_relaxed.model.cpp"
-} // namespace argmax_2_float_relaxed
-
-TEST_F(NeuralnetworksHidlTest, argmax_2_float_relaxed) {
+TEST_F(NeuralnetworksHidlTest, argmax_2_relaxed) {
   generated_tests::Execute(device,
-                           argmax_2_float_relaxed::createTestModel,
-                           argmax_2_float_relaxed::is_ignored,
-                           argmax_2_float_relaxed::get_examples());
+                           argmax_2::createTestModel_relaxed,
+                           argmax_2::is_ignored_relaxed,
+                           argmax_2::get_examples_relaxed());
 }
 
-TEST_F(ValidationTest, argmax_2_float_relaxed) {
-  const Model model = argmax_2_float_relaxed::createTestModel();
-  const std::vector<Request> requests = createRequests(argmax_2_float_relaxed::get_examples());
+TEST_F(ValidationTest, argmax_2_relaxed) {
+  const Model model = argmax_2::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(argmax_2::get_examples_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmax_2_int32.mod.py.
-namespace argmax_2_int32 {
-// Generated argmax_2_int32 test
-#include "examples/argmax_2_int32.example.cpp"
-// Generated model constructor
-#include "vts_models/argmax_2_int32.model.cpp"
-} // namespace argmax_2_int32
+TEST_F(NeuralnetworksHidlTest, argmax_2_float16) {
+  generated_tests::Execute(device,
+                           argmax_2::createTestModel_float16,
+                           argmax_2::is_ignored_float16,
+                           argmax_2::get_examples_float16());
+}
+
+TEST_F(ValidationTest, argmax_2_float16) {
+  const Model model = argmax_2::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(argmax_2::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 TEST_F(NeuralnetworksHidlTest, argmax_2_int32) {
   generated_tests::Execute(device,
-                           argmax_2_int32::createTestModel,
-                           argmax_2_int32::is_ignored,
-                           argmax_2_int32::get_examples());
+                           argmax_2::createTestModel_int32,
+                           argmax_2::is_ignored_int32,
+                           argmax_2::get_examples_int32());
 }
 
 TEST_F(ValidationTest, argmax_2_int32) {
-  const Model model = argmax_2_int32::createTestModel();
-  const std::vector<Request> requests = createRequests(argmax_2_int32::get_examples());
+  const Model model = argmax_2::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(argmax_2::get_examples_int32());
   validateModel(model);
   validateRequests(model, requests);
 }
 
-
-// Generated from: argmax_2_quant8.mod.py.
-namespace argmax_2_quant8 {
-// Generated argmax_2_quant8 test
-#include "examples/argmax_2_quant8.example.cpp"
-// Generated model constructor
-#include "vts_models/argmax_2_quant8.model.cpp"
-} // namespace argmax_2_quant8
 
 TEST_F(NeuralnetworksHidlTest, argmax_2_quant8) {
   generated_tests::Execute(device,
-                           argmax_2_quant8::createTestModel,
-                           argmax_2_quant8::is_ignored,
-                           argmax_2_quant8::get_examples());
+                           argmax_2::createTestModel_quant8,
+                           argmax_2::is_ignored_quant8,
+                           argmax_2::get_examples_quant8());
 }
 
 TEST_F(ValidationTest, argmax_2_quant8) {
-  const Model model = argmax_2_quant8::createTestModel();
-  const std::vector<Request> requests = createRequests(argmax_2_quant8::get_examples());
+  const Model model = argmax_2::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(argmax_2::get_examples_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmax_3_float.mod.py.
-namespace argmax_3_float {
-// Generated argmax_3_float test
-#include "examples/argmax_3_float.example.cpp"
+// Generated from: argmax_3.mod.py.
+namespace argmax_3 {
+// Generated argmax_3 test
+#include "examples/argmax_3.example.cpp"
 // Generated model constructor
-#include "vts_models/argmax_3_float.model.cpp"
-} // namespace argmax_3_float
+#include "vts_models/argmax_3.model.cpp"
+} // namespace argmax_3
 
-TEST_F(NeuralnetworksHidlTest, argmax_3_float) {
+TEST_F(NeuralnetworksHidlTest, argmax_3) {
   generated_tests::Execute(device,
-                           argmax_3_float::createTestModel,
-                           argmax_3_float::is_ignored,
-                           argmax_3_float::get_examples());
+                           argmax_3::createTestModel,
+                           argmax_3::is_ignored,
+                           argmax_3::get_examples());
 }
 
-TEST_F(ValidationTest, argmax_3_float) {
-  const Model model = argmax_3_float::createTestModel();
-  const std::vector<Request> requests = createRequests(argmax_3_float::get_examples());
+TEST_F(ValidationTest, argmax_3) {
+  const Model model = argmax_3::createTestModel();
+  const std::vector<Request> requests = createRequests(argmax_3::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmin_1_float.mod.py.
-namespace argmin_1_float {
-// Generated argmin_1_float test
-#include "examples/argmin_1_float.example.cpp"
-// Generated model constructor
-#include "vts_models/argmin_1_float.model.cpp"
-} // namespace argmin_1_float
-
-TEST_F(NeuralnetworksHidlTest, argmin_1_float) {
+TEST_F(NeuralnetworksHidlTest, argmax_3_relaxed) {
   generated_tests::Execute(device,
-                           argmin_1_float::createTestModel,
-                           argmin_1_float::is_ignored,
-                           argmin_1_float::get_examples());
+                           argmax_3::createTestModel_relaxed,
+                           argmax_3::is_ignored_relaxed,
+                           argmax_3::get_examples_relaxed());
 }
 
-TEST_F(ValidationTest, argmin_1_float) {
-  const Model model = argmin_1_float::createTestModel();
-  const std::vector<Request> requests = createRequests(argmin_1_float::get_examples());
+TEST_F(ValidationTest, argmax_3_relaxed) {
+  const Model model = argmax_3::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(argmax_3::get_examples_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmin_1_float_relaxed.mod.py.
-namespace argmin_1_float_relaxed {
-// Generated argmin_1_float_relaxed test
-#include "examples/argmin_1_float_relaxed.example.cpp"
-// Generated model constructor
-#include "vts_models/argmin_1_float_relaxed.model.cpp"
-} // namespace argmin_1_float_relaxed
-
-TEST_F(NeuralnetworksHidlTest, argmin_1_float_relaxed) {
+TEST_F(NeuralnetworksHidlTest, argmax_3_float16) {
   generated_tests::Execute(device,
-                           argmin_1_float_relaxed::createTestModel,
-                           argmin_1_float_relaxed::is_ignored,
-                           argmin_1_float_relaxed::get_examples());
+                           argmax_3::createTestModel_float16,
+                           argmax_3::is_ignored_float16,
+                           argmax_3::get_examples_float16());
 }
 
-TEST_F(ValidationTest, argmin_1_float_relaxed) {
-  const Model model = argmin_1_float_relaxed::createTestModel();
-  const std::vector<Request> requests = createRequests(argmin_1_float_relaxed::get_examples());
+TEST_F(ValidationTest, argmax_3_float16) {
+  const Model model = argmax_3::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(argmax_3::get_examples_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmin_1_int32.mod.py.
-namespace argmin_1_int32 {
-// Generated argmin_1_int32 test
-#include "examples/argmin_1_int32.example.cpp"
+TEST_F(NeuralnetworksHidlTest, argmax_3_int32) {
+  generated_tests::Execute(device,
+                           argmax_3::createTestModel_int32,
+                           argmax_3::is_ignored_int32,
+                           argmax_3::get_examples_int32());
+}
+
+TEST_F(ValidationTest, argmax_3_int32) {
+  const Model model = argmax_3::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(argmax_3::get_examples_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, argmax_3_quant8) {
+  generated_tests::Execute(device,
+                           argmax_3::createTestModel_quant8,
+                           argmax_3::is_ignored_quant8,
+                           argmax_3::get_examples_quant8());
+}
+
+TEST_F(ValidationTest, argmax_3_quant8) {
+  const Model model = argmax_3::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(argmax_3::get_examples_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: argmin_1.mod.py.
+namespace argmin_1 {
+// Generated argmin_1 test
+#include "examples/argmin_1.example.cpp"
 // Generated model constructor
-#include "vts_models/argmin_1_int32.model.cpp"
-} // namespace argmin_1_int32
+#include "vts_models/argmin_1.model.cpp"
+} // namespace argmin_1
+
+TEST_F(NeuralnetworksHidlTest, argmin_1) {
+  generated_tests::Execute(device,
+                           argmin_1::createTestModel,
+                           argmin_1::is_ignored,
+                           argmin_1::get_examples());
+}
+
+TEST_F(ValidationTest, argmin_1) {
+  const Model model = argmin_1::createTestModel();
+  const std::vector<Request> requests = createRequests(argmin_1::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, argmin_1_relaxed) {
+  generated_tests::Execute(device,
+                           argmin_1::createTestModel_relaxed,
+                           argmin_1::is_ignored_relaxed,
+                           argmin_1::get_examples_relaxed());
+}
+
+TEST_F(ValidationTest, argmin_1_relaxed) {
+  const Model model = argmin_1::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(argmin_1::get_examples_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, argmin_1_float16) {
+  generated_tests::Execute(device,
+                           argmin_1::createTestModel_float16,
+                           argmin_1::is_ignored_float16,
+                           argmin_1::get_examples_float16());
+}
+
+TEST_F(ValidationTest, argmin_1_float16) {
+  const Model model = argmin_1::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(argmin_1::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 TEST_F(NeuralnetworksHidlTest, argmin_1_int32) {
   generated_tests::Execute(device,
-                           argmin_1_int32::createTestModel,
-                           argmin_1_int32::is_ignored,
-                           argmin_1_int32::get_examples());
+                           argmin_1::createTestModel_int32,
+                           argmin_1::is_ignored_int32,
+                           argmin_1::get_examples_int32());
 }
 
 TEST_F(ValidationTest, argmin_1_int32) {
-  const Model model = argmin_1_int32::createTestModel();
-  const std::vector<Request> requests = createRequests(argmin_1_int32::get_examples());
+  const Model model = argmin_1::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(argmin_1::get_examples_int32());
   validateModel(model);
   validateRequests(model, requests);
 }
 
-
-// Generated from: argmin_1_quant8.mod.py.
-namespace argmin_1_quant8 {
-// Generated argmin_1_quant8 test
-#include "examples/argmin_1_quant8.example.cpp"
-// Generated model constructor
-#include "vts_models/argmin_1_quant8.model.cpp"
-} // namespace argmin_1_quant8
 
 TEST_F(NeuralnetworksHidlTest, argmin_1_quant8) {
   generated_tests::Execute(device,
-                           argmin_1_quant8::createTestModel,
-                           argmin_1_quant8::is_ignored,
-                           argmin_1_quant8::get_examples());
+                           argmin_1::createTestModel_quant8,
+                           argmin_1::is_ignored_quant8,
+                           argmin_1::get_examples_quant8());
 }
 
 TEST_F(ValidationTest, argmin_1_quant8) {
-  const Model model = argmin_1_quant8::createTestModel();
-  const std::vector<Request> requests = createRequests(argmin_1_quant8::get_examples());
+  const Model model = argmin_1::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(argmin_1::get_examples_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmin_2_float.mod.py.
-namespace argmin_2_float {
-// Generated argmin_2_float test
-#include "examples/argmin_2_float.example.cpp"
+// Generated from: argmin_2.mod.py.
+namespace argmin_2 {
+// Generated argmin_2 test
+#include "examples/argmin_2.example.cpp"
 // Generated model constructor
-#include "vts_models/argmin_2_float.model.cpp"
-} // namespace argmin_2_float
+#include "vts_models/argmin_2.model.cpp"
+} // namespace argmin_2
 
-TEST_F(NeuralnetworksHidlTest, argmin_2_float) {
+TEST_F(NeuralnetworksHidlTest, argmin_2) {
   generated_tests::Execute(device,
-                           argmin_2_float::createTestModel,
-                           argmin_2_float::is_ignored,
-                           argmin_2_float::get_examples());
+                           argmin_2::createTestModel,
+                           argmin_2::is_ignored,
+                           argmin_2::get_examples());
 }
 
-TEST_F(ValidationTest, argmin_2_float) {
-  const Model model = argmin_2_float::createTestModel();
-  const std::vector<Request> requests = createRequests(argmin_2_float::get_examples());
+TEST_F(ValidationTest, argmin_2) {
+  const Model model = argmin_2::createTestModel();
+  const std::vector<Request> requests = createRequests(argmin_2::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmin_2_float_relaxed.mod.py.
-namespace argmin_2_float_relaxed {
-// Generated argmin_2_float_relaxed test
-#include "examples/argmin_2_float_relaxed.example.cpp"
-// Generated model constructor
-#include "vts_models/argmin_2_float_relaxed.model.cpp"
-} // namespace argmin_2_float_relaxed
-
-TEST_F(NeuralnetworksHidlTest, argmin_2_float_relaxed) {
+TEST_F(NeuralnetworksHidlTest, argmin_2_relaxed) {
   generated_tests::Execute(device,
-                           argmin_2_float_relaxed::createTestModel,
-                           argmin_2_float_relaxed::is_ignored,
-                           argmin_2_float_relaxed::get_examples());
+                           argmin_2::createTestModel_relaxed,
+                           argmin_2::is_ignored_relaxed,
+                           argmin_2::get_examples_relaxed());
 }
 
-TEST_F(ValidationTest, argmin_2_float_relaxed) {
-  const Model model = argmin_2_float_relaxed::createTestModel();
-  const std::vector<Request> requests = createRequests(argmin_2_float_relaxed::get_examples());
+TEST_F(ValidationTest, argmin_2_relaxed) {
+  const Model model = argmin_2::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(argmin_2::get_examples_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmin_2_int32.mod.py.
-namespace argmin_2_int32 {
-// Generated argmin_2_int32 test
-#include "examples/argmin_2_int32.example.cpp"
-// Generated model constructor
-#include "vts_models/argmin_2_int32.model.cpp"
-} // namespace argmin_2_int32
+TEST_F(NeuralnetworksHidlTest, argmin_2_float16) {
+  generated_tests::Execute(device,
+                           argmin_2::createTestModel_float16,
+                           argmin_2::is_ignored_float16,
+                           argmin_2::get_examples_float16());
+}
+
+TEST_F(ValidationTest, argmin_2_float16) {
+  const Model model = argmin_2::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(argmin_2::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 TEST_F(NeuralnetworksHidlTest, argmin_2_int32) {
   generated_tests::Execute(device,
-                           argmin_2_int32::createTestModel,
-                           argmin_2_int32::is_ignored,
-                           argmin_2_int32::get_examples());
+                           argmin_2::createTestModel_int32,
+                           argmin_2::is_ignored_int32,
+                           argmin_2::get_examples_int32());
 }
 
 TEST_F(ValidationTest, argmin_2_int32) {
-  const Model model = argmin_2_int32::createTestModel();
-  const std::vector<Request> requests = createRequests(argmin_2_int32::get_examples());
+  const Model model = argmin_2::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(argmin_2::get_examples_int32());
   validateModel(model);
   validateRequests(model, requests);
 }
 
-
-// Generated from: argmin_2_quant8.mod.py.
-namespace argmin_2_quant8 {
-// Generated argmin_2_quant8 test
-#include "examples/argmin_2_quant8.example.cpp"
-// Generated model constructor
-#include "vts_models/argmin_2_quant8.model.cpp"
-} // namespace argmin_2_quant8
 
 TEST_F(NeuralnetworksHidlTest, argmin_2_quant8) {
   generated_tests::Execute(device,
-                           argmin_2_quant8::createTestModel,
-                           argmin_2_quant8::is_ignored,
-                           argmin_2_quant8::get_examples());
+                           argmin_2::createTestModel_quant8,
+                           argmin_2::is_ignored_quant8,
+                           argmin_2::get_examples_quant8());
 }
 
 TEST_F(ValidationTest, argmin_2_quant8) {
-  const Model model = argmin_2_quant8::createTestModel();
-  const std::vector<Request> requests = createRequests(argmin_2_quant8::get_examples());
+  const Model model = argmin_2::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(argmin_2::get_examples_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-// Generated from: argmin_3_float.mod.py.
-namespace argmin_3_float {
-// Generated argmin_3_float test
-#include "examples/argmin_3_float.example.cpp"
+// Generated from: argmin_3.mod.py.
+namespace argmin_3 {
+// Generated argmin_3 test
+#include "examples/argmin_3.example.cpp"
 // Generated model constructor
-#include "vts_models/argmin_3_float.model.cpp"
-} // namespace argmin_3_float
+#include "vts_models/argmin_3.model.cpp"
+} // namespace argmin_3
 
-TEST_F(NeuralnetworksHidlTest, argmin_3_float) {
+TEST_F(NeuralnetworksHidlTest, argmin_3) {
   generated_tests::Execute(device,
-                           argmin_3_float::createTestModel,
-                           argmin_3_float::is_ignored,
-                           argmin_3_float::get_examples());
+                           argmin_3::createTestModel,
+                           argmin_3::is_ignored,
+                           argmin_3::get_examples());
 }
 
-TEST_F(ValidationTest, argmin_3_float) {
-  const Model model = argmin_3_float::createTestModel();
-  const std::vector<Request> requests = createRequests(argmin_3_float::get_examples());
+TEST_F(ValidationTest, argmin_3) {
+  const Model model = argmin_3::createTestModel();
+  const std::vector<Request> requests = createRequests(argmin_3::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, argmin_3_relaxed) {
+  generated_tests::Execute(device,
+                           argmin_3::createTestModel_relaxed,
+                           argmin_3::is_ignored_relaxed,
+                           argmin_3::get_examples_relaxed());
+}
+
+TEST_F(ValidationTest, argmin_3_relaxed) {
+  const Model model = argmin_3::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(argmin_3::get_examples_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, argmin_3_float16) {
+  generated_tests::Execute(device,
+                           argmin_3::createTestModel_float16,
+                           argmin_3::is_ignored_float16,
+                           argmin_3::get_examples_float16());
+}
+
+TEST_F(ValidationTest, argmin_3_float16) {
+  const Model model = argmin_3::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(argmin_3::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, argmin_3_int32) {
+  generated_tests::Execute(device,
+                           argmin_3::createTestModel_int32,
+                           argmin_3::is_ignored_int32,
+                           argmin_3::get_examples_int32());
+}
+
+TEST_F(ValidationTest, argmin_3_int32) {
+  const Model model = argmin_3::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(argmin_3::get_examples_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, argmin_3_quant8) {
+  generated_tests::Execute(device,
+                           argmin_3::createTestModel_quant8,
+                           argmin_3::is_ignored_quant8,
+                           argmin_3::get_examples_quant8());
+}
+
+TEST_F(ValidationTest, argmin_3_quant8) {
+  const Model model = argmin_3::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(argmin_3::get_examples_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }

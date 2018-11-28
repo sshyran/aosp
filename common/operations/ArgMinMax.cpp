@@ -71,6 +71,7 @@ bool argMinMaxGeneric(const uint8_t* inputData, const Shape& inputShape,
         return true;                                                           \
     }
 
+    NNAPI_IMPL_ARG_MIN_MAX(OperandType::TENSOR_FLOAT16, _Float16);
     NNAPI_IMPL_ARG_MIN_MAX(OperandType::TENSOR_FLOAT32, float);
     NNAPI_IMPL_ARG_MIN_MAX(OperandType::TENSOR_INT32, int32_t);
     NNAPI_IMPL_ARG_MIN_MAX(OperandType::TENSOR_QUANT8_ASYMM, uint8_t);
