@@ -1600,3 +1600,523 @@ inline bool is_ignored_quant8_dim1_axis0_neg(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_float16_dim4_axis0(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type22(Type::TENSOR_FLOAT16, {12, 2, 2, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type22);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type22);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {0};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim4_axis0(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim4_axis0_neg(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type22(Type::TENSOR_FLOAT16, {12, 2, 2, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type22);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type22);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {-4};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim4_axis0_neg(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim4_axis1(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type23(Type::TENSOR_FLOAT16, {2, 12, 2, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type23);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type23);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {1};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim4_axis1(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim4_axis1_neg(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type23(Type::TENSOR_FLOAT16, {2, 12, 2, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type23);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type23);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {-3};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim4_axis1_neg(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim4_axis2(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type24(Type::TENSOR_FLOAT16, {2, 2, 12, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type24);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type24);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {2};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim4_axis2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim4_axis2_neg(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type24(Type::TENSOR_FLOAT16, {2, 2, 12, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type24);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type24);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {-2};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim4_axis2_neg(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim4_axis3(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type25(Type::TENSOR_FLOAT16, {2, 2, 3, 12});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type25);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type25);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {3};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim4_axis3(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim4_axis3_neg(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type25(Type::TENSOR_FLOAT16, {2, 2, 3, 12});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type25);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type25);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {-1};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim4_axis3_neg(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim3_axis0(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type26(Type::TENSOR_FLOAT16, {12, 2, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type26);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type26);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {0};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim3_axis0(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim3_axis0_neg(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type26(Type::TENSOR_FLOAT16, {12, 2, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type26);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type26);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {-3};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim3_axis0_neg(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim3_axis1(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type27(Type::TENSOR_FLOAT16, {2, 12, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type27);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type27);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {1};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim3_axis1(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim3_axis1_neg(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type27(Type::TENSOR_FLOAT16, {2, 12, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type27);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type27);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {-2};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim3_axis1_neg(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim3_axis2(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type28(Type::TENSOR_FLOAT16, {2, 3, 12});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type28);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type28);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {2};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim3_axis2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim3_axis2_neg(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type28(Type::TENSOR_FLOAT16, {2, 3, 12});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type28);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type28);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {-1};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim3_axis2_neg(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim2_axis0(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type29(Type::TENSOR_FLOAT16, {12, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type29);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type29);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {0};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim2_axis0(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim2_axis0_neg(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type29(Type::TENSOR_FLOAT16, {12, 3});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type29);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type29);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {-2};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim2_axis0_neg(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim2_axis1(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type30(Type::TENSOR_FLOAT16, {3, 12});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type30);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type30);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {1};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim2_axis1(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim2_axis1_neg(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type30(Type::TENSOR_FLOAT16, {3, 12});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type30);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type30);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {-1};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim2_axis1_neg(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim1_axis0(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type31(Type::TENSOR_FLOAT16, {12});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type31);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type31);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {0};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim1_axis0(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_dim1_axis0_neg(Model *model) {
+  OperandType type1(Type::INT32, {});
+  OperandType type31(Type::TENSOR_FLOAT16, {12});
+  // Phase 1, operands
+  auto op1 = model->addOperand(&type31);
+  auto param = model->addOperand(&type1);
+  auto axis = model->addOperand(&type1);
+  auto op2 = model->addOperand(&type31);
+  // Phase 2, operations
+  static int32_t param_init[] = {3};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  static int32_t axis_init[] = {-1};
+  model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_CHANNEL_SHUFFLE, {op1, param, axis}, {op2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op1},
+    {op2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_dim1_axis0_neg(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
