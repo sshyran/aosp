@@ -302,12 +302,12 @@ void activationOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
     }
 
     ANeuralNetworksOperandType output = input;
-    OperationTestBase activationTest(operationCode, {input}, {output});
+    OperationTestBase test(operationCode, {input}, {output});
 
-    EXPECT_TRUE(activationTest.testMutatingInputOperandCode());
-    EXPECT_TRUE(activationTest.testMutatingInputOperandCounts());
-    EXPECT_TRUE(activationTest.testMutatingOutputOperandCode());
-    EXPECT_TRUE(activationTest.testMutatingOutputOperandCounts());
+    EXPECT_TRUE(test.testMutatingInputOperandCode());
+    EXPECT_TRUE(test.testMutatingInputOperandCounts());
+    EXPECT_TRUE(test.testMutatingOutputOperandCode());
+    EXPECT_TRUE(test.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, ABS_float16) {
@@ -316,6 +316,10 @@ TEST(OperationValidationTest, ABS_float16) {
 
 TEST(OperationValidationTest, ABS_float32) {
     activationOpTest(ANEURALNETWORKS_ABS, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, LOGICAL_NOT_bool) {
+    activationOpTest(ANEURALNETWORKS_LOGICAL_NOT, ANEURALNETWORKS_TENSOR_BOOL8);
 }
 
 TEST(OperationValidationTest, FLOOR_float32) {
