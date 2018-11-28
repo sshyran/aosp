@@ -13307,6 +13307,194 @@ TEST_F(ValidationTest, local_response_normalization_v1_2_relaxed_dim3_axis2_floa
 }
 
 
+// Generated from: log_softmax.mod.py.
+namespace log_softmax {
+// Generated log_softmax test
+#include "examples/log_softmax.example.cpp"
+// Generated model constructor
+#include "vts_models/log_softmax.model.cpp"
+} // namespace log_softmax
+
+TEST_F(NeuralnetworksHidlTest, log_softmax) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel,
+                           log_softmax::is_ignored,
+                           log_softmax::get_examples());
+}
+
+TEST_F(ValidationTest, log_softmax) {
+  const Model model = log_softmax::createTestModel();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_relaxed) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_relaxed,
+                           log_softmax::is_ignored_relaxed,
+                           log_softmax::get_examples_relaxed());
+}
+
+TEST_F(ValidationTest, log_softmax_relaxed) {
+  const Model model = log_softmax::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_float16) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_float16,
+                           log_softmax::is_ignored_float16,
+                           log_softmax::get_examples_float16());
+}
+
+TEST_F(ValidationTest, log_softmax_float16) {
+  const Model model = log_softmax::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_2) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_2,
+                           log_softmax::is_ignored_2,
+                           log_softmax::get_examples_2());
+}
+
+TEST_F(ValidationTest, log_softmax_2) {
+  const Model model = log_softmax::createTestModel_2();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_relaxed_2) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_relaxed_2,
+                           log_softmax::is_ignored_relaxed_2,
+                           log_softmax::get_examples_relaxed_2());
+}
+
+TEST_F(ValidationTest, log_softmax_relaxed_2) {
+  const Model model = log_softmax::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_relaxed_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_float16_2) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_float16_2,
+                           log_softmax::is_ignored_float16_2,
+                           log_softmax::get_examples_float16_2());
+}
+
+TEST_F(ValidationTest, log_softmax_float16_2) {
+  const Model model = log_softmax::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_3) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_3,
+                           log_softmax::is_ignored_3,
+                           log_softmax::get_examples_3());
+}
+
+TEST_F(ValidationTest, log_softmax_3) {
+  const Model model = log_softmax::createTestModel_3();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_relaxed_3) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_relaxed_3,
+                           log_softmax::is_ignored_relaxed_3,
+                           log_softmax::get_examples_relaxed_3());
+}
+
+TEST_F(ValidationTest, log_softmax_relaxed_3) {
+  const Model model = log_softmax::createTestModel_relaxed_3();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_relaxed_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_float16_3) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_float16_3,
+                           log_softmax::is_ignored_float16_3,
+                           log_softmax::get_examples_float16_3());
+}
+
+TEST_F(ValidationTest, log_softmax_float16_3) {
+  const Model model = log_softmax::createTestModel_float16_3();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_float16_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_4) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_4,
+                           log_softmax::is_ignored_4,
+                           log_softmax::get_examples_4());
+}
+
+TEST_F(ValidationTest, log_softmax_4) {
+  const Model model = log_softmax::createTestModel_4();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_4());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_relaxed_4) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_relaxed_4,
+                           log_softmax::is_ignored_relaxed_4,
+                           log_softmax::get_examples_relaxed_4());
+}
+
+TEST_F(ValidationTest, log_softmax_relaxed_4) {
+  const Model model = log_softmax::createTestModel_relaxed_4();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_relaxed_4());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, log_softmax_float16_4) {
+  generated_tests::Execute(device,
+                           log_softmax::createTestModel_float16_4,
+                           log_softmax::is_ignored_float16_4,
+                           log_softmax::get_examples_float16_4());
+}
+
+TEST_F(ValidationTest, log_softmax_float16_4) {
+  const Model model = log_softmax::createTestModel_float16_4();
+  const std::vector<Request> requests = createRequests(log_softmax::get_examples_float16_4());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: logistic_float16_1.mod.py.
 namespace logistic_float16_1 {
 // Generated logistic_float16_1 test

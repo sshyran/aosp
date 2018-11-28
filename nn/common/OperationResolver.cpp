@@ -25,13 +25,15 @@ namespace nn {
 
 // TODO(b/119608412): Find a way to not reference every operation here.
 const OperationRegistration* register_ABS();
-const OperationRegistration* register_GATHER();
 const OperationRegistration* register_CHANNEL_SHUFFLE();
+const OperationRegistration* register_GATHER();
+const OperationRegistration* register_LOG_SOFTMAX();
 
 OperationResolver::OperationResolver() {
     registerOperation(register_ABS());
-    registerOperation(register_GATHER());
     registerOperation(register_CHANNEL_SHUFFLE());
+    registerOperation(register_GATHER());
+    registerOperation(register_LOG_SOFTMAX());
 }
 
 const OperationRegistration* OperationResolver::findOperation(OperationType operationType) const {
