@@ -1627,6 +1627,10 @@ void preluOpTest(int32_t operandCode) {
     EXPECT_TRUE(preluTest.testMutatingOutputOperandCounts());
 }
 
+TEST(OperationValidationTest, PRELU_float16) {
+    preluOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 TEST(OperationValidationTest, PRELU_float32) {
     preluOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }

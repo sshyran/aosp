@@ -2629,10 +2629,11 @@ typedef enum {
      *     output.dimension = {5, 4, 3, 2}
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: up to 4
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: A tensor, specifying the input.
