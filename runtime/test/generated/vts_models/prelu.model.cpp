@@ -188,6 +188,68 @@ inline bool is_ignored_quant8(int i) {
 }
 
 // Create the model
+Model createTestModel_float16() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 2, 2, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 1, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 6},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 2, 2, 3},
+            .numberOfConsumers = 0,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::PRELU,
+            .inputs = {0, 1},
+            .outputs = {2},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {2};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 60, 0, 64
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_float16(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_weight_as_input() {
     const std::vector<Operand> operands = {
         {
@@ -364,6 +426,66 @@ Model createTestModel_weight_as_input_quant8() {
 }
 
 inline bool is_ignored_weight_as_input_quant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_weight_as_input_float16() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 2, 2, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 1, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {1, 2, 2, 3},
+            .numberOfConsumers = 0,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::PRELU,
+            .inputs = {0, 1},
+            .outputs = {2},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1};
+    const std::vector<uint32_t> outputIndexes = {2};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
