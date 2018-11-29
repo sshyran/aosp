@@ -2394,22 +2394,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
         } break;
-        case OperationType::CHANNEL_SHUFFLE: {
-            if (!allParametersPresent(3, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const int32_t numGroups = getScalarData<int32_t>(mOperands[ins[1]]);
-            const int32_t axis = getScalarData<int32_t>(mOperands[ins[2]]);
-
-            RunTimeOperandInfo& out = mOperands[outs[0]];
-            Shape outShape = out.shape();
-
-            success = channelShufflePrepare(input.shape(), numGroups, axis, &outShape) &&
-                      setInfoAndAllocateIfNeeded(&out, outShape) &&
-                      channelShuffleGeneric(input.buffer, input.shape(), numGroups, axis,
-                                            out.buffer, outShape);
-        } break;
         case OperationType::TRANSPOSE_CONV_2D: {
             const size_t inCount = ins.size();
             if ((inCount != 11 && inCount != 9) || !allParametersPresent(inCount, 1)) {

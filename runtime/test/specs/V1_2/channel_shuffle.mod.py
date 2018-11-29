@@ -39,4 +39,4 @@ Example({
          108, 112, 116, 109, 113, 117, 110, 114, 118, 111, 115, 119,
          120, 124, 128, 121, 125, 129, 122, 126, 130, 123, 127, 131,
          132, 136, 140, 133, 137, 141, 134, 138, 142, 135, 139, 143]
-}).AddVariations("relaxed", quant8).AddAllDimsAndAxis(i1, o1, axis)
+}).AddVariations("relaxed", quant8, "float16").AddAllDimsAndAxis(i1, o1, axis)
