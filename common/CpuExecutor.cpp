@@ -2494,21 +2494,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
         } break;
-        case OperationType::PRELU: {
-            if (!allParametersPresent(2, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& alpha = mOperands[ins[1]];
-
-            RunTimeOperandInfo& out = mOperands[outs[0]];
-            Shape outShape = out.shape();
-
-            success = addMulPrepare(input.shape(), alpha.shape(), &outShape) &&
-                      setInfoAndAllocateIfNeeded(&out, outShape) &&
-                      pReluGeneric(input.buffer, input.shape(), alpha.buffer, alpha.shape(),
-                                   out.buffer, outShape);
-        } break;
         case OperationType::TILE: {
             if (!allParametersPresent(2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;

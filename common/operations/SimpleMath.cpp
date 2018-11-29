@@ -29,59 +29,6 @@
 namespace android {
 namespace nn {
 
-inline void get4DShape(const Shape& shapeIn, uint32_t* shapeOut) {
-    const int32_t kNumDims = 4;
-    int32_t numDims = static_cast<int32_t>(getNumberOfDimensions(shapeIn));
-    for (int32_t i = 0; i < numDims; i++) {
-        shapeOut[i + kNumDims - numDims] = getSizeOfDimension(shapeIn, i);
-    }
-    for (int32_t i = 0; i < kNumDims - numDims; i++) {
-        shapeOut[i] = 1;
-    }
-}
-
-inline void getBroadcastStrides(const Shape& shapeIn, uint32_t* stridesOut) {
-    const int32_t kNumDims = 4;
-    uint32_t dims[kNumDims];
-    get4DShape(shapeIn, dims);
-    stridesOut[kNumDims - 1] = 1;
-    for (int32_t i = kNumDims - 2; i >= 0; i--) {
-        stridesOut[i] = stridesOut[i + 1] * dims[i + 1];
-    }
-    for (int32_t i = kNumDims - 1; i >= 0; i--) {
-        if (dims[i] == 1) {
-            stridesOut[i] = 0;
-        }
-    }
-}
-
-template <typename T>
-inline bool broadcastOpBase(const T* in1, const Shape& shape1, const T* in2, const Shape& shape2,
-                            T* out, const Shape& shapeOut,
-                            std::function<T(const T&, const T&)> mathKernel) {
-    // extend to 4D
-    uint32_t outputDims[4], in1Strides[4], in2Strides[4];
-    get4DShape(shapeOut, outputDims);
-    getBroadcastStrides(shape1, in1Strides);
-    getBroadcastStrides(shape2, in2Strides);
-
-    T* outPtr = out;
-    for (uint32_t b = 0; b < outputDims[0]; b++) {
-        for (uint32_t h = 0; h < outputDims[1]; h++) {
-            for (uint32_t w = 0; w < outputDims[2]; w++) {
-                for (uint32_t c = 0; c < outputDims[3]; c++) {
-                    T in1Val = in1[b * in1Strides[0] + h * in1Strides[1] + w * in1Strides[2] +
-                                   c * in1Strides[3]];
-                    T in2Val = in2[b * in2Strides[0] + h * in2Strides[1] + w * in2Strides[2] +
-                                   c * in2Strides[3]];
-                    *outPtr++ = mathKernel(in1Val, in2Val);
-                }
-            }
-        }
-    }
-    return true;
-}
-
 #define ANDROID_NN_MACRO_DISPATCH(macro)                                    \
     switch (activation) {                                                   \
         case (int32_t) FusedActivationFunc::NONE:                           \
@@ -507,57 +454,5 @@ bool meanGeneric(const uint8_t* inputData, const Shape& inputShape,
     return result;
 }
 
-bool pReluGeneric(const uint8_t* inputData, const Shape& inputShape, const uint8_t* alphaData,
-                  const Shape& alphaShape, uint8_t* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("pReluGeneric");
-    if (inputShape.type == OperandType::TENSOR_FLOAT32) {
-        return broadcastOpBase<float>(reinterpret_cast<const float*>(inputData), inputShape,
-                                      reinterpret_cast<const float*>(alphaData), alphaShape,
-                                      reinterpret_cast<float*>(outputData), outputShape,
-                                      [](const float& val1, const float& val2) {
-                                          return val1 >= 0.0f ? val1 : val1 * val2;
-                                      });
-    } else if (inputShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        const int32_t input_offset = -inputShape.offset;
-        const int32_t alpha_offset = -alphaShape.offset;
-        const int32_t output_offset = outputShape.offset;
-        const double input_product_scale = inputShape.scale * alphaShape.scale;
-        const double real_multiplier_pos = inputShape.scale / outputShape.scale;
-        const double real_multiplier_neg = input_product_scale / outputShape.scale;
-        int32_t output_multiplier_pos, output_shift_pos;
-        int32_t output_multiplier_neg, output_shift_neg;
-        if (!QuantizeMultiplierSmallerThanOne(real_multiplier_pos, &output_multiplier_pos,
-                                              &output_shift_pos)) {
-            return false;
-        }
-        if (!QuantizeMultiplierSmallerThanOne(real_multiplier_neg, &output_multiplier_neg,
-                                              &output_shift_neg)) {
-            return false;
-        }
-        return broadcastOpBase<uint8_t>(
-                reinterpret_cast<const uint8_t*>(inputData), inputShape,
-                reinterpret_cast<const uint8_t*>(alphaData), alphaShape,
-                reinterpret_cast<uint8_t*>(outputData), outputShape,
-                [&](const uint8_t& val1, const uint8_t& val2) {
-                    const int32_t input = input_offset + static_cast<int32_t>(val1);
-                    int32_t output_val;
-                    if (input >= 0) {
-                        output_val = output_offset +
-                                     tflite::MultiplyByQuantizedMultiplierSmallerThanOneExp(
-                                             input, output_multiplier_pos, -output_shift_pos);
-                    } else {
-                        const int32_t alpha = alpha_offset + static_cast<int32_t>(val2);
-                        output_val =
-                                output_offset +
-                                tflite::MultiplyByQuantizedMultiplierSmallerThanOneExp(
-                                        input * alpha, output_multiplier_neg, -output_shift_neg);
-                    }
-                    return static_cast<uint8_t>(output_val);
-                });
-    } else {
-        LOG(ERROR) << "Unsupported data type";
-        return false;
-    }
-}
 } // namespace nn
 } // namespace android

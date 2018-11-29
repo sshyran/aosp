@@ -311,9 +311,6 @@ bool transposeConvQuant8(const uint8_t* inputData, const Shape& inputShape,
                          int32_t stride_width, int32_t stride_height, int32_t activation,
                          uint8_t* outputData, const Shape& outputShape);
 
-bool pReluGeneric(const uint8_t* inputData, const Shape& inputShape, const uint8_t* alphaData,
-                  const Shape& alphaShape, uint8_t* outputData, const Shape& outputShape);
-
 bool axisAlignedBBoxTransform(const float* roiData, const Shape& roiShape,
                               const float* bboxDeltasData, const Shape& bboxDeltasShape,
                               const float* imageInfoData, const Shape& imageInfoDataShape,
