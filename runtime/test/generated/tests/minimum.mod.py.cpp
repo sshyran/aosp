@@ -21,10 +21,10 @@ TEST_F(GeneratedTests, minimum_simple_relaxed) {
             minimum::get_examples_simple_relaxed());
 }
 
-TEST_F(GeneratedTests, minimum_simple_quant8) {
-    execute(minimum::CreateModel_quant8,
-            minimum::is_ignored_quant8,
-            minimum::get_examples_simple_quant8());
+TEST_F(GeneratedTests, minimum_simple_float16) {
+    execute(minimum::CreateModel_float16,
+            minimum::is_ignored_float16,
+            minimum::get_examples_simple_float16());
 }
 
 TEST_F(GeneratedTests, minimum_simple_int32) {
@@ -33,10 +33,10 @@ TEST_F(GeneratedTests, minimum_simple_int32) {
             minimum::get_examples_simple_int32());
 }
 
-TEST_F(GeneratedTests, minimum_simple_float16) {
-    execute(minimum::CreateModel_float16,
-            minimum::is_ignored_float16,
-            minimum::get_examples_simple_float16());
+TEST_F(GeneratedTests, minimum_simple_quant8) {
+    execute(minimum::CreateModel_quant8,
+            minimum::is_ignored_quant8,
+            minimum::get_examples_simple_quant8());
 }
 
 TEST_F(GeneratedTests, minimum_broadcast) {
@@ -51,10 +51,10 @@ TEST_F(GeneratedTests, minimum_broadcast_relaxed) {
             minimum::get_examples_broadcast_relaxed());
 }
 
-TEST_F(GeneratedTests, minimum_broadcast_quant8) {
-    execute(minimum::CreateModel_quant8_2,
-            minimum::is_ignored_quant8_2,
-            minimum::get_examples_broadcast_quant8());
+TEST_F(GeneratedTests, minimum_broadcast_float16) {
+    execute(minimum::CreateModel_float16_2,
+            minimum::is_ignored_float16_2,
+            minimum::get_examples_broadcast_float16());
 }
 
 TEST_F(GeneratedTests, minimum_broadcast_int32) {
@@ -63,9 +63,9 @@ TEST_F(GeneratedTests, minimum_broadcast_int32) {
             minimum::get_examples_broadcast_int32());
 }
 
-TEST_F(GeneratedTests, minimum_broadcast_float16) {
-    execute(minimum::CreateModel_float16_2,
-            minimum::is_ignored_float16_2,
-            minimum::get_examples_broadcast_float16());
+TEST_F(GeneratedTests, minimum_broadcast_quant8) {
+    execute(minimum::CreateModel_quant8_2,
+            minimum::is_ignored_quant8_2,
+            minimum::get_examples_broadcast_quant8());
 }
 
