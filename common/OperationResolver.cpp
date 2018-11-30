@@ -39,6 +39,12 @@ const OperationRegistration* register_LOGICAL_OR();
 const OperationRegistration* register_LOG_SOFTMAX();
 const OperationRegistration* register_NOT_EQUAL();
 const OperationRegistration* register_PRELU();
+const OperationRegistration* register_REDUCE_ALL();
+const OperationRegistration* register_REDUCE_ANY();
+const OperationRegistration* register_REDUCE_MAX();
+const OperationRegistration* register_REDUCE_MIN();
+const OperationRegistration* register_REDUCE_PROD();
+const OperationRegistration* register_REDUCE_SUM();
 
 OperationResolver::OperationResolver() {
     registerOperation(register_ABS());
@@ -56,6 +62,12 @@ OperationResolver::OperationResolver() {
     registerOperation(register_LOG_SOFTMAX());
     registerOperation(register_NOT_EQUAL());
     registerOperation(register_PRELU());
+    registerOperation(register_REDUCE_ALL());
+    registerOperation(register_REDUCE_ANY());
+    registerOperation(register_REDUCE_MAX());
+    registerOperation(register_REDUCE_MIN());
+    registerOperation(register_REDUCE_PROD());
+    registerOperation(register_REDUCE_SUM());
 }
 
 const OperationRegistration* OperationResolver::findOperation(OperationType operationType) const {
