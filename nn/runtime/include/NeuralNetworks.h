@@ -2866,7 +2866,32 @@ typedef enum {
      */
     ANEURALNETWORKS_RANDOM_MULTINOMIAL = 72,
 
-    ANEURALNETWORKS_REDUCE = 73,
+    /**
+     * Reduces a tensor by multiplying elements along given dimensions.
+     *
+     * If keep_dims is true, the reduced dimensions are
+     * retained with length 1. Otherwise, the rank of the tensor is reduced by
+     * 1 for each entry in dimensions.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: up to 4
+     *
+     * Inputs:
+     * * 0: An n-D tensor.
+     * * 1: A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}. The dimensions
+     *      to reduce. Dimension values must be in the range [-n, n).
+     * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, keep_dims. If true,
+     *      retains reduced dimensions with length 1.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_REDUCE_PROD = 73,
 
     /**
      * Select and scale the feature map of each region of interest to a unified
@@ -3249,6 +3274,7 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_ROI_POOLING = 89,
+
     /**
      * For input tensors x and y, computes x == y elementwise.
      *
@@ -3274,6 +3300,7 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_EQUAL = 90,
+
     /**
      * For input tensors x and y, computes x != y elementwise.
      *
@@ -3299,6 +3326,145 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_NOT_EQUAL = 91,
+
+    /**
+     * Reduces a tensor by summing elements along given dimensions.
+     *
+     * If keep_dims is true, the reduced dimensions are
+     * retained with length 1. Otherwise, the rank of the tensor is reduced by
+     * 1 for each entry in dimensions.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: up to 4
+     *
+     * Inputs:
+     * * 0: An n-D tensor.
+     * * 1: A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}. The dimensions
+     *      to reduce. Dimension values must be in the range [-n, n).
+     * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, keep_dims. If true,
+     *      retains reduced dimensions with length 1.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_REDUCE_SUM = 92,
+
+    /**
+     * Reduces a tensor by computing the maximum of elements along given
+     * dimensions.
+     *
+     * If keep_dims is true, the reduced dimensions are
+     * retained with length 1. Otherwise, the rank of the tensor is reduced by
+     * 1 for each entry in dimensions.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: up to 4
+     *
+     * Inputs:
+     * * 0: An n-D tensor.
+     * * 1: A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}. The dimensions
+     *      to reduce. Dimension values must be in the range [-n, n).
+     * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, keep_dims. If true,
+     *      retains reduced dimensions with length 1.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_REDUCE_MAX = 93,
+
+    /**
+     * Reduces a tensor by computing the minimum of elements along given
+     * dimensions.
+     *
+     * If keep_dims is true, the reduced dimensions are
+     * retained with length 1. Otherwise, the rank of the tensor is reduced by
+     * 1 for each entry in dimensions.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: up to 4
+     *
+     * Inputs:
+     * * 0: An n-D tensor.
+     * * 1: A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}. The dimensions
+     *      to reduce. Dimension values must be in the range [-n, n).
+     * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, keep_dims. If true,
+     *      retains reduced dimensions with length 1.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_REDUCE_MIN = 94,
+
+    /**
+     * Reduces a tensor by computing the "logical or" of elements along given
+     * dimensions.
+     *
+     * If keep_dims is true, the reduced dimensions are
+     * retained with length 1. Otherwise, the rank of the tensor is reduced by
+     * 1 for each entry in dimensions.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     *
+     * Supported tensor rank: up to 4
+     *
+     * Inputs:
+     * * 0: An n-D tensor.
+     * * 1: A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}. The dimensions
+     *      to reduce. Dimension values must be in the range [-n, n).
+     * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, keep_dims. If true,
+     *      retains reduced dimensions with length 1.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_REDUCE_ANY = 95,
+
+    /**
+     * Reduces a tensor by computing the "logical and" of elements along given
+     * dimensions.
+     *
+     * If keep_dims is true, the reduced dimensions are
+     * retained with length 1. Otherwise, the rank of the tensor is reduced by
+     * 1 for each entry in dimensions.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     *
+     * Supported tensor rank: up to 4
+     *
+     * Inputs:
+     * * 0: An n-D tensor.
+     * * 1: A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}. The dimensions
+     *      to reduce. Dimension values must be in the range [-n, n).
+     * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, keep_dims. If true,
+     *      retains reduced dimensions with length 1.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_REDUCE_ALL = 96,
 } OperationCode;
 
 /**
