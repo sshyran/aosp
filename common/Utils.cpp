@@ -279,7 +279,7 @@ const char* kOperationNames[kNumberOfOperationTypes] = {
         "QUANTIZE",
         "QUANTIZED_16BIT_LSTM",
         "RANDOM_MULTINOMIAL",
-        "REDUCE",
+        "REDUCE_PROD",
         "ROI_ALIGN",
         "RSQRT",
         "SELECT",
@@ -298,6 +298,11 @@ const char* kOperationNames[kNumberOfOperationTypes] = {
         "ROI_POOLING",
         "EQUAL",
         "NOT_EQUAL",
+        "REDUCE_SUM",
+        "REDUCE_MAX",
+        "REDUCE_MIN",
+        "REDUCE_ANY",
+        "REDUCE_ALL",
 };
 
 static_assert(COUNT(kOperationNames) == kNumberOfOperationTypes, "kOperationNames is incorrect");

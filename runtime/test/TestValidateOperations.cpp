@@ -1953,4 +1953,69 @@ TEST(OperationValidationTest, GREATER_EQUAL) {
     comparisonTest(ANEURALNETWORKS_GREATER_EQUAL, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+void reduceOpTest(ANeuralNetworksOperationType operationCode, int32_t inputOperandType) {
+    bool isQuant = inputOperandType == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM;
+    float scale = isQuant ? 1.f / 256 : 0.0f;
+    uint32_t inputDimensions[4] = {2, 2, 2, 2};
+    ANeuralNetworksOperandType input1 = {
+            .type = inputOperandType,
+            .dimensionCount = 4,
+            .dimensions = inputDimensions,
+            .scale = scale,
+            .zeroPoint = 0,
+    };
+    uint32_t axesDimensions[1] = {2};
+    ANeuralNetworksOperandType input2 = {
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 1,
+            .dimensions = axesDimensions,
+    };
+    ANeuralNetworksOperandType input3 = {
+            .type = ANEURALNETWORKS_BOOL,
+            .dimensions = {},
+    };
+    ANeuralNetworksOperandType output = {
+            .type = inputOperandType,
+            .dimensionCount = 4,
+            .dimensions = inputDimensions,
+            .scale = scale,
+    };
+    OperationTestBase test(operationCode, {input1, input2, input3}, {output});
+
+    EXPECT_TRUE(test.testMutatingInputOperandCode());
+    EXPECT_TRUE(test.testMutatingInputOperandCounts());
+    EXPECT_TRUE(test.testMutatingOutputOperandCode());
+    EXPECT_TRUE(test.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, REDUCE_PROD) {
+    reduceOpTest(ANEURALNETWORKS_REDUCE_PROD, ANEURALNETWORKS_TENSOR_FLOAT16);
+    reduceOpTest(ANEURALNETWORKS_REDUCE_PROD, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, REDUCE_SUM) {
+    reduceOpTest(ANEURALNETWORKS_REDUCE_SUM, ANEURALNETWORKS_TENSOR_FLOAT16);
+    reduceOpTest(ANEURALNETWORKS_REDUCE_SUM, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, REDUCE_MAX) {
+    reduceOpTest(ANEURALNETWORKS_REDUCE_MAX, ANEURALNETWORKS_TENSOR_FLOAT16);
+    reduceOpTest(ANEURALNETWORKS_REDUCE_MAX, ANEURALNETWORKS_TENSOR_FLOAT32);
+    reduceOpTest(ANEURALNETWORKS_REDUCE_MAX, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, REDUCE_MIN) {
+    reduceOpTest(ANEURALNETWORKS_REDUCE_MIN, ANEURALNETWORKS_TENSOR_FLOAT16);
+    reduceOpTest(ANEURALNETWORKS_REDUCE_MIN, ANEURALNETWORKS_TENSOR_FLOAT32);
+    reduceOpTest(ANEURALNETWORKS_REDUCE_MIN, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, REDUCE_ANY) {
+    reduceOpTest(ANEURALNETWORKS_REDUCE_ANY, ANEURALNETWORKS_TENSOR_BOOL8);
+}
+
+TEST(OperationValidationTest, REDUCE_ALL) {
+    reduceOpTest(ANEURALNETWORKS_REDUCE_ALL, ANEURALNETWORKS_TENSOR_BOOL8);
+}
+
 }  // end namespace
