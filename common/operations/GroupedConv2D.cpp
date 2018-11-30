@@ -173,6 +173,32 @@ bool groupedConvQuant8(const uint8_t* inputData, const Shape& inputShape, const 
     return true;
 }
 
+bool groupedConvFloat16(const _Float16* inputData, const Shape& inputShape,
+                        const _Float16* filterData, const Shape& filterShape,
+                        const _Float16* biasData, const Shape& biasShape, int32_t padding_left,
+                        int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                        int32_t stride_width, int32_t stride_height, int32_t numGroups,
+                        int32_t activation, _Float16* outputData, const Shape& outputShape) {
+    NNTRACE_TRANS("groupConvFloat16");
+
+    std::vector<float> inputData_float32(getNumberOfElements(inputShape));
+    std::vector<float> filterData_float32(getNumberOfElements(filterShape));
+    std::vector<float> biasData_float32(getNumberOfElements(biasShape));
+    std::vector<float> outputData_float32(getNumberOfElements(outputShape));
+
+    convertFloat16ToFloat32(inputData, &inputData_float32);
+    convertFloat16ToFloat32(filterData, &filterData_float32);
+    convertFloat16ToFloat32(biasData, &biasData_float32);
+
+    groupedConvFloat32(inputData_float32.data(), inputShape, filterData_float32.data(), filterShape,
+                       biasData_float32.data(), biasShape, padding_left, padding_right, padding_top,
+                       padding_bottom, stride_width, stride_height, numGroups, activation,
+                       outputData_float32.data(), outputShape);
+    convertFloat32ToFloat16(outputData_float32, outputData);
+
+    return true;
+}
+
 #undef ANDROID_NN_GROUPED_CONV_PARAMETERS
 }  // namespace nn
 }  // namespace android
