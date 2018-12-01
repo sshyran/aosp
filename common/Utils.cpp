@@ -295,6 +295,8 @@ const char* kOperationNames[kNumberOfOperationTypes] = {
         "ROTATED_BBOX_TRANSFORM",
         "ABS",
         "ROI_POOLING",
+        "EQUAL",
+        "NOT_EQUAL",
 };
 
 static_assert(COUNT(kOperationNames) == kNumberOfOperationTypes, "kOperationNames is incorrect");
