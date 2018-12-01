@@ -45,4 +45,4 @@ for model, output in [(model0, output0),
   Example({
       input0: data,
       output: data,
-  }, model=model).AddVariations("relaxed", quant8, int32)
+  }, model=model).AddVariations("relaxed", quant8, int32, "float16")
