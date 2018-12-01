@@ -1144,6 +1144,12 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                          padding_top, padding_bottom, stride_width, stride_height,
                                          filter_width, filter_height, activation,
                                          reinterpret_cast<float*>(output_tmp.buffer), outShape);
+            } else if (input_tmp.type == OperandType::TENSOR_FLOAT16) {
+                success = maxPoolFloat16(reinterpret_cast<const _Float16*>(input_tmp.buffer),
+                                         input_tmp.shape(), padding_left, padding_right,
+                                         padding_top, padding_bottom, stride_width, stride_height,
+                                         filter_width, filter_height, activation,
+                                         reinterpret_cast<_Float16*>(output_tmp.buffer), outShape);
             } else if (input_tmp.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = maxPoolQuant8(reinterpret_cast<const uint8_t*>(input_tmp.buffer),
                                         input_tmp.shape(), padding_left, padding_right, padding_top,
