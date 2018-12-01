@@ -31,7 +31,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i1: [1.0, 2.0, 3.0, 4.0],
     o1: [1.0, 2.0, 3.0, 4.0]
-}).AddNchw(i1, o1, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i1, o1, layout).AddVariations("relaxed", quant8, "float16")
 
 
 # TEST 2: MAX_POOL_2D_NCHW_2, act = none
@@ -59,7 +59,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i2: [x % std + 1 for x in range(bat * row * col * chn)],
     o2: [std for _ in range(bat * output_row * output_col * chn)]
-}).AddNchw(i2, o2, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i2, o2, layout).AddVariations("relaxed", quant8, "float16")
 
 
 # TEST 3: MAX_POOL_2D_NCHW_3, act = relu6
@@ -87,7 +87,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i3: [x % std + 1 for x in range(bat * row * col * chn)],
     o3: [6 for _ in range(bat * output_row * output_col * chn)]
-}).AddNchw(i3, o3, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i3, o3, layout).AddVariations("relaxed", quant8, "float16")
 
 
 # TEST 4: MAX_POOL_2D_NCHW_4, pad = same, stride = 2, filter = 2, act = none
@@ -105,4 +105,4 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i4: [0, 6, 2, 4, 3, 2, 10, 7],
     o4: [6, 10]
-}).AddNchw(i4, o4, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i4, o4, layout).AddVariations("relaxed", quant8, "float16")

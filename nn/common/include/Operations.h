@@ -125,6 +125,12 @@ bool l2PoolFloat32(const float* inputData, const Shape& inputShape, int32_t padd
                    int32_t stride_width, int32_t stride_height, int32_t filter_width,
                    int32_t filter_height, int32_t activation, float* outputData,
                    const Shape& outputShape);
+
+bool maxPoolFloat16(const _Float16* inputData, const Shape& inputShape, int32_t padding_left,
+                    int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                    int32_t stride_width, int32_t stride_height, int32_t filter_width,
+                    int32_t filter_height, int32_t activation, _Float16* outputData,
+                    const Shape& outputShape);
 bool maxPoolFloat32(const float* inputData, const Shape& inputShape, int32_t padding_left,
                     int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
                     int32_t stride_width, int32_t stride_height, int32_t filter_width,

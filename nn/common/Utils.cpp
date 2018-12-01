@@ -973,6 +973,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             auto inputType = operands[inputIndexes[0]].type;
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
+            // clang-format off
             if (inputType == OperandType::TENSOR_FLOAT32) {
                 inExpectedTypes = {OperandType::TENSOR_FLOAT32,
                                    OperandType::INT32,
@@ -982,6 +983,15 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                    OperandType::INT32,
                                    OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                inExpectedTypes = {OperandType::TENSOR_FLOAT16,
+                                   OperandType::INT32,
+                                   OperandType::INT32,
+                                   OperandType::INT32,
+                                   OperandType::INT32,
+                                   OperandType::INT32,
+                                   OperandType::INT32};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
                                    OperandType::INT32,
@@ -996,6 +1006,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            // clang-format on
 
             if (inputCount >= 10) {
                 std::vector<OperandType> explicitScalarTypes(3, OperandType::INT32);
