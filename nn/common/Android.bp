@@ -26,6 +26,7 @@ cc_defaults {
         "OperationResolver.cpp",
         "operations/Abs.cpp",
         "operations/ChannelShuffle.cpp",
+        "operations/Comparisons.cpp",
         "operations/Gather.cpp",
         "operations/LogicalAndOr.cpp",
         "operations/LogicalNot.cpp",
