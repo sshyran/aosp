@@ -208,6 +208,10 @@ void simpleMathOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
     EXPECT_TRUE(simpleMathTest.testMutatingOutputOperandCounts());
 }
 
+TEST(OperationValidationTest, ADD_float16) {
+    simpleMathOpTest(ANEURALNETWORKS_ADD, ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 TEST(OperationValidationTest, ADD_float32) {
     simpleMathOpTest(ANEURALNETWORKS_ADD, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
