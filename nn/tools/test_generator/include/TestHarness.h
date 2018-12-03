@@ -37,10 +37,12 @@ typedef std::map<int, std::vector<float>> Float32Operands;
 typedef std::map<int, std::vector<int32_t>> Int32Operands;
 typedef std::map<int, std::vector<uint8_t>> Quant8Operands;
 typedef std::map<int, std::vector<int16_t>> Quant16Operands;
+typedef std::map<int, std::vector<_Float16>> Float16Operands;
 typedef std::tuple<Float32Operands,  // ANEURALNETWORKS_TENSOR_FLOAT32
                    Int32Operands,    // ANEURALNETWORKS_TENSOR_INT32
                    Quant8Operands,   // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM
-                   Quant16Operands   // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+                   Quant16Operands,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+                   Float16Operands   // ANEURALNETWORKS_TENSOR_FLOAT16
                    >
         MixedTyped;
 typedef std::pair<MixedTyped, MixedTyped> MixedTypedExampleType;
@@ -72,6 +74,10 @@ struct MixedTypedIndex<uint8_t> {
 template <>
 struct MixedTypedIndex<int16_t> {
     static constexpr size_t index = 3;
+};
+template <>
+struct MixedTypedIndex<_Float16> {
+    static constexpr size_t index = 4;
 };
 
 template <size_t Index>
@@ -116,7 +122,8 @@ inline void for_all(MixedTyped& idx_and_data,
     for_all_internal<int32_t>(idx_and_data, execute_this);
     for_all_internal<uint8_t>(idx_and_data, execute_this);
     for_all_internal<int16_t>(idx_and_data, execute_this);
-    static_assert(4 == std::tuple_size<MixedTyped>::value,
+    for_all_internal<_Float16>(idx_and_data, execute_this);
+    static_assert(5 == std::tuple_size<MixedTyped>::value,
                   "Number of types in MixedTyped changed, but for_all function wasn't updated");
 }
 
@@ -138,8 +145,9 @@ inline void for_all(const MixedTyped& idx_and_data,
     for_all_internal<int32_t>(idx_and_data, execute_this);
     for_all_internal<uint8_t>(idx_and_data, execute_this);
     for_all_internal<int16_t>(idx_and_data, execute_this);
+    for_all_internal<_Float16>(idx_and_data, execute_this);
     static_assert(
-            4 == std::tuple_size<MixedTyped>::value,
+            5 == std::tuple_size<MixedTyped>::value,
             "Number of types in MixedTyped changed, but const for_all function wasn't updated");
 }
 
@@ -159,7 +167,8 @@ inline void resize_accordingly(const MixedTyped& golden, MixedTyped& test) {
     resize_accordingly_<int32_t, 1>(golden, test);
     resize_accordingly_<uint8_t, 2>(golden, test);
     resize_accordingly_<int16_t, 3>(golden, test);
-    static_assert(4 == std::tuple_size<MixedTyped>::value,
+    resize_accordingly_<_Float16, 4>(golden, test);
+    static_assert(5 == std::tuple_size<MixedTyped>::value,
                   "Number of types in MixedTyped changed, but resize_accordingly function wasn't "
                   "updated");
 }
@@ -181,8 +190,9 @@ inline MixedTyped filter(const MixedTyped& golden,
     filter_internal<int32_t, 1>(golden, &filtered, is_ignored);
     filter_internal<uint8_t, 2>(golden, &filtered, is_ignored);
     filter_internal<int16_t, 3>(golden, &filtered, is_ignored);
-    static_assert(4 == std::tuple_size<MixedTyped>::value,
-                  "Number of types in MixedTyped changed, but filter function wasn't updated");
+    filter_internal<_Float16, 4>(golden, &filtered, is_ignored);
+    static_assert(5 == std::tuple_size<MixedTyped>::value,
+                  "Number of types in MixedTyped changed, but compare function wasn't updated");
     return filtered;
 }
 
@@ -242,7 +252,18 @@ inline void compare(const MixedTyped& golden, const MixedTyped& test,
             totalNumberOfErrors++;
         }
     });
-    static_assert(4 == std::tuple_size<MixedTyped>::value,
+    compare_<4>(golden, test,
+                [&totalNumberOfErrors, fpAtol, fpRtol](_Float16 expected, _Float16 actual) {
+                    // Compute the range based on both absolute tolerance and relative tolerance
+                    float fpRange = fpAtol + fpRtol * std::abs(static_cast<float>(expected));
+                    if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                        EXPECT_NEAR(expected, actual, fpRange);
+                    }
+                    if (std::abs(static_cast<float>(expected - actual)) > fpRange) {
+                        totalNumberOfErrors++;
+                    }
+                });
+    static_assert(5 == std::tuple_size<MixedTyped>::value,
                   "Number of types in MixedTyped changed, but compare function wasn't updated");
     EXPECT_EQ(size_t{0}, totalNumberOfErrors);
 }

@@ -197,13 +197,17 @@ def DumpMixedType(operands, feedDict):
   // int -> QUANT8_ASYMM map
   {{{uint8_map}}},
   // int -> QUANT16_ASYMM map
-  {{{int16_map}}}\n}}"""
+  {{{int16_map}}},
+  // int -> FLOAT16 map
+  {{{float16_map}}},
+}}"""
     return mixedTypeTemplate.format(
         float32_map=tg.GetJointStr(typedMap.get("TENSOR_FLOAT32", [])),
         int32_map=tg.GetJointStr(typedMap.get("TENSOR_INT32", [])),
         uint8_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT8_ASYMM", []) +
                                  typedMap.get("TENSOR_OEM_BYTE", [])),
-        int16_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT16_ASYMM", [])))
+        int16_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT16_ASYMM", [])),
+        float16_map=tg.GetJointStr(typedMap.get("TENSOR_FLOAT16", [])))
 
 # Dump Example file for Cts tests
 def DumpCtsExample(example, example_fd):
