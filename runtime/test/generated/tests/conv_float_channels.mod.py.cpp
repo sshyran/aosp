@@ -12,6 +12,6 @@ namespace conv_float_channels {
 TEST_F(GeneratedTests, conv_float_channels) {
     execute(conv_float_channels::CreateModel,
             conv_float_channels::is_ignored,
-            conv_float_channels::examples);
+            conv_float_channels::get_examples());
 }
 

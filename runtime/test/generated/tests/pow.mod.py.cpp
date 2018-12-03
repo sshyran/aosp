@@ -12,36 +12,36 @@ namespace pow {
 TEST_F(GeneratedTests, pow) {
     execute(pow::CreateModel,
             pow::is_ignored,
-            pow::examples);
+            pow::get_examples());
 }
 
 TEST_F(GeneratedTests, pow_relaxed) {
     execute(pow::CreateModel_relaxed,
             pow::is_ignored_relaxed,
-            pow::examples_relaxed);
+            pow::get_examples_relaxed());
 }
 
 TEST_F(GeneratedTests, pow_2) {
     execute(pow::CreateModel_2,
             pow::is_ignored_2,
-            pow::examples_2);
+            pow::get_examples_2());
 }
 
 TEST_F(GeneratedTests, pow_relaxed_2) {
     execute(pow::CreateModel_relaxed_2,
             pow::is_ignored_relaxed_2,
-            pow::examples_relaxed_2);
+            pow::get_examples_relaxed_2());
 }
 
 TEST_F(GeneratedTests, pow_3) {
     execute(pow::CreateModel_3,
             pow::is_ignored_3,
-            pow::examples_3);
+            pow::get_examples_3());
 }
 
 TEST_F(GeneratedTests, pow_relaxed_3) {
     execute(pow::CreateModel_relaxed_3,
             pow::is_ignored_relaxed_3,
-            pow::examples_relaxed_3);
+            pow::get_examples_relaxed_3());
 }
 

@@ -12,12 +12,12 @@ namespace split_int32_3 {
 TEST_F(GeneratedTests, split_int32_3) {
     execute(split_int32_3::CreateModel,
             split_int32_3::is_ignored,
-            split_int32_3::examples);
+            split_int32_3::get_examples());
 }
 
 TEST_F(GeneratedTests, split_int32_3_relaxed) {
     execute(split_int32_3::CreateModel_relaxed,
             split_int32_3::is_ignored_relaxed,
-            split_int32_3::examples_relaxed);
+            split_int32_3::get_examples_relaxed());
 }
 

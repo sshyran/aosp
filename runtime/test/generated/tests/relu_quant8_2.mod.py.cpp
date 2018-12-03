@@ -12,6 +12,6 @@ namespace relu_quant8_2 {
 TEST_F(GeneratedTests, relu_quant8_2) {
     execute(relu_quant8_2::CreateModel,
             relu_quant8_2::is_ignored,
-            relu_quant8_2::examples);
+            relu_quant8_2::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace sub_quantized_broadcast {
 TEST_F(GeneratedTests, sub_quantized_broadcast) {
     execute(sub_quantized_broadcast::CreateModel,
             sub_quantized_broadcast::is_ignored,
-            sub_quantized_broadcast::examples);
+            sub_quantized_broadcast::get_examples());
 }
 

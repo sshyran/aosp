@@ -12,6 +12,6 @@ namespace div_relaxed {
 TEST_F(GeneratedTests, div_relaxed) {
     execute(div_relaxed::CreateModel,
             div_relaxed::is_ignored,
-            div_relaxed::examples);
+            div_relaxed::get_examples());
 }
 

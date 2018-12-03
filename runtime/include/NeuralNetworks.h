@@ -244,16 +244,19 @@ typedef enum {
      * dimensions except the dimension along the concatenation axis.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
-     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} (full support since API
+     *   level 29, see the input section)
      *
      * Supported tensor rank: up to 4
      *
      * Inputs:
      * * 0 ~ n-1: The list of n input tensors, of shape
-     *            [D0, D1, ..., Daxis(i), ..., Dm]. For inputs of
-     *            {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, all input tensors
-     *            must have the same scale and zeroPoint.
+     *            [D0, D1, ..., Daxis(i), ..., Dm].
+     *            Before API level 29, all input tensors of
+     *            {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *            must have the same scale and zeroPoint as the output tensor.
      * * n: An {@link ANEURALNETWORKS_INT32} scalar, specifying the
      *      concatenation axis.
      *
@@ -479,6 +482,7 @@ typedef enum {
      * be divisible by block_size * block_size
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1283,6 +1287,7 @@ typedef enum {
      *     output = max(0, input)
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1306,6 +1311,7 @@ typedef enum {
      *     output = min(1.f, max(-1.f, input))
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1329,6 +1335,7 @@ typedef enum {
      *     output = min(6, max(0, input))
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1351,6 +1358,7 @@ typedef enum {
      * tensor, but with a newly specified shape.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1377,6 +1385,7 @@ typedef enum {
      * same as corner pixels of input.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
@@ -1515,6 +1524,7 @@ typedef enum {
      * The input tensor's height and width must be divisible by block_size.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1661,6 +1671,7 @@ typedef enum {
      * This is the reverse of SpaceToBatch.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1764,6 +1775,7 @@ typedef enum {
      * This operation pads a tensor according to the specified paddings.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1805,6 +1817,7 @@ typedef enum {
      * dimensions of the input are optionally zero padded according to paddings.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1845,6 +1858,7 @@ typedef enum {
      * dimensions by specifying the axes (input1).
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1877,6 +1891,7 @@ typedef enum {
      * reverse slice.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1965,6 +1980,7 @@ typedef enum {
      * regular matrix transpose on 2-D input Tensors.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1988,6 +2004,7 @@ typedef enum {
      * Returns the index of the largest element along an axis.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2013,6 +2030,7 @@ typedef enum {
      * Returns the index of the smallest element along an axis.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2037,6 +2055,7 @@ typedef enum {
      * paddings.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -2671,6 +2690,39 @@ typedef enum {
     ANEURALNETWORKS_RSQRT = 75,
     ANEURALNETWORKS_SELECT = 76,
     ANEURALNETWORKS_SIN = 77,
+    /**
+     * Extracts a slice of specified size from the input tensor starting at a
+     * specified location.
+     *
+     * The starting location is specified as a 1-D tensor containing offsets
+     * for each dimension. The size is specified as a 1-D tensor containing
+     * either size of a slice along corresponding dimension or -1. In the latter
+     * case, all the remaining elements in dimension are included in the slice.
+     * Slice size in each dimension cannot be zero.
+     *
+     * A sum of begin offset and a size of a slice must not exceed size of a
+     * corresponding dimension.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
+     *
+     * Inputs:
+     * * 0: An n-D tensor to take slice from.
+     * * 1: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} specifying
+     *      the beginning indices of the slice in each dimension.
+     * * 2: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} specifying
+     *      the size of the slice in each dimension.
+     *
+     * Outputs:
+     * * 0: An n-D tensor of the same type as the input containing the slice.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_SLICE = 78,
     ANEURALNETWORKS_SPARSE_TO_DENSE = 79,
 
@@ -2911,7 +2963,61 @@ typedef enum {
      */
     ANEURALNETWORKS_ROTATED_BBOX_TRANSFORM = 87,
 
+    /**
+     * Computes the absolute value of a tensor, element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: from 1.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_ABS = 88,
+
+    /**
+     * Select and scale the feature map of each region of interest to a unified
+     * output size by max-pooling.
+     *
+     * The region of interest is represented by its upper-left corner coordinate
+     * (x1,y1) and lower-right corner coordinate (x2,y2) in the original image.
+     * A spatial scaling factor is applied to map into feature map coordinate.
+     * A valid region of interest should satisfy x1 < x2 and y1 < y2.
+     *
+     * Rounding is applied in this operation to ensure integer boundary for
+     * regions of interest and pooling bins.
+     *
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
+     *
+     * Inputs:
+     * * 0: A 4-D tensor, specifying the feature map.
+     * * 1: A 2-D Tensor of shape [num_rois, 5 or 4], specifying the locations
+     *      of the regions of interest, each line with format
+     *      [<optional batch_id>, x1, y1, x2, y2]. The batch_id is optional if
+     *      there is only one batch.
+     * * 2: A 1-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32},
+     *      specifying the size of the output tensor [out_height, out_width].
+     * * 3: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the spatial
+     *      scaling factor from original image to feature map.
+     * * 4: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     *      NCHW data layout for input0 and output0. Set to false for NHWC.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0. The output
+     *      shape is [num_rois, out_height, out_width, depth].
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_ROI_POOLING = 89,
 } OperationCode;
 

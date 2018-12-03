@@ -12,6 +12,6 @@ namespace lstm_relaxed {
 TEST_F(GeneratedTests, lstm_relaxed) {
     execute(lstm_relaxed::CreateModel,
             lstm_relaxed::is_ignored,
-            lstm_relaxed::examples);
+            lstm_relaxed::get_examples());
 }
 

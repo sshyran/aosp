@@ -62,21 +62,21 @@ bool stridedSliceGeneric(const uint8_t* inputData, const Shape& inputShape,
     if (inputShape.type == OperandType::TENSOR_FLOAT32) {
         NNTRACE_COMP_SWITCH("reference_ops::StridedSlice::float");
         tflite::reference_ops::StridedSlice(
-                reinterpret_cast<const float*>(inputData),
-                convertShapeToDims(inputShape),
-                beginMask, endMask, shrinkAxisMask,
-                starts, stops, strides,
-                reinterpret_cast<float*>(outputData),
-                convertShapeToDims(outputShape));
+                reinterpret_cast<const float*>(inputData), convertShapeToDims(inputShape),
+                beginMask, endMask, shrinkAxisMask, starts, stops, strides,
+                reinterpret_cast<float*>(outputData), convertShapeToDims(outputShape));
+    } else if (inputShape.type == OperandType::TENSOR_FLOAT16) {
+        NNTRACE_COMP_SWITCH("reference_ops::StridedSlice::float16");
+        tflite::reference_ops::StridedSlice(
+                reinterpret_cast<const _Float16*>(inputData), convertShapeToDims(inputShape),
+                beginMask, endMask, shrinkAxisMask, starts, stops, strides,
+                reinterpret_cast<_Float16*>(outputData), convertShapeToDims(outputShape));
     } else if (inputShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
         NNTRACE_COMP_SWITCH("reference_ops::StridedSlice::uint8");
         tflite::reference_ops::StridedSlice(
-                reinterpret_cast<const uint8_t*>(inputData),
-                convertShapeToDims(inputShape),
-                beginMask, endMask, shrinkAxisMask,
-                starts, stops, strides,
-                reinterpret_cast<uint8_t*>(outputData),
-                convertShapeToDims(outputShape));
+                reinterpret_cast<const uint8_t*>(inputData), convertShapeToDims(inputShape),
+                beginMask, endMask, shrinkAxisMask, starts, stops, strides,
+                reinterpret_cast<uint8_t*>(outputData), convertShapeToDims(outputShape));
     } else {
         LOG(ERROR) << "Unsupported data type";
         return false;

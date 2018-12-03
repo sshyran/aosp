@@ -12,6 +12,6 @@ namespace mul_broadcast_float16 {
 TEST_F(GeneratedTests, mul_broadcast_float16) {
     execute(mul_broadcast_float16::CreateModel,
             mul_broadcast_float16::is_ignored,
-            mul_broadcast_float16::examples);
+            mul_broadcast_float16::get_examples());
 }
 

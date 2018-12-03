@@ -12,6 +12,6 @@ namespace mul_float16 {
 TEST_F(GeneratedTests, mul_float16) {
     execute(mul_float16::CreateModel,
             mul_float16::is_ignored,
-            mul_float16::examples);
+            mul_float16::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace dequantize {
 TEST_F(GeneratedTests, dequantize) {
     execute(dequantize::CreateModel,
             dequantize::is_ignored,
-            dequantize::examples);
+            dequantize::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace conv_1_h3_w2_SAME {
 TEST_F(GeneratedTests, conv_1_h3_w2_SAME) {
     execute(conv_1_h3_w2_SAME::CreateModel,
             conv_1_h3_w2_SAME::is_ignored,
-            conv_1_h3_w2_SAME::examples);
+            conv_1_h3_w2_SAME::get_examples());
 }
 

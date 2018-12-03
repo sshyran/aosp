@@ -256,6 +256,14 @@ void activationOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
     EXPECT_TRUE(activationTest.testMutatingOutputOperandCounts());
 }
 
+TEST(OperationValidationTest, ABS_float16) {
+    activationOpTest(ANEURALNETWORKS_ABS, ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, ABS_float32) {
+    activationOpTest(ANEURALNETWORKS_ABS, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
 TEST(OperationValidationTest, FLOOR_float32) {
     activationOpTest(ANEURALNETWORKS_FLOOR, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
@@ -799,6 +807,10 @@ void depthwiseConvOpTest(int32_t operandCode) {
 
 TEST(OperationValidationTest, DEPTHWISE_CONV_2D_float32) {
     depthwiseConvOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, DEPTHWISE_CONV_2D_float16) {
+    depthwiseConvOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, DEPTHWISE_CONV_2D_quant8) {
@@ -1363,25 +1375,60 @@ TEST(OperationValidationTest, STRIDED_SLICE_float32) {
     stridedSliceOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+TEST(OperationValidationTest, STRIDED_SLICE_float16) {
+    stridedSliceOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 TEST(OperationValidationTest, STRIDED_SLICE_quant8) {
     stridedSliceOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
-TEST(OperationValidationTest, ROI_ALIGN_float32) {
+void roiAlignOpTest(int32_t operandCode) {
     uint32_t inDim[] = {1, 4, 4, 1}, roiDim[] = {4, 4}, outShapeDim[] = {2};
     uint32_t outDim[] = {4, 2, 2, 1};
     OperationTestBase roiAlignTest(
             ANEURALNETWORKS_ROI_ALIGN,
-            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, inDim),
-             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, roiDim),
+            {getOpType(operandCode, 4, inDim), getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, roiDim),
              getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim),
              getOpType(ANEURALNETWORKS_FLOAT32), getOpType(ANEURALNETWORKS_INT32)},
-            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, outDim)});
+            {getOpType(operandCode, 4, outDim)});
 
     EXPECT_TRUE(roiAlignTest.testMutatingInputOperandCode());
     EXPECT_TRUE(roiAlignTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(roiAlignTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(roiAlignTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, ROI_ALIGN_float32) {
+    roiAlignOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, ROI_ALIGN_quant8) {
+    roiAlignOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+void roiPoolingOpTest(int32_t operandCode) {
+    uint32_t inDim[] = {1, 4, 4, 1}, roiDim[] = {4, 4}, outShapeDim[] = {2};
+    uint32_t outDim[] = {4, 2, 2, 1};
+    OperationTestBase roiPoolingTest(
+            ANEURALNETWORKS_ROI_POOLING,
+            {getOpType(operandCode, 4, inDim), getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, roiDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim),
+             getOpType(ANEURALNETWORKS_FLOAT32)},
+            {getOpType(operandCode, 4, outDim)});
+
+    EXPECT_TRUE(roiPoolingTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(roiPoolingTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(roiPoolingTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(roiPoolingTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, ROI_POOLING_float32) {
+    roiPoolingOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, ROI_POOLING_quant8) {
+    roiPoolingOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
 TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
@@ -1612,4 +1659,36 @@ TEST(OperationValidationTest, ROTATED_BBOX_TRANSFORM_float32) {
     EXPECT_TRUE(rotatedBBoxTransformTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(rotatedBBoxTransformTest.testMutatingOutputOperandCounts());
 }
+
+void sliceTest(int32_t operandCode) {
+    uint32_t inputDim[] = {3, 3, 3};
+    uint32_t startDim[] = {3};
+    uint32_t sizeDim[] = {3};
+    uint32_t outputDim[] = {1, 2, 3};
+
+    OperationTestBase sliceTest(ANEURALNETWORKS_SLICE,
+                                {getOpType(operandCode, 3, inputDim),
+                                 getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, startDim),
+                                 getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, sizeDim)},
+                                {getOpType(operandCode, 3, outputDim)});
+
+    EXPECT_TRUE(sliceTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(sliceTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(sliceTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(sliceTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, SLICE_float32) {
+    sliceTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+TEST(OperationValidationTest, SLICE_int32) {
+    sliceTest(ANEURALNETWORKS_TENSOR_INT32);
+}
+TEST(OperationValidationTest, SLICE_uint8) {
+    sliceTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+TEST(OperationValidationTest, SLICE_float16) {
+    sliceTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 }  // end namespace

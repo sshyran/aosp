@@ -12,6 +12,6 @@ namespace logistic_quant8_1 {
 TEST_F(GeneratedTests, logistic_quant8_1) {
     execute(logistic_quant8_1::CreateModel,
             logistic_quant8_1::is_ignored,
-            logistic_quant8_1::examples);
+            logistic_quant8_1::get_examples());
 }
 

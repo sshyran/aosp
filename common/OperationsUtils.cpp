@@ -25,6 +25,46 @@
 namespace android {
 namespace nn {
 
+namespace {
+
+bool validateOperandTypes(const std::vector<OperandType>& expectedTypes, const char* tag,
+                          uint32_t operandCount,
+                          std::function<OperandType(uint32_t)> getOperandType) {
+    NN_RET_CHECK_EQ(operandCount, expectedTypes.size());
+    for (uint32_t i = 0; i < operandCount; ++i) {
+        OperandType type = getOperandType(i);
+        NN_RET_CHECK(type == expectedTypes[i])
+                << "Invalid " << tag << " tensor type " << toString(type) << " for " << tag << " "
+                << i << ", expected " << toString(expectedTypes[i]);
+    }
+    return true;
+}
+
+}  // namespace
+
+bool validateInputTypes(const IOperationValidationContext* context,
+                        const std::vector<OperandType>& expectedTypes) {
+    return validateOperandTypes(expectedTypes, "input", context->getNumInputs(),
+                                [context](uint32_t index) { return context->getInputType(index); });
+}
+
+bool validateOutputTypes(const IOperationValidationContext* context,
+                         const std::vector<OperandType>& expectedTypes) {
+    return validateOperandTypes(
+            expectedTypes, "output", context->getNumOutputs(),
+            [context](uint32_t index) { return context->getOutputType(index); });
+}
+
+bool validateHalVersion(const IOperationValidationContext* context,
+                        HalVersion minSupportedHalVersion) {
+    if (context->getHalVersion() < minSupportedHalVersion) {
+        NN_RET_CHECK_FAIL() << "The given inputs and outputs are only supported in "
+                            << toString(minSupportedHalVersion) << " and later (validating using "
+                            << toString(context->getHalVersion()) << ")";
+    }
+    return true;
+}
+
 bool SameShape(const Shape& in1, const Shape& in2) {
     if (in1.type != in2.type || in1.dimensions.size() != in2.dimensions.size()) {
         return false;
@@ -407,31 +447,24 @@ bool fullyConnectedPrepare(const Shape& input,
     return true;
 }
 
-bool concatenationPrepare(const std::vector<Shape>& inputShapes,
-                          int32_t axis,
-                          Shape* output) {
-
+bool concatenationPrepare(const std::vector<Shape>& inputShapes, int32_t axis, Shape* output) {
     int num_inputs = inputShapes.size();
     OperandType input_type = inputShapes[0].type;
     uint32_t num_dimensions = getNumberOfDimensions(inputShapes[0]);
 
-    NN_OPS_CHECK(axis >= 0);
-    NN_OPS_CHECK(axis < (int32_t)num_dimensions);
+    NN_RET_CHECK(axis >= 0);
+    NN_RET_CHECK(axis < (int32_t)num_dimensions);
 
     int sumAxis = getSizeOfDimension(inputShapes[0], axis);
     for (int i = 1; i < num_inputs; ++i) {
-        NN_OPS_CHECK(getNumberOfDimensions(inputShapes[i]) == num_dimensions);
-        NN_OPS_CHECK(inputShapes[i].type == inputShapes[0].type);
-        if (input_type == OperandType::TENSOR_QUANT8_ASYMM) {
-            NN_OPS_CHECK(inputShapes[0].offset == inputShapes[i].offset);
-            NN_OPS_CHECK(inputShapes[0].scale == inputShapes[i].scale);
-        }
+        NN_RET_CHECK(getNumberOfDimensions(inputShapes[i]) == num_dimensions);
+        NN_RET_CHECK(inputShapes[i].type == inputShapes[0].type);
         for (int d = 0; d < (int32_t)num_dimensions; ++d) {
             if (d == axis) {
                 sumAxis += getSizeOfDimension(inputShapes[i], axis);
             } else {
-                NN_OPS_CHECK(getSizeOfDimension(inputShapes[0], d) ==
-                           getSizeOfDimension(inputShapes[i], d));
+                NN_RET_CHECK_EQ(getSizeOfDimension(inputShapes[0], d),
+                                getSizeOfDimension(inputShapes[i], d));
             }
         }
     }
@@ -440,14 +473,8 @@ bool concatenationPrepare(const std::vector<Shape>& inputShapes,
     output->dimensions = inputShapes[0].dimensions;
     output->dimensions[axis] = sumAxis;
 
-    if (input_type == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_OPS_CHECK(inputShapes[0].offset == output->offset);
-        NN_OPS_CHECK(inputShapes[0].scale == output->scale);
-    }
-
     return true;
 }
-
 
 bool genericNormalizationPrepare(const Shape& input, Shape* output) {
     return SetShape(input, output);
