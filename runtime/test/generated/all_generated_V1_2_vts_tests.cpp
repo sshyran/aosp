@@ -18273,3 +18273,56 @@ TEST_F(ValidationTest, transpose_conv2d_nchw_quant8_weight_as_input_4) {
 }
 
 
+// Generated from: transpose_v1_2.mod.py.
+namespace transpose_v1_2 {
+// Generated transpose_v1_2 test
+#include "examples/transpose_v1_2.example.cpp"
+// Generated model constructor
+#include "vts_models/transpose_v1_2.model.cpp"
+} // namespace transpose_v1_2
+
+TEST_F(NeuralnetworksHidlTest, transpose_v1_2) {
+  generated_tests::Execute(device,
+                           transpose_v1_2::createTestModel,
+                           transpose_v1_2::is_ignored,
+                           transpose_v1_2::examples);
+}
+
+TEST_F(ValidationTest, transpose_v1_2) {
+  const Model model = transpose_v1_2::createTestModel();
+  const std::vector<Request> requests = createRequests(transpose_v1_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, transpose_v1_2_relaxed) {
+  generated_tests::Execute(device,
+                           transpose_v1_2::createTestModel_relaxed,
+                           transpose_v1_2::is_ignored_relaxed,
+                           transpose_v1_2::examples_relaxed);
+}
+
+TEST_F(ValidationTest, transpose_v1_2_relaxed) {
+  const Model model = transpose_v1_2::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(transpose_v1_2::examples_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, transpose_v1_2_quant8) {
+  generated_tests::Execute(device,
+                           transpose_v1_2::createTestModel_quant8,
+                           transpose_v1_2::is_ignored_quant8,
+                           transpose_v1_2::examples_quant8);
+}
+
+TEST_F(ValidationTest, transpose_v1_2_quant8) {
+  const Model model = transpose_v1_2::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(transpose_v1_2::examples_quant8);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
