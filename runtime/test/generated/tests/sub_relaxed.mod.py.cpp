@@ -12,6 +12,6 @@ namespace sub_relaxed {
 TEST_F(GeneratedTests, sub_relaxed) {
     execute(sub_relaxed::CreateModel,
             sub_relaxed::is_ignored,
-            sub_relaxed::examples);
+            sub_relaxed::get_examples());
 }
 

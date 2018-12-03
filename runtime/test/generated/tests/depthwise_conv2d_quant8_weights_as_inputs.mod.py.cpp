@@ -12,6 +12,6 @@ namespace depthwise_conv2d_quant8_weights_as_inputs {
 TEST_F(GeneratedTests, depthwise_conv2d_quant8_weights_as_inputs) {
     execute(depthwise_conv2d_quant8_weights_as_inputs::CreateModel,
             depthwise_conv2d_quant8_weights_as_inputs::is_ignored,
-            depthwise_conv2d_quant8_weights_as_inputs::examples);
+            depthwise_conv2d_quant8_weights_as_inputs::get_examples());
 }
 

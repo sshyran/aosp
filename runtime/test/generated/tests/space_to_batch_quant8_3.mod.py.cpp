@@ -12,6 +12,6 @@ namespace space_to_batch_quant8_3 {
 TEST_F(GeneratedTests, space_to_batch_quant8_3) {
     execute(space_to_batch_quant8_3::CreateModel,
             space_to_batch_quant8_3::is_ignored,
-            space_to_batch_quant8_3::examples);
+            space_to_batch_quant8_3::get_examples());
 }
 

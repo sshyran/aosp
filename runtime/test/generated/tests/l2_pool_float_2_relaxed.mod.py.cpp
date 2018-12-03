@@ -12,6 +12,6 @@ namespace l2_pool_float_2_relaxed {
 TEST_F(GeneratedTests, l2_pool_float_2_relaxed) {
     execute(l2_pool_float_2_relaxed::CreateModel,
             l2_pool_float_2_relaxed::is_ignored,
-            l2_pool_float_2_relaxed::examples);
+            l2_pool_float_2_relaxed::get_examples());
 }
 

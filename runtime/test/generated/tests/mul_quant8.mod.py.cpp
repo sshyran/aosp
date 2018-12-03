@@ -12,6 +12,6 @@ namespace mul_quant8 {
 TEST_F(GeneratedTests, mul_quant8) {
     execute(mul_quant8::CreateModel,
             mul_quant8::is_ignored,
-            mul_quant8::examples);
+            mul_quant8::get_examples());
 }
 

@@ -27,6 +27,7 @@ from __future__ import print_function
 import argparse
 from functools import reduce
 import math
+import numpy as np
 import os
 import re
 import struct
@@ -121,6 +122,10 @@ def generate_vts_operand_values(operands):
             binit += w.value
         elif ty == "BOOL":
             binit += [1 if x else 0 for x in w.value]
+        elif ty == "TENSOR_FLOAT16":
+            for f in w.value:
+                # The pack format for float16 is not available until Python 3.6.
+                binit += [int(x) for x in np.float16(f).tostring()]
         elif ty in {"TENSOR_FLOAT32", "FLOAT32", "TENSOR_INT32", "INT32"}:
             fmt = "f" if (ty == "TENSOR_FLOAT32" or ty == "FLOAT32") else "i"
             for f in w.value:
@@ -242,11 +247,11 @@ TEST_F(NeuralnetworksHidlTest, {test_name}) {{
   generated_tests::Execute(device,
                            {namespace}::{create_model_name},
                            {namespace}::{is_ignored_name},
-                           {namespace}::{examples_name});\n}}
+                           {namespace}::get_{examples_name}());\n}}
 
 TEST_F(ValidationTest, {test_name}) {{
   const Model model = {namespace}::{create_model_name}();
-  const std::vector<Request> requests = createRequests({namespace}::{examples_name});
+  const std::vector<Request> requests = createRequests({namespace}::get_{examples_name}());
   validateModel(model);
   validateRequests(model, requests);
 }}\n

@@ -12,6 +12,6 @@ namespace svdf_relaxed {
 TEST_F(GeneratedTests, svdf_relaxed) {
     execute(svdf_relaxed::CreateModel,
             svdf_relaxed::is_ignored,
-            svdf_relaxed::examples);
+            svdf_relaxed::get_examples());
 }
 

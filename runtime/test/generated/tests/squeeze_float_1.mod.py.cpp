@@ -12,6 +12,6 @@ namespace squeeze_float_1 {
 TEST_F(GeneratedTests, squeeze_float_1) {
     execute(squeeze_float_1::CreateModel,
             squeeze_float_1::is_ignored,
-            squeeze_float_1::examples);
+            squeeze_float_1::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace sub_float16_broadcast {
 TEST_F(GeneratedTests, sub_float16_broadcast) {
     execute(sub_float16_broadcast::CreateModel,
             sub_float16_broadcast::is_ignored,
-            sub_float16_broadcast::examples);
+            sub_float16_broadcast::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace reshape_weights_as_inputs_relaxed {
 TEST_F(GeneratedTests, reshape_weights_as_inputs_relaxed) {
     execute(reshape_weights_as_inputs_relaxed::CreateModel,
             reshape_weights_as_inputs_relaxed::is_ignored,
-            reshape_weights_as_inputs_relaxed::examples);
+            reshape_weights_as_inputs_relaxed::get_examples());
 }
 

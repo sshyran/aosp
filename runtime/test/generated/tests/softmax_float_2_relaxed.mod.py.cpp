@@ -12,6 +12,6 @@ namespace softmax_float_2_relaxed {
 TEST_F(GeneratedTests, softmax_float_2_relaxed) {
     execute(softmax_float_2_relaxed::CreateModel,
             softmax_float_2_relaxed::is_ignored,
-            softmax_float_2_relaxed::examples);
+            softmax_float_2_relaxed::get_examples());
 }
 

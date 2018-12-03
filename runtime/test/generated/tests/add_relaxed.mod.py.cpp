@@ -12,6 +12,6 @@ namespace add_relaxed {
 TEST_F(GeneratedTests, add_relaxed) {
     execute(add_relaxed::CreateModel,
             add_relaxed::is_ignored,
-            add_relaxed::examples);
+            add_relaxed::get_examples());
 }
 

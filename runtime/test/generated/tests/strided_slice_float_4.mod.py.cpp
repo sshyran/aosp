@@ -12,6 +12,6 @@ namespace strided_slice_float_4 {
 TEST_F(GeneratedTests, strided_slice_float_4) {
     execute(strided_slice_float_4::CreateModel,
             strided_slice_float_4::is_ignored,
-            strided_slice_float_4::examples);
+            strided_slice_float_4::get_examples());
 }
 
