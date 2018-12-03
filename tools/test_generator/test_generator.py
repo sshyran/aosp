@@ -605,6 +605,9 @@ class ModelVariation:
         model.compiled = False
         model.dumped = False
 
+        if not self.targetOperands:
+            self.AutoIdentify(model)
+
         # get transformed operands and update feedDicts
         operandsVar = self.ApplyToHelper(
             model, self.targetOperands, feedDicts, self.TransformOperand)
@@ -628,6 +631,10 @@ class ModelVariation:
         self.name = ""
         return self
 
+    # Automatically select the target operand list
+    def AutoIdentify(self, model):
+        return self
+
     # Transform operands that are marked by IdentifyOperands()
     def TransformOperand(self, op, arg=None):
         return op
@@ -647,12 +654,22 @@ class DefaultVariation(ModelVariation):
         return model, feedDicts
 
 # Convert operand data type
-class DataTypeConverter(ModelVariation):
+class DataTypeConverter(ModelVariation, ImplicitVariation):
 
-    def __init__(self, name=None):
+    def __init__(self, targetType=None, name=None):
         ModelVariation.__init__(self, name=name)
+        if targetType is not None:
+            assert DataTypeConverter.IsCompatible(targetType)
+        self.targetType = targetType
+
+    @staticmethod
+    def IsCompatible(value):
+        return value.lower() in ["float16", "int32"]
 
     def SetToDefaultName(self):
+        if self.targetType is not None:
+            self.name = self.targetType.lower()
+            return self
         # get all target types
         targetTypes = list(zip(*self.targetOperands.values()))[0]
         if "TENSOR_QUANT8_ASYMM" in targetTypes:
@@ -663,6 +680,13 @@ class DataTypeConverter(ModelVariation):
             self.name = "float16"
         else:
             self.name = "float32"
+        return self
+
+    def AutoIdentify(self, model):
+        if self.targetType is not None:
+            # By default, select all the float32 tensors
+            self.Identify({op: ["TENSOR_" + self.targetType.upper()] \
+                    for op in model.operands if op.type.type == "TENSOR_FLOAT32"})
         return self
 
     def TransformOperand(self, op, arg=None):
