@@ -15,7 +15,7 @@
  */
 
 #include "ModelBuilder.h"
-#include "NeuralNetworksWrapper.h"
+#include "TestNeuralNetworksWrapper.h"
 #include "Utils.h"
 
 #include <gtest/gtest.h>
@@ -29,8 +29,8 @@ class ComplianceTest : public ::testing::Test {
     virtual void SetUp() {}
 };
 
-void CreateHidlModel(std::function<void(wrapper::Model*)> CreateModel, Model* model) {
-    wrapper::Model wrapperModel;
+void CreateHidlModel(std::function<void(test_wrapper::Model*)> CreateModel, Model* model) {
+    test_wrapper::Model wrapperModel;
     CreateModel(&wrapperModel);
     ModelBuilder* modelBuilder = reinterpret_cast<ModelBuilder*>(wrapperModel.getHandle());
     modelBuilder->setHidlModel(model);
@@ -43,9 +43,9 @@ void CreateHidlModel(std::function<void(wrapper::Model*)> CreateModel, Model* mo
 #define GET_CONCAT_NAME(_0, _1, macro, ...) macro
 #define CONCAT_NAME(...) GET_CONCAT_NAME(__VA_ARGS__, CONCAT_NAME_2, CONCAT_NAME_1)(__VA_ARGS__)
 
-#define FORWARD_DECLARE_GENERATED_OBJECTS(NamespaceName, ...)                          \
-    namespace NamespaceName {                                                          \
-    void CONCAT_NAME(CreateModel, ##__VA_ARGS__)(android::nn::wrapper::Model * model); \
+#define FORWARD_DECLARE_GENERATED_OBJECTS(NamespaceName, ...)                               \
+    namespace NamespaceName {                                                               \
+    void CONCAT_NAME(CreateModel, ##__VA_ARGS__)(android::nn::test_wrapper::Model * model); \
     }
 
 #define TEST_AVAILABLE_SINCE_V1_2(NamespaceName, ...)                                    \

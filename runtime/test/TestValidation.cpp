@@ -648,6 +648,10 @@ TEST_F(ValidationTestExecution, SetOutputFromMemory) {
               ANEURALNETWORKS_BAD_DATA);
 }
 
+TEST_F(ValidationTestExecution, Compute) {
+    EXPECT_EQ(ANeuralNetworksExecution_compute(nullptr), ANEURALNETWORKS_UNEXPECTED_NULL);
+}
+
 TEST_F(ValidationTestExecution, StartCompute) {
     ANeuralNetworksExecution* execution;
     EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);

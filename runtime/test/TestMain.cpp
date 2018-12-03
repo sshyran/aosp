@@ -14,16 +14,44 @@
  * limitations under the License.
  */
 
-#include "NeuralNetworksWrapper.h"
+#include "TestNeuralNetworksWrapper.h"
 
 #ifndef NNTEST_ONLY_PUBLIC_API
 #include "Manager.h"
 #include "Utils.h"
 #endif
 
+#include <android-base/logging.h>
 #include <gtest/gtest.h>
+#include <iostream>
 
-using namespace android::nn::wrapper;
+using namespace android::nn::test_wrapper;
+
+// DeviceManager::setUseCpuOnly() and Execution::setComputeUsesSynchronousAPI()
+// according to arguments, and return RUN_ALL_TESTS().  It is unspecified what
+// values those settings have when this function returns.
+//
+// EXCEPTION: If NNTEST_ONLY_PUBLIC_API is defined, then we cannot call
+// non-public DeviceManager::setUseCpuOnly(); we assume the setting is always
+// false, and if we are asked to set it to true, we return 0 ("success") without
+// running tests.
+static int test(bool useCpuOnly, bool computeUsesSynchronousAPI) {
+#ifdef NNTEST_ONLY_PUBLIC_API
+    if (useCpuOnly) {
+        return 0;
+    }
+#else
+    android::nn::DeviceManager::get()->setUseCpuOnly(useCpuOnly);
+#endif
+
+    Execution::setComputeUsesSynchronousAPI(computeUsesSynchronousAPI);
+
+    LOG(INFO) << "test(useCpuOnly = " << useCpuOnly
+              << ", computeUsesSynchronousAPI = " << computeUsesSynchronousAPI << ")";
+    std::cout << "[**********] useCpuOnly = " << useCpuOnly
+              << ", computeUsesSynchronousAPI = " << computeUsesSynchronousAPI << std::endl;
+    return RUN_ALL_TESTS();
+}
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
@@ -31,16 +59,6 @@ int main(int argc, char** argv) {
 #ifndef NNTEST_ONLY_PUBLIC_API
     android::nn::initVLogMask();
 #endif
-    // Test with the installed drivers.
-    int n1 = RUN_ALL_TESTS();
-#ifdef NNTEST_ONLY_PUBLIC_API
-    // Can't use non-public functionality, because we're linking against
-    // the shared library version of the runtime.
-    return n1;
-#else
-    // Test with the CPU driver only.
-    android::nn::DeviceManager::get()->setUseCpuOnly(true);
-    int n2 = RUN_ALL_TESTS();
-    return n1 | n2;
-#endif // NNTEST_ONLY_PUBLIC_API
+
+    return test(false, false) | test(false, true) | test(true, false) | test(true, true);
 }
