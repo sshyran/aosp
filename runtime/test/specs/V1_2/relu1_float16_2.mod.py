@@ -22,9 +22,9 @@ d1 = 30
 d2 = 24
 d3 = 2
 
-i0 = Input("input", "TENSOR_FLOAT32", "{%d, %d, %d, %d}" % (d0, d1, d2, d3))
+i0 = Input("input", "TENSOR_FLOAT16", "{%d, %d, %d, %d}" % (d0, d1, d2, d3))
 
-output = Output("output", "TENSOR_FLOAT32", "{%d, %d, %d, %d}" % (d0, d1, d2, d3))
+output = Output("output", "TENSOR_FLOAT16", "{%d, %d, %d, %d}" % (d0, d1, d2, d3))
 
 model = model.Operation("RELU1", i0).To(output)
 
