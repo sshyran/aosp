@@ -1044,15 +1044,27 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
-            std::vector<OperandType> inExpectedTypes(inputCount, inputType);
-            std::vector<OperandType> outExpectedTypes = {inputType};
-            // The last one is the activation function.
-            inExpectedTypes.back() = OperandType::INT32;
-            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
-            return validateOperationOperandTypes(operands,
-                                                 inputCount, inputIndexes,
-                                                 inExpectedTypes,
-                                                 outputCount, outputIndexes,
+            if (inputType == OperandType::TENSOR_FLOAT16) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+            } else {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
+            }
+            std::vector<OperandType> inExpectedTypes(inputCount - 1, inputType);
+            inExpectedTypes.push_back(OperandType::INT32);
+            std::vector<OperandType> outExpectedTypes;
+            if (inputType == OperandType::TENSOR_FLOAT32) {
+                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
+            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
+            } else {
+                LOG(ERROR) << "Unsupported input tensor type for operation "
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_L2_NORMALIZATION: {
