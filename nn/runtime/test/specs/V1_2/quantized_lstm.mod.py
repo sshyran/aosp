@@ -27,12 +27,12 @@ prev_output = Input("prevOutput", ("TENSOR_QUANT8_ASYMM", (n_batch, n_output), 1
 weights_scale = 0.00408021
 weights = Input("weights", ("TENSOR_QUANT8_ASYMM", (4 * n_cell, n_input + n_output), 0.00408021, 100))
 bias = Input("bias", ("TENSOR_INT32", (4 * n_cell,), weights_scale / 128, 0))
-prev_cell_state = Input("prevCellState", ("TENSOR_QUANT16_ASYMM", (n_batch, n_cell), 1 / 2048, 0))
+prev_cell_state = Input("prevCellState", ("TENSOR_QUANT16_SYMM", (n_batch, n_cell), 1 / 2048, 0))
 
 concat_temp = IgnoredOutput("concatTemp", ("TENSOR_QUANT8_ASYMM", (n_batch, n_input + n_output), 1 / 128, 128))
-activation_temp = IgnoredOutput("activationTemp", ("TENSOR_QUANT16_ASYMM", (n_batch, 4 * n_cell), 1 / 128, 128))
+activation_temp = IgnoredOutput("activationTemp", ("TENSOR_QUANT16_SYMM", (n_batch, 4 * n_cell), 1 / 128, 0))
 output_state_out = Output("outputStateOut", ("TENSOR_QUANT8_ASYMM", (n_batch, n_output), 1 / 128, 128))
-cell_state_out = Output("cellStateOut", ("TENSOR_QUANT16_ASYMM", (n_batch, n_cell), 1 / 2048, 0))
+cell_state_out = Output("cellStateOut", ("TENSOR_QUANT16_SYMM", (n_batch, n_cell), 1 / 2048, 0))
 output = Output("output", ("TENSOR_QUANT8_ASYMM", (n_batch, n_output), 1 / 128, 128))
 
 
