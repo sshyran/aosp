@@ -182,6 +182,9 @@ bool spaceToBatchGeneric(const uint8_t* inputData, const Shape& inputShape,
                          const int32_t* blockSize, const int32_t* padding,
                          const Shape& paddingShape, uint8_t* outputData, const Shape& outputShape);
 
+bool subFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut);
+
 bool subFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
                 int32_t activation, float* out, const Shape& shapeOut);
 
