@@ -17,8 +17,8 @@ void CreateModel_nhwc(Model *model) {
   model->setOperandValue(param, param_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op1, param, paddings, layout}, {op4});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -49,8 +49,8 @@ void CreateModel_nhwc_relaxed(Model *model) {
   model->setOperandValue(param, param_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op1, param, paddings, layout}, {op4});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -83,8 +83,8 @@ void CreateModel_nhwc_float16(Model *model) {
   model->setOperandValue(param, param_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op1, param, paddings, layout}, {op4});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -115,8 +115,8 @@ void CreateModel_nhwc_quant8(Model *model) {
   model->setOperandValue(param, param_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op1, param, paddings, layout}, {op4});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -147,8 +147,8 @@ void CreateModel_nchw(Model *model) {
   model->setOperandValue(param, param_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op1, param, paddings, layout}, {op4});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -179,8 +179,8 @@ void CreateModel_nchw_relaxed(Model *model) {
   model->setOperandValue(param, param_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op1, param, paddings, layout}, {op4});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -213,8 +213,8 @@ void CreateModel_nchw_float16(Model *model) {
   model->setOperandValue(param, param_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op1, param, paddings, layout}, {op4});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -245,8 +245,8 @@ void CreateModel_nchw_quant8(Model *model) {
   model->setOperandValue(param, param_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op1, param, paddings, layout}, {op4});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -277,8 +277,8 @@ void CreateModel_nhwc_2(Model *model) {
   model->setOperandValue(param1, param1_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op11, param1, paddings, layout}, {op41});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -309,8 +309,8 @@ void CreateModel_nhwc_relaxed_2(Model *model) {
   model->setOperandValue(param1, param1_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op11, param1, paddings, layout}, {op41});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -343,8 +343,8 @@ void CreateModel_nhwc_float16_2(Model *model) {
   model->setOperandValue(param1, param1_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op11, param1, paddings, layout}, {op41});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -375,8 +375,8 @@ void CreateModel_nhwc_quant8_2(Model *model) {
   model->setOperandValue(param1, param1_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op11, param1, paddings, layout}, {op41});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -407,8 +407,8 @@ void CreateModel_nchw_2(Model *model) {
   model->setOperandValue(param1, param1_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op11, param1, paddings, layout}, {op41});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -439,8 +439,8 @@ void CreateModel_nchw_relaxed_2(Model *model) {
   model->setOperandValue(param1, param1_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op11, param1, paddings, layout}, {op41});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -473,8 +473,8 @@ void CreateModel_nchw_float16_2(Model *model) {
   model->setOperandValue(param1, param1_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op11, param1, paddings, layout}, {op41});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -505,8 +505,8 @@ void CreateModel_nchw_quant8_2(Model *model) {
   model->setOperandValue(param1, param1_init, sizeof(int32_t) * 2);
   static int32_t paddings_init[] = {0, 0, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op11, param1, paddings, layout}, {op41});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -537,8 +537,8 @@ void CreateModel_nhwc_3(Model *model) {
   model->setOperandValue(param2, param2_init, sizeof(int32_t) * 2);
   static int32_t paddings1_init[] = {1, 0, 2, 0};
   model->setOperandValue(paddings1, paddings1_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op12, param2, paddings1, layout}, {op42});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -569,8 +569,8 @@ void CreateModel_nhwc_relaxed_3(Model *model) {
   model->setOperandValue(param2, param2_init, sizeof(int32_t) * 2);
   static int32_t paddings1_init[] = {1, 0, 2, 0};
   model->setOperandValue(paddings1, paddings1_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op12, param2, paddings1, layout}, {op42});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -603,8 +603,8 @@ void CreateModel_nhwc_float16_3(Model *model) {
   model->setOperandValue(param2, param2_init, sizeof(int32_t) * 2);
   static int32_t paddings1_init[] = {1, 0, 2, 0};
   model->setOperandValue(paddings1, paddings1_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op12, param2, paddings1, layout}, {op42});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -635,8 +635,8 @@ void CreateModel_nhwc_quant8_3(Model *model) {
   model->setOperandValue(param2, param2_init, sizeof(int32_t) * 2);
   static int32_t paddings1_init[] = {1, 0, 2, 0};
   model->setOperandValue(paddings1, paddings1_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op12, param2, paddings1, layout}, {op42});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -667,8 +667,8 @@ void CreateModel_nchw_3(Model *model) {
   model->setOperandValue(param2, param2_init, sizeof(int32_t) * 2);
   static int32_t paddings1_init[] = {1, 0, 2, 0};
   model->setOperandValue(paddings1, paddings1_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op12, param2, paddings1, layout}, {op42});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -699,8 +699,8 @@ void CreateModel_nchw_relaxed_3(Model *model) {
   model->setOperandValue(param2, param2_init, sizeof(int32_t) * 2);
   static int32_t paddings1_init[] = {1, 0, 2, 0};
   model->setOperandValue(paddings1, paddings1_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op12, param2, paddings1, layout}, {op42});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -733,8 +733,8 @@ void CreateModel_nchw_float16_3(Model *model) {
   model->setOperandValue(param2, param2_init, sizeof(int32_t) * 2);
   static int32_t paddings1_init[] = {1, 0, 2, 0};
   model->setOperandValue(paddings1, paddings1_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op12, param2, paddings1, layout}, {op42});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -765,8 +765,8 @@ void CreateModel_nchw_quant8_3(Model *model) {
   model->setOperandValue(param2, param2_init, sizeof(int32_t) * 2);
   static int32_t paddings1_init[] = {1, 0, 2, 0};
   model->setOperandValue(paddings1, paddings1_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op12, param2, paddings1, layout}, {op42});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -797,8 +797,8 @@ void CreateModel_nhwc_4(Model *model) {
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 2);
   static int32_t paddings2_init[] = {1, 1, 2, 4};
   model->setOperandValue(paddings2, paddings2_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op13, param3, paddings2, layout}, {op43});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -829,8 +829,8 @@ void CreateModel_nhwc_relaxed_4(Model *model) {
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 2);
   static int32_t paddings2_init[] = {1, 1, 2, 4};
   model->setOperandValue(paddings2, paddings2_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op13, param3, paddings2, layout}, {op43});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -863,8 +863,8 @@ void CreateModel_nhwc_float16_4(Model *model) {
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 2);
   static int32_t paddings2_init[] = {1, 1, 2, 4};
   model->setOperandValue(paddings2, paddings2_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op13, param3, paddings2, layout}, {op43});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -895,8 +895,8 @@ void CreateModel_nhwc_quant8_4(Model *model) {
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 2);
   static int32_t paddings2_init[] = {1, 1, 2, 4};
   model->setOperandValue(paddings2, paddings2_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {false};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op13, param3, paddings2, layout}, {op43});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -927,8 +927,8 @@ void CreateModel_nchw_4(Model *model) {
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 2);
   static int32_t paddings2_init[] = {1, 1, 2, 4};
   model->setOperandValue(paddings2, paddings2_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op13, param3, paddings2, layout}, {op43});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -959,8 +959,8 @@ void CreateModel_nchw_relaxed_4(Model *model) {
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 2);
   static int32_t paddings2_init[] = {1, 1, 2, 4};
   model->setOperandValue(paddings2, paddings2_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op13, param3, paddings2, layout}, {op43});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -993,8 +993,8 @@ void CreateModel_nchw_float16_4(Model *model) {
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 2);
   static int32_t paddings2_init[] = {1, 1, 2, 4};
   model->setOperandValue(paddings2, paddings2_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op13, param3, paddings2, layout}, {op43});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -1025,8 +1025,8 @@ void CreateModel_nchw_quant8_4(Model *model) {
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 2);
   static int32_t paddings2_init[] = {1, 1, 2, 4};
   model->setOperandValue(paddings2, paddings2_init, sizeof(int32_t) * 4);
-  static bool layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_SPACE_TO_BATCH_ND, {op13, param3, paddings2, layout}, {op43});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
