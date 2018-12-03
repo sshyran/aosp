@@ -14195,6 +14195,52 @@ TEST_F(ValidationTest, split_quant8_4) {
 }
 
 
+// Generated from: sub_float16.mod.py.
+namespace sub_float16 {
+// Generated sub_float16 test
+#include "examples/sub_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/sub_float16.model.cpp"
+} // namespace sub_float16
+
+TEST_F(NeuralnetworksHidlTest, sub_float16) {
+  generated_tests::Execute(device,
+                           sub_float16::createTestModel,
+                           sub_float16::is_ignored,
+                           sub_float16::examples);
+}
+
+TEST_F(ValidationTest, sub_float16) {
+  const Model model = sub_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(sub_float16::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: sub_float16_broadcast.mod.py.
+namespace sub_float16_broadcast {
+// Generated sub_float16_broadcast test
+#include "examples/sub_float16_broadcast.example.cpp"
+// Generated model constructor
+#include "vts_models/sub_float16_broadcast.model.cpp"
+} // namespace sub_float16_broadcast
+
+TEST_F(NeuralnetworksHidlTest, sub_float16_broadcast) {
+  generated_tests::Execute(device,
+                           sub_float16_broadcast::createTestModel,
+                           sub_float16_broadcast::is_ignored,
+                           sub_float16_broadcast::examples);
+}
+
+TEST_F(ValidationTest, sub_float16_broadcast) {
+  const Model model = sub_float16_broadcast::createTestModel();
+  const std::vector<Request> requests = createRequests(sub_float16_broadcast::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: sub_quantized.mod.py.
 namespace sub_quantized {
 // Generated sub_quantized test
