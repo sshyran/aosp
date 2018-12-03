@@ -2734,6 +2734,7 @@ typedef enum {
      * two values are equal, the one with larger index appears first.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
