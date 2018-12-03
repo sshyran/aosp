@@ -12,6 +12,6 @@ namespace squeeze_quant8_1 {
 TEST_F(GeneratedTests, squeeze_quant8_1) {
     execute(squeeze_quant8_1::CreateModel,
             squeeze_quant8_1::is_ignored,
-            squeeze_quant8_1::examples);
+            squeeze_quant8_1::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace depth_to_space_float_1 {
 TEST_F(GeneratedTests, depth_to_space_float_1) {
     execute(depth_to_space_float_1::CreateModel,
             depth_to_space_float_1::is_ignored,
-            depth_to_space_float_1::examples);
+            depth_to_space_float_1::get_examples());
 }
 

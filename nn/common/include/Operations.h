@@ -20,7 +20,6 @@
 #include "operations/Cast.h"
 #include "operations/EmbeddingLookup.h"
 #include "operations/ExpandDims.h"
-#include "operations/Gather.h"
 #include "operations/HashtableLookup.h"
 #include "operations/LSHProjection.h"
 #include "operations/LSTM.h"
@@ -30,6 +29,7 @@
 #include "operations/QuantizedLSTM.h"
 #include "operations/RNN.h"
 #include "operations/SVDF.h"
+#include "operations/Slice.h"
 #include "operations/Tile.h"
 #include "operations/TopK_V2.h"
 
@@ -63,17 +63,23 @@ bool dequantizeQuant8ToFloat32(const uint8_t* inputData, float* outputData, cons
 
 bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData, const Shape& outputShape);
 
+bool depthwiseConvFloat16(const _Float16* inputData, const Shape& inputShape,
+                          const _Float16* filterData, const Shape& filterShape,
+                          const _Float16* biasData, const Shape& biasShape, int32_t paddingLeft,
+                          int32_t paddingRight, int32_t paddingTop, int32_t paddingBottom,
+                          int32_t strideWidth, int32_t strideHeight, int32_t depthMultiplier,
+                          int32_t activation, _Float16* outputData, const Shape& outputShape);
 bool depthwiseConvFloat32(const float* inputData, const Shape& inputShape, const float* filterData,
                           const Shape& filterShape, const float* biasData, const Shape& biasShape,
-                          int32_t padding_left, int32_t padding_right, int32_t padding_top,
-                          int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
-                          int32_t depth_multiplier, int32_t activation, float* outputData,
+                          int32_t paddingLeft, int32_t paddingRight, int32_t paddingTop,
+                          int32_t paddingBottom, int32_t strideWidth, int32_t strideHeight,
+                          int32_t depthMultiplier, int32_t activation, float* outputData,
                           const Shape& outputShape);
 bool depthwiseConvQuant8(const uint8_t* inputData, const Shape& inputShape,
                          const uint8_t* filterData, const Shape& filterShape,
-                         const int32_t* biasData, const Shape& biasShape, int32_t padding_left,
-                         int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
-                         int32_t stride_width, int32_t stride_height, int32_t depth_multiplier,
+                         const int32_t* biasData, const Shape& biasShape, int32_t paddingLeft,
+                         int32_t paddingRight, int32_t paddingTop, int32_t paddingBottom,
+                         int32_t strideWidth, int32_t strideHeight, int32_t depthMultiplier,
                          int32_t activation, uint8_t* outputData, const Shape& outputShape);
 
 bool convFloat32(const float* inputData, const Shape& inputShape, const float* filterData,
@@ -169,30 +175,33 @@ bool localResponseNormFloat32(const float* inputData, const Shape& inputShape, i
                               float bias, float alpha, float beta, int32_t axis, float* outputData,
                               const Shape& outputShape);
 
-bool reshapeGeneric(const void* inputData, const Shape& inputShape, void* outputData,
-                    const Shape& outputShape);
+bool copyData(const void* inputData, const Shape& inputShape, void* outputData,
+              const Shape& outputShape);
 
+bool resizeBilinearFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* outputData,
+                           const Shape& outputShape);
 bool resizeBilinearFloat32(const float* inputData, const Shape& inputShape, float* outputData,
                            const Shape& outputShape);
 
-bool depthToSpaceGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t blockSize,
-                         uint8_t* outputData, const Shape& outputShape);
+template <typename T>
+bool depthToSpaceGeneric(const T* inputData, const Shape& inputShape, int32_t blockSize,
+                         T* outputData, const Shape& outputShape);
+template <typename T>
+bool spaceToDepthGeneric(const T* inputData, const Shape& inputShape, int32_t blockSize,
+                         T* outputData, const Shape& outputShape);
 
-bool spaceToDepthGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t blockSize,
-                         uint8_t* outputData, const Shape& outputShape);
+template <typename T>
+bool padGeneric(const T* inputData, const Shape& inputShape, const int32_t* paddings, T pad_value,
+                T* outputData, const Shape& outputShape);
 
-bool padFloat32(const float* inputData, const Shape& inputShape, const int32_t* paddings,
-                float pad_value, float* outputData, const Shape& outputShape);
+template <typename T>
+bool batchToSpaceGeneric(const T* inputData, const Shape& inputShape, const int32_t* blockSize,
+                         T* outputData, const Shape& outputShape);
 
-bool padQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_t* paddings,
-               uint8_t pad_value, uint8_t* outputData, const Shape& outputShape);
-
-bool batchToSpaceGeneric(const uint8_t* inputData, const Shape& inputShape,
-                         const int32_t* blockSize, uint8_t* outputData, const Shape& outputShape);
-
-bool spaceToBatchGeneric(const uint8_t* inputData, const Shape& inputShape,
-                         const int32_t* blockSize, const int32_t* padding,
-                         const Shape& paddingShape, uint8_t* outputData, const Shape& outputShape);
+template <typename T>
+bool spaceToBatchGeneric(const T* inputData, const Shape& inputShape, const int32_t* blockSize,
+                         const int32_t* padding, const Shape& paddingShape, T* outputData,
+                         const Shape& outputShape);
 
 bool subFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
                 int32_t activation, _Float16* out, const Shape& shapeOut);
@@ -203,16 +212,14 @@ bool subFloat32(const float* in1, const Shape& shape1, const float* in2, const S
 bool subQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
                int32_t activation, uint8_t* out, const Shape& shapeOut);
 
-bool squeezeGeneric(const void* inputData, const Shape& inputShape, void* outputData,
-                    const Shape& outputShape);
-
 bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
                 int32_t activation, _Float16* out, const Shape& shapeOut);
 bool divFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
                 int32_t activation, float* out, const Shape& shapeOut);
 
-bool transposeGeneric(const uint8_t* inputData, const Shape& inputShape, const int32_t* perm,
-                      const Shape& permShape, uint8_t* outputData, const Shape& outputShape);
+template <typename T>
+bool transposeGeneric(const T* inputData, const Shape& inputShape, const int32_t* perm,
+                      const Shape& permShape, T* outputData, const Shape& outputShape);
 
 bool meanGeneric(const uint8_t* inputData, const Shape& inputShape, const int32_t* axis,
                  const Shape& axisShape, bool keepDims, uint8_t* outputData,
@@ -249,6 +256,10 @@ bool roiAlignFloat32(const float* inputData, const Shape& inputShape, const floa
 bool roiAlignQuant8(const uint8_t* inputData, const Shape& inputShape, const float* roiData,
                     const Shape& roiShape, float spatialScale, int32_t samplingRatio,
                     uint8_t* outputData, const Shape& outputShape);
+
+bool roiPoolingGeneric(const uint8_t* inputData, const Shape& inputShape, const uint8_t* roiData,
+                       const Shape& roiShape, float spatialScale, uint8_t* outputData,
+                       const Shape& outputShape);
 
 bool heatmapMaxKeypoint(const float* heatmap, const Shape& heatmapShape, const float* boxes,
                         const Shape& boxesShape, float* outputData, const Shape& outputShape);

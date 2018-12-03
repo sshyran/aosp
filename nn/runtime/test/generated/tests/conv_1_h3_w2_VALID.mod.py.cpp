@@ -12,6 +12,6 @@ namespace conv_1_h3_w2_VALID {
 TEST_F(GeneratedTests, conv_1_h3_w2_VALID) {
     execute(conv_1_h3_w2_VALID::CreateModel,
             conv_1_h3_w2_VALID::is_ignored,
-            conv_1_h3_w2_VALID::examples);
+            conv_1_h3_w2_VALID::get_examples());
 }
 

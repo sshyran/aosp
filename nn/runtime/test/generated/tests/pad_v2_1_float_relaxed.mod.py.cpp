@@ -12,6 +12,6 @@ namespace pad_v2_1_float_relaxed {
 TEST_F(GeneratedTests, pad_v2_1_float_relaxed) {
     execute(pad_v2_1_float_relaxed::CreateModel,
             pad_v2_1_float_relaxed::is_ignored,
-            pad_v2_1_float_relaxed::examples);
+            pad_v2_1_float_relaxed::get_examples());
 }
 

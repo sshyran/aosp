@@ -12,6 +12,6 @@ namespace floor_relaxed {
 TEST_F(GeneratedTests, floor_relaxed) {
     execute(floor_relaxed::CreateModel,
             floor_relaxed::is_ignored,
-            floor_relaxed::examples);
+            floor_relaxed::get_examples());
 }
 

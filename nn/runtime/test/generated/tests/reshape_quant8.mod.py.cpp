@@ -12,6 +12,6 @@ namespace reshape_quant8 {
 TEST_F(GeneratedTests, reshape_quant8) {
     execute(reshape_quant8::CreateModel,
             reshape_quant8::is_ignored,
-            reshape_quant8::examples);
+            reshape_quant8::get_examples());
 }
 

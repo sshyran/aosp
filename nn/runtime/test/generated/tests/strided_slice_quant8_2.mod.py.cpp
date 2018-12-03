@@ -12,6 +12,6 @@ namespace strided_slice_quant8_2 {
 TEST_F(GeneratedTests, strided_slice_quant8_2) {
     execute(strided_slice_quant8_2::CreateModel,
             strided_slice_quant8_2::is_ignored,
-            strided_slice_quant8_2::examples);
+            strided_slice_quant8_2::get_examples());
 }
 

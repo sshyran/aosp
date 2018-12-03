@@ -1,6 +1,7 @@
 // clang-format off
 // Generated file (from: axis_aligned_bbox_transform.mod.py). Do not edit
-std::vector<MixedTypedExample> examples = {
+std::vector<MixedTypedExample>& get_examples() {
+static std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 .operands = {
@@ -33,8 +34,11 @@ std::vector<MixedTypedExample> examples = {
 },
 }, // End of an example
 };
+return examples;
+};
 
-std::vector<MixedTypedExample> examples_relaxed = {
+std::vector<MixedTypedExample>& get_examples_relaxed() {
+static std::vector<MixedTypedExample> examples_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -67,8 +71,11 @@ std::vector<MixedTypedExample> examples_relaxed = {
 },
 }, // End of an example
 };
+return examples_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_2 = {
+std::vector<MixedTypedExample>& get_examples_2() {
+static std::vector<MixedTypedExample> examples_2 = {
 // Begin of an example
 {
 .operands = {
@@ -101,8 +108,11 @@ std::vector<MixedTypedExample> examples_2 = {
 },
 }, // End of an example
 };
+return examples_2;
+};
 
-std::vector<MixedTypedExample> examples_relaxed_2 = {
+std::vector<MixedTypedExample>& get_examples_relaxed_2() {
+static std::vector<MixedTypedExample> examples_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -135,8 +145,11 @@ std::vector<MixedTypedExample> examples_relaxed_2 = {
 },
 }, // End of an example
 };
+return examples_relaxed_2;
+};
 
-std::vector<MixedTypedExample> examples_single_batch = {
+std::vector<MixedTypedExample>& get_examples_single_batch() {
+static std::vector<MixedTypedExample> examples_single_batch = {
 // Begin of an example
 {
 .operands = {
@@ -169,8 +182,11 @@ std::vector<MixedTypedExample> examples_single_batch = {
 },
 }, // End of an example
 };
+return examples_single_batch;
+};
 
-std::vector<MixedTypedExample> examples_single_batch_relaxed = {
+std::vector<MixedTypedExample>& get_examples_single_batch_relaxed() {
+static std::vector<MixedTypedExample> examples_single_batch_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -202,5 +218,7 @@ std::vector<MixedTypedExample> examples_single_batch_relaxed = {
 }
 },
 }, // End of an example
+};
+return examples_single_batch_relaxed;
 };
 

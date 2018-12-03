@@ -12,6 +12,6 @@ namespace lsh_projection_weights_as_inputs {
 TEST_F(GeneratedTests, lsh_projection_weights_as_inputs) {
     execute(lsh_projection_weights_as_inputs::CreateModel,
             lsh_projection_weights_as_inputs::is_ignored,
-            lsh_projection_weights_as_inputs::examples);
+            lsh_projection_weights_as_inputs::get_examples());
 }
 

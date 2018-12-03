@@ -12,6 +12,6 @@ namespace relu6_float_2 {
 TEST_F(GeneratedTests, relu6_float_2) {
     execute(relu6_float_2::CreateModel,
             relu6_float_2::is_ignored,
-            relu6_float_2::examples);
+            relu6_float_2::get_examples());
 }
 

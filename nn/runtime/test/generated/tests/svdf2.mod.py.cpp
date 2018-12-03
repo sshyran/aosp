@@ -12,6 +12,6 @@ namespace svdf2 {
 TEST_F(GeneratedTests, svdf2) {
     execute(svdf2::CreateModel,
             svdf2::is_ignored,
-            svdf2::examples);
+            svdf2::get_examples());
 }
 

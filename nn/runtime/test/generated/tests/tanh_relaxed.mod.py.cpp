@@ -12,6 +12,6 @@ namespace tanh_relaxed {
 TEST_F(GeneratedTests, tanh_relaxed) {
     execute(tanh_relaxed::CreateModel,
             tanh_relaxed::is_ignored,
-            tanh_relaxed::examples);
+            tanh_relaxed::get_examples());
 }
 
