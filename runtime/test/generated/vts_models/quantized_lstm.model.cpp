@@ -40,7 +40,7 @@ Model createTestModel() {
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         },
         {
-            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .type = OperandType::TENSOR_QUANT16_SYMM,
             .dimensions = {2, 4},
             .numberOfConsumers = 1,
             .scale = 0.00048828125f,
@@ -58,11 +58,11 @@ Model createTestModel() {
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         },
         {
-            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .type = OperandType::TENSOR_QUANT16_SYMM,
             .dimensions = {2, 16},
             .numberOfConsumers = 0,
             .scale = 0.0078125f,
-            .zeroPoint = 128,
+            .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_OUTPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         },
@@ -76,7 +76,7 @@ Model createTestModel() {
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         },
         {
-            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .type = OperandType::TENSOR_QUANT16_SYMM,
             .dimensions = {2, 4},
             .numberOfConsumers = 0,
             .scale = 0.00048828125f,

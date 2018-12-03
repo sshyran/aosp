@@ -93,15 +93,13 @@ typedef enum {
     /**
      * A tensor of 16 bit signed integers that represent real numbers.
      *
-     * Attached to this tensor are two numbers that are used to convert the 16
-     * bit integer to the real value and vice versa. These two numbers are:
-     * - scale: a 32 bit floating point value greater than zero.
-     * - zeroPoint: a 32 bit integer, in range [-32768, 32767].
+     * Attached to this tensor is a number representing real value scale that is
+     * used to convert the 16 bit number to a real value in the following way:
+     * realValue = integerValue * scale.
      *
-     * The formula is:
-     * realValue = (integerValue - zeroPoint) * scale.
+     * scale is a 32 bit floating point with value greater then zero.
      */
-    ANEURALNETWORKS_TENSOR_QUANT16_ASYMM = 7,
+    ANEURALNETWORKS_TENSOR_QUANT16_SYMM = 7,
 
     /** A tensor of 16 bit floating point values. */
     ANEURALNETWORKS_TENSOR_FLOAT16 = 8,
@@ -139,6 +137,7 @@ typedef enum {
      *     output.dimension = {5, 4, 3, 2}
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -983,6 +982,12 @@ typedef enum {
      *   matrix, each element of which is the product of the corresponding
      *   elements of the input matrices.
      *
+     * Since API level 29 LSTM supports layer normalization.
+     * In case layer normalization is used, the inputs to internal activation
+     * functions (sigmoid and \f$g\f$) are normalized, rescaled and recentered
+     * following an approach from section 3.1 from
+     * https://arxiv.org/pdf/1607.06450.pdf
+     *
      * The operation has the following independently optional inputs:
      * * The input-to-input weights (\f$W_{xi}\f$), recurrent-to-input weights
      *   (\f$W_{hi}\f$), cell-to-input (\f$W_{ci}\f$) weights, and input gate
@@ -1003,6 +1008,9 @@ typedef enum {
      * * The projection bias (\f$b_{proj}\f$) may (but not required to) have a
      *   value if the recurrent projection layer exists, and should otherwise
      *   have no value.
+     * * (API level >= 29) The four layer normalization weights either all have
+     *   values or none of them have values. Layer normalization is used when
+     *   values are present.
      *
      * References:
      *
@@ -1022,6 +1030,10 @@ typedef enum {
      * The coupling of input and forget gate (CIFG) is based on:
      * http://arxiv.org/pdf/1503.04069.pdf
      * Greff et al. "LSTM: A Search Space Odyssey"
+     *
+     * The layer normalization is based on:
+     * https://arxiv.org/pdf/1607.06450.pdf
+     * Jimmy Ba et al. "Layer Normalization"
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -1106,6 +1118,23 @@ typedef enum {
      * * 22:The clipping threshold (\f$t_{proj}\f$) for the output from the
      *      projection layer, such that values are bound within
      *      [-proj_clip, proj_clip]. If set to 0.0 then clipping is disabled.
+     * Since API level 29 there are additional inputs to this op:
+     * * 23:The input layer normalization weights.
+     *      A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, of shape
+     *      [num_units]. Used to rescale normalized inputs to activation at
+     *      input gate.
+     * * 24:The forget layer normalization weights.
+     *      A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, of shape
+     *      [num_units]. Used to rescale normalized inputs to activation at
+     *      forget gate.
+     * * 25:The cell layer normalization weights.
+     *      A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, of shape
+     *      [num_units]. Used to rescale normalized inputs to activation at
+     *      cell gate.
+     * * 26:The output layer normalization weights.
+     *      A 1-D tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, of shape
+     *      [num_units]. Used to rescale normalized inputs to activation at
+     *      output gate.
      *
      * Outputs:
      * * 0: The scratch buffer.
@@ -1222,6 +1251,7 @@ typedef enum {
      * its way forward.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1599,6 +1629,7 @@ typedef enum {
      *     output = tanh(input)
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} (since API level 29)
      *
@@ -1675,6 +1706,7 @@ typedef enum {
      *     output.dimension = {5, 4, 3, 2}
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Supported tensor rank: up to 4
@@ -1902,6 +1934,7 @@ typedef enum {
      *     output.dimension = {5, 4, 3, 2}
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} (since API level 29)
      *
@@ -2091,6 +2124,7 @@ typedef enum {
      * as a tensor of uint8 values.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2190,6 +2224,7 @@ typedef enum {
      *       input0[a_0, ..., a_n, indices[i, ..., j], b_0, ..., b_n]
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2375,6 +2410,7 @@ typedef enum {
      * Returns the element-wise maximum of two tensors.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2395,6 +2431,7 @@ typedef enum {
      * Returns the element-wise minimum of two tensors.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2530,7 +2567,7 @@ typedef enum {
      *      [4 * cellSize] specifying the bias for the fully-connected layer
      *      inside the LSTM cell. Bias is quantized with scale being a product
      *      of input and weights scales and zeroPoint equal to 0.
-     * * 4: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     * * 4: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
      *      and shape [numBatches, cellSize] specifying the cell state from the
      *      previous time step of the LSTM cell. It is quantized using a
      *      quantization range of [-2^4, 2^4 * 32767/32768] (scale = 2^4 /
@@ -2543,7 +2580,7 @@ typedef enum {
      *      output from previous time step to pass it to the fully-connected
      *      layer. Tensor is quantized with a fixed quantization range of
      *      [-1, 127/128] (scale = 1/128, zeroPoint = 128).
-     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
      *      and shape [numBatches, 4 * cellSize]. This tensor is a scratch
      *      buffer used to store the result of the fully-connected layer.
      * * 2: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2552,7 +2589,7 @@ typedef enum {
      *      pass the output value through time. Tensor is quantized with a fixed
      *      quantization range of [-1, 127/128] (scale = 1/128, zeroPoint =
      *      128).
-     * * 3: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     * * 3: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
      *      and shape [numBatches, cellSize] which contains a cell state from
      *      the current time step. NN API requires this tensor to pass the cell
      *      state value through time. Tensor is quantized using a quantization
@@ -2641,6 +2678,7 @@ typedef enum {
      * Splits a tensor along a given axis into num_splits subtensors.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2673,6 +2711,7 @@ typedef enum {
      * For example, tiling `[a b c d]` by `[2]` produces `[a b c d a b c d]`.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2698,6 +2737,7 @@ typedef enum {
      * two values are equal, the one with larger index appears first.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -3116,9 +3156,12 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  *    <li>Associate output buffers or memory regions to the model outputs with
  *        {@link ANeuralNetworksExecution_setOutput} or
  *        {@link ANeuralNetworksExecution_setOutputFromMemory}.</li>
- *    <li>Apply the model with {@link ANeuralNetworksExecution_startCompute}.</li>
- *    <li>Wait for the execution to complete with {@link
- *        ANeuralNetworksEvent_wait}.</li>
+ *    <li>Either
+ *        <li>Apply the model asynchronously with {@link
+ * ANeuralNetworksExecution_startCompute}.</li> <li>Wait for the execution to complete with {@link
+ *            ANeuralNetworksEvent_wait}.</li></li>
+ *    <li>Or
+ *        <li>Apply the model synchronously with {@link ANeuralNetworksExecution_compute}.</li></li>
  *    <li>Destroy the execution with
  *        {@link ANeuralNetworksExecution_free}.</li></ul></p>
  *
@@ -3127,12 +3170,14 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  * memory region, or with an operand value in a memory object
  * ({@link ANeuralNetworksModel_setOperandValueFromMemory}).</p>
  *
- * <p>An execution cannot be modified once {@link ANeuralNetworksExecution_startCompute}
- * has been called on it.</p>
+ * <p>An execution cannot be modified once
+ * {@link ANeuralNetworksExecution_compute} or
+ * {@link ANeuralNetworksExecution_startCompute} has been called on it.</p>
  *
  * <p>An execution can be applied to a model with
- * {@link ANeuralNetworksExecution_startCompute} only once. Create new executions
- * to do new evaluations of the model.</p>
+ * {@link ANeuralNetworksExecution_compute} or
+ * {@link ANeuralNetworksExecution_startCompute} only once. Create new
+ * executions to do new evaluations of the model.</p>
  *
  * <p>It is the application's responsibility to make sure that only one thread
  * modifies an execution at a given time. It is however safe for more than one
@@ -3140,6 +3185,18 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  *
  * <p>It is also the application's responsibility to ensure that there are no other
  * uses of the execution after calling {@link ANeuralNetworksExecution_free}.</p>
+ *
+ * <p>Multiple executions can be scheduled and evaluated concurrently, either by
+ * means of {@link ANeuralNetworksExecution_compute} (which is synchronous) in
+ * different threads or by means of
+ * {@link ANeuralNetworksExecution_startCompute} (which is asynchronous). The
+ * runtime makes no guarantee on the ordering of completion of executions. If
+ * it's important to the application, the application should enforce the
+ * ordering by ensuring that one execution completes before the next is
+ * scheduled (for example, by scheduling all executions synchronously within a
+ * single thread, or by scheduling all executions asynchronously and using
+ * {@link ANeuralNetworksEvent_wait} between calls to
+ * {@link ANeuralNetworksExecution_startCompute}).</p>
  *
  * Available since API level 27.
  */
@@ -3360,6 +3417,26 @@ int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
                                                 uint32_t numDevices,
                                                 ANeuralNetworksCompilation** compilation);
 
+/**
+ * Schedule synchronous evaluation of the execution.
+ *
+ * <p>Schedules synchronous evaluation of the execution. Returns once the
+ * execution has completed and the outputs are ready to be consumed.
+ * </p>
+ *
+ * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
+ *
+ * See {@link ANeuralNetworksExecution_startCompute} for asynchronous execution.
+ * Synchronous execution incurs lower overhead than asynchronous execution.
+ *
+ * Available since API level 29.
+ *
+ * @param execution The execution to be scheduled and executed.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if the execution completed normally.
+ */
+int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution);
+
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
 #if __ANDROID_API__ >= 27
@@ -3408,6 +3485,7 @@ void ANeuralNetworksMemory_free(ANeuralNetworksMemory* memory) __INTRODUCED_IN(2
  * Create an empty {@link ANeuralNetworksModel}.
  *
  * <p>This only creates the object. Computation is performed once
+ * {@link ANeuralNetworksExecution_compute} or
  * {@link ANeuralNetworksExecution_startCompute} is invoked.
  *
  * The model should be constructed with calls to
@@ -3757,6 +3835,7 @@ int ANeuralNetworksCompilation_finish(ANeuralNetworksCompilation* compilation) _
 /**
  * Create a {@link ANeuralNetworksExecution} to apply the given compilation.
  * This only creates the object. Computation is only performed once
+ * {@link ANeuralNetworksExecution_compute} or
  * {@link ANeuralNetworksExecution_startCompute} is invoked.
  *
  * <p>The provided compilation must outlive the execution.</p>
@@ -3953,23 +4032,21 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
                                                  size_t length) __INTRODUCED_IN(27);
 
 /**
- * Schedule evaluation of the execution.
+ * Schedule asynchronous evaluation of the execution.
  *
- * <p>Schedules evaluation of the execution. Once the model has been
- * applied and the outputs are ready to be consumed, the returned event will be
- * signaled. Use {@link ANeuralNetworksEvent_wait} to wait for that event.
+ * <p>Schedules asynchronous evaluation of the execution. Once the model has
+ * been applied and the outputs are ready to be consumed, the returned event
+ * will be signaled. Use {@link ANeuralNetworksEvent_wait} to wait for that
+ * event.
  * </p>
- *
- * Multiple executions can be scheduled and evaluated concurrently. The
- * runtime makes no guarantee on the ordering of completion of
- * executions. If it's important to the application, the application
- * should enforce the ordering by using
- * {@link ANeuralNetworksEvent_wait}.
  *
  * ANeuralNetworksEvent_wait must be called to recuperate the resources used
  * by the execution.
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
+ *
+ * See {@link ANeuralNetworksExecution_compute} for synchronous execution.
+ * Synchronous execution incurs lower overhead than asynchronous execution.
  *
  * Available since API level 27.
  *

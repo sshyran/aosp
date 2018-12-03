@@ -101,13 +101,38 @@ inline bool broadcastOpBase(const T* in1, const Shape& shape1, const T* in2, con
             return false;                                                   \
     }
 
+using binaryFunctionFloat32 = std::function<bool(
+        const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
+        int32_t activation, float* out, const Shape& shapeOut)>;
+
+bool binaryOperationFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2,
+                            const Shape& shape2, int32_t activation, _Float16* out,
+                            const Shape& shapeOut, binaryFunctionFloat32 operationFloat32) {
+    std::vector<float> in1_float32(getNumberOfElements(shape1));
+    convertFloat16ToFloat32(in1, &in1_float32);
+    std::vector<float> in2_float32(getNumberOfElements(shape2));
+    convertFloat16ToFloat32(in2, &in2_float32);
+    std::vector<float> out_float32(getNumberOfElements(shapeOut));
+
+    operationFloat32(in1_float32.data(), shape1, in2_float32.data(), shape2, activation,
+                     out_float32.data(), shapeOut);
+    convertFloat32ToFloat16(out_float32, out);
+
+    return true;
+}
+
+bool addFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut) {
+    NNTRACE_TRANS("addFloat16");
+    return binaryOperationFloat16(in1, shape1, in2, shape2, activation, out, shapeOut, &addFloat32);
+}
+
 bool addFloat32(const float* in1, const Shape& shape1,
                 const float* in2, const Shape& shape2,
                 int32_t activation,
                 float* out, const Shape& shapeOut) {
     NNTRACE_TRANS("addFloat32");
     bool needBroadcast = !SameShape(shape1, shape2);
-
     if (needBroadcast) {
         NNTRACE_COMP_SWITCH("optimized_ops::BroadcastAdd");
         #define ANDROID_NN_BROADCAST_ADD(activation)                                              \
@@ -208,6 +233,12 @@ bool addQuant8(const uint8_t* in1, const Shape& shape1,
     }
 
     return true;
+}
+
+bool mulFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut) {
+    NNTRACE_TRANS("mulFloat16");
+    return binaryOperationFloat16(in1, shape1, in2, shape2, activation, out, shapeOut, &mulFloat32);
 }
 
 bool mulFloat32(const float* in1, const Shape& shape1,
@@ -311,6 +342,12 @@ bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData,
     return true;
 }
 
+bool subFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut) {
+    NNTRACE_TRANS("subFloat16");
+    return binaryOperationFloat16(in1, shape1, in2, shape2, activation, out, shapeOut, &subFloat32);
+}
+
 bool subFloat32(const float* in1, const Shape& shape1,
                 const float* in2, const Shape& shape2,
                 int32_t activation,
@@ -377,6 +414,12 @@ bool subQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, cons
 #undef ANDROID_NN_BROADCAST_ADD
 
     return true;
+}
+
+bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut) {
+    NNTRACE_TRANS("divFloat16");
+    return binaryOperationFloat16(in1, shape1, in2, shape2, activation, out, shapeOut, &divFloat32);
 }
 
 bool divFloat32(const float* in1, const Shape& shape1,

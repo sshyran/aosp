@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-#include "NeuralNetworksWrapper.h"
 #include "TestHarness.h"
+#include "TestNeuralNetworksWrapper.h"
 
 #include <gtest/gtest.h>
 
 #include <tuple>
 #include <vector>
 
-using namespace android::nn::wrapper;
+using namespace android::nn::test_wrapper;
 using namespace test_helper;
 
 namespace {
@@ -278,6 +278,10 @@ TEST_P(UnknownDimensionsTest, Float) {
 
 TEST_P(UnknownDimensionsTest, Quantized) {
     TestAll<uint8_t, Type::TENSOR_QUANT8_ASYMM>();
+}
+
+TEST_P(UnknownDimensionsTest, Float16) {
+    TestAll<_Float16, Type::TENSOR_FLOAT16>();
 }
 
 INSTANTIATE_TEST_CASE_P(UnknownCombinationsTest, UnknownDimensionsTest,

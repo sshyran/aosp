@@ -761,6 +761,17 @@ bool transposePrepare(const Shape& input,
                       const Shape& permShape,
                       Shape* output) {
     uint32_t numInputDims = getNumberOfDimensions(input);
+
+    // permData can be NO_VALUE representing a regular 2D matrix transpose
+    if (permData == nullptr) {
+        NN_OPS_CHECK(numInputDims == 2);
+        output->type = input.type;
+        output->dimensions = {getSizeOfDimension(input, 1), getSizeOfDimension(input, 0)};
+        output->offset = input.offset;
+        output->scale = input.scale;
+        return true;
+    }
+
     // Transpose op only supports 1D-4D input arrays.
     NN_OPS_CHECK(numInputDims <= 4);
 

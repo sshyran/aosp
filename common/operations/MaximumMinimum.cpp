@@ -55,7 +55,7 @@ bool evalGeneric(const T* aData, const Shape& aShape, const T* bData, const Shap
 }  // namespace
 
 bool prepare(const Shape& in1, const Shape& in2, Shape* out) {
-    NN_CHECK_EQ(in1.type, in2.type);
+    NN_CHECK(in1.type == in2.type);
     return calculateBroadcastedShape(in1, in2, out);
 }
 
@@ -63,6 +63,11 @@ bool eval(const void* in1, const Shape& shape1, const void* in2, const Shape& sh
           bool isMinimum, void* output, const Shape& outputShape) {
     NNTRACE_COMP("maximum_minimum::eval");
     switch (shape1.type) {
+        case OperandType::TENSOR_FLOAT16: {
+            return evalGeneric(reinterpret_cast<const _Float16*>(in1), shape1,
+                               reinterpret_cast<const _Float16*>(in2), shape2, isMinimum,
+                               reinterpret_cast<_Float16*>(output), outputShape);
+        }
         case OperandType::TENSOR_FLOAT32: {
             return evalGeneric(reinterpret_cast<const float*>(in1), shape1,
                                reinterpret_cast<const float*>(in2), shape2, isMinimum,

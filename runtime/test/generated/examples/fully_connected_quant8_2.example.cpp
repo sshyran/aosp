@@ -12,8 +12,10 @@ std::vector<MixedTypedExample> examples = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {129, 131, 133, 135, 137, 139, 141, 143, 109, 107, 129, 131, 133, 135, 137, 139, 141, 111, 145, 107}}},
-  // int -> QUANT16_ASYMM map
-  {}
+  // int -> QUANT16_SYMM map
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -23,8 +25,10 @@ std::vector<MixedTypedExample> examples = {
   {},
   // int -> QUANT8_ASYMM map
   {{0, {151, 152, 153, 185, 186, 187}}},
-  // int -> QUANT16_ASYMM map
-  {}
+  // int -> QUANT16_SYMM map
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example

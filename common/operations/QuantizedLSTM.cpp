@@ -259,7 +259,7 @@ bool QuantizedLSTMCell::prepare(const Operation& operation,
     // therefore:
     // StateIntegerBits = log2(cell state scale) + 15
     int stateScaleLog2Rounded;
-    NN_CHECK(tflite::CheckedLog2(prevCellState->scale, &stateScaleLog2Rounded))
+    NN_CHECK(tflite::CheckedLog2(prevCellState->scale, &stateScaleLog2Rounded));
     const int stateIntegerBits = 15 + stateScaleLog2Rounded;
     // We only support StateIntegerBits == 4
     NN_CHECK(stateIntegerBits == 4);
@@ -267,7 +267,7 @@ bool QuantizedLSTMCell::prepare(const Operation& operation,
     *concatTempShape = input->shape();
     concatTempShape->dimensions[1] = totalDepth;
 
-    activationTempShape->type = OperandType::TENSOR_QUANT16_ASYMM;
+    activationTempShape->type = OperandType::TENSOR_QUANT16_SYMM;
     activationTempShape->dimensions = {numBatches, 4 * activationDepth};
     activationTempShape->scale = prevOutput->scale;
     activationTempShape->offset = prevOutput->zeroPoint;

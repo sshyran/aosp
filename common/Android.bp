@@ -147,7 +147,9 @@ cc_test {
         "android.hidl.memory@1.0",
     ],
     static_libs: [
+        "libbase",
         "libgmock",
+        "liblog",
         "libneuralnetworks_common",
     ],
     cflags: [

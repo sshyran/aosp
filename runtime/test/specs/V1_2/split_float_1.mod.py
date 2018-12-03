@@ -35,4 +35,4 @@ output_dict = {
 }
 
 # Instantiate an example
-Example((input_dict, output_dict)).AddRelaxed()
+Example((input_dict, output_dict)).AddVariations("relaxed", "float16")

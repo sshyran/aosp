@@ -104,7 +104,7 @@ const char* kTypeNames[kNumberOfDataTypes] = {
         "FLOAT32",        "INT32",
         "UINT32",         "TENSOR_FLOAT32",
         "TENSOR_INT32",   "TENSOR_QUANT8_ASYMM",
-        "BOOL",           "TENSOR_QUANT16_ASYMM",
+        "BOOL",           "TENSOR_QUANT16_SYMM",
         "TENSOR_FLOAT16",
 };
 
@@ -241,7 +241,7 @@ const uint32_t kSizeOfDataType[]{
         4,  // ANEURALNETWORKS_TENSOR_INT32
         1,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
         1,  // ANEURALNETWORKS_BOOL
-        2,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+        2,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
         2,  // ANEURALNETWORKS_TENSOR_FLOAT16
 };
 
@@ -255,7 +255,7 @@ const bool kScalarDataType[]{
         false,  // ANEURALNETWORKS_TENSOR_INT32
         false,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
         true,   // ANEURALNETWORKS_BOOL
-        false,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+        false,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
         false,  // ANEURALNETWORKS_TENSOR_FLOAT16
 };
 
@@ -369,9 +369,9 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
-    if (type.type == ANEURALNETWORKS_TENSOR_QUANT16_ASYMM) {
-        if (type.zeroPoint < -32768 || type.zeroPoint > 32767) {
-            LOG(ERROR) << tag << " OperandType invalid zeroPoint " << type.zeroPoint;
+    if (type.type == ANEURALNETWORKS_TENSOR_QUANT16_SYMM) {
+        if (type.zeroPoint != 0) {
+            LOG(ERROR) << tag << " OperandType zeroPoint is not zero:" << type.zeroPoint;
             return ANEURALNETWORKS_BAD_DATA;
         }
         if (type.scale <= 0.f) {
@@ -435,15 +435,21 @@ int validateOperationOperandTypes(const std::vector<Operand>& operands,
     return ANEURALNETWORKS_NO_ERROR;
 }
 
+static int validateHalVersion(ANeuralNetworksOperationType opType, HalVersion halVersion,
+                              HalVersion minSupportedHalVersion) {
+    if (halVersion < minSupportedHalVersion) {
+        LOG(ERROR) << "The given inputs and outputs for operation " << kOperationNames[opType]
+                   << " are only supported in " << toString(minSupportedHalVersion)
+                   << " and later (validating using " << toString(halVersion) << ")";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                       const uint32_t* inputIndexes, uint32_t outputCount,
                       const uint32_t* outputIndexes, const std::vector<Operand>& operands,
-                      HalVersion* minSupportedHalVersion) {
-    if (minSupportedHalVersion == nullptr) {
-        return ANEURALNETWORKS_UNEXPECTED_NULL;
-    }
-    *minSupportedHalVersion = HalVersion::UNKNOWN;
-
+                      HalVersion halVersion) {
     int n = validateOperandList(inputCount, inputIndexes, static_cast<uint32_t>(operands.size()),
                                 "ANeuralNetworksModel_addOperation inputs");
     if (n != ANEURALNETWORKS_NO_ERROR) {
@@ -464,7 +470,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
 
     switch (opType) {
         case ANEURALNETWORKS_OEM_OPERATION: {
-            *minSupportedHalVersion = HalVersion::V1_0;
             return ANEURALNETWORKS_NO_ERROR;
         }
         case ANEURALNETWORKS_ADD: {
@@ -475,22 +480,28 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             auto inputType = operands[inputIndexes[0]].type;
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32,
-                                   OperandType::TENSOR_FLOAT32,
-                                   OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
-                                   OperandType::TENSOR_QUANT8_ASYMM,
-                                   OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
+            if (inputType == OperandType::TENSOR_FLOAT32 ||
+                inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                inExpectedTypes = {
+                        inputType,
+                        inputType,
+                        OperandType::INT32,
+                };
+                outExpectedTypes = {inputType};
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                inExpectedTypes = {
+                        OperandType::TENSOR_FLOAT16,
+                        OperandType::TENSOR_FLOAT16,
+                        OperandType::INT32,
+                };
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -510,6 +521,14 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                    OperandType::TENSOR_FLOAT32,
                                    OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+                inExpectedTypes = {
+                        OperandType::TENSOR_FLOAT16,
+                        OperandType::TENSOR_FLOAT16,
+                        OperandType::INT32,
+                };
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
                                    OperandType::TENSOR_QUANT8_ASYMM,
@@ -520,7 +539,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -543,7 +562,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -566,7 +585,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -589,7 +608,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -639,9 +658,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 12 || inputCount == 9) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                *minSupportedHalVersion = HalVersion::V1_0;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -692,9 +711,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                *minSupportedHalVersion = HalVersion::V1_0;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -745,9 +764,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                *minSupportedHalVersion = HalVersion::V1_0;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -789,9 +808,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                *minSupportedHalVersion = HalVersion::V1_0;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -842,9 +861,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 11 || inputCount == 8) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                *minSupportedHalVersion = HalVersion::V1_0;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -852,58 +871,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
-        case ANEURALNETWORKS_RELU: {
-            if (inputCount != 1 || outputCount != 1) {
-                logInvalidInOutNumber(1, 1);
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            auto inputType = operands[inputIndexes[0]].type;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-            } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << kOperationNames[opType];
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            *minSupportedHalVersion = HalVersion::V1_0;
-            return validateOperationOperandTypes(operands,
-                                                 inputCount, inputIndexes,
-                                                 inExpectedTypes,
-                                                 outputCount, outputIndexes,
-                                                 outExpectedTypes);
-        }
-        case ANEURALNETWORKS_RELU1: {
-            if (inputCount != 1 || outputCount != 1) {
-                logInvalidInOutNumber(1, 1);
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            auto inputType = operands[inputIndexes[0]].type;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-            } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << kOperationNames[opType];
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            *minSupportedHalVersion = HalVersion::V1_0;
-            return validateOperationOperandTypes(operands,
-                                                 inputCount, inputIndexes,
-                                                 inExpectedTypes,
-                                                 outputCount, outputIndexes,
-                                                 outExpectedTypes);
-        }
+        case ANEURALNETWORKS_RELU:
+        case ANEURALNETWORKS_RELU1:
         case ANEURALNETWORKS_RELU6: {
             if (inputCount != 1 || outputCount != 1) {
                 logInvalidInOutNumber(1, 1);
@@ -915,6 +884,10 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if (inputType == OperandType::TENSOR_FLOAT32) {
                 inExpectedTypes = {OperandType::TENSOR_FLOAT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+                inExpectedTypes = {OperandType::TENSOR_FLOAT16};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
@@ -923,7 +896,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -941,11 +914,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if (inputType == OperandType::TENSOR_FLOAT32) {
                 inExpectedTypes = {OperandType::TENSOR_FLOAT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-                *minSupportedHalVersion = HalVersion::V1_0;
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
+            } else if (inputType == OperandType::TENSOR_FLOAT16 ||
+                       inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                inExpectedTypes = {inputType};
+                outExpectedTypes = {inputType};
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
                            << kOperationNames[opType];
@@ -968,6 +942,10 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if (inputType == OperandType::TENSOR_FLOAT32) {
                 inExpectedTypes = {OperandType::TENSOR_FLOAT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
+                inExpectedTypes = {OperandType::TENSOR_FLOAT16};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
@@ -976,7 +954,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -997,6 +975,10 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes = {OperandType::TENSOR_FLOAT32,
                                    OperandType::FLOAT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+                inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::FLOAT32};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
                                    OperandType::FLOAT32};
@@ -1008,13 +990,11 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 3) {
                 inExpectedTypes.push_back(OperandType::INT32);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
                 const size_t ndim = operands[inputIndexes[0]].dimensions.size();
-                if (ndim == 4 || ndim == 2) {
-                    *minSupportedHalVersion = HalVersion::V1_0;
-                } else {
-                    *minSupportedHalVersion = HalVersion::V1_2;
+                if (ndim != 4 && ndim != 2) {
+                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
                 }
             }
             return validateOperationOperandTypes(operands,
@@ -1048,7 +1028,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1064,15 +1044,27 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
-            std::vector<OperandType> inExpectedTypes(inputCount, inputType);
-            std::vector<OperandType> outExpectedTypes = {inputType};
-            // The last one is the activation function.
-            inExpectedTypes.back() = OperandType::INT32;
-            *minSupportedHalVersion = HalVersion::V1_0;
-            return validateOperationOperandTypes(operands,
-                                                 inputCount, inputIndexes,
-                                                 inExpectedTypes,
-                                                 outputCount, outputIndexes,
+            if (inputType == OperandType::TENSOR_FLOAT16) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+            } else {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
+            }
+            std::vector<OperandType> inExpectedTypes(inputCount - 1, inputType);
+            inExpectedTypes.push_back(OperandType::INT32);
+            std::vector<OperandType> outExpectedTypes;
+            if (inputType == OperandType::TENSOR_FLOAT32) {
+                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
+            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
+            } else {
+                LOG(ERROR) << "Unsupported input tensor type for operation "
+                           << kOperationNames[opType];
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_L2_NORMALIZATION: {
@@ -1095,12 +1087,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 2) {
                 inExpectedTypes.push_back(OperandType::INT32);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
                 if (operands[inputIndexes[0]].dimensions.size() == 4) {
-                    *minSupportedHalVersion = HalVersion::V1_0;
+                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
                 } else {
-                    *minSupportedHalVersion = HalVersion::V1_2;
+                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
                 }
             }
             return validateOperationOperandTypes(operands,
@@ -1133,12 +1125,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 6) {
                 inExpectedTypes.push_back(OperandType::INT32);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
                 if (operands[inputIndexes[0]].dimensions.size() == 4) {
-                    *minSupportedHalVersion = HalVersion::V1_0;
+                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
                 } else {
-                    *minSupportedHalVersion = HalVersion::V1_2;
+                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
                 }
             }
             return validateOperationOperandTypes(operands,
@@ -1168,7 +1160,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1197,9 +1189,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 4) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                *minSupportedHalVersion = HalVersion::V1_0;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -1232,9 +1224,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 3) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                *minSupportedHalVersion = HalVersion::V1_0;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -1267,9 +1259,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 3) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                *minSupportedHalVersion = HalVersion::V1_0;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -1293,7 +1285,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_INT32,
                                                         inputType};
             std::vector<OperandType> outExpectedTypes = {inputType};
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1318,7 +1310,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                         inputType};
             std::vector<OperandType> outExpectedTypes = {inputType,
                                                          OperandType::TENSOR_QUANT8_ASYMM};
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1344,7 +1336,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                         OperandType::INT32};
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
             // TODO(mks): Return V1_2 if inputType is sparse.
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1352,38 +1344,48 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_LSTM: {
-            if (inputCount != 23 || outputCount != 4) {
-                logInvalidInOutNumber(23, 4);
+            std::vector<OperandType> inExpectedTypes;
+            std::vector<OperandType> outExpectedTypes;
+            if (inputCount == 23 && outputCount == 4) {
+                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::INT32,          OperandType::FLOAT32,
+                                   OperandType::FLOAT32};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                    OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32};
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
+            } else if (inputCount == 27 && outputCount == 4) {
+                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::INT32,          OperandType::FLOAT32,
+                                   OperandType::FLOAT32,        OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                   OperandType::TENSOR_FLOAT32};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                                    OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32};
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+            } else {
+                LOG(ERROR) << "Invalid number of input operands (" << inputCount
+                           << ", expected 23 or 27) or output operands (" << outputCount
+                           << ", expected 4) for operation " << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::INT32,
-                                                        OperandType::FLOAT32,
-                                                        OperandType::FLOAT32};
-            std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_FLOAT32,
-                                                         OperandType::TENSOR_FLOAT32,
-                                                         OperandType::TENSOR_FLOAT32,
-                                                         OperandType::TENSOR_FLOAT32};
-            *minSupportedHalVersion = HalVersion::V1_0;
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1395,14 +1397,14 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 logInvalidInOutNumber(5, 5);
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             std::vector<OperandType> inExpectedTypes = {
                     OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
                     OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_INT32,
-                    OperandType::TENSOR_QUANT16_ASYMM};
+                    OperandType::TENSOR_QUANT16_SYMM};
             std::vector<OperandType> outExpectedTypes = {
-                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM,
-                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM,
+                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_SYMM,
+                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_SYMM,
                     OperandType::TENSOR_QUANT8_ASYMM};
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
@@ -1413,7 +1415,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 logInvalidInOutNumber(2, 1);
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             std::vector<OperandType> inExpectedTypes = {
                     OperandType::TENSOR_FLOAT32,
                     OperandType::INT32,
@@ -1437,7 +1439,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                         OperandType::INT32};
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_FLOAT32,
                                                          OperandType::TENSOR_FLOAT32};
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1458,7 +1460,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                         OperandType::INT32};
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_FLOAT32,
                                                          OperandType::TENSOR_FLOAT32};
-            *minSupportedHalVersion = HalVersion::V1_0;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1490,9 +1492,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 3) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                *minSupportedHalVersion = HalVersion::V1_1;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -1527,9 +1529,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             if (inputCount == 4) {
                 inExpectedTypes.push_back(OperandType::BOOL);
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                *minSupportedHalVersion = HalVersion::V1_1;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
@@ -1558,7 +1560,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_1;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1584,7 +1586,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1599,7 +1601,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             auto inputType = operands[inputIndexes[0]].type;
             auto outputType = operands[outputIndexes[0]].type;
             std::vector<OperandType> inExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32 ||
+            if (inputType == OperandType::TENSOR_FLOAT16 ||
+                inputType == OperandType::TENSOR_FLOAT32 ||
                 inputType == OperandType::TENSOR_INT32 ||
                 inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {inputType};
@@ -1609,7 +1612,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 return ANEURALNETWORKS_BAD_DATA;
             }
             std::vector<OperandType> outExpectedTypes;
-            if (outputType == OperandType::TENSOR_FLOAT32 ||
+            if (outputType == OperandType::TENSOR_FLOAT16 ||
+                outputType == OperandType::TENSOR_FLOAT32 ||
                 outputType == OperandType::TENSOR_INT32 ||
                 outputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 outExpectedTypes = {outputType};
@@ -1618,7 +1622,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1644,7 +1648,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_1;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1672,7 +1676,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_1;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1710,7 +1714,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_1;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1730,12 +1734,20 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                    OperandType::TENSOR_FLOAT32,
                                    OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                inExpectedTypes = {
+                        OperandType::TENSOR_FLOAT16,
+                        OperandType::TENSOR_FLOAT16,
+                        OperandType::INT32,
+                };
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_1;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1754,12 +1766,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
                                    OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-                *minSupportedHalVersion = HalVersion::V1_1;
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
-                                   OperandType::TENSOR_QUANT8_ASYMM, OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-                *minSupportedHalVersion = HalVersion::V1_2;
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
+            } else if (inputType == OperandType::TENSOR_FLOAT16 ||
+                       inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                inExpectedTypes = {inputType, inputType, OperandType::INT32};
+                outExpectedTypes = {inputType};
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
                            << kOperationNames[opType];
@@ -1794,7 +1806,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_1;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1820,7 +1832,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1843,7 +1855,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1856,7 +1868,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             auto inputType = operands[inputIndexes[0]].type;
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32 ||
+            if (inputType == OperandType::TENSOR_FLOAT16 ||
+                inputType == OperandType::TENSOR_FLOAT32 ||
                 inputType == OperandType::TENSOR_INT32 ||
                 inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {inputType, OperandType::INT32, OperandType::TENSOR_INT32};
@@ -1866,7 +1879,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
                                                  inExpectedTypes,
@@ -1880,7 +1893,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
-            if (inputType != OperandType::TENSOR_FLOAT32 &&
+            if (inputType != OperandType::TENSOR_FLOAT16 &&
+                inputType != OperandType::TENSOR_FLOAT32 &&
                 inputType != OperandType::TENSOR_INT32 &&
                 inputType != OperandType::TENSOR_QUANT8_ASYMM) {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
@@ -1890,7 +1904,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             std::vector<OperandType> inExpectedTypes = {inputType, OperandType::INT32,
                                                         OperandType::INT32};
             std::vector<OperandType> outExpectedTypes(outputCount, inputType);
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1917,7 +1931,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1932,7 +1946,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
                                OperandType::BOOL};
             outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1946,7 +1960,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
             OperandType inputType = operands[inputIndexes[0]].type;
-            if (inputType == OperandType::TENSOR_FLOAT32 ||
+            if (inputType == OperandType::TENSOR_FLOAT16 ||
+                inputType == OperandType::TENSOR_FLOAT32 ||
                 inputType == OperandType::TENSOR_INT32 ||
                 inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {inputType, inputType};
@@ -1956,7 +1971,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1999,7 +2014,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                        explicitScalarTypes.end());
             }
             inExpectedTypes.push_back(OperandType::BOOL);
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -2025,7 +2040,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -2066,7 +2081,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             inExpectedTypes.insert(inExpectedTypes.end(), argExpectedTypes.begin(),
                                    argExpectedTypes.end());
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -2091,7 +2106,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -2104,7 +2119,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             auto inputType = operands[inputIndexes[0]].type;
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32 ||
+            if (inputType == OperandType::TENSOR_FLOAT16 ||
+                inputType == OperandType::TENSOR_FLOAT32 ||
                 inputType == OperandType::TENSOR_INT32 ||
                 inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {inputType, OperandType::TENSOR_INT32};
@@ -2114,7 +2130,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -2130,7 +2146,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
                                OperandType::BOOL};
             outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_INT32};
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -2148,7 +2164,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                OperandType::INT32,          OperandType::INT32,
                                OperandType::FLOAT32};
             outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_INT32};
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -2162,7 +2178,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             std::vector<OperandType> outExpectedTypes;
             inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32};
             outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -2175,7 +2191,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
             OperandType inputType = operands[inputIndexes[0]].type;
-            if (inputType == OperandType::TENSOR_FLOAT32 ||
+            if (inputType == OperandType::TENSOR_FLOAT16 ||
+                inputType == OperandType::TENSOR_FLOAT32 ||
                 inputType == OperandType::TENSOR_INT32 ||
                 inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {inputType, OperandType::INT32};
@@ -2185,7 +2202,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << kOperationNames[opType];
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            *minSupportedHalVersion = HalVersion::V1_2;
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -2272,14 +2289,12 @@ bool compliantWithV1_0(const V1_1::Model& model) {
     // still be computed by a strict fp32 driver.
     return std::all_of(
             model.operations.begin(), model.operations.end(), [&model](const V1_1::Operation& op) {
-                HalVersion minSupportedHalVersion;
-                int error = validateOperation(
-                        static_cast<int32_t>(op.type), op.inputs.size(),
-                        op.inputs.size() > 0 ? op.inputs.data() : nullptr, op.outputs.size(),
-                        op.outputs.size() > 0 ? op.outputs.data() : nullptr,
-                        convertToV1_2(model.operands), &minSupportedHalVersion);
-                return error == ANEURALNETWORKS_NO_ERROR &&
-                       minSupportedHalVersion == HalVersion::V1_0;
+                int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
+                                              op.inputs.size() > 0 ? op.inputs.data() : nullptr,
+                                              op.outputs.size(),
+                                              op.outputs.size() > 0 ? op.outputs.data() : nullptr,
+                                              convertToV1_2(model.operands), HalVersion::V1_0);
+                return error == ANEURALNETWORKS_NO_ERROR;
             });
 }
 
@@ -2394,28 +2409,24 @@ void logModelToInfo(const V1_2::Model& model) {
 bool compliantWithV1_0(const V1_2::Model& model) {
     return std::all_of(
             model.operations.begin(), model.operations.end(), [&model](const V1_2::Operation& op) {
-                HalVersion minSupportedHalVersion;
                 int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
                                               op.inputs.size() > 0 ? op.inputs.data() : nullptr,
                                               op.outputs.size(),
                                               op.outputs.size() > 0 ? op.outputs.data() : nullptr,
-                                              model.operands, &minSupportedHalVersion);
-                return error == ANEURALNETWORKS_NO_ERROR &&
-                       minSupportedHalVersion == HalVersion::V1_0;
+                                              model.operands, HalVersion::V1_0);
+                return error == ANEURALNETWORKS_NO_ERROR;
             });
 }
 
 bool compliantWithV1_1(const V1_2::Model& model) {
     return std::all_of(
             model.operations.begin(), model.operations.end(), [&model](const V1_2::Operation& op) {
-                HalVersion minSupportedHalVersion;
                 int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
                                               op.inputs.size() > 0 ? op.inputs.data() : nullptr,
                                               op.outputs.size(),
                                               op.outputs.size() > 0 ? op.outputs.data() : nullptr,
-                                              model.operands, &minSupportedHalVersion);
-                return error == ANEURALNETWORKS_NO_ERROR &&
-                       minSupportedHalVersion <= HalVersion::V1_1;
+                                              model.operands, HalVersion::V1_1);
+                return error == ANEURALNETWORKS_NO_ERROR;
             });
 }
 

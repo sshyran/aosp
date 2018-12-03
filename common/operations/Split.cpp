@@ -51,6 +51,13 @@ bool splitGeneric(const Scalar* inputData, const Shape& inputShape, int32_t axis
     return true;
 }
 
+bool splitFloat16(const _Float16* inputData, const Shape& inputShape, int32_t axis,
+                  const std::vector<_Float16*>* outputDataPtrs,
+                  const std::vector<Shape>& outputShapes) {
+    NNTRACE_COMP("splitFloat16");
+    return splitGeneric<_Float16>(inputData, inputShape, axis, outputDataPtrs, outputShapes);
+}
+
 bool splitFloat32(const float* inputData, const Shape& inputShape, int32_t axis,
                   const std::vector<float*>* outputDataPtrs,
                   const std::vector<Shape>& outputShapes) {

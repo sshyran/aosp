@@ -36,7 +36,7 @@ enum class Type {
     TENSOR_INT32 = ANEURALNETWORKS_TENSOR_INT32,
     TENSOR_QUANT8_ASYMM = ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
     BOOL = ANEURALNETWORKS_BOOL,
-    TENSOR_QUANT16_ASYMM = ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+    TENSOR_QUANT16_SYMM = ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
     TENSOR_FLOAT16 = ANEURALNETWORKS_TENSOR_FLOAT16,
 };
 
@@ -354,21 +354,9 @@ public:
         return result;
     }
 
-    Result compute() {
-        ANeuralNetworksEvent* event = nullptr;
-        Result result =
-                    static_cast<Result>(ANeuralNetworksExecution_startCompute(mExecution, &event));
-        if (result != Result::NO_ERROR) {
-            return result;
-        }
-        // TODO how to manage the lifetime of events when multiple waiters is not
-        // clear.
-        result = static_cast<Result>(ANeuralNetworksEvent_wait(event));
-        ANeuralNetworksEvent_free(event);
-        return result;
-    }
+    Result compute() { return static_cast<Result>(ANeuralNetworksExecution_compute(mExecution)); }
 
-private:
+   private:
     ANeuralNetworksExecution* mExecution = nullptr;
 };
 

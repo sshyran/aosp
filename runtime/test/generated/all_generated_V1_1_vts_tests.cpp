@@ -16,6 +16,14 @@ TEST_F(NeuralnetworksHidlTest, add_relaxed) {
                            add_relaxed::examples);
 }
 
+TEST_F(ValidationTest, add_relaxed) {
+  const Model model = add_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(add_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: avg_pool_float_1_relaxed.mod.py.
 namespace avg_pool_float_1_relaxed {
 // Generated avg_pool_float_1_relaxed test
@@ -30,6 +38,14 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_1_relaxed) {
                            avg_pool_float_1_relaxed::is_ignored,
                            avg_pool_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, avg_pool_float_1_relaxed) {
+  const Model model = avg_pool_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(avg_pool_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: avg_pool_float_2_relaxed.mod.py.
 namespace avg_pool_float_2_relaxed {
@@ -46,6 +62,14 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_2_relaxed) {
                            avg_pool_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, avg_pool_float_2_relaxed) {
+  const Model model = avg_pool_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(avg_pool_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: avg_pool_float_3_relaxed.mod.py.
 namespace avg_pool_float_3_relaxed {
 // Generated avg_pool_float_3_relaxed test
@@ -60,6 +84,14 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_3_relaxed) {
                            avg_pool_float_3_relaxed::is_ignored,
                            avg_pool_float_3_relaxed::examples);
 }
+
+TEST_F(ValidationTest, avg_pool_float_3_relaxed) {
+  const Model model = avg_pool_float_3_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(avg_pool_float_3_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: avg_pool_float_4_relaxed.mod.py.
 namespace avg_pool_float_4_relaxed {
@@ -76,6 +108,14 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_4_relaxed) {
                            avg_pool_float_4_relaxed::examples);
 }
 
+TEST_F(ValidationTest, avg_pool_float_4_relaxed) {
+  const Model model = avg_pool_float_4_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(avg_pool_float_4_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: avg_pool_float_5_relaxed.mod.py.
 namespace avg_pool_float_5_relaxed {
 // Generated avg_pool_float_5_relaxed test
@@ -90,6 +130,14 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_5_relaxed) {
                            avg_pool_float_5_relaxed::is_ignored,
                            avg_pool_float_5_relaxed::examples);
 }
+
+TEST_F(ValidationTest, avg_pool_float_5_relaxed) {
+  const Model model = avg_pool_float_5_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(avg_pool_float_5_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: batch_to_space.mod.py.
 namespace batch_to_space {
@@ -106,6 +154,14 @@ TEST_F(NeuralnetworksHidlTest, batch_to_space) {
                            batch_to_space::examples);
 }
 
+TEST_F(ValidationTest, batch_to_space) {
+  const Model model = batch_to_space::createTestModel();
+  const std::vector<Request> requests = createRequests(batch_to_space::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: batch_to_space_float_1.mod.py.
 namespace batch_to_space_float_1 {
 // Generated batch_to_space_float_1 test
@@ -120,6 +176,14 @@ TEST_F(NeuralnetworksHidlTest, batch_to_space_float_1) {
                            batch_to_space_float_1::is_ignored,
                            batch_to_space_float_1::examples);
 }
+
+TEST_F(ValidationTest, batch_to_space_float_1) {
+  const Model model = batch_to_space_float_1::createTestModel();
+  const std::vector<Request> requests = createRequests(batch_to_space_float_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: batch_to_space_float_1_relaxed.mod.py.
 namespace batch_to_space_float_1_relaxed {
@@ -136,6 +200,14 @@ TEST_F(NeuralnetworksHidlTest, batch_to_space_float_1_relaxed) {
                            batch_to_space_float_1_relaxed::examples);
 }
 
+TEST_F(ValidationTest, batch_to_space_float_1_relaxed) {
+  const Model model = batch_to_space_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(batch_to_space_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: batch_to_space_quant8_1.mod.py.
 namespace batch_to_space_quant8_1 {
 // Generated batch_to_space_quant8_1 test
@@ -150,6 +222,14 @@ TEST_F(NeuralnetworksHidlTest, batch_to_space_quant8_1) {
                            batch_to_space_quant8_1::is_ignored,
                            batch_to_space_quant8_1::examples);
 }
+
+TEST_F(ValidationTest, batch_to_space_quant8_1) {
+  const Model model = batch_to_space_quant8_1::createTestModel();
+  const std::vector<Request> requests = createRequests(batch_to_space_quant8_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: batch_to_space_relaxed.mod.py.
 namespace batch_to_space_relaxed {
@@ -166,6 +246,14 @@ TEST_F(NeuralnetworksHidlTest, batch_to_space_relaxed) {
                            batch_to_space_relaxed::examples);
 }
 
+TEST_F(ValidationTest, batch_to_space_relaxed) {
+  const Model model = batch_to_space_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(batch_to_space_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: concat_float_1_relaxed.mod.py.
 namespace concat_float_1_relaxed {
 // Generated concat_float_1_relaxed test
@@ -180,6 +268,14 @@ TEST_F(NeuralnetworksHidlTest, concat_float_1_relaxed) {
                            concat_float_1_relaxed::is_ignored,
                            concat_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, concat_float_1_relaxed) {
+  const Model model = concat_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(concat_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: concat_float_2_relaxed.mod.py.
 namespace concat_float_2_relaxed {
@@ -196,6 +292,14 @@ TEST_F(NeuralnetworksHidlTest, concat_float_2_relaxed) {
                            concat_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, concat_float_2_relaxed) {
+  const Model model = concat_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(concat_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: concat_float_3_relaxed.mod.py.
 namespace concat_float_3_relaxed {
 // Generated concat_float_3_relaxed test
@@ -210,6 +314,14 @@ TEST_F(NeuralnetworksHidlTest, concat_float_3_relaxed) {
                            concat_float_3_relaxed::is_ignored,
                            concat_float_3_relaxed::examples);
 }
+
+TEST_F(ValidationTest, concat_float_3_relaxed) {
+  const Model model = concat_float_3_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(concat_float_3_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: conv_1_h3_w2_SAME_relaxed.mod.py.
 namespace conv_1_h3_w2_SAME_relaxed {
@@ -226,6 +338,14 @@ TEST_F(NeuralnetworksHidlTest, conv_1_h3_w2_SAME_relaxed) {
                            conv_1_h3_w2_SAME_relaxed::examples);
 }
 
+TEST_F(ValidationTest, conv_1_h3_w2_SAME_relaxed) {
+  const Model model = conv_1_h3_w2_SAME_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_1_h3_w2_SAME_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: conv_1_h3_w2_VALID_relaxed.mod.py.
 namespace conv_1_h3_w2_VALID_relaxed {
 // Generated conv_1_h3_w2_VALID_relaxed test
@@ -240,6 +360,14 @@ TEST_F(NeuralnetworksHidlTest, conv_1_h3_w2_VALID_relaxed) {
                            conv_1_h3_w2_VALID_relaxed::is_ignored,
                            conv_1_h3_w2_VALID_relaxed::examples);
 }
+
+TEST_F(ValidationTest, conv_1_h3_w2_VALID_relaxed) {
+  const Model model = conv_1_h3_w2_VALID_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_1_h3_w2_VALID_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: conv_3_h3_w2_SAME_relaxed.mod.py.
 namespace conv_3_h3_w2_SAME_relaxed {
@@ -256,6 +384,14 @@ TEST_F(NeuralnetworksHidlTest, conv_3_h3_w2_SAME_relaxed) {
                            conv_3_h3_w2_SAME_relaxed::examples);
 }
 
+TEST_F(ValidationTest, conv_3_h3_w2_SAME_relaxed) {
+  const Model model = conv_3_h3_w2_SAME_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_3_h3_w2_SAME_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: conv_3_h3_w2_VALID_relaxed.mod.py.
 namespace conv_3_h3_w2_VALID_relaxed {
 // Generated conv_3_h3_w2_VALID_relaxed test
@@ -270,6 +406,14 @@ TEST_F(NeuralnetworksHidlTest, conv_3_h3_w2_VALID_relaxed) {
                            conv_3_h3_w2_VALID_relaxed::is_ignored,
                            conv_3_h3_w2_VALID_relaxed::examples);
 }
+
+TEST_F(ValidationTest, conv_3_h3_w2_VALID_relaxed) {
+  const Model model = conv_3_h3_w2_VALID_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_3_h3_w2_VALID_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: conv_float_2_relaxed.mod.py.
 namespace conv_float_2_relaxed {
@@ -286,6 +430,14 @@ TEST_F(NeuralnetworksHidlTest, conv_float_2_relaxed) {
                            conv_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, conv_float_2_relaxed) {
+  const Model model = conv_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: conv_float_channels_relaxed.mod.py.
 namespace conv_float_channels_relaxed {
 // Generated conv_float_channels_relaxed test
@@ -300,6 +452,14 @@ TEST_F(NeuralnetworksHidlTest, conv_float_channels_relaxed) {
                            conv_float_channels_relaxed::is_ignored,
                            conv_float_channels_relaxed::examples);
 }
+
+TEST_F(ValidationTest, conv_float_channels_relaxed) {
+  const Model model = conv_float_channels_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_float_channels_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: conv_float_channels_weights_as_inputs_relaxed.mod.py.
 namespace conv_float_channels_weights_as_inputs_relaxed {
@@ -316,6 +476,14 @@ TEST_F(NeuralnetworksHidlTest, conv_float_channels_weights_as_inputs_relaxed) {
                            conv_float_channels_weights_as_inputs_relaxed::examples);
 }
 
+TEST_F(ValidationTest, conv_float_channels_weights_as_inputs_relaxed) {
+  const Model model = conv_float_channels_weights_as_inputs_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_float_channels_weights_as_inputs_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: conv_float_large_relaxed.mod.py.
 namespace conv_float_large_relaxed {
 // Generated conv_float_large_relaxed test
@@ -330,6 +498,14 @@ TEST_F(NeuralnetworksHidlTest, conv_float_large_relaxed) {
                            conv_float_large_relaxed::is_ignored,
                            conv_float_large_relaxed::examples);
 }
+
+TEST_F(ValidationTest, conv_float_large_relaxed) {
+  const Model model = conv_float_large_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_float_large_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: conv_float_large_weights_as_inputs_relaxed.mod.py.
 namespace conv_float_large_weights_as_inputs_relaxed {
@@ -346,6 +522,14 @@ TEST_F(NeuralnetworksHidlTest, conv_float_large_weights_as_inputs_relaxed) {
                            conv_float_large_weights_as_inputs_relaxed::examples);
 }
 
+TEST_F(ValidationTest, conv_float_large_weights_as_inputs_relaxed) {
+  const Model model = conv_float_large_weights_as_inputs_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_float_large_weights_as_inputs_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: conv_float_relaxed.mod.py.
 namespace conv_float_relaxed {
 // Generated conv_float_relaxed test
@@ -360,6 +544,14 @@ TEST_F(NeuralnetworksHidlTest, conv_float_relaxed) {
                            conv_float_relaxed::is_ignored,
                            conv_float_relaxed::examples);
 }
+
+TEST_F(ValidationTest, conv_float_relaxed) {
+  const Model model = conv_float_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_float_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: conv_float_weights_as_inputs_relaxed.mod.py.
 namespace conv_float_weights_as_inputs_relaxed {
@@ -376,6 +568,14 @@ TEST_F(NeuralnetworksHidlTest, conv_float_weights_as_inputs_relaxed) {
                            conv_float_weights_as_inputs_relaxed::examples);
 }
 
+TEST_F(ValidationTest, conv_float_weights_as_inputs_relaxed) {
+  const Model model = conv_float_weights_as_inputs_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_float_weights_as_inputs_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: depth_to_space_float_1_relaxed.mod.py.
 namespace depth_to_space_float_1_relaxed {
 // Generated depth_to_space_float_1_relaxed test
@@ -390,6 +590,14 @@ TEST_F(NeuralnetworksHidlTest, depth_to_space_float_1_relaxed) {
                            depth_to_space_float_1_relaxed::is_ignored,
                            depth_to_space_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, depth_to_space_float_1_relaxed) {
+  const Model model = depth_to_space_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depth_to_space_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: depth_to_space_float_2_relaxed.mod.py.
 namespace depth_to_space_float_2_relaxed {
@@ -406,6 +614,14 @@ TEST_F(NeuralnetworksHidlTest, depth_to_space_float_2_relaxed) {
                            depth_to_space_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, depth_to_space_float_2_relaxed) {
+  const Model model = depth_to_space_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depth_to_space_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: depth_to_space_float_3_relaxed.mod.py.
 namespace depth_to_space_float_3_relaxed {
 // Generated depth_to_space_float_3_relaxed test
@@ -420,6 +636,14 @@ TEST_F(NeuralnetworksHidlTest, depth_to_space_float_3_relaxed) {
                            depth_to_space_float_3_relaxed::is_ignored,
                            depth_to_space_float_3_relaxed::examples);
 }
+
+TEST_F(ValidationTest, depth_to_space_float_3_relaxed) {
+  const Model model = depth_to_space_float_3_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depth_to_space_float_3_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: depthwise_conv2d_float_2_relaxed.mod.py.
 namespace depthwise_conv2d_float_2_relaxed {
@@ -436,6 +660,14 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_2_relaxed) {
                            depthwise_conv2d_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, depthwise_conv2d_float_2_relaxed) {
+  const Model model = depthwise_conv2d_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: depthwise_conv2d_float_large_2_relaxed.mod.py.
 namespace depthwise_conv2d_float_large_2_relaxed {
 // Generated depthwise_conv2d_float_large_2_relaxed test
@@ -450,6 +682,14 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_large_2_relaxed) {
                            depthwise_conv2d_float_large_2_relaxed::is_ignored,
                            depthwise_conv2d_float_large_2_relaxed::examples);
 }
+
+TEST_F(ValidationTest, depthwise_conv2d_float_large_2_relaxed) {
+  const Model model = depthwise_conv2d_float_large_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: depthwise_conv2d_float_large_2_weights_as_inputs_relaxed.mod.py.
 namespace depthwise_conv2d_float_large_2_weights_as_inputs_relaxed {
@@ -466,6 +706,14 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_large_2_weights_as_inputs_
                            depthwise_conv2d_float_large_2_weights_as_inputs_relaxed::examples);
 }
 
+TEST_F(ValidationTest, depthwise_conv2d_float_large_2_weights_as_inputs_relaxed) {
+  const Model model = depthwise_conv2d_float_large_2_weights_as_inputs_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large_2_weights_as_inputs_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: depthwise_conv2d_float_large_relaxed.mod.py.
 namespace depthwise_conv2d_float_large_relaxed {
 // Generated depthwise_conv2d_float_large_relaxed test
@@ -480,6 +728,14 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_large_relaxed) {
                            depthwise_conv2d_float_large_relaxed::is_ignored,
                            depthwise_conv2d_float_large_relaxed::examples);
 }
+
+TEST_F(ValidationTest, depthwise_conv2d_float_large_relaxed) {
+  const Model model = depthwise_conv2d_float_large_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: depthwise_conv2d_float_large_weights_as_inputs_relaxed.mod.py.
 namespace depthwise_conv2d_float_large_weights_as_inputs_relaxed {
@@ -496,6 +752,14 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_large_weights_as_inputs_re
                            depthwise_conv2d_float_large_weights_as_inputs_relaxed::examples);
 }
 
+TEST_F(ValidationTest, depthwise_conv2d_float_large_weights_as_inputs_relaxed) {
+  const Model model = depthwise_conv2d_float_large_weights_as_inputs_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large_weights_as_inputs_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: depthwise_conv2d_float_relaxed.mod.py.
 namespace depthwise_conv2d_float_relaxed {
 // Generated depthwise_conv2d_float_relaxed test
@@ -510,6 +774,14 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_relaxed) {
                            depthwise_conv2d_float_relaxed::is_ignored,
                            depthwise_conv2d_float_relaxed::examples);
 }
+
+TEST_F(ValidationTest, depthwise_conv2d_float_relaxed) {
+  const Model model = depthwise_conv2d_float_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_float_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: depthwise_conv2d_float_weights_as_inputs_relaxed.mod.py.
 namespace depthwise_conv2d_float_weights_as_inputs_relaxed {
@@ -526,6 +798,14 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_weights_as_inputs_relaxed)
                            depthwise_conv2d_float_weights_as_inputs_relaxed::examples);
 }
 
+TEST_F(ValidationTest, depthwise_conv2d_float_weights_as_inputs_relaxed) {
+  const Model model = depthwise_conv2d_float_weights_as_inputs_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_float_weights_as_inputs_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: depthwise_conv_relaxed.mod.py.
 namespace depthwise_conv_relaxed {
 // Generated depthwise_conv_relaxed test
@@ -540,6 +820,14 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv_relaxed) {
                            depthwise_conv_relaxed::is_ignored,
                            depthwise_conv_relaxed::examples);
 }
+
+TEST_F(ValidationTest, depthwise_conv_relaxed) {
+  const Model model = depthwise_conv_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(depthwise_conv_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: dequantize_relaxed.mod.py.
 namespace dequantize_relaxed {
@@ -556,6 +844,14 @@ TEST_F(NeuralnetworksHidlTest, dequantize_relaxed) {
                            dequantize_relaxed::examples);
 }
 
+TEST_F(ValidationTest, dequantize_relaxed) {
+  const Model model = dequantize_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(dequantize_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: div.mod.py.
 namespace div {
 // Generated div test
@@ -570,6 +866,14 @@ TEST_F(NeuralnetworksHidlTest, div) {
                            div::is_ignored,
                            div::examples);
 }
+
+TEST_F(ValidationTest, div) {
+  const Model model = div::createTestModel();
+  const std::vector<Request> requests = createRequests(div::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: div_broadcast_float.mod.py.
 namespace div_broadcast_float {
@@ -586,6 +890,14 @@ TEST_F(NeuralnetworksHidlTest, div_broadcast_float) {
                            div_broadcast_float::examples);
 }
 
+TEST_F(ValidationTest, div_broadcast_float) {
+  const Model model = div_broadcast_float::createTestModel();
+  const std::vector<Request> requests = createRequests(div_broadcast_float::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: div_broadcast_float_relaxed.mod.py.
 namespace div_broadcast_float_relaxed {
 // Generated div_broadcast_float_relaxed test
@@ -600,6 +912,14 @@ TEST_F(NeuralnetworksHidlTest, div_broadcast_float_relaxed) {
                            div_broadcast_float_relaxed::is_ignored,
                            div_broadcast_float_relaxed::examples);
 }
+
+TEST_F(ValidationTest, div_broadcast_float_relaxed) {
+  const Model model = div_broadcast_float_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(div_broadcast_float_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: div_relaxed.mod.py.
 namespace div_relaxed {
@@ -616,6 +936,14 @@ TEST_F(NeuralnetworksHidlTest, div_relaxed) {
                            div_relaxed::examples);
 }
 
+TEST_F(ValidationTest, div_relaxed) {
+  const Model model = div_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(div_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: embedding_lookup_relaxed.mod.py.
 namespace embedding_lookup_relaxed {
 // Generated embedding_lookup_relaxed test
@@ -630,6 +958,14 @@ TEST_F(NeuralnetworksHidlTest, embedding_lookup_relaxed) {
                            embedding_lookup_relaxed::is_ignored,
                            embedding_lookup_relaxed::examples);
 }
+
+TEST_F(ValidationTest, embedding_lookup_relaxed) {
+  const Model model = embedding_lookup_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(embedding_lookup_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: floor_relaxed.mod.py.
 namespace floor_relaxed {
@@ -646,6 +982,14 @@ TEST_F(NeuralnetworksHidlTest, floor_relaxed) {
                            floor_relaxed::examples);
 }
 
+TEST_F(ValidationTest, floor_relaxed) {
+  const Model model = floor_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(floor_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: fully_connected_float_2_relaxed.mod.py.
 namespace fully_connected_float_2_relaxed {
 // Generated fully_connected_float_2_relaxed test
@@ -660,6 +1004,14 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_2_relaxed) {
                            fully_connected_float_2_relaxed::is_ignored,
                            fully_connected_float_2_relaxed::examples);
 }
+
+TEST_F(ValidationTest, fully_connected_float_2_relaxed) {
+  const Model model = fully_connected_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(fully_connected_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: fully_connected_float_4d_simple.mod.py.
 namespace fully_connected_float_4d_simple {
@@ -676,6 +1028,14 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_4d_simple) {
                            fully_connected_float_4d_simple::examples);
 }
 
+TEST_F(ValidationTest, fully_connected_float_4d_simple) {
+  const Model model = fully_connected_float_4d_simple::createTestModel();
+  const std::vector<Request> requests = createRequests(fully_connected_float_4d_simple::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: fully_connected_float_4d_simple_relaxed.mod.py.
 namespace fully_connected_float_4d_simple_relaxed {
 // Generated fully_connected_float_4d_simple_relaxed test
@@ -690,6 +1050,14 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_4d_simple_relaxed) {
                            fully_connected_float_4d_simple_relaxed::is_ignored,
                            fully_connected_float_4d_simple_relaxed::examples);
 }
+
+TEST_F(ValidationTest, fully_connected_float_4d_simple_relaxed) {
+  const Model model = fully_connected_float_4d_simple_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(fully_connected_float_4d_simple_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: fully_connected_float_large_relaxed.mod.py.
 namespace fully_connected_float_large_relaxed {
@@ -706,6 +1074,14 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_large_relaxed) {
                            fully_connected_float_large_relaxed::examples);
 }
 
+TEST_F(ValidationTest, fully_connected_float_large_relaxed) {
+  const Model model = fully_connected_float_large_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(fully_connected_float_large_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: fully_connected_float_large_weights_as_inputs_relaxed.mod.py.
 namespace fully_connected_float_large_weights_as_inputs_relaxed {
 // Generated fully_connected_float_large_weights_as_inputs_relaxed test
@@ -720,6 +1096,14 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_large_weights_as_inputs_rel
                            fully_connected_float_large_weights_as_inputs_relaxed::is_ignored,
                            fully_connected_float_large_weights_as_inputs_relaxed::examples);
 }
+
+TEST_F(ValidationTest, fully_connected_float_large_weights_as_inputs_relaxed) {
+  const Model model = fully_connected_float_large_weights_as_inputs_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(fully_connected_float_large_weights_as_inputs_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: fully_connected_float_relaxed.mod.py.
 namespace fully_connected_float_relaxed {
@@ -736,6 +1120,14 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_relaxed) {
                            fully_connected_float_relaxed::examples);
 }
 
+TEST_F(ValidationTest, fully_connected_float_relaxed) {
+  const Model model = fully_connected_float_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(fully_connected_float_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: fully_connected_float_weights_as_inputs_relaxed.mod.py.
 namespace fully_connected_float_weights_as_inputs_relaxed {
 // Generated fully_connected_float_weights_as_inputs_relaxed test
@@ -750,6 +1142,14 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_weights_as_inputs_relaxed) 
                            fully_connected_float_weights_as_inputs_relaxed::is_ignored,
                            fully_connected_float_weights_as_inputs_relaxed::examples);
 }
+
+TEST_F(ValidationTest, fully_connected_float_weights_as_inputs_relaxed) {
+  const Model model = fully_connected_float_weights_as_inputs_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(fully_connected_float_weights_as_inputs_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: hashtable_lookup_float_relaxed.mod.py.
 namespace hashtable_lookup_float_relaxed {
@@ -766,6 +1166,14 @@ TEST_F(NeuralnetworksHidlTest, hashtable_lookup_float_relaxed) {
                            hashtable_lookup_float_relaxed::examples);
 }
 
+TEST_F(ValidationTest, hashtable_lookup_float_relaxed) {
+  const Model model = hashtable_lookup_float_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(hashtable_lookup_float_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: l2_normalization_2_relaxed.mod.py.
 namespace l2_normalization_2_relaxed {
 // Generated l2_normalization_2_relaxed test
@@ -780,6 +1188,14 @@ TEST_F(NeuralnetworksHidlTest, l2_normalization_2_relaxed) {
                            l2_normalization_2_relaxed::is_ignored,
                            l2_normalization_2_relaxed::examples);
 }
+
+TEST_F(ValidationTest, l2_normalization_2_relaxed) {
+  const Model model = l2_normalization_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(l2_normalization_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: l2_normalization_large_relaxed.mod.py.
 namespace l2_normalization_large_relaxed {
@@ -796,6 +1212,14 @@ TEST_F(NeuralnetworksHidlTest, l2_normalization_large_relaxed) {
                            l2_normalization_large_relaxed::examples);
 }
 
+TEST_F(ValidationTest, l2_normalization_large_relaxed) {
+  const Model model = l2_normalization_large_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(l2_normalization_large_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: l2_normalization_relaxed.mod.py.
 namespace l2_normalization_relaxed {
 // Generated l2_normalization_relaxed test
@@ -810,6 +1234,14 @@ TEST_F(NeuralnetworksHidlTest, l2_normalization_relaxed) {
                            l2_normalization_relaxed::is_ignored,
                            l2_normalization_relaxed::examples);
 }
+
+TEST_F(ValidationTest, l2_normalization_relaxed) {
+  const Model model = l2_normalization_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(l2_normalization_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: l2_pool_float_2_relaxed.mod.py.
 namespace l2_pool_float_2_relaxed {
@@ -826,6 +1258,14 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_float_2_relaxed) {
                            l2_pool_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, l2_pool_float_2_relaxed) {
+  const Model model = l2_pool_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(l2_pool_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: l2_pool_float_large_relaxed.mod.py.
 namespace l2_pool_float_large_relaxed {
 // Generated l2_pool_float_large_relaxed test
@@ -840,6 +1280,14 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_float_large_relaxed) {
                            l2_pool_float_large_relaxed::is_ignored,
                            l2_pool_float_large_relaxed::examples);
 }
+
+TEST_F(ValidationTest, l2_pool_float_large_relaxed) {
+  const Model model = l2_pool_float_large_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(l2_pool_float_large_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: l2_pool_float_relaxed.mod.py.
 namespace l2_pool_float_relaxed {
@@ -856,6 +1304,14 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_float_relaxed) {
                            l2_pool_float_relaxed::examples);
 }
 
+TEST_F(ValidationTest, l2_pool_float_relaxed) {
+  const Model model = l2_pool_float_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(l2_pool_float_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: local_response_norm_float_1_relaxed.mod.py.
 namespace local_response_norm_float_1_relaxed {
 // Generated local_response_norm_float_1_relaxed test
@@ -870,6 +1326,14 @@ TEST_F(NeuralnetworksHidlTest, local_response_norm_float_1_relaxed) {
                            local_response_norm_float_1_relaxed::is_ignored,
                            local_response_norm_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, local_response_norm_float_1_relaxed) {
+  const Model model = local_response_norm_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(local_response_norm_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: local_response_norm_float_2_relaxed.mod.py.
 namespace local_response_norm_float_2_relaxed {
@@ -886,6 +1350,14 @@ TEST_F(NeuralnetworksHidlTest, local_response_norm_float_2_relaxed) {
                            local_response_norm_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, local_response_norm_float_2_relaxed) {
+  const Model model = local_response_norm_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(local_response_norm_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: local_response_norm_float_3_relaxed.mod.py.
 namespace local_response_norm_float_3_relaxed {
 // Generated local_response_norm_float_3_relaxed test
@@ -900,6 +1372,14 @@ TEST_F(NeuralnetworksHidlTest, local_response_norm_float_3_relaxed) {
                            local_response_norm_float_3_relaxed::is_ignored,
                            local_response_norm_float_3_relaxed::examples);
 }
+
+TEST_F(ValidationTest, local_response_norm_float_3_relaxed) {
+  const Model model = local_response_norm_float_3_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(local_response_norm_float_3_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: local_response_norm_float_4_relaxed.mod.py.
 namespace local_response_norm_float_4_relaxed {
@@ -916,6 +1396,14 @@ TEST_F(NeuralnetworksHidlTest, local_response_norm_float_4_relaxed) {
                            local_response_norm_float_4_relaxed::examples);
 }
 
+TEST_F(ValidationTest, local_response_norm_float_4_relaxed) {
+  const Model model = local_response_norm_float_4_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(local_response_norm_float_4_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: logistic_float_1_relaxed.mod.py.
 namespace logistic_float_1_relaxed {
 // Generated logistic_float_1_relaxed test
@@ -930,6 +1418,14 @@ TEST_F(NeuralnetworksHidlTest, logistic_float_1_relaxed) {
                            logistic_float_1_relaxed::is_ignored,
                            logistic_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, logistic_float_1_relaxed) {
+  const Model model = logistic_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(logistic_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: logistic_float_2_relaxed.mod.py.
 namespace logistic_float_2_relaxed {
@@ -946,6 +1442,14 @@ TEST_F(NeuralnetworksHidlTest, logistic_float_2_relaxed) {
                            logistic_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, logistic_float_2_relaxed) {
+  const Model model = logistic_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(logistic_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: lsh_projection_2_relaxed.mod.py.
 namespace lsh_projection_2_relaxed {
 // Generated lsh_projection_2_relaxed test
@@ -960,6 +1464,14 @@ TEST_F(NeuralnetworksHidlTest, lsh_projection_2_relaxed) {
                            lsh_projection_2_relaxed::is_ignored,
                            lsh_projection_2_relaxed::examples);
 }
+
+TEST_F(ValidationTest, lsh_projection_2_relaxed) {
+  const Model model = lsh_projection_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lsh_projection_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: lsh_projection_relaxed.mod.py.
 namespace lsh_projection_relaxed {
@@ -976,6 +1488,14 @@ TEST_F(NeuralnetworksHidlTest, lsh_projection_relaxed) {
                            lsh_projection_relaxed::examples);
 }
 
+TEST_F(ValidationTest, lsh_projection_relaxed) {
+  const Model model = lsh_projection_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lsh_projection_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: lsh_projection_weights_as_inputs_relaxed.mod.py.
 namespace lsh_projection_weights_as_inputs_relaxed {
 // Generated lsh_projection_weights_as_inputs_relaxed test
@@ -990,6 +1510,14 @@ TEST_F(NeuralnetworksHidlTest, lsh_projection_weights_as_inputs_relaxed) {
                            lsh_projection_weights_as_inputs_relaxed::is_ignored,
                            lsh_projection_weights_as_inputs_relaxed::examples);
 }
+
+TEST_F(ValidationTest, lsh_projection_weights_as_inputs_relaxed) {
+  const Model model = lsh_projection_weights_as_inputs_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lsh_projection_weights_as_inputs_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: lstm2_relaxed.mod.py.
 namespace lstm2_relaxed {
@@ -1006,6 +1534,14 @@ TEST_F(NeuralnetworksHidlTest, lstm2_relaxed) {
                            lstm2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, lstm2_relaxed) {
+  const Model model = lstm2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: lstm2_state2_relaxed.mod.py.
 namespace lstm2_state2_relaxed {
 // Generated lstm2_state2_relaxed test
@@ -1020,6 +1556,14 @@ TEST_F(NeuralnetworksHidlTest, lstm2_state2_relaxed) {
                            lstm2_state2_relaxed::is_ignored,
                            lstm2_state2_relaxed::examples);
 }
+
+TEST_F(ValidationTest, lstm2_state2_relaxed) {
+  const Model model = lstm2_state2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm2_state2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: lstm2_state_relaxed.mod.py.
 namespace lstm2_state_relaxed {
@@ -1036,6 +1580,14 @@ TEST_F(NeuralnetworksHidlTest, lstm2_state_relaxed) {
                            lstm2_state_relaxed::examples);
 }
 
+TEST_F(ValidationTest, lstm2_state_relaxed) {
+  const Model model = lstm2_state_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm2_state_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: lstm3_relaxed.mod.py.
 namespace lstm3_relaxed {
 // Generated lstm3_relaxed test
@@ -1050,6 +1602,14 @@ TEST_F(NeuralnetworksHidlTest, lstm3_relaxed) {
                            lstm3_relaxed::is_ignored,
                            lstm3_relaxed::examples);
 }
+
+TEST_F(ValidationTest, lstm3_relaxed) {
+  const Model model = lstm3_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm3_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: lstm3_state2_relaxed.mod.py.
 namespace lstm3_state2_relaxed {
@@ -1066,6 +1626,14 @@ TEST_F(NeuralnetworksHidlTest, lstm3_state2_relaxed) {
                            lstm3_state2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, lstm3_state2_relaxed) {
+  const Model model = lstm3_state2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm3_state2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: lstm3_state3_relaxed.mod.py.
 namespace lstm3_state3_relaxed {
 // Generated lstm3_state3_relaxed test
@@ -1080,6 +1648,14 @@ TEST_F(NeuralnetworksHidlTest, lstm3_state3_relaxed) {
                            lstm3_state3_relaxed::is_ignored,
                            lstm3_state3_relaxed::examples);
 }
+
+TEST_F(ValidationTest, lstm3_state3_relaxed) {
+  const Model model = lstm3_state3_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm3_state3_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: lstm3_state_relaxed.mod.py.
 namespace lstm3_state_relaxed {
@@ -1096,6 +1672,14 @@ TEST_F(NeuralnetworksHidlTest, lstm3_state_relaxed) {
                            lstm3_state_relaxed::examples);
 }
 
+TEST_F(ValidationTest, lstm3_state_relaxed) {
+  const Model model = lstm3_state_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm3_state_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: lstm_relaxed.mod.py.
 namespace lstm_relaxed {
 // Generated lstm_relaxed test
@@ -1110,6 +1694,14 @@ TEST_F(NeuralnetworksHidlTest, lstm_relaxed) {
                            lstm_relaxed::is_ignored,
                            lstm_relaxed::examples);
 }
+
+TEST_F(ValidationTest, lstm_relaxed) {
+  const Model model = lstm_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: lstm_state2_relaxed.mod.py.
 namespace lstm_state2_relaxed {
@@ -1126,6 +1718,14 @@ TEST_F(NeuralnetworksHidlTest, lstm_state2_relaxed) {
                            lstm_state2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, lstm_state2_relaxed) {
+  const Model model = lstm_state2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm_state2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: lstm_state_relaxed.mod.py.
 namespace lstm_state_relaxed {
 // Generated lstm_state_relaxed test
@@ -1140,6 +1740,14 @@ TEST_F(NeuralnetworksHidlTest, lstm_state_relaxed) {
                            lstm_state_relaxed::is_ignored,
                            lstm_state_relaxed::examples);
 }
+
+TEST_F(ValidationTest, lstm_state_relaxed) {
+  const Model model = lstm_state_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm_state_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: max_pool_float_1_relaxed.mod.py.
 namespace max_pool_float_1_relaxed {
@@ -1156,6 +1764,14 @@ TEST_F(NeuralnetworksHidlTest, max_pool_float_1_relaxed) {
                            max_pool_float_1_relaxed::examples);
 }
 
+TEST_F(ValidationTest, max_pool_float_1_relaxed) {
+  const Model model = max_pool_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(max_pool_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: max_pool_float_2_relaxed.mod.py.
 namespace max_pool_float_2_relaxed {
 // Generated max_pool_float_2_relaxed test
@@ -1170,6 +1786,14 @@ TEST_F(NeuralnetworksHidlTest, max_pool_float_2_relaxed) {
                            max_pool_float_2_relaxed::is_ignored,
                            max_pool_float_2_relaxed::examples);
 }
+
+TEST_F(ValidationTest, max_pool_float_2_relaxed) {
+  const Model model = max_pool_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(max_pool_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: max_pool_float_3_relaxed.mod.py.
 namespace max_pool_float_3_relaxed {
@@ -1186,6 +1810,14 @@ TEST_F(NeuralnetworksHidlTest, max_pool_float_3_relaxed) {
                            max_pool_float_3_relaxed::examples);
 }
 
+TEST_F(ValidationTest, max_pool_float_3_relaxed) {
+  const Model model = max_pool_float_3_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(max_pool_float_3_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: max_pool_float_4_relaxed.mod.py.
 namespace max_pool_float_4_relaxed {
 // Generated max_pool_float_4_relaxed test
@@ -1200,6 +1832,14 @@ TEST_F(NeuralnetworksHidlTest, max_pool_float_4_relaxed) {
                            max_pool_float_4_relaxed::is_ignored,
                            max_pool_float_4_relaxed::examples);
 }
+
+TEST_F(ValidationTest, max_pool_float_4_relaxed) {
+  const Model model = max_pool_float_4_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(max_pool_float_4_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: mean.mod.py.
 namespace mean {
@@ -1216,6 +1856,14 @@ TEST_F(NeuralnetworksHidlTest, mean) {
                            mean::examples);
 }
 
+TEST_F(ValidationTest, mean) {
+  const Model model = mean::createTestModel();
+  const std::vector<Request> requests = createRequests(mean::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: mean_float_1.mod.py.
 namespace mean_float_1 {
 // Generated mean_float_1 test
@@ -1230,6 +1878,14 @@ TEST_F(NeuralnetworksHidlTest, mean_float_1) {
                            mean_float_1::is_ignored,
                            mean_float_1::examples);
 }
+
+TEST_F(ValidationTest, mean_float_1) {
+  const Model model = mean_float_1::createTestModel();
+  const std::vector<Request> requests = createRequests(mean_float_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: mean_float_1_relaxed.mod.py.
 namespace mean_float_1_relaxed {
@@ -1246,6 +1902,14 @@ TEST_F(NeuralnetworksHidlTest, mean_float_1_relaxed) {
                            mean_float_1_relaxed::examples);
 }
 
+TEST_F(ValidationTest, mean_float_1_relaxed) {
+  const Model model = mean_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(mean_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: mean_float_2.mod.py.
 namespace mean_float_2 {
 // Generated mean_float_2 test
@@ -1260,6 +1924,14 @@ TEST_F(NeuralnetworksHidlTest, mean_float_2) {
                            mean_float_2::is_ignored,
                            mean_float_2::examples);
 }
+
+TEST_F(ValidationTest, mean_float_2) {
+  const Model model = mean_float_2::createTestModel();
+  const std::vector<Request> requests = createRequests(mean_float_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: mean_float_2_relaxed.mod.py.
 namespace mean_float_2_relaxed {
@@ -1276,6 +1948,14 @@ TEST_F(NeuralnetworksHidlTest, mean_float_2_relaxed) {
                            mean_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, mean_float_2_relaxed) {
+  const Model model = mean_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(mean_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: mean_quant8_1.mod.py.
 namespace mean_quant8_1 {
 // Generated mean_quant8_1 test
@@ -1290,6 +1970,14 @@ TEST_F(NeuralnetworksHidlTest, mean_quant8_1) {
                            mean_quant8_1::is_ignored,
                            mean_quant8_1::examples);
 }
+
+TEST_F(ValidationTest, mean_quant8_1) {
+  const Model model = mean_quant8_1::createTestModel();
+  const std::vector<Request> requests = createRequests(mean_quant8_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: mean_quant8_2.mod.py.
 namespace mean_quant8_2 {
@@ -1306,6 +1994,14 @@ TEST_F(NeuralnetworksHidlTest, mean_quant8_2) {
                            mean_quant8_2::examples);
 }
 
+TEST_F(ValidationTest, mean_quant8_2) {
+  const Model model = mean_quant8_2::createTestModel();
+  const std::vector<Request> requests = createRequests(mean_quant8_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: mean_relaxed.mod.py.
 namespace mean_relaxed {
 // Generated mean_relaxed test
@@ -1320,6 +2016,14 @@ TEST_F(NeuralnetworksHidlTest, mean_relaxed) {
                            mean_relaxed::is_ignored,
                            mean_relaxed::examples);
 }
+
+TEST_F(ValidationTest, mean_relaxed) {
+  const Model model = mean_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(mean_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: mobilenet_224_gender_basic_fixed_relaxed.mod.py.
 namespace mobilenet_224_gender_basic_fixed_relaxed {
@@ -1336,6 +2040,14 @@ TEST_F(NeuralnetworksHidlTest, mobilenet_224_gender_basic_fixed_relaxed) {
                            mobilenet_224_gender_basic_fixed_relaxed::examples);
 }
 
+TEST_F(ValidationTest, mobilenet_224_gender_basic_fixed_relaxed) {
+  const Model model = mobilenet_224_gender_basic_fixed_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(mobilenet_224_gender_basic_fixed_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: mul_relaxed.mod.py.
 namespace mul_relaxed {
 // Generated mul_relaxed test
@@ -1350,6 +2062,14 @@ TEST_F(NeuralnetworksHidlTest, mul_relaxed) {
                            mul_relaxed::is_ignored,
                            mul_relaxed::examples);
 }
+
+TEST_F(ValidationTest, mul_relaxed) {
+  const Model model = mul_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(mul_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: mul_relu_relaxed.mod.py.
 namespace mul_relu_relaxed {
@@ -1366,6 +2086,14 @@ TEST_F(NeuralnetworksHidlTest, mul_relu_relaxed) {
                            mul_relu_relaxed::examples);
 }
 
+TEST_F(ValidationTest, mul_relu_relaxed) {
+  const Model model = mul_relu_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(mul_relu_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: pad.mod.py.
 namespace pad {
 // Generated pad test
@@ -1380,6 +2108,14 @@ TEST_F(NeuralnetworksHidlTest, pad) {
                            pad::is_ignored,
                            pad::examples);
 }
+
+TEST_F(ValidationTest, pad) {
+  const Model model = pad::createTestModel();
+  const std::vector<Request> requests = createRequests(pad::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: pad_float_1.mod.py.
 namespace pad_float_1 {
@@ -1396,6 +2132,14 @@ TEST_F(NeuralnetworksHidlTest, pad_float_1) {
                            pad_float_1::examples);
 }
 
+TEST_F(ValidationTest, pad_float_1) {
+  const Model model = pad_float_1::createTestModel();
+  const std::vector<Request> requests = createRequests(pad_float_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: pad_float_1_relaxed.mod.py.
 namespace pad_float_1_relaxed {
 // Generated pad_float_1_relaxed test
@@ -1410,6 +2154,14 @@ TEST_F(NeuralnetworksHidlTest, pad_float_1_relaxed) {
                            pad_float_1_relaxed::is_ignored,
                            pad_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, pad_float_1_relaxed) {
+  const Model model = pad_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(pad_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: pad_relaxed.mod.py.
 namespace pad_relaxed {
@@ -1426,6 +2178,14 @@ TEST_F(NeuralnetworksHidlTest, pad_relaxed) {
                            pad_relaxed::examples);
 }
 
+TEST_F(ValidationTest, pad_relaxed) {
+  const Model model = pad_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(pad_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: relu1_float_1_relaxed.mod.py.
 namespace relu1_float_1_relaxed {
 // Generated relu1_float_1_relaxed test
@@ -1440,6 +2200,14 @@ TEST_F(NeuralnetworksHidlTest, relu1_float_1_relaxed) {
                            relu1_float_1_relaxed::is_ignored,
                            relu1_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, relu1_float_1_relaxed) {
+  const Model model = relu1_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(relu1_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: relu1_float_2_relaxed.mod.py.
 namespace relu1_float_2_relaxed {
@@ -1456,6 +2224,14 @@ TEST_F(NeuralnetworksHidlTest, relu1_float_2_relaxed) {
                            relu1_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, relu1_float_2_relaxed) {
+  const Model model = relu1_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(relu1_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: relu6_float_1_relaxed.mod.py.
 namespace relu6_float_1_relaxed {
 // Generated relu6_float_1_relaxed test
@@ -1470,6 +2246,14 @@ TEST_F(NeuralnetworksHidlTest, relu6_float_1_relaxed) {
                            relu6_float_1_relaxed::is_ignored,
                            relu6_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, relu6_float_1_relaxed) {
+  const Model model = relu6_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(relu6_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: relu6_float_2_relaxed.mod.py.
 namespace relu6_float_2_relaxed {
@@ -1486,6 +2270,14 @@ TEST_F(NeuralnetworksHidlTest, relu6_float_2_relaxed) {
                            relu6_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, relu6_float_2_relaxed) {
+  const Model model = relu6_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(relu6_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: relu_float_1_relaxed.mod.py.
 namespace relu_float_1_relaxed {
 // Generated relu_float_1_relaxed test
@@ -1500,6 +2292,14 @@ TEST_F(NeuralnetworksHidlTest, relu_float_1_relaxed) {
                            relu_float_1_relaxed::is_ignored,
                            relu_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, relu_float_1_relaxed) {
+  const Model model = relu_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(relu_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: relu_float_2_relaxed.mod.py.
 namespace relu_float_2_relaxed {
@@ -1516,6 +2316,14 @@ TEST_F(NeuralnetworksHidlTest, relu_float_2_relaxed) {
                            relu_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, relu_float_2_relaxed) {
+  const Model model = relu_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(relu_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: reshape_relaxed.mod.py.
 namespace reshape_relaxed {
 // Generated reshape_relaxed test
@@ -1530,6 +2338,14 @@ TEST_F(NeuralnetworksHidlTest, reshape_relaxed) {
                            reshape_relaxed::is_ignored,
                            reshape_relaxed::examples);
 }
+
+TEST_F(ValidationTest, reshape_relaxed) {
+  const Model model = reshape_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(reshape_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: reshape_weights_as_inputs_relaxed.mod.py.
 namespace reshape_weights_as_inputs_relaxed {
@@ -1546,6 +2362,14 @@ TEST_F(NeuralnetworksHidlTest, reshape_weights_as_inputs_relaxed) {
                            reshape_weights_as_inputs_relaxed::examples);
 }
 
+TEST_F(ValidationTest, reshape_weights_as_inputs_relaxed) {
+  const Model model = reshape_weights_as_inputs_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(reshape_weights_as_inputs_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: resize_bilinear_2_relaxed.mod.py.
 namespace resize_bilinear_2_relaxed {
 // Generated resize_bilinear_2_relaxed test
@@ -1560,6 +2384,14 @@ TEST_F(NeuralnetworksHidlTest, resize_bilinear_2_relaxed) {
                            resize_bilinear_2_relaxed::is_ignored,
                            resize_bilinear_2_relaxed::examples);
 }
+
+TEST_F(ValidationTest, resize_bilinear_2_relaxed) {
+  const Model model = resize_bilinear_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(resize_bilinear_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: resize_bilinear_relaxed.mod.py.
 namespace resize_bilinear_relaxed {
@@ -1576,6 +2408,14 @@ TEST_F(NeuralnetworksHidlTest, resize_bilinear_relaxed) {
                            resize_bilinear_relaxed::examples);
 }
 
+TEST_F(ValidationTest, resize_bilinear_relaxed) {
+  const Model model = resize_bilinear_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(resize_bilinear_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: rnn_relaxed.mod.py.
 namespace rnn_relaxed {
 // Generated rnn_relaxed test
@@ -1590,6 +2430,14 @@ TEST_F(NeuralnetworksHidlTest, rnn_relaxed) {
                            rnn_relaxed::is_ignored,
                            rnn_relaxed::examples);
 }
+
+TEST_F(ValidationTest, rnn_relaxed) {
+  const Model model = rnn_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(rnn_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: rnn_state_relaxed.mod.py.
 namespace rnn_state_relaxed {
@@ -1606,6 +2454,14 @@ TEST_F(NeuralnetworksHidlTest, rnn_state_relaxed) {
                            rnn_state_relaxed::examples);
 }
 
+TEST_F(ValidationTest, rnn_state_relaxed) {
+  const Model model = rnn_state_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(rnn_state_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: softmax_float_1_relaxed.mod.py.
 namespace softmax_float_1_relaxed {
 // Generated softmax_float_1_relaxed test
@@ -1620,6 +2476,14 @@ TEST_F(NeuralnetworksHidlTest, softmax_float_1_relaxed) {
                            softmax_float_1_relaxed::is_ignored,
                            softmax_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, softmax_float_1_relaxed) {
+  const Model model = softmax_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(softmax_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: softmax_float_2_relaxed.mod.py.
 namespace softmax_float_2_relaxed {
@@ -1636,6 +2500,14 @@ TEST_F(NeuralnetworksHidlTest, softmax_float_2_relaxed) {
                            softmax_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, softmax_float_2_relaxed) {
+  const Model model = softmax_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(softmax_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: space_to_batch.mod.py.
 namespace space_to_batch {
 // Generated space_to_batch test
@@ -1650,6 +2522,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch) {
                            space_to_batch::is_ignored,
                            space_to_batch::examples);
 }
+
+TEST_F(ValidationTest, space_to_batch) {
+  const Model model = space_to_batch::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: space_to_batch_float_1.mod.py.
 namespace space_to_batch_float_1 {
@@ -1666,6 +2546,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_float_1) {
                            space_to_batch_float_1::examples);
 }
 
+TEST_F(ValidationTest, space_to_batch_float_1) {
+  const Model model = space_to_batch_float_1::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch_float_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: space_to_batch_float_1_relaxed.mod.py.
 namespace space_to_batch_float_1_relaxed {
 // Generated space_to_batch_float_1_relaxed test
@@ -1680,6 +2568,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_float_1_relaxed) {
                            space_to_batch_float_1_relaxed::is_ignored,
                            space_to_batch_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, space_to_batch_float_1_relaxed) {
+  const Model model = space_to_batch_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: space_to_batch_float_2.mod.py.
 namespace space_to_batch_float_2 {
@@ -1696,6 +2592,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_float_2) {
                            space_to_batch_float_2::examples);
 }
 
+TEST_F(ValidationTest, space_to_batch_float_2) {
+  const Model model = space_to_batch_float_2::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch_float_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: space_to_batch_float_2_relaxed.mod.py.
 namespace space_to_batch_float_2_relaxed {
 // Generated space_to_batch_float_2_relaxed test
@@ -1710,6 +2614,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_float_2_relaxed) {
                            space_to_batch_float_2_relaxed::is_ignored,
                            space_to_batch_float_2_relaxed::examples);
 }
+
+TEST_F(ValidationTest, space_to_batch_float_2_relaxed) {
+  const Model model = space_to_batch_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: space_to_batch_float_3.mod.py.
 namespace space_to_batch_float_3 {
@@ -1726,6 +2638,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_float_3) {
                            space_to_batch_float_3::examples);
 }
 
+TEST_F(ValidationTest, space_to_batch_float_3) {
+  const Model model = space_to_batch_float_3::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch_float_3::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: space_to_batch_float_3_relaxed.mod.py.
 namespace space_to_batch_float_3_relaxed {
 // Generated space_to_batch_float_3_relaxed test
@@ -1740,6 +2660,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_float_3_relaxed) {
                            space_to_batch_float_3_relaxed::is_ignored,
                            space_to_batch_float_3_relaxed::examples);
 }
+
+TEST_F(ValidationTest, space_to_batch_float_3_relaxed) {
+  const Model model = space_to_batch_float_3_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch_float_3_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: space_to_batch_quant8_1.mod.py.
 namespace space_to_batch_quant8_1 {
@@ -1756,6 +2684,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_quant8_1) {
                            space_to_batch_quant8_1::examples);
 }
 
+TEST_F(ValidationTest, space_to_batch_quant8_1) {
+  const Model model = space_to_batch_quant8_1::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch_quant8_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: space_to_batch_quant8_2.mod.py.
 namespace space_to_batch_quant8_2 {
 // Generated space_to_batch_quant8_2 test
@@ -1770,6 +2706,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_quant8_2) {
                            space_to_batch_quant8_2::is_ignored,
                            space_to_batch_quant8_2::examples);
 }
+
+TEST_F(ValidationTest, space_to_batch_quant8_2) {
+  const Model model = space_to_batch_quant8_2::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch_quant8_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: space_to_batch_quant8_3.mod.py.
 namespace space_to_batch_quant8_3 {
@@ -1786,6 +2730,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_quant8_3) {
                            space_to_batch_quant8_3::examples);
 }
 
+TEST_F(ValidationTest, space_to_batch_quant8_3) {
+  const Model model = space_to_batch_quant8_3::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch_quant8_3::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: space_to_batch_relaxed.mod.py.
 namespace space_to_batch_relaxed {
 // Generated space_to_batch_relaxed test
@@ -1800,6 +2752,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_batch_relaxed) {
                            space_to_batch_relaxed::is_ignored,
                            space_to_batch_relaxed::examples);
 }
+
+TEST_F(ValidationTest, space_to_batch_relaxed) {
+  const Model model = space_to_batch_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_batch_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: space_to_depth_float_1_relaxed.mod.py.
 namespace space_to_depth_float_1_relaxed {
@@ -1816,6 +2776,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_depth_float_1_relaxed) {
                            space_to_depth_float_1_relaxed::examples);
 }
 
+TEST_F(ValidationTest, space_to_depth_float_1_relaxed) {
+  const Model model = space_to_depth_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_depth_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: space_to_depth_float_2_relaxed.mod.py.
 namespace space_to_depth_float_2_relaxed {
 // Generated space_to_depth_float_2_relaxed test
@@ -1830,6 +2798,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_depth_float_2_relaxed) {
                            space_to_depth_float_2_relaxed::is_ignored,
                            space_to_depth_float_2_relaxed::examples);
 }
+
+TEST_F(ValidationTest, space_to_depth_float_2_relaxed) {
+  const Model model = space_to_depth_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_depth_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: space_to_depth_float_3_relaxed.mod.py.
 namespace space_to_depth_float_3_relaxed {
@@ -1846,6 +2822,14 @@ TEST_F(NeuralnetworksHidlTest, space_to_depth_float_3_relaxed) {
                            space_to_depth_float_3_relaxed::examples);
 }
 
+TEST_F(ValidationTest, space_to_depth_float_3_relaxed) {
+  const Model model = space_to_depth_float_3_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(space_to_depth_float_3_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: squeeze.mod.py.
 namespace squeeze {
 // Generated squeeze test
@@ -1860,6 +2844,14 @@ TEST_F(NeuralnetworksHidlTest, squeeze) {
                            squeeze::is_ignored,
                            squeeze::examples);
 }
+
+TEST_F(ValidationTest, squeeze) {
+  const Model model = squeeze::createTestModel();
+  const std::vector<Request> requests = createRequests(squeeze::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: squeeze_float_1.mod.py.
 namespace squeeze_float_1 {
@@ -1876,6 +2868,14 @@ TEST_F(NeuralnetworksHidlTest, squeeze_float_1) {
                            squeeze_float_1::examples);
 }
 
+TEST_F(ValidationTest, squeeze_float_1) {
+  const Model model = squeeze_float_1::createTestModel();
+  const std::vector<Request> requests = createRequests(squeeze_float_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: squeeze_float_1_relaxed.mod.py.
 namespace squeeze_float_1_relaxed {
 // Generated squeeze_float_1_relaxed test
@@ -1890,6 +2890,14 @@ TEST_F(NeuralnetworksHidlTest, squeeze_float_1_relaxed) {
                            squeeze_float_1_relaxed::is_ignored,
                            squeeze_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, squeeze_float_1_relaxed) {
+  const Model model = squeeze_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(squeeze_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: squeeze_quant8_1.mod.py.
 namespace squeeze_quant8_1 {
@@ -1906,6 +2914,14 @@ TEST_F(NeuralnetworksHidlTest, squeeze_quant8_1) {
                            squeeze_quant8_1::examples);
 }
 
+TEST_F(ValidationTest, squeeze_quant8_1) {
+  const Model model = squeeze_quant8_1::createTestModel();
+  const std::vector<Request> requests = createRequests(squeeze_quant8_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: squeeze_relaxed.mod.py.
 namespace squeeze_relaxed {
 // Generated squeeze_relaxed test
@@ -1920,6 +2936,14 @@ TEST_F(NeuralnetworksHidlTest, squeeze_relaxed) {
                            squeeze_relaxed::is_ignored,
                            squeeze_relaxed::examples);
 }
+
+TEST_F(ValidationTest, squeeze_relaxed) {
+  const Model model = squeeze_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(squeeze_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice.mod.py.
 namespace strided_slice {
@@ -1936,6 +2960,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice) {
                            strided_slice::examples);
 }
 
+TEST_F(ValidationTest, strided_slice) {
+  const Model model = strided_slice::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_1.mod.py.
 namespace strided_slice_float_1 {
 // Generated strided_slice_float_1 test
@@ -1950,6 +2982,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_1) {
                            strided_slice_float_1::is_ignored,
                            strided_slice_float_1::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_1) {
+  const Model model = strided_slice_float_1::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_10.mod.py.
 namespace strided_slice_float_10 {
@@ -1966,6 +3006,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_10) {
                            strided_slice_float_10::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_10) {
+  const Model model = strided_slice_float_10::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_10::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_10_relaxed.mod.py.
 namespace strided_slice_float_10_relaxed {
 // Generated strided_slice_float_10_relaxed test
@@ -1980,6 +3028,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_10_relaxed) {
                            strided_slice_float_10_relaxed::is_ignored,
                            strided_slice_float_10_relaxed::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_10_relaxed) {
+  const Model model = strided_slice_float_10_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_10_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_11.mod.py.
 namespace strided_slice_float_11 {
@@ -1996,6 +3052,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_11) {
                            strided_slice_float_11::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_11) {
+  const Model model = strided_slice_float_11::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_11::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_11_relaxed.mod.py.
 namespace strided_slice_float_11_relaxed {
 // Generated strided_slice_float_11_relaxed test
@@ -2010,6 +3074,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_11_relaxed) {
                            strided_slice_float_11_relaxed::is_ignored,
                            strided_slice_float_11_relaxed::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_11_relaxed) {
+  const Model model = strided_slice_float_11_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_11_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_1_relaxed.mod.py.
 namespace strided_slice_float_1_relaxed {
@@ -2026,6 +3098,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_1_relaxed) {
                            strided_slice_float_1_relaxed::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_1_relaxed) {
+  const Model model = strided_slice_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_2.mod.py.
 namespace strided_slice_float_2 {
 // Generated strided_slice_float_2 test
@@ -2040,6 +3120,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_2) {
                            strided_slice_float_2::is_ignored,
                            strided_slice_float_2::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_2) {
+  const Model model = strided_slice_float_2::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_2_relaxed.mod.py.
 namespace strided_slice_float_2_relaxed {
@@ -2056,6 +3144,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_2_relaxed) {
                            strided_slice_float_2_relaxed::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_2_relaxed) {
+  const Model model = strided_slice_float_2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_3.mod.py.
 namespace strided_slice_float_3 {
 // Generated strided_slice_float_3 test
@@ -2070,6 +3166,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_3) {
                            strided_slice_float_3::is_ignored,
                            strided_slice_float_3::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_3) {
+  const Model model = strided_slice_float_3::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_3::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_3_relaxed.mod.py.
 namespace strided_slice_float_3_relaxed {
@@ -2086,6 +3190,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_3_relaxed) {
                            strided_slice_float_3_relaxed::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_3_relaxed) {
+  const Model model = strided_slice_float_3_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_3_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_4.mod.py.
 namespace strided_slice_float_4 {
 // Generated strided_slice_float_4 test
@@ -2100,6 +3212,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_4) {
                            strided_slice_float_4::is_ignored,
                            strided_slice_float_4::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_4) {
+  const Model model = strided_slice_float_4::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_4::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_4_relaxed.mod.py.
 namespace strided_slice_float_4_relaxed {
@@ -2116,6 +3236,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_4_relaxed) {
                            strided_slice_float_4_relaxed::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_4_relaxed) {
+  const Model model = strided_slice_float_4_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_4_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_5.mod.py.
 namespace strided_slice_float_5 {
 // Generated strided_slice_float_5 test
@@ -2130,6 +3258,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_5) {
                            strided_slice_float_5::is_ignored,
                            strided_slice_float_5::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_5) {
+  const Model model = strided_slice_float_5::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_5::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_5_relaxed.mod.py.
 namespace strided_slice_float_5_relaxed {
@@ -2146,6 +3282,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_5_relaxed) {
                            strided_slice_float_5_relaxed::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_5_relaxed) {
+  const Model model = strided_slice_float_5_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_5_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_6.mod.py.
 namespace strided_slice_float_6 {
 // Generated strided_slice_float_6 test
@@ -2160,6 +3304,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_6) {
                            strided_slice_float_6::is_ignored,
                            strided_slice_float_6::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_6) {
+  const Model model = strided_slice_float_6::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_6::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_6_relaxed.mod.py.
 namespace strided_slice_float_6_relaxed {
@@ -2176,6 +3328,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_6_relaxed) {
                            strided_slice_float_6_relaxed::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_6_relaxed) {
+  const Model model = strided_slice_float_6_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_6_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_7.mod.py.
 namespace strided_slice_float_7 {
 // Generated strided_slice_float_7 test
@@ -2190,6 +3350,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_7) {
                            strided_slice_float_7::is_ignored,
                            strided_slice_float_7::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_7) {
+  const Model model = strided_slice_float_7::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_7::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_7_relaxed.mod.py.
 namespace strided_slice_float_7_relaxed {
@@ -2206,6 +3374,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_7_relaxed) {
                            strided_slice_float_7_relaxed::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_7_relaxed) {
+  const Model model = strided_slice_float_7_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_7_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_8.mod.py.
 namespace strided_slice_float_8 {
 // Generated strided_slice_float_8 test
@@ -2220,6 +3396,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_8) {
                            strided_slice_float_8::is_ignored,
                            strided_slice_float_8::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_8) {
+  const Model model = strided_slice_float_8::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_8::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_8_relaxed.mod.py.
 namespace strided_slice_float_8_relaxed {
@@ -2236,6 +3420,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_8_relaxed) {
                            strided_slice_float_8_relaxed::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_8_relaxed) {
+  const Model model = strided_slice_float_8_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_8_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_float_9.mod.py.
 namespace strided_slice_float_9 {
 // Generated strided_slice_float_9 test
@@ -2250,6 +3442,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_9) {
                            strided_slice_float_9::is_ignored,
                            strided_slice_float_9::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_float_9) {
+  const Model model = strided_slice_float_9::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_9::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_float_9_relaxed.mod.py.
 namespace strided_slice_float_9_relaxed {
@@ -2266,6 +3466,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_float_9_relaxed) {
                            strided_slice_float_9_relaxed::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_float_9_relaxed) {
+  const Model model = strided_slice_float_9_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_float_9_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_qaunt8_10.mod.py.
 namespace strided_slice_qaunt8_10 {
 // Generated strided_slice_qaunt8_10 test
@@ -2280,6 +3488,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_qaunt8_10) {
                            strided_slice_qaunt8_10::is_ignored,
                            strided_slice_qaunt8_10::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_qaunt8_10) {
+  const Model model = strided_slice_qaunt8_10::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_qaunt8_10::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_qaunt8_11.mod.py.
 namespace strided_slice_qaunt8_11 {
@@ -2296,6 +3512,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_qaunt8_11) {
                            strided_slice_qaunt8_11::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_qaunt8_11) {
+  const Model model = strided_slice_qaunt8_11::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_qaunt8_11::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_quant8_1.mod.py.
 namespace strided_slice_quant8_1 {
 // Generated strided_slice_quant8_1 test
@@ -2310,6 +3534,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_quant8_1) {
                            strided_slice_quant8_1::is_ignored,
                            strided_slice_quant8_1::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_quant8_1) {
+  const Model model = strided_slice_quant8_1::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_quant8_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_quant8_2.mod.py.
 namespace strided_slice_quant8_2 {
@@ -2326,6 +3558,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_quant8_2) {
                            strided_slice_quant8_2::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_quant8_2) {
+  const Model model = strided_slice_quant8_2::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_quant8_2::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_quant8_3.mod.py.
 namespace strided_slice_quant8_3 {
 // Generated strided_slice_quant8_3 test
@@ -2340,6 +3580,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_quant8_3) {
                            strided_slice_quant8_3::is_ignored,
                            strided_slice_quant8_3::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_quant8_3) {
+  const Model model = strided_slice_quant8_3::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_quant8_3::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_quant8_4.mod.py.
 namespace strided_slice_quant8_4 {
@@ -2356,6 +3604,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_quant8_4) {
                            strided_slice_quant8_4::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_quant8_4) {
+  const Model model = strided_slice_quant8_4::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_quant8_4::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_quant8_5.mod.py.
 namespace strided_slice_quant8_5 {
 // Generated strided_slice_quant8_5 test
@@ -2370,6 +3626,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_quant8_5) {
                            strided_slice_quant8_5::is_ignored,
                            strided_slice_quant8_5::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_quant8_5) {
+  const Model model = strided_slice_quant8_5::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_quant8_5::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_quant8_6.mod.py.
 namespace strided_slice_quant8_6 {
@@ -2386,6 +3650,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_quant8_6) {
                            strided_slice_quant8_6::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_quant8_6) {
+  const Model model = strided_slice_quant8_6::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_quant8_6::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_quant8_7.mod.py.
 namespace strided_slice_quant8_7 {
 // Generated strided_slice_quant8_7 test
@@ -2400,6 +3672,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_quant8_7) {
                            strided_slice_quant8_7::is_ignored,
                            strided_slice_quant8_7::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_quant8_7) {
+  const Model model = strided_slice_quant8_7::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_quant8_7::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_quant8_8.mod.py.
 namespace strided_slice_quant8_8 {
@@ -2416,6 +3696,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_quant8_8) {
                            strided_slice_quant8_8::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_quant8_8) {
+  const Model model = strided_slice_quant8_8::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_quant8_8::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: strided_slice_quant8_9.mod.py.
 namespace strided_slice_quant8_9 {
 // Generated strided_slice_quant8_9 test
@@ -2430,6 +3718,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_quant8_9) {
                            strided_slice_quant8_9::is_ignored,
                            strided_slice_quant8_9::examples);
 }
+
+TEST_F(ValidationTest, strided_slice_quant8_9) {
+  const Model model = strided_slice_quant8_9::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_quant8_9::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: strided_slice_relaxed.mod.py.
 namespace strided_slice_relaxed {
@@ -2446,6 +3742,14 @@ TEST_F(NeuralnetworksHidlTest, strided_slice_relaxed) {
                            strided_slice_relaxed::examples);
 }
 
+TEST_F(ValidationTest, strided_slice_relaxed) {
+  const Model model = strided_slice_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: sub.mod.py.
 namespace sub {
 // Generated sub test
@@ -2460,6 +3764,14 @@ TEST_F(NeuralnetworksHidlTest, sub) {
                            sub::is_ignored,
                            sub::examples);
 }
+
+TEST_F(ValidationTest, sub) {
+  const Model model = sub::createTestModel();
+  const std::vector<Request> requests = createRequests(sub::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: sub_broadcast_float.mod.py.
 namespace sub_broadcast_float {
@@ -2476,6 +3788,14 @@ TEST_F(NeuralnetworksHidlTest, sub_broadcast_float) {
                            sub_broadcast_float::examples);
 }
 
+TEST_F(ValidationTest, sub_broadcast_float) {
+  const Model model = sub_broadcast_float::createTestModel();
+  const std::vector<Request> requests = createRequests(sub_broadcast_float::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: sub_broadcast_float_relaxed.mod.py.
 namespace sub_broadcast_float_relaxed {
 // Generated sub_broadcast_float_relaxed test
@@ -2490,6 +3810,14 @@ TEST_F(NeuralnetworksHidlTest, sub_broadcast_float_relaxed) {
                            sub_broadcast_float_relaxed::is_ignored,
                            sub_broadcast_float_relaxed::examples);
 }
+
+TEST_F(ValidationTest, sub_broadcast_float_relaxed) {
+  const Model model = sub_broadcast_float_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(sub_broadcast_float_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: sub_relaxed.mod.py.
 namespace sub_relaxed {
@@ -2506,6 +3834,14 @@ TEST_F(NeuralnetworksHidlTest, sub_relaxed) {
                            sub_relaxed::examples);
 }
 
+TEST_F(ValidationTest, sub_relaxed) {
+  const Model model = sub_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(sub_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: svdf2_relaxed.mod.py.
 namespace svdf2_relaxed {
 // Generated svdf2_relaxed test
@@ -2520,6 +3856,14 @@ TEST_F(NeuralnetworksHidlTest, svdf2_relaxed) {
                            svdf2_relaxed::is_ignored,
                            svdf2_relaxed::examples);
 }
+
+TEST_F(ValidationTest, svdf2_relaxed) {
+  const Model model = svdf2_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(svdf2_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: svdf_relaxed.mod.py.
 namespace svdf_relaxed {
@@ -2536,6 +3880,14 @@ TEST_F(NeuralnetworksHidlTest, svdf_relaxed) {
                            svdf_relaxed::examples);
 }
 
+TEST_F(ValidationTest, svdf_relaxed) {
+  const Model model = svdf_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(svdf_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: svdf_state_relaxed.mod.py.
 namespace svdf_state_relaxed {
 // Generated svdf_state_relaxed test
@@ -2550,6 +3902,14 @@ TEST_F(NeuralnetworksHidlTest, svdf_state_relaxed) {
                            svdf_state_relaxed::is_ignored,
                            svdf_state_relaxed::examples);
 }
+
+TEST_F(ValidationTest, svdf_state_relaxed) {
+  const Model model = svdf_state_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(svdf_state_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: tanh_relaxed.mod.py.
 namespace tanh_relaxed {
@@ -2566,6 +3926,14 @@ TEST_F(NeuralnetworksHidlTest, tanh_relaxed) {
                            tanh_relaxed::examples);
 }
 
+TEST_F(ValidationTest, tanh_relaxed) {
+  const Model model = tanh_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(tanh_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: transpose.mod.py.
 namespace transpose {
 // Generated transpose test
@@ -2580,6 +3948,14 @@ TEST_F(NeuralnetworksHidlTest, transpose) {
                            transpose::is_ignored,
                            transpose::examples);
 }
+
+TEST_F(ValidationTest, transpose) {
+  const Model model = transpose::createTestModel();
+  const std::vector<Request> requests = createRequests(transpose::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: transpose_float_1.mod.py.
 namespace transpose_float_1 {
@@ -2596,6 +3972,14 @@ TEST_F(NeuralnetworksHidlTest, transpose_float_1) {
                            transpose_float_1::examples);
 }
 
+TEST_F(ValidationTest, transpose_float_1) {
+  const Model model = transpose_float_1::createTestModel();
+  const std::vector<Request> requests = createRequests(transpose_float_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: transpose_float_1_relaxed.mod.py.
 namespace transpose_float_1_relaxed {
 // Generated transpose_float_1_relaxed test
@@ -2610,6 +3994,14 @@ TEST_F(NeuralnetworksHidlTest, transpose_float_1_relaxed) {
                            transpose_float_1_relaxed::is_ignored,
                            transpose_float_1_relaxed::examples);
 }
+
+TEST_F(ValidationTest, transpose_float_1_relaxed) {
+  const Model model = transpose_float_1_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(transpose_float_1_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 
 // Generated from: transpose_quant8_1.mod.py.
 namespace transpose_quant8_1 {
@@ -2626,6 +4018,14 @@ TEST_F(NeuralnetworksHidlTest, transpose_quant8_1) {
                            transpose_quant8_1::examples);
 }
 
+TEST_F(ValidationTest, transpose_quant8_1) {
+  const Model model = transpose_quant8_1::createTestModel();
+  const std::vector<Request> requests = createRequests(transpose_quant8_1::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: transpose_relaxed.mod.py.
 namespace transpose_relaxed {
 // Generated transpose_relaxed test
@@ -2640,4 +4040,12 @@ TEST_F(NeuralnetworksHidlTest, transpose_relaxed) {
                            transpose_relaxed::is_ignored,
                            transpose_relaxed::examples);
 }
+
+TEST_F(ValidationTest, transpose_relaxed) {
+  const Model model = transpose_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(transpose_relaxed::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
 

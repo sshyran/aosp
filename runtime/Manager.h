@@ -81,6 +81,9 @@ public:
     void setUseCpuOnly(bool useCpuOnly) { mSetCpuOnly = useCpuOnly; }
     bool getUseCpuOnly() const { return mSetCpuOnly; }
 
+    bool syncExecCpu() const { return mSyncExecCpu; }
+    bool syncExecRuntime() const { return mSyncExecRuntime; }
+
     // How to handle graph partitioning?
     // 0 - Don't do graph partitioning.
     // 1 - Do graph partitioning; but fall back to non-partitioned
@@ -131,6 +134,10 @@ public:
     // on the device and run everything on the CPU.
     bool mSetCpuOnly = false;      // set by setUseCpuOnly()
     bool mDebugNNCpuOnly = false;  // derived from system property debug.nn.cpuonly
+
+    // synchronous execution
+    bool mSyncExecCpu = false;
+    bool mSyncExecRuntime = false;
 
     static const uint32_t kPartitioningDefault = kPartitioningWithFallback;
     uint32_t mPartitioning = kPartitioningDefault;
