@@ -29,11 +29,17 @@ def test(name, input0, input1, output0, input0_data, input1_data, output_data):
       output0: ["TENSOR_INT32"],
   })
 
+  float16 = DataTypeConverter().Identify({
+      input0: ["TENSOR_FLOAT16"],
+      input1: ["TENSOR_FLOAT16"],
+      output0: ["TENSOR_FLOAT16"],
+  })
+
   Example({
       input0: input0_data,
       input1: input1_data,
       output0: output_data,
-  }, model=model, name=name).AddVariations("relaxed", quant8, int32)
+  }, model=model, name=name).AddVariations("relaxed", quant8, int32, float16)
 
 test(
     name="simple",

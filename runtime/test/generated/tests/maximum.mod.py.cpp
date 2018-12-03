@@ -33,6 +33,12 @@ TEST_F(GeneratedTests, maximum_simple_int32) {
             maximum::examples_simple_int32);
 }
 
+TEST_F(GeneratedTests, maximum_simple_float16) {
+    execute(maximum::CreateModel_float16,
+            maximum::is_ignored_float16,
+            maximum::examples_simple_float16);
+}
+
 TEST_F(GeneratedTests, maximum_broadcast) {
     execute(maximum::CreateModel_2,
             maximum::is_ignored_2,
@@ -55,5 +61,11 @@ TEST_F(GeneratedTests, maximum_broadcast_int32) {
     execute(maximum::CreateModel_int32_2,
             maximum::is_ignored_int32_2,
             maximum::examples_broadcast_int32);
+}
+
+TEST_F(GeneratedTests, maximum_broadcast_float16) {
+    execute(maximum::CreateModel_float16_2,
+            maximum::is_ignored_float16_2,
+            maximum::examples_broadcast_float16);
 }
 
