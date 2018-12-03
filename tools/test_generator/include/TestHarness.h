@@ -41,7 +41,7 @@ typedef std::map<int, std::vector<_Float16>> Float16Operands;
 typedef std::tuple<Float32Operands,  // ANEURALNETWORKS_TENSOR_FLOAT32
                    Int32Operands,    // ANEURALNETWORKS_TENSOR_INT32
                    Quant8Operands,   // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM
-                   Quant16Operands,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+                   Quant16Operands,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
                    Float16Operands   // ANEURALNETWORKS_TENSOR_FLOAT16
                    >
         MixedTyped;
