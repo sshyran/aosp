@@ -146,7 +146,7 @@ class Type(NamedVariable):
         "TENSOR_FLOAT32": "float",
         "TENSOR_QUANT8_ASYMM": "uint8_t",
         "BOOL": "bool",
-        "TENSOR_QUANT16_ASYMM": "int16_t",
+        "TENSOR_QUANT16_SYMM": "int16_t",
 #     "OEM_SCALAR": this is service-defined.
         "TENSOR_OEM_BYTE": "uint8_t",
     }
