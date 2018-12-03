@@ -76,11 +76,20 @@ public:
                   size_t length);
     int setOutputFromMemory(uint32_t index, const ANeuralNetworksOperandType* type,
                             const Memory* memory, size_t offset, size_t length);
-    int startCompute(sp<ExecutionCallback>* synchronizationCallback);
+
+    int computeAsynchronously(sp<ExecutionCallback>* synchronizationCallback) {
+        CHECK(synchronizationCallback != nullptr);
+        return compute(synchronizationCallback);
+    }
+    int computeSynchronously() { return compute(nullptr); }
 
     const ModelBuilder* getModel() const { return mModel; }
 
-private:
+   private:
+    // If a callback is provided, then this is asynchronous. If a callback is
+    // not provided (i.e., is nullptr), then this is synchronous.
+    int compute(sp<ExecutionCallback>* synchronizationCallback);
+
     const ModelBuilder* mModel;
     const ExecutionPlan* mPlan;
 
