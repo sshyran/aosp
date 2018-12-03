@@ -115,20 +115,30 @@ inline void convertFloat32ToFloat16(const std::vector<float>& input, _Float16* o
 }
 }  // namespace
 
-bool addFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
-                int32_t activation, _Float16* out, const Shape& shapeOut) {
-    NNTRACE_TRANS("addFloat16");
+using binaryFunctionFloat32 = std::function<bool(
+        const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
+        int32_t activation, float* out, const Shape& shapeOut)>;
+
+bool binaryOperationFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2,
+                            const Shape& shape2, int32_t activation, _Float16* out,
+                            const Shape& shapeOut, binaryFunctionFloat32 operationFloat32) {
     std::vector<float> in1_float32(getNumberOfElements(shape1));
     convertFloat16ToFloat32(in1, &in1_float32);
     std::vector<float> in2_float32(getNumberOfElements(shape2));
     convertFloat16ToFloat32(in2, &in2_float32);
     std::vector<float> out_float32(getNumberOfElements(shapeOut));
 
-    addFloat32(in1_float32.data(), shape1, in2_float32.data(), shape2, activation,
-               out_float32.data(), shapeOut);
+    operationFloat32(in1_float32.data(), shape1, in2_float32.data(), shape2, activation,
+                     out_float32.data(), shapeOut);
     convertFloat32ToFloat16(out_float32, out);
 
     return true;
+}
+
+bool addFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut) {
+    NNTRACE_TRANS("addFloat16");
+    return binaryOperationFloat16(in1, shape1, in2, shape2, activation, out, shapeOut, &addFloat32);
 }
 
 bool addFloat32(const float* in1, const Shape& shape1,
@@ -239,6 +249,12 @@ bool addQuant8(const uint8_t* in1, const Shape& shape1,
     return true;
 }
 
+bool mulFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut) {
+    NNTRACE_TRANS("mulFloat16");
+    return binaryOperationFloat16(in1, shape1, in2, shape2, activation, out, shapeOut, &mulFloat32);
+}
+
 bool mulFloat32(const float* in1, const Shape& shape1,
                 const float* in2, const Shape& shape2,
                 int32_t activation,
@@ -343,24 +359,7 @@ bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData,
 bool subFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
                 int32_t activation, _Float16* out, const Shape& shapeOut) {
     NNTRACE_TRANS("subFloat16");
-
-    std::vector<float> in1_float32(getNumberOfElements(shape1));
-    for (int i = 0; i < in1_float32.size(); ++i) {
-        in1_float32[i] = static_cast<float>(in1[i]);
-    }
-
-    std::vector<float> in2_float32(getNumberOfElements(shape2));
-    for (int i = 0; i < in2_float32.size(); ++i) {
-        in2_float32[i] = static_cast<float>(in2[i]);
-    }
-
-    std::vector<float> out_float32(getNumberOfElements(shapeOut));
-    subFloat32(in1_float32.data(), shape1, in2_float32.data(), shape2, activation,
-               out_float32.data(), shapeOut);
-    for (int i = 0; i < out_float32.size(); ++i) {
-        out[i] = static_cast<_Float16>(out_float32[i]);
-    }
-    return true;
+    return binaryOperationFloat16(in1, shape1, in2, shape2, activation, out, shapeOut, &subFloat32);
 }
 
 bool subFloat32(const float* in1, const Shape& shape1,
@@ -429,6 +428,12 @@ bool subQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, cons
 #undef ANDROID_NN_BROADCAST_ADD
 
     return true;
+}
+
+bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut) {
+    NNTRACE_TRANS("divFloat16");
+    return binaryOperationFloat16(in1, shape1, in2, shape2, activation, out, shapeOut, &divFloat32);
 }
 
 bool divFloat32(const float* in1, const Shape& shape1,
