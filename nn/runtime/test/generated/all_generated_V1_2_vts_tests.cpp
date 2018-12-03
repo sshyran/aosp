@@ -14932,6 +14932,21 @@ TEST_F(ValidationTest, tile_1_relaxed) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, tile_1_float16) {
+  generated_tests::Execute(device,
+                           tile_1::createTestModel_float16,
+                           tile_1::is_ignored_float16,
+                           tile_1::examples_float16);
+}
+
+TEST_F(ValidationTest, tile_1_float16) {
+  const Model model = tile_1::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(tile_1::examples_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, tile_1_quant8) {
   generated_tests::Execute(device,
                            tile_1::createTestModel_quant8,
@@ -14980,6 +14995,21 @@ TEST_F(NeuralnetworksHidlTest, tile_2_relaxed) {
 TEST_F(ValidationTest, tile_2_relaxed) {
   const Model model = tile_2::createTestModel_relaxed();
   const std::vector<Request> requests = createRequests(tile_2::examples_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, tile_2_float16) {
+  generated_tests::Execute(device,
+                           tile_2::createTestModel_float16,
+                           tile_2::is_ignored_float16,
+                           tile_2::examples_float16);
+}
+
+TEST_F(ValidationTest, tile_2_float16) {
+  const Model model = tile_2::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(tile_2::examples_float16);
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -15048,6 +15078,21 @@ TEST_F(NeuralnetworksHidlTest, tile_3_relaxed) {
 TEST_F(ValidationTest, tile_3_relaxed) {
   const Model model = tile_3::createTestModel_relaxed();
   const std::vector<Request> requests = createRequests(tile_3::examples_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, tile_3_float16) {
+  generated_tests::Execute(device,
+                           tile_3::createTestModel_float16,
+                           tile_3::is_ignored_float16,
+                           tile_3::examples_float16);
+}
+
+TEST_F(ValidationTest, tile_3_float16) {
+  const Model model = tile_3::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(tile_3::examples_float16);
   validateModel(model);
   validateRequests(model, requests);
 }
