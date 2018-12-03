@@ -17,11 +17,11 @@
 #ifndef ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_GENERATEDUTILS_H
 #define ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_GENERATEDUTILS_H
 
-#include "NeuralNetworksWrapper.h"
 #include "TestHarness.h"
+#include "TestNeuralNetworksWrapper.h"
 
 namespace generated_tests {
-using namespace android::nn::wrapper;
+using namespace android::nn::test_wrapper;
 
 void execute(std::function<void(Model*)> createModel, std::function<bool(int)> isIgnored,
              std::vector<test_helper::MixedTypedExample>& examples, std::string dumpFile = "");

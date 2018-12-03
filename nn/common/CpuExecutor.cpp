@@ -478,6 +478,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 success = addFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
                                      reinterpret_cast<const float*>(in2.buffer), in2.shape(),
                                      activation, reinterpret_cast<float*>(out.buffer), outShape);
+            } else if (in1.type == OperandType::TENSOR_FLOAT16) {
+                success = addFloat16(reinterpret_cast<const _Float16*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const _Float16*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<_Float16*>(out.buffer), outShape);
             } else if (in1.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = addQuant8(reinterpret_cast<const uint8_t*>(in1.buffer), in1.shape(),
                                     reinterpret_cast<const uint8_t*>(in2.buffer), in2.shape(),
@@ -503,6 +507,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 success = mulFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
                                      reinterpret_cast<const float*>(in2.buffer), in2.shape(),
                                      activation, reinterpret_cast<float*>(out.buffer), outShape);
+            } else if (in1.type == OperandType::TENSOR_FLOAT16) {
+                success = mulFloat16(reinterpret_cast<const _Float16*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const _Float16*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<_Float16*>(out.buffer), outShape);
             } else if (in1.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = mulQuant8(reinterpret_cast<const uint8_t*>(in1.buffer), in1.shape(),
                                     reinterpret_cast<const uint8_t*>(in2.buffer), in2.shape(),
@@ -1046,8 +1054,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = reluFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
-                                      reinterpret_cast<float*>(output.buffer), outShape);
+                success = reluFloat(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                    reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = reluFloat(reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
+                                    reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = reluQuant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
                                      reinterpret_cast<uint8_t*>(output.buffer), outShape);
@@ -1066,8 +1077,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = relu1Float32(reinterpret_cast<const float*>(input.buffer), input.shape(),
-                                       reinterpret_cast<float*>(output.buffer), outShape);
+                success = relu1Float(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                     reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = relu1Float(reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
+                                     reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = relu1Quant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
                                       reinterpret_cast<uint8_t*>(output.buffer), outShape);
@@ -1086,8 +1100,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = relu6Float32(reinterpret_cast<const float*>(input.buffer), input.shape(),
-                                       reinterpret_cast<float*>(output.buffer), outShape);
+                success = relu6Float(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                                     reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = relu6Float(reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
+                                     reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = relu6Quant8(reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
                                       reinterpret_cast<uint8_t*>(output.buffer), outShape);
@@ -1105,7 +1122,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 !setInfoAndAllocateIfNeeded(&output, outShape)) {
                 break;
             }
-            if (input.type == OperandType::TENSOR_FLOAT32) {
+            if (input.type == OperandType::TENSOR_FLOAT16) {
+                success =
+                        tanhFloat16(reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
+                                    reinterpret_cast<_Float16*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT32) {
                 success = tanhFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
                                       reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
@@ -1126,9 +1147,12 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                success =
-                        logisticFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
+                success = logisticFloat(reinterpret_cast<const float*>(input.buffer), input.shape(),
                                         reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = logisticFloat(reinterpret_cast<const _Float16*>(input.buffer),
+                                        input.shape(), reinterpret_cast<_Float16*>(output.buffer),
+                                        outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = logisticQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
                                          input.shape(), reinterpret_cast<uint8_t*>(output.buffer),
@@ -1159,6 +1183,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 success = softmaxFloat32(reinterpret_cast<const float*>(input.buffer),
                                          input.shape(), beta, axis,
                                          reinterpret_cast<float*>(output.buffer), output.shape());
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = softmaxFloat16(
+                        reinterpret_cast<const _Float16*>(input.buffer), input.shape(), beta, axis,
+                        reinterpret_cast<_Float16*>(output.buffer), output.shape());
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = softmaxQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
                                         input.shape(), beta, axis,
@@ -1211,29 +1239,41 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 std::vector<Shape> inputShapes(numInputTensors);
                 std::vector<const float*> inputDataPtrs(numInputTensors);
 
-                for (int i=0; i<numInputTensors; i++) {
+                for (int i = 0; i < numInputTensors; i++) {
                     RunTimeOperandInfo& input = mOperands[ins[i]];
                     inputShapes[i] = input.shape();
                     inputDataPtrs[i] = reinterpret_cast<const float*>(input.buffer);
                 }
                 success = concatenationPrepare(inputShapes, axis, &outShape) &&
                           setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          concatenationFloat32(inputDataPtrs, inputShapes, axis,
-                                               reinterpret_cast<float*>(output.buffer), outShape);
+                          concatenation(inputDataPtrs, inputShapes, axis,
+                                        reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (firstInput.type == OperandType::TENSOR_FLOAT16) {
+                std::vector<Shape> inputShapes(numInputTensors);
+                std::vector<const _Float16*> inputDataPtrs(numInputTensors);
+
+                for (int i = 0; i < numInputTensors; i++) {
+                    RunTimeOperandInfo& input = mOperands[ins[i]];
+                    inputShapes[i] = input.shape();
+                    inputDataPtrs[i] = reinterpret_cast<const _Float16*>(input.buffer);
+                }
+                success = concatenationPrepare(inputShapes, axis, &outShape) &&
+                          setInfoAndAllocateIfNeeded(&output, outShape) &&
+                          concatenation(inputDataPtrs, inputShapes, axis,
+                                        reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (firstInput.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 std::vector<Shape> inputShapes(numInputTensors);
                 std::vector<const uint8_t*> inputDataPtrs(numInputTensors);
 
-                for (int i=0; i<numInputTensors; i++) {
+                for (int i = 0; i < numInputTensors; i++) {
                     RunTimeOperandInfo& input = mOperands[ins[i]];
                     inputShapes[i] = input.shape();
                     inputDataPtrs[i] = reinterpret_cast<const uint8_t*>(input.buffer);
                 }
                 success = concatenationPrepare(inputShapes, axis, &outShape) &&
                           setInfoAndAllocateIfNeeded(&output, outShape) &&
-                          concatenationQuant8(inputDataPtrs, inputShapes, axis,
-                                              reinterpret_cast<uint8_t*>(output.buffer),
-                                              outShape);
+                          concatenation(inputDataPtrs, inputShapes, axis,
+                                        reinterpret_cast<uint8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::L2_NORMALIZATION: {
@@ -1459,26 +1499,20 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 lsh.Eval();
         } break;
         case OperationType::LSTM: {
-            RunTimeOperandInfo &scratch =
-                mOperands[outs[LSTMCell::kScratchBufferTensor]];
-            RunTimeOperandInfo &outputStateOut =
-                mOperands[outs[LSTMCell::kOutputStateOutTensor]];
-            RunTimeOperandInfo &cellStateOut =
-                mOperands[outs[LSTMCell::kCellStateOutTensor]];
-            RunTimeOperandInfo &output =
-                mOperands[outs[LSTMCell::kOutputTensor]];
+            RunTimeOperandInfo& scratch = mOperands[outs[LSTMCell::kScratchBufferTensor]];
+            RunTimeOperandInfo& outputStateOut = mOperands[outs[LSTMCell::kOutputStateOutTensor]];
+            RunTimeOperandInfo& cellStateOut = mOperands[outs[LSTMCell::kCellStateOutTensor]];
+            RunTimeOperandInfo& output = mOperands[outs[LSTMCell::kOutputTensor]];
 
             Shape scratchShape, outputStateShape, cellStateShape, outputShape;
             LSTMCell lstm_cell(operation, mOperands);
 
-            success = LSTMCell::Prepare(operation, mOperands,
-                                        &scratchShape, &outputStateShape,
+            success = lstm_cell.Prepare(operation, mOperands, &scratchShape, &outputStateShape,
                                         &cellStateShape, &outputShape) &&
-                setInfoAndAllocateIfNeeded(&scratch, scratchShape) &&
-                setInfoAndAllocateIfNeeded(&outputStateOut, outputStateShape) &&
-                setInfoAndAllocateIfNeeded(&cellStateOut, cellStateShape) &&
-                setInfoAndAllocateIfNeeded(&output, outputShape) &&
-                lstm_cell.Eval();
+                      setInfoAndAllocateIfNeeded(&scratch, scratchShape) &&
+                      setInfoAndAllocateIfNeeded(&outputStateOut, outputStateShape) &&
+                      setInfoAndAllocateIfNeeded(&cellStateOut, cellStateShape) &&
+                      setInfoAndAllocateIfNeeded(&output, outputShape) && lstm_cell.Eval();
         } break;
         case OperationType::RANDOM_MULTINOMIAL: {
             const RunTimeOperandInfo& lookups = mOperands[ins[HashtableLookup::kLookupTensor]];
@@ -1662,7 +1696,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                      outShape);
         } break;
         case OperationType::TRANSPOSE: {
-            if (!allParametersPresent(2, 1)) {
+            if (ins.size() != 2 || outs.size() != 1 ||
+                mOperands[ins[0]].lifetime == OperandLifeTime::NO_VALUE ||
+                mOperands[outs[0]].lifetime == OperandLifeTime::NO_VALUE) {
+                LOG(ERROR) << "Wrong input/output count or lifetime for TRANSPOSE op.";
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
@@ -1728,16 +1765,18 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             RunTimeOperandInfo& out = mOperands[outs[0]];
             Shape outShape = out.shape();
 
+            if (!addMulPrepare(in1.shape(), in2.shape(), &outShape) ||
+                !setInfoAndAllocateIfNeeded(&out, outShape)) {
+                break;
+            }
             if (in1.type == OperandType::TENSOR_FLOAT32) {
-                success = addMulPrepare(in1.shape(), in2.shape(), &outShape) &&
-                          setInfoAndAllocateIfNeeded(&out, outShape) &&
-                          divFloat32(reinterpret_cast<const float*>(in1.buffer),
-                                     in1.shape(),
-                                     reinterpret_cast<const float*>(in2.buffer),
-                                     in2.shape(),
-                                     activation,
-                                     reinterpret_cast<float*>(out.buffer),
-                                     outShape);
+                success = divFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const float*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<float*>(out.buffer), outShape);
+            } else if (in1.type == OperandType::TENSOR_FLOAT16) {
+                success = divFloat16(reinterpret_cast<const _Float16*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const _Float16*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<_Float16*>(out.buffer), outShape);
             }
         } break;
         case OperationType::SUB: {
@@ -1755,7 +1794,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 !setInfoAndAllocateIfNeeded(&out, outShape)) {
                 break;
             }
-            if (in1.type == OperandType::TENSOR_FLOAT32) {
+            if (in1.type == OperandType::TENSOR_FLOAT16) {
+                success = subFloat16(reinterpret_cast<const _Float16*>(in1.buffer), in1.shape(),
+                                     reinterpret_cast<const _Float16*>(in2.buffer), in2.shape(),
+                                     activation, reinterpret_cast<_Float16*>(out.buffer), outShape);
+            } else if (in1.type == OperandType::TENSOR_FLOAT32) {
                 success = subFloat32(reinterpret_cast<const float*>(in1.buffer), in1.shape(),
                                      reinterpret_cast<const float*>(in2.buffer), in2.shape(),
                                      activation, reinterpret_cast<float*>(out.buffer), outShape);
@@ -1864,6 +1907,15 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                           setInfoAndAllocateIfNeeded(&(mOperands[outs[i]]), outputShapes[i]);
             }
             switch (input.type) {
+                case OperandType::TENSOR_FLOAT16: {
+                    std::vector<_Float16*> outputDataPtrs(numOutputs);
+                    for (int i = 0; i < numOutputs; ++i) {
+                        outputDataPtrs[i] = reinterpret_cast<_Float16*>(mOperands[outs[i]].buffer);
+                    }
+                    success = success &&
+                              splitFloat16(reinterpret_cast<const _Float16*>(input.buffer),
+                                           input.shape(), axis, &outputDataPtrs, outputShapes);
+                } break;
                 case OperandType::TENSOR_FLOAT32: {
                     std::vector<float*> outputDataPtrs(numOutputs);
                     for (int i = 0; i < numOutputs; ++i) {
@@ -2401,5 +2453,6 @@ ScopedOpenmpSettings::~ScopedOpenmpSettings() {
 #endif
 }
 #endif  // NNAPI_OPENMP
+
 } // namespace nn
 } // namespace android

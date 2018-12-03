@@ -142,10 +142,11 @@ class Type(NamedVariable):
         "UINT32": "uint32_t",
         "FLOAT32": "float",
         "TENSOR_INT32": "int32_t",
+        "TENSOR_FLOAT16": "_Float16",
         "TENSOR_FLOAT32": "float",
         "TENSOR_QUANT8_ASYMM": "uint8_t",
         "BOOL": "bool",
-        "TENSOR_QUANT16_ASYMM": "int16_t",
+        "TENSOR_QUANT16_SYMM": "int16_t",
 #     "OEM_SCALAR": this is service-defined.
         "TENSOR_OEM_BYTE": "uint8_t",
     }
@@ -206,7 +207,7 @@ class Type(NamedVariable):
         return Type.typeLookup[self.type]
 
     def IsFloat(self):
-        return self.GetCppTypeString() == "float"
+        return self.GetCppTypeString() in ["float", "_Float16"]
 
     def IsBool(self):
         return self.GetCppTypeString() == "bool"
@@ -215,7 +216,7 @@ class Type(NamedVariable):
         cppTypeString = self.GetCppTypeString()
         if cppTypeString in ["uint8_t", "bool"]:
             return 1
-        elif cppTypeString == "int16_t":
+        elif cppTypeString in ["int16_t", "_Float16"]:
             return 2
         else:
             return 4
@@ -604,6 +605,9 @@ class ModelVariation:
         model.compiled = False
         model.dumped = False
 
+        if not self.targetOperands:
+            self.AutoIdentify(model)
+
         # get transformed operands and update feedDicts
         operandsVar = self.ApplyToHelper(
             model, self.targetOperands, feedDicts, self.TransformOperand)
@@ -627,6 +631,10 @@ class ModelVariation:
         self.name = ""
         return self
 
+    # Automatically select the target operand list
+    def AutoIdentify(self, model):
+        return self
+
     # Transform operands that are marked by IdentifyOperands()
     def TransformOperand(self, op, arg=None):
         return op
@@ -646,20 +654,39 @@ class DefaultVariation(ModelVariation):
         return model, feedDicts
 
 # Convert operand data type
-class DataTypeConverter(ModelVariation):
+class DataTypeConverter(ModelVariation, ImplicitVariation):
 
-    def __init__(self, name=None):
+    def __init__(self, targetType=None, name=None):
         ModelVariation.__init__(self, name=name)
+        if targetType is not None:
+            assert DataTypeConverter.IsCompatible(targetType)
+        self.targetType = targetType
+
+    @staticmethod
+    def IsCompatible(value):
+        return value.lower() in ["float16", "int32"]
 
     def SetToDefaultName(self):
+        if self.targetType is not None:
+            self.name = self.targetType.lower()
+            return self
         # get all target types
         targetTypes = list(zip(*self.targetOperands.values()))[0]
         if "TENSOR_QUANT8_ASYMM" in targetTypes:
             self.name = "quant8"
         elif "TENSOR_INT32" in targetTypes:
             self.name = "int32"
+        elif "TENSOR_FLOAT16" in targetTypes:
+            self.name = "float16"
         else:
-            self.name = "float"
+            self.name = "float32"
+        return self
+
+    def AutoIdentify(self, model):
+        if self.targetType is not None:
+            # By default, select all the float32 tensors
+            self.Identify({op: ["TENSOR_" + self.targetType.upper()] \
+                    for op in model.operands if op.type.type == "TENSOR_FLOAT32"})
         return self
 
     def TransformOperand(self, op, arg=None):

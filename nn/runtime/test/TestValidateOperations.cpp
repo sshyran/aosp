@@ -27,7 +27,7 @@ static const int32_t kAvailableOperandCodes[] = {
         ANEURALNETWORKS_FLOAT32,        ANEURALNETWORKS_INT32,
         ANEURALNETWORKS_UINT32,         ANEURALNETWORKS_TENSOR_FLOAT32,
         ANEURALNETWORKS_TENSOR_INT32,   ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
-        ANEURALNETWORKS_BOOL,           ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+        ANEURALNETWORKS_BOOL,           ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
         ANEURALNETWORKS_TENSOR_OEM_BYTE};
 
 ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0, uint32_t* dim = nullptr,
@@ -132,9 +132,9 @@ public:
         return true;
     }
 
-    bool testMutatingInputOperandCounts() {
+    bool testMutatingInputOperandCounts(uint32_t numToAdd = 5) {
         std::vector<ANeuralNetworksOperandType> inputs = mValidInputs;
-        for (uint32_t i = 0; i < 5; i++) {
+        for (uint32_t i = 0; i < numToAdd; i++) {
             inputs.push_back(inputs[0]);
             if (ANEURALNETWORKS_NO_ERROR == addOperation(inputs, mValidOutputs)) {
                 return false;
@@ -206,6 +206,10 @@ void simpleMathOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
     EXPECT_TRUE(simpleMathTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(simpleMathTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(simpleMathTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, ADD_float16) {
+    simpleMathOpTest(ANEURALNETWORKS_ADD, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, ADD_float32) {
@@ -1110,6 +1114,99 @@ TEST(OperationValidationTest, LSTM_float32) {
          cellToOutput, inputGateBias, forgetGateBias, cellBias, outputGateBias, projWeights,
          projBias, outputStateIn, cellStateIn, activation, clipCellState, clipProjLayer},
         {scratch, outputStateOut, cellStateOut, output});
+
+    EXPECT_TRUE(lstmTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(lstmTest.testMutatingInputOperandCounts(3));
+    EXPECT_TRUE(lstmTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(lstmTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, LSTM_V1_2_float32) {
+    uint32_t oneDimensional[1] = {5};
+    uint32_t twoDimensional[2] = {5, 5};
+    ANeuralNetworksOperandType floatTensor1D = {.type = ANEURALNETWORKS_TENSOR_FLOAT32,
+                                                .dimensionCount = 1,
+                                                .dimensions = oneDimensional,
+                                                .scale = 0.0f,
+                                                .zeroPoint = 0};
+    ANeuralNetworksOperandType floatTensor2D = {.type = ANEURALNETWORKS_TENSOR_FLOAT32,
+                                                .dimensionCount = 2,
+                                                .dimensions = twoDimensional,
+                                                .scale = 0.0f,
+                                                .zeroPoint = 0};
+    ANeuralNetworksOperandType intScalar = {.type = ANEURALNETWORKS_INT32,
+                                            .dimensionCount = 0,
+                                            .dimensions = nullptr,
+                                            .scale = 0.0f,
+                                            .zeroPoint = 0};
+    ANeuralNetworksOperandType floatScalar = {.type = ANEURALNETWORKS_FLOAT32,
+                                              .dimensionCount = 0,
+                                              .dimensions = nullptr,
+                                              .scale = 0.0f,
+                                              .zeroPoint = 0};
+
+    ANeuralNetworksOperandType input = floatTensor2D;
+    ANeuralNetworksOperandType inputToInput = floatTensor2D;
+    ANeuralNetworksOperandType inputToForget = floatTensor2D;
+    ANeuralNetworksOperandType inputToCell = floatTensor2D;
+    ANeuralNetworksOperandType inputToOutput = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToInput = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToForget = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToCell = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToOutput = floatTensor2D;
+    ANeuralNetworksOperandType cellToInput = floatTensor1D;
+    ANeuralNetworksOperandType cellToForget = floatTensor1D;
+    ANeuralNetworksOperandType cellToOutput = floatTensor1D;
+    ANeuralNetworksOperandType inputGateBias = floatTensor1D;
+    ANeuralNetworksOperandType forgetGateBias = floatTensor1D;
+    ANeuralNetworksOperandType cellBias = floatTensor1D;
+    ANeuralNetworksOperandType outputGateBias = floatTensor1D;
+    ANeuralNetworksOperandType projWeights = floatTensor2D;
+    ANeuralNetworksOperandType projBias = floatTensor1D;
+    ANeuralNetworksOperandType outputStateIn = floatTensor2D;
+    ANeuralNetworksOperandType cellStateIn = floatTensor2D;
+    ANeuralNetworksOperandType activation = intScalar;
+    ANeuralNetworksOperandType clipCellState = floatScalar;
+    ANeuralNetworksOperandType clipProjLayer = floatScalar;
+    ANeuralNetworksOperandType inputLayerNormWeights = floatTensor1D;
+    ANeuralNetworksOperandType forgetLayerNormWeights = floatTensor1D;
+    ANeuralNetworksOperandType cellLayerNormWeights = floatTensor1D;
+    ANeuralNetworksOperandType outputLayerNormWeights = floatTensor1D;
+
+    ANeuralNetworksOperandType scratch = floatTensor2D;
+    ANeuralNetworksOperandType outputStateOut = floatTensor2D;
+    ANeuralNetworksOperandType cellStateOut = floatTensor2D;
+    ANeuralNetworksOperandType output = floatTensor2D;
+
+    OperationTestBase lstmTest(ANEURALNETWORKS_LSTM,
+                               {input,
+                                inputToInput,
+                                inputToForget,
+                                inputToCell,
+                                inputToOutput,
+                                recurrentToInput,
+                                recurrentToForget,
+                                recurrentToCell,
+                                recurrentToOutput,
+                                cellToInput,
+                                cellToForget,
+                                cellToOutput,
+                                inputGateBias,
+                                forgetGateBias,
+                                cellBias,
+                                outputGateBias,
+                                projWeights,
+                                projBias,
+                                outputStateIn,
+                                cellStateIn,
+                                activation,
+                                clipCellState,
+                                clipProjLayer,
+                                inputLayerNormWeights,
+                                forgetLayerNormWeights,
+                                cellLayerNormWeights,
+                                outputLayerNormWeights},
+                               {scratch, outputStateOut, cellStateOut, output});
 
     EXPECT_TRUE(lstmTest.testMutatingInputOperandCode());
     EXPECT_TRUE(lstmTest.testMutatingInputOperandCounts());

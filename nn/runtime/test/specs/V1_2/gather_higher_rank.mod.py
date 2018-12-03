@@ -26,11 +26,6 @@ quant8 = DataTypeConverter().Identify({
     output0: ["TENSOR_QUANT8_ASYMM", 0.5, 127],
 })
 
-int32 = DataTypeConverter().Identify({
-    input0: ["TENSOR_INT32"],
-    output0: ["TENSOR_INT32"],
-})
-
 Example({
     input0: [1, 2,
              3, 4,
@@ -44,4 +39,4 @@ Example({
              1, 2,
              1, 2,
              3, 4],
-}, model=model).AddVariations("relaxed", quant8, int32)
+}, model=model).AddVariations("relaxed", quant8, "int32")

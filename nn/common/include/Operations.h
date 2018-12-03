@@ -43,11 +43,15 @@ namespace nn {
 
 struct Shape;
 
+bool addFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut);
 bool addFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
                 int32_t activation, float* out, const Shape& shapeOut);
 bool addQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
                int32_t activation, uint8_t* out, const Shape& shapeOut);
 
+bool mulFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut);
 bool mulFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
                 int32_t activation, float* out, const Shape& shapeOut);
 bool mulQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
@@ -109,20 +113,32 @@ bool maxPoolQuant8(const uint8_t* inputData, const Shape& inputShape, int32_t pa
                    int32_t filter_height, int32_t activation, uint8_t* outputData,
                    const Shape& outputShape);
 
-bool reluFloat32(const float* inputData, const Shape& inputShape, float* outputData,
+template <typename T>
+bool reluFloat(const T* inputData, const Shape& inputShape, T* outputData, const Shape& outputShape,
+               float reluMin = 0.f, float reluMax = std::numeric_limits<float>::max());
+template <typename T>
+bool relu1Float(const T* inputData, const Shape& inputShape, T* outputData,
+                const Shape& outputShape);
+template <typename T>
+bool relu6Float(const T* inputData, const Shape& inputShape, T* outputData,
+                const Shape& outputShape);
+
+bool tanhFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* outputData,
                  const Shape& outputShape);
-bool relu1Float32(const float* inputData, const Shape& inputShape, float* outputData,
-                  const Shape& outputShape);
-bool relu6Float32(const float* inputData, const Shape& inputShape, float* outputData,
-                  const Shape& outputShape);
 bool tanhFloat32(const float* inputData, const Shape& inputShape, float* outputData,
                  const Shape& outputShape);
 bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
                 const Shape& outputShape);
-bool logisticFloat32(const float* inputData, const Shape& inputShape, float* outputData,
-                     const Shape& outputShape);
+
+template <typename T>
+bool logisticFloat(const T* inputData, const Shape& inputShape, T* outputData,
+                   const Shape& outputShape);
+
+bool softmaxFloat16(const _Float16* inputData, const Shape& inputShape, const float beta,
+                    int32_t axis, _Float16* outputData, const Shape& outputShape);
 bool softmaxFloat32(const float* inputData, const Shape& inputShape, const float beta, int32_t axis,
                     float* outputData, const Shape& outputShape);
+
 bool reluQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
                 const Shape& outputShape);
 bool relu1Quant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
@@ -142,12 +158,10 @@ bool fullyConnectedQuant8(const uint8_t* inputData, const Shape& inputShape, con
                           const Shape& biasShape, int32_t activation, uint8_t* outputData,
                           const Shape& outputShape);
 
-bool concatenationFloat32(const std::vector<const float*>& inputDataPtrs,
-                          const std::vector<Shape>& inputShapes, int32_t axis, float* outputData,
-                          const Shape& outputShape);
-bool concatenationQuant8(const std::vector<const uint8_t*>& inputDataPtrs,
-                         const std::vector<Shape>& inputShapes, int32_t axis, uint8_t* outputData,
-                         const Shape& outputShape);
+template <typename T>
+bool concatenation(const std::vector<const T*>& inputDataPtrs,
+                   const std::vector<Shape>& inputShapes, int32_t axis, T* outputData,
+                   const Shape& outputShape);
 
 bool l2normFloat32(const float* inputData, const Shape& inputShape, int32_t axis, float* outputData,
                    const Shape& outputShape);
@@ -180,6 +194,9 @@ bool spaceToBatchGeneric(const uint8_t* inputData, const Shape& inputShape,
                          const int32_t* blockSize, const int32_t* padding,
                          const Shape& paddingShape, uint8_t* outputData, const Shape& outputShape);
 
+bool subFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut);
+
 bool subFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
                 int32_t activation, float* out, const Shape& shapeOut);
 
@@ -189,6 +206,8 @@ bool subQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, cons
 bool squeezeGeneric(const void* inputData, const Shape& inputShape, void* outputData,
                     const Shape& outputShape);
 
+bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut);
 bool divFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
                 int32_t activation, float* out, const Shape& shapeOut);
 
@@ -206,6 +225,10 @@ bool stridedSliceGeneric(const uint8_t* inputData, const Shape& inputShape,
 
 bool argMinMaxGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t axis,
                       bool isArgMin, uint8_t* outputData, const Shape& outputShape);
+
+bool splitFloat16(const _Float16* inputData, const Shape& inputShape, int32_t axis,
+                  const std::vector<_Float16*>* outputDataPtrs,
+                  const std::vector<Shape>& outputShapes);
 
 bool splitFloat32(const float* inputData, const Shape& inputShape, const int32_t axis,
                   const std::vector<float*>* outputDataPtrs,

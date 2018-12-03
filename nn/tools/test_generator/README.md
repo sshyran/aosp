@@ -236,6 +236,13 @@ The test generator provides several helper functions or shorthands to add common
 ```Python
 # Each following group of statements are equivalent
 
+# DataTypeConverter
+example.AddVariations(DataTypeConverter().Identify({op1: "TENSOR_FLOAT16", ...}))
+example.AddVariations("float16")    # will apply to every TENSOR_FLOAT32 operands
+
+example.AddVariations(DataTypeConverter().Identify({op1: "TENSOR_INT32", ...}))
+example.AddVariations("int32")      # will apply to every TENSOR_FLOAT32 operands
+
 # DataLayoutConverter
 example.AddVariations(DataLayoutConverter("nchw").Identify(op_list))
 example.AddVariations(("nchw", op_list))
