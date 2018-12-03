@@ -1,6 +1,7 @@
 // clang-format off
 // Generated file (from: grouped_conv2d.mod.py). Do not edit
-std::vector<MixedTypedExample> examples_nhwc_none = {
+std::vector<MixedTypedExample>& get_examples_nhwc_none() {
+static std::vector<MixedTypedExample> examples_nhwc_none = {
 // Begin of an example
 {
 .operands = {
@@ -33,8 +34,11 @@ std::vector<MixedTypedExample> examples_nhwc_none = {
 },
 }, // End of an example
 };
+return examples_nhwc_none;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_none_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_none_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_none_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -67,8 +71,11 @@ std::vector<MixedTypedExample> examples_nhwc_none_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_none_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_none_relaxed = {
+std::vector<MixedTypedExample>& get_examples_nhwc_none_relaxed() {
+static std::vector<MixedTypedExample> examples_nhwc_none_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -101,8 +108,11 @@ std::vector<MixedTypedExample> examples_nhwc_none_relaxed = {
 },
 }, // End of an example
 };
+return examples_nhwc_none_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_none_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_none_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_none_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -135,8 +145,11 @@ std::vector<MixedTypedExample> examples_nhwc_none_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_none_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_none_quant8 = {
+std::vector<MixedTypedExample>& get_examples_nhwc_none_quant8() {
+static std::vector<MixedTypedExample> examples_nhwc_none_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -169,8 +182,11 @@ std::vector<MixedTypedExample> examples_nhwc_none_quant8 = {
 },
 }, // End of an example
 };
+return examples_nhwc_none_quant8;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_none_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_none_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_none_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -203,8 +219,11 @@ std::vector<MixedTypedExample> examples_nhwc_none_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_none_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu() {
+static std::vector<MixedTypedExample> examples_nhwc_relu = {
 // Begin of an example
 {
 .operands = {
@@ -237,8 +256,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_relu_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -271,8 +293,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu_relaxed = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu_relaxed() {
+static std::vector<MixedTypedExample> examples_nhwc_relu_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -305,8 +330,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu_relaxed = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_relu_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -339,8 +367,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu_quant8 = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu_quant8() {
+static std::vector<MixedTypedExample> examples_nhwc_relu_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -373,8 +404,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu_quant8 = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu_quant8;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_relu_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -407,8 +441,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu1 = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu1() {
+static std::vector<MixedTypedExample> examples_nhwc_relu1 = {
 // Begin of an example
 {
 .operands = {
@@ -441,8 +478,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu1 = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu1;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu1_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu1_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_relu1_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -475,8 +515,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu1_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu1_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu1_relaxed = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu1_relaxed() {
+static std::vector<MixedTypedExample> examples_nhwc_relu1_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -509,8 +552,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu1_relaxed = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu1_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu1_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu1_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_relu1_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -543,8 +589,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu1_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu1_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu1_quant8 = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu1_quant8() {
+static std::vector<MixedTypedExample> examples_nhwc_relu1_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -577,8 +626,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu1_quant8 = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu1_quant8;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu1_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu1_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_relu1_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -611,8 +663,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu1_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu1_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu6 = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu6() {
+static std::vector<MixedTypedExample> examples_nhwc_relu6 = {
 // Begin of an example
 {
 .operands = {
@@ -645,8 +700,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu6 = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu6;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu6_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu6_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_relu6_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -679,8 +737,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu6_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu6_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu6_relaxed = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu6_relaxed() {
+static std::vector<MixedTypedExample> examples_nhwc_relu6_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -713,8 +774,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu6_relaxed = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu6_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu6_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu6_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_relu6_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -747,8 +811,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu6_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu6_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu6_quant8 = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu6_quant8() {
+static std::vector<MixedTypedExample> examples_nhwc_relu6_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -781,8 +848,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu6_quant8 = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu6_quant8;
+};
 
-std::vector<MixedTypedExample> examples_nhwc_relu6_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nhwc_relu6_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nhwc_relu6_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -815,8 +885,11 @@ std::vector<MixedTypedExample> examples_nhwc_relu6_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nhwc_relu6_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_none = {
+std::vector<MixedTypedExample>& get_examples_nchw_none() {
+static std::vector<MixedTypedExample> examples_nchw_none = {
 // Begin of an example
 {
 .operands = {
@@ -849,8 +922,11 @@ std::vector<MixedTypedExample> examples_nchw_none = {
 },
 }, // End of an example
 };
+return examples_nchw_none;
+};
 
-std::vector<MixedTypedExample> examples_nchw_none_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_none_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_none_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -883,8 +959,11 @@ std::vector<MixedTypedExample> examples_nchw_none_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_none_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_none_relaxed = {
+std::vector<MixedTypedExample>& get_examples_nchw_none_relaxed() {
+static std::vector<MixedTypedExample> examples_nchw_none_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -917,8 +996,11 @@ std::vector<MixedTypedExample> examples_nchw_none_relaxed = {
 },
 }, // End of an example
 };
+return examples_nchw_none_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_nchw_none_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_none_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_none_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -951,8 +1033,11 @@ std::vector<MixedTypedExample> examples_nchw_none_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_none_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_none_quant8 = {
+std::vector<MixedTypedExample>& get_examples_nchw_none_quant8() {
+static std::vector<MixedTypedExample> examples_nchw_none_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -985,8 +1070,11 @@ std::vector<MixedTypedExample> examples_nchw_none_quant8 = {
 },
 }, // End of an example
 };
+return examples_nchw_none_quant8;
+};
 
-std::vector<MixedTypedExample> examples_nchw_none_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_none_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_none_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1019,8 +1107,11 @@ std::vector<MixedTypedExample> examples_nchw_none_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_none_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu() {
+static std::vector<MixedTypedExample> examples_nchw_relu = {
 // Begin of an example
 {
 .operands = {
@@ -1053,8 +1144,11 @@ std::vector<MixedTypedExample> examples_nchw_relu = {
 },
 }, // End of an example
 };
+return examples_nchw_relu;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_relu_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1087,8 +1181,11 @@ std::vector<MixedTypedExample> examples_nchw_relu_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_relu_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu_relaxed = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu_relaxed() {
+static std::vector<MixedTypedExample> examples_nchw_relu_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1121,8 +1218,11 @@ std::vector<MixedTypedExample> examples_nchw_relu_relaxed = {
 },
 }, // End of an example
 };
+return examples_nchw_relu_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_relu_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1155,8 +1255,11 @@ std::vector<MixedTypedExample> examples_nchw_relu_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_relu_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu_quant8 = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu_quant8() {
+static std::vector<MixedTypedExample> examples_nchw_relu_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1189,8 +1292,11 @@ std::vector<MixedTypedExample> examples_nchw_relu_quant8 = {
 },
 }, // End of an example
 };
+return examples_nchw_relu_quant8;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_relu_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1223,8 +1329,11 @@ std::vector<MixedTypedExample> examples_nchw_relu_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_relu_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu1 = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu1() {
+static std::vector<MixedTypedExample> examples_nchw_relu1 = {
 // Begin of an example
 {
 .operands = {
@@ -1257,8 +1366,11 @@ std::vector<MixedTypedExample> examples_nchw_relu1 = {
 },
 }, // End of an example
 };
+return examples_nchw_relu1;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu1_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu1_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_relu1_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1291,8 +1403,11 @@ std::vector<MixedTypedExample> examples_nchw_relu1_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_relu1_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu1_relaxed = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu1_relaxed() {
+static std::vector<MixedTypedExample> examples_nchw_relu1_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1325,8 +1440,11 @@ std::vector<MixedTypedExample> examples_nchw_relu1_relaxed = {
 },
 }, // End of an example
 };
+return examples_nchw_relu1_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu1_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu1_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_relu1_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1359,8 +1477,11 @@ std::vector<MixedTypedExample> examples_nchw_relu1_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_relu1_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu1_quant8 = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu1_quant8() {
+static std::vector<MixedTypedExample> examples_nchw_relu1_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1393,8 +1514,11 @@ std::vector<MixedTypedExample> examples_nchw_relu1_quant8 = {
 },
 }, // End of an example
 };
+return examples_nchw_relu1_quant8;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu1_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu1_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_relu1_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1427,8 +1551,11 @@ std::vector<MixedTypedExample> examples_nchw_relu1_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_relu1_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu6 = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu6() {
+static std::vector<MixedTypedExample> examples_nchw_relu6 = {
 // Begin of an example
 {
 .operands = {
@@ -1461,8 +1588,11 @@ std::vector<MixedTypedExample> examples_nchw_relu6 = {
 },
 }, // End of an example
 };
+return examples_nchw_relu6;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu6_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu6_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_relu6_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1495,8 +1625,11 @@ std::vector<MixedTypedExample> examples_nchw_relu6_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_relu6_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu6_relaxed = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu6_relaxed() {
+static std::vector<MixedTypedExample> examples_nchw_relu6_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1529,8 +1662,11 @@ std::vector<MixedTypedExample> examples_nchw_relu6_relaxed = {
 },
 }, // End of an example
 };
+return examples_nchw_relu6_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu6_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu6_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_relu6_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1563,8 +1699,11 @@ std::vector<MixedTypedExample> examples_nchw_relu6_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_relu6_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu6_quant8 = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu6_quant8() {
+static std::vector<MixedTypedExample> examples_nchw_relu6_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1597,8 +1736,11 @@ std::vector<MixedTypedExample> examples_nchw_relu6_quant8 = {
 },
 }, // End of an example
 };
+return examples_nchw_relu6_quant8;
+};
 
-std::vector<MixedTypedExample> examples_nchw_relu6_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_nchw_relu6_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_nchw_relu6_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1631,8 +1773,11 @@ std::vector<MixedTypedExample> examples_nchw_relu6_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_nchw_relu6_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_large_nhwc = {
+std::vector<MixedTypedExample>& get_examples_large_nhwc() {
+static std::vector<MixedTypedExample> examples_large_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -1665,8 +1810,11 @@ std::vector<MixedTypedExample> examples_large_nhwc = {
 },
 }, // End of an example
 };
+return examples_large_nhwc;
+};
 
-std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_large_nhwc_weight_as_input() {
+static std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1699,8 +1847,11 @@ std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_large_nhwc_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_large_nhwc_relaxed = {
+std::vector<MixedTypedExample>& get_examples_large_nhwc_relaxed() {
+static std::vector<MixedTypedExample> examples_large_nhwc_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1733,8 +1884,11 @@ std::vector<MixedTypedExample> examples_large_nhwc_relaxed = {
 },
 }, // End of an example
 };
+return examples_large_nhwc_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_large_nhwc_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_large_nhwc_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_large_nhwc_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1767,8 +1921,11 @@ std::vector<MixedTypedExample> examples_large_nhwc_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_large_nhwc_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_large_nhwc_quant8 = {
+std::vector<MixedTypedExample>& get_examples_large_nhwc_quant8() {
+static std::vector<MixedTypedExample> examples_large_nhwc_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1801,8 +1958,11 @@ std::vector<MixedTypedExample> examples_large_nhwc_quant8 = {
 },
 }, // End of an example
 };
+return examples_large_nhwc_quant8;
+};
 
-std::vector<MixedTypedExample> examples_large_nhwc_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_large_nhwc_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_large_nhwc_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1835,8 +1995,11 @@ std::vector<MixedTypedExample> examples_large_nhwc_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_large_nhwc_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_large_nchw = {
+std::vector<MixedTypedExample>& get_examples_large_nchw() {
+static std::vector<MixedTypedExample> examples_large_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -1869,8 +2032,11 @@ std::vector<MixedTypedExample> examples_large_nchw = {
 },
 }, // End of an example
 };
+return examples_large_nchw;
+};
 
-std::vector<MixedTypedExample> examples_large_nchw_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_large_nchw_weight_as_input() {
+static std::vector<MixedTypedExample> examples_large_nchw_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1903,8 +2069,11 @@ std::vector<MixedTypedExample> examples_large_nchw_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_large_nchw_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_large_nchw_relaxed = {
+std::vector<MixedTypedExample>& get_examples_large_nchw_relaxed() {
+static std::vector<MixedTypedExample> examples_large_nchw_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1937,8 +2106,11 @@ std::vector<MixedTypedExample> examples_large_nchw_relaxed = {
 },
 }, // End of an example
 };
+return examples_large_nchw_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_large_nchw_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_large_nchw_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_large_nchw_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -1971,8 +2143,11 @@ std::vector<MixedTypedExample> examples_large_nchw_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_large_nchw_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_large_nchw_quant8 = {
+std::vector<MixedTypedExample>& get_examples_large_nchw_quant8() {
+static std::vector<MixedTypedExample> examples_large_nchw_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -2005,8 +2180,11 @@ std::vector<MixedTypedExample> examples_large_nchw_quant8 = {
 },
 }, // End of an example
 };
+return examples_large_nchw_quant8;
+};
 
-std::vector<MixedTypedExample> examples_large_nchw_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_large_nchw_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_large_nchw_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -2039,8 +2217,11 @@ std::vector<MixedTypedExample> examples_large_nchw_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_large_nchw_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_channel_nhwc = {
+std::vector<MixedTypedExample>& get_examples_channel_nhwc() {
+static std::vector<MixedTypedExample> examples_channel_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -2073,8 +2254,11 @@ std::vector<MixedTypedExample> examples_channel_nhwc = {
 },
 }, // End of an example
 };
+return examples_channel_nhwc;
+};
 
-std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_channel_nhwc_weight_as_input() {
+static std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -2107,8 +2291,11 @@ std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_channel_nhwc_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_channel_nhwc_relaxed = {
+std::vector<MixedTypedExample>& get_examples_channel_nhwc_relaxed() {
+static std::vector<MixedTypedExample> examples_channel_nhwc_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -2141,8 +2328,11 @@ std::vector<MixedTypedExample> examples_channel_nhwc_relaxed = {
 },
 }, // End of an example
 };
+return examples_channel_nhwc_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_channel_nhwc_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_channel_nhwc_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_channel_nhwc_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -2175,8 +2365,11 @@ std::vector<MixedTypedExample> examples_channel_nhwc_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_channel_nhwc_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_channel_nhwc_quant8 = {
+std::vector<MixedTypedExample>& get_examples_channel_nhwc_quant8() {
+static std::vector<MixedTypedExample> examples_channel_nhwc_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -2209,8 +2402,11 @@ std::vector<MixedTypedExample> examples_channel_nhwc_quant8 = {
 },
 }, // End of an example
 };
+return examples_channel_nhwc_quant8;
+};
 
-std::vector<MixedTypedExample> examples_channel_nhwc_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_channel_nhwc_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_channel_nhwc_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -2243,8 +2439,11 @@ std::vector<MixedTypedExample> examples_channel_nhwc_quant8_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_channel_nhwc_quant8_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_channel_nchw = {
+std::vector<MixedTypedExample>& get_examples_channel_nchw() {
+static std::vector<MixedTypedExample> examples_channel_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -2277,8 +2476,11 @@ std::vector<MixedTypedExample> examples_channel_nchw = {
 },
 }, // End of an example
 };
+return examples_channel_nchw;
+};
 
-std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_channel_nchw_weight_as_input() {
+static std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -2311,8 +2513,11 @@ std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_channel_nchw_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_channel_nchw_relaxed = {
+std::vector<MixedTypedExample>& get_examples_channel_nchw_relaxed() {
+static std::vector<MixedTypedExample> examples_channel_nchw_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -2345,8 +2550,11 @@ std::vector<MixedTypedExample> examples_channel_nchw_relaxed = {
 },
 }, // End of an example
 };
+return examples_channel_nchw_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_channel_nchw_relaxed_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_channel_nchw_relaxed_weight_as_input() {
+static std::vector<MixedTypedExample> examples_channel_nchw_relaxed_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -2379,8 +2587,11 @@ std::vector<MixedTypedExample> examples_channel_nchw_relaxed_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_channel_nchw_relaxed_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_channel_nchw_quant8 = {
+std::vector<MixedTypedExample>& get_examples_channel_nchw_quant8() {
+static std::vector<MixedTypedExample> examples_channel_nchw_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -2413,8 +2624,11 @@ std::vector<MixedTypedExample> examples_channel_nchw_quant8 = {
 },
 }, // End of an example
 };
+return examples_channel_nchw_quant8;
+};
 
-std::vector<MixedTypedExample> examples_channel_nchw_quant8_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_channel_nchw_quant8_weight_as_input() {
+static std::vector<MixedTypedExample> examples_channel_nchw_quant8_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -2446,5 +2660,7 @@ std::vector<MixedTypedExample> examples_channel_nchw_quant8_weight_as_input = {
 }
 },
 }, // End of an example
+};
+return examples_channel_nchw_quant8_weight_as_input;
 };
 

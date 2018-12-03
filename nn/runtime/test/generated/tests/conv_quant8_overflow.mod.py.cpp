@@ -12,6 +12,6 @@ namespace conv_quant8_overflow {
 TEST_F(GeneratedTests, conv_quant8_overflow) {
     execute(conv_quant8_overflow::CreateModel,
             conv_quant8_overflow::is_ignored,
-            conv_quant8_overflow::examples);
+            conv_quant8_overflow::get_examples());
 }
 

@@ -1,6 +1,7 @@
 // clang-format off
 // Generated file (from: quantize.mod.py). Do not edit
-std::vector<MixedTypedExample> examples_quant8 = {
+std::vector<MixedTypedExample>& get_examples_quant8() {
+static std::vector<MixedTypedExample> examples_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -33,8 +34,11 @@ std::vector<MixedTypedExample> examples_quant8 = {
 },
 }, // End of an example
 };
+return examples_quant8;
+};
 
-std::vector<MixedTypedExample> examples_quant8_2 = {
+std::vector<MixedTypedExample>& get_examples_quant8_2() {
+static std::vector<MixedTypedExample> examples_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -67,8 +71,11 @@ std::vector<MixedTypedExample> examples_quant8_2 = {
 },
 }, // End of an example
 };
+return examples_quant8_2;
+};
 
-std::vector<MixedTypedExample> examples_quant8_3 = {
+std::vector<MixedTypedExample>& get_examples_quant8_3() {
+static std::vector<MixedTypedExample> examples_quant8_3 = {
 // Begin of an example
 {
 .operands = {
@@ -101,8 +108,11 @@ std::vector<MixedTypedExample> examples_quant8_3 = {
 },
 }, // End of an example
 };
+return examples_quant8_3;
+};
 
-std::vector<MixedTypedExample> examples_quant8_4 = {
+std::vector<MixedTypedExample>& get_examples_quant8_4() {
+static std::vector<MixedTypedExample> examples_quant8_4 = {
 // Begin of an example
 {
 .operands = {
@@ -134,5 +144,7 @@ std::vector<MixedTypedExample> examples_quant8_4 = {
 }
 },
 }, // End of an example
+};
+return examples_quant8_4;
 };
 

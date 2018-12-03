@@ -1,6 +1,7 @@
 // clang-format off
 // Generated file (from: layer_norm_lstm.mod.py). Do not edit
-std::vector<MixedTypedExample> examples = {
+std::vector<MixedTypedExample>& get_examples() {
+static std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 .operands = {
@@ -94,5 +95,7 @@ std::vector<MixedTypedExample> examples = {
 }
 },
 }, // End of an example
+};
+return examples;
 };
 

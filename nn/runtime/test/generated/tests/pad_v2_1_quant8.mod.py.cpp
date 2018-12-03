@@ -12,6 +12,6 @@ namespace pad_v2_1_quant8 {
 TEST_F(GeneratedTests, pad_v2_1_quant8) {
     execute(pad_v2_1_quant8::CreateModel,
             pad_v2_1_quant8::is_ignored,
-            pad_v2_1_quant8::examples);
+            pad_v2_1_quant8::get_examples());
 }
 

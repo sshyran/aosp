@@ -12,6 +12,6 @@ namespace div {
 TEST_F(GeneratedTests, div) {
     execute(div::CreateModel,
             div::is_ignored,
-            div::examples);
+            div::get_examples());
 }
 

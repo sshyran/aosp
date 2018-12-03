@@ -12,6 +12,6 @@ namespace depthwise_conv2d_float_weights_as_inputs_relaxed {
 TEST_F(GeneratedTests, depthwise_conv2d_float_weights_as_inputs_relaxed) {
     execute(depthwise_conv2d_float_weights_as_inputs_relaxed::CreateModel,
             depthwise_conv2d_float_weights_as_inputs_relaxed::is_ignored,
-            depthwise_conv2d_float_weights_as_inputs_relaxed::examples);
+            depthwise_conv2d_float_weights_as_inputs_relaxed::get_examples());
 }
 

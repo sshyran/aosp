@@ -12,6 +12,6 @@ namespace local_response_norm_float_2 {
 TEST_F(GeneratedTests, local_response_norm_float_2) {
     execute(local_response_norm_float_2::CreateModel,
             local_response_norm_float_2::is_ignored,
-            local_response_norm_float_2::examples);
+            local_response_norm_float_2::get_examples());
 }
 

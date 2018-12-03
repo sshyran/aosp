@@ -113,6 +113,72 @@ struct Shape {
     int32_t offset;
 };
 
+// Provides information available during graph creation to validate an operation.
+class IOperationValidationContext {
+   public:
+    virtual ~IOperationValidationContext() {}
+
+    // The HAL version used to validate the operation.
+    // If getHalVersion() returns HalVersion::V1_0 and the operation
+    // is only supported since HalVersion::V1_1, validation will fail.
+    virtual HalVersion getHalVersion() const = 0;
+
+    virtual uint32_t getNumInputs() const = 0;
+    virtual OperandType getInputType(uint32_t index) const = 0;
+    virtual Shape getInputShape(uint32_t index) const = 0;
+
+    virtual uint32_t getNumOutputs() const = 0;
+    virtual OperandType getOutputType(uint32_t index) const = 0;
+    virtual Shape getOutputShape(uint32_t index) const = 0;
+};
+
+// Provides inputs and outputs during operation execution.
+class IOperationExecutionContext {
+   public:
+    virtual ~IOperationExecutionContext() {}
+
+    virtual uint32_t getNumInputs() const = 0;
+    virtual OperandType getInputType(uint32_t index) const = 0;
+    virtual Shape getInputShape(uint32_t index) const = 0;
+    virtual const void* getInputBuffer(uint32_t index) const = 0;
+
+    virtual uint32_t getNumOutputs() const = 0;
+    virtual OperandType getOutputType(uint32_t index) const = 0;
+    virtual Shape getOutputShape(uint32_t index) const = 0;
+    virtual void* getOutputBuffer(uint32_t index) = 0;
+
+    // Requests the output buffer to be resized. Updates the output shape.
+    virtual bool resizeOutputTensor(uint32_t index, const Shape& shape) = 0;
+
+    template <typename T>
+    const T* getInputBuffer(uint32_t index) const {
+        return reinterpret_cast<const T*>(getInputBuffer(index));
+    }
+
+    template <typename T>
+    T* getOutputBuffer(uint32_t index) {
+        return reinterpret_cast<T*>(getOutputBuffer(index));
+    }
+
+    template <typename T>
+    T getInputValue(uint32_t index) const {
+        return getInputBuffer<T>(index)[0];
+    }
+};
+
+// Verifies that the number and types of operation inputs are as expected.
+bool validateInputTypes(const IOperationValidationContext* context,
+                        const std::vector<OperandType>& expectedTypes);
+
+// Verifies that the number and types of operation outputs are as expected.
+bool validateOutputTypes(const IOperationValidationContext* context,
+                         const std::vector<OperandType>& expectedTypes);
+
+// Verifies that the HAL version specified in the context is greater or equal
+// than the minimal supported HAL version.
+bool validateHalVersion(const IOperationValidationContext* context,
+                        HalVersion minSupportedHalVersion);
+
 // Verifies that the two shapes are the same.
 bool SameShape(const Shape& in1, const Shape& in2);
 

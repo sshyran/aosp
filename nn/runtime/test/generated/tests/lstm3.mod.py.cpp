@@ -12,6 +12,6 @@ namespace lstm3 {
 TEST_F(GeneratedTests, lstm3) {
     execute(lstm3::CreateModel,
             lstm3::is_ignored,
-            lstm3::examples);
+            lstm3::get_examples());
 }
 

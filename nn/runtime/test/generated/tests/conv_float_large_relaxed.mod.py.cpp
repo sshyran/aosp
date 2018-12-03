@@ -12,6 +12,6 @@ namespace conv_float_large_relaxed {
 TEST_F(GeneratedTests, conv_float_large_relaxed) {
     execute(conv_float_large_relaxed::CreateModel,
             conv_float_large_relaxed::is_ignored,
-            conv_float_large_relaxed::examples);
+            conv_float_large_relaxed::get_examples());
 }
 

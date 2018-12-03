@@ -12,6 +12,6 @@ namespace space_to_batch_float_3 {
 TEST_F(GeneratedTests, space_to_batch_float_3) {
     execute(space_to_batch_float_3::CreateModel,
             space_to_batch_float_3::is_ignored,
-            space_to_batch_float_3::examples);
+            space_to_batch_float_3::get_examples());
 }
 

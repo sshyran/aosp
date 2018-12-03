@@ -12,6 +12,6 @@ namespace mul_relu_relaxed {
 TEST_F(GeneratedTests, mul_relu_relaxed) {
     execute(mul_relu_relaxed::CreateModel,
             mul_relu_relaxed::is_ignored,
-            mul_relu_relaxed::examples);
+            mul_relu_relaxed::get_examples());
 }
 

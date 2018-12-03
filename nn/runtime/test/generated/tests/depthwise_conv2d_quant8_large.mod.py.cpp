@@ -12,6 +12,6 @@ namespace depthwise_conv2d_quant8_large {
 TEST_F(GeneratedTests, depthwise_conv2d_quant8_large) {
     execute(depthwise_conv2d_quant8_large::CreateModel,
             depthwise_conv2d_quant8_large::is_ignored,
-            depthwise_conv2d_quant8_large::examples);
+            depthwise_conv2d_quant8_large::get_examples());
 }
 

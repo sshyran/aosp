@@ -12,6 +12,6 @@ namespace hashtable_lookup_float_relaxed {
 TEST_F(GeneratedTests, hashtable_lookup_float_relaxed) {
     execute(hashtable_lookup_float_relaxed::CreateModel,
             hashtable_lookup_float_relaxed::is_ignored,
-            hashtable_lookup_float_relaxed::examples);
+            hashtable_lookup_float_relaxed::get_examples());
 }
 

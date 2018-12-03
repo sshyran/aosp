@@ -12,6 +12,6 @@ namespace reshape {
 TEST_F(GeneratedTests, reshape) {
     execute(reshape::CreateModel,
             reshape::is_ignored,
-            reshape::examples);
+            reshape::get_examples());
 }
 
