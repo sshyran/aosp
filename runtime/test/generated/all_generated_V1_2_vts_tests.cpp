@@ -14781,6 +14781,21 @@ TEST_F(ValidationTest, split_float_1_relaxed) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, split_float_1_float16) {
+  generated_tests::Execute(device,
+                           split_float_1::createTestModel_float16,
+                           split_float_1::is_ignored_float16,
+                           split_float_1::examples_float16);
+}
+
+TEST_F(ValidationTest, split_float_1_float16) {
+  const Model model = split_float_1::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(split_float_1::examples_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: split_float_2.mod.py.
 namespace split_float_2 {
 // Generated split_float_2 test
@@ -14814,6 +14829,21 @@ TEST_F(NeuralnetworksHidlTest, split_float_2_relaxed) {
 TEST_F(ValidationTest, split_float_2_relaxed) {
   const Model model = split_float_2::createTestModel_relaxed();
   const std::vector<Request> requests = createRequests(split_float_2::examples_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, split_float_2_float16) {
+  generated_tests::Execute(device,
+                           split_float_2::createTestModel_float16,
+                           split_float_2::is_ignored_float16,
+                           split_float_2::examples_float16);
+}
+
+TEST_F(ValidationTest, split_float_2_float16) {
+  const Model model = split_float_2::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(split_float_2::examples_float16);
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14857,6 +14887,21 @@ TEST_F(ValidationTest, split_float_3_relaxed) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, split_float_3_float16) {
+  generated_tests::Execute(device,
+                           split_float_3::createTestModel_float16,
+                           split_float_3::is_ignored_float16,
+                           split_float_3::examples_float16);
+}
+
+TEST_F(ValidationTest, split_float_3_float16) {
+  const Model model = split_float_3::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(split_float_3::examples_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: split_float_4.mod.py.
 namespace split_float_4 {
 // Generated split_float_4 test
@@ -14895,6 +14940,21 @@ TEST_F(ValidationTest, split_float_4_relaxed) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, split_float_4_float16) {
+  generated_tests::Execute(device,
+                           split_float_4::createTestModel_float16,
+                           split_float_4::is_ignored_float16,
+                           split_float_4::examples_float16);
+}
+
+TEST_F(ValidationTest, split_float_4_float16) {
+  const Model model = split_float_4::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(split_float_4::examples_float16);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: split_float_5.mod.py.
 namespace split_float_5 {
 // Generated split_float_5 test
@@ -14928,6 +14988,21 @@ TEST_F(NeuralnetworksHidlTest, split_float_5_relaxed) {
 TEST_F(ValidationTest, split_float_5_relaxed) {
   const Model model = split_float_5::createTestModel_relaxed();
   const std::vector<Request> requests = createRequests(split_float_5::examples_relaxed);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, split_float_5_float16) {
+  generated_tests::Execute(device,
+                           split_float_5::createTestModel_float16,
+                           split_float_5::is_ignored_float16,
+                           split_float_5::examples_float16);
+}
+
+TEST_F(ValidationTest, split_float_5_float16) {
+  const Model model = split_float_5::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(split_float_5::examples_float16);
   validateModel(model);
   validateRequests(model, requests);
 }
