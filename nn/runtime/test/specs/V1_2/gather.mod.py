@@ -27,10 +27,15 @@ def test(input0, axis, indices, output0, input_data, output_data):
       output0: ["TENSOR_INT32"],
   })
 
+  float16 = DataTypeConverter().Identify({
+      input0: ["TENSOR_FLOAT16"],
+      output0: ["TENSOR_FLOAT16"],
+  })
+
   Example({
       input0: input_data,
       output0: output_data,
-  }, model=model).AddVariations("relaxed", quant8, int32)
+  }, model=model).AddVariations("relaxed", quant8, int32, float16)
 
 test(
     input0=Input("input0", "TENSOR_FLOAT32", "{2, 2}"),

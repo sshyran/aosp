@@ -33,6 +33,12 @@ TEST_F(GeneratedTests, gather_int32) {
             gather::examples_int32);
 }
 
+TEST_F(GeneratedTests, gather_float16) {
+    execute(gather::CreateModel_float16,
+            gather::is_ignored_float16,
+            gather::examples_float16);
+}
+
 TEST_F(GeneratedTests, gather_2) {
     execute(gather::CreateModel_2,
             gather::is_ignored_2,
@@ -55,6 +61,12 @@ TEST_F(GeneratedTests, gather_int32_2) {
     execute(gather::CreateModel_int32_2,
             gather::is_ignored_int32_2,
             gather::examples_int32_2);
+}
+
+TEST_F(GeneratedTests, gather_float16_2) {
+    execute(gather::CreateModel_float16_2,
+            gather::is_ignored_float16_2,
+            gather::examples_float16_2);
 }
 
 TEST_F(GeneratedTests, gather_3) {
@@ -81,6 +93,12 @@ TEST_F(GeneratedTests, gather_int32_3) {
             gather::examples_int32_3);
 }
 
+TEST_F(GeneratedTests, gather_float16_3) {
+    execute(gather::CreateModel_float16_3,
+            gather::is_ignored_float16_3,
+            gather::examples_float16_3);
+}
+
 TEST_F(GeneratedTests, gather_4) {
     execute(gather::CreateModel_4,
             gather::is_ignored_4,
@@ -103,6 +121,12 @@ TEST_F(GeneratedTests, gather_int32_4) {
     execute(gather::CreateModel_int32_4,
             gather::is_ignored_int32_4,
             gather::examples_int32_4);
+}
+
+TEST_F(GeneratedTests, gather_float16_4) {
+    execute(gather::CreateModel_float16_4,
+            gather::is_ignored_float16_4,
+            gather::examples_float16_4);
 }
 
 TEST_F(GeneratedTests, gather_5) {
@@ -129,6 +153,12 @@ TEST_F(GeneratedTests, gather_int32_5) {
             gather::examples_int32_5);
 }
 
+TEST_F(GeneratedTests, gather_float16_5) {
+    execute(gather::CreateModel_float16_5,
+            gather::is_ignored_float16_5,
+            gather::examples_float16_5);
+}
+
 TEST_F(GeneratedTests, gather_6) {
     execute(gather::CreateModel_6,
             gather::is_ignored_6,
@@ -151,6 +181,12 @@ TEST_F(GeneratedTests, gather_int32_6) {
     execute(gather::CreateModel_int32_6,
             gather::is_ignored_int32_6,
             gather::examples_int32_6);
+}
+
+TEST_F(GeneratedTests, gather_float16_6) {
+    execute(gather::CreateModel_float16_6,
+            gather::is_ignored_float16_6,
+            gather::examples_float16_6);
 }
 
 TEST_F(GeneratedTests, gather_7) {
@@ -177,6 +213,12 @@ TEST_F(GeneratedTests, gather_int32_7) {
             gather::examples_int32_7);
 }
 
+TEST_F(GeneratedTests, gather_float16_7) {
+    execute(gather::CreateModel_float16_7,
+            gather::is_ignored_float16_7,
+            gather::examples_float16_7);
+}
+
 TEST_F(GeneratedTests, gather_8) {
     execute(gather::CreateModel_8,
             gather::is_ignored_8,
@@ -199,5 +241,11 @@ TEST_F(GeneratedTests, gather_int32_8) {
     execute(gather::CreateModel_int32_8,
             gather::is_ignored_int32_8,
             gather::examples_int32_8);
+}
+
+TEST_F(GeneratedTests, gather_float16_8) {
+    execute(gather::CreateModel_float16_8,
+            gather::is_ignored_float16_8,
+            gather::examples_float16_8);
 }
 

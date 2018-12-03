@@ -75,6 +75,7 @@ bool compute(const uint8_t* inputData, const Shape& inputShape, int32_t axis,
     }
 
     switch (inputShape.type) {
+        ANDROID_NN_GATHER(OperandType::TENSOR_FLOAT16, _Float16);
         ANDROID_NN_GATHER(OperandType::TENSOR_FLOAT32, float);
         ANDROID_NN_GATHER(OperandType::TENSOR_INT32, int32_t);
         ANDROID_NN_GATHER(OperandType::TENSOR_QUANT8_ASYMM, uint8_t);
