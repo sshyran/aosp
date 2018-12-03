@@ -88,6 +88,8 @@ typedef enum {
      *
      * Values of this operand type are either true or false. A zero value
      * represents false; any other value represents true.
+     *
+     * Available since API level 29.
      */
     ANEURALNETWORKS_BOOL = 6,
     /**
@@ -98,11 +100,25 @@ typedef enum {
      * realValue = integerValue * scale.
      *
      * scale is a 32 bit floating point with value greater then zero.
+     *
+     * Available since API level 29.
      */
     ANEURALNETWORKS_TENSOR_QUANT16_SYMM = 7,
-
-    /** A tensor of 16 bit floating point values. */
+    /**
+     * A tensor of 16 bit floating point values.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_TENSOR_FLOAT16 = 8,
+    /**
+     * A tensor of 8 bit boolean values.
+     *
+     * Values of this operand type are either true or false. A zero value
+     * represents false; any other value represents true.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_TENSOR_BOOL8 = 9,
 } OperandCode;
 
 /**

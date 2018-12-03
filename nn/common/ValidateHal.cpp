@@ -90,6 +90,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::TENSOR_INT32:
             case OperandType::TENSOR_QUANT8_ASYMM:
             case OperandType::TENSOR_QUANT16_SYMM:
+            case OperandType::TENSOR_BOOL8:
             case OperandType::TENSOR_OEM_BYTE: {
                 if (operand.dimensions.size() == 0) {
                     LOG(ERROR) << "Operand " << index << ": Tensor has dimensions of rank 0";
@@ -116,6 +117,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::BOOL:
             case OperandType::TENSOR_FLOAT16:
             case OperandType::TENSOR_FLOAT32:
+            case OperandType::TENSOR_BOOL8:
                 if (operand.scale != 0.f) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with a non-zero scale ("
@@ -161,6 +163,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::TENSOR_FLOAT16:
             case OperandType::TENSOR_FLOAT32:
             case OperandType::TENSOR_INT32:
+            case OperandType::TENSOR_BOOL8:
                 if (operand.zeroPoint != 0) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with an non-zero zeroPoint "
@@ -517,6 +520,7 @@ bool validOperandType(V1_2::OperandType operandType) {
         case V1_2::OperandType::TENSOR_INT32:
         case V1_2::OperandType::TENSOR_QUANT8_ASYMM:
         case V1_2::OperandType::TENSOR_QUANT16_SYMM:
+        case V1_2::OperandType::TENSOR_BOOL8:
         case V1_2::OperandType::OEM:
         case V1_2::OperandType::TENSOR_OEM_BYTE:
             return true;

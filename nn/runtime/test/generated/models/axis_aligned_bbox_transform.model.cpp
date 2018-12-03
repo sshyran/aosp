@@ -18,8 +18,8 @@ void CreateModel(Model *model) {
   // Phase 2, operations
   static float param_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param, param_init, sizeof(float) * 4);
-  static bool param1_init[] = {false};
-  model->setOperandValue(param1, param1_init, sizeof(bool) * 1);
+  static bool8 param1_init[] = {false};
+  model->setOperandValue(param1, param1_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, bboxDeltas, imageInfo, param, param1}, {out, batchSplit});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -51,8 +51,8 @@ void CreateModel_relaxed(Model *model) {
   // Phase 2, operations
   static float param_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param, param_init, sizeof(float) * 4);
-  static bool param1_init[] = {false};
-  model->setOperandValue(param1, param1_init, sizeof(bool) * 1);
+  static bool8 param1_init[] = {false};
+  model->setOperandValue(param1, param1_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, bboxDeltas, imageInfo, param, param1}, {out, batchSplit});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -86,8 +86,8 @@ void CreateModel_2(Model *model) {
   // Phase 2, operations
   static float param2_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 4);
-  static bool param3_init[] = {true};
-  model->setOperandValue(param3, param3_init, sizeof(bool) * 1);
+  static bool8 param3_init[] = {true};
+  model->setOperandValue(param3, param3_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, bboxDeltas, imageInfo, param2, param3}, {out, batchSplit});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -119,8 +119,8 @@ void CreateModel_relaxed_2(Model *model) {
   // Phase 2, operations
   static float param2_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 4);
-  static bool param3_init[] = {true};
-  model->setOperandValue(param3, param3_init, sizeof(bool) * 1);
+  static bool8 param3_init[] = {true};
+  model->setOperandValue(param3, param3_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, bboxDeltas, imageInfo, param2, param3}, {out, batchSplit});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -154,8 +154,8 @@ void CreateModel_single_batch(Model *model) {
   // Phase 2, operations
   static float param4_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param4, param4_init, sizeof(float) * 4);
-  static bool param5_init[] = {true};
-  model->setOperandValue(param5, param5_init, sizeof(bool) * 1);
+  static bool8 param5_init[] = {true};
+  model->setOperandValue(param5, param5_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi1, bboxDeltas1, imageInfo1, param4, param5}, {out1, batchSplit1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -187,8 +187,8 @@ void CreateModel_single_batch_relaxed(Model *model) {
   // Phase 2, operations
   static float param4_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param4, param4_init, sizeof(float) * 4);
-  static bool param5_init[] = {true};
-  model->setOperandValue(param5, param5_init, sizeof(bool) * 1);
+  static bool8 param5_init[] = {true};
+  model->setOperandValue(param5, param5_init, sizeof(bool8) * 1);
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi1, bboxDeltas1, imageInfo1, param4, param5}, {out1, batchSplit1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
