@@ -395,6 +395,7 @@
 #include "../generated/tests/sub_quantized.mod.py.cpp"
 #include "../generated/tests/sub_quantized_broadcast.mod.py.cpp"
 #include "../generated/tests/sub_quantized_different_scales.mod.py.cpp"
+#include "../generated/tests/tanh_float16.mod.py.cpp"
 #include "../generated/tests/tanh_quantized.mod.py.cpp"
 #include "../generated/tests/tile_1.mod.py.cpp"
 #include "../generated/tests/tile_2.mod.py.cpp"
