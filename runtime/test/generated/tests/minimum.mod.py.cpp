@@ -33,6 +33,12 @@ TEST_F(GeneratedTests, minimum_simple_int32) {
             minimum::examples_simple_int32);
 }
 
+TEST_F(GeneratedTests, minimum_simple_float16) {
+    execute(minimum::CreateModel_float16,
+            minimum::is_ignored_float16,
+            minimum::examples_simple_float16);
+}
+
 TEST_F(GeneratedTests, minimum_broadcast) {
     execute(minimum::CreateModel_2,
             minimum::is_ignored_2,
@@ -55,5 +61,11 @@ TEST_F(GeneratedTests, minimum_broadcast_int32) {
     execute(minimum::CreateModel_int32_2,
             minimum::is_ignored_int32_2,
             minimum::examples_broadcast_int32);
+}
+
+TEST_F(GeneratedTests, minimum_broadcast_float16) {
+    execute(minimum::CreateModel_float16_2,
+            minimum::is_ignored_float16_2,
+            minimum::examples_broadcast_float16);
 }
 
