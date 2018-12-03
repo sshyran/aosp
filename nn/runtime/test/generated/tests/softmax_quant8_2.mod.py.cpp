@@ -12,6 +12,6 @@ namespace softmax_quant8_2 {
 TEST_F(GeneratedTests, softmax_quant8_2) {
     execute(softmax_quant8_2::CreateModel,
             softmax_quant8_2::is_ignored,
-            softmax_quant8_2::examples);
+            softmax_quant8_2::get_examples());
 }
 

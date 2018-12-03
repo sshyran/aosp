@@ -12,6 +12,6 @@ namespace reshape_weights_as_inputs {
 TEST_F(GeneratedTests, reshape_weights_as_inputs) {
     execute(reshape_weights_as_inputs::CreateModel,
             reshape_weights_as_inputs::is_ignored,
-            reshape_weights_as_inputs::examples);
+            reshape_weights_as_inputs::get_examples());
 }
 

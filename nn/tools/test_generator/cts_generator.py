@@ -213,7 +213,8 @@ def DumpMixedType(operands, feedDict):
 
 # Dump Example file for Cts tests
 def DumpCtsExample(example, example_fd):
-    print("std::vector<MixedTypedExample> %s = {"%(example.examplesName), file=example_fd)
+    print("std::vector<MixedTypedExample>& get_%s() {" % (example.examplesName), file=example_fd)
+    print("static std::vector<MixedTypedExample> %s = {" % (example.examplesName), file=example_fd)
     for inputFeedDict, outputFeedDict in example.feedDicts:
         print ('// Begin of an example', file = example_fd)
         print ('{\n.operands = {', file = example_fd)
@@ -226,6 +227,8 @@ def DumpCtsExample(example, example_fd):
           print ('.expectedMultinomialDistributionTolerance = %f' %
                  example.expectedMultinomialDistributionTolerance, file = example_fd)
         print ('}, // End of an example', file = example_fd)
+    print("};", file=example_fd)
+    print("return %s;" % (example.examplesName), file=example_fd)
     print("};\n", file=example_fd)
 
 # Dump Test file for Cts tests
@@ -234,7 +237,7 @@ def DumpCtsTest(example, test_fd):
 TEST_F(GeneratedTests, {test_name}) {{
     execute({namespace}::{create_model_name},
             {namespace}::{is_ignored_name},
-            {namespace}::{examples_name}{log_file});\n}}\n"""
+            {namespace}::get_{examples_name}(){log_file});\n}}\n"""
     print(testTemplate.format(
         test_name=str(example.testName),
         namespace=tg.FileNames.specName,

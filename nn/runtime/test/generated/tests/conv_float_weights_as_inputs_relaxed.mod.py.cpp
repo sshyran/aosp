@@ -12,6 +12,6 @@ namespace conv_float_weights_as_inputs_relaxed {
 TEST_F(GeneratedTests, conv_float_weights_as_inputs_relaxed) {
     execute(conv_float_weights_as_inputs_relaxed::CreateModel,
             conv_float_weights_as_inputs_relaxed::is_ignored,
-            conv_float_weights_as_inputs_relaxed::examples);
+            conv_float_weights_as_inputs_relaxed::get_examples());
 }
 

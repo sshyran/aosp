@@ -12,6 +12,6 @@ namespace logistic_float16_2 {
 TEST_F(GeneratedTests, logistic_float16_2) {
     execute(logistic_float16_2::CreateModel,
             logistic_float16_2::is_ignored,
-            logistic_float16_2::examples);
+            logistic_float16_2::get_examples());
 }
 

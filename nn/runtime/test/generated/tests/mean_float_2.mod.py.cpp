@@ -12,6 +12,6 @@ namespace mean_float_2 {
 TEST_F(GeneratedTests, mean_float_2) {
     execute(mean_float_2::CreateModel,
             mean_float_2::is_ignored,
-            mean_float_2::examples);
+            mean_float_2::get_examples());
 }
 

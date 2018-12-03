@@ -12,6 +12,6 @@ namespace mobilenet_224_gender_basic_fixed_relaxed {
 TEST_F(GeneratedTests, mobilenet_224_gender_basic_fixed_relaxed) {
     execute(mobilenet_224_gender_basic_fixed_relaxed::CreateModel,
             mobilenet_224_gender_basic_fixed_relaxed::is_ignored,
-            mobilenet_224_gender_basic_fixed_relaxed::examples);
+            mobilenet_224_gender_basic_fixed_relaxed::get_examples());
 }
 

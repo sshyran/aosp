@@ -12,6 +12,6 @@ namespace space_to_depth_quant8_2 {
 TEST_F(GeneratedTests, space_to_depth_quant8_2) {
     execute(space_to_depth_quant8_2::CreateModel,
             space_to_depth_quant8_2::is_ignored,
-            space_to_depth_quant8_2::examples);
+            space_to_depth_quant8_2::get_examples());
 }
 

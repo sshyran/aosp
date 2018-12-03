@@ -12,6 +12,6 @@ namespace resize_bilinear_2_relaxed {
 TEST_F(GeneratedTests, resize_bilinear_2_relaxed) {
     execute(resize_bilinear_2_relaxed::CreateModel,
             resize_bilinear_2_relaxed::is_ignored,
-            resize_bilinear_2_relaxed::examples);
+            resize_bilinear_2_relaxed::get_examples());
 }
 

@@ -29,19 +29,32 @@
 namespace android {
 namespace nn {
 
-bool reshapeGeneric(const void* inputData, const Shape& inputShape,
-                    void* outputData, const Shape& outputShape) {
-    NNTRACE_COMP("reshapeGeneric");
+bool copyData(const void* inputData, const Shape& inputShape, void* outputData,
+              const Shape& outputShape) {
+    NNTRACE_COMP("copyData");
     size_t count = sizeOfData(inputShape.type, inputShape.dimensions);
     memcpy(outputData, inputData, count);
+    return true;
+}
+
+bool resizeBilinearFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* outputData,
+                           const Shape& outputShape) {
+    NNTRACE_TRANS("resizeBilinearFloat16");
+    std::vector<float> inputData_float32(getNumberOfElements(inputShape));
+    convertFloat16ToFloat32(inputData, &inputData_float32);
+    std::vector<float> outputData_float32(getNumberOfElements(outputShape));
+
+    resizeBilinearFloat32(inputData_float32.data(), inputShape, outputData_float32.data(),
+                          outputShape);
+    convertFloat32ToFloat16(outputData_float32, outputData);
     return true;
 }
 
 bool resizeBilinearFloat32(const float* inputData, const Shape& inputShape,
                            float* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("resizeBilinearFloat32");
-    int32_t height = (int32_t) getSizeOfDimension(outputShape, 1);
-    int32_t width  = (int32_t) getSizeOfDimension(outputShape, 2);
+    int32_t height = static_cast<int32_t>(getSizeOfDimension(outputShape, 1));
+    int32_t width = static_cast<int32_t>(getSizeOfDimension(outputShape, 2));
 
     int32_t outDimData[2] = {height, width};
     // We have to fake a tensor here, to satisfy ResizeBilinear().
@@ -56,63 +69,45 @@ bool resizeBilinearFloat32(const float* inputData, const Shape& inputShape,
     return true;
 }
 
-bool depthToSpaceGeneric(const uint8_t* inputData, const Shape& inputShape,
-                         int32_t blockSize,
-                         uint8_t* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("depthToSpaceGeneric");
-    if (inputShape.type == OperandType::TENSOR_FLOAT32) {
-        NNTRACE_COMP_SWITCH("optimized_ops::DepthToSpace::float");
-        tflite::optimized_ops::DepthToSpace(
-                 reinterpret_cast<const float*>(inputData),
-                 convertShapeToDims(inputShape),
-                 blockSize,
-                 reinterpret_cast<float*>(outputData),
-                 convertShapeToDims(outputShape));
-    } else if (inputShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        NNTRACE_COMP_SWITCH("optimized_ops::DepthToSpace::uint8");
-        tflite::optimized_ops::DepthToSpace(
-                reinterpret_cast<const uint8_t*>(inputData),
-                convertShapeToDims(inputShape),
-                blockSize,
-                reinterpret_cast<uint8_t*>(outputData),
-                convertShapeToDims(outputShape));
-    } else {
-        LOG(ERROR) << "Unsupported data type";
-        return false;
-    }
+template <typename T>
+bool depthToSpaceGeneric(const T* inputData, const Shape& inputShape, int32_t blockSize,
+                         T* outputData, const Shape& outputShape) {
+    NNTRACE_COMP("optimized_ops::DepthToSpace");
+    tflite::optimized_ops::DepthToSpace(inputData, convertShapeToDims(inputShape), blockSize,
+                                        outputData, convertShapeToDims(outputShape));
     return true;
 }
-
-bool spaceToDepthGeneric(const uint8_t* inputData, const Shape& inputShape,
-                         int32_t blockSize,
-                         uint8_t* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("spaceToDepthGeneric");
-    if (inputShape.type == OperandType::TENSOR_FLOAT32) {
-        NNTRACE_COMP_SWITCH("optimized_ops::SpaceToDepth::float");
-        tflite::optimized_ops::SpaceToDepth(
-                reinterpret_cast<const float*>(inputData),
-                convertShapeToDims(inputShape),
-                blockSize,
-                reinterpret_cast<float*>(outputData),
-                convertShapeToDims(outputShape));
-    } else if (inputShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        NNTRACE_COMP_SWITCH("optimized_ops::SpaceToDepth::uint8");
-        tflite::optimized_ops::SpaceToDepth(
-                reinterpret_cast<const uint8_t*>(inputData),
-                convertShapeToDims(inputShape),
-                blockSize,
-                reinterpret_cast<uint8_t*>(outputData),
-                convertShapeToDims(outputShape));
-    } else {
-        LOG(ERROR) << "Unsupported data type";
-        return false;
-    }
-    return true;
-}
+template bool depthToSpaceGeneric<float>(const float* inputData, const Shape& inputShape,
+                                         int32_t blockSize, float* outputData,
+                                         const Shape& outputShape);
+template bool depthToSpaceGeneric<_Float16>(const _Float16* inputData, const Shape& inputShape,
+                                            int32_t blockSize, _Float16* outputData,
+                                            const Shape& outputShape);
+template bool depthToSpaceGeneric<uint8_t>(const uint8_t* inputData, const Shape& inputShape,
+                                           int32_t blockSize, uint8_t* outputData,
+                                           const Shape& outputShape);
 
 template <typename T>
-static bool padGeneric(const T* inputData, const Shape& inputShape, const int32_t* paddings,
-                       T padValue, T* outputData, const Shape& outputShape) {
+bool spaceToDepthGeneric(const T* inputData, const Shape& inputShape, int32_t blockSize,
+                         T* outputData, const Shape& outputShape) {
+    NNTRACE_COMP("optimized_ops::SpaceToDepth");
+    tflite::optimized_ops::SpaceToDepth(inputData, convertShapeToDims(inputShape), blockSize,
+                                        outputData, convertShapeToDims(outputShape));
+    return true;
+}
+template bool spaceToDepthGeneric<float>(const float* inputData, const Shape& inputShape,
+                                         int32_t blockSize, float* outputData,
+                                         const Shape& outputShape);
+template bool spaceToDepthGeneric<_Float16>(const _Float16* inputData, const Shape& inputShape,
+                                            int32_t blockSize, _Float16* outputData,
+                                            const Shape& outputShape);
+template bool spaceToDepthGeneric<uint8_t>(const uint8_t* inputData, const Shape& inputShape,
+                                           int32_t blockSize, uint8_t* outputData,
+                                           const Shape& outputShape);
+
+template <typename T>
+bool padGeneric(const T* inputData, const Shape& inputShape, const int32_t* paddings, T padValue,
+                T* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("padGeneric");
 
     // Based on
@@ -210,92 +205,66 @@ static bool padGeneric(const T* inputData, const Shape& inputShape, const int32_
 
     return true;
 }
+template bool padGeneric<float>(const float* inputData, const Shape& inputShape,
+                                const int32_t* paddings, float padValue, float* outputData,
+                                const Shape& outputShape);
+template bool padGeneric<_Float16>(const _Float16* inputData, const Shape& inputShape,
+                                   const int32_t* paddings, _Float16 padValue, _Float16* outputData,
+                                   const Shape& outputShape);
+template bool padGeneric<uint8_t>(const uint8_t* inputData, const Shape& inputShape,
+                                  const int32_t* paddings, uint8_t padValue, uint8_t* outputData,
+                                  const Shape& outputShape);
 
-bool padFloat32(const float* inputData, const Shape& inputShape, const int32_t* paddings,
-                float padValue, float* outputData, const Shape& outputShape) {
-    return padGeneric(inputData, inputShape, paddings, padValue, outputData, outputShape);
-}
-
-bool padQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_t* paddings,
-               uint8_t padValue, uint8_t* outputData, const Shape& outputShape) {
-    return padGeneric(inputData, inputShape, paddings, padValue, outputData, outputShape);
-}
-
-bool batchToSpaceGeneric(const uint8_t* inputData, const Shape& inputShape,
-                         const int32_t* blockSize,
-                         uint8_t* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("batchToSpaceGeneric");
+template <typename T>
+bool batchToSpaceGeneric(const T* inputData, const Shape& inputShape, const int32_t* blockSize,
+                         T* outputData, const Shape& outputShape) {
     // Needed by low level implementation, but not really used.
     tflite::Dims<4> blockSizeDim, cropsDim;
     const int32 crops[4] = {0, 0, 0, 0};
-    if (inputShape.type == OperandType::TENSOR_FLOAT32) {
-        NNTRACE_COMP_SWITCH("optimized_ops::BatchToSpaceND::float");
-        tflite::optimized_ops::BatchToSpaceND(
-                 reinterpret_cast<const float*>(inputData),
-                 convertShapeToDims(inputShape),
-                 blockSize, blockSizeDim,
-                 crops, cropsDim,
-                 reinterpret_cast<float*>(outputData),
-                 convertShapeToDims(outputShape));
-    } else if (inputShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        NNTRACE_COMP_SWITCH("optimized_ops::BatchToSpaceND::uint8");
-        tflite::optimized_ops::BatchToSpaceND(
-                reinterpret_cast<const uint8_t*>(inputData),
-                convertShapeToDims(inputShape),
-                blockSize, blockSizeDim,
-                crops, cropsDim,
-                reinterpret_cast<uint8_t*>(outputData),
-                convertShapeToDims(outputShape));
-    } else {
-        LOG(ERROR) << "Unsupported data type";
-        return false;
-    }
+    NNTRACE_COMP("optimized_ops::BatchToSpaceND");
+    tflite::optimized_ops::BatchToSpaceND(inputData, convertShapeToDims(inputShape), blockSize,
+                                          blockSizeDim, crops, cropsDim, outputData,
+                                          convertShapeToDims(outputShape));
     return true;
 }
+template bool batchToSpaceGeneric<float>(const float* inputData, const Shape& inputShape,
+                                         const int32_t* blockSize, float* outputData,
+                                         const Shape& outputShape);
+template bool batchToSpaceGeneric<_Float16>(const _Float16* inputData, const Shape& inputShape,
+                                            const int32_t* blockSize, _Float16* outputData,
+                                            const Shape& outputShape);
+template bool batchToSpaceGeneric<uint8_t>(const uint8_t* inputData, const Shape& inputShape,
+                                           const int32_t* blockSize, uint8_t* outputData,
+                                           const Shape& outputShape);
 
-bool spaceToBatchGeneric(const uint8_t* inputData, const Shape& inputShape,
-                         const int32_t* blockSize,
-                         const int32_t* padding, const Shape& paddingShape,
-                         uint8_t* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("spaceToBatchGeneric");
+template <typename T>
+bool spaceToBatchGeneric(const T* inputData, const Shape& inputShape, const int32_t* blockSize,
+                         const int32_t* padding, const Shape& paddingShape, T* outputData,
+                         const Shape& outputShape) {
     // Needed by low level implementation, but not really used.
     tflite::Dims<4> blockSizeDim;
-    if (inputShape.type == OperandType::TENSOR_FLOAT32) {
-        NNTRACE_COMP_SWITCH("optimized_ops::SpaceToBatchND::float");
-        tflite::optimized_ops::SpaceToBatchND(
-                reinterpret_cast<const float*>(inputData),
-                convertShapeToDims(inputShape),
-                blockSize, blockSizeDim,
-                padding, convertShapeToDims(paddingShape),
-                reinterpret_cast<float*>(outputData),
-                convertShapeToDims(outputShape));
-    } else if (inputShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        NNTRACE_COMP_SWITCH("optimized_ops::SpaceToBatchND::uint8");
-        tflite::optimized_ops::SpaceToBatchND(
-                reinterpret_cast<const uint8_t*>(inputData),
-                convertShapeToDims(inputShape),
-                blockSize, blockSizeDim,
-                padding, convertShapeToDims(paddingShape),
-                reinterpret_cast<uint8_t*>(outputData),
-                convertShapeToDims(outputShape));
-    } else {
-        LOG(ERROR) << "Unsupported data type";
-        return false;
-    }
+    NNTRACE_COMP("optimized_ops::SpaceToBatchND");
+    tflite::optimized_ops::SpaceToBatchND(inputData, convertShapeToDims(inputShape), blockSize,
+                                          blockSizeDim, padding, convertShapeToDims(paddingShape),
+                                          outputData, convertShapeToDims(outputShape));
     return true;
 }
+template bool spaceToBatchGeneric<float>(const float* inputData, const Shape& inputShape,
+                                         const int32_t* blockSize, const int32_t* padding,
+                                         const Shape& paddingShape, float* outputData,
+                                         const Shape& outputShape);
+template bool spaceToBatchGeneric<_Float16>(const _Float16* inputData, const Shape& inputShape,
+                                            const int32_t* blockSize, const int32_t* padding,
+                                            const Shape& paddingShape, _Float16* outputData,
+                                            const Shape& outputShape);
+template bool spaceToBatchGeneric<uint8_t>(const uint8_t* inputData, const Shape& inputShape,
+                                           const int32_t* blockSize, const int32_t* padding,
+                                           const Shape& paddingShape, uint8_t* outputData,
+                                           const Shape& outputShape);
 
-bool squeezeGeneric(const void* inputData, const Shape& inputShape,
-                    void* outputData, const Shape& outputShape) {
-    NNTRACE_COMP("squeezeGeneric");
-    size_t count = sizeOfData(inputShape.type, inputShape.dimensions);
-    memcpy(outputData, inputData, count);
-    return true;
-}
-
-bool transposeGeneric(const uint8_t* inputData, const Shape& inputShape,
-                      const int32_t* perm, const Shape& permShape,
-                      uint8_t* outputData, const Shape& outputShape) {
+template <typename T>
+bool transposeGeneric(const T* inputData, const Shape& inputShape, const int32_t* perm,
+                      const Shape& permShape, T* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("transposeGeneric");
     // Reverse the permuted axes and convert to 4D due to the way Dims are
     // constructed.
@@ -308,34 +277,26 @@ bool transposeGeneric(const uint8_t* inputData, const Shape& inputShape,
         perm = perm_tmp;
     }
     int32_t reversed_perm[kOutputDimensionNum];
-    for (int32_t output_k = 0, input_k = permSize - 1; output_k < permSize;
-             ++output_k, --input_k) {
+    for (int32_t output_k = 0, input_k = permSize - 1; output_k < permSize; ++output_k, --input_k) {
         reversed_perm[output_k] = permSize - perm[input_k] - 1;
     }
     for (int32_t k = permSize; k < kOutputDimensionNum; ++k) {
         reversed_perm[k] = k;
     }
-    if (inputShape.type == OperandType::TENSOR_FLOAT32) {
-        NNTRACE_COMP_SWITCH("optimized_ops::Transpose::float");
-        tflite::reference_ops::Transpose(
-                reinterpret_cast<const float*>(inputData),
-                convertShapeToDims(inputShape),
-                reinterpret_cast<float*>(outputData),
-                convertShapeToDims(outputShape),
-                reversed_perm);
-    } else if (inputShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        NNTRACE_COMP_SWITCH("optimized_ops::Transpose::uint8");
-        tflite::reference_ops::Transpose(
-                reinterpret_cast<const uint8_t*>(inputData),
-                convertShapeToDims(inputShape),
-                reinterpret_cast<uint8_t*>(outputData),
-                convertShapeToDims(outputShape),
-                reversed_perm);
-    } else {
-        LOG(ERROR) << "Unsupported data type";
-        return false;
-    }
+    NNTRACE_COMP_SWITCH("reference_ops::Transpose");
+    tflite::reference_ops::Transpose(inputData, convertShapeToDims(inputShape), outputData,
+                                     convertShapeToDims(outputShape), reversed_perm);
     return true;
 }
+template bool transposeGeneric<float>(const float* inputData, const Shape& inputShape,
+                                      const int32_t* perm, const Shape& permShape,
+                                      float* outputData, const Shape& outputShape);
+template bool transposeGeneric<_Float16>(const _Float16* inputData, const Shape& inputShape,
+                                         const int32_t* perm, const Shape& permShape,
+                                         _Float16* outputData, const Shape& outputShape);
+template bool transposeGeneric<uint8_t>(const uint8_t* inputData, const Shape& inputShape,
+                                        const int32_t* perm, const Shape& permShape,
+                                        uint8_t* outputData, const Shape& outputShape);
+
 } // namespace nn
 } // namespace android

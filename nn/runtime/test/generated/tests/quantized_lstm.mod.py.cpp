@@ -12,6 +12,6 @@ namespace quantized_lstm {
 TEST_F(GeneratedTests, quantized_lstm) {
     execute(quantized_lstm::CreateModel,
             quantized_lstm::is_ignored,
-            quantized_lstm::examples);
+            quantized_lstm::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace relu6_float_2_relaxed {
 TEST_F(GeneratedTests, relu6_float_2_relaxed) {
     execute(relu6_float_2_relaxed::CreateModel,
             relu6_float_2_relaxed::is_ignored,
-            relu6_float_2_relaxed::examples);
+            relu6_float_2_relaxed::get_examples());
 }
 
