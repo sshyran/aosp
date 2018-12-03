@@ -50,6 +50,8 @@ bool addFloat32(const float* in1, const Shape& shape1, const float* in2, const S
 bool addQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
                int32_t activation, uint8_t* out, const Shape& shapeOut);
 
+bool mulFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut);
 bool mulFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
                 int32_t activation, float* out, const Shape& shapeOut);
 bool mulQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
@@ -196,6 +198,8 @@ bool subQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, cons
 bool squeezeGeneric(const void* inputData, const Shape& inputShape, void* outputData,
                     const Shape& outputShape);
 
+bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut);
 bool divFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
                 int32_t activation, float* out, const Shape& shapeOut);
 
