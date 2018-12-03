@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2018 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_GENERATEDUTILS_H
-#define ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_GENERATEDUTILS_H
-
-#include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
 
-namespace generated_tests {
-using namespace android::nn::test_wrapper;
+namespace android {
+namespace nn {
+namespace test_wrapper {
 
-void execute(std::function<void(Model*)> createModel, std::function<bool(int)> isIgnored,
-             std::vector<test_helper::MixedTypedExample>& examples, std::string dumpFile = "");
+bool Execution::mComputeUsesSychronousAPI = true;
 
-}  // namespace generated_tests
-
-
-#endif  // ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_GENERATEDUTILS_H
+}  // namespace test_wrapper
+}  // namespace nn
+}  // namespace android
