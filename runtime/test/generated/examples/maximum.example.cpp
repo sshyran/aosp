@@ -13,7 +13,9 @@ std::vector<MixedTypedExample> examples_simple = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -24,7 +26,9 @@ std::vector<MixedTypedExample> examples_simple = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -43,7 +47,9 @@ std::vector<MixedTypedExample> examples_simple_relaxed = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -54,7 +60,9 @@ std::vector<MixedTypedExample> examples_simple_relaxed = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -73,7 +81,9 @@ std::vector<MixedTypedExample> examples_simple_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {129, 127, 125, 149, 123, 124}}, {1, {125, 127, 129, 151, 121, 124}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -84,7 +94,9 @@ std::vector<MixedTypedExample> examples_simple_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {129, 127, 129, 151, 123, 124}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -103,7 +115,9 @@ std::vector<MixedTypedExample> examples_simple_int32 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -114,7 +128,9 @@ std::vector<MixedTypedExample> examples_simple_int32 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -133,7 +149,9 @@ std::vector<MixedTypedExample> examples_broadcast = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -144,7 +162,9 @@ std::vector<MixedTypedExample> examples_broadcast = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -163,7 +183,9 @@ std::vector<MixedTypedExample> examples_broadcast_relaxed = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -174,7 +196,9 @@ std::vector<MixedTypedExample> examples_broadcast_relaxed = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -193,7 +217,9 @@ std::vector<MixedTypedExample> examples_broadcast_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {129, 127, 125, 123, 124, 149}}, {1, {128, 131}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -204,7 +230,9 @@ std::vector<MixedTypedExample> examples_broadcast_quant8 = {
   // int -> QUANT8_ASYMM map
   {{0, {129, 131, 128, 131, 128, 149}}},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example
@@ -223,7 +251,9 @@ std::vector<MixedTypedExample> examples_broadcast_int32 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -234,7 +264,9 @@ std::vector<MixedTypedExample> examples_broadcast_int32 = {
   // int -> QUANT8_ASYMM map
   {},
   // int -> QUANT16_ASYMM map
-  {}
+  {},
+  // int -> FLOAT16 map
+  {},
 }
 },
 }, // End of an example

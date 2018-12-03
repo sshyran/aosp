@@ -85,6 +85,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                 }
                 break;
             }
+            case OperandType::TENSOR_FLOAT16:
             case OperandType::TENSOR_FLOAT32:
             case OperandType::TENSOR_INT32:
             case OperandType::TENSOR_QUANT8_ASYMM:
@@ -113,6 +114,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::INT32:
             case OperandType::UINT32:
             case OperandType::BOOL:
+            case OperandType::TENSOR_FLOAT16:
             case OperandType::TENSOR_FLOAT32:
                 if (operand.scale != 0.f) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
@@ -156,6 +158,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::INT32:
             case OperandType::UINT32:
             case OperandType::BOOL:
+            case OperandType::TENSOR_FLOAT16:
             case OperandType::TENSOR_FLOAT32:
             case OperandType::TENSOR_INT32:
                 if (operand.zeroPoint != 0) {
@@ -517,6 +520,7 @@ bool validOperandType(V1_2::OperandType operandType) {
         case V1_2::OperandType::INT32:
         case V1_2::OperandType::UINT32:
         case V1_2::OperandType::BOOL:
+        case V1_2::OperandType::TENSOR_FLOAT16:
         case V1_2::OperandType::TENSOR_FLOAT32:
         case V1_2::OperandType::TENSOR_INT32:
         case V1_2::OperandType::TENSOR_QUANT8_ASYMM:
