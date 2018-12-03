@@ -49,7 +49,7 @@ class QuantizedLSTMOpModel {
         OperandType biasOperandType(Type::TENSOR_INT32, input_shapes[3],
                                     weightsScale / 128., 0);
         inputs.push_back(model_.addOperand(&biasOperandType));
-        OperandType prevCellStateOperandType(Type::TENSOR_QUANT16_ASYMM, input_shapes[4],
+        OperandType prevCellStateOperandType(Type::TENSOR_QUANT16_SYMM, input_shapes[4],
                                              1. / 2048., 0);
         inputs.push_back(model_.addOperand(&prevCellStateOperandType));
         // clang-format on
@@ -66,13 +66,13 @@ class QuantizedLSTMOpModel {
         OperandType concatTempOperandType(Type::TENSOR_QUANT8_ASYMM, output_shapes[0],
                                           1. / 128., 128);
         outputs.push_back(model_.addOperand(&concatTempOperandType));
-        OperandType activationTempOperandType(Type::TENSOR_QUANT16_ASYMM, output_shapes[1],
-                                              1. / 128., 128);
+        OperandType activationTempOperandType(Type::TENSOR_QUANT16_SYMM, output_shapes[1],
+                                              1. / 128., 0);
         outputs.push_back(model_.addOperand(&activationTempOperandType));
         OperandType outputStateOutOperandType(Type::TENSOR_QUANT8_ASYMM, output_shapes[2],
                                               1. / 128., 128);
         outputs.push_back(model_.addOperand(&outputStateOutOperandType));
-        OperandType cellStateOutOperandType(Type::TENSOR_QUANT16_ASYMM, output_shapes[3],
+        OperandType cellStateOutOperandType(Type::TENSOR_QUANT16_SYMM, output_shapes[3],
                                             1. / 2048., 0);
         outputs.push_back(model_.addOperand(&cellStateOutOperandType));
         OperandType outputOperandType(Type::TENSOR_QUANT8_ASYMM, output_shapes[4],
