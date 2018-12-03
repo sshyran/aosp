@@ -101,13 +101,42 @@ inline bool broadcastOpBase(const T* in1, const Shape& shape1, const T* in2, con
             return false;                                                   \
     }
 
+namespace {
+inline void convertFloat16ToFloat32(const _Float16* input, std::vector<float>* output) {
+    for (int i = 0; i < output->size(); ++i) {
+        (*output)[i] = static_cast<float>(input[i]);
+    }
+}
+
+inline void convertFloat32ToFloat16(const std::vector<float>& input, _Float16* output) {
+    for (int i = 0; i < input.size(); ++i) {
+        output[i] = input[i];
+    }
+}
+}  // namespace
+
+bool addFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
+                int32_t activation, _Float16* out, const Shape& shapeOut) {
+    NNTRACE_TRANS("addFloat16");
+    std::vector<float> in1_float32(getNumberOfElements(shape1));
+    convertFloat16ToFloat32(in1, &in1_float32);
+    std::vector<float> in2_float32(getNumberOfElements(shape2));
+    convertFloat16ToFloat32(in2, &in2_float32);
+    std::vector<float> out_float32(getNumberOfElements(shapeOut));
+
+    addFloat32(in1_float32.data(), shape1, in2_float32.data(), shape2, activation,
+               out_float32.data(), shapeOut);
+    convertFloat32ToFloat16(out_float32, out);
+
+    return true;
+}
+
 bool addFloat32(const float* in1, const Shape& shape1,
                 const float* in2, const Shape& shape2,
                 int32_t activation,
                 float* out, const Shape& shapeOut) {
     NNTRACE_TRANS("addFloat32");
     bool needBroadcast = !SameShape(shape1, shape2);
-
     if (needBroadcast) {
         NNTRACE_COMP_SWITCH("optimized_ops::BroadcastAdd");
         #define ANDROID_NN_BROADCAST_ADD(activation)                                              \
