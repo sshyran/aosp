@@ -37,15 +37,15 @@ example2 = {
 # TEST1: All dimensions other than 2 or 4, without axis parameter
 # beta = 1.0
 Model().Operation("SOFTMAX", i, 1.0).To(o)
-Example(example1).AddVariations("relaxed", quant8).AddDims([1, 3], i, o)
+Example(example1).AddVariations("relaxed", "float16", quant8).AddDims([1, 3], i, o)
 # beta = 0.000001
 Model().Operation("SOFTMAX", i, 0.000001).To(o)
-Example(example2).AddVariations("relaxed", quant8).AddDims([1, 3], i, o)
+Example(example2).AddVariations("relaxed", "float16", quant8).AddDims([1, 3], i, o)
 
 # TEST2: All dimensions, with all possible axis parameter
 # beta = 1.0
 Model("axis").Operation("SOFTMAX", i, 1.0, axis).To(o)
-Example(example1).AddVariations("relaxed", quant8).AddAllDimsAndAxis(i, o, axis)
+Example(example1).AddVariations("relaxed", "float16", quant8).AddAllDimsAndAxis(i, o, axis)
 # beta = 0.000001
 Model("axis").Operation("SOFTMAX", i, 0.000001, axis).To(o)
-Example(example2).AddVariations("relaxed", quant8).AddAllDimsAndAxis(i, o, axis)
+Example(example2).AddVariations("relaxed", "float16", quant8).AddAllDimsAndAxis(i, o, axis)
