@@ -12,6 +12,6 @@ namespace sub_broadcast_float_relaxed {
 TEST_F(GeneratedTests, sub_broadcast_float_relaxed) {
     execute(sub_broadcast_float_relaxed::CreateModel,
             sub_broadcast_float_relaxed::is_ignored,
-            sub_broadcast_float_relaxed::examples);
+            sub_broadcast_float_relaxed::get_examples());
 }
 

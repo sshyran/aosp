@@ -12,6 +12,6 @@ namespace transpose {
 TEST_F(GeneratedTests, transpose) {
     execute(transpose::CreateModel,
             transpose::is_ignored,
-            transpose::examples);
+            transpose::get_examples());
 }
 

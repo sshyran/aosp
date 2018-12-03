@@ -12,6 +12,6 @@ namespace conv_float_large_weights_as_inputs {
 TEST_F(GeneratedTests, conv_float_large_weights_as_inputs) {
     execute(conv_float_large_weights_as_inputs::CreateModel,
             conv_float_large_weights_as_inputs::is_ignored,
-            conv_float_large_weights_as_inputs::examples);
+            conv_float_large_weights_as_inputs::get_examples());
 }
 

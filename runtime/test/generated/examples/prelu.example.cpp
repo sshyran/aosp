@@ -1,6 +1,7 @@
 // clang-format off
 // Generated file (from: prelu.mod.py). Do not edit
-std::vector<MixedTypedExample> examples = {
+std::vector<MixedTypedExample>& get_examples() {
+static std::vector<MixedTypedExample> examples = {
 // Begin of an example
 {
 .operands = {
@@ -33,8 +34,11 @@ std::vector<MixedTypedExample> examples = {
 },
 }, // End of an example
 };
+return examples;
+};
 
-std::vector<MixedTypedExample> examples_relaxed = {
+std::vector<MixedTypedExample>& get_examples_relaxed() {
+static std::vector<MixedTypedExample> examples_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -67,8 +71,11 @@ std::vector<MixedTypedExample> examples_relaxed = {
 },
 }, // End of an example
 };
+return examples_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_quant8 = {
+std::vector<MixedTypedExample>& get_examples_quant8() {
+static std::vector<MixedTypedExample> examples_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -101,8 +108,11 @@ std::vector<MixedTypedExample> examples_quant8 = {
 },
 }, // End of an example
 };
+return examples_quant8;
+};
 
-std::vector<MixedTypedExample> examples_weight_as_input = {
+std::vector<MixedTypedExample>& get_examples_weight_as_input() {
+static std::vector<MixedTypedExample> examples_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -135,8 +145,11 @@ std::vector<MixedTypedExample> examples_weight_as_input = {
 },
 }, // End of an example
 };
+return examples_weight_as_input;
+};
 
-std::vector<MixedTypedExample> examples_weight_as_input_relaxed = {
+std::vector<MixedTypedExample>& get_examples_weight_as_input_relaxed() {
+static std::vector<MixedTypedExample> examples_weight_as_input_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -169,8 +182,11 @@ std::vector<MixedTypedExample> examples_weight_as_input_relaxed = {
 },
 }, // End of an example
 };
+return examples_weight_as_input_relaxed;
+};
 
-std::vector<MixedTypedExample> examples_weight_as_input_quant8 = {
+std::vector<MixedTypedExample>& get_examples_weight_as_input_quant8() {
+static std::vector<MixedTypedExample> examples_weight_as_input_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -202,5 +218,7 @@ std::vector<MixedTypedExample> examples_weight_as_input_quant8 = {
 }
 },
 }, // End of an example
+};
+return examples_weight_as_input_quant8;
 };
 

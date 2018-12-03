@@ -12,6 +12,6 @@ namespace conv_3_h3_w2_SAME_relaxed {
 TEST_F(GeneratedTests, conv_3_h3_w2_SAME_relaxed) {
     execute(conv_3_h3_w2_SAME_relaxed::CreateModel,
             conv_3_h3_w2_SAME_relaxed::is_ignored,
-            conv_3_h3_w2_SAME_relaxed::examples);
+            conv_3_h3_w2_SAME_relaxed::get_examples());
 }
 

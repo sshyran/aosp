@@ -12,6 +12,6 @@ namespace conv_quant8 {
 TEST_F(GeneratedTests, conv_quant8) {
     execute(conv_quant8::CreateModel,
             conv_quant8::is_ignored,
-            conv_quant8::examples);
+            conv_quant8::get_examples());
 }
 

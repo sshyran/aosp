@@ -12,6 +12,6 @@ namespace concat_float_3_relaxed {
 TEST_F(GeneratedTests, concat_float_3_relaxed) {
     execute(concat_float_3_relaxed::CreateModel,
             concat_float_3_relaxed::is_ignored,
-            concat_float_3_relaxed::examples);
+            concat_float_3_relaxed::get_examples());
 }
 

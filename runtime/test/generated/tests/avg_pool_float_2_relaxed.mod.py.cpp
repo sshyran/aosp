@@ -12,6 +12,6 @@ namespace avg_pool_float_2_relaxed {
 TEST_F(GeneratedTests, avg_pool_float_2_relaxed) {
     execute(avg_pool_float_2_relaxed::CreateModel,
             avg_pool_float_2_relaxed::is_ignored,
-            avg_pool_float_2_relaxed::examples);
+            avg_pool_float_2_relaxed::get_examples());
 }
 

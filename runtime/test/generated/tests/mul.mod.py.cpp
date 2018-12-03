@@ -12,6 +12,6 @@ namespace mul {
 TEST_F(GeneratedTests, mul) {
     execute(mul::CreateModel,
             mul::is_ignored,
-            mul::examples);
+            mul::get_examples());
 }
 

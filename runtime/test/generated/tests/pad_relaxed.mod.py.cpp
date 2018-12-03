@@ -12,6 +12,6 @@ namespace pad_relaxed {
 TEST_F(GeneratedTests, pad_relaxed) {
     execute(pad_relaxed::CreateModel,
             pad_relaxed::is_ignored,
-            pad_relaxed::examples);
+            pad_relaxed::get_examples());
 }
 

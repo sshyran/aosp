@@ -12,6 +12,6 @@ namespace depthwise_conv_relaxed {
 TEST_F(GeneratedTests, depthwise_conv_relaxed) {
     execute(depthwise_conv_relaxed::CreateModel,
             depthwise_conv_relaxed::is_ignored,
-            depthwise_conv_relaxed::examples);
+            depthwise_conv_relaxed::get_examples());
 }
 

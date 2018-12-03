@@ -12,6 +12,6 @@ namespace logistic_float_2_relaxed {
 TEST_F(GeneratedTests, logistic_float_2_relaxed) {
     execute(logistic_float_2_relaxed::CreateModel,
             logistic_float_2_relaxed::is_ignored,
-            logistic_float_2_relaxed::examples);
+            logistic_float_2_relaxed::get_examples());
 }
 

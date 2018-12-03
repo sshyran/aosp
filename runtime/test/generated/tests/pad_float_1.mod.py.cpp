@@ -12,6 +12,6 @@ namespace pad_float_1 {
 TEST_F(GeneratedTests, pad_float_1) {
     execute(pad_float_1::CreateModel,
             pad_float_1::is_ignored,
-            pad_float_1::examples);
+            pad_float_1::get_examples());
 }
 

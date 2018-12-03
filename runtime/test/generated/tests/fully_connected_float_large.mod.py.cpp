@@ -12,6 +12,6 @@ namespace fully_connected_float_large {
 TEST_F(GeneratedTests, fully_connected_float_large) {
     execute(fully_connected_float_large::CreateModel,
             fully_connected_float_large::is_ignored,
-            fully_connected_float_large::examples);
+            fully_connected_float_large::get_examples());
 }
 

@@ -12,6 +12,6 @@ namespace add_broadcast_quant8 {
 TEST_F(GeneratedTests, add_broadcast_quant8) {
     execute(add_broadcast_quant8::CreateModel,
             add_broadcast_quant8::is_ignored,
-            add_broadcast_quant8::examples);
+            add_broadcast_quant8::get_examples());
 }
 

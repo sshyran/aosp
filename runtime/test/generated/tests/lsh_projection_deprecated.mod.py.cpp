@@ -12,6 +12,6 @@ namespace lsh_projection_deprecated {
 TEST_F(GeneratedTests, lsh_projection_deprecated) {
     execute(lsh_projection_deprecated::CreateModel,
             lsh_projection_deprecated::is_ignored,
-            lsh_projection_deprecated::examples);
+            lsh_projection_deprecated::get_examples());
 }
 

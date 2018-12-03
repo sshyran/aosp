@@ -12,6 +12,6 @@ namespace strided_slice_float_7_relaxed {
 TEST_F(GeneratedTests, strided_slice_float_7_relaxed) {
     execute(strided_slice_float_7_relaxed::CreateModel,
             strided_slice_float_7_relaxed::is_ignored,
-            strided_slice_float_7_relaxed::examples);
+            strided_slice_float_7_relaxed::get_examples());
 }
 
