@@ -7420,6 +7420,29 @@ TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_relaxed) {
 }
 
 
+// Generated from: layer_norm_lstm.mod.py.
+namespace layer_norm_lstm {
+// Generated layer_norm_lstm test
+#include "examples/layer_norm_lstm.example.cpp"
+// Generated model constructor
+#include "vts_models/layer_norm_lstm.model.cpp"
+} // namespace layer_norm_lstm
+
+TEST_F(NeuralnetworksHidlTest, layer_norm_lstm) {
+  generated_tests::Execute(device,
+                           layer_norm_lstm::createTestModel,
+                           layer_norm_lstm::is_ignored,
+                           layer_norm_lstm::examples);
+}
+
+TEST_F(ValidationTest, layer_norm_lstm) {
+  const Model model = layer_norm_lstm::createTestModel();
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::examples);
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: local_response_normalization_v1_2.mod.py.
 namespace local_response_normalization_v1_2 {
 // Generated local_response_normalization_v1_2 test
