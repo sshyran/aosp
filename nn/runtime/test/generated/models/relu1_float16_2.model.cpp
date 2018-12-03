@@ -1,7 +1,7 @@
 // clang-format off
 // Generated file (from: relu1_float16_2.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {2, 30, 24, 2});
+  OperandType type0(Type::TENSOR_FLOAT16, {2, 30, 24, 2});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto output = model->addOperand(&type0);
