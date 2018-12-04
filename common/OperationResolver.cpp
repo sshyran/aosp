@@ -28,6 +28,7 @@ const OperationRegistration* register_ABS();
 const OperationRegistration* register_CHANNEL_SHUFFLE();
 const OperationRegistration* register_GATHER();
 const OperationRegistration* register_LOGICAL_AND();
+const OperationRegistration* register_LOGICAL_NOT();
 const OperationRegistration* register_LOGICAL_OR();
 const OperationRegistration* register_LOG_SOFTMAX();
 
@@ -36,6 +37,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_CHANNEL_SHUFFLE());
     registerOperation(register_GATHER());
     registerOperation(register_LOGICAL_AND());
+    registerOperation(register_LOGICAL_NOT());
     registerOperation(register_LOGICAL_OR());
     registerOperation(register_LOG_SOFTMAX());
 }

@@ -2465,6 +2465,22 @@ typedef enum {
      */
     ANEURALNETWORKS_LOGICAL_AND = 60,
 
+    /**
+     * Computes the truth value of NOT x element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     *
+     * Supported tensor rank: from 1.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_LOGICAL_NOT = 61,
 
     /**
