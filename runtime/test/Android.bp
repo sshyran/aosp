@@ -136,6 +136,24 @@ cc_test {
 }
 
 cc_test {
+    name: "NeuralNetworksTest_static_fuzzing",
+    defaults: ["NeuralNetworksTest_default_libs"],
+    srcs: [
+        "TestNeuralNetworksWrapper.cpp",
+        "fuzzing/OperationManager.cpp",
+        "fuzzing/RandomGraphGenerator.cpp",
+        "fuzzing/RandomGraphGeneratorUtils.cpp",
+        "fuzzing/RandomVariable.cpp",
+        "fuzzing/TestRandomGraph.cpp",
+    ],
+    static_libs: [
+        "libgmock",
+        "libneuralnetworks",
+        "libneuralnetworks_common",
+    ],
+}
+
+cc_test {
     name: "NeuralNetworksTest_static_asan",
     defaults: ["NeuralNetworksTest_static_defaults"],
     sanitize: {
