@@ -39,8 +39,9 @@ example0 = {
 
 # TEST1: All dimensions other than 4, without axis parameter
 Model().Operation("L2_NORMALIZATION", i1).To(o1)
-Example(example0).AddRelaxed().AddDims([1, 2, 3], i1, o1, includeDefault=False)
+Example(
+    example0).AddRelaxed().AddDims([1, 2, 3], i1, o1, includeDefault=False).AddVariations("float16")
 
 # TEST2: All dimensions, with all possible axis parameter
 Model("axis").Operation("L2_NORMALIZATION", i1, axis).To(o1)
-Example(example0).AddRelaxed().AddAllDimsAndAxis(i1, o1, axis)
+Example(example0).AddRelaxed().AddAllDimsAndAxis(i1, o1, axis).AddVariations("float16")
