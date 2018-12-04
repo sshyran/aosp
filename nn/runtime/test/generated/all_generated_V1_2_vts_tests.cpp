@@ -14092,16 +14092,16 @@ TEST_F(ValidationTest, maximum_simple_relaxed) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, maximum_simple_quant8) {
+TEST_F(NeuralnetworksHidlTest, maximum_simple_float16) {
   generated_tests::Execute(device,
-                           maximum::createTestModel_quant8,
-                           maximum::is_ignored_quant8,
-                           maximum::get_examples_simple_quant8());
+                           maximum::createTestModel_float16,
+                           maximum::is_ignored_float16,
+                           maximum::get_examples_simple_float16());
 }
 
-TEST_F(ValidationTest, maximum_simple_quant8) {
-  const Model model = maximum::createTestModel_quant8();
-  const std::vector<Request> requests = createRequests(maximum::get_examples_simple_quant8());
+TEST_F(ValidationTest, maximum_simple_float16) {
+  const Model model = maximum::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(maximum::get_examples_simple_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14122,16 +14122,16 @@ TEST_F(ValidationTest, maximum_simple_int32) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, maximum_simple_float16) {
+TEST_F(NeuralnetworksHidlTest, maximum_simple_quant8) {
   generated_tests::Execute(device,
-                           maximum::createTestModel_float16,
-                           maximum::is_ignored_float16,
-                           maximum::get_examples_simple_float16());
+                           maximum::createTestModel_quant8,
+                           maximum::is_ignored_quant8,
+                           maximum::get_examples_simple_quant8());
 }
 
-TEST_F(ValidationTest, maximum_simple_float16) {
-  const Model model = maximum::createTestModel_float16();
-  const std::vector<Request> requests = createRequests(maximum::get_examples_simple_float16());
+TEST_F(ValidationTest, maximum_simple_quant8) {
+  const Model model = maximum::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(maximum::get_examples_simple_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14167,16 +14167,16 @@ TEST_F(ValidationTest, maximum_broadcast_relaxed) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, maximum_broadcast_quant8) {
+TEST_F(NeuralnetworksHidlTest, maximum_broadcast_float16) {
   generated_tests::Execute(device,
-                           maximum::createTestModel_quant8_2,
-                           maximum::is_ignored_quant8_2,
-                           maximum::get_examples_broadcast_quant8());
+                           maximum::createTestModel_float16_2,
+                           maximum::is_ignored_float16_2,
+                           maximum::get_examples_broadcast_float16());
 }
 
-TEST_F(ValidationTest, maximum_broadcast_quant8) {
-  const Model model = maximum::createTestModel_quant8_2();
-  const std::vector<Request> requests = createRequests(maximum::get_examples_broadcast_quant8());
+TEST_F(ValidationTest, maximum_broadcast_float16) {
+  const Model model = maximum::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(maximum::get_examples_broadcast_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14197,16 +14197,16 @@ TEST_F(ValidationTest, maximum_broadcast_int32) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, maximum_broadcast_float16) {
+TEST_F(NeuralnetworksHidlTest, maximum_broadcast_quant8) {
   generated_tests::Execute(device,
-                           maximum::createTestModel_float16_2,
-                           maximum::is_ignored_float16_2,
-                           maximum::get_examples_broadcast_float16());
+                           maximum::createTestModel_quant8_2,
+                           maximum::is_ignored_quant8_2,
+                           maximum::get_examples_broadcast_quant8());
 }
 
-TEST_F(ValidationTest, maximum_broadcast_float16) {
-  const Model model = maximum::createTestModel_float16_2();
-  const std::vector<Request> requests = createRequests(maximum::get_examples_broadcast_float16());
+TEST_F(ValidationTest, maximum_broadcast_quant8) {
+  const Model model = maximum::createTestModel_quant8_2();
+  const std::vector<Request> requests = createRequests(maximum::get_examples_broadcast_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14250,16 +14250,16 @@ TEST_F(ValidationTest, minimum_simple_relaxed) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, minimum_simple_quant8) {
+TEST_F(NeuralnetworksHidlTest, minimum_simple_float16) {
   generated_tests::Execute(device,
-                           minimum::createTestModel_quant8,
-                           minimum::is_ignored_quant8,
-                           minimum::get_examples_simple_quant8());
+                           minimum::createTestModel_float16,
+                           minimum::is_ignored_float16,
+                           minimum::get_examples_simple_float16());
 }
 
-TEST_F(ValidationTest, minimum_simple_quant8) {
-  const Model model = minimum::createTestModel_quant8();
-  const std::vector<Request> requests = createRequests(minimum::get_examples_simple_quant8());
+TEST_F(ValidationTest, minimum_simple_float16) {
+  const Model model = minimum::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(minimum::get_examples_simple_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14280,16 +14280,16 @@ TEST_F(ValidationTest, minimum_simple_int32) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, minimum_simple_float16) {
+TEST_F(NeuralnetworksHidlTest, minimum_simple_quant8) {
   generated_tests::Execute(device,
-                           minimum::createTestModel_float16,
-                           minimum::is_ignored_float16,
-                           minimum::get_examples_simple_float16());
+                           minimum::createTestModel_quant8,
+                           minimum::is_ignored_quant8,
+                           minimum::get_examples_simple_quant8());
 }
 
-TEST_F(ValidationTest, minimum_simple_float16) {
-  const Model model = minimum::createTestModel_float16();
-  const std::vector<Request> requests = createRequests(minimum::get_examples_simple_float16());
+TEST_F(ValidationTest, minimum_simple_quant8) {
+  const Model model = minimum::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(minimum::get_examples_simple_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14325,16 +14325,16 @@ TEST_F(ValidationTest, minimum_broadcast_relaxed) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, minimum_broadcast_quant8) {
+TEST_F(NeuralnetworksHidlTest, minimum_broadcast_float16) {
   generated_tests::Execute(device,
-                           minimum::createTestModel_quant8_2,
-                           minimum::is_ignored_quant8_2,
-                           minimum::get_examples_broadcast_quant8());
+                           minimum::createTestModel_float16_2,
+                           minimum::is_ignored_float16_2,
+                           minimum::get_examples_broadcast_float16());
 }
 
-TEST_F(ValidationTest, minimum_broadcast_quant8) {
-  const Model model = minimum::createTestModel_quant8_2();
-  const std::vector<Request> requests = createRequests(minimum::get_examples_broadcast_quant8());
+TEST_F(ValidationTest, minimum_broadcast_float16) {
+  const Model model = minimum::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(minimum::get_examples_broadcast_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14355,16 +14355,16 @@ TEST_F(ValidationTest, minimum_broadcast_int32) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, minimum_broadcast_float16) {
+TEST_F(NeuralnetworksHidlTest, minimum_broadcast_quant8) {
   generated_tests::Execute(device,
-                           minimum::createTestModel_float16_2,
-                           minimum::is_ignored_float16_2,
-                           minimum::get_examples_broadcast_float16());
+                           minimum::createTestModel_quant8_2,
+                           minimum::is_ignored_quant8_2,
+                           minimum::get_examples_broadcast_quant8());
 }
 
-TEST_F(ValidationTest, minimum_broadcast_float16) {
-  const Model model = minimum::createTestModel_float16_2();
-  const std::vector<Request> requests = createRequests(minimum::get_examples_broadcast_float16());
+TEST_F(ValidationTest, minimum_broadcast_quant8) {
+  const Model model = minimum::createTestModel_quant8_2();
+  const std::vector<Request> requests = createRequests(minimum::get_examples_broadcast_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
