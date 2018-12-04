@@ -1388,6 +1388,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (input.type == OperandType::TENSOR_FLOAT32) {
                 success = l2normFloat32(reinterpret_cast<const float*>(input.buffer), input.shape(),
                                         axis, reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = l2normFloat16(reinterpret_cast<const _Float16*>(input.buffer),
+                                        input.shape(), axis,
+                                        reinterpret_cast<_Float16*>(output.buffer), outShape);
             }
         } break;
         case OperationType::LOCAL_RESPONSE_NORMALIZATION: {
@@ -1414,6 +1418,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 success = localResponseNormFloat32(
                         reinterpret_cast<const float*>(input.buffer), input.shape(), radius, bias,
                         alpha, beta, axis, reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = localResponseNormFloat16(reinterpret_cast<const _Float16*>(input.buffer),
+                                                   input.shape(), radius, bias, alpha, beta, axis,
+                                                   reinterpret_cast<_Float16*>(output.buffer),
+                                                   outShape);
             }
         } break;
         case OperationType::RESHAPE: {
