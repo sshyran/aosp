@@ -141,6 +141,7 @@ class Type(NamedVariable):
         "INT32": "int32_t",
         "UINT32": "uint32_t",
         "FLOAT32": "float",
+        "FLOAT16": "_Float16",
         "TENSOR_INT32": "int32_t",
         "TENSOR_FLOAT16": "_Float16",
         "TENSOR_FLOAT32": "float",
@@ -685,9 +686,12 @@ class DataTypeConverter(ModelVariation, ImplicitVariation):
 
     def AutoIdentify(self, model):
         if self.targetType is not None:
-            # By default, select all the float32 tensors
-            self.Identify({op: ["TENSOR_" + self.targetType.upper()] \
-                    for op in model.operands if op.type.type == "TENSOR_FLOAT32"})
+            # By default, select all the float32 tensors/scalars
+            targets = {op: ["TENSOR_" + self.targetType.upper()] \
+                    for op in model.operands if op.type.type == "TENSOR_FLOAT32"}
+            targets.update({op: [self.targetType.upper()] \
+                    for op in model.operands if op.type.type == "FLOAT32"})
+            self.Identify(targets)
         return self
 
     def TransformOperand(self, op, arg=None):
