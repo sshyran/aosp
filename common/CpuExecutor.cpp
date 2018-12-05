@@ -1284,7 +1284,9 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
             RunTimeOperandInfo& input = mOperands[ins[0]];
-            float beta = getScalarData<float>(mOperands[ins[1]]);
+            float beta = (input.type == OperandType::TENSOR_FLOAT16)
+                                 ? getScalarData<_Float16>(mOperands[ins[1]])
+                                 : getScalarData<float>(mOperands[ins[1]]);
             if (beta <= 0.0f) {
                 LOG(ERROR) << "beta must be positive for softmax";
                 return ANEURALNETWORKS_BAD_DATA;
@@ -1432,9 +1434,15 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             const RunTimeOperandInfo& input = mOperands[ins[0]];
             int32_t radius = getScalarData<int32_t>(mOperands[ins[1]]);
-            float bias = getScalarData<float>(mOperands[ins[2]]);
-            float alpha = getScalarData<float>(mOperands[ins[3]]);
-            float beta = getScalarData<float>(mOperands[ins[4]]);
+            float bias = (input.type == OperandType::TENSOR_FLOAT16)
+                                 ? getScalarData<_Float16>(mOperands[ins[2]])
+                                 : getScalarData<float>(mOperands[ins[2]]);
+            float alpha = (input.type == OperandType::TENSOR_FLOAT16)
+                                  ? getScalarData<_Float16>(mOperands[ins[3]])
+                                  : getScalarData<float>(mOperands[ins[3]]);
+            float beta = (input.type == OperandType::TENSOR_FLOAT16)
+                                 ? getScalarData<_Float16>(mOperands[ins[4]])
+                                 : getScalarData<float>(mOperands[ins[4]]);
             const int32_t axis = inCount == 6 ? getScalarData<int32_t>(mOperands[ins[5]]) : -1;
 
             RunTimeOperandInfo& output = mOperands[outs[0]];
@@ -1888,7 +1896,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                      reinterpret_cast<const int32_t*>(paddings.buffer), pad_value,
                                      reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_FLOAT16) {
-                float pad_value = isV2 ? getScalarData<float>(mOperands[ins[2]]) : 0;
+                _Float16 pad_value = isV2 ? getScalarData<_Float16>(mOperands[ins[2]]) : 0;
                 success = padGeneric(reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
                                      reinterpret_cast<const int32_t*>(paddings.buffer),
                                      static_cast<_Float16>(pad_value),
