@@ -116,7 +116,7 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK(input.type == alpha.type);
     Shape output = context->getOutputShape(kOutputTensor);
     NN_RET_CHECK(calculateBroadcastedShape(input, alpha, &output));
-    return context->resizeOutputTensor(kOutputTensor, output);
+    return context->setOutputShape(kOutputTensor, output);
 }
 
 bool execute(IOperationExecutionContext* context) {
