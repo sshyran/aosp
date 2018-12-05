@@ -38,7 +38,7 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 template <typename T>
-inline bool compute(const T* input, const Shape& shape, float beta, uint32_t axis, T* output) {
+inline bool compute(const T* input, const Shape& shape, T beta, uint32_t axis, T* output) {
     const uint32_t outerSize = getNumberOfElements(shape, 0, axis);
     const uint32_t axisSize = getSizeOfDimension(shape, axis);
     const uint32_t innerSize = getNumberOfElements(shape, axis + 1, getNumberOfDimensions(shape));
@@ -73,12 +73,20 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32)
-            << "Unsupported tensor type for operation " << kOperationName;
-    NN_RET_CHECK(
-            validateInputTypes(context, {inputType, OperandType::FLOAT32, OperandType::INT32}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    std::vector<OperandType> inExpectedTypes;
+    std::vector<OperandType> outExpectedTypes;
+    if (inputType == OperandType::TENSOR_FLOAT32) {
+        inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::FLOAT32, OperandType::INT32};
+        outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+    } else if (inputType == OperandType::TENSOR_FLOAT16) {
+        inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::FLOAT16, OperandType::INT32};
+        outExpectedTypes = {OperandType::TENSOR_FLOAT16};
+    } else {
+        LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
+        return false;
+    }
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     return validateHalVersion(context, HalVersion::V1_2);
 }
 
@@ -93,8 +101,7 @@ bool execute(IOperationExecutionContext* context) {
         case OperandType::TENSOR_FLOAT16:
             return compute(context->getInputBuffer<_Float16>(kInputTensor),
                            context->getInputShape(kInputTensor),
-                           // TODO(b/120225191): Use float16 instead.
-                           context->getInputValue<float>(kInputBeta), axis,
+                           context->getInputValue<_Float16>(kInputBeta), axis,
                            context->getOutputBuffer<_Float16>(kOutputTensor));
         case OperandType::TENSOR_FLOAT32:
             return compute(context->getInputBuffer<float>(kInputTensor),
