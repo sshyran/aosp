@@ -184,6 +184,7 @@ const char* kTypeNames[kNumberOfDataTypes] = {
         "TENSOR_INT32",   "TENSOR_QUANT8_ASYMM",
         "BOOL",           "TENSOR_QUANT16_SYMM",
         "TENSOR_FLOAT16", "TENSOR_BOOL8",
+        "FLOAT16",
 };
 
 static_assert(COUNT(kTypeNames) == kNumberOfDataTypes, "kTypeNames is incorrect");
@@ -327,6 +328,7 @@ const uint32_t kSizeOfDataType[]{
         2,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
         2,  // ANEURALNETWORKS_TENSOR_FLOAT16
         1,  // ANEURALNETWORKS_TENSOR_BOOL8
+        2,  // ANEURALNETWORKS_FLOAT16
 };
 
 static_assert(COUNT(kSizeOfDataType) == kNumberOfDataTypes, "kSizeOfDataType is incorrect");
@@ -342,6 +344,7 @@ const bool kScalarDataType[]{
         false,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
         false,  // ANEURALNETWORKS_TENSOR_FLOAT16
         false,  // ANEURALNETWORKS_TENSOR_BOOL8
+        true,   // ANEURALNETWORKS_FLOAT16
 };
 
 static_assert(COUNT(kScalarDataType) == kNumberOfDataTypes, "kScalarDataType is incorrect");
@@ -474,9 +477,9 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
-    if (type.type == ANEURALNETWORKS_FLOAT32 || type.type == ANEURALNETWORKS_INT32 ||
-        type.type == ANEURALNETWORKS_UINT32 || type.type == ANEURALNETWORKS_BOOL ||
-        type.type == ANEURALNETWORKS_OEM_SCALAR) {
+    if (type.type == ANEURALNETWORKS_FLOAT16 || type.type == ANEURALNETWORKS_FLOAT32 ||
+        type.type == ANEURALNETWORKS_INT32 || type.type == ANEURALNETWORKS_UINT32 ||
+        type.type == ANEURALNETWORKS_BOOL || type.type == ANEURALNETWORKS_OEM_SCALAR) {
         if (type.dimensionCount != 0 || type.dimensions != nullptr) {
             LOG(ERROR) << tag << " Invalid dimensions for scalar type";
             return ANEURALNETWORKS_BAD_DATA;

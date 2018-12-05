@@ -105,7 +105,7 @@ typedef enum {
      */
     ANEURALNETWORKS_TENSOR_QUANT16_SYMM = 7,
     /**
-     * A tensor of 16 bit floating point values.
+     * A tensor of IEEE 754 16 bit floating point values.
      *
      * Available since API level 29.
      */
@@ -119,6 +119,12 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_TENSOR_BOOL8 = 9,
+    /**
+     * An IEEE 754 16 bit floating point scalar value.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_FLOAT16 = 10,
 } OperandCode;
 
 /**
