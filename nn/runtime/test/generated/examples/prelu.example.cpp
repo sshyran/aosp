@@ -123,6 +123,47 @@ static std::vector<MixedTypedExample> examples_quant8 = {
 return examples_quant8;
 };
 
+std::vector<MixedTypedExample>& get_examples_float16() {
+static std::vector<MixedTypedExample> examples_float16 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_SYMM map
+  {},
+  // int -> FLOAT16 map
+  {{0, {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -2.0f, -2.0f, -2.0f}}},
+  // int -> BOOL8 map
+  {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_SYMM map
+  {},
+  // int -> FLOAT16 map
+  {{0, {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, -1.0f, -2.0f, 0.0f, -2.0f, -4.0f}}},
+  // int -> BOOL8 map
+  {},
+}
+},
+}, // End of an example
+};
+return examples_float16;
+};
+
 std::vector<MixedTypedExample>& get_examples_weight_as_input() {
 static std::vector<MixedTypedExample> examples_weight_as_input = {
 // Begin of an example
@@ -244,5 +285,46 @@ static std::vector<MixedTypedExample> examples_weight_as_input_quant8 = {
 }, // End of an example
 };
 return examples_weight_as_input_quant8;
+};
+
+std::vector<MixedTypedExample>& get_examples_weight_as_input_float16() {
+static std::vector<MixedTypedExample> examples_weight_as_input_float16 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_SYMM map
+  {},
+  // int -> FLOAT16 map
+  {{0, {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -2.0f, -2.0f, -2.0f}}, {1, {0.0f, 1.0f, 2.0f}}},
+  // int -> BOOL8 map
+  {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> FLOAT32 map
+  {},
+  // int -> INT32 map
+  {},
+  // int -> QUANT8_ASYMM map
+  {},
+  // int -> QUANT16_SYMM map
+  {},
+  // int -> FLOAT16 map
+  {{0, {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, -1.0f, -2.0f, 0.0f, -2.0f, -4.0f}}},
+  // int -> BOOL8 map
+  {},
+}
+},
+}, // End of an example
+};
+return examples_weight_as_input_float16;
 };
 
