@@ -77,7 +77,7 @@ bool prepare(IOperationExecutionContext* context) {
     Shape input2 = context->getInputShape(kInputTensor2);
     Shape output = context->getOutputShape(kOutputTensor);
     NN_RET_CHECK(calculateBroadcastedShape(input1, input2, &output));
-    return context->resizeOutputTensor(kOutputTensor, output);
+    return context->setOutputShape(kOutputTensor, output);
 }
 
 bool executeAnd(IOperationExecutionContext* context) {

@@ -90,7 +90,7 @@ bool prepare(IOperationExecutionContext* context) {
     output.dimensions.insert(output.dimensions.end(), input.dimensions.begin() + axis + 1,
                              input.dimensions.end());
 
-    return context->resizeOutputTensor(kOutputTensor, output);
+    return context->setOutputShape(kOutputTensor, output);
 }
 
 bool execute(IOperationExecutionContext* context) {

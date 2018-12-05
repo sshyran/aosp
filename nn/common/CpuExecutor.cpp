@@ -53,8 +53,7 @@ class OperationExecutionContext : public IOperationExecutionContext {
     Shape getOutputShape(uint32_t index) const override;
     void* getOutputBuffer(uint32_t index) override;
 
-    // Requests the output buffer to be resized. Updates the output shape.
-    bool resizeOutputTensor(uint32_t index, const Shape& shape) override;
+    bool setOutputShape(uint32_t index, const Shape& shape) override;
 
    private:
     const RunTimeOperandInfo* getInputInfo(uint32_t index) const;
@@ -137,7 +136,7 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape) {
     return true;
 }
 
-bool OperationExecutionContext::resizeOutputTensor(uint32_t index, const Shape& shape) {
+bool OperationExecutionContext::setOutputShape(uint32_t index, const Shape& shape) {
     return setInfoAndAllocateIfNeeded(getOutputInfo(index), shape);
 }
 
