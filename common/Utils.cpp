@@ -2207,6 +2207,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                    OperandType::INT32,          OperandType::INT32,
                                    OperandType::INT32,          OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+            } else if (inputType == OperandType::TENSOR_FLOAT16) {
+                inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
+                                   OperandType::TENSOR_FLOAT16, OperandType::INT32,
+                                   OperandType::INT32,          OperandType::INT32,
+                                   OperandType::INT32,          OperandType::INT32};
+                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
                 inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
                                    OperandType::TENSOR_QUANT8_ASYMM,
