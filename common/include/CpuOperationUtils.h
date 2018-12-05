@@ -69,6 +69,28 @@ inline void convertFloat32ToFloat16(const std::vector<float>& input, _Float16* o
     }
 }
 
+template <typename T>
+inline bool convertNchwToNhwc(const T* nchw, const Shape& nchwShape, std::vector<T>* nhwc,
+                              Shape* nhwcShape) {
+    NN_RET_CHECK_EQ(getNumberOfDimensions(nchwShape), 4)
+            << "Error converting a non-4-D tensor to NHWC layout";
+    *nhwcShape = nchwShape;
+    const auto& fromDim = nchwShape.dimensions;
+    nhwcShape->dimensions = {fromDim[0], fromDim[2], fromDim[3], fromDim[1]};
+    nhwc->resize(getNumberOfElements(nchwShape));
+    auto to = nhwc->data();
+    uint32_t spatialSize = fromDim[2] * fromDim[3];
+    for (uint32_t n = 0; n < fromDim[0]; n++) {
+        for (uint32_t hw = 0; hw < spatialSize; hw++) {
+            for (uint32_t c = 0; c < fromDim[1]; c++) {
+                uint32_t fromIndex = n * fromDim[1] * spatialSize + c * spatialSize + hw;
+                *to++ = nchw[fromIndex];
+            }
+        }
+    }
+    return true;
+}
+
 } // nn
 } // android
 

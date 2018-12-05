@@ -21,6 +21,12 @@ TEST_F(GeneratedTests, heatmap_max_keypoint_nhwc_relaxed) {
             heatmap_max_keypoint::get_examples_nhwc_relaxed());
 }
 
+TEST_F(GeneratedTests, heatmap_max_keypoint_nhwc_float16) {
+    execute(heatmap_max_keypoint::CreateModel_nhwc_float16,
+            heatmap_max_keypoint::is_ignored_nhwc_float16,
+            heatmap_max_keypoint::get_examples_nhwc_float16());
+}
+
 TEST_F(GeneratedTests, heatmap_max_keypoint_nchw) {
     execute(heatmap_max_keypoint::CreateModel_nchw,
             heatmap_max_keypoint::is_ignored_nchw,
@@ -31,6 +37,12 @@ TEST_F(GeneratedTests, heatmap_max_keypoint_nchw_relaxed) {
     execute(heatmap_max_keypoint::CreateModel_nchw_relaxed,
             heatmap_max_keypoint::is_ignored_nchw_relaxed,
             heatmap_max_keypoint::get_examples_nchw_relaxed());
+}
+
+TEST_F(GeneratedTests, heatmap_max_keypoint_nchw_float16) {
+    execute(heatmap_max_keypoint::CreateModel_nchw_float16,
+            heatmap_max_keypoint::is_ignored_nchw_float16,
+            heatmap_max_keypoint::get_examples_nchw_float16());
 }
 
 TEST_F(GeneratedTests, heatmap_max_keypoint_nhwc_2) {
@@ -45,6 +57,12 @@ TEST_F(GeneratedTests, heatmap_max_keypoint_nhwc_relaxed_2) {
             heatmap_max_keypoint::get_examples_nhwc_relaxed_2());
 }
 
+TEST_F(GeneratedTests, heatmap_max_keypoint_nhwc_float16_2) {
+    execute(heatmap_max_keypoint::CreateModel_nhwc_float16_2,
+            heatmap_max_keypoint::is_ignored_nhwc_float16_2,
+            heatmap_max_keypoint::get_examples_nhwc_float16_2());
+}
+
 TEST_F(GeneratedTests, heatmap_max_keypoint_nchw_2) {
     execute(heatmap_max_keypoint::CreateModel_nchw_2,
             heatmap_max_keypoint::is_ignored_nchw_2,
@@ -55,5 +73,11 @@ TEST_F(GeneratedTests, heatmap_max_keypoint_nchw_relaxed_2) {
     execute(heatmap_max_keypoint::CreateModel_nchw_relaxed_2,
             heatmap_max_keypoint::is_ignored_nchw_relaxed_2,
             heatmap_max_keypoint::get_examples_nchw_relaxed_2());
+}
+
+TEST_F(GeneratedTests, heatmap_max_keypoint_nchw_float16_2) {
+    execute(heatmap_max_keypoint::CreateModel_nchw_float16_2,
+            heatmap_max_keypoint::is_ignored_nchw_float16_2,
+            heatmap_max_keypoint::get_examples_nchw_float16_2());
 }
 

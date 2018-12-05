@@ -1575,18 +1575,26 @@ TEST(OperationValidationTest, ROI_POOLING_quant8) {
     roiPoolingOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
-TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
+void heatmapMaxKeypointOpTest(int32_t operandCode) {
     uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outDim[] = {6, 3, 1};
     OperationTestBase heatmapMaxKeypointTest(
             ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT,
-            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, heatmapDim),
-             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, boxDim), getOpType(ANEURALNETWORKS_BOOL)},
-            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 3, outDim)});
+            {getOpType(operandCode, 4, heatmapDim), getOpType(operandCode, 2, boxDim),
+             getOpType(ANEURALNETWORKS_BOOL)},
+            {getOpType(operandCode, 3, outDim)});
 
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCode());
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float16) {
+    heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
+    heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
 void groupedConvOpTest(int32_t operandCode) {

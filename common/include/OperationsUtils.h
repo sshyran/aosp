@@ -447,9 +447,6 @@ bool roiAlignPrepare(const Shape& input, const float* roiData, const Shape& roiS
                      const int32_t* outputShapeData, const Shape& outputShapeShape,
                      const float spatialScale, Shape* output);
 
-bool heatmapMaxKeypointPrepare(const Shape& heatmapShape, const float* boxesData,
-                               const Shape& boxesShape, Shape* output);
-
 bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
                         int32_t padding_left, int32_t padding_right, int32_t padding_top,
                         int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
