@@ -30,6 +30,7 @@ cc_defaults {
         "operations/LogicalAndOr.cpp",
         "operations/LogicalNot.cpp",
         "operations/LogSoftmax.cpp",
+        "operations/PRelu.cpp",
     ],
 }
 
@@ -44,6 +45,9 @@ cc_library_static {
     ],
     header_libs: [
         "libneuralnetworks_headers",
+        "libeigen",
+        "gemmlowp_headers",
+        "tensorflow_headers",
     ],
     shared_libs: [
         "libhidltransport",
@@ -53,6 +57,17 @@ cc_library_static {
         "android.hardware.neuralnetworks@1.2",
         "android.hidl.allocator@1.0",
         "android.hidl.memory@1.0",
+    ],
+    cflags: [
+        "-Werror",
+        "-Wall",
+        "-Wextra",
+        "-Wno-extern-c-compat",
+        "-Wno-sign-compare",
+        "-Wno-unused-local-typedef",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-invalid-partial-specialization",
     ],
 }
 

@@ -14697,6 +14697,21 @@ TEST_F(ValidationTest, prelu_quant8) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, prelu_float16) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_float16,
+                           prelu::is_ignored_float16,
+                           prelu::get_examples_float16());
+}
+
+TEST_F(ValidationTest, prelu_float16) {
+  const Model model = prelu::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input) {
   generated_tests::Execute(device,
                            prelu::createTestModel_weight_as_input,
@@ -14737,6 +14752,21 @@ TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input_quant8) {
 TEST_F(ValidationTest, prelu_weight_as_input_quant8) {
   const Model model = prelu::createTestModel_weight_as_input_quant8();
   const std::vector<Request> requests = createRequests(prelu::get_examples_weight_as_input_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input_float16) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_weight_as_input_float16,
+                           prelu::is_ignored_weight_as_input_float16,
+                           prelu::get_examples_weight_as_input_float16());
+}
+
+TEST_F(ValidationTest, prelu_weight_as_input_float16) {
+  const Model model = prelu::createTestModel_weight_as_input_float16();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_weight_as_input_float16());
   validateModel(model);
   validateRequests(model, requests);
 }

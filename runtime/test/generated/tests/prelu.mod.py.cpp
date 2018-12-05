@@ -27,6 +27,12 @@ TEST_F(GeneratedTests, prelu_quant8) {
             prelu::get_examples_quant8());
 }
 
+TEST_F(GeneratedTests, prelu_float16) {
+    execute(prelu::CreateModel_float16,
+            prelu::is_ignored_float16,
+            prelu::get_examples_float16());
+}
+
 TEST_F(GeneratedTests, prelu_weight_as_input) {
     execute(prelu::CreateModel_weight_as_input,
             prelu::is_ignored_weight_as_input,
@@ -43,5 +49,11 @@ TEST_F(GeneratedTests, prelu_weight_as_input_quant8) {
     execute(prelu::CreateModel_weight_as_input_quant8,
             prelu::is_ignored_weight_as_input_quant8,
             prelu::get_examples_weight_as_input_quant8());
+}
+
+TEST_F(GeneratedTests, prelu_weight_as_input_float16) {
+    execute(prelu::CreateModel_weight_as_input_float16,
+            prelu::is_ignored_weight_as_input_float16,
+            prelu::get_examples_weight_as_input_float16());
 }
 
