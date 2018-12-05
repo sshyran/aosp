@@ -147,8 +147,8 @@ class IOperationExecutionContext {
     virtual Shape getOutputShape(uint32_t index) const = 0;
     virtual void* getOutputBuffer(uint32_t index) = 0;
 
-    // Requests the output buffer to be resized. Updates the output shape.
-    virtual bool resizeOutputTensor(uint32_t index, const Shape& shape) = 0;
+    // Updates the output shape, allocating the buffer if necessary.
+    virtual bool setOutputShape(uint32_t index, const Shape& shape) = 0;
 
     template <typename T>
     const T* getInputBuffer(uint32_t index) const {

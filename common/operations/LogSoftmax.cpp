@@ -83,7 +83,7 @@ bool validate(const IOperationValidationContext* context) {
 }
 
 bool prepare(IOperationExecutionContext* context) {
-    return context->resizeOutputTensor(kOutputTensor, context->getInputShape(kInputTensor));
+    return context->setOutputShape(kOutputTensor, context->getInputShape(kInputTensor));
 }
 
 bool execute(IOperationExecutionContext* context) {

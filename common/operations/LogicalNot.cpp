@@ -59,7 +59,7 @@ bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape output = context->getOutputShape(kOutputTensor);
     NN_RET_CHECK(SetShape(input, &output));
-    return context->resizeOutputTensor(kOutputTensor, output);
+    return context->setOutputShape(kOutputTensor, output);
 }
 
 bool execute(IOperationExecutionContext* context) {
