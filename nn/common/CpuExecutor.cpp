@@ -672,6 +672,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             const RunTimeOperandInfo& input  = mOperands[ins[0]];
             const RunTimeOperandInfo& filter = mOperands[ins[1]];
+            const Operand& filterOperand = mModel->operands[ins[1]];
             const RunTimeOperandInfo& bias   = mOperands[ins[2]];
 
             int32_t padding_left, padding_right;
@@ -756,13 +757,24 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                         depth_multiplier, activation,
                         reinterpret_cast<_Float16*>(output_tmp.buffer), outShape);
             } else if (input_tmp.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = depthwiseConvQuant8(
-                        reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
-                        reinterpret_cast<const uint8_t*>(filter.buffer), filter.shape(),
-                        reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(), padding_left,
-                        padding_right, padding_top, padding_bottom, stride_width, stride_height,
-                        depth_multiplier, activation, reinterpret_cast<uint8_t*>(output_tmp.buffer),
-                        outShape);
+                if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+                    success = depthwiseConvQuant8PerChannel(
+                            reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            reinterpret_cast<const int8_t*>(filter.buffer), filter.shape(),
+                            filterOperand.extraParams.channelQuant().scales.data(),
+                            reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
+                            padding_left, padding_right, padding_top, padding_bottom, stride_width,
+                            stride_height, depth_multiplier, activation,
+                            reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+                } else if (filter.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                    success = depthwiseConvQuant8(
+                            reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            reinterpret_cast<const uint8_t*>(filter.buffer), filter.shape(),
+                            reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
+                            padding_left, padding_right, padding_top, padding_bottom, stride_width,
+                            stride_height, depth_multiplier, activation,
+                            reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+                }
             }
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
@@ -866,7 +878,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                             padding_left, padding_right, padding_top, padding_bottom, stride_width,
                             stride_height, activation,
                             reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
-
                 } else if (filter.type == OperandType::TENSOR_QUANT8_ASYMM) {
                     success = convQuant8(
                             reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
