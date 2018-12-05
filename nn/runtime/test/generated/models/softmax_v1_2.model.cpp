@@ -145,15 +145,15 @@ inline bool is_ignored_relaxed_dim3_axis2(int i) {
 }
 
 void CreateModel_float16(Model *model) {
-  OperandType type2(Type::FLOAT32, {});
   OperandType type5(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
-  auto param = model->addOperand(&type2);
+  auto param = model->addOperand(&type6);
   auto op2 = model->addOperand(&type5);
   // Phase 2, operations
-  static float param_init[] = {1.0f};
-  model->setOperandValue(param, param_init, sizeof(float) * 1);
+  static _Float16 param_init[] = {1.0f};
+  model->setOperandValue(param, param_init, sizeof(_Float16) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param}, {op2});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -168,15 +168,15 @@ inline bool is_ignored_float16(int i) {
 }
 
 void CreateModel_float16_dim1_axis0(Model *model) {
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type7(Type::TENSOR_FLOAT16, {5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type8(Type::TENSOR_FLOAT16, {5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type7);
-  auto param = model->addOperand(&type2);
-  auto op2 = model->addOperand(&type7);
+  auto op1 = model->addOperand(&type8);
+  auto param = model->addOperand(&type6);
+  auto op2 = model->addOperand(&type8);
   // Phase 2, operations
-  static float param_init[] = {1.0f};
-  model->setOperandValue(param, param_init, sizeof(float) * 1);
+  static _Float16 param_init[] = {1.0f};
+  model->setOperandValue(param, param_init, sizeof(_Float16) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param}, {op2});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -191,15 +191,15 @@ inline bool is_ignored_float16_dim1_axis0(int i) {
 }
 
 void CreateModel_float16_dim3_axis2(Model *model) {
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type8(Type::TENSOR_FLOAT16, {2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type9(Type::TENSOR_FLOAT16, {2, 2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type8);
-  auto param = model->addOperand(&type2);
-  auto op2 = model->addOperand(&type8);
+  auto op1 = model->addOperand(&type9);
+  auto param = model->addOperand(&type6);
+  auto op2 = model->addOperand(&type9);
   // Phase 2, operations
-  static float param_init[] = {1.0f};
-  model->setOperandValue(param, param_init, sizeof(float) * 1);
+  static _Float16 param_init[] = {1.0f};
+  model->setOperandValue(param, param_init, sizeof(_Float16) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param}, {op2});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -214,13 +214,13 @@ inline bool is_ignored_float16_dim3_axis2(int i) {
 }
 
 void CreateModel_quant8(Model *model) {
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
+  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
+  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type9);
+  auto op1 = model->addOperand(&type10);
   auto param = model->addOperand(&type2);
-  auto op2 = model->addOperand(&type10);
+  auto op2 = model->addOperand(&type11);
   // Phase 2, operations
   static float param_init[] = {1.0f};
   model->setOperandValue(param, param_init, sizeof(float) * 1);
@@ -238,13 +238,13 @@ inline bool is_ignored_quant8(int i) {
 }
 
 void CreateModel_quant8_dim1_axis0(Model *model) {
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
-  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
+  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
+  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type11);
+  auto op1 = model->addOperand(&type12);
   auto param = model->addOperand(&type2);
-  auto op2 = model->addOperand(&type12);
+  auto op2 = model->addOperand(&type13);
   // Phase 2, operations
   static float param_init[] = {1.0f};
   model->setOperandValue(param, param_init, sizeof(float) * 1);
@@ -262,13 +262,13 @@ inline bool is_ignored_quant8_dim1_axis0(int i) {
 }
 
 void CreateModel_quant8_dim3_axis2(Model *model) {
-  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
+  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
+  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type13);
+  auto op1 = model->addOperand(&type14);
   auto param = model->addOperand(&type2);
-  auto op2 = model->addOperand(&type14);
+  auto op2 = model->addOperand(&type15);
   // Phase 2, operations
   static float param_init[] = {1.0f};
   model->setOperandValue(param, param_init, sizeof(float) * 1);
@@ -430,15 +430,15 @@ inline bool is_ignored_relaxed_dim3_axis2_2(int i) {
 }
 
 void CreateModel_float16_2(Model *model) {
-  OperandType type2(Type::FLOAT32, {});
   OperandType type5(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
   auto op1 = model->addOperand(&type5);
-  auto param1 = model->addOperand(&type2);
+  auto param1 = model->addOperand(&type6);
   auto op2 = model->addOperand(&type5);
   // Phase 2, operations
-  static float param1_init[] = {1e-06f};
-  model->setOperandValue(param1, param1_init, sizeof(float) * 1);
+  static _Float16 param1_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param1, param1_init, sizeof(_Float16) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param1}, {op2});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -453,15 +453,15 @@ inline bool is_ignored_float16_2(int i) {
 }
 
 void CreateModel_float16_dim1_axis0_2(Model *model) {
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type7(Type::TENSOR_FLOAT16, {5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type8(Type::TENSOR_FLOAT16, {5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type7);
-  auto param1 = model->addOperand(&type2);
-  auto op2 = model->addOperand(&type7);
+  auto op1 = model->addOperand(&type8);
+  auto param1 = model->addOperand(&type6);
+  auto op2 = model->addOperand(&type8);
   // Phase 2, operations
-  static float param1_init[] = {1e-06f};
-  model->setOperandValue(param1, param1_init, sizeof(float) * 1);
+  static _Float16 param1_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param1, param1_init, sizeof(_Float16) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param1}, {op2});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -476,15 +476,15 @@ inline bool is_ignored_float16_dim1_axis0_2(int i) {
 }
 
 void CreateModel_float16_dim3_axis2_2(Model *model) {
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type8(Type::TENSOR_FLOAT16, {2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type9(Type::TENSOR_FLOAT16, {2, 2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type8);
-  auto param1 = model->addOperand(&type2);
-  auto op2 = model->addOperand(&type8);
+  auto op1 = model->addOperand(&type9);
+  auto param1 = model->addOperand(&type6);
+  auto op2 = model->addOperand(&type9);
   // Phase 2, operations
-  static float param1_init[] = {1e-06f};
-  model->setOperandValue(param1, param1_init, sizeof(float) * 1);
+  static _Float16 param1_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param1, param1_init, sizeof(_Float16) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param1}, {op2});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
@@ -499,13 +499,13 @@ inline bool is_ignored_float16_dim3_axis2_2(int i) {
 }
 
 void CreateModel_quant8_2(Model *model) {
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
+  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
+  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type9);
+  auto op1 = model->addOperand(&type10);
   auto param1 = model->addOperand(&type2);
-  auto op2 = model->addOperand(&type10);
+  auto op2 = model->addOperand(&type11);
   // Phase 2, operations
   static float param1_init[] = {1e-06f};
   model->setOperandValue(param1, param1_init, sizeof(float) * 1);
@@ -523,13 +523,13 @@ inline bool is_ignored_quant8_2(int i) {
 }
 
 void CreateModel_quant8_dim1_axis0_2(Model *model) {
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
-  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
+  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
+  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type11);
+  auto op1 = model->addOperand(&type12);
   auto param1 = model->addOperand(&type2);
-  auto op2 = model->addOperand(&type12);
+  auto op2 = model->addOperand(&type13);
   // Phase 2, operations
   static float param1_init[] = {1e-06f};
   model->setOperandValue(param1, param1_init, sizeof(float) * 1);
@@ -547,13 +547,13 @@ inline bool is_ignored_quant8_dim1_axis0_2(int i) {
 }
 
 void CreateModel_quant8_dim3_axis2_2(Model *model) {
-  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
+  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
+  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type13);
+  auto op1 = model->addOperand(&type14);
   auto param1 = model->addOperand(&type2);
-  auto op2 = model->addOperand(&type14);
+  auto op2 = model->addOperand(&type15);
   // Phase 2, operations
   static float param1_init[] = {1e-06f};
   model->setOperandValue(param1, param1_init, sizeof(float) * 1);
@@ -572,13 +572,13 @@ inline bool is_ignored_quant8_dim3_axis2_2(int i) {
 
 void CreateModel_axis_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type15(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
+  OperandType type16(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type15);
+  auto op1 = model->addOperand(&type16);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type15);
+  auto op2 = model->addOperand(&type16);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -599,13 +599,13 @@ inline bool is_ignored_axis_dim4_axis0(int i) {
 
 void CreateModel_axis_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type15(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
+  OperandType type16(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type15);
+  auto op1 = model->addOperand(&type16);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type15);
+  auto op2 = model->addOperand(&type16);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -626,13 +626,13 @@ inline bool is_ignored_axis_dim4_axis0_neg(int i) {
 
 void CreateModel_axis_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type16(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
+  OperandType type17(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type16);
+  auto op1 = model->addOperand(&type17);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type16);
+  auto op2 = model->addOperand(&type17);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -653,13 +653,13 @@ inline bool is_ignored_axis_dim4_axis1(int i) {
 
 void CreateModel_axis_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type16(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
+  OperandType type17(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type16);
+  auto op1 = model->addOperand(&type17);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type16);
+  auto op2 = model->addOperand(&type17);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -680,13 +680,13 @@ inline bool is_ignored_axis_dim4_axis1_neg(int i) {
 
 void CreateModel_axis_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type17(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
+  OperandType type18(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type17);
+  auto op1 = model->addOperand(&type18);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type17);
+  auto op2 = model->addOperand(&type18);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -707,13 +707,13 @@ inline bool is_ignored_axis_dim4_axis2(int i) {
 
 void CreateModel_axis_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type17(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
+  OperandType type18(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type17);
+  auto op1 = model->addOperand(&type18);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type17);
+  auto op2 = model->addOperand(&type18);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -788,13 +788,13 @@ inline bool is_ignored_axis_dim4_axis3_neg(int i) {
 
 void CreateModel_axis_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type18(Type::TENSOR_FLOAT32, {5, 2, 2});
+  OperandType type19(Type::TENSOR_FLOAT32, {5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type18);
+  auto op1 = model->addOperand(&type19);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type18);
+  auto op2 = model->addOperand(&type19);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -815,13 +815,13 @@ inline bool is_ignored_axis_dim3_axis0(int i) {
 
 void CreateModel_axis_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type18(Type::TENSOR_FLOAT32, {5, 2, 2});
+  OperandType type19(Type::TENSOR_FLOAT32, {5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type18);
+  auto op1 = model->addOperand(&type19);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type18);
+  auto op2 = model->addOperand(&type19);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -842,13 +842,13 @@ inline bool is_ignored_axis_dim3_axis0_neg(int i) {
 
 void CreateModel_axis_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
+  OperandType type20(Type::TENSOR_FLOAT32, {2, 5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type19);
+  auto op1 = model->addOperand(&type20);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type19);
+  auto op2 = model->addOperand(&type20);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -869,13 +869,13 @@ inline bool is_ignored_axis_dim3_axis1(int i) {
 
 void CreateModel_axis_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
+  OperandType type20(Type::TENSOR_FLOAT32, {2, 5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type19);
+  auto op1 = model->addOperand(&type20);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type19);
+  auto op2 = model->addOperand(&type20);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -951,12 +951,12 @@ inline bool is_ignored_axis_dim3_axis2_neg(int i) {
 void CreateModel_axis_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type20(Type::TENSOR_FLOAT32, {5, 2});
+  OperandType type21(Type::TENSOR_FLOAT32, {5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type20);
+  auto op1 = model->addOperand(&type21);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type20);
+  auto op2 = model->addOperand(&type21);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -978,12 +978,12 @@ inline bool is_ignored_axis_dim2_axis0(int i) {
 void CreateModel_axis_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type20(Type::TENSOR_FLOAT32, {5, 2});
+  OperandType type21(Type::TENSOR_FLOAT32, {5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type20);
+  auto op1 = model->addOperand(&type21);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type20);
+  auto op2 = model->addOperand(&type21);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1005,12 +1005,12 @@ inline bool is_ignored_axis_dim2_axis0_neg(int i) {
 void CreateModel_axis_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type21(Type::TENSOR_FLOAT32, {2, 5});
+  OperandType type22(Type::TENSOR_FLOAT32, {2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type21);
+  auto op1 = model->addOperand(&type22);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type21);
+  auto op2 = model->addOperand(&type22);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1032,12 +1032,12 @@ inline bool is_ignored_axis_dim2_axis1(int i) {
 void CreateModel_axis_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type21(Type::TENSOR_FLOAT32, {2, 5});
+  OperandType type22(Type::TENSOR_FLOAT32, {2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type21);
+  auto op1 = model->addOperand(&type22);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type21);
+  auto op2 = model->addOperand(&type22);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1112,13 +1112,13 @@ inline bool is_ignored_axis_dim1_axis0_neg(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type15(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
+  OperandType type16(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type15);
+  auto op1 = model->addOperand(&type16);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type15);
+  auto op2 = model->addOperand(&type16);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1141,13 +1141,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis0(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type15(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
+  OperandType type16(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type15);
+  auto op1 = model->addOperand(&type16);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type15);
+  auto op2 = model->addOperand(&type16);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1170,13 +1170,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis0_neg(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type16(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
+  OperandType type17(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type16);
+  auto op1 = model->addOperand(&type17);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type16);
+  auto op2 = model->addOperand(&type17);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1199,13 +1199,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis1(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type16(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
+  OperandType type17(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type16);
+  auto op1 = model->addOperand(&type17);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type16);
+  auto op2 = model->addOperand(&type17);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1228,13 +1228,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis1_neg(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type17(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
+  OperandType type18(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type17);
+  auto op1 = model->addOperand(&type18);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type17);
+  auto op2 = model->addOperand(&type18);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1257,13 +1257,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis2(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type17(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
+  OperandType type18(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type17);
+  auto op1 = model->addOperand(&type18);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type17);
+  auto op2 = model->addOperand(&type18);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1344,13 +1344,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis3_neg(int i) {
 
 void CreateModel_axis_relaxed_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type18(Type::TENSOR_FLOAT32, {5, 2, 2});
+  OperandType type19(Type::TENSOR_FLOAT32, {5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type18);
+  auto op1 = model->addOperand(&type19);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type18);
+  auto op2 = model->addOperand(&type19);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1373,13 +1373,13 @@ inline bool is_ignored_axis_relaxed_dim3_axis0(int i) {
 
 void CreateModel_axis_relaxed_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type18(Type::TENSOR_FLOAT32, {5, 2, 2});
+  OperandType type19(Type::TENSOR_FLOAT32, {5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type18);
+  auto op1 = model->addOperand(&type19);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type18);
+  auto op2 = model->addOperand(&type19);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1402,13 +1402,13 @@ inline bool is_ignored_axis_relaxed_dim3_axis0_neg(int i) {
 
 void CreateModel_axis_relaxed_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
+  OperandType type20(Type::TENSOR_FLOAT32, {2, 5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type19);
+  auto op1 = model->addOperand(&type20);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type19);
+  auto op2 = model->addOperand(&type20);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1431,13 +1431,13 @@ inline bool is_ignored_axis_relaxed_dim3_axis1(int i) {
 
 void CreateModel_axis_relaxed_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
+  OperandType type20(Type::TENSOR_FLOAT32, {2, 5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type19);
+  auto op1 = model->addOperand(&type20);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type19);
+  auto op2 = model->addOperand(&type20);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1519,12 +1519,12 @@ inline bool is_ignored_axis_relaxed_dim3_axis2_neg(int i) {
 void CreateModel_axis_relaxed_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type20(Type::TENSOR_FLOAT32, {5, 2});
+  OperandType type21(Type::TENSOR_FLOAT32, {5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type20);
+  auto op1 = model->addOperand(&type21);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type20);
+  auto op2 = model->addOperand(&type21);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1548,12 +1548,12 @@ inline bool is_ignored_axis_relaxed_dim2_axis0(int i) {
 void CreateModel_axis_relaxed_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type20(Type::TENSOR_FLOAT32, {5, 2});
+  OperandType type21(Type::TENSOR_FLOAT32, {5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type20);
+  auto op1 = model->addOperand(&type21);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type20);
+  auto op2 = model->addOperand(&type21);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1577,12 +1577,12 @@ inline bool is_ignored_axis_relaxed_dim2_axis0_neg(int i) {
 void CreateModel_axis_relaxed_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type21(Type::TENSOR_FLOAT32, {2, 5});
+  OperandType type22(Type::TENSOR_FLOAT32, {2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type21);
+  auto op1 = model->addOperand(&type22);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type21);
+  auto op2 = model->addOperand(&type22);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1606,12 +1606,12 @@ inline bool is_ignored_axis_relaxed_dim2_axis1(int i) {
 void CreateModel_axis_relaxed_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type21(Type::TENSOR_FLOAT32, {2, 5});
+  OperandType type22(Type::TENSOR_FLOAT32, {2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type21);
+  auto op1 = model->addOperand(&type22);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type21);
+  auto op2 = model->addOperand(&type22);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -1692,16 +1692,16 @@ inline bool is_ignored_axis_relaxed_dim1_axis0_neg(int i) {
 
 void CreateModel_axis_float16_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type22(Type::TENSOR_FLOAT16, {5, 2, 2, 2});
+  OperandType type23(Type::TENSOR_FLOAT16, {5, 2, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type22);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type23);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type22);
+  auto op2 = model->addOperand(&type23);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {0};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1719,16 +1719,16 @@ inline bool is_ignored_axis_float16_dim4_axis0(int i) {
 
 void CreateModel_axis_float16_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type22(Type::TENSOR_FLOAT16, {5, 2, 2, 2});
+  OperandType type23(Type::TENSOR_FLOAT16, {5, 2, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type22);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type23);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type22);
+  auto op2 = model->addOperand(&type23);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-4};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1746,16 +1746,16 @@ inline bool is_ignored_axis_float16_dim4_axis0_neg(int i) {
 
 void CreateModel_axis_float16_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type23(Type::TENSOR_FLOAT16, {2, 5, 2, 2});
+  OperandType type24(Type::TENSOR_FLOAT16, {2, 5, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type23);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type24);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type23);
+  auto op2 = model->addOperand(&type24);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1773,16 +1773,16 @@ inline bool is_ignored_axis_float16_dim4_axis1(int i) {
 
 void CreateModel_axis_float16_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type23(Type::TENSOR_FLOAT16, {2, 5, 2, 2});
+  OperandType type24(Type::TENSOR_FLOAT16, {2, 5, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type23);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type24);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type23);
+  auto op2 = model->addOperand(&type24);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-3};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1800,16 +1800,16 @@ inline bool is_ignored_axis_float16_dim4_axis1_neg(int i) {
 
 void CreateModel_axis_float16_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type24(Type::TENSOR_FLOAT16, {2, 2, 5, 2});
+  OperandType type25(Type::TENSOR_FLOAT16, {2, 2, 5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type24);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type25);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type24);
+  auto op2 = model->addOperand(&type25);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {2};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1827,16 +1827,16 @@ inline bool is_ignored_axis_float16_dim4_axis2(int i) {
 
 void CreateModel_axis_float16_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type24(Type::TENSOR_FLOAT16, {2, 2, 5, 2});
+  OperandType type25(Type::TENSOR_FLOAT16, {2, 2, 5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type24);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type25);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type24);
+  auto op2 = model->addOperand(&type25);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-2};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1854,16 +1854,16 @@ inline bool is_ignored_axis_float16_dim4_axis2_neg(int i) {
 
 void CreateModel_axis_float16_dim4_axis3(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type6(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type7(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type6);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type7);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type6);
+  auto op2 = model->addOperand(&type7);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {3};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1881,16 +1881,16 @@ inline bool is_ignored_axis_float16_dim4_axis3(int i) {
 
 void CreateModel_axis_float16_dim4_axis3_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type6(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type7(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type6);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type7);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type6);
+  auto op2 = model->addOperand(&type7);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1908,16 +1908,16 @@ inline bool is_ignored_axis_float16_dim4_axis3_neg(int i) {
 
 void CreateModel_axis_float16_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type25(Type::TENSOR_FLOAT16, {5, 2, 2});
+  OperandType type26(Type::TENSOR_FLOAT16, {5, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type25);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type26);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type25);
+  auto op2 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {0};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1935,16 +1935,16 @@ inline bool is_ignored_axis_float16_dim3_axis0(int i) {
 
 void CreateModel_axis_float16_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type25(Type::TENSOR_FLOAT16, {5, 2, 2});
+  OperandType type26(Type::TENSOR_FLOAT16, {5, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type25);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type26);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type25);
+  auto op2 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-3};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1962,16 +1962,16 @@ inline bool is_ignored_axis_float16_dim3_axis0_neg(int i) {
 
 void CreateModel_axis_float16_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type26(Type::TENSOR_FLOAT16, {2, 5, 2});
+  OperandType type27(Type::TENSOR_FLOAT16, {2, 5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type26);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type27);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type26);
+  auto op2 = model->addOperand(&type27);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -1989,16 +1989,16 @@ inline bool is_ignored_axis_float16_dim3_axis1(int i) {
 
 void CreateModel_axis_float16_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type26(Type::TENSOR_FLOAT16, {2, 5, 2});
+  OperandType type27(Type::TENSOR_FLOAT16, {2, 5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type26);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type27);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type26);
+  auto op2 = model->addOperand(&type27);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-2};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -2016,16 +2016,16 @@ inline bool is_ignored_axis_float16_dim3_axis1_neg(int i) {
 
 void CreateModel_axis_float16_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type8(Type::TENSOR_FLOAT16, {2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type9(Type::TENSOR_FLOAT16, {2, 2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type8);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type9);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type8);
+  auto op2 = model->addOperand(&type9);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {2};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -2043,16 +2043,16 @@ inline bool is_ignored_axis_float16_dim3_axis2(int i) {
 
 void CreateModel_axis_float16_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type8(Type::TENSOR_FLOAT16, {2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type9(Type::TENSOR_FLOAT16, {2, 2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type8);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type9);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type8);
+  auto op2 = model->addOperand(&type9);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -2070,16 +2070,16 @@ inline bool is_ignored_axis_float16_dim3_axis2_neg(int i) {
 
 void CreateModel_axis_float16_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type27(Type::TENSOR_FLOAT16, {5, 2});
+  OperandType type28(Type::TENSOR_FLOAT16, {5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type27);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type28);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type27);
+  auto op2 = model->addOperand(&type28);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {0};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -2097,16 +2097,16 @@ inline bool is_ignored_axis_float16_dim2_axis0(int i) {
 
 void CreateModel_axis_float16_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type27(Type::TENSOR_FLOAT16, {5, 2});
+  OperandType type28(Type::TENSOR_FLOAT16, {5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type27);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type28);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type27);
+  auto op2 = model->addOperand(&type28);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-2};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -2124,16 +2124,16 @@ inline bool is_ignored_axis_float16_dim2_axis0_neg(int i) {
 
 void CreateModel_axis_float16_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type28(Type::TENSOR_FLOAT16, {2, 5});
+  OperandType type29(Type::TENSOR_FLOAT16, {2, 5});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type28);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type29);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type28);
+  auto op2 = model->addOperand(&type29);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -2151,16 +2151,16 @@ inline bool is_ignored_axis_float16_dim2_axis1(int i) {
 
 void CreateModel_axis_float16_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type28(Type::TENSOR_FLOAT16, {2, 5});
+  OperandType type29(Type::TENSOR_FLOAT16, {2, 5});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type28);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type29);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type28);
+  auto op2 = model->addOperand(&type29);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -2178,16 +2178,16 @@ inline bool is_ignored_axis_float16_dim2_axis1_neg(int i) {
 
 void CreateModel_axis_float16_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type7(Type::TENSOR_FLOAT16, {5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type8(Type::TENSOR_FLOAT16, {5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type7);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type8);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type7);
+  auto op2 = model->addOperand(&type8);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {0};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -2205,16 +2205,16 @@ inline bool is_ignored_axis_float16_dim1_axis0(int i) {
 
 void CreateModel_axis_float16_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type7(Type::TENSOR_FLOAT16, {5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type8(Type::TENSOR_FLOAT16, {5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type7);
-  auto param2 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type8);
+  auto param2 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type7);
+  auto op2 = model->addOperand(&type8);
   // Phase 2, operations
-  static float param2_init[] = {1.0f};
-  model->setOperandValue(param2, param2_init, sizeof(float) * 1);
+  static _Float16 param2_init[] = {1.0f};
+  model->setOperandValue(param2, param2_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param2, axis}, {op2});
@@ -2233,13 +2233,13 @@ inline bool is_ignored_axis_float16_dim1_axis0_neg(int i) {
 void CreateModel_axis_quant8_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.25f, 128);
-  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.00390625f, 0);
+  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.25f, 128);
+  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type29);
+  auto op1 = model->addOperand(&type30);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type30);
+  auto op2 = model->addOperand(&type31);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2261,13 +2261,13 @@ inline bool is_ignored_axis_quant8_dim4_axis0(int i) {
 void CreateModel_axis_quant8_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.25f, 128);
-  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.00390625f, 0);
+  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.25f, 128);
+  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type29);
+  auto op1 = model->addOperand(&type30);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type30);
+  auto op2 = model->addOperand(&type31);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2289,13 +2289,13 @@ inline bool is_ignored_axis_quant8_dim4_axis0_neg(int i) {
 void CreateModel_axis_quant8_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.25f, 128);
-  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.00390625f, 0);
+  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.25f, 128);
+  OperandType type33(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type31);
+  auto op1 = model->addOperand(&type32);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type32);
+  auto op2 = model->addOperand(&type33);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2317,13 +2317,13 @@ inline bool is_ignored_axis_quant8_dim4_axis1(int i) {
 void CreateModel_axis_quant8_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.25f, 128);
-  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.00390625f, 0);
+  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.25f, 128);
+  OperandType type33(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type31);
+  auto op1 = model->addOperand(&type32);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type32);
+  auto op2 = model->addOperand(&type33);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2345,13 +2345,13 @@ inline bool is_ignored_axis_quant8_dim4_axis1_neg(int i) {
 void CreateModel_axis_quant8_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type33(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.25f, 128);
-  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.00390625f, 0);
+  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.25f, 128);
+  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type33);
+  auto op1 = model->addOperand(&type34);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type34);
+  auto op2 = model->addOperand(&type35);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2373,13 +2373,13 @@ inline bool is_ignored_axis_quant8_dim4_axis2(int i) {
 void CreateModel_axis_quant8_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type33(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.25f, 128);
-  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.00390625f, 0);
+  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.25f, 128);
+  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type33);
+  auto op1 = model->addOperand(&type34);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type34);
+  auto op2 = model->addOperand(&type35);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2400,14 +2400,14 @@ inline bool is_ignored_axis_quant8_dim4_axis2_neg(int i) {
 
 void CreateModel_axis_quant8_dim4_axis3(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
+  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
+  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type9);
+  auto op1 = model->addOperand(&type10);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type10);
+  auto op2 = model->addOperand(&type11);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2428,14 +2428,14 @@ inline bool is_ignored_axis_quant8_dim4_axis3(int i) {
 
 void CreateModel_axis_quant8_dim4_axis3_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
+  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
+  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type9);
+  auto op1 = model->addOperand(&type10);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type10);
+  auto op2 = model->addOperand(&type11);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2457,13 +2457,13 @@ inline bool is_ignored_axis_quant8_dim4_axis3_neg(int i) {
 void CreateModel_axis_quant8_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.25f, 128);
-  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.00390625f, 0);
+  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.25f, 128);
+  OperandType type37(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type35);
+  auto op1 = model->addOperand(&type36);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type36);
+  auto op2 = model->addOperand(&type37);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2485,13 +2485,13 @@ inline bool is_ignored_axis_quant8_dim3_axis0(int i) {
 void CreateModel_axis_quant8_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.25f, 128);
-  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.00390625f, 0);
+  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.25f, 128);
+  OperandType type37(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type35);
+  auto op1 = model->addOperand(&type36);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type36);
+  auto op2 = model->addOperand(&type37);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2513,13 +2513,13 @@ inline bool is_ignored_axis_quant8_dim3_axis0_neg(int i) {
 void CreateModel_axis_quant8_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type37(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.25f, 128);
-  OperandType type38(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.00390625f, 0);
+  OperandType type38(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.25f, 128);
+  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type37);
+  auto op1 = model->addOperand(&type38);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type38);
+  auto op2 = model->addOperand(&type39);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2541,13 +2541,13 @@ inline bool is_ignored_axis_quant8_dim3_axis1(int i) {
 void CreateModel_axis_quant8_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type37(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.25f, 128);
-  OperandType type38(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.00390625f, 0);
+  OperandType type38(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.25f, 128);
+  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type37);
+  auto op1 = model->addOperand(&type38);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type38);
+  auto op2 = model->addOperand(&type39);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2568,14 +2568,14 @@ inline bool is_ignored_axis_quant8_dim3_axis1_neg(int i) {
 
 void CreateModel_axis_quant8_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
+  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
+  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type13);
+  auto op1 = model->addOperand(&type14);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type14);
+  auto op2 = model->addOperand(&type15);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2596,14 +2596,14 @@ inline bool is_ignored_axis_quant8_dim3_axis2(int i) {
 
 void CreateModel_axis_quant8_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
+  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
+  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type13);
+  auto op1 = model->addOperand(&type14);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type14);
+  auto op2 = model->addOperand(&type15);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2625,13 +2625,13 @@ inline bool is_ignored_axis_quant8_dim3_axis2_neg(int i) {
 void CreateModel_axis_quant8_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.25f, 128);
-  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.00390625f, 0);
+  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.25f, 128);
+  OperandType type41(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type39);
+  auto op1 = model->addOperand(&type40);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type40);
+  auto op2 = model->addOperand(&type41);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2653,13 +2653,13 @@ inline bool is_ignored_axis_quant8_dim2_axis0(int i) {
 void CreateModel_axis_quant8_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.25f, 128);
-  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.00390625f, 0);
+  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.25f, 128);
+  OperandType type41(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type39);
+  auto op1 = model->addOperand(&type40);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type40);
+  auto op2 = model->addOperand(&type41);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2681,13 +2681,13 @@ inline bool is_ignored_axis_quant8_dim2_axis0_neg(int i) {
 void CreateModel_axis_quant8_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type41(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.25f, 128);
-  OperandType type42(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.00390625f, 0);
+  OperandType type42(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.25f, 128);
+  OperandType type43(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type41);
+  auto op1 = model->addOperand(&type42);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type42);
+  auto op2 = model->addOperand(&type43);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2709,13 +2709,13 @@ inline bool is_ignored_axis_quant8_dim2_axis1(int i) {
 void CreateModel_axis_quant8_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type41(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.25f, 128);
-  OperandType type42(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.00390625f, 0);
+  OperandType type42(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.25f, 128);
+  OperandType type43(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type41);
+  auto op1 = model->addOperand(&type42);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type42);
+  auto op2 = model->addOperand(&type43);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2736,14 +2736,14 @@ inline bool is_ignored_axis_quant8_dim2_axis1_neg(int i) {
 
 void CreateModel_axis_quant8_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
-  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
+  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
+  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type11);
+  auto op1 = model->addOperand(&type12);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type12);
+  auto op2 = model->addOperand(&type13);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2764,14 +2764,14 @@ inline bool is_ignored_axis_quant8_dim1_axis0(int i) {
 
 void CreateModel_axis_quant8_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
-  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
+  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
+  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type11);
+  auto op1 = model->addOperand(&type12);
   auto param2 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type12);
+  auto op2 = model->addOperand(&type13);
   // Phase 2, operations
   static float param2_init[] = {1.0f};
   model->setOperandValue(param2, param2_init, sizeof(float) * 1);
@@ -2792,13 +2792,13 @@ inline bool is_ignored_axis_quant8_dim1_axis0_neg(int i) {
 
 void CreateModel_axis_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type15(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
+  OperandType type16(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type15);
+  auto op1 = model->addOperand(&type16);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type15);
+  auto op2 = model->addOperand(&type16);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -2819,13 +2819,13 @@ inline bool is_ignored_axis_dim4_axis0_2(int i) {
 
 void CreateModel_axis_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type15(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
+  OperandType type16(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type15);
+  auto op1 = model->addOperand(&type16);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type15);
+  auto op2 = model->addOperand(&type16);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -2846,13 +2846,13 @@ inline bool is_ignored_axis_dim4_axis0_neg_2(int i) {
 
 void CreateModel_axis_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type16(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
+  OperandType type17(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type16);
+  auto op1 = model->addOperand(&type17);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type16);
+  auto op2 = model->addOperand(&type17);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -2873,13 +2873,13 @@ inline bool is_ignored_axis_dim4_axis1_2(int i) {
 
 void CreateModel_axis_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type16(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
+  OperandType type17(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type16);
+  auto op1 = model->addOperand(&type17);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type16);
+  auto op2 = model->addOperand(&type17);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -2900,13 +2900,13 @@ inline bool is_ignored_axis_dim4_axis1_neg_2(int i) {
 
 void CreateModel_axis_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type17(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
+  OperandType type18(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type17);
+  auto op1 = model->addOperand(&type18);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type17);
+  auto op2 = model->addOperand(&type18);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -2927,13 +2927,13 @@ inline bool is_ignored_axis_dim4_axis2_2(int i) {
 
 void CreateModel_axis_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type17(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
+  OperandType type18(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type17);
+  auto op1 = model->addOperand(&type18);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type17);
+  auto op2 = model->addOperand(&type18);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3008,13 +3008,13 @@ inline bool is_ignored_axis_dim4_axis3_neg_2(int i) {
 
 void CreateModel_axis_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type18(Type::TENSOR_FLOAT32, {5, 2, 2});
+  OperandType type19(Type::TENSOR_FLOAT32, {5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type18);
+  auto op1 = model->addOperand(&type19);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type18);
+  auto op2 = model->addOperand(&type19);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3035,13 +3035,13 @@ inline bool is_ignored_axis_dim3_axis0_2(int i) {
 
 void CreateModel_axis_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type18(Type::TENSOR_FLOAT32, {5, 2, 2});
+  OperandType type19(Type::TENSOR_FLOAT32, {5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type18);
+  auto op1 = model->addOperand(&type19);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type18);
+  auto op2 = model->addOperand(&type19);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3062,13 +3062,13 @@ inline bool is_ignored_axis_dim3_axis0_neg_2(int i) {
 
 void CreateModel_axis_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
+  OperandType type20(Type::TENSOR_FLOAT32, {2, 5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type19);
+  auto op1 = model->addOperand(&type20);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type19);
+  auto op2 = model->addOperand(&type20);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3089,13 +3089,13 @@ inline bool is_ignored_axis_dim3_axis1_2(int i) {
 
 void CreateModel_axis_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
+  OperandType type20(Type::TENSOR_FLOAT32, {2, 5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type19);
+  auto op1 = model->addOperand(&type20);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type19);
+  auto op2 = model->addOperand(&type20);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3171,12 +3171,12 @@ inline bool is_ignored_axis_dim3_axis2_neg_2(int i) {
 void CreateModel_axis_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type20(Type::TENSOR_FLOAT32, {5, 2});
+  OperandType type21(Type::TENSOR_FLOAT32, {5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type20);
+  auto op1 = model->addOperand(&type21);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type20);
+  auto op2 = model->addOperand(&type21);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3198,12 +3198,12 @@ inline bool is_ignored_axis_dim2_axis0_2(int i) {
 void CreateModel_axis_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type20(Type::TENSOR_FLOAT32, {5, 2});
+  OperandType type21(Type::TENSOR_FLOAT32, {5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type20);
+  auto op1 = model->addOperand(&type21);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type20);
+  auto op2 = model->addOperand(&type21);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3225,12 +3225,12 @@ inline bool is_ignored_axis_dim2_axis0_neg_2(int i) {
 void CreateModel_axis_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type21(Type::TENSOR_FLOAT32, {2, 5});
+  OperandType type22(Type::TENSOR_FLOAT32, {2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type21);
+  auto op1 = model->addOperand(&type22);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type21);
+  auto op2 = model->addOperand(&type22);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3252,12 +3252,12 @@ inline bool is_ignored_axis_dim2_axis1_2(int i) {
 void CreateModel_axis_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type21(Type::TENSOR_FLOAT32, {2, 5});
+  OperandType type22(Type::TENSOR_FLOAT32, {2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type21);
+  auto op1 = model->addOperand(&type22);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type21);
+  auto op2 = model->addOperand(&type22);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3332,13 +3332,13 @@ inline bool is_ignored_axis_dim1_axis0_neg_2(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type15(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
+  OperandType type16(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type15);
+  auto op1 = model->addOperand(&type16);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type15);
+  auto op2 = model->addOperand(&type16);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3361,13 +3361,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis0_2(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type15(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
+  OperandType type16(Type::TENSOR_FLOAT32, {5, 2, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type15);
+  auto op1 = model->addOperand(&type16);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type15);
+  auto op2 = model->addOperand(&type16);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3390,13 +3390,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis0_neg_2(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type16(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
+  OperandType type17(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type16);
+  auto op1 = model->addOperand(&type17);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type16);
+  auto op2 = model->addOperand(&type17);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3419,13 +3419,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis1_2(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type16(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
+  OperandType type17(Type::TENSOR_FLOAT32, {2, 5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type16);
+  auto op1 = model->addOperand(&type17);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type16);
+  auto op2 = model->addOperand(&type17);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3448,13 +3448,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis1_neg_2(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type17(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
+  OperandType type18(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type17);
+  auto op1 = model->addOperand(&type18);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type17);
+  auto op2 = model->addOperand(&type18);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3477,13 +3477,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis2_2(int i) {
 
 void CreateModel_axis_relaxed_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type17(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
+  OperandType type18(Type::TENSOR_FLOAT32, {2, 2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type17);
+  auto op1 = model->addOperand(&type18);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type17);
+  auto op2 = model->addOperand(&type18);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3564,13 +3564,13 @@ inline bool is_ignored_axis_relaxed_dim4_axis3_neg_2(int i) {
 
 void CreateModel_axis_relaxed_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type18(Type::TENSOR_FLOAT32, {5, 2, 2});
+  OperandType type19(Type::TENSOR_FLOAT32, {5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type18);
+  auto op1 = model->addOperand(&type19);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type18);
+  auto op2 = model->addOperand(&type19);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3593,13 +3593,13 @@ inline bool is_ignored_axis_relaxed_dim3_axis0_2(int i) {
 
 void CreateModel_axis_relaxed_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type18(Type::TENSOR_FLOAT32, {5, 2, 2});
+  OperandType type19(Type::TENSOR_FLOAT32, {5, 2, 2});
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type18);
+  auto op1 = model->addOperand(&type19);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type18);
+  auto op2 = model->addOperand(&type19);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3622,13 +3622,13 @@ inline bool is_ignored_axis_relaxed_dim3_axis0_neg_2(int i) {
 
 void CreateModel_axis_relaxed_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
+  OperandType type20(Type::TENSOR_FLOAT32, {2, 5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type19);
+  auto op1 = model->addOperand(&type20);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type19);
+  auto op2 = model->addOperand(&type20);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3651,13 +3651,13 @@ inline bool is_ignored_axis_relaxed_dim3_axis1_2(int i) {
 
 void CreateModel_axis_relaxed_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {2, 5, 2});
   OperandType type2(Type::FLOAT32, {});
+  OperandType type20(Type::TENSOR_FLOAT32, {2, 5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type19);
+  auto op1 = model->addOperand(&type20);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type19);
+  auto op2 = model->addOperand(&type20);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3739,12 +3739,12 @@ inline bool is_ignored_axis_relaxed_dim3_axis2_neg_2(int i) {
 void CreateModel_axis_relaxed_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type20(Type::TENSOR_FLOAT32, {5, 2});
+  OperandType type21(Type::TENSOR_FLOAT32, {5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type20);
+  auto op1 = model->addOperand(&type21);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type20);
+  auto op2 = model->addOperand(&type21);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3768,12 +3768,12 @@ inline bool is_ignored_axis_relaxed_dim2_axis0_2(int i) {
 void CreateModel_axis_relaxed_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type20(Type::TENSOR_FLOAT32, {5, 2});
+  OperandType type21(Type::TENSOR_FLOAT32, {5, 2});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type20);
+  auto op1 = model->addOperand(&type21);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type20);
+  auto op2 = model->addOperand(&type21);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3797,12 +3797,12 @@ inline bool is_ignored_axis_relaxed_dim2_axis0_neg_2(int i) {
 void CreateModel_axis_relaxed_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type21(Type::TENSOR_FLOAT32, {2, 5});
+  OperandType type22(Type::TENSOR_FLOAT32, {2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type21);
+  auto op1 = model->addOperand(&type22);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type21);
+  auto op2 = model->addOperand(&type22);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3826,12 +3826,12 @@ inline bool is_ignored_axis_relaxed_dim2_axis1_2(int i) {
 void CreateModel_axis_relaxed_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type21(Type::TENSOR_FLOAT32, {2, 5});
+  OperandType type22(Type::TENSOR_FLOAT32, {2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type21);
+  auto op1 = model->addOperand(&type22);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type21);
+  auto op2 = model->addOperand(&type22);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -3912,16 +3912,16 @@ inline bool is_ignored_axis_relaxed_dim1_axis0_neg_2(int i) {
 
 void CreateModel_axis_float16_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type22(Type::TENSOR_FLOAT16, {5, 2, 2, 2});
+  OperandType type23(Type::TENSOR_FLOAT16, {5, 2, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type22);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type23);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type22);
+  auto op2 = model->addOperand(&type23);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {0};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -3939,16 +3939,16 @@ inline bool is_ignored_axis_float16_dim4_axis0_2(int i) {
 
 void CreateModel_axis_float16_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type22(Type::TENSOR_FLOAT16, {5, 2, 2, 2});
+  OperandType type23(Type::TENSOR_FLOAT16, {5, 2, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type22);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type23);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type22);
+  auto op2 = model->addOperand(&type23);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-4};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -3966,16 +3966,16 @@ inline bool is_ignored_axis_float16_dim4_axis0_neg_2(int i) {
 
 void CreateModel_axis_float16_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type23(Type::TENSOR_FLOAT16, {2, 5, 2, 2});
+  OperandType type24(Type::TENSOR_FLOAT16, {2, 5, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type23);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type24);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type23);
+  auto op2 = model->addOperand(&type24);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -3993,16 +3993,16 @@ inline bool is_ignored_axis_float16_dim4_axis1_2(int i) {
 
 void CreateModel_axis_float16_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type23(Type::TENSOR_FLOAT16, {2, 5, 2, 2});
+  OperandType type24(Type::TENSOR_FLOAT16, {2, 5, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type23);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type24);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type23);
+  auto op2 = model->addOperand(&type24);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-3};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4020,16 +4020,16 @@ inline bool is_ignored_axis_float16_dim4_axis1_neg_2(int i) {
 
 void CreateModel_axis_float16_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type24(Type::TENSOR_FLOAT16, {2, 2, 5, 2});
+  OperandType type25(Type::TENSOR_FLOAT16, {2, 2, 5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type24);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type25);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type24);
+  auto op2 = model->addOperand(&type25);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {2};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4047,16 +4047,16 @@ inline bool is_ignored_axis_float16_dim4_axis2_2(int i) {
 
 void CreateModel_axis_float16_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type24(Type::TENSOR_FLOAT16, {2, 2, 5, 2});
+  OperandType type25(Type::TENSOR_FLOAT16, {2, 2, 5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type24);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type25);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type24);
+  auto op2 = model->addOperand(&type25);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-2};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4074,16 +4074,16 @@ inline bool is_ignored_axis_float16_dim4_axis2_neg_2(int i) {
 
 void CreateModel_axis_float16_dim4_axis3_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type6(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type7(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type6);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type7);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type6);
+  auto op2 = model->addOperand(&type7);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {3};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4101,16 +4101,16 @@ inline bool is_ignored_axis_float16_dim4_axis3_2(int i) {
 
 void CreateModel_axis_float16_dim4_axis3_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type6(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type7(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type6);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type7);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type6);
+  auto op2 = model->addOperand(&type7);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4128,16 +4128,16 @@ inline bool is_ignored_axis_float16_dim4_axis3_neg_2(int i) {
 
 void CreateModel_axis_float16_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type25(Type::TENSOR_FLOAT16, {5, 2, 2});
+  OperandType type26(Type::TENSOR_FLOAT16, {5, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type25);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type26);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type25);
+  auto op2 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {0};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4155,16 +4155,16 @@ inline bool is_ignored_axis_float16_dim3_axis0_2(int i) {
 
 void CreateModel_axis_float16_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type25(Type::TENSOR_FLOAT16, {5, 2, 2});
+  OperandType type26(Type::TENSOR_FLOAT16, {5, 2, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type25);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type26);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type25);
+  auto op2 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-3};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4182,16 +4182,16 @@ inline bool is_ignored_axis_float16_dim3_axis0_neg_2(int i) {
 
 void CreateModel_axis_float16_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type26(Type::TENSOR_FLOAT16, {2, 5, 2});
+  OperandType type27(Type::TENSOR_FLOAT16, {2, 5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type26);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type27);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type26);
+  auto op2 = model->addOperand(&type27);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4209,16 +4209,16 @@ inline bool is_ignored_axis_float16_dim3_axis1_2(int i) {
 
 void CreateModel_axis_float16_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type26(Type::TENSOR_FLOAT16, {2, 5, 2});
+  OperandType type27(Type::TENSOR_FLOAT16, {2, 5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type26);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type27);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type26);
+  auto op2 = model->addOperand(&type27);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-2};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4236,16 +4236,16 @@ inline bool is_ignored_axis_float16_dim3_axis1_neg_2(int i) {
 
 void CreateModel_axis_float16_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type8(Type::TENSOR_FLOAT16, {2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type9(Type::TENSOR_FLOAT16, {2, 2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type8);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type9);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type8);
+  auto op2 = model->addOperand(&type9);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {2};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4263,16 +4263,16 @@ inline bool is_ignored_axis_float16_dim3_axis2_2(int i) {
 
 void CreateModel_axis_float16_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type8(Type::TENSOR_FLOAT16, {2, 2, 5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type9(Type::TENSOR_FLOAT16, {2, 2, 5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type8);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type9);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type8);
+  auto op2 = model->addOperand(&type9);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4290,16 +4290,16 @@ inline bool is_ignored_axis_float16_dim3_axis2_neg_2(int i) {
 
 void CreateModel_axis_float16_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type27(Type::TENSOR_FLOAT16, {5, 2});
+  OperandType type28(Type::TENSOR_FLOAT16, {5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type27);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type28);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type27);
+  auto op2 = model->addOperand(&type28);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {0};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4317,16 +4317,16 @@ inline bool is_ignored_axis_float16_dim2_axis0_2(int i) {
 
 void CreateModel_axis_float16_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type27(Type::TENSOR_FLOAT16, {5, 2});
+  OperandType type28(Type::TENSOR_FLOAT16, {5, 2});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type27);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type28);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type27);
+  auto op2 = model->addOperand(&type28);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-2};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4344,16 +4344,16 @@ inline bool is_ignored_axis_float16_dim2_axis0_neg_2(int i) {
 
 void CreateModel_axis_float16_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type28(Type::TENSOR_FLOAT16, {2, 5});
+  OperandType type29(Type::TENSOR_FLOAT16, {2, 5});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type28);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type29);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type28);
+  auto op2 = model->addOperand(&type29);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4371,16 +4371,16 @@ inline bool is_ignored_axis_float16_dim2_axis1_2(int i) {
 
 void CreateModel_axis_float16_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type28(Type::TENSOR_FLOAT16, {2, 5});
+  OperandType type29(Type::TENSOR_FLOAT16, {2, 5});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type28);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type29);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type28);
+  auto op2 = model->addOperand(&type29);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4398,16 +4398,16 @@ inline bool is_ignored_axis_float16_dim2_axis1_neg_2(int i) {
 
 void CreateModel_axis_float16_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type7(Type::TENSOR_FLOAT16, {5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type8(Type::TENSOR_FLOAT16, {5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type7);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type8);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type7);
+  auto op2 = model->addOperand(&type8);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {0};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4425,16 +4425,16 @@ inline bool is_ignored_axis_float16_dim1_axis0_2(int i) {
 
 void CreateModel_axis_float16_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::FLOAT32, {});
-  OperandType type7(Type::TENSOR_FLOAT16, {5});
+  OperandType type6(Type::FLOAT16, {});
+  OperandType type8(Type::TENSOR_FLOAT16, {5});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type7);
-  auto param3 = model->addOperand(&type2);
+  auto op1 = model->addOperand(&type8);
+  auto param3 = model->addOperand(&type6);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type7);
+  auto op2 = model->addOperand(&type8);
   // Phase 2, operations
-  static float param3_init[] = {1e-06f};
-  model->setOperandValue(param3, param3_init, sizeof(float) * 1);
+  static _Float16 param3_init[] = {9.999999974752427e-07f};
+  model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
   static int32_t axis_init[] = {-1};
   model->setOperandValue(axis, axis_init, sizeof(int32_t) * 1);
   model->addOperation(ANEURALNETWORKS_SOFTMAX, {op1, param3, axis}, {op2});
@@ -4453,13 +4453,13 @@ inline bool is_ignored_axis_float16_dim1_axis0_neg_2(int i) {
 void CreateModel_axis_quant8_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.25f, 128);
-  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.00390625f, 0);
+  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.25f, 128);
+  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type29);
+  auto op1 = model->addOperand(&type30);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type30);
+  auto op2 = model->addOperand(&type31);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4481,13 +4481,13 @@ inline bool is_ignored_axis_quant8_dim4_axis0_2(int i) {
 void CreateModel_axis_quant8_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.25f, 128);
-  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.00390625f, 0);
+  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.25f, 128);
+  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type29);
+  auto op1 = model->addOperand(&type30);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type30);
+  auto op2 = model->addOperand(&type31);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4509,13 +4509,13 @@ inline bool is_ignored_axis_quant8_dim4_axis0_neg_2(int i) {
 void CreateModel_axis_quant8_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.25f, 128);
-  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.00390625f, 0);
+  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.25f, 128);
+  OperandType type33(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type31);
+  auto op1 = model->addOperand(&type32);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type32);
+  auto op2 = model->addOperand(&type33);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4537,13 +4537,13 @@ inline bool is_ignored_axis_quant8_dim4_axis1_2(int i) {
 void CreateModel_axis_quant8_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.25f, 128);
-  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.00390625f, 0);
+  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.25f, 128);
+  OperandType type33(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type31);
+  auto op1 = model->addOperand(&type32);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type32);
+  auto op2 = model->addOperand(&type33);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4565,13 +4565,13 @@ inline bool is_ignored_axis_quant8_dim4_axis1_neg_2(int i) {
 void CreateModel_axis_quant8_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type33(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.25f, 128);
-  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.00390625f, 0);
+  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.25f, 128);
+  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type33);
+  auto op1 = model->addOperand(&type34);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type34);
+  auto op2 = model->addOperand(&type35);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4593,13 +4593,13 @@ inline bool is_ignored_axis_quant8_dim4_axis2_2(int i) {
 void CreateModel_axis_quant8_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type33(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.25f, 128);
-  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.00390625f, 0);
+  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.25f, 128);
+  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type33);
+  auto op1 = model->addOperand(&type34);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type34);
+  auto op2 = model->addOperand(&type35);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4620,14 +4620,14 @@ inline bool is_ignored_axis_quant8_dim4_axis2_neg_2(int i) {
 
 void CreateModel_axis_quant8_dim4_axis3_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
+  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
+  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type9);
+  auto op1 = model->addOperand(&type10);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type10);
+  auto op2 = model->addOperand(&type11);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4648,14 +4648,14 @@ inline bool is_ignored_axis_quant8_dim4_axis3_2(int i) {
 
 void CreateModel_axis_quant8_dim4_axis3_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
+  OperandType type10(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
+  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type9);
+  auto op1 = model->addOperand(&type10);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type10);
+  auto op2 = model->addOperand(&type11);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4677,13 +4677,13 @@ inline bool is_ignored_axis_quant8_dim4_axis3_neg_2(int i) {
 void CreateModel_axis_quant8_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.25f, 128);
-  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.00390625f, 0);
+  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.25f, 128);
+  OperandType type37(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type35);
+  auto op1 = model->addOperand(&type36);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type36);
+  auto op2 = model->addOperand(&type37);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4705,13 +4705,13 @@ inline bool is_ignored_axis_quant8_dim3_axis0_2(int i) {
 void CreateModel_axis_quant8_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.25f, 128);
-  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.00390625f, 0);
+  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.25f, 128);
+  OperandType type37(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type35);
+  auto op1 = model->addOperand(&type36);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type36);
+  auto op2 = model->addOperand(&type37);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4733,13 +4733,13 @@ inline bool is_ignored_axis_quant8_dim3_axis0_neg_2(int i) {
 void CreateModel_axis_quant8_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type37(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.25f, 128);
-  OperandType type38(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.00390625f, 0);
+  OperandType type38(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.25f, 128);
+  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type37);
+  auto op1 = model->addOperand(&type38);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type38);
+  auto op2 = model->addOperand(&type39);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4761,13 +4761,13 @@ inline bool is_ignored_axis_quant8_dim3_axis1_2(int i) {
 void CreateModel_axis_quant8_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type37(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.25f, 128);
-  OperandType type38(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.00390625f, 0);
+  OperandType type38(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.25f, 128);
+  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {2, 5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type37);
+  auto op1 = model->addOperand(&type38);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type38);
+  auto op2 = model->addOperand(&type39);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4788,14 +4788,14 @@ inline bool is_ignored_axis_quant8_dim3_axis1_neg_2(int i) {
 
 void CreateModel_axis_quant8_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
+  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
+  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type13);
+  auto op1 = model->addOperand(&type14);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type14);
+  auto op2 = model->addOperand(&type15);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4816,14 +4816,14 @@ inline bool is_ignored_axis_quant8_dim3_axis2_2(int i) {
 
 void CreateModel_axis_quant8_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
-  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
+  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.25f, 128);
+  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {2, 2, 5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type13);
+  auto op1 = model->addOperand(&type14);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type14);
+  auto op2 = model->addOperand(&type15);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4845,13 +4845,13 @@ inline bool is_ignored_axis_quant8_dim3_axis2_neg_2(int i) {
 void CreateModel_axis_quant8_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.25f, 128);
-  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.00390625f, 0);
+  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.25f, 128);
+  OperandType type41(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type39);
+  auto op1 = model->addOperand(&type40);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type40);
+  auto op2 = model->addOperand(&type41);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4873,13 +4873,13 @@ inline bool is_ignored_axis_quant8_dim2_axis0_2(int i) {
 void CreateModel_axis_quant8_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.25f, 128);
-  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.00390625f, 0);
+  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.25f, 128);
+  OperandType type41(Type::TENSOR_QUANT8_ASYMM, {5, 2}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type39);
+  auto op1 = model->addOperand(&type40);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type40);
+  auto op2 = model->addOperand(&type41);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4901,13 +4901,13 @@ inline bool is_ignored_axis_quant8_dim2_axis0_neg_2(int i) {
 void CreateModel_axis_quant8_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type41(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.25f, 128);
-  OperandType type42(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.00390625f, 0);
+  OperandType type42(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.25f, 128);
+  OperandType type43(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type41);
+  auto op1 = model->addOperand(&type42);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type42);
+  auto op2 = model->addOperand(&type43);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4929,13 +4929,13 @@ inline bool is_ignored_axis_quant8_dim2_axis1_2(int i) {
 void CreateModel_axis_quant8_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
-  OperandType type41(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.25f, 128);
-  OperandType type42(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.00390625f, 0);
+  OperandType type42(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.25f, 128);
+  OperandType type43(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.00390625f, 0);
   // Phase 1, operands
-  auto op1 = model->addOperand(&type41);
+  auto op1 = model->addOperand(&type42);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type42);
+  auto op2 = model->addOperand(&type43);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4956,14 +4956,14 @@ inline bool is_ignored_axis_quant8_dim2_axis1_neg_2(int i) {
 
 void CreateModel_axis_quant8_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
-  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
+  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
+  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type11);
+  auto op1 = model->addOperand(&type12);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type12);
+  auto op2 = model->addOperand(&type13);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -4984,14 +4984,14 @@ inline bool is_ignored_axis_quant8_dim1_axis0_2(int i) {
 
 void CreateModel_axis_quant8_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
-  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
+  OperandType type12(Type::TENSOR_QUANT8_ASYMM, {5}, 0.25f, 128);
+  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {5}, 0.00390625f, 0);
   OperandType type2(Type::FLOAT32, {});
   // Phase 1, operands
-  auto op1 = model->addOperand(&type11);
+  auto op1 = model->addOperand(&type12);
   auto param3 = model->addOperand(&type2);
   auto axis = model->addOperand(&type1);
-  auto op2 = model->addOperand(&type12);
+  auto op2 = model->addOperand(&type13);
   // Phase 2, operations
   static float param3_init[] = {1e-06f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
