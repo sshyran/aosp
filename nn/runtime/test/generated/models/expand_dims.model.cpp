@@ -98,6 +98,30 @@ inline bool is_ignored_int32(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_float16(Model *model) {
+  OperandType type10(Type::TENSOR_FLOAT16, {1, 2, 2});
+  OperandType type4(Type::INT32, {});
+  OperandType type9(Type::TENSOR_FLOAT16, {2, 2});
+  // Phase 1, operands
+  auto input0 = model->addOperand(&type9);
+  auto param = model->addOperand(&type4);
+  auto output = model->addOperand(&type10);
+  // Phase 2, operations
+  static int32_t param_init[] = {0};
+  model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_EXPAND_DIMS, {input0, param}, {output});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input0},
+    {output});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
 void CreateModel_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2});
   OperandType type2(Type::TENSOR_FLOAT32, {2, 1, 2});
@@ -149,13 +173,13 @@ inline bool is_ignored_relaxed_2(int i) {
 }
 
 void CreateModel_quant8_2(Model *model) {
+  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {2, 1, 2}, 0.5f, 127);
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::TENSOR_QUANT8_ASYMM, {2, 2}, 0.5f, 127);
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {2, 1, 2}, 0.5f, 127);
   // Phase 1, operands
   auto input0 = model->addOperand(&type5);
   auto param1 = model->addOperand(&type4);
-  auto output1 = model->addOperand(&type9);
+  auto output1 = model->addOperand(&type11);
   // Phase 2, operations
   static int32_t param1_init[] = {1};
   model->setOperandValue(param1, param1_init, sizeof(int32_t) * 1);
@@ -173,13 +197,13 @@ inline bool is_ignored_quant8_2(int i) {
 }
 
 void CreateModel_int32_2(Model *model) {
-  OperandType type10(Type::TENSOR_INT32, {2, 1, 2});
+  OperandType type12(Type::TENSOR_INT32, {2, 1, 2});
   OperandType type4(Type::INT32, {});
   OperandType type7(Type::TENSOR_INT32, {2, 2});
   // Phase 1, operands
   auto input0 = model->addOperand(&type7);
   auto param1 = model->addOperand(&type4);
-  auto output1 = model->addOperand(&type10);
+  auto output1 = model->addOperand(&type12);
   // Phase 2, operations
   static int32_t param1_init[] = {1};
   model->setOperandValue(param1, param1_init, sizeof(int32_t) * 1);
@@ -192,6 +216,30 @@ void CreateModel_int32_2(Model *model) {
 }
 
 inline bool is_ignored_int32_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_2(Model *model) {
+  OperandType type13(Type::TENSOR_FLOAT16, {2, 1, 2});
+  OperandType type4(Type::INT32, {});
+  OperandType type9(Type::TENSOR_FLOAT16, {2, 2});
+  // Phase 1, operands
+  auto input0 = model->addOperand(&type9);
+  auto param1 = model->addOperand(&type4);
+  auto output1 = model->addOperand(&type13);
+  // Phase 2, operations
+  static int32_t param1_init[] = {1};
+  model->setOperandValue(param1, param1_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_EXPAND_DIMS, {input0, param1}, {output1});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input0},
+    {output1});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -247,13 +295,13 @@ inline bool is_ignored_relaxed_3(int i) {
 }
 
 void CreateModel_quant8_3(Model *model) {
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {2, 2, 1}, 0.5f, 127);
+  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 1}, 0.5f, 127);
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::TENSOR_QUANT8_ASYMM, {2, 2}, 0.5f, 127);
   // Phase 1, operands
   auto input0 = model->addOperand(&type5);
   auto param2 = model->addOperand(&type4);
-  auto output2 = model->addOperand(&type11);
+  auto output2 = model->addOperand(&type14);
   // Phase 2, operations
   static int32_t param2_init[] = {2};
   model->setOperandValue(param2, param2_init, sizeof(int32_t) * 1);
@@ -271,13 +319,13 @@ inline bool is_ignored_quant8_3(int i) {
 }
 
 void CreateModel_int32_3(Model *model) {
-  OperandType type12(Type::TENSOR_INT32, {2, 2, 1});
+  OperandType type15(Type::TENSOR_INT32, {2, 2, 1});
   OperandType type4(Type::INT32, {});
   OperandType type7(Type::TENSOR_INT32, {2, 2});
   // Phase 1, operands
   auto input0 = model->addOperand(&type7);
   auto param2 = model->addOperand(&type4);
-  auto output2 = model->addOperand(&type12);
+  auto output2 = model->addOperand(&type15);
   // Phase 2, operations
   static int32_t param2_init[] = {2};
   model->setOperandValue(param2, param2_init, sizeof(int32_t) * 1);
@@ -290,6 +338,30 @@ void CreateModel_int32_3(Model *model) {
 }
 
 inline bool is_ignored_int32_3(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_3(Model *model) {
+  OperandType type16(Type::TENSOR_FLOAT16, {2, 2, 1});
+  OperandType type4(Type::INT32, {});
+  OperandType type9(Type::TENSOR_FLOAT16, {2, 2});
+  // Phase 1, operands
+  auto input0 = model->addOperand(&type9);
+  auto param2 = model->addOperand(&type4);
+  auto output2 = model->addOperand(&type16);
+  // Phase 2, operations
+  static int32_t param2_init[] = {2};
+  model->setOperandValue(param2, param2_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_EXPAND_DIMS, {input0, param2}, {output2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input0},
+    {output2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -345,13 +417,13 @@ inline bool is_ignored_relaxed_4(int i) {
 }
 
 void CreateModel_quant8_4(Model *model) {
-  OperandType type11(Type::TENSOR_QUANT8_ASYMM, {2, 2, 1}, 0.5f, 127);
+  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {2, 2, 1}, 0.5f, 127);
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::TENSOR_QUANT8_ASYMM, {2, 2}, 0.5f, 127);
   // Phase 1, operands
   auto input0 = model->addOperand(&type5);
   auto param3 = model->addOperand(&type4);
-  auto output2 = model->addOperand(&type11);
+  auto output2 = model->addOperand(&type14);
   // Phase 2, operations
   static int32_t param3_init[] = {-1};
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 1);
@@ -369,13 +441,13 @@ inline bool is_ignored_quant8_4(int i) {
 }
 
 void CreateModel_int32_4(Model *model) {
-  OperandType type12(Type::TENSOR_INT32, {2, 2, 1});
+  OperandType type15(Type::TENSOR_INT32, {2, 2, 1});
   OperandType type4(Type::INT32, {});
   OperandType type7(Type::TENSOR_INT32, {2, 2});
   // Phase 1, operands
   auto input0 = model->addOperand(&type7);
   auto param3 = model->addOperand(&type4);
-  auto output2 = model->addOperand(&type12);
+  auto output2 = model->addOperand(&type15);
   // Phase 2, operations
   static int32_t param3_init[] = {-1};
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 1);
@@ -388,6 +460,30 @@ void CreateModel_int32_4(Model *model) {
 }
 
 inline bool is_ignored_int32_4(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_4(Model *model) {
+  OperandType type16(Type::TENSOR_FLOAT16, {2, 2, 1});
+  OperandType type4(Type::INT32, {});
+  OperandType type9(Type::TENSOR_FLOAT16, {2, 2});
+  // Phase 1, operands
+  auto input0 = model->addOperand(&type9);
+  auto param3 = model->addOperand(&type4);
+  auto output2 = model->addOperand(&type16);
+  // Phase 2, operations
+  static int32_t param3_init[] = {-1};
+  model->setOperandValue(param3, param3_init, sizeof(int32_t) * 1);
+  model->addOperation(ANEURALNETWORKS_EXPAND_DIMS, {input0, param3}, {output2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input0},
+    {output2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
