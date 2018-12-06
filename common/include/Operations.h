@@ -286,10 +286,6 @@ bool roiAlignQuant8(const uint8_t* inputData, const Shape& inputShape, const flo
                     const Shape& roiShape, float spatialScale, int32_t samplingRatio,
                     uint8_t* outputData, const Shape& outputShape);
 
-bool roiPoolingGeneric(const uint8_t* inputData, const Shape& inputShape, const uint8_t* roiData,
-                       const Shape& roiShape, float spatialScale, uint8_t* outputData,
-                       const Shape& outputShape);
-
 bool groupedConvFloat16(const _Float16* inputData, const Shape& inputShape,
                         const _Float16* filterData, const Shape& filterShape,
                         const _Float16* biasData, const Shape& biasShape, int32_t numGroups,
