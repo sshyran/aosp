@@ -765,6 +765,7 @@ typedef enum {
      *              sum(1))
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
@@ -2871,6 +2872,7 @@ typedef enum {
      * interpolation.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
