@@ -45,6 +45,7 @@ const OperationRegistration* register_REDUCE_MAX();
 const OperationRegistration* register_REDUCE_MIN();
 const OperationRegistration* register_REDUCE_PROD();
 const OperationRegistration* register_REDUCE_SUM();
+const OperationRegistration* register_ROI_POOLING();
 const OperationRegistration* register_SELECT();
 
 OperationResolver::OperationResolver() {
@@ -69,6 +70,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_REDUCE_MIN());
     registerOperation(register_REDUCE_PROD());
     registerOperation(register_REDUCE_SUM());
+    registerOperation(register_ROI_POOLING());
     registerOperation(register_SELECT());
 }
 
