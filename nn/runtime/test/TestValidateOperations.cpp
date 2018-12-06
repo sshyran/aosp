@@ -1458,6 +1458,45 @@ TEST(OperationValidationTest, RANDOM_MULTINOMIAL_float32) {
     EXPECT_TRUE(multinomialTest.testMutatingOutputOperandCounts());
 }
 
+TEST(OperationValidationTest, RNN_float16) {
+    uint32_t oneDimensional[1] = {5};
+    uint32_t twoDimensional[2] = {5, 5};
+    ANeuralNetworksOperandType floatTensor1D = {.type = ANEURALNETWORKS_TENSOR_FLOAT16,
+                                                .dimensionCount = 1,
+                                                .dimensions = oneDimensional,
+                                                .scale = 0.0f,
+                                                .zeroPoint = 0};
+    ANeuralNetworksOperandType floatTensor2D = {.type = ANEURALNETWORKS_TENSOR_FLOAT16,
+                                                .dimensionCount = 2,
+                                                .dimensions = twoDimensional,
+                                                .scale = 0.0f,
+                                                .zeroPoint = 0};
+    ANeuralNetworksOperandType intScalar = {.type = ANEURALNETWORKS_INT32,
+                                            .dimensionCount = 0,
+                                            .dimensions = nullptr,
+                                            .scale = 0.0f,
+                                            .zeroPoint = 0};
+
+    ANeuralNetworksOperandType input = floatTensor2D;
+    ANeuralNetworksOperandType weights = floatTensor2D;
+    ANeuralNetworksOperandType recurrentWeights = floatTensor2D;
+    ANeuralNetworksOperandType bias = floatTensor1D;
+    ANeuralNetworksOperandType hiddenStateIn = floatTensor2D;
+    ANeuralNetworksOperandType activation = intScalar;
+
+    ANeuralNetworksOperandType hiddenStateOut = floatTensor2D;
+    ANeuralNetworksOperandType output = floatTensor2D;
+
+    OperationTestBase rnnTest(ANEURALNETWORKS_RNN,
+                              {input, weights, recurrentWeights, bias, hiddenStateIn, activation},
+                              {hiddenStateOut, output});
+
+    EXPECT_TRUE(rnnTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(rnnTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCounts());
+}
+
 TEST(OperationValidationTest, RNN_float32) {
     uint32_t oneDimensional[1] = {5};
     uint32_t twoDimensional[2] = {5, 5};
