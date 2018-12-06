@@ -173,6 +173,10 @@ bool logisticQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* 
 bool softmaxQuant8(const uint8_t* inputData, const Shape& inputShape, const float beta,
                    int32_t axis, uint8_t* outputData, const Shape& outputShape);
 
+bool fullyConnectedFloat16(const _Float16* inputData, const Shape& inputShape,
+                           const _Float16* weightsData, const Shape& weightsShape,
+                           const _Float16* biasData, const Shape& biasShape, int32_t activation,
+                           _Float16* outputData, const Shape& outputShape);
 bool fullyConnectedFloat32(const float* inputData, const Shape& inputShape, const float* weights,
                            const Shape& weightsShape, const float* biasData, const Shape& biasShape,
                            int32_t activation, float* outputData, const Shape& outputShape);
