@@ -6442,6 +6442,29 @@ TEST_F(ValidationTest, floor_float16) {
 }
 
 
+// Generated from: fully_connected_float16.mod.py.
+namespace fully_connected_float16 {
+// Generated fully_connected_float16 test
+#include "examples/fully_connected_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/fully_connected_float16.model.cpp"
+} // namespace fully_connected_float16
+
+TEST_F(NeuralnetworksHidlTest, fully_connected_float16) {
+  generated_tests::Execute(device,
+                           fully_connected_float16::createTestModel,
+                           fully_connected_float16::is_ignored,
+                           fully_connected_float16::get_examples());
+}
+
+TEST_F(ValidationTest, fully_connected_float16) {
+  const Model model = fully_connected_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(fully_connected_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: gather.mod.py.
 namespace gather {
 // Generated gather test
