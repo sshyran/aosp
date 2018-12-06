@@ -977,6 +977,10 @@ void fullyConnectedOpTest(int32_t operandCode) {
     EXPECT_TRUE(fullyConnectedTest.testMutatingOutputOperandCounts());
 }
 
+TEST(OperationValidationTest, FULLY_CONNECTED_float16) {
+    fullyConnectedOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 TEST(OperationValidationTest, FULLY_CONNECTED_float32) {
     fullyConnectedOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }

@@ -1335,6 +1335,12 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                         reinterpret_cast<const float*>(weights.buffer), weights.shape(),
                         reinterpret_cast<const float*>(bias.buffer), bias.shape(), activation,
                         reinterpret_cast<float*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = fullyConnectedFloat16(
+                        reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
+                        reinterpret_cast<const _Float16*>(weights.buffer), weights.shape(),
+                        reinterpret_cast<const _Float16*>(bias.buffer), bias.shape(), activation,
+                        reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = fullyConnectedQuant8(
                         reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
