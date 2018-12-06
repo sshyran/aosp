@@ -31,7 +31,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i1: [1.0, 2.0, 3.0, 4.0],
     o1: [1.0, 2.0, 3.0, 4.0]
-}).AddNchw(i1, o1, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i1, o1, layout).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 2: AVERAGE_POOL_2D_NCHW_2, act = none
@@ -59,7 +59,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i2: [1. for _ in range(bat * row * col * chn)],
     o2: [1. for _ in range(bat * output_row * output_col * chn)]
-}).AddNchw(i2, o2, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i2, o2, layout).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 3: AVERAGE_POOL_2D_NCHW_3, act = none
@@ -87,7 +87,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i3: [x % 2 for x in range(bat * row * col * chn)],
     o3: [.5 for _ in range(bat * output_row * output_col * chn)]
-}).AddNchw(i3, o3, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i3, o3, layout).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 4: AVERAGE_POOL_2D_NCHW_4, act = relu6
@@ -115,7 +115,7 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i4: [10 for _ in range(bat * row * col * chn)],
     o4: [6 for _ in range(bat * output_row * output_col * chn)]
-}).AddNchw(i4, o4, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i4, o4, layout).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 5: AVERAGE_POOL_2D_NCHW_5, pad = same, stride = 2, filter = 2, act = none
@@ -133,4 +133,4 @@ quant8 = DataTypeConverter().Identify({
 example = Example({
     i5: [0, 6, 2, 4, 3, 2, 10, 7],
     o5: [2.75, 5.75]
-}).AddNchw(i5, o5, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i5, o5, layout).AddVariations("relaxed", "float16", quant8)
