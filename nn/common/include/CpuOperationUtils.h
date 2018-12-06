@@ -91,6 +91,81 @@ inline bool convertNchwToNhwc(const T* nchw, const Shape& nchwShape, std::vector
     return true;
 }
 
+template <typename T>
+inline bool convertNhwcToNchw(const std::vector<T>& nhwc, const Shape& nhwcShape, T* nchw) {
+    NN_RET_CHECK_EQ(getNumberOfDimensions(nhwcShape), 4)
+            << "Error converting a non-4-D tensor to NCHW layout";
+    const auto& fromDim = nhwcShape.dimensions;
+    const auto from = nhwc.data();
+    uint32_t spatialSize = fromDim[1] * fromDim[2];
+    for (uint32_t n = 0; n < fromDim[0]; n++) {
+        for (uint32_t c = 0; c < fromDim[3]; c++) {
+            for (uint32_t hw = 0; hw < spatialSize; hw++) {
+                uint32_t fromIndex = n * spatialSize * fromDim[3] + hw * fromDim[3] + c;
+                *nchw++ = from[fromIndex];
+            }
+        }
+    }
+    return true;
+}
+
+template <typename T>
+class InputWithLayout {
+   public:
+    InputWithLayout(bool useNchw) : mDataOriginal(nullptr), mUseNchw(useNchw) {}
+
+    bool initialize(const T* data, const Shape& shape) {
+        mDataOriginal = data;
+        mShape = shape;
+        if (mUseNchw) {
+            return convertNchwToNhwc(mDataOriginal, shape, &mDataNhwc, &mShape);
+        }
+        return true;
+    }
+
+    const T* getNhwcBuffer() { return mUseNchw ? mDataNhwc.data() : mDataOriginal; }
+    const Shape& getNhwcShape() { return mShape; }
+
+   private:
+    const T* mDataOriginal;
+    std::vector<T> mDataNhwc;
+    Shape mShape;
+    bool mUseNchw;
+};
+
+template <typename T>
+class OutputWithLayout {
+   public:
+    OutputWithLayout(bool useNchw) : mDataOriginal(nullptr), mUseNchw(useNchw) {}
+
+    bool initialize(T* data, const Shape& shape) {
+        NN_RET_CHECK_EQ(getNumberOfDimensions(shape), 4);
+        mDataOriginal = data;
+        mShape = shape;
+        if (mUseNchw) {
+            const auto& dim = shape.dimensions;
+            mShape.dimensions = {dim[0], dim[2], dim[3], dim[1]};
+            mDataNhwc.resize(getNumberOfElements(shape));
+        }
+        return true;
+    }
+
+    T* getNhwcBuffer() { return mUseNchw ? mDataNhwc.data() : mDataOriginal; }
+    const Shape& getNhwcShape() { return mShape; }
+    bool commit() {
+        if (mUseNchw) {
+            return convertNhwcToNchw(mDataNhwc, mShape, mDataOriginal);
+        }
+        return true;
+    }
+
+   private:
+    T* mDataOriginal;
+    std::vector<T> mDataNhwc;
+    Shape mShape;
+    bool mUseNchw;
+};
+
 } // nn
 } // android
 
