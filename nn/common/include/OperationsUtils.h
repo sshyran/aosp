@@ -118,7 +118,18 @@ class IOperationValidationContext {
    public:
     virtual ~IOperationValidationContext() {}
 
-    // The HAL version used to validate the operation.
+    // The HAL version of the environment in which the operation is to be
+    // executed.
+    //
+    // Operation validation logic needs to handle all HAL versions to support
+    // the following use cases (assume in these examples that the latest HAL
+    // version is V1_2):
+    // 1. Our runtime wants to distribute work to a driver implementing an older
+    //    HAL version and calls, for example,
+    //    compliantWithV1_0(const V1_2::Model&).
+    // 2. A driver implements an older HAL version and delegates model
+    //    validation to, for example, validateModel(const V1_0::Model&).
+    //
     // If getHalVersion() returns HalVersion::V1_0 and the operation
     // is only supported since HalVersion::V1_1, validation will fail.
     virtual HalVersion getHalVersion() const = 0;
