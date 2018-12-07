@@ -374,6 +374,7 @@
 #include "../generated/tests/lsh_projection_3_relaxed.mod.py.cpp"
 #include "../generated/tests/lsh_projection_4_relaxed.mod.py.cpp"
 #include "../generated/tests/lsh_projection_deprecated.mod.py.cpp"
+#include "../generated/tests/lsh_projection_float16.mod.py.cpp"
 #include "../generated/tests/max_pool_v1_2.mod.py.cpp"
 #include "../generated/tests/maximum.mod.py.cpp"
 #include "../generated/tests/mean_float16.mod.py.cpp"
