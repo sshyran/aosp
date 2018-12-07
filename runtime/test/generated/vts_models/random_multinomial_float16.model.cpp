@@ -1,10 +1,10 @@
 // clang-format off
-// Generated file (from: random_multinomial.mod.py). Do not edit
+// Generated file (from: random_multinomial_float16.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
         {
-            .type = OperandType::TENSOR_FLOAT32,
+            .type = OperandType::TENSOR_FLOAT16,
             .dimensions = {1, 1024},
             .numberOfConsumers = 1,
             .scale = 0.0f,

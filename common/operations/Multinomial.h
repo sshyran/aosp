@@ -46,6 +46,8 @@ class Multinomial {
     static constexpr int kOutputTensor = 0;
 
    private:
+    void EvalFloat32(const float* inputData);
+
     RunTimeOperandInfo* input_;
     int sample_count_;
     RunTimeOperandInfo* random_seeds_;
