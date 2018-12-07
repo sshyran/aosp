@@ -1675,16 +1675,29 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 lookup.Eval();
         } break;
         case OperationType::LSH_PROJECTION: {
-            RunTimeOperandInfo &output =
-                mOperands[outs[LSHProjection::kOutputTensor]];
-
+            RunTimeOperandInfo& output = mOperands[outs[LSHProjection::kOutputTensor]];
             Shape outputShape;
-            LSHProjection lsh(operation, mOperands);
+            if (!LSHProjection::Prepare(operation, mOperands, &outputShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outputShape)) {
+                break;
+            }
 
-            success = LSHProjection::Prepare(operation, mOperands,
-                                             &outputShape) &&
-                setInfoAndAllocateIfNeeded(&output, outputShape) &&
-                lsh.Eval();
+            LSHProjection lsh(operation, mOperands);
+            const RunTimeOperandInfo& hash = mOperands[ins[LSHProjection::kHashTensor]];
+            switch (hash.type) {
+                case OperandType::TENSOR_FLOAT32: {
+                    success = lsh.Eval<float>();
+                    break;
+                }
+                case OperandType::TENSOR_FLOAT16: {
+                    success = lsh.Eval<_Float16>();
+                    break;
+                }
+                default: {
+                    success = false;
+                    LOG(ERROR) << "Unsupported data type";
+                }
+            }
         } break;
         case OperationType::LSTM: {
             RunTimeOperandInfo& scratch = mOperands[outs[LSTMCell::kScratchBufferTensor]];

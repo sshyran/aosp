@@ -1137,9 +1137,9 @@ TEST(OperationValidationTest, HASHTABLE_LOOKUP_quant8) {
     hashtableLookupTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
-void lshProjectionTest(int32_t operandCode) {
+void lshProjectionTest(int32_t operandCode, int32_t hashAndWeightOperandCode) {
     uint32_t inputDimensions[2] = {5, 5};
-    ANeuralNetworksOperandType hash = {.type = ANEURALNETWORKS_TENSOR_FLOAT32,
+    ANeuralNetworksOperandType hash = {.type = hashAndWeightOperandCode,
                                        .dimensionCount = 2,
                                        .dimensions = inputDimensions,
                                        .scale = 0.0f,
@@ -1152,7 +1152,7 @@ void lshProjectionTest(int32_t operandCode) {
     }
 
     uint32_t weightDimensions[1] = {5};
-    ANeuralNetworksOperandType weight = {.type = ANEURALNETWORKS_TENSOR_FLOAT32,
+    ANeuralNetworksOperandType weight = {.type = hashAndWeightOperandCode,
                                          .dimensionCount = 1,
                                          .dimensions = weightDimensions,
                                          .scale = 0.0f,
@@ -1176,12 +1176,18 @@ void lshProjectionTest(int32_t operandCode) {
     EXPECT_TRUE(lshProjTest.testMutatingOutputOperandCounts());
 }
 
+TEST(OperationValidationTest, LSH_PROJECTION_float16) {
+    lshProjectionTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_FLOAT32);
+    lshProjectionTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_FLOAT16);
+}
 TEST(OperationValidationTest, LSH_PROJECTION_float32) {
-    lshProjectionTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+    lshProjectionTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32);
+    lshProjectionTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, LSH_PROJECTION_quant8) {
-    lshProjectionTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    lshProjectionTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_FLOAT32);
+    lshProjectionTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, LSTM_float32) {
