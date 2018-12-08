@@ -66,7 +66,7 @@ Example({
         9.569672, 2.000000, 10.689667,
         8.125000, 8.750000, 9.000000
     ]
-}).AddNchw(heatmap1, layout).AddVariations("relaxed")
+}).AddNchw(heatmap1, layout).AddVariations("relaxed", "float16")
 
 
 # TEST 2: HEATMAP_MAX_KEYPOINT_2
@@ -105,4 +105,4 @@ Example({
          8.934225,  9.239437,  7.375000,  9.625000,
          0.987798,  1.073820,  0.930000,  0.800000
     ]
-}).AddNchw(heatmap2, layout).AddVariations("relaxed")
+}).AddNchw(heatmap2, layout).AddVariations("relaxed", "float16")

@@ -24,18 +24,12 @@ using namespace android::nn::wrapper;
 namespace {
 
 static const int32_t kAvailableOperandCodes[] = {
-        ANEURALNETWORKS_FLOAT32,
-        ANEURALNETWORKS_INT32,
-        ANEURALNETWORKS_UINT32,
-        ANEURALNETWORKS_TENSOR_FLOAT32,
-        ANEURALNETWORKS_TENSOR_INT32,
-        ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
-        ANEURALNETWORKS_BOOL,
-        ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
-        ANEURALNETWORKS_TENSOR_FLOAT16,
-        ANEURALNETWORKS_TENSOR_BOOL8,
-        ANEURALNETWORKS_TENSOR_OEM_BYTE,
-};
+        ANEURALNETWORKS_FLOAT32,        ANEURALNETWORKS_INT32,
+        ANEURALNETWORKS_UINT32,         ANEURALNETWORKS_TENSOR_FLOAT32,
+        ANEURALNETWORKS_TENSOR_INT32,   ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+        ANEURALNETWORKS_BOOL,           ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
+        ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_BOOL8,
+        ANEURALNETWORKS_FLOAT16,        ANEURALNETWORKS_TENSOR_OEM_BYTE};
 
 ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0, uint32_t* dim = nullptr,
                                      float scale = 0.0f, int32_t zeroPoint = 0) {
@@ -1581,18 +1575,26 @@ TEST(OperationValidationTest, ROI_POOLING_quant8) {
     roiPoolingOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
-TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
+void heatmapMaxKeypointOpTest(int32_t operandCode) {
     uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outDim[] = {6, 3, 1};
     OperationTestBase heatmapMaxKeypointTest(
             ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT,
-            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 4, heatmapDim),
-             getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 2, boxDim), getOpType(ANEURALNETWORKS_BOOL)},
-            {getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, 3, outDim)});
+            {getOpType(operandCode, 4, heatmapDim), getOpType(operandCode, 2, boxDim),
+             getOpType(ANEURALNETWORKS_BOOL)},
+            {getOpType(operandCode, 3, outDim)});
 
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCode());
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float16) {
+    heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
+    heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
 void groupedConvOpTest(int32_t operandCode) {
