@@ -18,6 +18,7 @@
 
 #include "MaximumMinimum.h"
 #include "IndexedShapeWrapper.h"
+#include "OperationsUtils.h"
 #include "Tracing.h"
 
 namespace android {
@@ -50,11 +51,6 @@ bool evalGeneric(const T* aData, const Shape& aShape, const T* bData, const Shap
     } while (!lastIndex);
 
     return true;
-}
-
-uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape) {
-    double doubleValue = (value - oldShape.offset) * oldShape.scale;
-    return static_cast<uint8_t>(doubleValue / newShape.scale + newShape.offset);
 }
 
 bool evalQuant8(const uint8_t* aData, const Shape& aShape, const uint8_t* bData,

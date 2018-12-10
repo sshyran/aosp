@@ -269,6 +269,11 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
     return true;
 }
 
+uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape) {
+    double doubleValue = (value - oldShape.offset) * oldShape.scale;
+    return static_cast<uint8_t>(doubleValue / newShape.scale + newShape.offset);
+}
+
 bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out) {
     NN_OPS_CHECK(getNumberOfDimensions(in1) <= 4 && getNumberOfDimensions(in2) <= 4);
     NN_OPS_CHECK(in1.type == in2.type);
