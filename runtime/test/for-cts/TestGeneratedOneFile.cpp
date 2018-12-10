@@ -408,6 +408,7 @@
 #include "../generated/tests/roi_align.mod.py.cpp"
 #include "../generated/tests/roi_pooling.mod.py.cpp"
 #include "../generated/tests/rotated_bbox_transform.mod.py.cpp"
+#include "../generated/tests/select_v1_2.mod.py.cpp"
 #include "../generated/tests/slice.mod.py.cpp"
 #include "../generated/tests/softmax_v1_2.mod.py.cpp"
 #include "../generated/tests/space_to_batch_v1_2.mod.py.cpp"
