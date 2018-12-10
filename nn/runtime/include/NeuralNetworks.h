@@ -2940,6 +2940,32 @@ typedef enum {
      */
     ANEURALNETWORKS_ROI_ALIGN = 74,
     ANEURALNETWORKS_RSQRT = 75,
+    /**
+     * Using a tensor of booleans c and input tensors x and y select values
+     * elementwise from both input tensors:
+     *
+     * O[i] = C[i] ? x[i] : y[i].
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
+     *
+     * Inputs:
+     * * 0: A tensor of type {@link ANEURALNETWORKS_TENSOR_BOOL8} acting as a
+     *      mask that chooses, based on the value at each element, whether the
+     *      corresponding element in the output should be taken from input1 (if
+     *      true) or input2 (if false).
+     * * 1: An input tensor of the same shape as input0.
+     * * 2: An input tensor of the same shape and type as input1.
+     *
+     * Outputs:
+     * * 0: A tensor of the same type and shape as input1 and input2.
+     *
+     */
     ANEURALNETWORKS_SELECT = 76,
     ANEURALNETWORKS_SIN = 77,
     /**

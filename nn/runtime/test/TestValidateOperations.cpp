@@ -2018,4 +2018,36 @@ TEST(OperationValidationTest, REDUCE_ALL) {
     reduceOpTest(ANEURALNETWORKS_REDUCE_ALL, ANEURALNETWORKS_TENSOR_BOOL8);
 }
 
+void selectTest(ANeuralNetworksOperationType operationCode, int32_t inputOperandType) {
+    uint32_t inputDimensions[4] = {2, 2, 2, 2};
+    ANeuralNetworksOperandType input0 = {.type = ANEURALNETWORKS_TENSOR_BOOL8,
+                                         .dimensionCount = 4,
+                                         .dimensions = inputDimensions,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+    ANeuralNetworksOperandType input1 = {.type = inputOperandType,
+                                         .dimensionCount = 4,
+                                         .dimensions = inputDimensions,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+    if (inputOperandType == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        input1.scale = 1.f / 256;
+    }
+    ANeuralNetworksOperandType input2 = input1;
+    ANeuralNetworksOperandType output = input1;
+
+    OperationTestBase test(operationCode, {input0, input1, input2}, {output});
+
+    EXPECT_TRUE(test.testMutatingInputOperandCode());
+    EXPECT_TRUE(test.testMutatingInputOperandCounts());
+    EXPECT_TRUE(test.testMutatingOutputOperandCode());
+    EXPECT_TRUE(test.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, SELECT) {
+    selectTest(ANEURALNETWORKS_SELECT, ANEURALNETWORKS_TENSOR_FLOAT16);
+    selectTest(ANEURALNETWORKS_SELECT, ANEURALNETWORKS_TENSOR_FLOAT32);
+    selectTest(ANEURALNETWORKS_SELECT, ANEURALNETWORKS_TENSOR_INT32);
+    selectTest(ANEURALNETWORKS_SELECT, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
 }  // end namespace
