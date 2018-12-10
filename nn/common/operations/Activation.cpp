@@ -357,7 +357,7 @@ bool softmaxQuant8(const uint8_t* inputData, const Shape& inputShape, const floa
     static const int32_t kScaledDiffIntegerBits = 5;
     const double input_beta_real_multiplier =
             std::min(1.0 * beta * inputShape.scale * (1 << (31 - kScaledDiffIntegerBits)),
-                     (1ll << 31) - 1.0);
+                     (1LL << 31) - 1.0);
 
     int32_t inputMultiplier = 0, inputLeftShift = 0;
     if (!QuantizeMultiplierGreaterThanOne(input_beta_real_multiplier, &inputMultiplier,
