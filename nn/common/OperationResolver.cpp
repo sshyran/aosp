@@ -45,6 +45,7 @@ const OperationRegistration* register_REDUCE_MAX();
 const OperationRegistration* register_REDUCE_MIN();
 const OperationRegistration* register_REDUCE_PROD();
 const OperationRegistration* register_REDUCE_SUM();
+const OperationRegistration* register_SELECT();
 
 OperationResolver::OperationResolver() {
     registerOperation(register_ABS());
@@ -68,6 +69,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_REDUCE_MIN());
     registerOperation(register_REDUCE_PROD());
     registerOperation(register_REDUCE_SUM());
+    registerOperation(register_SELECT());
 }
 
 const OperationRegistration* OperationResolver::findOperation(OperationType operationType) const {
