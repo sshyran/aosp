@@ -15,15 +15,33 @@ TEST_F(GeneratedTests, conv_per_channel) {
             conv_per_channel::get_examples());
 }
 
+TEST_F(GeneratedTests, conv_per_channel_weight_as_input) {
+    execute(conv_per_channel::CreateModel_weight_as_input,
+            conv_per_channel::is_ignored_weight_as_input,
+            conv_per_channel::get_examples_weight_as_input());
+}
+
 TEST_F(GeneratedTests, conv_per_channel_layouts_nhwc) {
     execute(conv_per_channel::CreateModel_layouts_nhwc,
             conv_per_channel::is_ignored_layouts_nhwc,
             conv_per_channel::get_examples_layouts_nhwc());
 }
 
+TEST_F(GeneratedTests, conv_per_channel_layouts_nhwc_weight_as_input) {
+    execute(conv_per_channel::CreateModel_layouts_nhwc_weight_as_input,
+            conv_per_channel::is_ignored_layouts_nhwc_weight_as_input,
+            conv_per_channel::get_examples_layouts_nhwc_weight_as_input());
+}
+
 TEST_F(GeneratedTests, conv_per_channel_layouts_nchw) {
     execute(conv_per_channel::CreateModel_layouts_nchw,
             conv_per_channel::is_ignored_layouts_nchw,
             conv_per_channel::get_examples_layouts_nchw());
+}
+
+TEST_F(GeneratedTests, conv_per_channel_layouts_nchw_weight_as_input) {
+    execute(conv_per_channel::CreateModel_layouts_nchw_weight_as_input,
+            conv_per_channel::is_ignored_layouts_nchw_weight_as_input,
+            conv_per_channel::get_examples_layouts_nchw_weight_as_input());
 }
 
