@@ -293,7 +293,7 @@ class Operand(NamedVariable):
             self.type = Type.GetTypeFromString(opType, value, extraParams)
             value = backward
         else:
-            self.type = Type.GetType(*opType)
+            self.type = Type.GetType(*opType, extraParams=extraParams)
         self.SetValue(value)
         self.lifetime = "TEMPORARY_VARIABLE"
         self.ins = []
@@ -324,8 +324,8 @@ class Operand(NamedVariable):
 # Base class of user-defined input/output operand
 class InOut(Operand):
 
-    def __init__(self, name, opType, backward=None, skipRenaming=False):
-        Operand.__init__(self, name, opType, backward, None, skipRenaming=skipRenaming)
+    def __init__(self, name, opType, backward=None, skipRenaming=False, extraParams=None):
+        Operand.__init__(self, name, opType, backward, None, skipRenaming=skipRenaming, extraParams=extraParams)
         self.lifetime = "MODEL_INPUT"
         self.index = 0
 
@@ -338,8 +338,8 @@ class InOut(Operand):
 
 # A user-declared input operand
 class Input(InOut):
-    def __init__(self, name, opType, backward=None, skipRenaming=False):
-        InOut.__init__(self, name, opType, backward, skipRenaming=skipRenaming)
+    def __init__(self, name, opType, backward=None, skipRenaming=False, extraParams=None):
+        InOut.__init__(self, name, opType, backward, skipRenaming=skipRenaming, extraParams=extraParams)
         self.lifetime = "MODEL_INPUT"
 
 # A user-declared output operand
@@ -884,7 +884,7 @@ class ParameterAsInputConverter(ModelVariation, ImplicitVariation):
 
     def TransformOperand(self, op, arg=None):
         assert isinstance(op, Parameter), "%s cannot be converted to Input."%type(op)
-        newop = Input(op.name, op.type.GetSignatureTuple(), skipRenaming=True)
+        newop = Input(op.name, op.type.GetSignatureTuple(), skipRenaming=True, extraParams=op.type.extraParams)
         newop.SetValue(op.value)
         return newop
 
