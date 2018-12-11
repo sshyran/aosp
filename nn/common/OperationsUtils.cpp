@@ -999,54 +999,6 @@ bool splitPrepare(const Shape& input, int32_t axis, int32_t numOutputs,
     return true;
 }
 
-bool roiAlignPrepare(const Shape& input, const float* roiData, const Shape& roiShape,
-                     const int32_t* outputShapeData, const Shape& outputShapeShape,
-                     const float spatialScale, Shape* output) {
-    const uint32_t kRoiDim = 4;
-
-    NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
-    NN_OPS_CHECK(getNumberOfDimensions(roiShape) == 2);
-    NN_OPS_CHECK(getNumberOfDimensions(outputShapeShape) == 1);
-
-    uint32_t numBatches = getSizeOfDimension(input, 0);
-    uint32_t inHeight = getSizeOfDimension(input, 1);
-    uint32_t inWidth = getSizeOfDimension(input, 2);
-    uint32_t inDepth = getSizeOfDimension(input, 3);
-    uint32_t numRois = getSizeOfDimension(roiShape, 0);
-    uint32_t roiInfoLength = getSizeOfDimension(roiShape, 1);
-
-    NN_OPS_CHECK(roiInfoLength == (kRoiDim + 1) || (roiInfoLength == kRoiDim && numBatches == 1));
-    NN_OPS_CHECK(getSizeOfDimension(outputShapeShape, 0) == 2);
-
-    const float* roiDataEnd = roiData + numRois * roiInfoLength;
-    for (const float* roiInfo = roiData; roiInfo < roiDataEnd; roiInfo += kRoiDim) {
-        if (roiInfoLength == kRoiDim + 1) {
-            NN_OPS_CHECK(roiInfo[0] >= 0);
-            NN_OPS_CHECK(roiInfo[0] < numBatches);
-            roiInfo++;
-        }
-
-        // Check for malformed data
-        // 1. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
-        // 2. Invalid region: x2 <= x1 || y2 <= y1
-        NN_OPS_CHECK(roiInfo[0] >= 0);
-        NN_OPS_CHECK(roiInfo[1] >= 0);
-        NN_OPS_CHECK(roiInfo[2] >= 0);
-        NN_OPS_CHECK(roiInfo[3] >= 0);
-        NN_OPS_CHECK(roiInfo[0] * spatialScale <= inWidth);
-        NN_OPS_CHECK(roiInfo[1] * spatialScale <= inHeight);
-        NN_OPS_CHECK(roiInfo[2] * spatialScale <= inWidth);
-        NN_OPS_CHECK(roiInfo[3] * spatialScale <= inHeight);
-        NN_OPS_CHECK(roiInfo[0] < roiInfo[2]);
-        NN_OPS_CHECK(roiInfo[1] < roiInfo[3]);
-    }
-
-    output->type = input.type;
-    output->dimensions = {numRois, static_cast<uint32_t>(outputShapeData[0]),
-                          static_cast<uint32_t>(outputShapeData[1]), inDepth};
-    return true;
-}
-
 bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
                         int32_t padding_left, int32_t padding_right, int32_t padding_top,
                         int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
