@@ -136,9 +136,9 @@ bool QuantizeMultiplierSmallerThanOne(double double_multiplier,
     NN_OPS_CHECK(double_multiplier > 0.);
     const double q = std::frexp(double_multiplier, right_shift);
     *right_shift *= -1;
-    int64_t q_fixed = static_cast<int64_t>(std::round(q * (1ll << 31)));
-    NN_OPS_CHECK(q_fixed <= (1ll << 31));
-    if (q_fixed == (1ll << 31)) {
+    int64_t q_fixed = static_cast<int64_t>(std::round(q * (1LL << 31)));
+    NN_OPS_CHECK(q_fixed <= (1LL << 31));
+    if (q_fixed == (1LL << 31)) {
         q_fixed /= 2;
         --*right_shift;
     }
@@ -153,9 +153,9 @@ bool QuantizeMultiplierGreaterThanOne(double double_multiplier,
                                       int* left_shift) {
     NN_OPS_CHECK(double_multiplier > 1.);
     const double q = std::frexp(double_multiplier, left_shift);
-    int64_t q_fixed = static_cast<int64_t>(std::round(q * (1ll << 31)));
-    NN_OPS_CHECK(q_fixed <= (1ll << 31));
-    if (q_fixed == (1ll << 31)) {
+    int64_t q_fixed = static_cast<int64_t>(std::round(q * (1LL << 31)));
+    NN_OPS_CHECK(q_fixed <= (1LL << 31));
+    if (q_fixed == (1LL << 31)) {
         q_fixed /= 2;
         ++*left_shift;
     }
@@ -236,8 +236,8 @@ void CalculateActivationRangeFloat(int32_t activation,
 
 int32_t CalculateInputRadius(int input_integer_bits, int input_left_shift) {
     const double max_input_rescaled = 1.0 * ((1 << input_integer_bits) - 1) *
-                                      (1ll << (31 - input_integer_bits)) /
-                                      (1ll << input_left_shift);
+                                      (1LL << (31 - input_integer_bits)) /
+                                      (1LL << input_left_shift);
     // Tighten bound using floor.  Suppose that we could use the exact value.
     // After scaling the difference, the result would be at the maximum.  Thus we
     // must ensure that our value has lower magnitude.
