@@ -2133,6 +2133,7 @@ typedef enum {
      * the image.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Inputs:
@@ -3195,6 +3196,7 @@ typedef enum {
      * boxes with angle less than a threshold are cliped.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Inputs:
@@ -3226,7 +3228,7 @@ typedef enum {
      *      the upper bound of the angle in degree. The bounded region
      *      (angle_bound_high - angle_bound_low) should be a multiple of 180
      *      degrees. If input5 is negative, this field is ignored.
-     * * 8: An {@link ANEURALNETWORKS_INT32} scalar, specifying the angle
+     * * 8: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the angle
      *      threshold for box clipping. For all bounding boxes with absolute
      *      value of angle less than the threshold, they are considered to be
      *      almost upright and will be clipped against the image edges. Set
