@@ -914,6 +914,7 @@ typedef enum {
      * Projects an input to a bit vector via locality senstive hashing.
      *
      * Supported input tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -935,7 +936,7 @@ typedef enum {
      *      Tensor[1].Dim[0] == Tensor[2].Dim[0]
      * * 3: Type:
      *        Sparse:
-     *          Value LSHProjectionType_SPARSE(=3).
+     *          Value LSHProjectionType_SPARSE(=3) (since API level 29).
      *          Computed bit vector is considered to be sparse.
      *          Each output element is an int32 made up of multiple bits
      *          computed from hash functions.
@@ -963,7 +964,7 @@ typedef enum {
      *      A flattened tensor that represents projected bit vectors.
      *
      * Available since API level 27.
-     * The offset value for sparse projections was added in API level 28.
+     * The offset value for sparse projections was added in API level 29.
      */
     ANEURALNETWORKS_LSH_PROJECTION = 15,
 

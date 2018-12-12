@@ -1531,24 +1531,40 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[1]].type;
-            if (inputType != OperandType::TENSOR_FLOAT32 &&
+            if (inputType != OperandType::TENSOR_FLOAT16 &&
+                inputType != OperandType::TENSOR_FLOAT32 &&
                 inputType != OperandType::TENSOR_INT32 &&
                 inputType != OperandType::TENSOR_QUANT8_ASYMM) {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
                            << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_FLOAT32,
-                                                        inputType,
-                                                        OperandType::TENSOR_FLOAT32,
-                                                        OperandType::INT32};
+            auto hashType = operands[inputIndexes[0]].type;
+            std::vector<OperandType> inExpectedTypes;
+            if (hashType == OperandType::TENSOR_FLOAT16) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+                inExpectedTypes = {
+                        OperandType::TENSOR_FLOAT16,
+                        inputType,
+                        OperandType::TENSOR_FLOAT16,
+                        OperandType::INT32,
+                };
+            } else if (hashType == OperandType::TENSOR_FLOAT32) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
+                inExpectedTypes = {
+                        OperandType::TENSOR_FLOAT32,
+                        inputType,
+                        OperandType::TENSOR_FLOAT32,
+                        OperandType::INT32,
+                };
+            } else {
+                LOG(ERROR) << "Unsupported hash tensor type for operation "
+                           << getOperationName(opType);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
-            // TODO(mks): Return V1_2 if inputType is sparse.
-            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
-            return validateOperationOperandTypes(operands,
-                                                 inputCount, inputIndexes,
-                                                 inExpectedTypes,
-                                                 outputCount, outputIndexes,
+            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                 inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_LSTM: {

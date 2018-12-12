@@ -85,8 +85,9 @@ cc_library_static {
     vendor_available: true,
     // b/109953668, disable OpenMP
     // openmp: true,
-    export_include_dirs: ["include"],
-
+    export_include_dirs: [
+        "include",
+    ],
     srcs: [
         "CpuExecutor.cpp",
         "GraphDump.cpp",
