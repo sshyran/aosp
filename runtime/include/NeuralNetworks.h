@@ -2689,7 +2689,26 @@ typedef enum {
      */
     ANEURALNETWORKS_MINIMUM = 65,
 
+    /**
+     * Computes numerical negative value element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     *
+     * Supported tensor rank: from 1.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_NEG = 66,
+
     /**
      * Computes the power of one value to another.
      *
