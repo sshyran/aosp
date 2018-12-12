@@ -6111,6 +6111,59 @@ TEST_F(ValidationTest, equal_quantized_different_zero_point) {
 }
 
 
+// Generated from: exp.mod.py.
+namespace exp {
+// Generated exp test
+#include "examples/exp.example.cpp"
+// Generated model constructor
+#include "vts_models/exp.model.cpp"
+} // namespace exp
+
+TEST_F(NeuralnetworksHidlTest, exp) {
+  generated_tests::Execute(device,
+                           exp::createTestModel,
+                           exp::is_ignored,
+                           exp::get_examples());
+}
+
+TEST_F(ValidationTest, exp) {
+  const Model model = exp::createTestModel();
+  const std::vector<Request> requests = createRequests(exp::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, exp_relaxed) {
+  generated_tests::Execute(device,
+                           exp::createTestModel_relaxed,
+                           exp::is_ignored_relaxed,
+                           exp::get_examples_relaxed());
+}
+
+TEST_F(ValidationTest, exp_relaxed) {
+  const Model model = exp::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(exp::get_examples_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, exp_float16) {
+  generated_tests::Execute(device,
+                           exp::createTestModel_float16,
+                           exp::is_ignored_float16,
+                           exp::get_examples_float16());
+}
+
+TEST_F(ValidationTest, exp_float16) {
+  const Model model = exp::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(exp::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: expand_dims.mod.py.
 namespace expand_dims {
 // Generated expand_dims test
