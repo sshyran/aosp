@@ -85,7 +85,7 @@ Example((inputs, {
      255.000000, 442.753632, 1.000000, 137.492737, 0.729584],
     b1: # batch split
     [1, 1, 4, 2, 0]
-}), model=model1).AddVariations("relaxed")
+}), model=model1).AddVariations("relaxed", "float16")
 
 Example((inputs, {
     o1: # output 0
@@ -107,7 +107,7 @@ Example((inputs, {
      730.000000, 1097.500000, 220.727676, 698.970947, -179.270416],
     b1: # batch split
     [1, 1, 4, 2, 0]
-}), model=model2).AddVariations("relaxed")
+}), model=model2).AddVariations("relaxed", "float16")
 
 Example((inputs, {
     o1: # output 0
@@ -129,7 +129,7 @@ Example((inputs, {
      730.000000, 1097.500000, 220.727676, 698.970947, 0.729584],
     b1: # batch split
     [1, 1, 4, 2, 0]
-}), model=model3).AddVariations("relaxed")
+}), model=model3).AddVariations("relaxed", "float16")
 
 
 # TEST 4: ROTATED_BBOX_TRANSFORM_SINGLE_BATCH
@@ -164,4 +164,4 @@ Example({
          105.000000, 148.000000, 0.123938, 0.043610, -64.075356,
          125.000008, 102.500000, 91.105942, 353.376648, -64.075356],
     b4: [4]
-}).AddVariations("relaxed")
+}).AddVariations("relaxed", "float16")
