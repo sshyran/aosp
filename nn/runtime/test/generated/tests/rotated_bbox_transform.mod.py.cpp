@@ -21,6 +21,12 @@ TEST_F(GeneratedTests, rotated_bbox_transform_relaxed) {
             rotated_bbox_transform::get_examples_relaxed());
 }
 
+TEST_F(GeneratedTests, rotated_bbox_transform_float16) {
+    execute(rotated_bbox_transform::CreateModel_float16,
+            rotated_bbox_transform::is_ignored_float16,
+            rotated_bbox_transform::get_examples_float16());
+}
+
 TEST_F(GeneratedTests, rotated_bbox_transform_2) {
     execute(rotated_bbox_transform::CreateModel_2,
             rotated_bbox_transform::is_ignored_2,
@@ -31,6 +37,12 @@ TEST_F(GeneratedTests, rotated_bbox_transform_relaxed_2) {
     execute(rotated_bbox_transform::CreateModel_relaxed_2,
             rotated_bbox_transform::is_ignored_relaxed_2,
             rotated_bbox_transform::get_examples_relaxed_2());
+}
+
+TEST_F(GeneratedTests, rotated_bbox_transform_float16_2) {
+    execute(rotated_bbox_transform::CreateModel_float16_2,
+            rotated_bbox_transform::is_ignored_float16_2,
+            rotated_bbox_transform::get_examples_float16_2());
 }
 
 TEST_F(GeneratedTests, rotated_bbox_transform_3) {
@@ -45,6 +57,12 @@ TEST_F(GeneratedTests, rotated_bbox_transform_relaxed_3) {
             rotated_bbox_transform::get_examples_relaxed_3());
 }
 
+TEST_F(GeneratedTests, rotated_bbox_transform_float16_3) {
+    execute(rotated_bbox_transform::CreateModel_float16_3,
+            rotated_bbox_transform::is_ignored_float16_3,
+            rotated_bbox_transform::get_examples_float16_3());
+}
+
 TEST_F(GeneratedTests, rotated_bbox_transform_single_batch) {
     execute(rotated_bbox_transform::CreateModel_single_batch,
             rotated_bbox_transform::is_ignored_single_batch,
@@ -55,5 +73,11 @@ TEST_F(GeneratedTests, rotated_bbox_transform_single_batch_relaxed) {
     execute(rotated_bbox_transform::CreateModel_single_batch_relaxed,
             rotated_bbox_transform::is_ignored_single_batch_relaxed,
             rotated_bbox_transform::get_examples_single_batch_relaxed());
+}
+
+TEST_F(GeneratedTests, rotated_bbox_transform_single_batch_float16) {
+    execute(rotated_bbox_transform::CreateModel_single_batch_float16,
+            rotated_bbox_transform::is_ignored_single_batch_float16,
+            rotated_bbox_transform::get_examples_single_batch_float16());
 }
 
