@@ -345,6 +345,18 @@ TEST(OperationValidationTest, ABS_float32) {
     activationOpTest(ANEURALNETWORKS_ABS, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+TEST(OperationValidationTest, NEG_float16) {
+    activationOpTest(ANEURALNETWORKS_NEG, ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, NEG_float32) {
+    activationOpTest(ANEURALNETWORKS_NEG, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, NEG_int32) {
+    activationOpTest(ANEURALNETWORKS_NEG, ANEURALNETWORKS_TENSOR_INT32);
+}
+
 TEST(OperationValidationTest, FLOOR_float16) {
     activationOpTest(ANEURALNETWORKS_FLOOR, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
