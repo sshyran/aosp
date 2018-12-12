@@ -38,6 +38,7 @@ const OperationRegistration* register_LOGICAL_AND();
 const OperationRegistration* register_LOGICAL_NOT();
 const OperationRegistration* register_LOGICAL_OR();
 const OperationRegistration* register_LOG_SOFTMAX();
+const OperationRegistration* register_NEG();
 const OperationRegistration* register_NOT_EQUAL();
 const OperationRegistration* register_PRELU();
 const OperationRegistration* register_REDUCE_ALL();
@@ -66,6 +67,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_LOGICAL_NOT());
     registerOperation(register_LOGICAL_OR());
     registerOperation(register_LOG_SOFTMAX());
+    registerOperation(register_NEG());
     registerOperation(register_NOT_EQUAL());
     registerOperation(register_PRELU());
     registerOperation(register_REDUCE_ALL());
