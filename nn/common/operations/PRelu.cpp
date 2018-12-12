@@ -131,7 +131,7 @@ bool execute(IOperationExecutionContext* context) {
                     context->getInputBuffer<_Float16>(kAlphaTensor),
                     context->getInputShape(kAlphaTensor),
                     context->getOutputBuffer<_Float16>(kOutputTensor),
-                    context->getInputShape(kOutputTensor));
+                    context->getOutputShape(kOutputTensor));
         case OperandType::TENSOR_FLOAT32:
             return eval<float>(
                     [](const float& val1, const float& val2) -> float {
@@ -142,7 +142,7 @@ bool execute(IOperationExecutionContext* context) {
                     context->getInputBuffer<float>(kAlphaTensor),
                     context->getInputShape(kAlphaTensor),
                     context->getOutputBuffer<float>(kOutputTensor),
-                    context->getInputShape(kOutputTensor));
+                    context->getOutputShape(kOutputTensor));
         case OperandType::TENSOR_QUANT8_ASYMM: {
             return evalQuant8(context->getInputBuffer<uint8_t>(kInputTensor),
                               context->getInputShape(kInputTensor),
