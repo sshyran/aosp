@@ -2233,6 +2233,24 @@ typedef enum {
     ANEURALNETWORKS_CHANNEL_SHUFFLE = 46,
     ANEURALNETWORKS_DETECTION_OUTPUT = 47,
     ANEURALNETWORKS_EMBEDDING_LOOKUP_SPARSE = 48,
+
+    /**
+     * Computes exponential of x element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: from 1.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_EXP = 49,
 
     /**

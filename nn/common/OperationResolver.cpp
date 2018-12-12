@@ -27,6 +27,7 @@ namespace nn {
 const OperationRegistration* register_ABS();
 const OperationRegistration* register_CHANNEL_SHUFFLE();
 const OperationRegistration* register_EQUAL();
+const OperationRegistration* register_EXP();
 const OperationRegistration* register_GATHER();
 const OperationRegistration* register_GREATER();
 const OperationRegistration* register_GREATER_EQUAL();
@@ -54,6 +55,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_ABS());
     registerOperation(register_CHANNEL_SHUFFLE());
     registerOperation(register_EQUAL());
+    registerOperation(register_EXP());
     registerOperation(register_GATHER());
     registerOperation(register_GREATER());
     registerOperation(register_GREATER_EQUAL());
