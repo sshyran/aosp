@@ -15423,6 +15423,44 @@ TEST_F(ValidationTest, lsh_projection_deprecated) {
 }
 
 
+// Generated from: lsh_projection_float16.mod.py.
+namespace lsh_projection_float16 {
+// Generated lsh_projection_float16 test
+#include "examples/lsh_projection_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lsh_projection_float16.model.cpp"
+} // namespace lsh_projection_float16
+
+TEST_F(NeuralnetworksHidlTest, lsh_projection_float16) {
+  generated_tests::Execute(device,
+                           lsh_projection_float16::createTestModel,
+                           lsh_projection_float16::is_ignored,
+                           lsh_projection_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lsh_projection_float16) {
+  const Model model = lsh_projection_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lsh_projection_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, lsh_projection_float16_float16) {
+  generated_tests::Execute(device,
+                           lsh_projection_float16::createTestModel_float16,
+                           lsh_projection_float16::is_ignored_float16,
+                           lsh_projection_float16::get_examples_float16());
+}
+
+TEST_F(ValidationTest, lsh_projection_float16_float16) {
+  const Model model = lsh_projection_float16::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(lsh_projection_float16::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: max_pool_v1_2.mod.py.
 namespace max_pool_v1_2 {
 // Generated max_pool_v1_2 test
