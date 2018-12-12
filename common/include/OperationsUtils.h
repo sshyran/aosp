@@ -455,17 +455,6 @@ bool transposeConvPrepare(const Shape& input, const Shape& filter, const Shape& 
                           int32_t padding_left, int32_t padding_right, int32_t padding_top,
                           int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
                           Shape* output);
-
-bool axisAlignedBBoxTransformPrepare(const float* roiData, const Shape& roiShape,
-                                     const Shape& bboxDeltasShape, const Shape& imageInfoShape,
-                                     const Shape& weightsShape, Shape* outputShape,
-                                     Shape* batchSplitShape);
-
-bool rotatedBBoxTransformPrepare(const float* roiData, const Shape& roiShape,
-                                 const Shape& bboxDeltasShape, const Shape& imageInfoShape,
-                                 const Shape& weightsShape, bool angleBoundOn,
-                                 int32_t angleBoundLow, int32_t angleBoundHigh, Shape* outputShape,
-                                 Shape* batchSplitShape);
 } // namespace nn
 } // namespace android
 
