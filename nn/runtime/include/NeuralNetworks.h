@@ -3122,6 +3122,40 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_SLICE = 78,
+
+    /**
+     * Converts a sparse tensor representation into a dense tensor.
+     *
+     * If sparse_indices is a vector, then for each i:
+     * dense[sparse_indices[i]] = sparse_values[i]
+     *
+     * If sparse_indices is an n by d matrix, then for each i in [0, n):
+     * dense[sparse_indices[i][0], ..., sparse_indices[i][d-1]] = sparse_values[i]
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: A 1-D or 2-D tensor of type {@link ANEURALNETWORKS_INT32} containing
+     *      indices of the sparse tensor elements.
+     * * 1: A 1-D tensor of type {@link ANEURALNETWORKS_INT32} containing shape
+     *      of the dense output tensor.
+     * * 2: A 1-D tensor of any type listed above in supported types section.
+     *      Contains values corresponding to each index in input0.
+     * * 3: A scalar value of the same type as values in input2. If input2 is of
+     *      type {@link ANEURALNETWORKS_QUANT8_ASYMM}, the scalar should be of
+     *      type {@link ANEURALNETWORKS_INT32} lying in a range of [0, 256).
+     *      The value is used to populate all the elements of the dense tensor
+     *      except for the ones listed in sparse values.
+     *
+     * Outputs:
+     * * 0: Resulting dense tensor.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_SPARSE_TO_DENSE = 79,
 
     /**
