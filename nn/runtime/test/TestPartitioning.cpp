@@ -233,7 +233,7 @@ public:
                                          const sp<IPreparedModelCallback>& cb) override {
         ErrorStatus status = ErrorStatus::NONE;
         if (mOEM != OEMYes) {
-            for (auto operation : model.operations) {
+            for (const auto& operation : model.operations) {
                 if (operation.type == OperationType::OEM_OPERATION) {
                     status = ErrorStatus::INVALID_ARGUMENT;
                     break;
