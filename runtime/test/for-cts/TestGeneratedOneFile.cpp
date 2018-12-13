@@ -419,6 +419,7 @@
 #include "../generated/tests/softmax_v1_2.mod.py.cpp"
 #include "../generated/tests/space_to_batch_v1_2.mod.py.cpp"
 #include "../generated/tests/space_to_depth_v1_2.mod.py.cpp"
+#include "../generated/tests/sparse_to_dense.mod.py.cpp"
 #include "../generated/tests/split_float_1.mod.py.cpp"
 #include "../generated/tests/split_float_2.mod.py.cpp"
 #include "../generated/tests/split_float_3.mod.py.cpp"
