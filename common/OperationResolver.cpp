@@ -35,6 +35,7 @@ const OperationRegistration* register_GREATER_EQUAL();
 const OperationRegistration* register_HEATMAP_MAX_KEYPOINT();
 const OperationRegistration* register_LESS();
 const OperationRegistration* register_LESS_EQUAL();
+const OperationRegistration* register_LOG();
 const OperationRegistration* register_LOGICAL_AND();
 const OperationRegistration* register_LOGICAL_NOT();
 const OperationRegistration* register_LOGICAL_OR();
@@ -51,7 +52,10 @@ const OperationRegistration* register_REDUCE_SUM();
 const OperationRegistration* register_ROI_ALIGN();
 const OperationRegistration* register_ROI_POOLING();
 const OperationRegistration* register_ROTATED_BBOX_TRANSFORM();
+const OperationRegistration* register_RSQRT();
 const OperationRegistration* register_SELECT();
+const OperationRegistration* register_SIN();
+const OperationRegistration* register_SQRT();
 
 OperationResolver::OperationResolver() {
     registerOperation(register_ABS());
@@ -65,6 +69,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_HEATMAP_MAX_KEYPOINT());
     registerOperation(register_LESS());
     registerOperation(register_LESS_EQUAL());
+    registerOperation(register_LOG());
     registerOperation(register_LOGICAL_AND());
     registerOperation(register_LOGICAL_NOT());
     registerOperation(register_LOGICAL_OR());
@@ -81,7 +86,10 @@ OperationResolver::OperationResolver() {
     registerOperation(register_ROI_ALIGN());
     registerOperation(register_ROI_POOLING());
     registerOperation(register_ROTATED_BBOX_TRANSFORM());
+    registerOperation(register_RSQRT());
     registerOperation(register_SELECT());
+    registerOperation(register_SIN());
+    registerOperation(register_SQRT());
 }
 
 const OperationRegistration* OperationResolver::findOperation(OperationType operationType) const {
