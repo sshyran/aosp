@@ -455,12 +455,15 @@ static void setRequestArgumentArray(const std::vector<ModelArgumentInfo>& argume
     }
 }
 
-StepExecutor::StepExecutor(const ExecutionBuilder* executionBuilder,
-                           const ModelBuilder* model,
-                           VersionedIDevice* driver, sp<IPreparedModel> preparedModel) :
-    mExecutionBuilder(executionBuilder), mModel(model),
-    mDriver(driver), mPreparedModel(preparedModel),
-    mInputs(model->inputCount()), mOutputs(model->outputCount()) {}
+StepExecutor::StepExecutor(const ExecutionBuilder* executionBuilder, const ModelBuilder* model,
+                           VersionedIDevice* driver,
+                           std::shared_ptr<VersionedIPreparedModel> preparedModel)
+    : mExecutionBuilder(executionBuilder),
+      mModel(model),
+      mDriver(driver),
+      mPreparedModel(preparedModel),
+      mInputs(model->inputCount()),
+      mOutputs(model->outputCount()) {}
 
 void StepExecutor::mapInputsAndOutputsTrivially() {
     mInputs = mExecutionBuilder->mInputs;
@@ -570,7 +573,9 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
         // TODO: change to asynchronous later
         preparedModelCallback->wait();
         ErrorStatus prepareReturnStatus = preparedModelCallback->getStatus();
-        mPreparedModel = preparedModelCallback->getPreparedModel();
+        if (auto preparedModel = preparedModelCallback->getPreparedModel()) {
+            mPreparedModel = std::make_shared<VersionedIPreparedModel>(preparedModel);
+        }
         if (prepareReturnStatus != ErrorStatus::NONE) {
             return convertErrorStatusToResultCode(prepareReturnStatus);
         }
@@ -693,7 +698,7 @@ static void computeOnCpu(const Model& model, const Request& request,
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "computeOnCpu");
     CpuExecutor executor;
     int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
-    executionCallback->notify(convertResultCodeToErrorStatus(err));
+    executionCallback->notify_1_2(convertResultCodeToErrorStatus(err));
 }
 
 int StepExecutor::startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallback) {

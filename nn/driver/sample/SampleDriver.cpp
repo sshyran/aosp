@@ -74,66 +74,60 @@ Return<void> SampleDriver::getSupportedOperations_1_1(const V1_1::Model& model,
     return getSupportedOperations_1_2(convertToV1_2(model), cb);
 }
 
-Return<ErrorStatus> SampleDriver::prepareModel(const V1_0::Model& model,
-                                               const sp<IPreparedModelCallback>& callback) {
-    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
-                 "SampleDriver::prepareModel");
-    if (callback.get() == nullptr) {
-        VLOG(DRIVER) << "prepareModel";
-        LOG(ERROR) << "invalid callback passed to prepareModel";
-        return ErrorStatus::INVALID_ARGUMENT;
-    }
-    if (!validateModel(model)) {
-        VLOG(DRIVER) << "prepareModel";
-        callback->notify(ErrorStatus::INVALID_ARGUMENT, nullptr);
-        return ErrorStatus::INVALID_ARGUMENT;
-    }
-    return prepareModel_1_2(convertToV1_2(model), ExecutionPreference::FAST_SINGLE_ANSWER,
-                            callback);
+static void notify(const sp<V1_0::IPreparedModelCallback>& callback, const ErrorStatus& status,
+                   const sp<SamplePreparedModel>& preparedModel) {
+    callback->notify(status, preparedModel);
 }
 
-Return<ErrorStatus> SampleDriver::prepareModel_1_1(const V1_1::Model& model,
-                                                   ExecutionPreference preference,
-                                                   const sp<IPreparedModelCallback>& callback) {
-    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
-                 "SampleDriver::prepareModel_1_1");
-    if (callback.get() == nullptr) {
-        LOG(ERROR) << "invalid callback passed to prepareModel_1_1";
-        return ErrorStatus::INVALID_ARGUMENT;
-    }
-    if (!validateModel(model) || !validateExecutionPreference(preference)) {
-        callback->notify(ErrorStatus::INVALID_ARGUMENT, nullptr);
-        return ErrorStatus::INVALID_ARGUMENT;
-    }
-    return prepareModel_1_2(convertToV1_2(model), preference, callback);
+static void notify(const sp<V1_2::IPreparedModelCallback>& callback, const ErrorStatus& status,
+                   const sp<SamplePreparedModel>& preparedModel) {
+    callback->notify_1_2(status, preparedModel);
 }
 
-Return<ErrorStatus> SampleDriver::prepareModel_1_2(const V1_2::Model& model,
-                                                   ExecutionPreference preference,
-                                                   const sp<IPreparedModelCallback>& callback) {
-    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
-                 "SampleDriver::prepareModel_1_2");
+template <typename T_Model, typename T_IPreparedModelCallback>
+Return<ErrorStatus> prepareModelBase(const T_Model& model, ExecutionPreference preference,
+                                     const sp<T_IPreparedModelCallback>& callback) {
     if (callback.get() == nullptr) {
-        LOG(ERROR) << "invalid callback passed to prepareModel_1_2";
+        LOG(ERROR) << "invalid callback passed to prepareModelBase";
         return ErrorStatus::INVALID_ARGUMENT;
     }
     if (VLOG_IS_ON(DRIVER)) {
-        VLOG(DRIVER) << "prepareModel_1_2";
+        VLOG(DRIVER) << "prepareModelBase";
         logModelToInfo(model);
     }
     if (!validateModel(model) || !validateExecutionPreference(preference)) {
-        callback->notify(ErrorStatus::INVALID_ARGUMENT, nullptr);
+        notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
         return ErrorStatus::INVALID_ARGUMENT;
     }
 
     // TODO: make asynchronous later
-    sp<SamplePreparedModel> preparedModel = new SamplePreparedModel(model);
+    sp<SamplePreparedModel> preparedModel = new SamplePreparedModel(convertToV1_2(model));
     if (!preparedModel->initialize()) {
-       callback->notify(ErrorStatus::INVALID_ARGUMENT, nullptr);
-       return ErrorStatus::INVALID_ARGUMENT;
+        notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
+        return ErrorStatus::INVALID_ARGUMENT;
     }
-    callback->notify(ErrorStatus::NONE, preparedModel);
+    notify(callback, ErrorStatus::NONE, preparedModel);
     return ErrorStatus::NONE;
+}
+
+Return<ErrorStatus> SampleDriver::prepareModel(const V1_0::Model& model,
+                                               const sp<V1_0::IPreparedModelCallback>& callback) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel");
+    return prepareModelBase(model, ExecutionPreference::FAST_SINGLE_ANSWER, callback);
+}
+
+Return<ErrorStatus> SampleDriver::prepareModel_1_1(
+        const V1_1::Model& model, ExecutionPreference preference,
+        const sp<V1_0::IPreparedModelCallback>& callback) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_1");
+    return prepareModelBase(model, preference, callback);
+}
+
+Return<ErrorStatus> SampleDriver::prepareModel_1_2(
+        const V1_2::Model& model, ExecutionPreference preference,
+        const sp<V1_2::IPreparedModelCallback>& callback) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_2");
+    return prepareModelBase(model, preference, callback);
 }
 
 Return<DeviceStatus> SampleDriver::getStatus() {
@@ -158,48 +152,73 @@ bool SamplePreparedModel::initialize() {
     return setRunTimePoolInfosFromHidlMemories(&mPoolInfos, mModel.pools);
 }
 
-void SamplePreparedModel::asyncExecute(const Request& request,
-                                       const sp<IExecutionCallback>& callback) {
+static Return<void> notify(const sp<V1_0::IExecutionCallback>& callback,
+                           const ErrorStatus& status) {
+    return callback->notify(status);
+}
+
+static Return<void> notify(const sp<V1_2::IExecutionCallback>& callback,
+                           const ErrorStatus& status) {
+    return callback->notify_1_2(status);
+}
+
+template <typename T_IExecutionCallback>
+void asyncExecute(const Request& request, const Model& model,
+                  const std::vector<RunTimePoolInfo>& poolInfos,
+                  const sp<T_IExecutionCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
                  "SampleDriver::asyncExecute");
     std::vector<RunTimePoolInfo> requestPoolInfos;
     if (!setRunTimePoolInfosFromHidlMemories(&requestPoolInfos, request.pools)) {
-        callback->notify(ErrorStatus::GENERAL_FAILURE);
+        notify(callback, ErrorStatus::GENERAL_FAILURE);
         return;
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                         "SampleDriver::asyncExecute");
     CpuExecutor executor;
-    int n = executor.run(mModel, request, mPoolInfos, requestPoolInfos);
+    int n = executor.run(model, request, poolInfos, requestPoolInfos);
     VLOG(DRIVER) << "executor.run returned " << n;
     ErrorStatus executionStatus =
             n == ANEURALNETWORKS_NO_ERROR ? ErrorStatus::NONE : ErrorStatus::GENERAL_FAILURE;
-    Return<void> returned = callback->notify(executionStatus);
+    Return<void> returned = notify(callback, executionStatus);
     if (!returned.isOk()) {
         LOG(ERROR) << " hidl callback failed to return properly: " << returned.description();
     }
 }
 
-Return<ErrorStatus> SamplePreparedModel::execute(const Request& request,
-                                                 const sp<IExecutionCallback>& callback) {
-    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
-                 "SampleDriver::execute");
-    VLOG(DRIVER) << "execute(" << SHOW_IF_DEBUG(toString(request)) << ")";
+template <typename T_IExecutionCallback>
+Return<ErrorStatus> executeBase(const Request& request, const Model& model,
+                                const std::vector<RunTimePoolInfo>& poolInfos,
+                                const sp<T_IExecutionCallback>& callback) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION, "SampleDriver::executeBase");
+    VLOG(DRIVER) << "executeBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
     if (callback.get() == nullptr) {
-        LOG(ERROR) << "invalid callback passed to execute";
+        LOG(ERROR) << "invalid callback passed to executeBase";
         return ErrorStatus::INVALID_ARGUMENT;
     }
-    if (!validateRequest(request, mModel)) {
-        callback->notify(ErrorStatus::INVALID_ARGUMENT);
+    if (!validateRequest(request, model)) {
+        notify(callback, ErrorStatus::INVALID_ARGUMENT);
         return ErrorStatus::INVALID_ARGUMENT;
     }
 
     // This thread is intentionally detached because the sample driver service
     // is expected to live forever.
-    std::thread([this, request, callback]{ asyncExecute(request, callback); }).detach();
+    std::thread([&model, &poolInfos, request, callback] {
+        asyncExecute(request, model, poolInfos, callback);
+    }).detach();
 
     return ErrorStatus::NONE;
+}
+
+Return<ErrorStatus> SamplePreparedModel::execute(const Request& request,
+                                                 const sp<V1_0::IExecutionCallback>& callback) {
+    return executeBase(request, mModel, mPoolInfos, callback);
+}
+
+Return<ErrorStatus> SamplePreparedModel::execute_1_2(const Request& request,
+                                                     const sp<V1_2::IExecutionCallback>& callback) {
+    return executeBase(request, mModel, mPoolInfos, callback);
 }
 
 } // namespace sample_driver

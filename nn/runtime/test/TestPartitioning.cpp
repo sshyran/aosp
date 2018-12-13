@@ -209,10 +209,12 @@ private:
     // Dummy class -- a prepared model must not be nullptr.
     class PartitioningPreparedModel : public IPreparedModel {
     public:
-        Return<ErrorStatus> execute(const Request&,
-                                    const sp<IExecutionCallback>&) override {
-            return ErrorStatus::DEVICE_UNAVAILABLE;
-        }
+     Return<ErrorStatus> execute(const Request&, const sp<V1_0::IExecutionCallback>&) override {
+         return ErrorStatus::DEVICE_UNAVAILABLE;
+     }
+     Return<ErrorStatus> execute_1_2(const Request&, const sp<V1_2::IExecutionCallback>&) override {
+         return ErrorStatus::DEVICE_UNAVAILABLE;
+     }
     };
 public:
     enum OEM {
@@ -238,7 +240,7 @@ public:
                 }
             }
         }
-        cb->notify(status, new PartitioningPreparedModel);
+        cb->notify_1_2(status, new PartitioningPreparedModel);
         return status;
     }
 
