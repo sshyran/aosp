@@ -2849,6 +2849,10 @@ V1_2::Model convertToV1_2(const V1_1::Model& model) {
             .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16};
 }
 
+V1_2::Model convertToV1_2(const V1_2::Model& model) {
+    return model;
+}
+
 #ifdef NN_DEBUGGABLE
 uint32_t getProp(const char* str, uint32_t defaultValue) {
     const std::string propStr = android::base::GetProperty(str, "");
