@@ -45,6 +45,32 @@ bool ModelBuilder::badState(const char* name) {
     return false;
 }
 
+Operand::ExtraParams ModelBuilder::createOperandExtraParams(
+        const ANeuralNetworksOperandType& type) {
+    Operand::ExtraParams extraParams;
+    switch (type.type) {
+        case ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL:
+            extraParams.channelQuant({
+                    .scales = hidl_vec<float>(type.extraParams.channelQuant.scales,
+                                              type.extraParams.channelQuant.scales +
+                                                      type.extraParams.channelQuant.scaleCount),
+                    .channelDim = type.extraParams.channelQuant.channelDim,
+            });
+            break;
+        case ANEURALNETWORKS_FLOAT32:
+        case ANEURALNETWORKS_INT32:
+        case ANEURALNETWORKS_UINT32:
+        case ANEURALNETWORKS_TENSOR_FLOAT32:
+        case ANEURALNETWORKS_TENSOR_INT32:
+        case ANEURALNETWORKS_TENSOR_QUANT8_ASYMM:
+        case ANEURALNETWORKS_BOOL:
+        case ANEURALNETWORKS_TENSOR_QUANT16_SYMM:
+        case ANEURALNETWORKS_TENSOR_FLOAT16:
+            extraParams.none();
+    }
+    return extraParams;
+}
+
 int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
     if (badState("addOperand")) {
         return ANEURALNETWORKS_BAD_STATE;
@@ -59,14 +85,17 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
         LOG(ERROR) << "ANeuralNetworksModel_addOperand exceed max operands";
         return ANEURALNETWORKS_BAD_DATA;
     }
+
     mOperands.push_back({
-        .type = static_cast<OperandType>(type.type),
-        .dimensions = hidl_vec<uint32_t>(type.dimensions, type.dimensions + type.dimensionCount),
-        .numberOfConsumers = 0,
-        .scale = type.scale,
-        .zeroPoint = type.zeroPoint,
-        .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
-        .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .type = static_cast<OperandType>(type.type),
+            .dimensions =
+                    hidl_vec<uint32_t>(type.dimensions, type.dimensions + type.dimensionCount),
+            .numberOfConsumers = 0,
+            .scale = type.scale,
+            .zeroPoint = type.zeroPoint,
+            .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = createOperandExtraParams(type),
     });
     return ANEURALNETWORKS_NO_ERROR;
 }
