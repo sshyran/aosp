@@ -35,14 +35,11 @@ struct RunTimeOperandInfo;
 struct Shape;
 
 class SVDF {
-public:
-    SVDF(const Operation &operation,
-         std::vector<RunTimeOperandInfo>& operands);
+   public:
+    SVDF(const Operation& operation, std::vector<RunTimeOperandInfo>& operands);
 
-    static bool Prepare(const Operation &operation,
-                        std::vector<RunTimeOperandInfo> &operands,
-                        Shape *stateShape,
-                        Shape *outputShape);
+    static bool Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+                        Shape* stateShape, Shape* outputShape);
     bool Eval();
 
     static constexpr int kInputTensor = 0;
@@ -56,17 +53,21 @@ public:
     static constexpr int kStateOutTensor = 0;
     static constexpr int kOutputTensor = 1;
 
-private:
+   private:
+    void EvalFloat32(const float* inputData, const float* inputStateData, const float* biasData,
+                     const float* weightsFeatureData, const float* weightsTimeData,
+                     float* outputData, float* outputStateData);
+
     SVDFParams params_;
 
-    const RunTimeOperandInfo *input_;
-    const RunTimeOperandInfo *weights_feature_;
-    const RunTimeOperandInfo *weights_time_;
-    const RunTimeOperandInfo *bias_;
-    const RunTimeOperandInfo *state_in_;
+    const RunTimeOperandInfo* input_;
+    const RunTimeOperandInfo* weights_feature_;
+    const RunTimeOperandInfo* weights_time_;
+    const RunTimeOperandInfo* bias_;
+    const RunTimeOperandInfo* state_in_;
 
-    RunTimeOperandInfo *state_out_;
-    RunTimeOperandInfo *output_;
+    RunTimeOperandInfo* state_out_;
+    RunTimeOperandInfo* output_;
 };
 
 }  // namespace nn
