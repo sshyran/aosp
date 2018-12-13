@@ -74,7 +74,8 @@ static void printAll(std::ostream& os, const MixedTyped& test) {
     print<uint8_t>(os, test);
     print<int16_t>(os, test);
     print<_Float16>(os, test);
-    static_assert(5 == std::tuple_size<MixedTyped>::value,
+    print<bool8>(os, test);
+    static_assert(6 == std::tuple_size<MixedTyped>::value,
                   "Number of types in MixedTyped changed, but printAll function wasn't updated");
 }
 
