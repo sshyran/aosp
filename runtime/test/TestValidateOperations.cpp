@@ -18,6 +18,8 @@
 #include "NeuralNetworksOEM.h"
 
 #include <gtest/gtest.h>
+#include <iostream>
+#include <set>
 
 using namespace android::nn::wrapper;
 
@@ -90,8 +92,21 @@ public:
             }
             ANeuralNetworksOperandType newType = mValidInputs[i];
             int32_t originalOperandCode = mValidInputs[i].type;
+            std::set<int32_t> operandTypesToSkip;
+            // SPARSE_TO_DENSE's first two inputs have fixed types. And the
+            // third argument can be both TENSOR_QUANT8_ASYMM and TENSOR_INT32
+            // while having INT32 as the 4th argument. Therefore, we need to
+            // skip one while having another as an input.
+            if (mOpCode == ANEURALNETWORKS_SPARSE_TO_DENSE && i == 2) {
+                if (originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+                    operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_INT32);
+                } else if (originalOperandCode == ANEURALNETWORKS_TENSOR_INT32) {
+                    operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+                }
+            }
             for (int32_t newOperandCode : kAvailableOperandCodes) {
-                if (newOperandCode == originalOperandCode) {
+                if (newOperandCode == originalOperandCode ||
+                    operandTypesToSkip.find(newOperandCode) != operandTypesToSkip.end()) {
                     continue;
                 }
                 newType.type = newOperandCode;
@@ -2137,4 +2152,49 @@ TEST(OperationValidationTest, SELECT) {
     selectTest(ANEURALNETWORKS_SELECT, ANEURALNETWORKS_TENSOR_INT32);
     selectTest(ANEURALNETWORKS_SELECT, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
+
+void sparseToDenseTest(int32_t inputOperandType, int32_t scalarOperandType) {
+    uint32_t inputDimensions[4] = {3, 3, 3};
+    ANeuralNetworksOperandType input_indices = {.type = ANEURALNETWORKS_TENSOR_INT32,
+                                                .dimensionCount = 2,
+                                                .dimensions = inputDimensions,
+                                                .scale = 0.0f,
+                                                .zeroPoint = 0};
+    ANeuralNetworksOperandType output_shape = {.type = ANEURALNETWORKS_TENSOR_INT32,
+                                               .dimensionCount = 1,
+                                               .dimensions = inputDimensions,
+                                               .scale = 0.0f,
+                                               .zeroPoint = 0};
+    ANeuralNetworksOperandType input_values = {.type = inputOperandType,
+                                               .dimensionCount = 1,
+                                               .dimensions = inputDimensions,
+                                               .scale = 0.0f,
+                                               .zeroPoint = 0};
+    ANeuralNetworksOperandType default_value = {.type = scalarOperandType,
+                                                .dimensionCount = 0,
+                                                .dimensions = nullptr,
+                                                .scale = 0.0f,
+                                                .zeroPoint = 0};
+    if (inputOperandType == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        input_values.scale = 1.f / 256;
+    }
+    ANeuralNetworksOperandType output = input_values;
+    output.dimensionCount = 3;
+
+    OperationTestBase test(ANEURALNETWORKS_SPARSE_TO_DENSE,
+                           {input_indices, output_shape, input_values, default_value}, {output});
+
+    EXPECT_TRUE(test.testMutatingInputOperandCode());
+    EXPECT_TRUE(test.testMutatingInputOperandCounts());
+    EXPECT_TRUE(test.testMutatingOutputOperandCode());
+    EXPECT_TRUE(test.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, SPARSE_TO_DENSE) {
+    sparseToDenseTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_FLOAT16);
+    sparseToDenseTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_FLOAT32);
+    sparseToDenseTest(ANEURALNETWORKS_TENSOR_INT32, ANEURALNETWORKS_INT32);
+    sparseToDenseTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_INT32);
+}
+
 }  // end namespace
