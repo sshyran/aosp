@@ -24,10 +24,10 @@ void CreateModel(Model *model) {
   // Phase 2, operations
   static float param_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param, param_init, sizeof(float) * 4);
-  static bool param1_init[] = {false};
-  model->setOperandValue(param1, param1_init, sizeof(bool) * 1);
-  static bool param2_init[] = {true};
-  model->setOperandValue(param2, param2_init, sizeof(bool) * 1);
+  static bool8 param1_init[] = {false};
+  model->setOperandValue(param1, param1_init, sizeof(bool8) * 1);
+  static bool8 param2_init[] = {true};
+  model->setOperandValue(param2, param2_init, sizeof(bool8) * 1);
   static int32_t param3_init[] = {-90};
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 1);
   static int32_t param4_init[] = {90};
@@ -71,10 +71,10 @@ void CreateModel_relaxed(Model *model) {
   // Phase 2, operations
   static float param_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param, param_init, sizeof(float) * 4);
-  static bool param1_init[] = {false};
-  model->setOperandValue(param1, param1_init, sizeof(bool) * 1);
-  static bool param2_init[] = {true};
-  model->setOperandValue(param2, param2_init, sizeof(bool) * 1);
+  static bool8 param1_init[] = {false};
+  model->setOperandValue(param1, param1_init, sizeof(bool8) * 1);
+  static bool8 param2_init[] = {true};
+  model->setOperandValue(param2, param2_init, sizeof(bool8) * 1);
   static int32_t param3_init[] = {-90};
   model->setOperandValue(param3, param3_init, sizeof(int32_t) * 1);
   static int32_t param4_init[] = {90};
@@ -120,10 +120,10 @@ void CreateModel_2(Model *model) {
   // Phase 2, operations
   static float param6_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param6, param6_init, sizeof(float) * 4);
-  static bool param7_init[] = {true};
-  model->setOperandValue(param7, param7_init, sizeof(bool) * 1);
-  static bool param8_init[] = {false};
-  model->setOperandValue(param8, param8_init, sizeof(bool) * 1);
+  static bool8 param7_init[] = {true};
+  model->setOperandValue(param7, param7_init, sizeof(bool8) * 1);
+  static bool8 param8_init[] = {false};
+  model->setOperandValue(param8, param8_init, sizeof(bool8) * 1);
   static int32_t param9_init[] = {-90};
   model->setOperandValue(param9, param9_init, sizeof(int32_t) * 1);
   static int32_t param10_init[] = {90};
@@ -167,10 +167,10 @@ void CreateModel_relaxed_2(Model *model) {
   // Phase 2, operations
   static float param6_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param6, param6_init, sizeof(float) * 4);
-  static bool param7_init[] = {true};
-  model->setOperandValue(param7, param7_init, sizeof(bool) * 1);
-  static bool param8_init[] = {false};
-  model->setOperandValue(param8, param8_init, sizeof(bool) * 1);
+  static bool8 param7_init[] = {true};
+  model->setOperandValue(param7, param7_init, sizeof(bool8) * 1);
+  static bool8 param8_init[] = {false};
+  model->setOperandValue(param8, param8_init, sizeof(bool8) * 1);
   static int32_t param9_init[] = {-90};
   model->setOperandValue(param9, param9_init, sizeof(int32_t) * 1);
   static int32_t param10_init[] = {90};
@@ -216,10 +216,10 @@ void CreateModel_3(Model *model) {
   // Phase 2, operations
   static float param12_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param12, param12_init, sizeof(float) * 4);
-  static bool param13_init[] = {true};
-  model->setOperandValue(param13, param13_init, sizeof(bool) * 1);
-  static bool param14_init[] = {true};
-  model->setOperandValue(param14, param14_init, sizeof(bool) * 1);
+  static bool8 param13_init[] = {true};
+  model->setOperandValue(param13, param13_init, sizeof(bool8) * 1);
+  static bool8 param14_init[] = {true};
+  model->setOperandValue(param14, param14_init, sizeof(bool8) * 1);
   static int32_t param15_init[] = {-90};
   model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
   static int32_t param16_init[] = {90};
@@ -263,10 +263,10 @@ void CreateModel_relaxed_3(Model *model) {
   // Phase 2, operations
   static float param12_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param12, param12_init, sizeof(float) * 4);
-  static bool param13_init[] = {true};
-  model->setOperandValue(param13, param13_init, sizeof(bool) * 1);
-  static bool param14_init[] = {true};
-  model->setOperandValue(param14, param14_init, sizeof(bool) * 1);
+  static bool8 param13_init[] = {true};
+  model->setOperandValue(param13, param13_init, sizeof(bool8) * 1);
+  static bool8 param14_init[] = {true};
+  model->setOperandValue(param14, param14_init, sizeof(bool8) * 1);
   static int32_t param15_init[] = {-90};
   model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
   static int32_t param16_init[] = {90};
@@ -312,10 +312,10 @@ void CreateModel_single_batch(Model *model) {
   // Phase 2, operations
   static float param18_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param18, param18_init, sizeof(float) * 4);
-  static bool param19_init[] = {true};
-  model->setOperandValue(param19, param19_init, sizeof(bool) * 1);
-  static bool param20_init[] = {true};
-  model->setOperandValue(param20, param20_init, sizeof(bool) * 1);
+  static bool8 param19_init[] = {true};
+  model->setOperandValue(param19, param19_init, sizeof(bool8) * 1);
+  static bool8 param20_init[] = {true};
+  model->setOperandValue(param20, param20_init, sizeof(bool8) * 1);
   static int32_t param21_init[] = {-90};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static int32_t param22_init[] = {90};
@@ -359,10 +359,10 @@ void CreateModel_single_batch_relaxed(Model *model) {
   // Phase 2, operations
   static float param18_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
   model->setOperandValue(param18, param18_init, sizeof(float) * 4);
-  static bool param19_init[] = {true};
-  model->setOperandValue(param19, param19_init, sizeof(bool) * 1);
-  static bool param20_init[] = {true};
-  model->setOperandValue(param20, param20_init, sizeof(bool) * 1);
+  static bool8 param19_init[] = {true};
+  model->setOperandValue(param19, param19_init, sizeof(bool8) * 1);
+  static bool8 param20_init[] = {true};
+  model->setOperandValue(param20, param20_init, sizeof(bool8) * 1);
   static int32_t param21_init[] = {-90};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static int32_t param22_init[] = {90};
