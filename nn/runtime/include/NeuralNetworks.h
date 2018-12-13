@@ -2599,6 +2599,24 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_LESS_EQUAL = 58,
+
+    /**
+     * Computes natural logarithm of x element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: from 1.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_LOG = 59,
 
     /**
@@ -3003,7 +3021,26 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_ROI_ALIGN = 74,
+
+    /**
+     * Computes reciprocal of square root of x element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: from 1.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_RSQRT = 75,
+
     /**
      * Using a tensor of booleans c and input tensors x and y select values
      * elementwise from both input tensors:
@@ -3031,7 +3068,26 @@ typedef enum {
      *
      */
     ANEURALNETWORKS_SELECT = 76,
+
+    /**
+     * Computes sin of x element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: from 1.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_SIN = 77,
+
     /**
      * Extracts a slice of specified size from the input tensor starting at a
      * specified location.
@@ -3093,6 +3149,23 @@ typedef enum {
      */
     ANEURALNETWORKS_SPLIT = 80,
 
+    /**
+     * Computes square root of x element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported tensor rank: from 1.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_SQRT = 81,
 
     /**
