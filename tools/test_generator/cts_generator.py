@@ -39,6 +39,7 @@ from test_generator import Configuration
 from test_generator import DataTypeConverter
 from test_generator import DataLayoutConverter
 from test_generator import Example
+from test_generator import Float16Scalar
 from test_generator import Float32Scalar
 from test_generator import Float32Vector
 from test_generator import GetJointStr
