@@ -49,6 +49,7 @@ static_assert(ANEURALNETWORKS_BOOL == 6, "ANEURALNETWORKS_BOOL has changed");
 static_assert(ANEURALNETWORKS_TENSOR_QUANT16_SYMM == 7,
               "ANEURALNETWORKS_TENSOR_QUANT16_SYMM has changed");
 static_assert(ANEURALNETWORKS_TENSOR_FLOAT16 == 8, "ANEURALNETWORKS_TENSOR_FLOAT16 has changed");
+static_assert(ANEURALNETWORKS_TENSOR_BOOL8 == 9, "ANEURALNETWORKS_TENSOR_BOOL8 has changed");
 static_assert(ANEURALNETWORKS_OEM_SCALAR == 10000, "ANEURALNETWORKS_OEM_SCALAR has changed");
 static_assert(ANEURALNETWORKS_TENSOR_OEM_BYTE == 10001,
               "ANEURALNETWORKS_TENSOR_OEM_BYTE has changed");
@@ -157,6 +158,8 @@ static_assert(static_cast<int32_t>(OperandType::BOOL) == ANEURALNETWORKS_BOOL,
 static_assert(static_cast<int32_t>(OperandType::TENSOR_QUANT16_SYMM) ==
                       ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
               "TENSOR_QUANT16_SYMM != ANEURALNETWORKS_TENSOR_QUANT16_SYMM");
+static_assert(static_cast<int32_t>(OperandType::TENSOR_BOOL8) == ANEURALNETWORKS_TENSOR_BOOL8,
+              "TENSOR_BOOL8 != ANEURALNETWORKS_TENSOR_BOOL8");
 
 static_assert(static_cast<int32_t>(OperationType::ADD) == ANEURALNETWORKS_ADD,
               "OperationType::ADD != ANEURALNETWORKS_ADD");
