@@ -17,6 +17,8 @@ static std::vector<MixedTypedExample> examples_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -29,6 +31,8 @@ static std::vector<MixedTypedExample> examples_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -54,6 +58,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -66,6 +72,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -91,6 +99,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -103,6 +113,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -128,6 +140,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -140,6 +154,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -165,6 +181,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -177,6 +195,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -202,6 +222,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_quant8 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -214,6 +236,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_quant8 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -239,6 +263,8 @@ static std::vector<MixedTypedExample> examples_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -251,6 +277,8 @@ static std::vector<MixedTypedExample> examples_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -276,6 +304,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -288,6 +318,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -313,6 +345,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -325,6 +359,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -350,6 +386,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -362,6 +400,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -387,6 +427,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -399,6 +441,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -424,6 +468,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_quant8 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -436,6 +482,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_quant8 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -461,6 +509,8 @@ static std::vector<MixedTypedExample> examples_nhwc_2 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -473,6 +523,8 @@ static std::vector<MixedTypedExample> examples_nhwc_2 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -498,6 +550,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -510,6 +564,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -535,6 +591,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -547,6 +605,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -572,6 +632,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_2 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -584,6 +646,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_2 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -609,6 +673,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_relaxed_2 = 
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -621,6 +687,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_relaxed_2 = 
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -646,6 +714,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_quant8_2 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -658,6 +728,8 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_quant8_2 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -683,6 +755,8 @@ static std::vector<MixedTypedExample> examples_nchw_2 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -695,6 +769,8 @@ static std::vector<MixedTypedExample> examples_nchw_2 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -720,6 +796,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -732,6 +810,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -757,6 +837,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -769,6 +851,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -794,6 +878,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_2 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -806,6 +892,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_2 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -831,6 +919,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_relaxed_2 = 
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -843,6 +933,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_relaxed_2 = 
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -868,6 +960,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_quant8_2 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -880,6 +974,8 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_quant8_2 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -905,6 +1001,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -917,6 +1015,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -942,6 +1042,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -954,6 +1056,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -979,6 +1083,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_quant8 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -991,6 +1097,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_quant8 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1016,6 +1124,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1028,6 +1138,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1053,6 +1165,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input_rela
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1065,6 +1179,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input_rela
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1090,6 +1206,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input_quan
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1102,6 +1220,8 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input_quan
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1127,6 +1247,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1139,6 +1261,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1164,6 +1288,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1176,6 +1302,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1201,6 +1329,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw_quant8 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1213,6 +1343,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw_quant8 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1238,6 +1370,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1250,6 +1384,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1275,6 +1411,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input_rela
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1287,6 +1425,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input_rela
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1312,6 +1452,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input_quan
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1324,6 +1466,8 @@ static std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input_quan
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1349,6 +1493,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1361,6 +1507,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1386,6 +1534,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1398,6 +1548,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1423,6 +1575,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc_quant8 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1435,6 +1589,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc_quant8 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1460,6 +1616,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1472,6 +1630,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1497,6 +1657,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input_relaxe
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1509,6 +1671,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input_relaxe
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1534,6 +1698,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input_quant8
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1546,6 +1712,8 @@ static std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input_quant8
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1571,6 +1739,8 @@ static std::vector<MixedTypedExample> examples_large_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1583,6 +1753,8 @@ static std::vector<MixedTypedExample> examples_large_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1608,6 +1780,8 @@ static std::vector<MixedTypedExample> examples_large_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1620,6 +1794,8 @@ static std::vector<MixedTypedExample> examples_large_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1645,6 +1821,8 @@ static std::vector<MixedTypedExample> examples_large_nchw_quant8 = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1657,6 +1835,8 @@ static std::vector<MixedTypedExample> examples_large_nchw_quant8 = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1682,6 +1862,8 @@ static std::vector<MixedTypedExample> examples_large_nchw_weight_as_input = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1694,6 +1876,8 @@ static std::vector<MixedTypedExample> examples_large_nchw_weight_as_input = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1719,6 +1903,8 @@ static std::vector<MixedTypedExample> examples_large_nchw_weight_as_input_relaxe
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1731,6 +1917,8 @@ static std::vector<MixedTypedExample> examples_large_nchw_weight_as_input_relaxe
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1756,6 +1944,8 @@ static std::vector<MixedTypedExample> examples_large_nchw_weight_as_input_quant8
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1768,6 +1958,8 @@ static std::vector<MixedTypedExample> examples_large_nchw_weight_as_input_quant8
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1793,6 +1985,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1805,6 +1999,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1824,6 +2020,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1836,6 +2034,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1861,6 +2061,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1873,6 +2075,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1892,6 +2096,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1904,6 +2110,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1929,6 +2137,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1941,6 +2151,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1960,6 +2172,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1972,6 +2186,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -1997,6 +2213,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2009,6 +2227,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2028,6 +2248,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2040,6 +2262,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_SAME_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2065,6 +2289,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2077,6 +2303,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2096,6 +2324,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2108,6 +2338,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2133,6 +2365,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2145,6 +2379,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2164,6 +2400,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2176,6 +2414,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2201,6 +2441,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2213,6 +2455,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2232,6 +2476,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2244,6 +2490,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2269,6 +2517,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2281,6 +2531,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2300,6 +2552,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2312,6 +2566,8 @@ static std::vector<MixedTypedExample> examples_1_H3_W2_VALID_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2337,6 +2593,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2349,6 +2607,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2368,6 +2628,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2380,6 +2642,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2405,6 +2669,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2417,6 +2683,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2436,6 +2704,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2448,6 +2718,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2473,6 +2745,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2485,6 +2759,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2504,6 +2780,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2516,6 +2794,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2541,6 +2821,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2553,6 +2835,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2572,6 +2856,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2584,6 +2870,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_SAME_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2609,6 +2897,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2621,6 +2911,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2640,6 +2932,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2652,6 +2946,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2677,6 +2973,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2689,6 +2987,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2708,6 +3008,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2720,6 +3022,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nhwc_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2745,6 +3049,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2757,6 +3063,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2776,6 +3084,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2788,6 +3098,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2813,6 +3125,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2825,6 +3139,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
@@ -2844,6 +3160,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw_relaxed = {
   {},
   // int -> FLOAT16 map
   {},
+  // int -> BOOL8 map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2856,6 +3174,8 @@ static std::vector<MixedTypedExample> examples_3_H3_W2_VALID_nchw_relaxed = {
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
+  {},
+  // int -> BOOL8 map
   {},
 }
 },
