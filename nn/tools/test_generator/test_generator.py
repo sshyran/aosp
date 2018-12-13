@@ -340,6 +340,14 @@ class Int32Scalar(Parameter, ImplicitParameter):
     def IsCompatible(value):
         return type(value) is int
 
+# A shortcut for parameters of FLOAT16
+class Float16Scalar(Parameter, ImplicitParameter):
+    def __init__(self, name, value):
+        Parameter.__init__(self, name, ("FLOAT16", []), float(value))
+    @staticmethod
+    def IsCompatible(value):
+        return False
+
 # A shortcut for parameters of FLOAT32
 class Float32Scalar(Parameter, ImplicitParameter):
     def __init__(self, name, value):
