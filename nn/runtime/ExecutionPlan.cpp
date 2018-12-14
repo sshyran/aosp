@@ -36,9 +36,10 @@
 namespace android {
 namespace nn {
 
-static int compile(std::shared_ptr<Device> device, const ModelBuilder* model,
-                   int32_t executionPreference,
-                   std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+namespace {
+
+int compile(std::shared_ptr<Device> device, const ModelBuilder* model, int32_t executionPreference,
+            std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
     nnAssert(device != nullptr);
     Model hidlModel;
     model->setHidlModel(&hidlModel);
@@ -47,6 +48,22 @@ static int compile(std::shared_ptr<Device> device, const ModelBuilder* model,
 }
 
 typedef std::function<void(uint32_t)> OperationReadyCallback;
+
+ANeuralNetworksOperandType::ExtraParams createOperandExtraParams(
+        const Operand::ExtraParams& extraParams) {
+    switch (extraParams.getDiscriminator()) {
+        case V1_2::Operand::ExtraParams::hidl_discriminator::none:
+            return {};
+        case V1_2::Operand::ExtraParams::hidl_discriminator::channelQuant: {
+            auto& channelQuant = extraParams.channelQuant();
+            return {.channelQuant = {
+                            .scales = channelQuant.scales.data(),
+                            .scaleCount = static_cast<uint32_t>(channelQuant.scales.size()),
+                            .channelDim = channelQuant.channelDim,
+                    }};
+        } break;
+    }
+}
 
 // This class tracks whether we know the value of an operand as operations
 // are processed.
@@ -103,6 +120,8 @@ void OperandTracker::markProcessed(uint32_t operationIndex, OperationReadyCallba
     }
 }
 
+}  // namespace
+
 ExecutionStep::ExecutionStep(ExecutionPlan* plan, uint32_t stepIndex,
                              std::shared_ptr<Device> device)
     : mPlan(plan), mIndex(stepIndex), mSubModel(), mDevice(device) {}
@@ -126,12 +145,14 @@ int ExecutionStep::addOperand(uint32_t fromOperandIndex, uint32_t* toOperandInde
     // Add the operand to the submodel.
     const Operand& operand = fromModel.getOperand(fromOperandIndex);
     ANeuralNetworksOperandType type = {
-        .type = static_cast<int32_t>(operand.type),
-        .dimensionCount = static_cast<uint32_t>(operand.dimensions.size()),
-        .dimensions = operand.dimensions.size() > 0 ? operand.dimensions.data() : nullptr,
-        .scale = operand.scale,
-        .zeroPoint = operand.zeroPoint
+            .type = static_cast<int32_t>(operand.type),
+            .dimensionCount = static_cast<uint32_t>(operand.dimensions.size()),
+            .dimensions = operand.dimensions.size() > 0 ? operand.dimensions.data() : nullptr,
+            .scale = operand.scale,
+            .zeroPoint = operand.zeroPoint,
+            .extraParams = createOperandExtraParams(operand.extraParams),
     };
+
     int n = mSubModel.addOperand(type);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         LOG(ERROR) << "Previous error occurred when partitioning the graph";
