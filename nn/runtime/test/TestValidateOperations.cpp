@@ -108,6 +108,18 @@ public:
                     operandTypesToSkip.find(newOperandCode) != operandTypesToSkip.end()) {
                     continue;
                 }
+                // Switch input 7 from bool to int for 10-input CONV_2d
+                // switch between valid "implicit padding with layout param"
+                // and valid "explicit padding without layout param"
+                if (mOpCode == ANEURALNETWORKS_CONV_2D && i == 7 && mValidInputs.size() == 10) {
+                    if ((newOperandCode == ANEURALNETWORKS_INT32 &&
+                         originalOperandCode == ANEURALNETWORKS_BOOL) ||
+                        (newOperandCode == ANEURALNETWORKS_BOOL &&
+                         originalOperandCode == ANEURALNETWORKS_INT32)) {
+                        continue;
+                    }
+                }
+
                 newType.type = newOperandCode;
                 std::vector<ANeuralNetworksOperandType> inputs = mValidInputs;
                 inputs[i] = newType;
@@ -850,6 +862,8 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
     ANeuralNetworksOperandType padBottom = scalar;
     ANeuralNetworksOperandType strideWidth = scalar;
     ANeuralNetworksOperandType strideHeight = scalar;
+    ANeuralNetworksOperandType dilationHeightFactor = scalar;
+    ANeuralNetworksOperandType dilationWidthFactor = scalar;
     ANeuralNetworksOperandType activation = scalar;
 
     OperationTestBase explicitConvTest(ANEURALNETWORKS_CONV_2D,
@@ -903,6 +917,28 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
     EXPECT_TRUE(implicitNchwConvTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(implicitNchwConvTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(implicitNchwConvTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase explicitDilateConvTest(
+            ANEURALNETWORKS_CONV_2D,
+            {input, filter, bias, padLeft, padRight, padTop, padBottom, strideWidth, strideHeight,
+             activation, layout, dilationWidthFactor, dilationHeightFactor},
+            {output});
+
+    EXPECT_TRUE(explicitDilateConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(explicitDilateConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(explicitDilateConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(explicitDilateConvTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase implicitDilateConvTest(
+            ANEURALNETWORKS_CONV_2D,
+            {input, filter, bias, padImplicit, strideWidth, strideHeight, activation, layout,
+             dilationWidthFactor, dilationHeightFactor},
+            {output});
+
+    EXPECT_TRUE(implicitDilateConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(implicitDilateConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(implicitDilateConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(implicitDilateConvTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, CONV_2D_float32) {

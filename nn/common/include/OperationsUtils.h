@@ -222,6 +222,12 @@ inline uint32_t computeOutSize(uint32_t imageSize, uint32_t filterSize, uint32_t
     return (imageSize - filterSize + stride + paddingHead + paddingTail) / stride;
 }
 
+inline uint32_t computeOutSize(uint32_t imageSize, uint32_t filterSize, uint32_t stride,
+                               uint32_t dilationRate, uint32_t paddingHead, uint32_t paddingTail) {
+    uint32_t effectiveFilterSize = ((filterSize - 1) * dilationRate + 1);
+    return (imageSize - effectiveFilterSize + stride + paddingHead + paddingTail) / stride;
+}
+
 inline uint32_t computeOutSizeTransposeConv(uint32_t imageSize, uint32_t filterSize,
                                             uint32_t stride, uint32_t paddingHead,
                                             uint32_t paddingTail) {
@@ -256,20 +262,29 @@ void CalculateActivationRangeFloat(int32_t activation,
 
 int32_t CalculateInputRadius(int input_integer_bits, int input_left_shift);
 
-inline void calculateExplicitPadding(int32_t in_size, int32_t stride,
+inline void calculateExplicitPadding(int32_t in_size, int32_t stride, int32_t dilation_factor,
                                      int32_t filter_size, int32_t padding_implicit,
                                      int32_t* padding_head, int32_t* padding_tail) {
     *padding_head = 0;
     *padding_tail = 0;
 
+    int32_t effective_filter_size = (filter_size - 1) * dilation_factor + 1;
+
     if (padding_implicit == kPaddingSame) {
         int32_t out_size = (in_size + stride - 1) / stride;
-        int32_t tmp = (out_size - 1) * stride + filter_size;
+        int32_t tmp = (out_size - 1) * stride + effective_filter_size;
         if (tmp > in_size) {
             *padding_head = (tmp - in_size) / 2;
             *padding_tail = (tmp - in_size) - *padding_head;
         }
     }
+}
+
+inline void calculateExplicitPadding(int32_t in_size, int32_t stride, int32_t filter_size,
+                                     int32_t padding_implicit, int32_t* padding_head,
+                                     int32_t* padding_tail) {
+    calculateExplicitPadding(in_size, stride, 1, filter_size, padding_implicit, padding_head,
+                             padding_tail);
 }
 
 inline PaddingScheme getPaddingScheme(int32_t inWidth, int32_t inHeight,
@@ -349,13 +364,10 @@ bool depthwiseConvPrepare(const Shape& input,
                           int32_t stride_width, int32_t stride_height,
                           Shape* output);
 
-bool convPrepare(const Shape& input,
-                 const Shape& filter,
-                 const Shape& bias,
-                 int32_t padding_left, int32_t padding_right,
-                 int32_t padding_top, int32_t padding_bottom,
-                 int32_t stride_width, int32_t stride_height,
-                 Shape* output);
+bool convPrepare(const Shape& input, const Shape& filter, const Shape& bias, int32_t padding_left,
+                 int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                 int32_t stride_width, int32_t stride_height, int32_t dilation_width_factor,
+                 int32_t dilation_height_factor, Shape* output);
 
 bool genericPoolingPrepare(const Shape& input,
                            int32_t padding_left, int32_t padding_right,
