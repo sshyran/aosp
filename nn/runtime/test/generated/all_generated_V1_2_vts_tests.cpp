@@ -4593,6 +4593,59 @@ TEST_F(ValidationTest, conv2d_v1_2_3_H3_W2_VALID_nchw_float16) {
 }
 
 
+// Generated from: conv_per_channel.mod.py.
+namespace conv_per_channel {
+// Generated conv_per_channel test
+#include "examples/conv_per_channel.example.cpp"
+// Generated model constructor
+#include "vts_models/conv_per_channel.model.cpp"
+} // namespace conv_per_channel
+
+TEST_F(NeuralnetworksHidlTest, conv_per_channel) {
+  generated_tests::Execute(device,
+                           conv_per_channel::createTestModel,
+                           conv_per_channel::is_ignored,
+                           conv_per_channel::get_examples());
+}
+
+TEST_F(ValidationTest, conv_per_channel) {
+  const Model model = conv_per_channel::createTestModel();
+  const std::vector<Request> requests = createRequests(conv_per_channel::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, conv_per_channel_layouts_nhwc) {
+  generated_tests::Execute(device,
+                           conv_per_channel::createTestModel_layouts_nhwc,
+                           conv_per_channel::is_ignored_layouts_nhwc,
+                           conv_per_channel::get_examples_layouts_nhwc());
+}
+
+TEST_F(ValidationTest, conv_per_channel_layouts_nhwc) {
+  const Model model = conv_per_channel::createTestModel_layouts_nhwc();
+  const std::vector<Request> requests = createRequests(conv_per_channel::get_examples_layouts_nhwc());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, conv_per_channel_layouts_nchw) {
+  generated_tests::Execute(device,
+                           conv_per_channel::createTestModel_layouts_nchw,
+                           conv_per_channel::is_ignored_layouts_nchw,
+                           conv_per_channel::get_examples_layouts_nchw());
+}
+
+TEST_F(ValidationTest, conv_per_channel_layouts_nchw) {
+  const Model model = conv_per_channel::createTestModel_layouts_nchw();
+  const std::vector<Request> requests = createRequests(conv_per_channel::get_examples_layouts_nchw());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: depth_to_space_v1_2.mod.py.
 namespace depth_to_space_v1_2 {
 // Generated depth_to_space_v1_2 test

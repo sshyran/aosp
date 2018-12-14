@@ -799,29 +799,45 @@ TEST(OperationValidationTest, SQUEEZE_quant8) {
     transposeAndSqueezeOpTest(ANEURALNETWORKS_SQUEEZE, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
-void convOpTest(int32_t operandCode) {
+void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
     uint32_t inputDimensions[4] = {2, 4, 4, 2};
-    ANeuralNetworksOperandType input = {.type = operandCode,
+    ANeuralNetworksOperandType input = {.type = inputOperandCode,
                                         .dimensionCount = 4,
                                         .dimensions = inputDimensions,
                                         .scale = 0.0f,
                                         .zeroPoint = 0};
-    if (operandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+    if (inputOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
         input.scale = 0.5f;
     }
-
-    ANeuralNetworksOperandType filter = input;
     ANeuralNetworksOperandType output = input;
 
+    float filterScales[2] = {0.5f, 1.0f};
+    ANeuralNetworksOperandType filter = {.type = filterOperandCode,
+                                         .dimensionCount = 4,
+                                         .dimensions = inputDimensions,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        filter.scale = 0.5f;
+    }
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        filter.extraParams.channelQuant = {
+                .scales = filterScales, .channelDim = 0, .scaleCount = 2};
+    }
+
     uint32_t biasDimensions[1] = {2};
-    ANeuralNetworksOperandType bias = {.type = operandCode,
+    ANeuralNetworksOperandType bias = {.type = inputOperandCode,
                                        .dimensionCount = 1,
                                        .dimensions = biasDimensions,
                                        .scale = 0.0f,
                                        .zeroPoint = 0};
-    if (operandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
         bias.type = ANEURALNETWORKS_TENSOR_INT32;
         bias.scale = 0.25f;
+    }
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        bias.type = ANEURALNETWORKS_TENSOR_INT32;
+        bias.scale = 0.0f;
     }
 
     ANeuralNetworksOperandType scalar = {.type = ANEURALNETWORKS_INT32,
@@ -891,11 +907,15 @@ void convOpTest(int32_t operandCode) {
 }
 
 TEST(OperationValidationTest, CONV_2D_float32) {
-    convOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+    convOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
 TEST(OperationValidationTest, CONV_2D_quant8) {
-    convOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    convOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, CONV_2D_quant8_per_channel) {
+    convOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
 }
 
 void depthwiseConvOpTest(int32_t operandCode) {
