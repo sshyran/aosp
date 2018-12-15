@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_RUNTIME_VERSIONED_IDEVICE_H
-#define ANDROID_ML_NN_RUNTIME_VERSIONED_IDEVICE_H
+#ifndef ANDROID_ML_NN_RUNTIME_VERSIONED_INTERFACES_H
+#define ANDROID_ML_NN_RUNTIME_VERSIONED_INTERFACES_H
 
 #include "HalInterfaces.h"
 
 #include <android-base/macros.h>
+#include <memory>
 #include <string>
 #include <tuple>
 
@@ -27,20 +28,24 @@ namespace android {
 namespace nn {
 
 /**
- * This class wraps an IDevice object of any version to abstract away version
- * differences. It allows the remainder of the runtime to always use the most
- * up-to-date version of all HIDL types. As such, any reference to a HIDL type
- * in the rest of the runtime will--by default--be the latest HIDL version.
+ * Each class (VersionedIDevice, VersionedIPreparedModel) wraps a HIDL interface
+ * of any version to abstract away version differences. It allows the remainder
+ * of the runtime to always use the most up-to-date version of all HIDL types.
+ * As such, any reference to a HIDL type in the rest of the runtime
+ * will--by default--be the latest HIDL version.
  *
- * This class will attempt to call the latest version of each interface method
- * if possible. If the latest method is unavailable, the VersionedIDevice class
+ * Each class will attempt to call the latest version of each interface method
+ * if possible. If the latest method is unavailable, the versioned class
  * will attempt to upcast the type (e.g., V1_1::Model to V1_0::Model), and
- * invoke the latest interface method possible. If the VersionedIDevice class
+ * invoke the latest interface method possible. If the versioned class
  * fails to find a matching applicable function, it will return an error.
  */
+
+/** This class wraps an IDevice object of any version. */
 class VersionedIDevice {
     DISALLOW_IMPLICIT_CONSTRUCTORS(VersionedIDevice);
-public:
+
+   public:
     /**
      * Constructor for the VersionedIDevice object.
      *
@@ -201,7 +206,7 @@ public:
      * @return bool true if V1_0::IDevice (which could be V1_1::IDevice) is
      *              valid, false otherwise.
      */
-    bool operator!=(nullptr_t);
+    bool operator!=(nullptr_t) const;
 
     /**
      * Returns whether this handle to an IDevice object is valid or not.
@@ -209,9 +214,9 @@ public:
      * @return bool true if V1_0::IDevice (which could be V1_1::IDevice) is
      *              invalid, false otherwise.
      */
-    bool operator==(nullptr_t);
+    bool operator==(nullptr_t) const;
 
-private:
+   private:
     /**
      * All versions of IDevice are necessary because the driver could be v1.0,
      * v1.1, or a later version. All these pointers logically represent the same
@@ -237,7 +242,113 @@ private:
     sp<V1_2::IDevice> mDeviceV1_2;
 };
 
+/** This class wraps an IPreparedModel object of any version. */
+class VersionedIPreparedModel {
+    DISALLOW_IMPLICIT_CONSTRUCTORS(VersionedIPreparedModel);
+
+   public:
+    /**
+     * Constructor for the VersionedIPreparedModel object.
+     *
+     * VersionedIPreparedModel is constructed with the V1_0::IPreparedModel object, which
+     * represents a device that is at least v1.0 of the interface. The constructor downcasts
+     * to the latest version of the IPreparedModel interface, and will default to using the
+     * latest version of all IPreparedModel interface methods automatically.
+     *
+     * @param preparedModel A prepared model object that is least version 1.0 of the
+     *                      IPreparedModel interface.
+     */
+    VersionedIPreparedModel(sp<V1_0::IPreparedModel> preparedModel)
+        : mPreparedModelV1_0(preparedModel),
+          mPreparedModelV1_2(
+                  V1_2::IPreparedModel::castFrom(mPreparedModelV1_0).withDefault(nullptr)) {}
+
+    /**
+     * Launches an asynchronous execution on a prepared model.
+     *
+     * The execution is performed asynchronously with respect to the caller.
+     * execute must verify the inputs to the function are correct. If there is
+     * an error, execute must immediately invoke the callback with the
+     * appropriate ErrorStatus value, then return with the same ErrorStatus. If
+     * the inputs to the function are valid and there is no error, execute must
+     * launch an asynchronous task to perform the execution in the background,
+     * and immediately return with ErrorStatus::NONE. If the asynchronous task
+     * fails to launch, execute must immediately invoke the callback with
+     * ErrorStatus::GENERAL_FAILURE, then return with
+     * ErrorStatus::GENERAL_FAILURE.
+     *
+     * When the asynchronous task has finished its execution, it must
+     * immediately invoke the callback object provided as an input to the
+     * execute function. This callback must be provided with the ErrorStatus of
+     * the execution.
+     *
+     * If the prepared model was prepared from a model wherein all
+     * tensor operands have fully specified dimensions, and the inputs
+     * to the function are valid, then the execution should launch
+     * and complete successfully (ErrorStatus::NONE). There must be
+     * no failure unless the device itself is in a bad state.
+     *
+     * Multiple threads can call the execute function on the same IPreparedModel
+     * object concurrently with different requests.
+     *
+     * @param request The input and output information on which the prepared
+     *                model is to be executed.
+     * @param callback A callback object used to return the error status of
+     *                 the execution. The callback object's notify function must
+     *                 be called exactly once, even if the execution was
+     *                 unsuccessful.
+     * @return status Error status of the call, must be:
+     *                - NONE if task is successfully launched
+     *                - DEVICE_UNAVAILABLE if driver is offline or busy
+     *                - GENERAL_FAILURE if there is an unspecified error
+     *                - OUTPUT_INSUFFICIENT_SIZE if provided output buffer is
+     *                  not large enough to store the resultant values
+     *                - INVALID_ARGUMENT if one of the input arguments is
+     *                  invalid
+     */
+    ErrorStatus execute(const Request& request, const sp<IExecutionCallback>& callback);
+
+    /**
+     * Returns whether this handle to an IPreparedModel object is valid or not.
+     *
+     * @return bool true if V1_0::IPreparedModel (which could be V1_2::IPreparedModel) is
+     *              valid, false otherwise.
+     */
+    bool operator!=(nullptr_t) const;
+
+    /**
+     * Returns whether this handle to an IPreparedModel object is valid or not.
+     *
+     * @return bool true if V1_0::IPreparedModel (which could be V1_2::IPreparedModel) is
+     *              invalid, false otherwise.
+     */
+    bool operator==(nullptr_t) const;
+
+   private:
+    /**
+     * All versions of IPreparedModel are necessary because the preparedModel could be v1.0,
+     * v1.2, or a later version. All these pointers logically represent the same object.
+     *
+     * The general strategy is: HIDL returns a V1_0 prepared model object, which
+     * (if not nullptr) could be v1.0, v1.2, or a greater version. The V1_0
+     * object is then "dynamically cast" to a V1_2 object. If successful,
+     * mPreparedModelV1_2 will point to the same object as mPreparedModelV1_0; otherwise,
+     * mPreparedModelV1_2 will be nullptr.
+     *
+     * In general:
+     * * If the prepared model is truly v1.0, mPreparedModelV1_0 will point to a valid object
+     *   and mPreparedModelV1_2 will be nullptr.
+     * * If the prepared model is truly v1.2 or later, both mPreparedModelV1_0 and
+     *   mPreparedModelV1_2 will point to the same valid object.
+     *
+     * Idiomatic usage: if mPreparedModelV1_2 is non-null, do V1_2 dispatch; otherwise,
+     * do V1_0 dispatch.
+     */
+    sp<V1_0::IPreparedModel> mPreparedModelV1_0;
+    sp<V1_2::IPreparedModel> mPreparedModelV1_2;
+};
+
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_ML_NN_RUNTIME_VERSIONED_IDEVICE_H
+#endif  // ANDROID_ML_NN_RUNTIME_VERSIONED_INTERFACES_H
