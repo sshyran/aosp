@@ -33,15 +33,17 @@
 #include <utility>
 #include <vector>
 
-using ::android::hardware::neuralnetworks::V1_0::implementation::ExecutionCallback;
-using ::android::hardware::neuralnetworks::V1_0::implementation::PreparedModelCallback;
+using ::android::hardware::neuralnetworks::V1_2::implementation::ExecutionCallback;
+using ::android::hardware::neuralnetworks::V1_2::implementation::PreparedModelCallback;
 
 namespace android {
 namespace nn {
 
 static int compile(std::shared_ptr<Device> device, const ModelBuilder* model,
-                   int32_t executionPreference, sp<IPreparedModel>* preparedModel) {
+                   int32_t executionPreference,
+                   std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
     nnAssert(device != nullptr);  // nullptr indicates CPU
+    *preparedModel = nullptr;
     // Compilation logic copied from ExecutionBuilder::startComputeOnDevice().
     Model hidlModel;
     model->setHidlModel(&hidlModel);
@@ -66,7 +68,9 @@ static int compile(std::shared_ptr<Device> device, const ModelBuilder* model,
 
     preparedModelCallback->wait();
     ErrorStatus prepareReturnStatus = preparedModelCallback->getStatus();
-    *preparedModel = preparedModelCallback->getPreparedModel();
+    if (auto returnedPreparedModel = preparedModelCallback->getPreparedModel()) {
+        *preparedModel = std::make_shared<VersionedIPreparedModel>(returnedPreparedModel);
+    }
     if (prepareReturnStatus != ErrorStatus::NONE || *preparedModel == nullptr) {
         LOG(ERROR) << "ExecutionPlan compilation on " << device->getName() << " failed:"
                    << " prepareReturnStatus=" << toString(prepareReturnStatus)

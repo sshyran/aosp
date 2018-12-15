@@ -43,11 +43,11 @@ public:
     Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
                                             getSupportedOperations_1_1_cb cb) override;
     Return<ErrorStatus> prepareModel(const V1_0::Model& model,
-                                     const sp<IPreparedModelCallback>& callback) override;
+                                     const sp<V1_0::IPreparedModelCallback>& callback) override;
     Return<ErrorStatus> prepareModel_1_1(const V1_1::Model& model, ExecutionPreference preference,
-                                         const sp<IPreparedModelCallback>& callback) override;
+                                         const sp<V1_0::IPreparedModelCallback>& callback) override;
     Return<ErrorStatus> prepareModel_1_2(const V1_2::Model& model, ExecutionPreference preference,
-                                         const sp<IPreparedModelCallback>& callback) override;
+                                         const sp<V1_2::IPreparedModelCallback>& callback) override;
     Return<DeviceStatus> getStatus() override;
 
     // Starts and runs the driver service.  Typically called from main().
@@ -63,11 +63,11 @@ public:
     ~SamplePreparedModel() override {}
     bool initialize();
     Return<ErrorStatus> execute(const Request& request,
-                                const sp<IExecutionCallback>& callback) override;
+                                const sp<V1_0::IExecutionCallback>& callback) override;
+    Return<ErrorStatus> execute_1_2(const Request& request,
+                                    const sp<V1_2::IExecutionCallback>& callback) override;
 
-private:
-    void asyncExecute(const Request& request, const sp<IExecutionCallback>& callback);
-
+   private:
     Model mModel;
     std::vector<RunTimePoolInfo> mPoolInfos;
 };
