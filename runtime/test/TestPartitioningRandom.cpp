@@ -518,7 +518,7 @@ public:
         if (ret.isOk() && (outStatus == ErrorStatus::NONE)) {
             return SampleDriver::prepareModel_1_2(model, preference, callback);
         } else {
-            callback->notify(ErrorStatus::INVALID_ARGUMENT, nullptr);
+            callback->notify_1_2(ErrorStatus::INVALID_ARGUMENT, nullptr);
             return ErrorStatus::INVALID_ARGUMENT;
         }
     }
