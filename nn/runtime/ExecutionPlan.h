@@ -24,6 +24,7 @@
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
 #include "Utils.h"
+#include "VersionedInterfaces.h"
 
 #include <set>
 
@@ -87,7 +88,9 @@ public:
     std::shared_ptr<Device> getDevice() const { return mDevice; }
 
     // only available after calling finishSubModel()
-    sp<IPreparedModel> getPreparedSubModel() const { return mPreparedSubModel; }
+    std::shared_ptr<VersionedIPreparedModel> getPreparedSubModel() const {
+        return mPreparedSubModel;
+    }
 
     // Map inputs and outputs from ExecutionBuilder to StepExecutor.
     void mapInputsAndOutputs(std::shared_ptr<StepExecutor> stepExecutor) const;
@@ -105,7 +108,7 @@ private:
     uint32_t mIndex;  // index of step within plan
     ModelBuilder mSubModel;
     std::shared_ptr<Device> mDevice;  // nullptr signifies CPU
-    sp<IPreparedModel> mPreparedSubModel;  // not used for CPU
+    std::shared_ptr<VersionedIPreparedModel> mPreparedSubModel;  // not used for CPU
 
     // Inputs of original model that are also inputs of this submodel:
     //     (fromModel index, subModel index)
@@ -243,7 +246,7 @@ private:
 
         std::shared_ptr<Device> mDevice;  // nullptr signifies CPU
         const ModelBuilder* mModel;
-        sp<IPreparedModel> mPreparedModel;  // not used for CPU
+        std::shared_ptr<VersionedIPreparedModel> mPreparedModel;  // not used for CPU
     };
 
     struct CompoundBody : Body {
