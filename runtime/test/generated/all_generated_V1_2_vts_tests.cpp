@@ -25740,6 +25740,52 @@ TEST_F(ValidationTest, sub_quantized_different_scales_64) {
 }
 
 
+// Generated from: svdf_float16.mod.py.
+namespace svdf_float16 {
+// Generated svdf_float16 test
+#include "examples/svdf_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/svdf_float16.model.cpp"
+} // namespace svdf_float16
+
+TEST_F(NeuralnetworksHidlTest, svdf_float16) {
+  generated_tests::Execute(device,
+                           svdf_float16::createTestModel,
+                           svdf_float16::is_ignored,
+                           svdf_float16::get_examples());
+}
+
+TEST_F(ValidationTest, svdf_float16) {
+  const Model model = svdf_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(svdf_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: svdf_state_float16.mod.py.
+namespace svdf_state_float16 {
+// Generated svdf_state_float16 test
+#include "examples/svdf_state_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/svdf_state_float16.model.cpp"
+} // namespace svdf_state_float16
+
+TEST_F(NeuralnetworksHidlTest, svdf_state_float16) {
+  generated_tests::Execute(device,
+                           svdf_state_float16::createTestModel,
+                           svdf_state_float16::is_ignored,
+                           svdf_state_float16::get_examples());
+}
+
+TEST_F(ValidationTest, svdf_state_float16) {
+  const Model model = svdf_state_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(svdf_state_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: tanh_float16.mod.py.
 namespace tanh_float16 {
 // Generated tanh_float16 test
