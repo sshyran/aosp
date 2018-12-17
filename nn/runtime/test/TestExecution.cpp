@@ -271,9 +271,8 @@ public:
     TestCompilation(const WrapperModel* model, const std::string& deviceName,
                     ErrorStatus errorStatus) {
         std::vector<std::shared_ptr<Device>> devices;
-        auto device = std::make_shared<Device>(deviceName,
-                                               new DriverClass(deviceName, errorStatus));
-        assert(device->initialize());
+        auto device = DeviceManager::forTest_makeDriverDevice(
+                deviceName, new DriverClass(deviceName, errorStatus));
         devices.push_back(device);
 
         nn::ModelBuilder* m = reinterpret_cast<nn::ModelBuilder*>(model->getHandle());

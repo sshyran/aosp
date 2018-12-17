@@ -45,9 +45,7 @@ public:
 
     enum OperandKind { INPUT, OUTPUT };
 
-    ExecutionStep(ExecutionPlan* plan,
-                  uint32_t stepIndex,
-                  std::shared_ptr<Device> device);
+    ExecutionStep(ExecutionPlan* plan, uint32_t stepIndex, std::shared_ptr<Device> device);
     int addOperation(int operationIndex, const ModelBuilder& fromModel);
     int addOperand(uint32_t fromOperandIndex, uint32_t* toOperandIndex,
                    const ModelBuilder& fromModel, OperandKind kind);
@@ -107,7 +105,7 @@ private:
     ExecutionPlan* mPlan;
     uint32_t mIndex;  // index of step within plan
     ModelBuilder mSubModel;
-    std::shared_ptr<Device> mDevice;  // nullptr signifies CPU
+    std::shared_ptr<Device> mDevice;
     std::shared_ptr<VersionedIPreparedModel> mPreparedSubModel;  // not used for CPU
 
     // Inputs of original model that are also inputs of this submodel:
@@ -204,8 +202,7 @@ public:
 
     std::shared_ptr<ExecutionStep> createNewStep(const std::shared_ptr<Device> device);
 
-    void becomeSingleStep(const std::shared_ptr<Device> device,
-                          const ModelBuilder* model);
+    void becomeSingleStep(const std::shared_ptr<Device> device, const ModelBuilder* model);
 
     int finish(const ModelBuilder* fromModel, int32_t executionPreference);
 
@@ -216,6 +213,10 @@ public:
     }
 
     void dump() const;
+
+    void reset();
+
+    bool isValid() const { return mState != EMPTY && mBody != nullptr && mBody->mSuccessfulFinish; }
 
     // These functions are solely intended for use by unit tests of
     // the partitioning algorithm.
@@ -237,14 +238,14 @@ private:
     };
 
     struct SimpleBody : Body {
-        SimpleBody(std::shared_ptr<Device> device, const ModelBuilder* model) :
-                mDevice(device), mModel(model) {}
+        SimpleBody(std::shared_ptr<Device> device, const ModelBuilder* model)
+            : mDevice(device), mModel(model) {}
 
         void dump() const override;
         int finish(const ModelBuilder* fromModel, int32_t executionPreference) override;
         virtual bool hasSubModelOutputsOfUnknownSize() const override { return false; }
 
-        std::shared_ptr<Device> mDevice;  // nullptr signifies CPU
+        std::shared_ptr<Device> mDevice;
         const ModelBuilder* mModel;
         std::shared_ptr<VersionedIPreparedModel> mPreparedModel;  // not used for CPU
     };

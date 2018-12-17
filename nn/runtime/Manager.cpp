@@ -17,30 +17,76 @@
 #define LOG_TAG "Manager"
 
 #include "Manager.h"
+#include "Callbacks.h"
 #include "HalInterfaces.h"
+#include "Tracing.h"
 #include "Utils.h"
 
 #include <android/hidl/manager/1.0/IServiceManager.h>
+#include <build/version.h>
 #include <hidl/HidlTransportSupport.h>
 #include <hidl/ServiceManagement.h>
 
 #include <algorithm>
 #include <functional>
 
+using ::android::hardware::neuralnetworks::V1_2::implementation::ExecutionCallback;
+using ::android::hardware::neuralnetworks::V1_2::implementation::PreparedModelCallback;
+
 namespace android {
 namespace nn {
 
-Device::Device(std::string name, const sp<V1_0::IDevice>& device) :
-      mName(std::move(name)), mInterface(device) {}
+// A Device with actual underlying driver
+class DriverDevice : public Device {
+    DISALLOW_IMPLICIT_CONSTRUCTORS(DriverDevice);
+
+   public:
+    DriverDevice(std::string name, const sp<V1_0::IDevice>& device);
+
+    // Returns true if succesfully initialized.
+    bool initialize();
+
+    const char* getName() const override { return mName.c_str(); }
+    const char* getVersionString() const override { return mVersionString.c_str(); }
+    VersionedIDevice* getInterface() override { return &mInterface; }
+    int64_t getFeatureLevel() override { return mInterface.getFeatureLevel(); }
+    void getSupportedOperations(const Model& hidlModel, hidl_vec<bool>* supported) override;
+    PerformanceInfo getFloat32Performance() const override { return mFloat32Performance; }
+    PerformanceInfo getQuantized8Performance() const override { return mQuantized8Performance; }
+    PerformanceInfo getRelaxedFloat32toFloat16Performance() const override {
+        return mRelaxedFloat32toFloat16Performance;
+    }
+
+    int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
+                     std::shared_ptr<VersionedIPreparedModel>* preparedModel) override;
+
+   private:
+    std::string mName;
+    std::string mVersionString;
+    VersionedIDevice mInterface;
+    PerformanceInfo mFloat32Performance;
+    PerformanceInfo mQuantized8Performance;
+    PerformanceInfo mRelaxedFloat32toFloat16Performance;
+
+#ifdef NN_DEBUGGABLE
+    // For debugging: behavior of IDevice::getSupportedOperations for SampleDriver.
+    // 0 - all operations reported by IDevice::getSupportedOperations() supported
+    // 1 - some operations reported by IDevice::getSupportedOperations() supported
+    uint32_t mSupported = 0;
+#endif  // NN_DEBUGGABLE
+};
+
+DriverDevice::DriverDevice(std::string name, const sp<V1_0::IDevice>& device)
+    : mName(std::move(name)), mInterface(device) {}
 
 // TODO: handle errors from initialize correctly
-bool Device::initialize() {
+bool DriverDevice::initialize() {
 #ifdef NN_DEBUGGABLE
     static const char samplePrefix[] = "sample";
 
-    mSupported =
-            (mName.substr(0, sizeof(samplePrefix) - 1)  == samplePrefix)
-            ? getProp("debug.nn.sample.supported") : 0;
+    mSupported = (mName.substr(0, sizeof(samplePrefix) - 1) == samplePrefix)
+                         ? getProp("debug.nn.sample.supported")
+                         : 0;
 #endif  // NN_DEBUGGABLE
 
     ErrorStatus status = ErrorStatus::GENERAL_FAILURE;
@@ -68,8 +114,8 @@ bool Device::initialize() {
     return status == ErrorStatus::NONE;
 }
 
-void Device::getSupportedOperations(const Model& hidlModel,
-                                    hidl_vec<bool>* outSupportedOperations) {
+void DriverDevice::getSupportedOperations(const Model& hidlModel,
+                                          hidl_vec<bool>* outSupportedOperations) {
     // Query the driver for what it can do.
     ErrorStatus status = ErrorStatus::GENERAL_FAILURE;
     hidl_vec<bool> supportedOperations;
@@ -92,7 +138,7 @@ void Device::getSupportedOperations(const Model& hidlModel,
         return;
     }
 
-    *outSupportedOperations = supportedOperations;
+    *outSupportedOperations = std::move(supportedOperations);
 
 #ifdef NN_DEBUGGABLE
     if (mSupported != 1) {
@@ -132,9 +178,114 @@ void Device::getSupportedOperations(const Model& hidlModel,
 #endif  // NN_DEBUGGABLE
 }
 
+// Compilation logic copied from StepExecutor::startComputeOnDevice().
+int DriverDevice::prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
+                               std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+    *preparedModel = nullptr;
+    sp<PreparedModelCallback> preparedModelCallback = new PreparedModelCallback();
+
+    // Note that some work within VersionedIDevice will be subtracted from the
+    // IPC layer
+    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
+    Return<ErrorStatus> prepareLaunchStatus =
+            mInterface.prepareModel(hidlModel, executionPreference, preparedModelCallback);
+    if (!prepareLaunchStatus.isOk()) {
+        LOG(ERROR) << "ExecutionStep::finishSubModel compilation failed due to transport error: "
+                   << prepareLaunchStatus.description();
+        return ANEURALNETWORKS_OP_FAILED;
+    }
+    if (prepareLaunchStatus != ErrorStatus::NONE) {
+        LOG(ERROR) << "ExecutionStep::finishSubModel compilation failed with error: "
+                   << toString(static_cast<ErrorStatus>(prepareLaunchStatus));
+        return ANEURALNETWORKS_OP_FAILED;
+    }
+
+    preparedModelCallback->wait();
+    ErrorStatus prepareReturnStatus = preparedModelCallback->getStatus();
+    if (auto returnedPreparedModel = preparedModelCallback->getPreparedModel()) {
+        *preparedModel = std::make_shared<VersionedIPreparedModel>(returnedPreparedModel);
+    }
+    if (prepareReturnStatus != ErrorStatus::NONE || *preparedModel == nullptr) {
+        LOG(ERROR) << "ExecutionPlan compilation on " << getName() << " failed:"
+                   << " prepareReturnStatus=" << toString(prepareReturnStatus)
+                   << ", preparedModel=" << preparedModel->get();
+        return ANEURALNETWORKS_OP_FAILED;
+    }
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+// A special abstracted device for the CPU. Only one instance of this class will exist.
+// Use get() to retrieve it.
+class CpuDevice : public Device {
+    DISALLOW_COPY_AND_ASSIGN(CpuDevice);
+
+   public:
+    // Returns the singleton CPU fallback device.
+    static std::shared_ptr<CpuDevice> get() {
+        static std::shared_ptr<CpuDevice> instance(new CpuDevice);
+        return instance;
+    }
+
+    const char* getName() const override { return kName.c_str(); }
+    const char* getVersionString() const override { return kVersionString.c_str(); }
+    VersionedIDevice* getInterface() override { return nullptr; }
+    int64_t getFeatureLevel() override { return kFeatureLevel; }
+    void getSupportedOperations(const Model& hidlModel, hidl_vec<bool>* supported) override;
+    PerformanceInfo getFloat32Performance() const override { return kPerformance; }
+    PerformanceInfo getQuantized8Performance() const override { return kPerformance; }
+    PerformanceInfo getRelaxedFloat32toFloat16Performance() const override { return kPerformance; }
+
+    int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
+                     std::shared_ptr<VersionedIPreparedModel>* preparedModel) override;
+
+   private:
+    CpuDevice() = default;
+    const int64_t kFeatureLevel = __ANDROID_API__;
+    const std::string kName = "google-cpu";
+    const std::string kVersionString = build::GetBuildNumber();
+    // Since the performance is a ratio compared to the CPU performance,
+    // by definition the performance of the CPU is 1.0.
+    const PerformanceInfo kPerformance = {.execTime = 1.0f, .powerUsage = 1.0f};
+};
+
+void CpuDevice::getSupportedOperations(const Model& hidlModel, hidl_vec<bool>* supported) {
+    const size_t count = hidlModel.operations.size();
+    hidl_vec<bool> supportedOperations(count);
+    for (size_t i = 0; i < count; i++) {
+        // TODO(b/119870033): Decide whether and how post-P operations would be supported on CPU.
+        // CPU fallback should support all the operations except for OEM_OPERATION
+        if (hidlModel.operations[i].type == OperationType::OEM_OPERATION) {
+            supportedOperations[i] = false;
+        } else {
+            supportedOperations[i] = true;
+        }
+    }
+    *supported = std::move(supportedOperations);
+}
+
+int CpuDevice::prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
+                            std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+    *preparedModel = nullptr;
+    if (!validateModel(hidlModel) || !validateExecutionPreference(executionPreference)) {
+        return ANEURALNETWORKS_OP_FAILED;
+    }
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 DeviceManager* DeviceManager::get() {
     static DeviceManager manager;
     return &manager;
+}
+
+std::shared_ptr<Device> DeviceManager::getCpuDevice() {
+    return CpuDevice::get();
+}
+
+std::shared_ptr<Device> DeviceManager::forTest_makeDriverDevice(const std::string& name,
+                                                                const sp<V1_0::IDevice>& device) {
+    auto driverDevice = std::make_shared<DriverDevice>(name, device);
+    CHECK(driverDevice->initialize());
+    return driverDevice;
 }
 
 void DeviceManager::findAvailableDevices() {
@@ -158,10 +309,14 @@ void DeviceManager::findAvailableDevices() {
             registerDevice(name.c_str(), device);
         }
     });
+
+    // register CPU fallback device
+    mDevices.push_back(CpuDevice::get());
+    mDevicesCpuOnly.push_back(CpuDevice::get());
 }
 
 void DeviceManager::registerDevice(const char* name, const sp<V1_0::IDevice>& device) {
-    auto d = std::make_shared<Device>(name, device);
+    auto d = std::make_shared<DriverDevice>(name, device);
     if (d->initialize()) {
         mDevices.push_back(d);
     }
