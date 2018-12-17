@@ -30,13 +30,16 @@ namespace roi_align {
 
 constexpr char kOperationName[] = "ROI_ALIGN";
 
-constexpr uint32_t kNumInputs = 6;
+constexpr uint32_t kNumInputs = 9;
 constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kRoiTensor = 1;
-constexpr uint32_t kOutputShapeTensor = 2;
-constexpr uint32_t kSpacialScaleScalar = 3;
-constexpr uint32_t kSamplingRatioScalar = 4;
-constexpr uint32_t kLayoutScalar = 5;
+constexpr uint32_t kOutputHeightScalar = 2;
+constexpr uint32_t kOutputWidthScalar = 3;
+constexpr uint32_t kHeightScaleScalar = 4;
+constexpr uint32_t kWidthScaleScalar = 5;
+constexpr uint32_t kHeightSamplingRatioScalar = 6;
+constexpr uint32_t kWidthSamplingRatioScalar = 7;
+constexpr uint32_t kLayoutScalar = 8;
 
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
@@ -45,7 +48,8 @@ namespace {
 
 template <typename T_Input, typename T_Roi>
 inline bool roiAlignNhwc(const T_Input* inputData, const Shape& inputShape, const T_Roi* roiData,
-                         const Shape& roiShape, T_Roi spatialScale, int32_t samplingRatio,
+                         const Shape& roiShape, T_Roi heightScale, T_Roi widthScale,
+                         int32_t heightSamplingRatio, int32_t widthSamplingRatio,
                          T_Input* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("RoiAlign");
 
@@ -80,28 +84,29 @@ inline bool roiAlignNhwc(const T_Input* inputData, const Shape& inputShape, cons
         NN_RET_CHECK(roiInfo[1] >= 0);
         NN_RET_CHECK(roiInfo[2] >= 0);
         NN_RET_CHECK(roiInfo[3] >= 0);
-        NN_RET_CHECK(roiInfo[0] * spatialScale <= inWidth);
-        NN_RET_CHECK(roiInfo[1] * spatialScale <= inHeight);
-        NN_RET_CHECK(roiInfo[2] * spatialScale <= inWidth);
-        NN_RET_CHECK(roiInfo[3] * spatialScale <= inHeight);
-        NN_RET_CHECK(roiInfo[0] < roiInfo[2]);
-        NN_RET_CHECK(roiInfo[1] < roiInfo[3]);
+        NN_RET_CHECK(roiInfo[0] * widthScale <= inWidth);
+        NN_RET_CHECK(roiInfo[1] * heightScale <= inHeight);
+        NN_RET_CHECK(roiInfo[2] * widthScale <= inWidth);
+        NN_RET_CHECK(roiInfo[3] * heightScale <= inHeight);
+        NN_RET_CHECK(roiInfo[0] <= roiInfo[2]);
+        NN_RET_CHECK(roiInfo[1] <= roiInfo[3]);
 
-        T_Roi wRoiStart = roiInfo[0] * spatialScale;
-        T_Roi hRoiStart = roiInfo[1] * spatialScale;
-        T_Roi wRoiEnd = roiInfo[2] * spatialScale;
-        T_Roi hRoiEnd = roiInfo[3] * spatialScale;
+        T_Roi wRoiStart = roiInfo[0] * widthScale;
+        T_Roi hRoiStart = roiInfo[1] * heightScale;
+        T_Roi wRoiEnd = roiInfo[2] * widthScale;
+        T_Roi hRoiEnd = roiInfo[3] * heightScale;
 
         T_Roi roiWidth = std::max(static_cast<float>(wRoiEnd - wRoiStart), 1.0f);
         T_Roi roiHeight = std::max(static_cast<float>(hRoiEnd - hRoiStart), 1.0f);
         T_Roi wStepSize = roiWidth / static_cast<T_Roi>(outWidth);
         T_Roi hStepSize = roiHeight / static_cast<T_Roi>(outHeight);
 
-        // if samplingRatio <= 0, use adaptive value of ceil(roiWidth/outWidth), same for height
-        int32_t wSamplingRatio =
-                samplingRatio > 0 ? samplingRatio : std::ceil(static_cast<float>(wStepSize));
-        int32_t hSamplingRatio =
-                samplingRatio > 0 ? samplingRatio : std::ceil(static_cast<float>(hStepSize));
+        // if samplingRatio = 0, use adaptive value of ceil(roiWidth/outWidth), same for height
+        uint32_t wSamplingRatio = widthSamplingRatio > 0 ? widthSamplingRatio
+                                                         : std::ceil(static_cast<float>(wStepSize));
+        uint32_t hSamplingRatio = heightSamplingRatio > 0
+                                          ? heightSamplingRatio
+                                          : std::ceil(static_cast<float>(hStepSize));
         int32_t numSamplingPoints = wSamplingRatio * hSamplingRatio;
         T_Roi wBinSize = wStepSize / static_cast<T_Roi>(wSamplingRatio);
         T_Roi hBinSize = hStepSize / static_cast<T_Roi>(hSamplingRatio);
@@ -168,7 +173,8 @@ inline bool roiAlignNhwc(const T_Input* inputData, const Shape& inputShape, cons
 template <>
 inline bool roiAlignNhwc<uint8_t, float>(const uint8_t* inputData, const Shape& inputShape,
                                          const float* roiData, const Shape& roiShape,
-                                         float spatialScale, int32_t samplingRatio,
+                                         float heightScale, float widthScale,
+                                         int32_t heightSamplingRatio, int32_t widthSamplingRatio,
                                          uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("RoiAlignQuant8");
 
@@ -204,26 +210,28 @@ inline bool roiAlignNhwc<uint8_t, float>(const uint8_t* inputData, const Shape& 
         NN_RET_CHECK(roiInfo[1] >= 0);
         NN_RET_CHECK(roiInfo[2] >= 0);
         NN_RET_CHECK(roiInfo[3] >= 0);
-        NN_RET_CHECK(roiInfo[0] * spatialScale <= inWidth);
-        NN_RET_CHECK(roiInfo[1] * spatialScale <= inHeight);
-        NN_RET_CHECK(roiInfo[2] * spatialScale <= inWidth);
-        NN_RET_CHECK(roiInfo[3] * spatialScale <= inHeight);
-        NN_RET_CHECK(roiInfo[0] < roiInfo[2]);
-        NN_RET_CHECK(roiInfo[1] < roiInfo[3]);
+        NN_RET_CHECK(roiInfo[0] * widthScale <= inWidth);
+        NN_RET_CHECK(roiInfo[1] * heightScale <= inHeight);
+        NN_RET_CHECK(roiInfo[2] * widthScale <= inWidth);
+        NN_RET_CHECK(roiInfo[3] * heightScale <= inHeight);
+        NN_RET_CHECK(roiInfo[0] <= roiInfo[2]);
+        NN_RET_CHECK(roiInfo[1] <= roiInfo[3]);
 
-        float wRoiStart = roiInfo[0] * spatialScale;
-        float hRoiStart = roiInfo[1] * spatialScale;
-        float wRoiEnd = roiInfo[2] * spatialScale;
-        float hRoiEnd = roiInfo[3] * spatialScale;
+        float wRoiStart = roiInfo[0] * widthScale;
+        float hRoiStart = roiInfo[1] * heightScale;
+        float wRoiEnd = roiInfo[2] * widthScale;
+        float hRoiEnd = roiInfo[3] * heightScale;
 
         float roiWidth = std::max(wRoiEnd - wRoiStart, 1.0f);
         float roiHeight = std::max(hRoiEnd - hRoiStart, 1.0f);
         float wStepSize = roiWidth / static_cast<float>(outWidth);
         float hStepSize = roiHeight / static_cast<float>(outHeight);
 
-        // if samplingRatio <= 0, use adaptive value of ceil(roiWidth/outWidth), same for height
-        int32_t wSamplingRatio = samplingRatio > 0 ? samplingRatio : std::ceil(wStepSize);
-        int32_t hSamplingRatio = samplingRatio > 0 ? samplingRatio : std::ceil(hStepSize);
+        // if samplingRatio = 0, use adaptive value of ceil(roiWidth/outWidth), same for height
+        uint32_t wSamplingRatio =
+                widthSamplingRatio > 0 ? widthSamplingRatio : std::ceil(wStepSize);
+        uint32_t hSamplingRatio =
+                heightSamplingRatio > 0 ? heightSamplingRatio : std::ceil(hStepSize);
         int32_t numSamplingPoints = wSamplingRatio * hSamplingRatio;
         float wBinSize = wStepSize / static_cast<float>(wSamplingRatio);
         float hBinSize = hStepSize / static_cast<float>(hSamplingRatio);
@@ -301,15 +309,16 @@ inline bool roiAlignNhwc<uint8_t, float>(const uint8_t* inputData, const Shape& 
 
 template <typename T_Input, typename T_Roi>
 inline bool roiAlign(const T_Input* inputData, const Shape& inputShape, const T_Roi* roiData,
-                     const Shape& roiShape, T_Roi spatialScale, int32_t samplingRatio, bool useNchw,
+                     const Shape& roiShape, T_Roi heightScale, T_Roi widthScale,
+                     int32_t heightSamplingRatio, int32_t widthSamplingRatio, bool useNchw,
                      T_Input* outputData, const Shape& outputShape) {
     InputWithLayout<T_Input> input(useNchw);
     OutputWithLayout<T_Input> output(useNchw);
     NN_RET_CHECK(input.initialize(inputData, inputShape));
     NN_RET_CHECK(output.initialize(outputData, outputShape));
     NN_RET_CHECK(roiAlignNhwc(input.getNhwcBuffer(), input.getNhwcShape(), roiData, roiShape,
-                              spatialScale, samplingRatio, output.getNhwcBuffer(),
-                              output.getNhwcShape()));
+                              heightScale, widthScale, heightSamplingRatio, widthSamplingRatio,
+                              output.getNhwcBuffer(), output.getNhwcShape()));
     NN_RET_CHECK(output.commit());
     return true;
 }
@@ -322,18 +331,23 @@ bool validate(const IOperationValidationContext* context) {
     std::vector<OperandType> inExpectedTypes;
     auto inputType = context->getInputType(kInputTensor);
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
-                           OperandType::TENSOR_INT32,   OperandType::FLOAT32,
-                           OperandType::INT32,          OperandType::BOOL};
+        inExpectedTypes = {
+                OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32, OperandType::INT32,
+                OperandType::INT32,          OperandType::FLOAT32,        OperandType::FLOAT32,
+                OperandType::INT32,          OperandType::INT32,          OperandType::BOOL};
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
-                           OperandType::TENSOR_INT32,   OperandType::FLOAT16,
-                           OperandType::INT32,          OperandType::BOOL};
+        inExpectedTypes = {
+                OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16, OperandType::INT32,
+                OperandType::INT32,          OperandType::FLOAT16,        OperandType::FLOAT16,
+                OperandType::INT32,          OperandType::INT32,          OperandType::BOOL};
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
                            OperandType::TENSOR_FLOAT32,
-                           OperandType::TENSOR_INT32,
+                           OperandType::INT32,
+                           OperandType::INT32,
                            OperandType::FLOAT32,
+                           OperandType::FLOAT32,
+                           OperandType::INT32,
                            OperandType::INT32,
                            OperandType::BOOL};
     } else {
@@ -349,12 +363,8 @@ bool prepare(IOperationExecutionContext* context) {
     bool useNchw = context->getInputValue<bool>(kLayoutScalar);
     Shape input = context->getInputShape(kInputTensor);
     Shape roiShape = context->getInputShape(kRoiTensor);
-    auto outputShapeData = context->getInputBuffer<int32_t>(kOutputShapeTensor);
-    Shape outputShapeShape = context->getInputShape(kOutputShapeTensor);
-
     NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
     NN_RET_CHECK_EQ(getNumberOfDimensions(roiShape), 2);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(outputShapeShape), 1);
 
     uint32_t numBatches = getSizeOfDimension(input, 0);
     uint32_t inHeight = getSizeOfDimension(input, useNchw ? 2 : 1);
@@ -362,19 +372,37 @@ bool prepare(IOperationExecutionContext* context) {
     uint32_t inDepth = getSizeOfDimension(input, useNchw ? 1 : 3);
     uint32_t numRois = getSizeOfDimension(roiShape, 0);
     uint32_t roiInfoLength = getSizeOfDimension(roiShape, 1);
-
     const uint32_t kRoiDim = 4;
     NN_RET_CHECK(roiInfoLength == (kRoiDim + 1) || (roiInfoLength == kRoiDim && numBatches == 1));
-    NN_RET_CHECK_EQ(getSizeOfDimension(outputShapeShape, 0), 2);
+
+    int32_t outputHeight = context->getInputValue<int32_t>(kOutputHeightScalar);
+    int32_t outputWidth = context->getInputValue<int32_t>(kOutputWidthScalar);
+    int32_t heightSamplingRatio = context->getInputValue<int32_t>(kHeightSamplingRatioScalar);
+    int32_t widthSamplingRatio = context->getInputValue<int32_t>(kWidthSamplingRatioScalar);
+    float heightScale, widthScale;
+    if (context->getInputType(kInputTensor) == OperandType::TENSOR_FLOAT16) {
+        heightScale = context->getInputValue<_Float16>(kHeightScaleScalar);
+        widthScale = context->getInputValue<_Float16>(kWidthScaleScalar);
+    } else {
+        heightScale = context->getInputValue<float>(kHeightScaleScalar);
+        widthScale = context->getInputValue<float>(kWidthScaleScalar);
+    }
+    NN_RET_CHECK_GT(outputHeight, 0);
+    NN_RET_CHECK_GT(outputWidth, 0);
+    NN_RET_CHECK_GT(heightScale, 0);
+    NN_RET_CHECK_GT(widthScale, 0);
+    // Sampling ratio can set to 0 for adaptive value.
+    NN_RET_CHECK_GE(heightSamplingRatio, 0);
+    NN_RET_CHECK_GE(widthSamplingRatio, 0);
 
     Shape output = context->getOutputShape(kOutputTensor);
     output.type = input.type;
     if (useNchw) {
-        output.dimensions = {numRois, inDepth, static_cast<uint32_t>(outputShapeData[0]),
-                             static_cast<uint32_t>(outputShapeData[1])};
+        output.dimensions = {numRois, inDepth, static_cast<uint32_t>(outputHeight),
+                             static_cast<uint32_t>(outputWidth)};
     } else {
-        output.dimensions = {numRois, static_cast<uint32_t>(outputShapeData[0]),
-                             static_cast<uint32_t>(outputShapeData[1]), inDepth};
+        output.dimensions = {numRois, static_cast<uint32_t>(outputHeight),
+                             static_cast<uint32_t>(outputWidth), inDepth};
     }
     return context->setOutputShape(kOutputTensor, output);
 }
@@ -386,8 +414,10 @@ bool execute(IOperationExecutionContext* context) {
                             context->getInputShape(kInputTensor),
                             context->getInputBuffer<_Float16>(kRoiTensor),
                             context->getInputShape(kRoiTensor),
-                            context->getInputValue<_Float16>(kSpacialScaleScalar),
-                            context->getInputValue<int32_t>(kSamplingRatioScalar),
+                            context->getInputValue<_Float16>(kHeightScaleScalar),
+                            context->getInputValue<_Float16>(kWidthScaleScalar),
+                            context->getInputValue<int32_t>(kHeightSamplingRatioScalar),
+                            context->getInputValue<int32_t>(kWidthSamplingRatioScalar),
                             context->getInputValue<bool>(kLayoutScalar),
                             context->getOutputBuffer<_Float16>(kOutputTensor),
                             context->getOutputShape(kOutputTensor));
@@ -396,8 +426,10 @@ bool execute(IOperationExecutionContext* context) {
                             context->getInputShape(kInputTensor),
                             context->getInputBuffer<float>(kRoiTensor),
                             context->getInputShape(kRoiTensor),
-                            context->getInputValue<float>(kSpacialScaleScalar),
-                            context->getInputValue<int32_t>(kSamplingRatioScalar),
+                            context->getInputValue<float>(kHeightScaleScalar),
+                            context->getInputValue<float>(kWidthScaleScalar),
+                            context->getInputValue<int32_t>(kHeightSamplingRatioScalar),
+                            context->getInputValue<int32_t>(kWidthSamplingRatioScalar),
                             context->getInputValue<bool>(kLayoutScalar),
                             context->getOutputBuffer<float>(kOutputTensor),
                             context->getOutputShape(kOutputTensor));
@@ -406,8 +438,10 @@ bool execute(IOperationExecutionContext* context) {
                             context->getInputShape(kInputTensor),
                             context->getInputBuffer<float>(kRoiTensor),
                             context->getInputShape(kRoiTensor),
-                            context->getInputValue<float>(kSpacialScaleScalar),
-                            context->getInputValue<int32_t>(kSamplingRatioScalar),
+                            context->getInputValue<float>(kHeightScaleScalar),
+                            context->getInputValue<float>(kWidthScaleScalar),
+                            context->getInputValue<int32_t>(kHeightSamplingRatioScalar),
+                            context->getInputValue<int32_t>(kWidthSamplingRatioScalar),
                             context->getInputValue<bool>(kLayoutScalar),
                             context->getOutputBuffer<uint8_t>(kOutputTensor),
                             context->getOutputShape(kOutputTensor));
