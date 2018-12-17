@@ -366,6 +366,10 @@ template<typename VersionedModel>
 static bool validateModelVersioned(const VersionedModel& model) {
     NNTRACE_FULL(NNTRACE_LAYER_UTILITY, NNTRACE_PHASE_UNSPECIFIED,
                  "validateModelVersioned");
+    if (model.operations.size() == 0 || model.operands.size() == 0) {
+        LOG(ERROR) << "Invalid empty model.";
+        return false;
+    }
     // We only need versioned operands for their validation. For all the other
     // validations we can use operands upcasted to the latest version.
     const hidl_vec<Operand> latestVersionOperands = convertToV1_2(model.operands);

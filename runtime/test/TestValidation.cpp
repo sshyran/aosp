@@ -333,7 +333,7 @@ TEST_F(ValidationTestModel, IdentifyInputsAndOutputs) {
     EXPECT_EQ(ANeuralNetworksModel_identifyInputsAndOutputs(mModel, 1, &input, 0, nullptr),
               ANEURALNETWORKS_UNEXPECTED_NULL);
 
-    ANeuralNetworksModel_finish(mModel);
+    createModel();
     // This should fail, as the model is already finished.
     EXPECT_EQ(ANeuralNetworksModel_identifyInputsAndOutputs(mModel, 1, &input, 1, &output),
               ANEURALNETWORKS_BAD_STATE);
@@ -343,7 +343,7 @@ TEST_F(ValidationTestModel, RelaxComputationFloat32toFloat16) {
     EXPECT_EQ(ANeuralNetworksModel_relaxComputationFloat32toFloat16(nullptr, true),
               ANEURALNETWORKS_UNEXPECTED_NULL);
 
-    ANeuralNetworksModel_finish(mModel);
+    createModel();
     // This should fail, as the model is already finished.
     EXPECT_EQ(ANeuralNetworksModel_relaxComputationFloat32toFloat16(mModel, true),
               ANEURALNETWORKS_BAD_STATE);
@@ -353,8 +353,13 @@ TEST_F(ValidationTestModel, RelaxComputationFloat32toFloat16) {
 
 TEST_F(ValidationTestModel, Finish) {
     EXPECT_EQ(ANeuralNetworksModel_finish(nullptr), ANEURALNETWORKS_UNEXPECTED_NULL);
-    EXPECT_EQ(ANeuralNetworksModel_finish(mModel), ANEURALNETWORKS_NO_ERROR);
+    createModel();
     EXPECT_EQ(ANeuralNetworksModel_finish(mModel), ANEURALNETWORKS_BAD_STATE);
+}
+
+TEST_F(ValidationTestModel, EmptyModel) {
+    // An empty model is invalid
+    EXPECT_EQ(ANeuralNetworksModel_finish(mModel), ANEURALNETWORKS_BAD_DATA);
 }
 
 TEST_F(ValidationTestModel, CreateCompilation) {
@@ -378,6 +383,10 @@ TEST_F(ValidationTestModel, CreateCompilationForDevices) {
                   ANEURALNETWORKS_UNEXPECTED_NULL);
         EXPECT_EQ(ANeuralNetworksCompilation_createForDevices(mModel, &device, 1, nullptr),
                   ANEURALNETWORKS_UNEXPECTED_NULL);
+
+        // empty device list
+        EXPECT_EQ(ANeuralNetworksCompilation_createForDevices(mModel, &device, 0, &compilation),
+                  ANEURALNETWORKS_BAD_DATA);
 
         // duplicate devices in the list.
         ANeuralNetworksDevice* invalidDevices[2] = {device, device};
@@ -416,6 +425,11 @@ TEST_F(ValidationTestModel, GetSupportedOperationsForDevices) {
         EXPECT_EQ(
                 ANeuralNetworksModel_getSupportedOperationsForDevices(mModel, &device, 1, nullptr),
                 ANEURALNETWORKS_UNEXPECTED_NULL);
+
+        // empty device list
+        EXPECT_EQ(ANeuralNetworksModel_getSupportedOperationsForDevices(mModel, &device, 0,
+                                                                        supportedOps),
+                  ANEURALNETWORKS_BAD_DATA);
 
         // duplicate devices in the list.
         ANeuralNetworksDevice* invalidDevices[2] = {device, device};
@@ -799,6 +813,66 @@ TEST_F(ValidationTestCompilationForDevices, Finish) {
                                                        ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER),
               ANEURALNETWORKS_BAD_STATE);
     EXPECT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_BAD_STATE);
+}
+
+class ValidationTestInvalidCompilation : public ValidationTestModel {
+   protected:
+    virtual void SetUp() override {
+        ValidationTestModel::SetUp();
+
+        // Create a model with an OEM operation
+        uint32_t dimensions[]{1};
+        ANeuralNetworksOperandType OEMTensorType{.type = ANEURALNETWORKS_TENSOR_OEM_BYTE,
+                                                 .dimensionCount = 1,
+                                                 .dimensions = dimensions};
+        EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &OEMTensorType),
+                  ANEURALNETWORKS_NO_ERROR);
+        EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &OEMTensorType),
+                  ANEURALNETWORKS_NO_ERROR);
+        uint32_t inList[1]{0};
+        uint32_t outList[1]{1};
+        ASSERT_EQ(ANeuralNetworksModel_addOperation(mModel, ANEURALNETWORKS_OEM_OPERATION, 1,
+                                                    inList, 1, outList),
+                  ANEURALNETWORKS_NO_ERROR);
+        ASSERT_EQ(ANeuralNetworksModel_identifyInputsAndOutputs(mModel, 1, inList, 1, outList),
+                  ANEURALNETWORKS_NO_ERROR);
+        ASSERT_EQ(ANeuralNetworksModel_finish(mModel), ANEURALNETWORKS_NO_ERROR);
+
+        // Find a device that cannot handle OEM operation and create compilation on that
+        uint32_t numDevices = 0;
+        EXPECT_EQ(ANeuralNetworks_getDeviceCount(&numDevices), ANEURALNETWORKS_NO_ERROR);
+        for (uint32_t i = 0; i < numDevices; i++) {
+            ANeuralNetworksDevice* device;
+            EXPECT_EQ(ANeuralNetworks_getDevice(i, &device), ANEURALNETWORKS_NO_ERROR);
+            bool supported = false;
+            EXPECT_EQ(ANeuralNetworksModel_getSupportedOperationsForDevices(mModel, &device, 1,
+                                                                            &supported),
+                      ANEURALNETWORKS_NO_ERROR);
+            if (!supported) {
+                ASSERT_EQ(ANeuralNetworksCompilation_createForDevices(mModel, &device, 1,
+                                                                      &mInvalidCompilation),
+                          ANEURALNETWORKS_NO_ERROR);
+                break;
+            }
+        }
+    }
+
+    virtual void TearDown() {
+        ANeuralNetworksCompilation_free(mInvalidCompilation);
+        ValidationTestModel::TearDown();
+    }
+
+    ANeuralNetworksCompilation* mInvalidCompilation = nullptr;
+};
+
+TEST_F(ValidationTestInvalidCompilation, CreateExecutionWithInvalidCompilation) {
+    if (!mInvalidCompilation) {
+        return;
+    }
+    ASSERT_EQ(ANeuralNetworksCompilation_finish(mInvalidCompilation), ANEURALNETWORKS_BAD_DATA);
+    ANeuralNetworksExecution* execution = nullptr;
+    EXPECT_EQ(ANeuralNetworksExecution_create(mInvalidCompilation, &execution),
+              ANEURALNETWORKS_BAD_STATE);
 }
 
 }  // namespace
