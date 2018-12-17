@@ -410,6 +410,7 @@
 #include "../generated/tests/relu_float16_2.mod.py.cpp"
 #include "../generated/tests/reshape_float16.mod.py.cpp"
 #include "../generated/tests/resize_bilinear_v1_2.mod.py.cpp"
+#include "../generated/tests/rnn_float16.mod.py.cpp"
 #include "../generated/tests/roi_align.mod.py.cpp"
 #include "../generated/tests/roi_pooling.mod.py.cpp"
 #include "../generated/tests/rotated_bbox_transform.mod.py.cpp"
