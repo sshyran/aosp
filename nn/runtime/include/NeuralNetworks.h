@@ -3546,7 +3546,7 @@ typedef enum {
      * The region of interest is represented by its upper-left corner coordinate
      * (x1,y1) and lower-right corner coordinate (x2,y2) in the original image.
      * A spatial scaling factor is applied to map into feature map coordinate.
-     * A valid region of interest should satisfy x1 < x2 and y1 < y2.
+     * A valid region of interest should satisfy x1 <= x2 and y1 <= y2.
      *
      * Rounding is applied in this operation to ensure integer boundary for
      * regions of interest and pooling bins.
@@ -3567,11 +3567,15 @@ typedef enum {
      *      of the regions of interest, each line with format
      *      [<optional batch_id>, x1, y1, x2, y2]. The batch_id is optional if
      *      there is only one batch.
-     * * 2: A 1-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32},
-     *      specifying the size of the output tensor [out_height, out_width].
-     * * 3: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the spatial
-     *      scaling factor from original image to feature map.
-     * * 4: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
+     *      height of the output tensor.
+     * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
+     *      width of the output tensor.
+     * * 4: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the spatial
+     *      scaling factor from the height of original image to feature map.
+     * * 5: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the spatial
+     *      scaling factor from the width of original image to feature map.
+     * * 6: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
      *      NCHW data layout for input0 and output0. Set to false for NHWC.
      *
      * Outputs:
