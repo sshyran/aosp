@@ -923,10 +923,12 @@ TEST_P(RandomPartitioningTest, Test) {
     std::vector<std::shared_ptr<Device>> devices;
     for (unsigned i = 0; i < signaturesForDriver.size(); i++) {
         const std::string name = "TestDriver(" + std::to_string(i) + ")";
-        devices.push_back(std::make_shared<Device>(
-            name, new TestDriver(name.c_str(), signaturesForDriver[i])));
-        ASSERT_TRUE(devices.back()->initialize());
+        auto device = DeviceManager::forTest_makeDriverDevice(
+                name, new TestDriver(name.c_str(), signaturesForDriver[i]));
+        devices.push_back(device);
     }
+    // CPU fallback device
+    devices.push_back(DeviceManager::getCpuDevice());
 
     // Partitioned compilation.
     // For test cases without unknown intermediate operand sizes we require the
@@ -944,6 +946,9 @@ TEST_P(RandomPartitioningTest, Test) {
         ASSERT_EQ(cWithFallback.setPartitioning(DeviceManager::kPartitioningWithFallback),
                   Result::NO_ERROR);
         ASSERT_EQ(cWithFallback.finish(), Result::NO_ERROR);
+        ASSERT_EQ(cWithFallback.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
+        ASSERT_EQ(cWithFallback.getExecutionPlan().forTest_simpleGetDevice(),
+                  DeviceManager::getCpuDevice());
         c2 = &cWithFallback;
     } else {
         ASSERT_EQ(compilationResult, Result::NO_ERROR);
