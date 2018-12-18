@@ -25,7 +25,9 @@ cc_defaults {
     srcs: [
         "OperationResolver.cpp",
         "operations/Abs.cpp",
+        "operations/ChannelShuffle.cpp",
         "operations/Gather.cpp",
+        "operations/LogSoftmax.cpp",
     ],
 }
 
@@ -71,7 +73,6 @@ cc_library_static {
         "operations/Activation.cpp",
         "operations/ArgMinMax.cpp",
         "operations/Cast.cpp",
-        "operations/ChannelShuffle.cpp",
         "operations/Concatenation.cpp",
         "operations/Conv2D.cpp",
         "operations/DepthwiseConv2D.cpp",
