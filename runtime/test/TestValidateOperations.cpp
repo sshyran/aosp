@@ -18,7 +18,6 @@
 #include "NeuralNetworksOEM.h"
 
 #include <gtest/gtest.h>
-#include <iostream>
 #include <set>
 
 using namespace android::nn::wrapper;
