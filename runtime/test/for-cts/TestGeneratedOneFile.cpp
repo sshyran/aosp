@@ -347,6 +347,7 @@
 #include "../generated/tests/conv2d_per_channel.mod.py.cpp"
 #include "../generated/tests/conv2d_v1_2.mod.py.cpp"
 #include "../generated/tests/depth_to_space_v1_2.mod.py.cpp"
+#include "../generated/tests/depthwise_conv2d_dilation.mod.py.cpp"
 #include "../generated/tests/depthwise_conv2d_per_channel.mod.py.cpp"
 #include "../generated/tests/depthwise_conv2d_v1_2.mod.py.cpp"
 #include "../generated/tests/dequantize_float16.mod.py.cpp"

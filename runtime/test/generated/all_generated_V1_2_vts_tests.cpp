@@ -5502,6 +5502,314 @@ TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_3) {
 }
 
 
+// Generated from: depthwise_conv2d_dilation.mod.py.
+namespace depthwise_conv2d_dilation {
+// Generated depthwise_conv2d_dilation test
+#include "examples/depthwise_conv2d_dilation.example.cpp"
+// Generated model constructor
+#include "vts_models/depthwise_conv2d_dilation.model.cpp"
+} // namespace depthwise_conv2d_dilation
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nhwc) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nhwc,
+                           depthwise_conv2d_dilation::is_ignored_nhwc,
+                           depthwise_conv2d_dilation::get_examples_nhwc());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nhwc) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nhwc();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nhwc());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nhwc_relaxed) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nhwc_relaxed,
+                           depthwise_conv2d_dilation::is_ignored_nhwc_relaxed,
+                           depthwise_conv2d_dilation::get_examples_nhwc_relaxed());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nhwc_relaxed) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nhwc_relaxed();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nhwc_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nhwc_float16) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nhwc_float16,
+                           depthwise_conv2d_dilation::is_ignored_nhwc_float16,
+                           depthwise_conv2d_dilation::get_examples_nhwc_float16());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nhwc_float16) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nhwc_float16();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nhwc_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nhwc_quant8) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nhwc_quant8,
+                           depthwise_conv2d_dilation::is_ignored_nhwc_quant8,
+                           depthwise_conv2d_dilation::get_examples_nhwc_quant8());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nhwc_quant8) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nhwc_quant8();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nhwc_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nhwc_weight_as_input) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nhwc_weight_as_input,
+                           depthwise_conv2d_dilation::is_ignored_nhwc_weight_as_input,
+                           depthwise_conv2d_dilation::get_examples_nhwc_weight_as_input());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nhwc_weight_as_input) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nhwc_weight_as_input();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nhwc_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nhwc_weight_as_input_relaxed) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nhwc_weight_as_input_relaxed,
+                           depthwise_conv2d_dilation::is_ignored_nhwc_weight_as_input_relaxed,
+                           depthwise_conv2d_dilation::get_examples_nhwc_weight_as_input_relaxed());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nhwc_weight_as_input_relaxed) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nhwc_weight_as_input_relaxed();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nhwc_weight_as_input_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nhwc_weight_as_input_float16) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nhwc_weight_as_input_float16,
+                           depthwise_conv2d_dilation::is_ignored_nhwc_weight_as_input_float16,
+                           depthwise_conv2d_dilation::get_examples_nhwc_weight_as_input_float16());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nhwc_weight_as_input_float16) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nhwc_weight_as_input_float16();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nhwc_weight_as_input_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nhwc_weight_as_input_quant8) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nhwc_weight_as_input_quant8,
+                           depthwise_conv2d_dilation::is_ignored_nhwc_weight_as_input_quant8,
+                           depthwise_conv2d_dilation::get_examples_nhwc_weight_as_input_quant8());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nhwc_weight_as_input_quant8) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nhwc_weight_as_input_quant8();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nhwc_weight_as_input_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nchw) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nchw,
+                           depthwise_conv2d_dilation::is_ignored_nchw,
+                           depthwise_conv2d_dilation::get_examples_nchw());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nchw) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nchw();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nchw());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nchw_relaxed) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nchw_relaxed,
+                           depthwise_conv2d_dilation::is_ignored_nchw_relaxed,
+                           depthwise_conv2d_dilation::get_examples_nchw_relaxed());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nchw_relaxed) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nchw_relaxed();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nchw_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nchw_float16) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nchw_float16,
+                           depthwise_conv2d_dilation::is_ignored_nchw_float16,
+                           depthwise_conv2d_dilation::get_examples_nchw_float16());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nchw_float16) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nchw_float16();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nchw_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nchw_quant8) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nchw_quant8,
+                           depthwise_conv2d_dilation::is_ignored_nchw_quant8,
+                           depthwise_conv2d_dilation::get_examples_nchw_quant8());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nchw_quant8) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nchw_quant8();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nchw_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nchw_weight_as_input) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nchw_weight_as_input,
+                           depthwise_conv2d_dilation::is_ignored_nchw_weight_as_input,
+                           depthwise_conv2d_dilation::get_examples_nchw_weight_as_input());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nchw_weight_as_input) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nchw_weight_as_input();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nchw_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nchw_weight_as_input_relaxed) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nchw_weight_as_input_relaxed,
+                           depthwise_conv2d_dilation::is_ignored_nchw_weight_as_input_relaxed,
+                           depthwise_conv2d_dilation::get_examples_nchw_weight_as_input_relaxed());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nchw_weight_as_input_relaxed) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nchw_weight_as_input_relaxed();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nchw_weight_as_input_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nchw_weight_as_input_float16) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nchw_weight_as_input_float16,
+                           depthwise_conv2d_dilation::is_ignored_nchw_weight_as_input_float16,
+                           depthwise_conv2d_dilation::get_examples_nchw_weight_as_input_float16());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nchw_weight_as_input_float16) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nchw_weight_as_input_float16();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nchw_weight_as_input_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nchw_weight_as_input_quant8) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nchw_weight_as_input_quant8,
+                           depthwise_conv2d_dilation::is_ignored_nchw_weight_as_input_quant8,
+                           depthwise_conv2d_dilation::get_examples_nchw_weight_as_input_quant8());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nchw_weight_as_input_quant8) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nchw_weight_as_input_quant8();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nchw_weight_as_input_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nhwc_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nhwc_2,
+                           depthwise_conv2d_dilation::is_ignored_nhwc_2,
+                           depthwise_conv2d_dilation::get_examples_nhwc_2());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nhwc_2) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nhwc_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nhwc_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nhwc_weight_as_input_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nhwc_weight_as_input_2,
+                           depthwise_conv2d_dilation::is_ignored_nhwc_weight_as_input_2,
+                           depthwise_conv2d_dilation::get_examples_nhwc_weight_as_input_2());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nhwc_weight_as_input_2) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nhwc_weight_as_input_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nhwc_weight_as_input_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nchw_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nchw_2,
+                           depthwise_conv2d_dilation::is_ignored_nchw_2,
+                           depthwise_conv2d_dilation::get_examples_nchw_2());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nchw_2) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nchw_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nchw_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_dilation_nchw_weight_as_input_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_dilation::createTestModel_nchw_weight_as_input_2,
+                           depthwise_conv2d_dilation::is_ignored_nchw_weight_as_input_2,
+                           depthwise_conv2d_dilation::get_examples_nchw_weight_as_input_2());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_dilation_nchw_weight_as_input_2) {
+  const Model model = depthwise_conv2d_dilation::createTestModel_nchw_weight_as_input_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_dilation::get_examples_nchw_weight_as_input_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: depthwise_conv2d_per_channel.mod.py.
 namespace depthwise_conv2d_per_channel {
 // Generated depthwise_conv2d_per_channel test

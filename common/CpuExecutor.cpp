@@ -670,7 +670,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
         } break;
         case OperationType::DEPTHWISE_CONV_2D: {
             const size_t inCount = ins.size();
-            if ((inCount != 12 && inCount != 11 && inCount != 9 && inCount != 8) ||
+            if ((inCount != 14 && inCount != 12 && inCount != 11 && inCount != 9 && inCount != 8) ||
                 !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
@@ -682,11 +682,27 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             int32_t padding_top, padding_bottom;
             int32_t padding_implicit = 0;
             int32_t stride_width, stride_height;
+            int32_t dilation_width_factor = 1, dilation_height_factor = 1;
             int32_t depth_multiplier;
             int32_t activation;
             bool data_layout = false;
+            bool useImplicitPadding = false;
 
-            if (inCount >= 11) {
+            if ((inCount >= 9 && mOperands[ins[8]].type == OperandType::BOOL) || inCount == 8) {
+                padding_implicit = getScalarData<int32_t>(mOperands[ins[3]]);
+                stride_width = getScalarData<int32_t>(mOperands[ins[4]]);
+                stride_height = getScalarData<int32_t>(mOperands[ins[5]]);
+                depth_multiplier = getScalarData<int32_t>(mOperands[ins[6]]);
+                activation = getScalarData<int32_t>(mOperands[ins[7]]);
+                if (inCount >= 9) {
+                    data_layout = getScalarData<bool>(mOperands[ins[8]]);
+                }
+                if (inCount == 11) {
+                    dilation_width_factor = getScalarData<int32_t>(mOperands[ins[9]]);
+                    dilation_height_factor = getScalarData<int32_t>(mOperands[ins[10]]);
+                }
+                useImplicitPadding = true;
+            } else if (inCount >= 11 && mOperands[ins[8]].type == OperandType::INT32) {
                 padding_left     = getScalarData<int32_t>(mOperands[ins[3]]);
                 padding_right    = getScalarData<int32_t>(mOperands[ins[4]]);
                 padding_top      = getScalarData<int32_t>(mOperands[ins[5]]);
@@ -695,18 +711,15 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 stride_height    = getScalarData<int32_t>(mOperands[ins[8]]);
                 depth_multiplier = getScalarData<int32_t>(mOperands[ins[9]]);
                 activation       = getScalarData<int32_t>(mOperands[ins[10]]);
-                if (inCount == 12) {
+                if (inCount >= 12) {
                     data_layout = getScalarData<bool>(mOperands[ins[11]]);
                 }
-            } else {
-                padding_implicit = getScalarData<int32_t>(mOperands[ins[3]]);
-                stride_width     = getScalarData<int32_t>(mOperands[ins[4]]);
-                stride_height    = getScalarData<int32_t>(mOperands[ins[5]]);
-                depth_multiplier = getScalarData<int32_t>(mOperands[ins[6]]);
-                activation       = getScalarData<int32_t>(mOperands[ins[7]]);
-                if (inCount == 9) {
-                    data_layout = getScalarData<bool>(mOperands[ins[8]]);
+                if (inCount == 14) {
+                    dilation_width_factor = getScalarData<int32_t>(mOperands[ins[12]]);
+                    dilation_height_factor = getScalarData<int32_t>(mOperands[ins[13]]);
                 }
+            } else {
+                return ANEURALNETWORKS_BAD_DATA;
             }
 
             RunTimeOperandInfo& output = mOperands[outs[0]];
@@ -721,24 +734,25 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
 
-            if (inCount <= 9) {
+            if (useImplicitPadding) {
                 Shape inputShape = input_tmp.shape();
                 Shape filterShape = filter.shape();
                 int32_t input_width  = getSizeOfDimension(inputShape, 2);
                 int32_t input_height = getSizeOfDimension(inputShape, 1);
                 int32_t filter_width  = getSizeOfDimension(filterShape, 2);
                 int32_t filter_height = getSizeOfDimension(filterShape, 1);
-                calculateExplicitPadding(input_width, stride_width,
-                                         filter_width, padding_implicit,
-                                         &padding_left, &padding_right);
-                calculateExplicitPadding(input_height, stride_height,
-                                         filter_height, padding_implicit,
-                                         &padding_top, &padding_bottom);
+                calculateExplicitPadding(input_width, stride_width, dilation_width_factor,
+                                         filter_width, padding_implicit, &padding_left,
+                                         &padding_right);
+                calculateExplicitPadding(input_height, stride_height, dilation_height_factor,
+                                         filter_height, padding_implicit, &padding_top,
+                                         &padding_bottom);
             }
 
             if (!depthwiseConvPrepare(input_tmp.shape(), filter.shape(), bias.shape(), padding_left,
                                       padding_right, padding_top, padding_bottom, stride_width,
-                                      stride_height, depth_multiplier, &outShape) ||
+                                      stride_height, depth_multiplier, dilation_width_factor,
+                                      dilation_height_factor, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape)) {
                 success = false;
                 break;
@@ -749,15 +763,15 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                         reinterpret_cast<const float*>(filter.buffer), filter.shape(),
                         reinterpret_cast<const float*>(bias.buffer), bias.shape(), padding_left,
                         padding_right, padding_top, padding_bottom, stride_width, stride_height,
-                        depth_multiplier, activation, reinterpret_cast<float*>(output_tmp.buffer),
-                        outShape);
+                        dilation_width_factor, dilation_height_factor, depth_multiplier, activation,
+                        reinterpret_cast<float*>(output_tmp.buffer), outShape);
             } else if (input_tmp.type == OperandType::TENSOR_FLOAT16) {
                 success = depthwiseConvFloat16(
                         reinterpret_cast<const _Float16*>(input_tmp.buffer), input_tmp.shape(),
                         reinterpret_cast<const _Float16*>(filter.buffer), filter.shape(),
                         reinterpret_cast<const _Float16*>(bias.buffer), bias.shape(), padding_left,
                         padding_right, padding_top, padding_bottom, stride_width, stride_height,
-                        depth_multiplier, activation,
+                        dilation_width_factor, dilation_height_factor, depth_multiplier, activation,
                         reinterpret_cast<_Float16*>(output_tmp.buffer), outShape);
             } else if (input_tmp.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
@@ -767,7 +781,8 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                             filter.extraParams.channelQuant().scales.data(),
                             reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
                             padding_left, padding_right, padding_top, padding_bottom, stride_width,
-                            stride_height, depth_multiplier, activation,
+                            stride_height, dilation_width_factor, dilation_height_factor,
+                            depth_multiplier, activation,
                             reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
                 } else if (filter.type == OperandType::TENSOR_QUANT8_ASYMM) {
                     success = depthwiseConvQuant8(
@@ -775,7 +790,8 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                             reinterpret_cast<const uint8_t*>(filter.buffer), filter.shape(),
                             reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
                             padding_left, padding_right, padding_top, padding_bottom, stride_width,
-                            stride_height, depth_multiplier, activation,
+                            stride_height, dilation_width_factor, dilation_height_factor,
+                            depth_multiplier, activation,
                             reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
                 }
             }
