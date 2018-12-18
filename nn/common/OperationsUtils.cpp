@@ -1107,17 +1107,6 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
     return true;
 }
 
-bool channelShufflePrepare(const Shape& input, int32_t numGroups, int32_t axis, Shape* output) {
-    NN_CHECK(handleNegativeAxis(input, &axis));
-    NN_OPS_CHECK(numGroups > 0);
-    NN_OPS_CHECK(getSizeOfDimension(input, axis) % numGroups == 0);
-    output->type = input.type;
-    output->dimensions = input.dimensions;
-    output->offset = input.offset;
-    output->scale = input.scale;
-    return true;
-}
-
 bool transposeConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
                           int32_t padding_left, int32_t padding_right, int32_t padding_top,
                           int32_t padding_bottom, int32_t stride_width, int32_t stride_height,

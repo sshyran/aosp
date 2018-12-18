@@ -842,6 +842,13 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                         reinterpret_cast<const float*>(bias.buffer), bias.shape(), padding_left,
                         padding_right, padding_top, padding_bottom, stride_width, stride_height,
                         activation, reinterpret_cast<float*>(output_tmp.buffer), outShape);
+            } else if (input_tmp.type == OperandType::TENSOR_FLOAT16) {
+                success = convFloat16(
+                        reinterpret_cast<const _Float16*>(input_tmp.buffer), input_tmp.shape(),
+                        reinterpret_cast<const _Float16*>(filter.buffer), filter.shape(),
+                        reinterpret_cast<const _Float16*>(bias.buffer), bias.shape(), padding_left,
+                        padding_right, padding_top, padding_bottom, stride_width, stride_height,
+                        activation, reinterpret_cast<_Float16*>(output_tmp.buffer), outShape);
             } else if (input_tmp.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = convQuant8(
                         reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
@@ -2387,22 +2394,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
         } break;
-        case OperationType::CHANNEL_SHUFFLE: {
-            if (!allParametersPresent(3, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const int32_t numGroups = getScalarData<int32_t>(mOperands[ins[1]]);
-            const int32_t axis = getScalarData<int32_t>(mOperands[ins[2]]);
-
-            RunTimeOperandInfo& out = mOperands[outs[0]];
-            Shape outShape = out.shape();
-
-            success = channelShufflePrepare(input.shape(), numGroups, axis, &outShape) &&
-                      setInfoAndAllocateIfNeeded(&out, outShape) &&
-                      channelShuffleGeneric(input.buffer, input.shape(), numGroups, axis,
-                                            out.buffer, outShape);
-        } break;
         case OperationType::TRANSPOSE_CONV_2D: {
             const size_t inCount = ins.size();
             if ((inCount != 11 && inCount != 9) || !allParametersPresent(inCount, 1)) {
@@ -2486,6 +2477,13 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                         reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(), padding_left,
                         padding_right, padding_top, padding_bottom, stride_width, stride_height,
                         activation, reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+            } else if (input_tmp.type == OperandType::TENSOR_FLOAT16) {
+                success = transposeConvFloat16(
+                        reinterpret_cast<const _Float16*>(input_tmp.buffer), input_tmp.shape(),
+                        reinterpret_cast<const _Float16*>(filter.buffer), filter.shape(),
+                        reinterpret_cast<const _Float16*>(bias.buffer), bias.shape(), padding_left,
+                        padding_right, padding_top, padding_bottom, stride_width, stride_height,
+                        activation, reinterpret_cast<_Float16*>(output_tmp.buffer), outShape);
             }
 
             if (data_layout) {

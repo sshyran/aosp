@@ -444,8 +444,6 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
                         int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
                         int32_t numGroups, Shape* output);
 
-bool channelShufflePrepare(const Shape& input, int32_t numGroups, int32_t axis, Shape* output);
-
 bool transposeConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
                           int32_t padding_left, int32_t padding_right, int32_t padding_top,
                           int32_t padding_bottom, int32_t stride_width, int32_t stride_height,

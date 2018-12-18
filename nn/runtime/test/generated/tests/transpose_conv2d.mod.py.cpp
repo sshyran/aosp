@@ -45,6 +45,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_none_quant8_weight_as_input) {
             transpose_conv2d::get_examples_nhwc_none_quant8_weight_as_input());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_none_float16) {
+    execute(transpose_conv2d::CreateModel_nhwc_none_float16,
+            transpose_conv2d::is_ignored_nhwc_none_float16,
+            transpose_conv2d::get_examples_nhwc_none_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_none_float16_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nhwc_none_float16_weight_as_input,
+            transpose_conv2d::is_ignored_nhwc_none_float16_weight_as_input,
+            transpose_conv2d::get_examples_nhwc_none_float16_weight_as_input());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu) {
     execute(transpose_conv2d::CreateModel_nhwc_relu,
             transpose_conv2d::is_ignored_nhwc_relu,
@@ -79,6 +91,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu_quant8_weight_as_input) {
     execute(transpose_conv2d::CreateModel_nhwc_relu_quant8_weight_as_input,
             transpose_conv2d::is_ignored_nhwc_relu_quant8_weight_as_input,
             transpose_conv2d::get_examples_nhwc_relu_quant8_weight_as_input());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu_float16) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu_float16,
+            transpose_conv2d::is_ignored_nhwc_relu_float16,
+            transpose_conv2d::get_examples_nhwc_relu_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu_float16_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu_float16_weight_as_input,
+            transpose_conv2d::is_ignored_nhwc_relu_float16_weight_as_input,
+            transpose_conv2d::get_examples_nhwc_relu_float16_weight_as_input());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu1) {
@@ -117,6 +141,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu1_quant8_weight_as_input) {
             transpose_conv2d::get_examples_nhwc_relu1_quant8_weight_as_input());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu1_float16) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu1_float16,
+            transpose_conv2d::is_ignored_nhwc_relu1_float16,
+            transpose_conv2d::get_examples_nhwc_relu1_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu1_float16_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu1_float16_weight_as_input,
+            transpose_conv2d::is_ignored_nhwc_relu1_float16_weight_as_input,
+            transpose_conv2d::get_examples_nhwc_relu1_float16_weight_as_input());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu6) {
     execute(transpose_conv2d::CreateModel_nhwc_relu6,
             transpose_conv2d::is_ignored_nhwc_relu6,
@@ -151,6 +187,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu6_quant8_weight_as_input) {
     execute(transpose_conv2d::CreateModel_nhwc_relu6_quant8_weight_as_input,
             transpose_conv2d::is_ignored_nhwc_relu6_quant8_weight_as_input,
             transpose_conv2d::get_examples_nhwc_relu6_quant8_weight_as_input());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu6_float16) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu6_float16,
+            transpose_conv2d::is_ignored_nhwc_relu6_float16,
+            transpose_conv2d::get_examples_nhwc_relu6_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu6_float16_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu6_float16_weight_as_input,
+            transpose_conv2d::is_ignored_nhwc_relu6_float16_weight_as_input,
+            transpose_conv2d::get_examples_nhwc_relu6_float16_weight_as_input());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nchw_none) {
@@ -189,6 +237,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_none_quant8_weight_as_input) {
             transpose_conv2d::get_examples_nchw_none_quant8_weight_as_input());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nchw_none_float16) {
+    execute(transpose_conv2d::CreateModel_nchw_none_float16,
+            transpose_conv2d::is_ignored_nchw_none_float16,
+            transpose_conv2d::get_examples_nchw_none_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_none_float16_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nchw_none_float16_weight_as_input,
+            transpose_conv2d::is_ignored_nchw_none_float16_weight_as_input,
+            transpose_conv2d::get_examples_nchw_none_float16_weight_as_input());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nchw_relu) {
     execute(transpose_conv2d::CreateModel_nchw_relu,
             transpose_conv2d::is_ignored_nchw_relu,
@@ -223,6 +283,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_relu_quant8_weight_as_input) {
     execute(transpose_conv2d::CreateModel_nchw_relu_quant8_weight_as_input,
             transpose_conv2d::is_ignored_nchw_relu_quant8_weight_as_input,
             transpose_conv2d::get_examples_nchw_relu_quant8_weight_as_input());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu_float16) {
+    execute(transpose_conv2d::CreateModel_nchw_relu_float16,
+            transpose_conv2d::is_ignored_nchw_relu_float16,
+            transpose_conv2d::get_examples_nchw_relu_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu_float16_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nchw_relu_float16_weight_as_input,
+            transpose_conv2d::is_ignored_nchw_relu_float16_weight_as_input,
+            transpose_conv2d::get_examples_nchw_relu_float16_weight_as_input());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nchw_relu1) {
@@ -261,6 +333,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_relu1_quant8_weight_as_input) {
             transpose_conv2d::get_examples_nchw_relu1_quant8_weight_as_input());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu1_float16) {
+    execute(transpose_conv2d::CreateModel_nchw_relu1_float16,
+            transpose_conv2d::is_ignored_nchw_relu1_float16,
+            transpose_conv2d::get_examples_nchw_relu1_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu1_float16_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nchw_relu1_float16_weight_as_input,
+            transpose_conv2d::is_ignored_nchw_relu1_float16_weight_as_input,
+            transpose_conv2d::get_examples_nchw_relu1_float16_weight_as_input());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nchw_relu6) {
     execute(transpose_conv2d::CreateModel_nchw_relu6,
             transpose_conv2d::is_ignored_nchw_relu6,
@@ -295,6 +379,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_relu6_quant8_weight_as_input) {
     execute(transpose_conv2d::CreateModel_nchw_relu6_quant8_weight_as_input,
             transpose_conv2d::is_ignored_nchw_relu6_quant8_weight_as_input,
             transpose_conv2d::get_examples_nchw_relu6_quant8_weight_as_input());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu6_float16) {
+    execute(transpose_conv2d::CreateModel_nchw_relu6_float16,
+            transpose_conv2d::is_ignored_nchw_relu6_float16,
+            transpose_conv2d::get_examples_nchw_relu6_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu6_float16_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nchw_relu6_float16_weight_as_input,
+            transpose_conv2d::is_ignored_nchw_relu6_float16_weight_as_input,
+            transpose_conv2d::get_examples_nchw_relu6_float16_weight_as_input());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nhwc) {
@@ -333,6 +429,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_quant8_weight_as_input) {
             transpose_conv2d::get_examples_nhwc_quant8_weight_as_input());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_float16) {
+    execute(transpose_conv2d::CreateModel_nhwc_float16,
+            transpose_conv2d::is_ignored_nhwc_float16,
+            transpose_conv2d::get_examples_nhwc_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_float16_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nhwc_float16_weight_as_input,
+            transpose_conv2d::is_ignored_nhwc_float16_weight_as_input,
+            transpose_conv2d::get_examples_nhwc_float16_weight_as_input());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nchw) {
     execute(transpose_conv2d::CreateModel_nchw,
             transpose_conv2d::is_ignored_nchw,
@@ -367,6 +475,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_quant8_weight_as_input) {
     execute(transpose_conv2d::CreateModel_nchw_quant8_weight_as_input,
             transpose_conv2d::is_ignored_nchw_quant8_weight_as_input,
             transpose_conv2d::get_examples_nchw_quant8_weight_as_input());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_float16) {
+    execute(transpose_conv2d::CreateModel_nchw_float16,
+            transpose_conv2d::is_ignored_nchw_float16,
+            transpose_conv2d::get_examples_nchw_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_float16_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nchw_float16_weight_as_input,
+            transpose_conv2d::is_ignored_nchw_float16_weight_as_input,
+            transpose_conv2d::get_examples_nchw_float16_weight_as_input());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_2) {
@@ -405,6 +525,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_quant8_weight_as_input_2) {
             transpose_conv2d::get_examples_nhwc_quant8_weight_as_input_2());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_float16_2) {
+    execute(transpose_conv2d::CreateModel_nhwc_float16_2,
+            transpose_conv2d::is_ignored_nhwc_float16_2,
+            transpose_conv2d::get_examples_nhwc_float16_2());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_float16_weight_as_input_2) {
+    execute(transpose_conv2d::CreateModel_nhwc_float16_weight_as_input_2,
+            transpose_conv2d::is_ignored_nhwc_float16_weight_as_input_2,
+            transpose_conv2d::get_examples_nhwc_float16_weight_as_input_2());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nchw_2) {
     execute(transpose_conv2d::CreateModel_nchw_2,
             transpose_conv2d::is_ignored_nchw_2,
@@ -439,6 +571,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_quant8_weight_as_input_2) {
     execute(transpose_conv2d::CreateModel_nchw_quant8_weight_as_input_2,
             transpose_conv2d::is_ignored_nchw_quant8_weight_as_input_2,
             transpose_conv2d::get_examples_nchw_quant8_weight_as_input_2());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_float16_2) {
+    execute(transpose_conv2d::CreateModel_nchw_float16_2,
+            transpose_conv2d::is_ignored_nchw_float16_2,
+            transpose_conv2d::get_examples_nchw_float16_2());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_float16_weight_as_input_2) {
+    execute(transpose_conv2d::CreateModel_nchw_float16_weight_as_input_2,
+            transpose_conv2d::is_ignored_nchw_float16_weight_as_input_2,
+            transpose_conv2d::get_examples_nchw_float16_weight_as_input_2());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_3) {
@@ -477,6 +621,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_quant8_weight_as_input_3) {
             transpose_conv2d::get_examples_nhwc_quant8_weight_as_input_3());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_float16_3) {
+    execute(transpose_conv2d::CreateModel_nhwc_float16_3,
+            transpose_conv2d::is_ignored_nhwc_float16_3,
+            transpose_conv2d::get_examples_nhwc_float16_3());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_float16_weight_as_input_3) {
+    execute(transpose_conv2d::CreateModel_nhwc_float16_weight_as_input_3,
+            transpose_conv2d::is_ignored_nhwc_float16_weight_as_input_3,
+            transpose_conv2d::get_examples_nhwc_float16_weight_as_input_3());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nchw_3) {
     execute(transpose_conv2d::CreateModel_nchw_3,
             transpose_conv2d::is_ignored_nchw_3,
@@ -511,6 +667,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_quant8_weight_as_input_3) {
     execute(transpose_conv2d::CreateModel_nchw_quant8_weight_as_input_3,
             transpose_conv2d::is_ignored_nchw_quant8_weight_as_input_3,
             transpose_conv2d::get_examples_nchw_quant8_weight_as_input_3());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_float16_3) {
+    execute(transpose_conv2d::CreateModel_nchw_float16_3,
+            transpose_conv2d::is_ignored_nchw_float16_3,
+            transpose_conv2d::get_examples_nchw_float16_3());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_float16_weight_as_input_3) {
+    execute(transpose_conv2d::CreateModel_nchw_float16_weight_as_input_3,
+            transpose_conv2d::is_ignored_nchw_float16_weight_as_input_3,
+            transpose_conv2d::get_examples_nchw_float16_weight_as_input_3());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_4) {
@@ -549,6 +717,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_quant8_weight_as_input_4) {
             transpose_conv2d::get_examples_nhwc_quant8_weight_as_input_4());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_float16_4) {
+    execute(transpose_conv2d::CreateModel_nhwc_float16_4,
+            transpose_conv2d::is_ignored_nhwc_float16_4,
+            transpose_conv2d::get_examples_nhwc_float16_4());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_float16_weight_as_input_4) {
+    execute(transpose_conv2d::CreateModel_nhwc_float16_weight_as_input_4,
+            transpose_conv2d::is_ignored_nhwc_float16_weight_as_input_4,
+            transpose_conv2d::get_examples_nhwc_float16_weight_as_input_4());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nchw_4) {
     execute(transpose_conv2d::CreateModel_nchw_4,
             transpose_conv2d::is_ignored_nchw_4,
@@ -583,5 +763,17 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_quant8_weight_as_input_4) {
     execute(transpose_conv2d::CreateModel_nchw_quant8_weight_as_input_4,
             transpose_conv2d::is_ignored_nchw_quant8_weight_as_input_4,
             transpose_conv2d::get_examples_nchw_quant8_weight_as_input_4());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_float16_4) {
+    execute(transpose_conv2d::CreateModel_nchw_float16_4,
+            transpose_conv2d::is_ignored_nchw_float16_4,
+            transpose_conv2d::get_examples_nchw_float16_4());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_float16_weight_as_input_4) {
+    execute(transpose_conv2d::CreateModel_nchw_float16_weight_as_input_4,
+            transpose_conv2d::is_ignored_nchw_float16_weight_as_input_4,
+            transpose_conv2d::get_examples_nchw_float16_weight_as_input_4());
 }
 
