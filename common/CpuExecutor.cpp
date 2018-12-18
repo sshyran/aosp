@@ -1935,7 +1935,8 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                      static_cast<_Float16>(pad_value),
                                      reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                uint8_t pad_value = isV2 ? getScalarData<uint8_t>(mOperands[ins[2]]) : 0;
+                uint8_t pad_value =
+                        isV2 ? getScalarData<uint8_t>(mOperands[ins[2]]) : outShape.offset;
                 success = padGeneric(input.buffer, input.shape(),
                                      reinterpret_cast<const int32_t*>(paddings.buffer), pad_value,
                                      output.buffer, outShape);
