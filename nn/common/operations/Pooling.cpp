@@ -33,7 +33,23 @@ namespace nn {
     op_params.padding_values.height = padding_top;                         \
     op_params.padding_values.width = padding_left;
 
+bool averagePoolFloat16(const _Float16* inputData, const Shape& inputShape, int32_t padding_left,
+                        int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                        int32_t stride_width, int32_t stride_height, int32_t filter_width,
+                        int32_t filter_height, int32_t activation, _Float16* outputData,
+                        const Shape& outputShape) {
+    NNTRACE_TRANS("averagePoolFloat16");
+    std::vector<float> inputDataFloat32(getNumberOfElements(inputShape));
+    std::vector<float> outputDataFloat32(getNumberOfElements(outputShape));
 
+    convertFloat16ToFloat32(inputData, &inputDataFloat32);
+    averagePoolFloat32(inputDataFloat32.data(), inputShape, padding_left, padding_right,
+                       padding_top, padding_bottom, stride_width, stride_height, filter_width,
+                       filter_height, activation, outputDataFloat32.data(), outputShape);
+    convertFloat32ToFloat16(outputDataFloat32, outputData);
+
+    return true;
+}
 
 bool averagePoolFloat32(const float* inputData, const Shape& inputShape,
                         int32_t padding_left, int32_t padding_right,
@@ -86,6 +102,24 @@ bool averagePoolQuant8(const uint8_t* inputData, const Shape& inputShape,
             op_params,
             convertShapeToTflshape(inputShape), inputData,
             convertShapeToTflshape(outputShape), outputData);
+
+    return true;
+}
+
+bool l2PoolFloat16(const _Float16* inputData, const Shape& inputShape, int32_t padding_left,
+                   int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                   int32_t stride_width, int32_t stride_height, int32_t filter_width,
+                   int32_t filter_height, int32_t activation, _Float16* outputData,
+                   const Shape& outputShape) {
+    NNTRACE_TRANS("l2PoolFloat16");
+    std::vector<float> inputDataFloat32(getNumberOfElements(inputShape));
+    std::vector<float> outputDataFloat32(getNumberOfElements(outputShape));
+
+    convertFloat16ToFloat32(inputData, &inputDataFloat32);
+    l2PoolFloat32(inputDataFloat32.data(), inputShape, padding_left, padding_right, padding_top,
+                  padding_bottom, stride_width, stride_height, filter_width, filter_height,
+                  activation, outputDataFloat32.data(), outputShape);
+    convertFloat32ToFloat16(outputDataFloat32, outputData);
 
     return true;
 }

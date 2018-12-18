@@ -32,8 +32,8 @@ struct OperationRegistration {
     std::function<bool(const IOperationValidationContext*)> validate;
 
     // prepare is called when the inputs this operation depends on have been
-    // computed. Typically, prepare does any remaining validation and requests
-    // output tensors to be resized via context->resizeOutputTensor(...).
+    // computed. Typically, prepare does any remaining validation and sets
+    // output shapes via context->setOutputShape(...).
     std::function<bool(IOperationExecutionContext*)> prepare;
 
     // Executes the operation, reading from context->getInputBuffer(...)

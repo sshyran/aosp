@@ -82,8 +82,8 @@ static std::vector<MixedTypedExample> examples_simple_relaxed = {
 return examples_simple_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_simple_quant8() {
-static std::vector<MixedTypedExample> examples_simple_quant8 = {
+std::vector<MixedTypedExample>& get_examples_simple_float16() {
+static std::vector<MixedTypedExample> examples_simple_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -94,11 +94,11 @@ static std::vector<MixedTypedExample> examples_simple_quant8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {129, 127, 125, 149, 123, 124}}, {1, {125, 127, 129, 151, 121, 124}}},
+  {},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
-  {},
+  {{0, {1.0f, 0.0f, -1.0f, 11.0f, -2.0f, -1.440000057220459f}}, {1, {-1.0f, 0.0f, 1.0f, 12.0f, -3.0f, -1.4299999475479126f}}},
   // int -> BOOL8 map
   {},
 },
@@ -109,18 +109,18 @@ static std::vector<MixedTypedExample> examples_simple_quant8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {125, 127, 125, 149, 121, 124}}},
+  {},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
-  {},
+  {{0, {-1.0f, 0.0f, -1.0f, 11.0f, -3.0f, -1.440000057220459f}}},
   // int -> BOOL8 map
   {},
 }
 },
 }, // End of an example
 };
-return examples_simple_quant8;
+return examples_simple_float16;
 };
 
 std::vector<MixedTypedExample>& get_examples_simple_int32() {
@@ -164,8 +164,8 @@ static std::vector<MixedTypedExample> examples_simple_int32 = {
 return examples_simple_int32;
 };
 
-std::vector<MixedTypedExample>& get_examples_simple_float16() {
-static std::vector<MixedTypedExample> examples_simple_float16 = {
+std::vector<MixedTypedExample>& get_examples_simple_quant8() {
+static std::vector<MixedTypedExample> examples_simple_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -176,11 +176,11 @@ static std::vector<MixedTypedExample> examples_simple_float16 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {},
+  {{0, {129, 127, 125, 149, 123, 124}}, {1, {99, 100, 101, 112, 97, 99}}},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
-  {{0, {1.0f, 0.0f, -1.0f, 11.0f, -2.0f, -1.440000057220459f}}, {1, {-1.0f, 0.0f, 1.0f, 12.0f, -3.0f, -1.4299999475479126f}}},
+  {},
   // int -> BOOL8 map
   {},
 },
@@ -191,18 +191,18 @@ static std::vector<MixedTypedExample> examples_simple_float16 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {},
+  {{0, {80, 80, 80, 86, 78, 79}}},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
-  {{0, {-1.0f, 0.0f, -1.0f, 11.0f, -3.0f, -1.440000057220459f}}},
+  {},
   // int -> BOOL8 map
   {},
 }
 },
 }, // End of an example
 };
-return examples_simple_float16;
+return examples_simple_quant8;
 };
 
 std::vector<MixedTypedExample>& get_examples_broadcast() {
@@ -287,8 +287,8 @@ static std::vector<MixedTypedExample> examples_broadcast_relaxed = {
 return examples_broadcast_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_broadcast_quant8() {
-static std::vector<MixedTypedExample> examples_broadcast_quant8 = {
+std::vector<MixedTypedExample>& get_examples_broadcast_float16() {
+static std::vector<MixedTypedExample> examples_broadcast_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -299,11 +299,11 @@ static std::vector<MixedTypedExample> examples_broadcast_quant8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {129, 127, 125, 123, 124, 149}}, {1, {128, 131}}},
+  {},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
-  {},
+  {{0, {1.0f, 0.0f, -1.0f, -2.0f, -1.440000057220459f, 11.0f}}, {1, {0.5f, 2.0f}}},
   // int -> BOOL8 map
   {},
 },
@@ -314,18 +314,18 @@ static std::vector<MixedTypedExample> examples_broadcast_quant8 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {128, 127, 125, 123, 124, 131}}},
+  {},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
-  {},
+  {{0, {0.5f, 0.0f, -1.0f, -2.0f, -1.440000057220459f, 2.0f}}},
   // int -> BOOL8 map
   {},
 }
 },
 }, // End of an example
 };
-return examples_broadcast_quant8;
+return examples_broadcast_float16;
 };
 
 std::vector<MixedTypedExample>& get_examples_broadcast_int32() {
@@ -369,8 +369,8 @@ static std::vector<MixedTypedExample> examples_broadcast_int32 = {
 return examples_broadcast_int32;
 };
 
-std::vector<MixedTypedExample>& get_examples_broadcast_float16() {
-static std::vector<MixedTypedExample> examples_broadcast_float16 = {
+std::vector<MixedTypedExample>& get_examples_broadcast_quant8() {
+static std::vector<MixedTypedExample> examples_broadcast_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -381,11 +381,11 @@ static std::vector<MixedTypedExample> examples_broadcast_float16 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {},
+  {{0, {129, 127, 125, 123, 124, 149}}, {1, {100, 102}}},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
-  {{0, {1.0f, 0.0f, -1.0f, -2.0f, -1.440000057220459f, 11.0f}}, {1, {0.5f, 2.0f}}},
+  {},
   // int -> BOOL8 map
   {},
 },
@@ -396,17 +396,17 @@ static std::vector<MixedTypedExample> examples_broadcast_float16 = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {},
+  {{0, {80, 80, 80, 79, 79, 81}}},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
-  {{0, {0.5f, 0.0f, -1.0f, -2.0f, -1.440000057220459f, 2.0f}}},
+  {},
   // int -> BOOL8 map
   {},
 }
 },
 }, // End of an example
 };
-return examples_broadcast_float16;
+return examples_broadcast_quant8;
 };
 
