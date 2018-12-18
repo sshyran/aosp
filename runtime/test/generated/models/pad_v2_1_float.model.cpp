@@ -30,19 +30,19 @@ inline bool is_ignored(int i) {
 
 void CreateModel_float16(Model *model) {
   OperandType type1(Type::TENSOR_INT32, {4, 2});
-  OperandType type2(Type::FLOAT32, {});
   OperandType type4(Type::TENSOR_FLOAT16, {1, 2, 3, 1});
   OperandType type5(Type::TENSOR_FLOAT16, {1, 4, 7, 1});
+  OperandType type6(Type::FLOAT16, {});
   // Phase 1, operands
   auto input0 = model->addOperand(&type4);
   auto paddings = model->addOperand(&type1);
-  auto pad_value = model->addOperand(&type2);
+  auto pad_value = model->addOperand(&type6);
   auto output0 = model->addOperand(&type5);
   // Phase 2, operations
   static int32_t paddings_init[] = {0, 0, 0, 2, 1, 3, 0, 0};
   model->setOperandValue(paddings, paddings_init, sizeof(int32_t) * 8);
-  static float pad_value_init[] = {9.3f};
-  model->setOperandValue(pad_value, pad_value_init, sizeof(float) * 1);
+  static _Float16 pad_value_init[] = {9.300000190734863f};
+  model->setOperandValue(pad_value, pad_value_init, sizeof(_Float16) * 1);
   model->addOperation(ANEURALNETWORKS_PAD_V2, {input0, paddings, pad_value}, {output0});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(

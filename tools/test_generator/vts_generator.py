@@ -120,9 +120,9 @@ def generate_vts_operand_values(operands):
         ty = w.type.type
         if ty == "TENSOR_QUANT8_ASYMM":
             binit += w.value
-        elif ty == "BOOL":
+        elif ty == "BOOL" or ty == "TENSOR_BOOL8":
             binit += [1 if x else 0 for x in w.value]
-        elif ty == "TENSOR_FLOAT16":
+        elif ty == "TENSOR_FLOAT16" or ty == "FLOAT16":
             for f in w.value:
                 # The pack format for float16 is not available until Python 3.6.
                 binit += [int(x) for x in np.float16(f).tostring()]

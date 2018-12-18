@@ -25,6 +25,32 @@
 namespace android {
 namespace nn {
 
+// executionMutex is used to protect concurrent access of non-threadsafe resources
+// like gemmlowp::GemmContext.
+// std::mutex is safe for pthreads on Android.
+static std::mutex executionMutex;
+
+bool fullyConnectedFloat16(const _Float16* inputData, const Shape& inputShape,
+                           const _Float16* weightsData, const Shape& weightsShape,
+                           const _Float16* biasData, const Shape& biasShape, int32_t activation,
+                           _Float16* outputData, const Shape& outputShape) {
+    NNTRACE_TRANS("fullyConnectedFloat16");
+    std::vector<float> inputDataFloat32(getNumberOfElements(inputShape));
+    convertFloat16ToFloat32(inputData, &inputDataFloat32);
+    std::vector<float> weightsDataFloat32(getNumberOfElements(weightsShape));
+    convertFloat16ToFloat32(weightsData, &weightsDataFloat32);
+    std::vector<float> biasDataFloat32(getNumberOfElements(biasShape));
+    convertFloat16ToFloat32(biasData, &biasDataFloat32);
+
+    std::vector<float> outputDataFloat32(getNumberOfElements(outputShape));
+    fullyConnectedFloat32(inputDataFloat32.data(), inputShape, weightsDataFloat32.data(),
+                          weightsShape, biasDataFloat32.data(), biasShape, activation,
+                          outputDataFloat32.data(), outputShape);
+    convertFloat32ToFloat16(outputDataFloat32, outputData);
+
+    return true;
+}
+
 bool fullyConnectedFloat32(const float* inputData, const Shape& inputShape,
                            const float* weightsData, const Shape& weightsShape,
                            const float* biasData, const Shape& biasShape,

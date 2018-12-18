@@ -37,4 +37,4 @@ Example({
           1,  1,  1,
           0, -1, -2,
           0, -2, -4]
-}).AddInput(a1).AddVariations("relaxed", quant8)
+}).AddInput(a1).AddVariations("relaxed", quant8, "float16")

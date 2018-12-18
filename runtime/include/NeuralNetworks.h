@@ -105,7 +105,7 @@ typedef enum {
      */
     ANEURALNETWORKS_TENSOR_QUANT16_SYMM = 7,
     /**
-     * A tensor of 16 bit floating point values.
+     * A tensor of IEEE 754 16 bit floating point values.
      *
      * Available since API level 29.
      */
@@ -119,6 +119,12 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_TENSOR_BOOL8 = 9,
+    /**
+     * An IEEE 754 16 bit floating point scalar value.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_FLOAT16 = 10,
 } OperandCode;
 
 /**
@@ -535,8 +541,12 @@ typedef enum {
      *
      *     output = (input - zeroPoint) * scale.
      *
-     * Supported tensor {@link OperandCode}:
+     * Supported input tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported output tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}.
      *
      * Supported tensor rank: up to 4
      *
@@ -544,8 +554,7 @@ typedef enum {
      * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}.
      *
      * Outputs:
-     * * 0: The output tensor of same shape as input0, but with
-     *      {@link ANEURALNETWORKS_TENSOR_FLOAT32}.
+     * * 0: A tensor with the same shape as input0.
      *
      * Available since API level 27.
      */
@@ -597,6 +606,7 @@ typedef enum {
      * Computes element-wise floor() on the input tensor.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Supported tensor rank: up to 4
@@ -621,6 +631,7 @@ typedef enum {
      *     outputs = activation(inputs * weights’ + bias)
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -761,6 +772,7 @@ typedef enum {
      *              sum(1))
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
@@ -1770,6 +1782,7 @@ typedef enum {
      * a tensor with a single element is returned.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -2231,6 +2244,7 @@ typedef enum {
      * from the end.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -2289,7 +2303,55 @@ typedef enum {
     ANEURALNETWORKS_GATHER = 51,
 
     ANEURALNETWORKS_GENERATE_PROPOSALS = 52,
+    /**
+     * For input tensors x and y, computes x > y elementwise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
+     *
+     * This operation supports broadcasting.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     * * 1: A tensor of the same {@link OperandCode} and dimensions compatible
+     *      with input0.
+     *
+     * Outputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_GREATER = 53,
+    /**
+     * For input tensors x and y, computes x >= y elementwise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
+     *
+     * This operation supports broadcasting.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     * * 1: A tensor of the same {@link OperandCode} and dimensions compatible
+     *      with input0.
+     *
+     * Outputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_GREATER_EQUAL = 54,
 
     /**
@@ -2322,6 +2384,7 @@ typedef enum {
      * where channel_multiplier = depth_out / num_groups
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -2339,9 +2402,10 @@ typedef enum {
      *      [depth_out, filter_height, filter_width, depth_group], specifying
      *      the filter, where depth_out must be divisible by num_groups.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
-     *      tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the bias should
-     *      also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}. For input tensor
-     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias should be
+     *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
+     *      {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the bias must be of the same
+     *      type. For input tensor of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias must be
      *      of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of 0 and
      *      bias_scale == input_scale * filter_scale.
      * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
@@ -2371,9 +2435,10 @@ typedef enum {
      *      [depth_out, filter_height, filter_width, depth_group], specifying
      *      the filter, where depth_out must be divisible by num_groups.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
-     *      tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the bias should
-     *      also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}. For input tensor
-     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias should be
+     *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
+     *      {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the bias must be of the same
+     *      type. For input tensor of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias must be
      *      of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of 0 and
      *      bias_scale == input_scale * filter_scale.
      * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the implicit
@@ -2439,11 +2504,118 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT = 56,
+    /**
+     * For input tensors x and y, computes x < y elementwise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
+     *
+     * This operation supports broadcasting.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     * * 1: A tensor of the same {@link OperandCode} and dimensions compatible
+     *      with input0.
+     *
+     * Outputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_LESS = 57,
+    /**
+     * For input tensors x and y, computes x <= y elementwise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
+     *
+     * This operation supports broadcasting.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     * * 1: A tensor of the same {@link OperandCode} and dimensions compatible
+     *      with input0.
+     *
+     * Outputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_LESS_EQUAL = 58,
     ANEURALNETWORKS_LOG = 59,
+
+    /**
+     * Returns the truth value of x AND y element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     *
+     * Supported tensor rank: from 1
+     *
+     * This operation supports broadcasting.
+     *
+     * Inputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     * * 1: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8} and dimensions
+     *      compatible with input0.
+     *
+     * Outputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_LOGICAL_AND = 60,
+
+    /**
+     * Computes the truth value of NOT x element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     *
+     * Supported tensor rank: from 1.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape as input0.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_LOGICAL_NOT = 61,
+
+    /**
+     * Returns the truth value of x OR y element-wise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     *
+     * Supported tensor rank: from 1
+     *
+     * This operation supports broadcasting.
+     *
+     * Inputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     * * 1: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8} and dimensions
+     *      compatible with input0.
+     *
+     * Outputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_LOGICAL_OR = 62,
 
     /**
@@ -2570,10 +2742,11 @@ typedef enum {
      *     output.dimension = {5, 4, 3, 2}
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
-     * Supported tensor rank: up to 4
+     * Supported tensor rank: from 1
      *
      * Inputs:
      * * 0: A tensor, specifying the input.
@@ -2706,6 +2879,7 @@ typedef enum {
      * interpolation.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -3072,6 +3246,56 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_ROI_POOLING = 89,
+    /**
+     * For input tensors x and y, computes x == y elementwise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
+     *
+     * This operation supports broadcasting.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     * * 1: A tensor of the same {@link OperandCode} and dimensions compatible
+     *      with input0.
+     *
+     * Outputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_EQUAL = 90,
+    /**
+     * For input tensors x and y, computes x != y elementwise.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
+     *
+     * This operation supports broadcasting.
+     *
+     * Inputs:
+     * * 0: A tensor.
+     * * 1: A tensor of the same {@link OperandCode} and dimensions compatible
+     *      with input0.
+     *
+     * Outputs:
+     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_BOOL8}.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_NOT_EQUAL = 91,
 } OperationCode;
 
 /**
