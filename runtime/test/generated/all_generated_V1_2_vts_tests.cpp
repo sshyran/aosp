@@ -636,6 +636,21 @@ TEST_F(ValidationTest, avg_pool_v1_2_nhwc_relaxed) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nhwc_float16) {
+  generated_tests::Execute(device,
+                           avg_pool_v1_2::createTestModel_nhwc_float16,
+                           avg_pool_v1_2::is_ignored_nhwc_float16,
+                           avg_pool_v1_2::get_examples_nhwc_float16());
+}
+
+TEST_F(ValidationTest, avg_pool_v1_2_nhwc_float16) {
+  const Model model = avg_pool_v1_2::createTestModel_nhwc_float16();
+  const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nhwc_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nhwc_quant8) {
   generated_tests::Execute(device,
                            avg_pool_v1_2::createTestModel_nhwc_quant8,
@@ -676,6 +691,21 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_relaxed) {
 TEST_F(ValidationTest, avg_pool_v1_2_nchw_relaxed) {
   const Model model = avg_pool_v1_2::createTestModel_nchw_relaxed();
   const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nchw_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_float16) {
+  generated_tests::Execute(device,
+                           avg_pool_v1_2::createTestModel_nchw_float16,
+                           avg_pool_v1_2::is_ignored_nchw_float16,
+                           avg_pool_v1_2::get_examples_nchw_float16());
+}
+
+TEST_F(ValidationTest, avg_pool_v1_2_nchw_float16) {
+  const Model model = avg_pool_v1_2::createTestModel_nchw_float16();
+  const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nchw_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -726,6 +756,21 @@ TEST_F(ValidationTest, avg_pool_v1_2_nhwc_relaxed_2) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nhwc_float16_2) {
+  generated_tests::Execute(device,
+                           avg_pool_v1_2::createTestModel_nhwc_float16_2,
+                           avg_pool_v1_2::is_ignored_nhwc_float16_2,
+                           avg_pool_v1_2::get_examples_nhwc_float16_2());
+}
+
+TEST_F(ValidationTest, avg_pool_v1_2_nhwc_float16_2) {
+  const Model model = avg_pool_v1_2::createTestModel_nhwc_float16_2();
+  const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nhwc_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nhwc_quant8_2) {
   generated_tests::Execute(device,
                            avg_pool_v1_2::createTestModel_nhwc_quant8_2,
@@ -766,6 +811,21 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_relaxed_2) {
 TEST_F(ValidationTest, avg_pool_v1_2_nchw_relaxed_2) {
   const Model model = avg_pool_v1_2::createTestModel_nchw_relaxed_2();
   const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nchw_relaxed_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_float16_2) {
+  generated_tests::Execute(device,
+                           avg_pool_v1_2::createTestModel_nchw_float16_2,
+                           avg_pool_v1_2::is_ignored_nchw_float16_2,
+                           avg_pool_v1_2::get_examples_nchw_float16_2());
+}
+
+TEST_F(ValidationTest, avg_pool_v1_2_nchw_float16_2) {
+  const Model model = avg_pool_v1_2::createTestModel_nchw_float16_2();
+  const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nchw_float16_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -816,6 +876,21 @@ TEST_F(ValidationTest, avg_pool_v1_2_nhwc_relaxed_3) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nhwc_float16_3) {
+  generated_tests::Execute(device,
+                           avg_pool_v1_2::createTestModel_nhwc_float16_3,
+                           avg_pool_v1_2::is_ignored_nhwc_float16_3,
+                           avg_pool_v1_2::get_examples_nhwc_float16_3());
+}
+
+TEST_F(ValidationTest, avg_pool_v1_2_nhwc_float16_3) {
+  const Model model = avg_pool_v1_2::createTestModel_nhwc_float16_3();
+  const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nhwc_float16_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nhwc_quant8_3) {
   generated_tests::Execute(device,
                            avg_pool_v1_2::createTestModel_nhwc_quant8_3,
@@ -856,6 +931,21 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_relaxed_3) {
 TEST_F(ValidationTest, avg_pool_v1_2_nchw_relaxed_3) {
   const Model model = avg_pool_v1_2::createTestModel_nchw_relaxed_3();
   const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nchw_relaxed_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_float16_3) {
+  generated_tests::Execute(device,
+                           avg_pool_v1_2::createTestModel_nchw_float16_3,
+                           avg_pool_v1_2::is_ignored_nchw_float16_3,
+                           avg_pool_v1_2::get_examples_nchw_float16_3());
+}
+
+TEST_F(ValidationTest, avg_pool_v1_2_nchw_float16_3) {
+  const Model model = avg_pool_v1_2::createTestModel_nchw_float16_3();
+  const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nchw_float16_3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -906,6 +996,21 @@ TEST_F(ValidationTest, avg_pool_v1_2_nhwc_relaxed_4) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nhwc_float16_4) {
+  generated_tests::Execute(device,
+                           avg_pool_v1_2::createTestModel_nhwc_float16_4,
+                           avg_pool_v1_2::is_ignored_nhwc_float16_4,
+                           avg_pool_v1_2::get_examples_nhwc_float16_4());
+}
+
+TEST_F(ValidationTest, avg_pool_v1_2_nhwc_float16_4) {
+  const Model model = avg_pool_v1_2::createTestModel_nhwc_float16_4();
+  const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nhwc_float16_4());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nhwc_quant8_4) {
   generated_tests::Execute(device,
                            avg_pool_v1_2::createTestModel_nhwc_quant8_4,
@@ -946,6 +1051,21 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_relaxed_4) {
 TEST_F(ValidationTest, avg_pool_v1_2_nchw_relaxed_4) {
   const Model model = avg_pool_v1_2::createTestModel_nchw_relaxed_4();
   const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nchw_relaxed_4());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_float16_4) {
+  generated_tests::Execute(device,
+                           avg_pool_v1_2::createTestModel_nchw_float16_4,
+                           avg_pool_v1_2::is_ignored_nchw_float16_4,
+                           avg_pool_v1_2::get_examples_nchw_float16_4());
+}
+
+TEST_F(ValidationTest, avg_pool_v1_2_nchw_float16_4) {
+  const Model model = avg_pool_v1_2::createTestModel_nchw_float16_4();
+  const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nchw_float16_4());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -996,6 +1116,21 @@ TEST_F(ValidationTest, avg_pool_v1_2_nhwc_relaxed_5) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nhwc_float16_5) {
+  generated_tests::Execute(device,
+                           avg_pool_v1_2::createTestModel_nhwc_float16_5,
+                           avg_pool_v1_2::is_ignored_nhwc_float16_5,
+                           avg_pool_v1_2::get_examples_nhwc_float16_5());
+}
+
+TEST_F(ValidationTest, avg_pool_v1_2_nhwc_float16_5) {
+  const Model model = avg_pool_v1_2::createTestModel_nhwc_float16_5();
+  const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nhwc_float16_5());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nhwc_quant8_5) {
   generated_tests::Execute(device,
                            avg_pool_v1_2::createTestModel_nhwc_quant8_5,
@@ -1036,6 +1171,21 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_relaxed_5) {
 TEST_F(ValidationTest, avg_pool_v1_2_nchw_relaxed_5) {
   const Model model = avg_pool_v1_2::createTestModel_nchw_relaxed_5();
   const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nchw_relaxed_5());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, avg_pool_v1_2_nchw_float16_5) {
+  generated_tests::Execute(device,
+                           avg_pool_v1_2::createTestModel_nchw_float16_5,
+                           avg_pool_v1_2::is_ignored_nchw_float16_5,
+                           avg_pool_v1_2::get_examples_nchw_float16_5());
+}
+
+TEST_F(ValidationTest, avg_pool_v1_2_nchw_float16_5) {
+  const Model model = avg_pool_v1_2::createTestModel_nchw_float16_5();
+  const std::vector<Request> requests = createRequests(avg_pool_v1_2::get_examples_nchw_float16_5());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -5734,6 +5884,29 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_large_nchw_weight_as_input_quant8_2
 }
 
 
+// Generated from: dequantize_float16.mod.py.
+namespace dequantize_float16 {
+// Generated dequantize_float16 test
+#include "examples/dequantize_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/dequantize_float16.model.cpp"
+} // namespace dequantize_float16
+
+TEST_F(NeuralnetworksHidlTest, dequantize_float16) {
+  generated_tests::Execute(device,
+                           dequantize_float16::createTestModel,
+                           dequantize_float16::is_ignored,
+                           dequantize_float16::get_examples());
+}
+
+TEST_F(ValidationTest, dequantize_float16) {
+  const Model model = dequantize_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(dequantize_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: div_broadcast_float16.mod.py.
 namespace div_broadcast_float16 {
 // Generated div_broadcast_float16 test
@@ -5775,6 +5948,164 @@ TEST_F(NeuralnetworksHidlTest, div_float16) {
 TEST_F(ValidationTest, div_float16) {
   const Model model = div_float16::createTestModel();
   const std::vector<Request> requests = createRequests(div_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: equal.mod.py.
+namespace equal {
+// Generated equal test
+#include "examples/equal.example.cpp"
+// Generated model constructor
+#include "vts_models/equal.model.cpp"
+} // namespace equal
+
+TEST_F(NeuralnetworksHidlTest, equal_simple) {
+  generated_tests::Execute(device,
+                           equal::createTestModel,
+                           equal::is_ignored,
+                           equal::get_examples_simple());
+}
+
+TEST_F(ValidationTest, equal_simple) {
+  const Model model = equal::createTestModel();
+  const std::vector<Request> requests = createRequests(equal::get_examples_simple());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, equal_simple_int32) {
+  generated_tests::Execute(device,
+                           equal::createTestModel_int32,
+                           equal::is_ignored_int32,
+                           equal::get_examples_simple_int32());
+}
+
+TEST_F(ValidationTest, equal_simple_int32) {
+  const Model model = equal::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(equal::get_examples_simple_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, equal_simple_float16) {
+  generated_tests::Execute(device,
+                           equal::createTestModel_float16,
+                           equal::is_ignored_float16,
+                           equal::get_examples_simple_float16());
+}
+
+TEST_F(ValidationTest, equal_simple_float16) {
+  const Model model = equal::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(equal::get_examples_simple_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, equal_simple_relaxed) {
+  generated_tests::Execute(device,
+                           equal::createTestModel_relaxed,
+                           equal::is_ignored_relaxed,
+                           equal::get_examples_simple_relaxed());
+}
+
+TEST_F(ValidationTest, equal_simple_relaxed) {
+  const Model model = equal::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(equal::get_examples_simple_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, equal_broadcast) {
+  generated_tests::Execute(device,
+                           equal::createTestModel_2,
+                           equal::is_ignored_2,
+                           equal::get_examples_broadcast());
+}
+
+TEST_F(ValidationTest, equal_broadcast) {
+  const Model model = equal::createTestModel_2();
+  const std::vector<Request> requests = createRequests(equal::get_examples_broadcast());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, equal_broadcast_int32) {
+  generated_tests::Execute(device,
+                           equal::createTestModel_int32_2,
+                           equal::is_ignored_int32_2,
+                           equal::get_examples_broadcast_int32());
+}
+
+TEST_F(ValidationTest, equal_broadcast_int32) {
+  const Model model = equal::createTestModel_int32_2();
+  const std::vector<Request> requests = createRequests(equal::get_examples_broadcast_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, equal_broadcast_float16) {
+  generated_tests::Execute(device,
+                           equal::createTestModel_float16_2,
+                           equal::is_ignored_float16_2,
+                           equal::get_examples_broadcast_float16());
+}
+
+TEST_F(ValidationTest, equal_broadcast_float16) {
+  const Model model = equal::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(equal::get_examples_broadcast_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, equal_broadcast_relaxed) {
+  generated_tests::Execute(device,
+                           equal::createTestModel_relaxed_2,
+                           equal::is_ignored_relaxed_2,
+                           equal::get_examples_broadcast_relaxed());
+}
+
+TEST_F(ValidationTest, equal_broadcast_relaxed) {
+  const Model model = equal::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(equal::get_examples_broadcast_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, equal_quantized_different_scale) {
+  generated_tests::Execute(device,
+                           equal::createTestModel_3,
+                           equal::is_ignored_3,
+                           equal::get_examples_quantized_different_scale());
+}
+
+TEST_F(ValidationTest, equal_quantized_different_scale) {
+  const Model model = equal::createTestModel_3();
+  const std::vector<Request> requests = createRequests(equal::get_examples_quantized_different_scale());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, equal_quantized_different_zero_point) {
+  generated_tests::Execute(device,
+                           equal::createTestModel_4,
+                           equal::is_ignored_4,
+                           equal::get_examples_quantized_different_zero_point());
+}
+
+TEST_F(ValidationTest, equal_quantized_different_zero_point) {
+  const Model model = equal::createTestModel_4();
+  const std::vector<Request> requests = createRequests(equal::get_examples_quantized_different_zero_point());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -5848,6 +6179,21 @@ TEST_F(ValidationTest, expand_dims_int32) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, expand_dims_float16) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_float16,
+                           expand_dims::is_ignored_float16,
+                           expand_dims::get_examples_float16());
+}
+
+TEST_F(ValidationTest, expand_dims_float16) {
+  const Model model = expand_dims::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(expand_dims::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, expand_dims_2) {
   generated_tests::Execute(device,
                            expand_dims::createTestModel_2,
@@ -5903,6 +6249,21 @@ TEST_F(NeuralnetworksHidlTest, expand_dims_int32_2) {
 TEST_F(ValidationTest, expand_dims_int32_2) {
   const Model model = expand_dims::createTestModel_int32_2();
   const std::vector<Request> requests = createRequests(expand_dims::get_examples_int32_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_float16_2) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_float16_2,
+                           expand_dims::is_ignored_float16_2,
+                           expand_dims::get_examples_float16_2());
+}
+
+TEST_F(ValidationTest, expand_dims_float16_2) {
+  const Model model = expand_dims::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(expand_dims::get_examples_float16_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -5968,6 +6329,21 @@ TEST_F(ValidationTest, expand_dims_int32_3) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, expand_dims_float16_3) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_float16_3,
+                           expand_dims::is_ignored_float16_3,
+                           expand_dims::get_examples_float16_3());
+}
+
+TEST_F(ValidationTest, expand_dims_float16_3) {
+  const Model model = expand_dims::createTestModel_float16_3();
+  const std::vector<Request> requests = createRequests(expand_dims::get_examples_float16_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, expand_dims_4) {
   generated_tests::Execute(device,
                            expand_dims::createTestModel_4,
@@ -6023,6 +6399,67 @@ TEST_F(NeuralnetworksHidlTest, expand_dims_int32_4) {
 TEST_F(ValidationTest, expand_dims_int32_4) {
   const Model model = expand_dims::createTestModel_int32_4();
   const std::vector<Request> requests = createRequests(expand_dims::get_examples_int32_4());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, expand_dims_float16_4) {
+  generated_tests::Execute(device,
+                           expand_dims::createTestModel_float16_4,
+                           expand_dims::is_ignored_float16_4,
+                           expand_dims::get_examples_float16_4());
+}
+
+TEST_F(ValidationTest, expand_dims_float16_4) {
+  const Model model = expand_dims::createTestModel_float16_4();
+  const std::vector<Request> requests = createRequests(expand_dims::get_examples_float16_4());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: floor_float16.mod.py.
+namespace floor_float16 {
+// Generated floor_float16 test
+#include "examples/floor_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/floor_float16.model.cpp"
+} // namespace floor_float16
+
+TEST_F(NeuralnetworksHidlTest, floor_float16) {
+  generated_tests::Execute(device,
+                           floor_float16::createTestModel,
+                           floor_float16::is_ignored,
+                           floor_float16::get_examples());
+}
+
+TEST_F(ValidationTest, floor_float16) {
+  const Model model = floor_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(floor_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: fully_connected_float16.mod.py.
+namespace fully_connected_float16 {
+// Generated fully_connected_float16 test
+#include "examples/fully_connected_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/fully_connected_float16.model.cpp"
+} // namespace fully_connected_float16
+
+TEST_F(NeuralnetworksHidlTest, fully_connected_float16) {
+  generated_tests::Execute(device,
+                           fully_connected_float16::createTestModel,
+                           fully_connected_float16::is_ignored,
+                           fully_connected_float16::get_examples());
+}
+
+TEST_F(ValidationTest, fully_connected_float16) {
+  const Model model = fully_connected_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(fully_connected_float16::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -6704,6 +7141,322 @@ TEST_F(ValidationTest, gather_higher_rank_int32) {
 }
 
 
+// Generated from: greater.mod.py.
+namespace greater {
+// Generated greater test
+#include "examples/greater.example.cpp"
+// Generated model constructor
+#include "vts_models/greater.model.cpp"
+} // namespace greater
+
+TEST_F(NeuralnetworksHidlTest, greater_simple) {
+  generated_tests::Execute(device,
+                           greater::createTestModel,
+                           greater::is_ignored,
+                           greater::get_examples_simple());
+}
+
+TEST_F(ValidationTest, greater_simple) {
+  const Model model = greater::createTestModel();
+  const std::vector<Request> requests = createRequests(greater::get_examples_simple());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_simple_int32) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_int32,
+                           greater::is_ignored_int32,
+                           greater::get_examples_simple_int32());
+}
+
+TEST_F(ValidationTest, greater_simple_int32) {
+  const Model model = greater::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(greater::get_examples_simple_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_simple_float16) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_float16,
+                           greater::is_ignored_float16,
+                           greater::get_examples_simple_float16());
+}
+
+TEST_F(ValidationTest, greater_simple_float16) {
+  const Model model = greater::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(greater::get_examples_simple_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_simple_relaxed) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_relaxed,
+                           greater::is_ignored_relaxed,
+                           greater::get_examples_simple_relaxed());
+}
+
+TEST_F(ValidationTest, greater_simple_relaxed) {
+  const Model model = greater::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(greater::get_examples_simple_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_broadcast) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_2,
+                           greater::is_ignored_2,
+                           greater::get_examples_broadcast());
+}
+
+TEST_F(ValidationTest, greater_broadcast) {
+  const Model model = greater::createTestModel_2();
+  const std::vector<Request> requests = createRequests(greater::get_examples_broadcast());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_broadcast_int32) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_int32_2,
+                           greater::is_ignored_int32_2,
+                           greater::get_examples_broadcast_int32());
+}
+
+TEST_F(ValidationTest, greater_broadcast_int32) {
+  const Model model = greater::createTestModel_int32_2();
+  const std::vector<Request> requests = createRequests(greater::get_examples_broadcast_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_broadcast_float16) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_float16_2,
+                           greater::is_ignored_float16_2,
+                           greater::get_examples_broadcast_float16());
+}
+
+TEST_F(ValidationTest, greater_broadcast_float16) {
+  const Model model = greater::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(greater::get_examples_broadcast_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_broadcast_relaxed) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_relaxed_2,
+                           greater::is_ignored_relaxed_2,
+                           greater::get_examples_broadcast_relaxed());
+}
+
+TEST_F(ValidationTest, greater_broadcast_relaxed) {
+  const Model model = greater::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(greater::get_examples_broadcast_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_quantized_different_scale) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_3,
+                           greater::is_ignored_3,
+                           greater::get_examples_quantized_different_scale());
+}
+
+TEST_F(ValidationTest, greater_quantized_different_scale) {
+  const Model model = greater::createTestModel_3();
+  const std::vector<Request> requests = createRequests(greater::get_examples_quantized_different_scale());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_quantized_different_zero_point) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_4,
+                           greater::is_ignored_4,
+                           greater::get_examples_quantized_different_zero_point());
+}
+
+TEST_F(ValidationTest, greater_quantized_different_zero_point) {
+  const Model model = greater::createTestModel_4();
+  const std::vector<Request> requests = createRequests(greater::get_examples_quantized_different_zero_point());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: greater_equal.mod.py.
+namespace greater_equal {
+// Generated greater_equal test
+#include "examples/greater_equal.example.cpp"
+// Generated model constructor
+#include "vts_models/greater_equal.model.cpp"
+} // namespace greater_equal
+
+TEST_F(NeuralnetworksHidlTest, greater_equal_simple) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel,
+                           greater_equal::is_ignored,
+                           greater_equal::get_examples_simple());
+}
+
+TEST_F(ValidationTest, greater_equal_simple) {
+  const Model model = greater_equal::createTestModel();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_simple());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_equal_simple_int32) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_int32,
+                           greater_equal::is_ignored_int32,
+                           greater_equal::get_examples_simple_int32());
+}
+
+TEST_F(ValidationTest, greater_equal_simple_int32) {
+  const Model model = greater_equal::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_simple_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_equal_simple_float16) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_float16,
+                           greater_equal::is_ignored_float16,
+                           greater_equal::get_examples_simple_float16());
+}
+
+TEST_F(ValidationTest, greater_equal_simple_float16) {
+  const Model model = greater_equal::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_simple_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_equal_simple_relaxed) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_relaxed,
+                           greater_equal::is_ignored_relaxed,
+                           greater_equal::get_examples_simple_relaxed());
+}
+
+TEST_F(ValidationTest, greater_equal_simple_relaxed) {
+  const Model model = greater_equal::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_simple_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_equal_broadcast) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_2,
+                           greater_equal::is_ignored_2,
+                           greater_equal::get_examples_broadcast());
+}
+
+TEST_F(ValidationTest, greater_equal_broadcast) {
+  const Model model = greater_equal::createTestModel_2();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_broadcast());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_equal_broadcast_int32) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_int32_2,
+                           greater_equal::is_ignored_int32_2,
+                           greater_equal::get_examples_broadcast_int32());
+}
+
+TEST_F(ValidationTest, greater_equal_broadcast_int32) {
+  const Model model = greater_equal::createTestModel_int32_2();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_broadcast_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_equal_broadcast_float16) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_float16_2,
+                           greater_equal::is_ignored_float16_2,
+                           greater_equal::get_examples_broadcast_float16());
+}
+
+TEST_F(ValidationTest, greater_equal_broadcast_float16) {
+  const Model model = greater_equal::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_broadcast_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_equal_broadcast_relaxed) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_relaxed_2,
+                           greater_equal::is_ignored_relaxed_2,
+                           greater_equal::get_examples_broadcast_relaxed());
+}
+
+TEST_F(ValidationTest, greater_equal_broadcast_relaxed) {
+  const Model model = greater_equal::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_broadcast_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_equal_quantized_different_scale) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_3,
+                           greater_equal::is_ignored_3,
+                           greater_equal::get_examples_quantized_different_scale());
+}
+
+TEST_F(ValidationTest, greater_equal_quantized_different_scale) {
+  const Model model = greater_equal::createTestModel_3();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_quantized_different_scale());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, greater_equal_quantized_different_zero_point) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_4,
+                           greater_equal::is_ignored_4,
+                           greater_equal::get_examples_quantized_different_zero_point());
+}
+
+TEST_F(ValidationTest, greater_equal_quantized_different_zero_point) {
+  const Model model = greater_equal::createTestModel_4();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_quantized_different_zero_point());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: grouped_conv2d.mod.py.
 namespace grouped_conv2d {
 // Generated grouped_conv2d test
@@ -6802,6 +7555,36 @@ TEST_F(ValidationTest, grouped_conv2d_nhwc_none_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_none_float16,
+                           grouped_conv2d::is_ignored_nhwc_none_float16,
+                           grouped_conv2d::get_examples_nhwc_none_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_none_float16) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_none_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_none_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_none_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_none_float16_weight_as_input,
+                           grouped_conv2d::get_examples_nhwc_none_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_none_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_none_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_none_float16_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_nhwc_relu,
@@ -6887,6 +7670,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_quant8_weight_as_input) 
 TEST_F(ValidationTest, grouped_conv2d_nhwc_relu_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_nhwc_relu_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu_float16,
+                           grouped_conv2d::is_ignored_nhwc_relu_float16,
+                           grouped_conv2d::get_examples_nhwc_relu_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu_float16) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu_float16_weight_as_input,
+                           grouped_conv2d::get_examples_nhwc_relu_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu_float16_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -6982,6 +7795,36 @@ TEST_F(ValidationTest, grouped_conv2d_nhwc_relu1_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu1_float16,
+                           grouped_conv2d::is_ignored_nhwc_relu1_float16,
+                           grouped_conv2d::get_examples_nhwc_relu1_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu1_float16) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu1_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu1_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu1_float16_weight_as_input,
+                           grouped_conv2d::get_examples_nhwc_relu1_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu1_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu1_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu1_float16_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_nhwc_relu6,
@@ -7067,6 +7910,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_quant8_weight_as_input)
 TEST_F(ValidationTest, grouped_conv2d_nhwc_relu6_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_nhwc_relu6_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu6_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu6_float16,
+                           grouped_conv2d::is_ignored_nhwc_relu6_float16,
+                           grouped_conv2d::get_examples_nhwc_relu6_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu6_float16) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu6_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu6_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu6_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu6_float16_weight_as_input,
+                           grouped_conv2d::get_examples_nhwc_relu6_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu6_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu6_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu6_float16_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -7162,6 +8035,36 @@ TEST_F(ValidationTest, grouped_conv2d_nchw_none_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_none_float16,
+                           grouped_conv2d::is_ignored_nchw_none_float16,
+                           grouped_conv2d::get_examples_nchw_none_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_none_float16) {
+  const Model model = grouped_conv2d::createTestModel_nchw_none_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_none_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_none_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_none_float16_weight_as_input,
+                           grouped_conv2d::get_examples_nchw_none_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_none_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nchw_none_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_none_float16_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_nchw_relu,
@@ -7247,6 +8150,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_quant8_weight_as_input) 
 TEST_F(ValidationTest, grouped_conv2d_nchw_relu_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_nchw_relu_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu_float16,
+                           grouped_conv2d::is_ignored_nchw_relu_float16,
+                           grouped_conv2d::get_examples_nchw_relu_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu_float16) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu_float16_weight_as_input,
+                           grouped_conv2d::get_examples_nchw_relu_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu_float16_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -7342,6 +8275,36 @@ TEST_F(ValidationTest, grouped_conv2d_nchw_relu1_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu1_float16,
+                           grouped_conv2d::is_ignored_nchw_relu1_float16,
+                           grouped_conv2d::get_examples_nchw_relu1_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu1_float16) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu1_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu1_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu1_float16_weight_as_input,
+                           grouped_conv2d::get_examples_nchw_relu1_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu1_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu1_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu1_float16_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_nchw_relu6,
@@ -7427,6 +8390,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_quant8_weight_as_input)
 TEST_F(ValidationTest, grouped_conv2d_nchw_relu6_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_nchw_relu6_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu6_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu6_float16,
+                           grouped_conv2d::is_ignored_nchw_relu6_float16,
+                           grouped_conv2d::get_examples_nchw_relu6_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu6_float16) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu6_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu6_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu6_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu6_float16_weight_as_input,
+                           grouped_conv2d::get_examples_nchw_relu6_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu6_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu6_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu6_float16_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -7522,6 +8515,36 @@ TEST_F(ValidationTest, grouped_conv2d_large_nhwc_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nhwc_float16,
+                           grouped_conv2d::is_ignored_large_nhwc_float16,
+                           grouped_conv2d::get_examples_large_nhwc_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_nhwc_float16) {
+  const Model model = grouped_conv2d::createTestModel_large_nhwc_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_nhwc_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nhwc_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_large_nhwc_float16_weight_as_input,
+                           grouped_conv2d::get_examples_large_nhwc_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_nhwc_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_large_nhwc_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_nhwc_float16_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_large_nchw,
@@ -7607,6 +8630,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_quant8_weight_as_input)
 TEST_F(ValidationTest, grouped_conv2d_large_nchw_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_large_nchw_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_nchw_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nchw_float16,
+                           grouped_conv2d::is_ignored_large_nchw_float16,
+                           grouped_conv2d::get_examples_large_nchw_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_nchw_float16) {
+  const Model model = grouped_conv2d::createTestModel_large_nchw_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_nchw_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nchw_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_large_nchw_float16_weight_as_input,
+                           grouped_conv2d::get_examples_large_nchw_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_nchw_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_large_nchw_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_nchw_float16_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -7702,6 +8755,36 @@ TEST_F(ValidationTest, grouped_conv2d_channel_nhwc_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nhwc_float16,
+                           grouped_conv2d::is_ignored_channel_nhwc_float16,
+                           grouped_conv2d::get_examples_channel_nhwc_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_nhwc_float16) {
+  const Model model = grouped_conv2d::createTestModel_channel_nhwc_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_nhwc_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nhwc_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_nhwc_float16_weight_as_input,
+                           grouped_conv2d::get_examples_channel_nhwc_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_nhwc_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_channel_nhwc_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_nhwc_float16_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_channel_nchw,
@@ -7787,6 +8870,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_quant8_weight_as_inpu
 TEST_F(ValidationTest, grouped_conv2d_channel_nchw_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_channel_nchw_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_nchw_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_float16) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nchw_float16,
+                           grouped_conv2d::is_ignored_channel_nchw_float16,
+                           grouped_conv2d::get_examples_channel_nchw_float16());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_nchw_float16) {
+  const Model model = grouped_conv2d::createTestModel_channel_nchw_float16();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_nchw_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_float16_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nchw_float16_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_nchw_float16_weight_as_input,
+                           grouped_conv2d::get_examples_channel_nchw_float16_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_nchw_float16_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_channel_nchw_float16_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_nchw_float16_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -9331,6 +10444,21 @@ TEST_F(ValidationTest, l2_pool_v1_2_nhwc) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_float16) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nhwc_float16,
+                           l2_pool_v1_2::is_ignored_nhwc_float16,
+                           l2_pool_v1_2::get_examples_nhwc_float16());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_nhwc_float16) {
+  const Model model = l2_pool_v1_2::createTestModel_nhwc_float16();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nhwc_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_relaxed) {
   generated_tests::Execute(device,
                            l2_pool_v1_2::createTestModel_nhwc_relaxed,
@@ -9341,6 +10469,21 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_relaxed) {
 TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed) {
   const Model model = l2_pool_v1_2::createTestModel_nhwc_relaxed();
   const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nhwc_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_relaxed_float16) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nhwc_relaxed_float16,
+                           l2_pool_v1_2::is_ignored_nhwc_relaxed_float16,
+                           l2_pool_v1_2::get_examples_nhwc_relaxed_float16());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_float16) {
+  const Model model = l2_pool_v1_2::createTestModel_nhwc_relaxed_float16();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nhwc_relaxed_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -9361,6 +10504,21 @@ TEST_F(ValidationTest, l2_pool_v1_2_nchw) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_float16) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nchw_float16,
+                           l2_pool_v1_2::is_ignored_nchw_float16,
+                           l2_pool_v1_2::get_examples_nchw_float16());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_nchw_float16) {
+  const Model model = l2_pool_v1_2::createTestModel_nchw_float16();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nchw_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_relaxed) {
   generated_tests::Execute(device,
                            l2_pool_v1_2::createTestModel_nchw_relaxed,
@@ -9371,6 +10529,21 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_relaxed) {
 TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed) {
   const Model model = l2_pool_v1_2::createTestModel_nchw_relaxed();
   const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nchw_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_relaxed_float16) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nchw_relaxed_float16,
+                           l2_pool_v1_2::is_ignored_nchw_relaxed_float16,
+                           l2_pool_v1_2::get_examples_nchw_relaxed_float16());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_float16) {
+  const Model model = l2_pool_v1_2::createTestModel_nchw_relaxed_float16();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nchw_relaxed_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -9391,6 +10564,21 @@ TEST_F(ValidationTest, l2_pool_v1_2_nhwc_2) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_float16_2) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nhwc_float16_2,
+                           l2_pool_v1_2::is_ignored_nhwc_float16_2,
+                           l2_pool_v1_2::get_examples_nhwc_float16_2());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_nhwc_float16_2) {
+  const Model model = l2_pool_v1_2::createTestModel_nhwc_float16_2();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nhwc_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_relaxed_2) {
   generated_tests::Execute(device,
                            l2_pool_v1_2::createTestModel_nhwc_relaxed_2,
@@ -9401,6 +10589,21 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_relaxed_2) {
 TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_2) {
   const Model model = l2_pool_v1_2::createTestModel_nhwc_relaxed_2();
   const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nhwc_relaxed_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nhwc_relaxed_float16_2) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nhwc_relaxed_float16_2,
+                           l2_pool_v1_2::is_ignored_nhwc_relaxed_float16_2,
+                           l2_pool_v1_2::get_examples_nhwc_relaxed_float16_2());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_float16_2) {
+  const Model model = l2_pool_v1_2::createTestModel_nhwc_relaxed_float16_2();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nhwc_relaxed_float16_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -9421,6 +10624,21 @@ TEST_F(ValidationTest, l2_pool_v1_2_nchw_2) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_float16_2) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nchw_float16_2,
+                           l2_pool_v1_2::is_ignored_nchw_float16_2,
+                           l2_pool_v1_2::get_examples_nchw_float16_2());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_nchw_float16_2) {
+  const Model model = l2_pool_v1_2::createTestModel_nchw_float16_2();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nchw_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_relaxed_2) {
   generated_tests::Execute(device,
                            l2_pool_v1_2::createTestModel_nchw_relaxed_2,
@@ -9431,6 +10649,21 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_relaxed_2) {
 TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_2) {
   const Model model = l2_pool_v1_2::createTestModel_nchw_relaxed_2();
   const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nchw_relaxed_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_nchw_relaxed_float16_2) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_nchw_relaxed_float16_2,
+                           l2_pool_v1_2::is_ignored_nchw_relaxed_float16_2,
+                           l2_pool_v1_2::get_examples_nchw_relaxed_float16_2());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_float16_2) {
+  const Model model = l2_pool_v1_2::createTestModel_nchw_relaxed_float16_2();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_nchw_relaxed_float16_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -9451,6 +10684,21 @@ TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nhwc_float16) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_large_nhwc_float16,
+                           l2_pool_v1_2::is_ignored_large_nhwc_float16,
+                           l2_pool_v1_2::get_examples_large_nhwc_float16());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_float16) {
+  const Model model = l2_pool_v1_2::createTestModel_large_nhwc_float16();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_large_nhwc_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nhwc_relaxed) {
   generated_tests::Execute(device,
                            l2_pool_v1_2::createTestModel_large_nhwc_relaxed,
@@ -9461,6 +10709,21 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nhwc_relaxed) {
 TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_relaxed) {
   const Model model = l2_pool_v1_2::createTestModel_large_nhwc_relaxed();
   const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_large_nhwc_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nhwc_relaxed_float16) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_large_nhwc_relaxed_float16,
+                           l2_pool_v1_2::is_ignored_large_nhwc_relaxed_float16,
+                           l2_pool_v1_2::get_examples_large_nhwc_relaxed_float16());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_relaxed_float16) {
+  const Model model = l2_pool_v1_2::createTestModel_large_nhwc_relaxed_float16();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_large_nhwc_relaxed_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -9481,6 +10744,21 @@ TEST_F(ValidationTest, l2_pool_v1_2_large_nchw) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nchw_float16) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_large_nchw_float16,
+                           l2_pool_v1_2::is_ignored_large_nchw_float16,
+                           l2_pool_v1_2::get_examples_large_nchw_float16());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_float16) {
+  const Model model = l2_pool_v1_2::createTestModel_large_nchw_float16();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_large_nchw_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nchw_relaxed) {
   generated_tests::Execute(device,
                            l2_pool_v1_2::createTestModel_large_nchw_relaxed,
@@ -9491,6 +10769,21 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nchw_relaxed) {
 TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_relaxed) {
   const Model model = l2_pool_v1_2::createTestModel_large_nchw_relaxed();
   const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_large_nchw_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_pool_v1_2_large_nchw_relaxed_float16) {
+  generated_tests::Execute(device,
+                           l2_pool_v1_2::createTestModel_large_nchw_relaxed_float16,
+                           l2_pool_v1_2::is_ignored_large_nchw_relaxed_float16,
+                           l2_pool_v1_2::get_examples_large_nchw_relaxed_float16());
+}
+
+TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_relaxed_float16) {
+  const Model model = l2_pool_v1_2::createTestModel_large_nchw_relaxed_float16();
+  const std::vector<Request> requests = createRequests(l2_pool_v1_2::get_examples_large_nchw_relaxed_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -9514,6 +10807,322 @@ TEST_F(NeuralnetworksHidlTest, layer_norm_lstm) {
 TEST_F(ValidationTest, layer_norm_lstm) {
   const Model model = layer_norm_lstm::createTestModel();
   const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: less.mod.py.
+namespace less {
+// Generated less test
+#include "examples/less.example.cpp"
+// Generated model constructor
+#include "vts_models/less.model.cpp"
+} // namespace less
+
+TEST_F(NeuralnetworksHidlTest, less_simple) {
+  generated_tests::Execute(device,
+                           less::createTestModel,
+                           less::is_ignored,
+                           less::get_examples_simple());
+}
+
+TEST_F(ValidationTest, less_simple) {
+  const Model model = less::createTestModel();
+  const std::vector<Request> requests = createRequests(less::get_examples_simple());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_simple_int32) {
+  generated_tests::Execute(device,
+                           less::createTestModel_int32,
+                           less::is_ignored_int32,
+                           less::get_examples_simple_int32());
+}
+
+TEST_F(ValidationTest, less_simple_int32) {
+  const Model model = less::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(less::get_examples_simple_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_simple_float16) {
+  generated_tests::Execute(device,
+                           less::createTestModel_float16,
+                           less::is_ignored_float16,
+                           less::get_examples_simple_float16());
+}
+
+TEST_F(ValidationTest, less_simple_float16) {
+  const Model model = less::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(less::get_examples_simple_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_simple_relaxed) {
+  generated_tests::Execute(device,
+                           less::createTestModel_relaxed,
+                           less::is_ignored_relaxed,
+                           less::get_examples_simple_relaxed());
+}
+
+TEST_F(ValidationTest, less_simple_relaxed) {
+  const Model model = less::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(less::get_examples_simple_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_broadcast) {
+  generated_tests::Execute(device,
+                           less::createTestModel_2,
+                           less::is_ignored_2,
+                           less::get_examples_broadcast());
+}
+
+TEST_F(ValidationTest, less_broadcast) {
+  const Model model = less::createTestModel_2();
+  const std::vector<Request> requests = createRequests(less::get_examples_broadcast());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_broadcast_int32) {
+  generated_tests::Execute(device,
+                           less::createTestModel_int32_2,
+                           less::is_ignored_int32_2,
+                           less::get_examples_broadcast_int32());
+}
+
+TEST_F(ValidationTest, less_broadcast_int32) {
+  const Model model = less::createTestModel_int32_2();
+  const std::vector<Request> requests = createRequests(less::get_examples_broadcast_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_broadcast_float16) {
+  generated_tests::Execute(device,
+                           less::createTestModel_float16_2,
+                           less::is_ignored_float16_2,
+                           less::get_examples_broadcast_float16());
+}
+
+TEST_F(ValidationTest, less_broadcast_float16) {
+  const Model model = less::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(less::get_examples_broadcast_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_broadcast_relaxed) {
+  generated_tests::Execute(device,
+                           less::createTestModel_relaxed_2,
+                           less::is_ignored_relaxed_2,
+                           less::get_examples_broadcast_relaxed());
+}
+
+TEST_F(ValidationTest, less_broadcast_relaxed) {
+  const Model model = less::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(less::get_examples_broadcast_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_quantized_different_scale) {
+  generated_tests::Execute(device,
+                           less::createTestModel_3,
+                           less::is_ignored_3,
+                           less::get_examples_quantized_different_scale());
+}
+
+TEST_F(ValidationTest, less_quantized_different_scale) {
+  const Model model = less::createTestModel_3();
+  const std::vector<Request> requests = createRequests(less::get_examples_quantized_different_scale());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_quantized_different_zero_point) {
+  generated_tests::Execute(device,
+                           less::createTestModel_4,
+                           less::is_ignored_4,
+                           less::get_examples_quantized_different_zero_point());
+}
+
+TEST_F(ValidationTest, less_quantized_different_zero_point) {
+  const Model model = less::createTestModel_4();
+  const std::vector<Request> requests = createRequests(less::get_examples_quantized_different_zero_point());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: less_equal.mod.py.
+namespace less_equal {
+// Generated less_equal test
+#include "examples/less_equal.example.cpp"
+// Generated model constructor
+#include "vts_models/less_equal.model.cpp"
+} // namespace less_equal
+
+TEST_F(NeuralnetworksHidlTest, less_equal_simple) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel,
+                           less_equal::is_ignored,
+                           less_equal::get_examples_simple());
+}
+
+TEST_F(ValidationTest, less_equal_simple) {
+  const Model model = less_equal::createTestModel();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_simple());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_equal_simple_int32) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_int32,
+                           less_equal::is_ignored_int32,
+                           less_equal::get_examples_simple_int32());
+}
+
+TEST_F(ValidationTest, less_equal_simple_int32) {
+  const Model model = less_equal::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_simple_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_equal_simple_float16) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_float16,
+                           less_equal::is_ignored_float16,
+                           less_equal::get_examples_simple_float16());
+}
+
+TEST_F(ValidationTest, less_equal_simple_float16) {
+  const Model model = less_equal::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_simple_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_equal_simple_relaxed) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_relaxed,
+                           less_equal::is_ignored_relaxed,
+                           less_equal::get_examples_simple_relaxed());
+}
+
+TEST_F(ValidationTest, less_equal_simple_relaxed) {
+  const Model model = less_equal::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_simple_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_equal_broadcast) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_2,
+                           less_equal::is_ignored_2,
+                           less_equal::get_examples_broadcast());
+}
+
+TEST_F(ValidationTest, less_equal_broadcast) {
+  const Model model = less_equal::createTestModel_2();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_broadcast());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_equal_broadcast_int32) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_int32_2,
+                           less_equal::is_ignored_int32_2,
+                           less_equal::get_examples_broadcast_int32());
+}
+
+TEST_F(ValidationTest, less_equal_broadcast_int32) {
+  const Model model = less_equal::createTestModel_int32_2();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_broadcast_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_equal_broadcast_float16) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_float16_2,
+                           less_equal::is_ignored_float16_2,
+                           less_equal::get_examples_broadcast_float16());
+}
+
+TEST_F(ValidationTest, less_equal_broadcast_float16) {
+  const Model model = less_equal::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_broadcast_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_equal_broadcast_relaxed) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_relaxed_2,
+                           less_equal::is_ignored_relaxed_2,
+                           less_equal::get_examples_broadcast_relaxed());
+}
+
+TEST_F(ValidationTest, less_equal_broadcast_relaxed) {
+  const Model model = less_equal::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_broadcast_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_equal_quantized_different_scale) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_3,
+                           less_equal::is_ignored_3,
+                           less_equal::get_examples_quantized_different_scale());
+}
+
+TEST_F(ValidationTest, less_equal_quantized_different_scale) {
+  const Model model = less_equal::createTestModel_3();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_quantized_different_scale());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, less_equal_quantized_different_zero_point) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_4,
+                           less_equal::is_ignored_4,
+                           less_equal::get_examples_quantized_different_zero_point());
+}
+
+TEST_F(ValidationTest, less_equal_quantized_different_zero_point) {
+  const Model model = less_equal::createTestModel_4();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_quantized_different_zero_point());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -13495,6 +15104,105 @@ TEST_F(ValidationTest, log_softmax_float16_4) {
 }
 
 
+// Generated from: logical_and.mod.py.
+namespace logical_and {
+// Generated logical_and test
+#include "examples/logical_and.example.cpp"
+// Generated model constructor
+#include "vts_models/logical_and.model.cpp"
+} // namespace logical_and
+
+TEST_F(NeuralnetworksHidlTest, logical_and_simple) {
+  generated_tests::Execute(device,
+                           logical_and::createTestModel,
+                           logical_and::is_ignored,
+                           logical_and::get_examples_simple());
+}
+
+TEST_F(ValidationTest, logical_and_simple) {
+  const Model model = logical_and::createTestModel();
+  const std::vector<Request> requests = createRequests(logical_and::get_examples_simple());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, logical_and_broadcast) {
+  generated_tests::Execute(device,
+                           logical_and::createTestModel_2,
+                           logical_and::is_ignored_2,
+                           logical_and::get_examples_broadcast());
+}
+
+TEST_F(ValidationTest, logical_and_broadcast) {
+  const Model model = logical_and::createTestModel_2();
+  const std::vector<Request> requests = createRequests(logical_and::get_examples_broadcast());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: logical_not.mod.py.
+namespace logical_not {
+// Generated logical_not test
+#include "examples/logical_not.example.cpp"
+// Generated model constructor
+#include "vts_models/logical_not.model.cpp"
+} // namespace logical_not
+
+TEST_F(NeuralnetworksHidlTest, logical_not) {
+  generated_tests::Execute(device,
+                           logical_not::createTestModel,
+                           logical_not::is_ignored,
+                           logical_not::get_examples());
+}
+
+TEST_F(ValidationTest, logical_not) {
+  const Model model = logical_not::createTestModel();
+  const std::vector<Request> requests = createRequests(logical_not::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: logical_or.mod.py.
+namespace logical_or {
+// Generated logical_or test
+#include "examples/logical_or.example.cpp"
+// Generated model constructor
+#include "vts_models/logical_or.model.cpp"
+} // namespace logical_or
+
+TEST_F(NeuralnetworksHidlTest, logical_or_simple) {
+  generated_tests::Execute(device,
+                           logical_or::createTestModel,
+                           logical_or::is_ignored,
+                           logical_or::get_examples_simple());
+}
+
+TEST_F(ValidationTest, logical_or_simple) {
+  const Model model = logical_or::createTestModel();
+  const std::vector<Request> requests = createRequests(logical_or::get_examples_simple());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, logical_or_broadcast) {
+  generated_tests::Execute(device,
+                           logical_or::createTestModel_2,
+                           logical_or::is_ignored_2,
+                           logical_or::get_examples_broadcast());
+}
+
+TEST_F(ValidationTest, logical_or_broadcast) {
+  const Model model = logical_or::createTestModel_2();
+  const std::vector<Request> requests = createRequests(logical_or::get_examples_broadcast());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: logistic_float16_1.mod.py.
 namespace logistic_float16_1 {
 // Generated logistic_float16_1 test
@@ -14016,16 +15724,16 @@ TEST_F(ValidationTest, maximum_simple_relaxed) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, maximum_simple_quant8) {
+TEST_F(NeuralnetworksHidlTest, maximum_simple_float16) {
   generated_tests::Execute(device,
-                           maximum::createTestModel_quant8,
-                           maximum::is_ignored_quant8,
-                           maximum::get_examples_simple_quant8());
+                           maximum::createTestModel_float16,
+                           maximum::is_ignored_float16,
+                           maximum::get_examples_simple_float16());
 }
 
-TEST_F(ValidationTest, maximum_simple_quant8) {
-  const Model model = maximum::createTestModel_quant8();
-  const std::vector<Request> requests = createRequests(maximum::get_examples_simple_quant8());
+TEST_F(ValidationTest, maximum_simple_float16) {
+  const Model model = maximum::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(maximum::get_examples_simple_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14046,16 +15754,16 @@ TEST_F(ValidationTest, maximum_simple_int32) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, maximum_simple_float16) {
+TEST_F(NeuralnetworksHidlTest, maximum_simple_quant8) {
   generated_tests::Execute(device,
-                           maximum::createTestModel_float16,
-                           maximum::is_ignored_float16,
-                           maximum::get_examples_simple_float16());
+                           maximum::createTestModel_quant8,
+                           maximum::is_ignored_quant8,
+                           maximum::get_examples_simple_quant8());
 }
 
-TEST_F(ValidationTest, maximum_simple_float16) {
-  const Model model = maximum::createTestModel_float16();
-  const std::vector<Request> requests = createRequests(maximum::get_examples_simple_float16());
+TEST_F(ValidationTest, maximum_simple_quant8) {
+  const Model model = maximum::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(maximum::get_examples_simple_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14091,16 +15799,16 @@ TEST_F(ValidationTest, maximum_broadcast_relaxed) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, maximum_broadcast_quant8) {
+TEST_F(NeuralnetworksHidlTest, maximum_broadcast_float16) {
   generated_tests::Execute(device,
-                           maximum::createTestModel_quant8_2,
-                           maximum::is_ignored_quant8_2,
-                           maximum::get_examples_broadcast_quant8());
+                           maximum::createTestModel_float16_2,
+                           maximum::is_ignored_float16_2,
+                           maximum::get_examples_broadcast_float16());
 }
 
-TEST_F(ValidationTest, maximum_broadcast_quant8) {
-  const Model model = maximum::createTestModel_quant8_2();
-  const std::vector<Request> requests = createRequests(maximum::get_examples_broadcast_quant8());
+TEST_F(ValidationTest, maximum_broadcast_float16) {
+  const Model model = maximum::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(maximum::get_examples_broadcast_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14121,16 +15829,39 @@ TEST_F(ValidationTest, maximum_broadcast_int32) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, maximum_broadcast_float16) {
+TEST_F(NeuralnetworksHidlTest, maximum_broadcast_quant8) {
   generated_tests::Execute(device,
-                           maximum::createTestModel_float16_2,
-                           maximum::is_ignored_float16_2,
-                           maximum::get_examples_broadcast_float16());
+                           maximum::createTestModel_quant8_2,
+                           maximum::is_ignored_quant8_2,
+                           maximum::get_examples_broadcast_quant8());
 }
 
-TEST_F(ValidationTest, maximum_broadcast_float16) {
-  const Model model = maximum::createTestModel_float16_2();
-  const std::vector<Request> requests = createRequests(maximum::get_examples_broadcast_float16());
+TEST_F(ValidationTest, maximum_broadcast_quant8) {
+  const Model model = maximum::createTestModel_quant8_2();
+  const std::vector<Request> requests = createRequests(maximum::get_examples_broadcast_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: mean_float16.mod.py.
+namespace mean_float16 {
+// Generated mean_float16 test
+#include "examples/mean_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/mean_float16.model.cpp"
+} // namespace mean_float16
+
+TEST_F(NeuralnetworksHidlTest, mean_float16) {
+  generated_tests::Execute(device,
+                           mean_float16::createTestModel,
+                           mean_float16::is_ignored,
+                           mean_float16::get_examples());
+}
+
+TEST_F(ValidationTest, mean_float16) {
+  const Model model = mean_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(mean_float16::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14174,16 +15905,16 @@ TEST_F(ValidationTest, minimum_simple_relaxed) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, minimum_simple_quant8) {
+TEST_F(NeuralnetworksHidlTest, minimum_simple_float16) {
   generated_tests::Execute(device,
-                           minimum::createTestModel_quant8,
-                           minimum::is_ignored_quant8,
-                           minimum::get_examples_simple_quant8());
+                           minimum::createTestModel_float16,
+                           minimum::is_ignored_float16,
+                           minimum::get_examples_simple_float16());
 }
 
-TEST_F(ValidationTest, minimum_simple_quant8) {
-  const Model model = minimum::createTestModel_quant8();
-  const std::vector<Request> requests = createRequests(minimum::get_examples_simple_quant8());
+TEST_F(ValidationTest, minimum_simple_float16) {
+  const Model model = minimum::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(minimum::get_examples_simple_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14204,16 +15935,16 @@ TEST_F(ValidationTest, minimum_simple_int32) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, minimum_simple_float16) {
+TEST_F(NeuralnetworksHidlTest, minimum_simple_quant8) {
   generated_tests::Execute(device,
-                           minimum::createTestModel_float16,
-                           minimum::is_ignored_float16,
-                           minimum::get_examples_simple_float16());
+                           minimum::createTestModel_quant8,
+                           minimum::is_ignored_quant8,
+                           minimum::get_examples_simple_quant8());
 }
 
-TEST_F(ValidationTest, minimum_simple_float16) {
-  const Model model = minimum::createTestModel_float16();
-  const std::vector<Request> requests = createRequests(minimum::get_examples_simple_float16());
+TEST_F(ValidationTest, minimum_simple_quant8) {
+  const Model model = minimum::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(minimum::get_examples_simple_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14249,16 +15980,16 @@ TEST_F(ValidationTest, minimum_broadcast_relaxed) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, minimum_broadcast_quant8) {
+TEST_F(NeuralnetworksHidlTest, minimum_broadcast_float16) {
   generated_tests::Execute(device,
-                           minimum::createTestModel_quant8_2,
-                           minimum::is_ignored_quant8_2,
-                           minimum::get_examples_broadcast_quant8());
+                           minimum::createTestModel_float16_2,
+                           minimum::is_ignored_float16_2,
+                           minimum::get_examples_broadcast_float16());
 }
 
-TEST_F(ValidationTest, minimum_broadcast_quant8) {
-  const Model model = minimum::createTestModel_quant8_2();
-  const std::vector<Request> requests = createRequests(minimum::get_examples_broadcast_quant8());
+TEST_F(ValidationTest, minimum_broadcast_float16) {
+  const Model model = minimum::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(minimum::get_examples_broadcast_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14279,16 +16010,16 @@ TEST_F(ValidationTest, minimum_broadcast_int32) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, minimum_broadcast_float16) {
+TEST_F(NeuralnetworksHidlTest, minimum_broadcast_quant8) {
   generated_tests::Execute(device,
-                           minimum::createTestModel_float16_2,
-                           minimum::is_ignored_float16_2,
-                           minimum::get_examples_broadcast_float16());
+                           minimum::createTestModel_quant8_2,
+                           minimum::is_ignored_quant8_2,
+                           minimum::get_examples_broadcast_quant8());
 }
 
-TEST_F(ValidationTest, minimum_broadcast_float16) {
-  const Model model = minimum::createTestModel_float16_2();
-  const std::vector<Request> requests = createRequests(minimum::get_examples_broadcast_float16());
+TEST_F(ValidationTest, minimum_broadcast_quant8) {
+  const Model model = minimum::createTestModel_quant8_2();
+  const std::vector<Request> requests = createRequests(minimum::get_examples_broadcast_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14335,6 +16066,164 @@ TEST_F(NeuralnetworksHidlTest, mul_float16) {
 TEST_F(ValidationTest, mul_float16) {
   const Model model = mul_float16::createTestModel();
   const std::vector<Request> requests = createRequests(mul_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: not_equal.mod.py.
+namespace not_equal {
+// Generated not_equal test
+#include "examples/not_equal.example.cpp"
+// Generated model constructor
+#include "vts_models/not_equal.model.cpp"
+} // namespace not_equal
+
+TEST_F(NeuralnetworksHidlTest, not_equal_simple) {
+  generated_tests::Execute(device,
+                           not_equal::createTestModel,
+                           not_equal::is_ignored,
+                           not_equal::get_examples_simple());
+}
+
+TEST_F(ValidationTest, not_equal_simple) {
+  const Model model = not_equal::createTestModel();
+  const std::vector<Request> requests = createRequests(not_equal::get_examples_simple());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, not_equal_simple_int32) {
+  generated_tests::Execute(device,
+                           not_equal::createTestModel_int32,
+                           not_equal::is_ignored_int32,
+                           not_equal::get_examples_simple_int32());
+}
+
+TEST_F(ValidationTest, not_equal_simple_int32) {
+  const Model model = not_equal::createTestModel_int32();
+  const std::vector<Request> requests = createRequests(not_equal::get_examples_simple_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, not_equal_simple_float16) {
+  generated_tests::Execute(device,
+                           not_equal::createTestModel_float16,
+                           not_equal::is_ignored_float16,
+                           not_equal::get_examples_simple_float16());
+}
+
+TEST_F(ValidationTest, not_equal_simple_float16) {
+  const Model model = not_equal::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(not_equal::get_examples_simple_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, not_equal_simple_relaxed) {
+  generated_tests::Execute(device,
+                           not_equal::createTestModel_relaxed,
+                           not_equal::is_ignored_relaxed,
+                           not_equal::get_examples_simple_relaxed());
+}
+
+TEST_F(ValidationTest, not_equal_simple_relaxed) {
+  const Model model = not_equal::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(not_equal::get_examples_simple_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, not_equal_broadcast) {
+  generated_tests::Execute(device,
+                           not_equal::createTestModel_2,
+                           not_equal::is_ignored_2,
+                           not_equal::get_examples_broadcast());
+}
+
+TEST_F(ValidationTest, not_equal_broadcast) {
+  const Model model = not_equal::createTestModel_2();
+  const std::vector<Request> requests = createRequests(not_equal::get_examples_broadcast());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, not_equal_broadcast_int32) {
+  generated_tests::Execute(device,
+                           not_equal::createTestModel_int32_2,
+                           not_equal::is_ignored_int32_2,
+                           not_equal::get_examples_broadcast_int32());
+}
+
+TEST_F(ValidationTest, not_equal_broadcast_int32) {
+  const Model model = not_equal::createTestModel_int32_2();
+  const std::vector<Request> requests = createRequests(not_equal::get_examples_broadcast_int32());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, not_equal_broadcast_float16) {
+  generated_tests::Execute(device,
+                           not_equal::createTestModel_float16_2,
+                           not_equal::is_ignored_float16_2,
+                           not_equal::get_examples_broadcast_float16());
+}
+
+TEST_F(ValidationTest, not_equal_broadcast_float16) {
+  const Model model = not_equal::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(not_equal::get_examples_broadcast_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, not_equal_broadcast_relaxed) {
+  generated_tests::Execute(device,
+                           not_equal::createTestModel_relaxed_2,
+                           not_equal::is_ignored_relaxed_2,
+                           not_equal::get_examples_broadcast_relaxed());
+}
+
+TEST_F(ValidationTest, not_equal_broadcast_relaxed) {
+  const Model model = not_equal::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(not_equal::get_examples_broadcast_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, not_equal_quantized_different_scale) {
+  generated_tests::Execute(device,
+                           not_equal::createTestModel_3,
+                           not_equal::is_ignored_3,
+                           not_equal::get_examples_quantized_different_scale());
+}
+
+TEST_F(ValidationTest, not_equal_quantized_different_scale) {
+  const Model model = not_equal::createTestModel_3();
+  const std::vector<Request> requests = createRequests(not_equal::get_examples_quantized_different_scale());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, not_equal_quantized_different_zero_point) {
+  generated_tests::Execute(device,
+                           not_equal::createTestModel_4,
+                           not_equal::is_ignored_4,
+                           not_equal::get_examples_quantized_different_zero_point());
+}
+
+TEST_F(ValidationTest, not_equal_quantized_different_zero_point) {
+  const Model model = not_equal::createTestModel_4();
+  const std::vector<Request> requests = createRequests(not_equal::get_examples_quantized_different_zero_point());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14598,6 +16487,21 @@ TEST_F(ValidationTest, prelu_quant8) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, prelu_float16) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_float16,
+                           prelu::is_ignored_float16,
+                           prelu::get_examples_float16());
+}
+
+TEST_F(ValidationTest, prelu_float16) {
+  const Model model = prelu::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input) {
   generated_tests::Execute(device,
                            prelu::createTestModel_weight_as_input,
@@ -14638,6 +16542,21 @@ TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input_quant8) {
 TEST_F(ValidationTest, prelu_weight_as_input_quant8) {
   const Model model = prelu::createTestModel_weight_as_input_quant8();
   const std::vector<Request> requests = createRequests(prelu::get_examples_weight_as_input_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input_float16) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_weight_as_input_float16,
+                           prelu::is_ignored_weight_as_input_float16,
+                           prelu::get_examples_weight_as_input_float16());
+}
+
+TEST_F(ValidationTest, prelu_weight_as_input_float16) {
+  const Model model = prelu::createTestModel_weight_as_input_float16();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_weight_as_input_float16());
   validateModel(model);
   validateRequests(model, requests);
 }

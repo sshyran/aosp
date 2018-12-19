@@ -120,31 +120,31 @@ Model createTestModel_axis_dim4_axis0_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -153,7 +153,7 @@ Model createTestModel_axis_dim4_axis0_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -177,7 +177,7 @@ Model createTestModel_axis_dim4_axis0_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -316,31 +316,31 @@ Model createTestModel_axis_dim4_axis0_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -349,7 +349,7 @@ Model createTestModel_axis_dim4_axis0_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -373,7 +373,7 @@ Model createTestModel_axis_dim4_axis0_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 252, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 252, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -512,31 +512,31 @@ Model createTestModel_axis_dim4_axis1_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -545,7 +545,7 @@ Model createTestModel_axis_dim4_axis1_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -569,7 +569,7 @@ Model createTestModel_axis_dim4_axis1_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -708,31 +708,31 @@ Model createTestModel_axis_dim4_axis1_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -741,7 +741,7 @@ Model createTestModel_axis_dim4_axis1_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -765,7 +765,7 @@ Model createTestModel_axis_dim4_axis1_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 253, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -904,31 +904,31 @@ Model createTestModel_axis_dim4_axis2_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -937,7 +937,7 @@ Model createTestModel_axis_dim4_axis2_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -961,7 +961,7 @@ Model createTestModel_axis_dim4_axis2_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 2, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1100,31 +1100,31 @@ Model createTestModel_axis_dim4_axis2_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -1133,7 +1133,7 @@ Model createTestModel_axis_dim4_axis2_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -1157,7 +1157,7 @@ Model createTestModel_axis_dim4_axis2_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1296,31 +1296,31 @@ Model createTestModel_axis_dim4_axis3_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -1329,7 +1329,7 @@ Model createTestModel_axis_dim4_axis3_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -1353,7 +1353,7 @@ Model createTestModel_axis_dim4_axis3_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 3, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 3, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1492,31 +1492,31 @@ Model createTestModel_axis_dim4_axis3_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -1525,7 +1525,7 @@ Model createTestModel_axis_dim4_axis3_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -1549,7 +1549,7 @@ Model createTestModel_axis_dim4_axis3_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1688,31 +1688,31 @@ Model createTestModel_axis_dim3_axis0_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -1721,7 +1721,7 @@ Model createTestModel_axis_dim3_axis0_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -1745,7 +1745,7 @@ Model createTestModel_axis_dim3_axis0_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1884,31 +1884,31 @@ Model createTestModel_axis_dim3_axis0_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -1917,7 +1917,7 @@ Model createTestModel_axis_dim3_axis0_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -1941,7 +1941,7 @@ Model createTestModel_axis_dim3_axis0_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 253, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2080,31 +2080,31 @@ Model createTestModel_axis_dim3_axis1_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -2113,7 +2113,7 @@ Model createTestModel_axis_dim3_axis1_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -2137,7 +2137,7 @@ Model createTestModel_axis_dim3_axis1_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2276,31 +2276,31 @@ Model createTestModel_axis_dim3_axis1_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -2309,7 +2309,7 @@ Model createTestModel_axis_dim3_axis1_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -2333,7 +2333,7 @@ Model createTestModel_axis_dim3_axis1_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2472,31 +2472,31 @@ Model createTestModel_axis_dim3_axis2_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -2505,7 +2505,7 @@ Model createTestModel_axis_dim3_axis2_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -2529,7 +2529,7 @@ Model createTestModel_axis_dim3_axis2_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 2, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2668,31 +2668,31 @@ Model createTestModel_axis_dim3_axis2_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -2701,7 +2701,7 @@ Model createTestModel_axis_dim3_axis2_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -2725,7 +2725,7 @@ Model createTestModel_axis_dim3_axis2_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2864,31 +2864,31 @@ Model createTestModel_axis_dim2_axis0_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -2897,7 +2897,7 @@ Model createTestModel_axis_dim2_axis0_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -2921,7 +2921,7 @@ Model createTestModel_axis_dim2_axis0_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -3060,31 +3060,31 @@ Model createTestModel_axis_dim2_axis0_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -3093,7 +3093,7 @@ Model createTestModel_axis_dim2_axis0_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -3117,7 +3117,7 @@ Model createTestModel_axis_dim2_axis0_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -3256,31 +3256,31 @@ Model createTestModel_axis_dim2_axis1_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -3289,7 +3289,7 @@ Model createTestModel_axis_dim2_axis1_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -3313,7 +3313,7 @@ Model createTestModel_axis_dim2_axis1_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -3452,31 +3452,31 @@ Model createTestModel_axis_dim2_axis1_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -3485,7 +3485,7 @@ Model createTestModel_axis_dim2_axis1_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -3509,7 +3509,7 @@ Model createTestModel_axis_dim2_axis1_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -3648,31 +3648,31 @@ Model createTestModel_axis_dim1_axis0_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -3681,7 +3681,7 @@ Model createTestModel_axis_dim1_axis0_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -3705,7 +3705,7 @@ Model createTestModel_axis_dim1_axis0_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -3844,31 +3844,31 @@ Model createTestModel_axis_dim1_axis0_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -3877,7 +3877,7 @@ Model createTestModel_axis_dim1_axis0_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -3901,7 +3901,7 @@ Model createTestModel_axis_dim1_axis0_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -4041,31 +4041,31 @@ Model createTestModel_axis_relaxed_dim4_axis0_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -4074,7 +4074,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -4098,7 +4098,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -4239,31 +4239,31 @@ Model createTestModel_axis_relaxed_dim4_axis0_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -4272,7 +4272,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -4296,7 +4296,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 252, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 252, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -4437,31 +4437,31 @@ Model createTestModel_axis_relaxed_dim4_axis1_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -4470,7 +4470,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -4494,7 +4494,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -4635,31 +4635,31 @@ Model createTestModel_axis_relaxed_dim4_axis1_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -4668,7 +4668,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -4692,7 +4692,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 253, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -4833,31 +4833,31 @@ Model createTestModel_axis_relaxed_dim4_axis2_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -4866,7 +4866,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -4890,7 +4890,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 2, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -5031,31 +5031,31 @@ Model createTestModel_axis_relaxed_dim4_axis2_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -5064,7 +5064,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -5088,7 +5088,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -5229,31 +5229,31 @@ Model createTestModel_axis_relaxed_dim4_axis3_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -5262,7 +5262,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -5286,7 +5286,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 3, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 3, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -5427,31 +5427,31 @@ Model createTestModel_axis_relaxed_dim4_axis3_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -5460,7 +5460,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -5484,7 +5484,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -5625,31 +5625,31 @@ Model createTestModel_axis_relaxed_dim3_axis0_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -5658,7 +5658,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -5682,7 +5682,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -5823,31 +5823,31 @@ Model createTestModel_axis_relaxed_dim3_axis0_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -5856,7 +5856,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -5880,7 +5880,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 253, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -6021,31 +6021,31 @@ Model createTestModel_axis_relaxed_dim3_axis1_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -6054,7 +6054,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -6078,7 +6078,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -6219,31 +6219,31 @@ Model createTestModel_axis_relaxed_dim3_axis1_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -6252,7 +6252,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -6276,7 +6276,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -6417,31 +6417,31 @@ Model createTestModel_axis_relaxed_dim3_axis2_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -6450,7 +6450,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -6474,7 +6474,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 2, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -6615,31 +6615,31 @@ Model createTestModel_axis_relaxed_dim3_axis2_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -6648,7 +6648,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -6672,7 +6672,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -6813,31 +6813,31 @@ Model createTestModel_axis_relaxed_dim2_axis0_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -6846,7 +6846,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -6870,7 +6870,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -7011,31 +7011,31 @@ Model createTestModel_axis_relaxed_dim2_axis0_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -7044,7 +7044,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -7068,7 +7068,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -7209,31 +7209,31 @@ Model createTestModel_axis_relaxed_dim2_axis1_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -7242,7 +7242,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -7266,7 +7266,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -7407,31 +7407,31 @@ Model createTestModel_axis_relaxed_dim2_axis1_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -7440,7 +7440,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -7464,7 +7464,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -7605,31 +7605,31 @@ Model createTestModel_axis_relaxed_dim1_axis0_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -7638,7 +7638,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -7662,7 +7662,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -7803,31 +7803,31 @@ Model createTestModel_axis_relaxed_dim1_axis0_neg_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -7836,7 +7836,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_neg_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -7860,7 +7860,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_neg_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 0, 0, 0, 60, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8000,31 +8000,31 @@ Model createTestModel_axis_dim4_axis0_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -8033,7 +8033,7 @@ Model createTestModel_axis_dim4_axis0_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -8057,7 +8057,7 @@ Model createTestModel_axis_dim4_axis0_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8196,31 +8196,31 @@ Model createTestModel_axis_dim4_axis0_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -8229,7 +8229,7 @@ Model createTestModel_axis_dim4_axis0_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -8253,7 +8253,7 @@ Model createTestModel_axis_dim4_axis0_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 252, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 252, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8392,31 +8392,31 @@ Model createTestModel_axis_dim4_axis1_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -8425,7 +8425,7 @@ Model createTestModel_axis_dim4_axis1_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -8449,7 +8449,7 @@ Model createTestModel_axis_dim4_axis1_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8588,31 +8588,31 @@ Model createTestModel_axis_dim4_axis1_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -8621,7 +8621,7 @@ Model createTestModel_axis_dim4_axis1_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -8645,7 +8645,7 @@ Model createTestModel_axis_dim4_axis1_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 253, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8784,31 +8784,31 @@ Model createTestModel_axis_dim4_axis2_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -8817,7 +8817,7 @@ Model createTestModel_axis_dim4_axis2_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -8841,7 +8841,7 @@ Model createTestModel_axis_dim4_axis2_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 2, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8980,31 +8980,31 @@ Model createTestModel_axis_dim4_axis2_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -9013,7 +9013,7 @@ Model createTestModel_axis_dim4_axis2_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -9037,7 +9037,7 @@ Model createTestModel_axis_dim4_axis2_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9176,31 +9176,31 @@ Model createTestModel_axis_dim4_axis3_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -9209,7 +9209,7 @@ Model createTestModel_axis_dim4_axis3_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -9233,7 +9233,7 @@ Model createTestModel_axis_dim4_axis3_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 3, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 3, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9372,31 +9372,31 @@ Model createTestModel_axis_dim4_axis3_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -9405,7 +9405,7 @@ Model createTestModel_axis_dim4_axis3_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -9429,7 +9429,7 @@ Model createTestModel_axis_dim4_axis3_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9568,31 +9568,31 @@ Model createTestModel_axis_dim3_axis0_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -9601,7 +9601,7 @@ Model createTestModel_axis_dim3_axis0_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -9625,7 +9625,7 @@ Model createTestModel_axis_dim3_axis0_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9764,31 +9764,31 @@ Model createTestModel_axis_dim3_axis0_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -9797,7 +9797,7 @@ Model createTestModel_axis_dim3_axis0_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -9821,7 +9821,7 @@ Model createTestModel_axis_dim3_axis0_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 253, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9960,31 +9960,31 @@ Model createTestModel_axis_dim3_axis1_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -9993,7 +9993,7 @@ Model createTestModel_axis_dim3_axis1_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -10017,7 +10017,7 @@ Model createTestModel_axis_dim3_axis1_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -10156,31 +10156,31 @@ Model createTestModel_axis_dim3_axis1_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -10189,7 +10189,7 @@ Model createTestModel_axis_dim3_axis1_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -10213,7 +10213,7 @@ Model createTestModel_axis_dim3_axis1_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -10352,31 +10352,31 @@ Model createTestModel_axis_dim3_axis2_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -10385,7 +10385,7 @@ Model createTestModel_axis_dim3_axis2_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -10409,7 +10409,7 @@ Model createTestModel_axis_dim3_axis2_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 2, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -10548,31 +10548,31 @@ Model createTestModel_axis_dim3_axis2_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -10581,7 +10581,7 @@ Model createTestModel_axis_dim3_axis2_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -10605,7 +10605,7 @@ Model createTestModel_axis_dim3_axis2_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -10744,31 +10744,31 @@ Model createTestModel_axis_dim2_axis0_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -10777,7 +10777,7 @@ Model createTestModel_axis_dim2_axis0_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -10801,7 +10801,7 @@ Model createTestModel_axis_dim2_axis0_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -10940,31 +10940,31 @@ Model createTestModel_axis_dim2_axis0_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -10973,7 +10973,7 @@ Model createTestModel_axis_dim2_axis0_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -10997,7 +10997,7 @@ Model createTestModel_axis_dim2_axis0_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -11136,31 +11136,31 @@ Model createTestModel_axis_dim2_axis1_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -11169,7 +11169,7 @@ Model createTestModel_axis_dim2_axis1_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -11193,7 +11193,7 @@ Model createTestModel_axis_dim2_axis1_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -11332,31 +11332,31 @@ Model createTestModel_axis_dim2_axis1_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -11365,7 +11365,7 @@ Model createTestModel_axis_dim2_axis1_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -11389,7 +11389,7 @@ Model createTestModel_axis_dim2_axis1_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -11528,31 +11528,31 @@ Model createTestModel_axis_dim1_axis0_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -11561,7 +11561,7 @@ Model createTestModel_axis_dim1_axis0_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -11585,7 +11585,7 @@ Model createTestModel_axis_dim1_axis0_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -11724,31 +11724,31 @@ Model createTestModel_axis_dim1_axis0_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -11757,7 +11757,7 @@ Model createTestModel_axis_dim1_axis0_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -11781,7 +11781,7 @@ Model createTestModel_axis_dim1_axis0_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -11921,31 +11921,31 @@ Model createTestModel_axis_relaxed_dim4_axis0_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -11954,7 +11954,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -11978,7 +11978,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -12119,31 +12119,31 @@ Model createTestModel_axis_relaxed_dim4_axis0_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -12152,7 +12152,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -12176,7 +12176,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 252, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 252, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -12317,31 +12317,31 @@ Model createTestModel_axis_relaxed_dim4_axis1_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -12350,7 +12350,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -12374,7 +12374,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -12515,31 +12515,31 @@ Model createTestModel_axis_relaxed_dim4_axis1_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -12548,7 +12548,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -12572,7 +12572,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 253, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -12713,31 +12713,31 @@ Model createTestModel_axis_relaxed_dim4_axis2_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -12746,7 +12746,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -12770,7 +12770,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 2, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -12911,31 +12911,31 @@ Model createTestModel_axis_relaxed_dim4_axis2_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -12944,7 +12944,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -12968,7 +12968,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13109,31 +13109,31 @@ Model createTestModel_axis_relaxed_dim4_axis3_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -13142,7 +13142,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -13166,7 +13166,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 3, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 3, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13307,31 +13307,31 @@ Model createTestModel_axis_relaxed_dim4_axis3_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -13340,7 +13340,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -13364,7 +13364,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13505,31 +13505,31 @@ Model createTestModel_axis_relaxed_dim3_axis0_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -13538,7 +13538,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -13562,7 +13562,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13703,31 +13703,31 @@ Model createTestModel_axis_relaxed_dim3_axis0_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -13736,7 +13736,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -13760,7 +13760,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 253, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13901,31 +13901,31 @@ Model createTestModel_axis_relaxed_dim3_axis1_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -13934,7 +13934,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -13958,7 +13958,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14099,31 +14099,31 @@ Model createTestModel_axis_relaxed_dim3_axis1_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -14132,7 +14132,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -14156,7 +14156,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14297,31 +14297,31 @@ Model createTestModel_axis_relaxed_dim3_axis2_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -14330,7 +14330,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -14354,7 +14354,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 2, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14495,31 +14495,31 @@ Model createTestModel_axis_relaxed_dim3_axis2_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -14528,7 +14528,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -14552,7 +14552,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14693,31 +14693,31 @@ Model createTestModel_axis_relaxed_dim2_axis0_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -14726,7 +14726,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -14750,7 +14750,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14891,31 +14891,31 @@ Model createTestModel_axis_relaxed_dim2_axis0_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -14924,7 +14924,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -14948,7 +14948,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -15089,31 +15089,31 @@ Model createTestModel_axis_relaxed_dim2_axis1_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -15122,7 +15122,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -15146,7 +15146,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -15287,31 +15287,31 @@ Model createTestModel_axis_relaxed_dim2_axis1_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -15320,7 +15320,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -15344,7 +15344,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -15485,31 +15485,31 @@ Model createTestModel_axis_relaxed_dim1_axis0_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -15518,7 +15518,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -15542,7 +15542,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -15683,31 +15683,31 @@ Model createTestModel_axis_relaxed_dim1_axis0_neg_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -15716,7 +15716,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_neg_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -15740,7 +15740,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_neg_float16_2() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      20, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      20, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -15880,31 +15880,31 @@ Model createTestModel_axis_dim4_axis0_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -15913,7 +15913,7 @@ Model createTestModel_axis_dim4_axis0_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -15937,7 +15937,7 @@ Model createTestModel_axis_dim4_axis0_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -16076,31 +16076,31 @@ Model createTestModel_axis_dim4_axis0_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -16109,7 +16109,7 @@ Model createTestModel_axis_dim4_axis0_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -16133,7 +16133,7 @@ Model createTestModel_axis_dim4_axis0_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 252, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 252, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -16272,31 +16272,31 @@ Model createTestModel_axis_dim4_axis1_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -16305,7 +16305,7 @@ Model createTestModel_axis_dim4_axis1_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -16329,7 +16329,7 @@ Model createTestModel_axis_dim4_axis1_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -16468,31 +16468,31 @@ Model createTestModel_axis_dim4_axis1_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -16501,7 +16501,7 @@ Model createTestModel_axis_dim4_axis1_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -16525,7 +16525,7 @@ Model createTestModel_axis_dim4_axis1_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 253, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -16664,31 +16664,31 @@ Model createTestModel_axis_dim4_axis2_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -16697,7 +16697,7 @@ Model createTestModel_axis_dim4_axis2_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -16721,7 +16721,7 @@ Model createTestModel_axis_dim4_axis2_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 2, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -16860,31 +16860,31 @@ Model createTestModel_axis_dim4_axis2_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -16893,7 +16893,7 @@ Model createTestModel_axis_dim4_axis2_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -16917,7 +16917,7 @@ Model createTestModel_axis_dim4_axis2_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -17056,31 +17056,31 @@ Model createTestModel_axis_dim4_axis3_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -17089,7 +17089,7 @@ Model createTestModel_axis_dim4_axis3_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -17113,7 +17113,7 @@ Model createTestModel_axis_dim4_axis3_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 3, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 3, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -17252,31 +17252,31 @@ Model createTestModel_axis_dim4_axis3_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -17285,7 +17285,7 @@ Model createTestModel_axis_dim4_axis3_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -17309,7 +17309,7 @@ Model createTestModel_axis_dim4_axis3_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -17448,31 +17448,31 @@ Model createTestModel_axis_dim3_axis0_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -17481,7 +17481,7 @@ Model createTestModel_axis_dim3_axis0_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -17505,7 +17505,7 @@ Model createTestModel_axis_dim3_axis0_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -17644,31 +17644,31 @@ Model createTestModel_axis_dim3_axis0_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -17677,7 +17677,7 @@ Model createTestModel_axis_dim3_axis0_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -17701,7 +17701,7 @@ Model createTestModel_axis_dim3_axis0_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 253, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -17840,31 +17840,31 @@ Model createTestModel_axis_dim3_axis1_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -17873,7 +17873,7 @@ Model createTestModel_axis_dim3_axis1_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -17897,7 +17897,7 @@ Model createTestModel_axis_dim3_axis1_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -18036,31 +18036,31 @@ Model createTestModel_axis_dim3_axis1_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -18069,7 +18069,7 @@ Model createTestModel_axis_dim3_axis1_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -18093,7 +18093,7 @@ Model createTestModel_axis_dim3_axis1_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -18232,31 +18232,31 @@ Model createTestModel_axis_dim3_axis2_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -18265,7 +18265,7 @@ Model createTestModel_axis_dim3_axis2_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -18289,7 +18289,7 @@ Model createTestModel_axis_dim3_axis2_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 2, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -18428,31 +18428,31 @@ Model createTestModel_axis_dim3_axis2_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -18461,7 +18461,7 @@ Model createTestModel_axis_dim3_axis2_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -18485,7 +18485,7 @@ Model createTestModel_axis_dim3_axis2_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -18624,31 +18624,31 @@ Model createTestModel_axis_dim2_axis0_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -18657,7 +18657,7 @@ Model createTestModel_axis_dim2_axis0_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -18681,7 +18681,7 @@ Model createTestModel_axis_dim2_axis0_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -18820,31 +18820,31 @@ Model createTestModel_axis_dim2_axis0_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -18853,7 +18853,7 @@ Model createTestModel_axis_dim2_axis0_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -18877,7 +18877,7 @@ Model createTestModel_axis_dim2_axis0_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -19016,31 +19016,31 @@ Model createTestModel_axis_dim2_axis1_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -19049,7 +19049,7 @@ Model createTestModel_axis_dim2_axis1_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -19073,7 +19073,7 @@ Model createTestModel_axis_dim2_axis1_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -19212,31 +19212,31 @@ Model createTestModel_axis_dim2_axis1_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -19245,7 +19245,7 @@ Model createTestModel_axis_dim2_axis1_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -19269,7 +19269,7 @@ Model createTestModel_axis_dim2_axis1_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -19408,31 +19408,31 @@ Model createTestModel_axis_dim1_axis0_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -19441,7 +19441,7 @@ Model createTestModel_axis_dim1_axis0_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -19465,7 +19465,7 @@ Model createTestModel_axis_dim1_axis0_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -19604,31 +19604,31 @@ Model createTestModel_axis_dim1_axis0_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -19637,7 +19637,7 @@ Model createTestModel_axis_dim1_axis0_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -19661,7 +19661,7 @@ Model createTestModel_axis_dim1_axis0_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -19801,31 +19801,31 @@ Model createTestModel_axis_relaxed_dim4_axis0_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -19834,7 +19834,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -19858,7 +19858,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -19999,31 +19999,31 @@ Model createTestModel_axis_relaxed_dim4_axis0_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -20032,7 +20032,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -20056,7 +20056,7 @@ Model createTestModel_axis_relaxed_dim4_axis0_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 252, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 252, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -20197,31 +20197,31 @@ Model createTestModel_axis_relaxed_dim4_axis1_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -20230,7 +20230,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -20254,7 +20254,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -20395,31 +20395,31 @@ Model createTestModel_axis_relaxed_dim4_axis1_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -20428,7 +20428,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -20452,7 +20452,7 @@ Model createTestModel_axis_relaxed_dim4_axis1_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 253, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -20593,31 +20593,31 @@ Model createTestModel_axis_relaxed_dim4_axis2_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -20626,7 +20626,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -20650,7 +20650,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 2, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -20791,31 +20791,31 @@ Model createTestModel_axis_relaxed_dim4_axis2_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -20824,7 +20824,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -20848,7 +20848,7 @@ Model createTestModel_axis_relaxed_dim4_axis2_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -20989,31 +20989,31 @@ Model createTestModel_axis_relaxed_dim4_axis3_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -21022,7 +21022,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -21046,7 +21046,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 3, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 3, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -21187,31 +21187,31 @@ Model createTestModel_axis_relaxed_dim4_axis3_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -21220,7 +21220,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -21244,7 +21244,7 @@ Model createTestModel_axis_relaxed_dim4_axis3_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -21385,31 +21385,31 @@ Model createTestModel_axis_relaxed_dim3_axis0_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -21418,7 +21418,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -21442,7 +21442,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -21583,31 +21583,31 @@ Model createTestModel_axis_relaxed_dim3_axis0_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -21616,7 +21616,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -21640,7 +21640,7 @@ Model createTestModel_axis_relaxed_dim3_axis0_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 253, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 253, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -21781,31 +21781,31 @@ Model createTestModel_axis_relaxed_dim3_axis1_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -21814,7 +21814,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -21838,7 +21838,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -21979,31 +21979,31 @@ Model createTestModel_axis_relaxed_dim3_axis1_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -22012,7 +22012,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -22036,7 +22036,7 @@ Model createTestModel_axis_relaxed_dim3_axis1_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -22177,31 +22177,31 @@ Model createTestModel_axis_relaxed_dim3_axis2_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -22210,7 +22210,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -22234,7 +22234,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 2, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 2, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -22375,31 +22375,31 @@ Model createTestModel_axis_relaxed_dim3_axis2_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -22408,7 +22408,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -22432,7 +22432,7 @@ Model createTestModel_axis_relaxed_dim3_axis2_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -22573,31 +22573,31 @@ Model createTestModel_axis_relaxed_dim2_axis0_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -22606,7 +22606,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -22630,7 +22630,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -22771,31 +22771,31 @@ Model createTestModel_axis_relaxed_dim2_axis0_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -22804,7 +22804,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -22828,7 +22828,7 @@ Model createTestModel_axis_relaxed_dim2_axis0_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 254, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 254, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -22969,31 +22969,31 @@ Model createTestModel_axis_relaxed_dim2_axis1_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -23002,7 +23002,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -23026,7 +23026,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 1, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 1, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -23167,31 +23167,31 @@ Model createTestModel_axis_relaxed_dim2_axis1_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -23200,7 +23200,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -23224,7 +23224,7 @@ Model createTestModel_axis_relaxed_dim2_axis1_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -23365,31 +23365,31 @@ Model createTestModel_axis_relaxed_dim1_axis0_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -23398,7 +23398,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -23422,7 +23422,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 0, 0, 0, 0
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -23563,31 +23563,31 @@ Model createTestModel_axis_relaxed_dim1_axis0_neg_float16_3() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::INT32,
@@ -23596,7 +23596,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_neg_float16_3() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+            .location = {.poolIndex = 0, .offset = 10, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -23620,7 +23620,7 @@ Model createTestModel_axis_relaxed_dim1_axis0_neg_float16_3() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {6};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63, 255, 255, 255, 255
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56, 255, 255, 255, 255
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -23751,31 +23751,31 @@ Model createTestModel_dim1_axis0_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -23799,7 +23799,7 @@ Model createTestModel_dim1_axis0_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {5};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -23929,31 +23929,31 @@ Model createTestModel_dim2_axis1_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -23977,7 +23977,7 @@ Model createTestModel_dim2_axis1_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {5};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -24107,31 +24107,31 @@ Model createTestModel_dim3_axis2_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -24155,7 +24155,7 @@ Model createTestModel_dim3_axis2_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {5};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -24286,31 +24286,31 @@ Model createTestModel_relaxed_dim1_axis0_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -24334,7 +24334,7 @@ Model createTestModel_relaxed_dim1_axis0_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {5};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -24466,31 +24466,31 @@ Model createTestModel_relaxed_dim2_axis1_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -24514,7 +24514,7 @@ Model createTestModel_relaxed_dim2_axis1_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {5};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -24646,31 +24646,31 @@ Model createTestModel_relaxed_dim3_axis2_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 4, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 2},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::FLOAT16,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+            .location = {.poolIndex = 0, .offset = 8, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -24694,7 +24694,7 @@ Model createTestModel_relaxed_dim3_axis2_float16() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {5};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 0, 0, 16, 65, 0, 0, 128, 64, 0, 0, 0, 63
+      2, 0, 0, 0, 128, 72, 0, 68, 0, 56
     };
     const std::vector<hidl_memory> pools = {};
 
