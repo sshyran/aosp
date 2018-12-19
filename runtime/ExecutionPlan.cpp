@@ -49,20 +49,49 @@ int compile(std::shared_ptr<Device> device, const ModelBuilder* model, int32_t e
 
 typedef std::function<void(uint32_t)> OperationReadyCallback;
 
-ANeuralNetworksOperandType::ExtraParams createOperandExtraParams(
-        const Operand::ExtraParams& extraParams) {
-    switch (extraParams.getDiscriminator()) {
-        case V1_2::Operand::ExtraParams::hidl_discriminator::none:
-            return {};
-        case V1_2::Operand::ExtraParams::hidl_discriminator::channelQuant: {
-            auto& channelQuant = extraParams.channelQuant();
-            return {.channelQuant = {
-                            .scales = channelQuant.scales.data(),
-                            .scaleCount = static_cast<uint32_t>(channelQuant.scales.size()),
-                            .channelDim = channelQuant.channelDim,
-                    }};
-        } break;
+bool createSymmPerChannelQuantParams(ANeuralNetworksSymmPerChannelQuantParams* outChannelQuant,
+                                     const Operand::ExtraParams& extraParams) {
+    if (extraParams.getDiscriminator() !=
+        V1_2::Operand::ExtraParams::hidl_discriminator::channelQuant) {
+        LOG(ERROR) << "Unexpected extraParams discriminator, expected channelQuant"
+                   << " received " << static_cast<int>(extraParams.getDiscriminator());
+        return false;
     }
+    auto& fromChannelQuant = extraParams.channelQuant();
+    *outChannelQuant = {
+            .channelDim = fromChannelQuant.channelDim,
+            .scaleCount = static_cast<uint32_t>(fromChannelQuant.scales.size()),
+            .scales = fromChannelQuant.scales.data(),
+    };
+    return true;
+}
+
+int copyOperandExtraParams(ModelBuilder& model, uint32_t toOperandIndex,
+                           const Operand& fromOperand) {
+    switch (fromOperand.type) {
+        case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL: {
+            ANeuralNetworksSymmPerChannelQuantParams toChannelQuant;
+            if (!createSymmPerChannelQuantParams(&toChannelQuant, fromOperand.extraParams)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            int n = model.setOperandSymmPerChannelQuantParams(toOperandIndex, toChannelQuant);
+            if (n != ANEURALNETWORKS_NO_ERROR) {
+                LOG(ERROR) << "Failed setOperandSymmPerChannelQuantParams";
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+        } break;
+
+        default: {
+            if (fromOperand.extraParams.getDiscriminator() !=
+                V1_2::Operand::ExtraParams::hidl_discriminator::none) {
+                LOG(ERROR) << "Unexpected extraParams discriminator, expected none"
+                           << " received "
+                           << static_cast<int>(fromOperand.extraParams.getDiscriminator());
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+        }
+    }
+    return ANEURALNETWORKS_NO_ERROR;
 }
 
 // This class tracks whether we know the value of an operand as operations
@@ -150,12 +179,17 @@ int ExecutionStep::addOperand(uint32_t fromOperandIndex, uint32_t* toOperandInde
             .dimensions = operand.dimensions.size() > 0 ? operand.dimensions.data() : nullptr,
             .scale = operand.scale,
             .zeroPoint = operand.zeroPoint,
-            .extraParams = createOperandExtraParams(operand.extraParams),
     };
 
     int n = mSubModel.addOperand(type);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         LOG(ERROR) << "Previous error occurred when partitioning the graph";
+        return n;
+    }
+
+    n = copyOperandExtraParams(mSubModel, *toOperandIndex, operand);
+    if (n != ANEURALNETWORKS_NO_ERROR) {
+        LOG(ERROR) << "Error when copying extra parameters to the operand";
         return n;
     }
 

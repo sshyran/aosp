@@ -83,6 +83,7 @@ typedef enum {
      *   real_value = (integer_value - zeroPoint) * scale.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_ASYMM = 5,
+#if __ANDROID_API__ >= __ANDROID_API_Q__
     /**
      * An 8 bit boolean scalar value.
      *
@@ -134,11 +135,9 @@ typedef enum {
      * - channelDim: a 32 bit unsigned integer indicating channel dimension.
      * - scales: an array of positive 32 bit floating point values.
      * The size of the scales array must be equal to dimensions[channelDim].
-     * These fields are located inside Operand's extraParams union, inside the
-     * {@link ANeuralNetworksSymmPerChannelQuantParams} struct.
      *
-     * An Operand of this type must use 'channelQuant' field of its extraParams
-     * union.
+     * {@link ANeuralNetworksModel_setOperandSymmPerChannelQuantParams} must be used
+     * to set the parameters for an Operand of this type.
      *
      * The channel dimension of this tensor must not be unknown (dimensions[channelDim] != 0).
      *
@@ -150,6 +149,8 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL = 11,
+#endif  // __ANDROID_API__ >= __ANDROID_API_Q__
+
 } OperandCode;
 
 /**
@@ -4116,17 +4117,19 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  */
 typedef struct ANeuralNetworksExecution ANeuralNetworksExecution;
 
+#if __ANDROID_API__ >= __ANDROID_API_Q__
 /**
  * Parameters for ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL operand.
  */
 typedef struct ANeuralNetworksSymmPerChannelQuantParams {
-    /** The array of scaling values for each channel. Each value must be greater than zero. */
-    const float* scales;
-    /** The size of the scale array. Should be equal to dimension[channelDim] of the Operand. */
-    uint32_t scaleCount;
     /* The index of the channel dimension. */
     uint32_t channelDim;
+    /** The size of the scale array. Should be equal to dimension[channelDim] of the Operand. */
+    uint32_t scaleCount;
+    /** The array of scaling values for each channel. Each value must be greater than zero. */
+    const float* scales;
 } ANeuralNetworksSymmPerChannelQuantParams;
+#endif  //  __ANDROID_API__ >= __ANDROID_API_Q__
 
 /**
  * ANeuralNetworksOperandType describes the type of an operand.
@@ -4184,36 +4187,6 @@ typedef struct ANeuralNetworksOperandType {
      */
     float scale;
     int32_t zeroPoint;
-
-    // This struct was extended with additional fields in API29, changing this struct
-    // size. For binary compatibility with pre-API29 code, fields below this comment
-    // must not be accessed by the runtime if there is no guarantee that client compiled
-    // against API29+.
-    // Usage of operand types that were added in API29 is a strong signal that this is
-    // true. Fields below this comment should be accessed only if tensor type is set to
-    // - ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
-    // - ANEURALNETWORKS_TENSOR_FLOAT16
-    // - ANEURALNETWORKS_TENSOR_QUANT16_SYMM
-    // - ANEURALNETWORKS_BOOL
-    // ExtraParams is aligned to a byte to prevent binary compatibility problems that may
-    // arise from extending it with new fields. In particular, we want to avoid altering
-    // ANeuralNetorksOperandType alignment.
-    /**
-     * Union of extra parameters, used by some types of Operands that need additional
-     * information for the complete definition of an Operand.
-     *
-     * Available since API level 29.
-     */
-    union ExtraParams {
-        /** Must be set to null if no extra params are expected
-         * (only if compiled against API level 29 and later). */
-        const void* none;
-
-        /** Used with {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL}
-         * operand type.
-         */
-        ANeuralNetworksSymmPerChannelQuantParams channelQuant;
-    } __attribute__((aligned(1))) extraParams;
 } ANeuralNetworksOperandType;
 
 typedef int32_t ANeuralNetworksOperationType;
@@ -4586,6 +4559,33 @@ int ANeuralNetworksModel_addOperand(ANeuralNetworksModel* model,
  */
 int ANeuralNetworksModel_setOperandValue(ANeuralNetworksModel* model, int32_t index,
                                          const void* buffer, size_t length) __INTRODUCED_IN(27);
+
+#if __ANDROID_API__ >= __ANDROID_API_Q__
+
+/**
+ * Sets an operand's per channel quantization parameters.
+ *
+ * Sets parameters required by a tensor of type
+ * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL}.
+ * This function must be called for every tensor of type
+ * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} before
+ * calling {@link ANeuralNetworksModel_finish}.
+ *
+ * Available since API level 29.
+ *
+ * @param model The model to be modified.
+ * @param index The index of the model operand we're setting.
+ * @param channelQuant The per channel quantization parameters for the operand.
+ *                    No memory in this struct needs to outlive the call to
+ *                    this function.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ */
+int ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(
+        ANeuralNetworksModel* model, int32_t index,
+        const ANeuralNetworksSymmPerChannelQuantParams* channelQuant) __INTRODUCED_IN(29);
+
+#endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
 /**
  * Sets an operand to a value stored in a memory object.
