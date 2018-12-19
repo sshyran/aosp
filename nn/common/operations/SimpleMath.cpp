@@ -29,59 +29,6 @@
 namespace android {
 namespace nn {
 
-inline void get4DShape(const Shape& shapeIn, uint32_t* shapeOut) {
-    const int32_t kNumDims = 4;
-    int32_t numDims = static_cast<int32_t>(getNumberOfDimensions(shapeIn));
-    for (int32_t i = 0; i < numDims; i++) {
-        shapeOut[i + kNumDims - numDims] = getSizeOfDimension(shapeIn, i);
-    }
-    for (int32_t i = 0; i < kNumDims - numDims; i++) {
-        shapeOut[i] = 1;
-    }
-}
-
-inline void getBroadcastStrides(const Shape& shapeIn, uint32_t* stridesOut) {
-    const int32_t kNumDims = 4;
-    uint32_t dims[kNumDims];
-    get4DShape(shapeIn, dims);
-    stridesOut[kNumDims - 1] = 1;
-    for (int32_t i = kNumDims - 2; i >= 0; i--) {
-        stridesOut[i] = stridesOut[i + 1] * dims[i + 1];
-    }
-    for (int32_t i = kNumDims - 1; i >= 0; i--) {
-        if (dims[i] == 1) {
-            stridesOut[i] = 0;
-        }
-    }
-}
-
-template <typename T>
-inline bool broadcastOpBase(const T* in1, const Shape& shape1, const T* in2, const Shape& shape2,
-                            T* out, const Shape& shapeOut,
-                            std::function<T(const T&, const T&)> mathKernel) {
-    // extend to 4D
-    uint32_t outputDims[4], in1Strides[4], in2Strides[4];
-    get4DShape(shapeOut, outputDims);
-    getBroadcastStrides(shape1, in1Strides);
-    getBroadcastStrides(shape2, in2Strides);
-
-    T* outPtr = out;
-    for (uint32_t b = 0; b < outputDims[0]; b++) {
-        for (uint32_t h = 0; h < outputDims[1]; h++) {
-            for (uint32_t w = 0; w < outputDims[2]; w++) {
-                for (uint32_t c = 0; c < outputDims[3]; c++) {
-                    T in1Val = in1[b * in1Strides[0] + h * in1Strides[1] + w * in1Strides[2] +
-                                   c * in1Strides[3]];
-                    T in2Val = in2[b * in2Strides[0] + h * in2Strides[1] + w * in2Strides[2] +
-                                   c * in2Strides[3]];
-                    *outPtr++ = mathKernel(in1Val, in2Val);
-                }
-            }
-        }
-    }
-    return true;
-}
-
 #define ANDROID_NN_MACRO_DISPATCH(macro)                                    \
     switch (activation) {                                                   \
         case (int32_t) FusedActivationFunc::NONE:                           \
@@ -308,9 +255,18 @@ bool mulQuant8(const uint8_t* in1, const Shape& shape1,
     return true;
 }
 
-bool floorFloat32(const float* inputData,
-                  float* outputData,
-                  const Shape& shape) {
+bool floorFloat16(const _Float16* inputData, _Float16* outputData, const Shape& shape) {
+    NNTRACE_TRANS("floorFloat16");
+    std::vector<float> inputDataFloat32(getNumberOfElements(shape));
+    convertFloat16ToFloat32(inputData, &inputDataFloat32);
+
+    std::vector<float> outputDataFloat32(getNumberOfElements(shape));
+    floorFloat32(inputDataFloat32.data(), outputDataFloat32.data(), shape);
+    convertFloat32ToFloat16(outputDataFloat32, outputData);
+    return true;
+}
+
+bool floorFloat32(const float* inputData, float* outputData, const Shape& shape) {
     NNTRACE_TRANS("floorFloat32");
     tflite::Dims<4> dim = convertShapeToDims(shape);
     NNTRACE_COMP_SWITCH("optimized_ops::Floor");
@@ -318,15 +274,19 @@ bool floorFloat32(const float* inputData,
     return true;
 }
 
-bool dequantizeQuant8ToFloat32(const uint8_t* inputData,
-                               float* outputData,
-                               const Shape& shape) {
+bool dequantizeQuant8ToFloat16(const uint8_t* inputData, _Float16* outputData, const Shape& shape) {
+    NNTRACE_TRANS("dequantizeQuant8ToFloat16");
+    std::vector<float> outputDataFloat32(getNumberOfElements(shape));
+    dequantizeQuant8ToFloat32(inputData, outputDataFloat32.data(), shape);
+    convertFloat32ToFloat16(outputDataFloat32, outputData);
+    return true;
+}
+
+bool dequantizeQuant8ToFloat32(const uint8_t* inputData, float* outputData, const Shape& shape) {
     NNTRACE_TRANS("dequantizeQuant8ToFloat32");
     tflite::Dims<4> dim = convertShapeToDims(shape);
     NNTRACE_COMP_SWITCH("optimized_ops::Dequantize");
-    tflite::optimized_ops::Dequantize(inputData, dim,
-                                      shape.offset, shape.scale,
-                                      outputData, dim);
+    tflite::optimized_ops::Dequantize(inputData, dim, shape.offset, shape.scale, outputData, dim);
     return true;
 }
 
@@ -450,9 +410,23 @@ bool divFloat32(const float* in1, const Shape& shape1,
     return true;
 }
 
-bool meanGeneric(const uint8_t* inputData, const Shape& inputShape,
-                 const int32_t* axis, const Shape& axisShape, bool keepDims,
-                 uint8_t* outputData, const Shape& outputShape) {
+bool meanFloat16(_Float16* inputData, const Shape& inputShape, const int32_t* axis,
+                 const Shape& axisShape, bool keepDims, _Float16* outputData,
+                 const Shape& outputShape) {
+    NNTRACE_TRANS("meanFloat16");
+    std::vector<float> inputDataFloat32(getNumberOfElements(inputShape));
+    convertFloat16ToFloat32(inputData, &inputDataFloat32);
+
+    std::vector<float> outputDataFloat32(getNumberOfElements(outputShape));
+    meanGeneric<float, float>(inputDataFloat32.data(), inputShape, axis, axisShape, keepDims,
+                              outputDataFloat32.data(), outputShape);
+    convertFloat32ToFloat16(outputDataFloat32, outputData);
+    return true;
+}
+
+template <typename T, typename U>
+bool meanGeneric(T* inputData, const Shape& inputShape, const int32_t* axis, const Shape& axisShape,
+                 bool keepDims, T* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("meanGeneric");
     // Creates a temp index to iterate through input data.
     int32_t* scratchBuffer = new int32_t[getNumberOfDimensions(inputShape)];
@@ -462,102 +436,31 @@ bool meanGeneric(const uint8_t* inputData, const Shape& inputShape,
     int32_t* resolvedAxis = new int32_t[axisSize];
 
     bool result = true;
-    if (inputShape.type == OperandType::TENSOR_FLOAT32) {
-        float* tempSumBuffer = new (std::nothrow) float[getNumberOfElements(outputShape)];
-        if (!tempSumBuffer) {
-            LOG(ERROR) << "Failed to allocate tempSumBuffer for MEAN";
-            result = false;
-        } else {
-            NNTRACE_COMP_SWITCH("optimized_ops::Mean");
-            tflite::reference_ops::Mean<float, float>(
-                    const_cast<float*>(reinterpret_cast<const float*>(inputData)),
-                    reinterpret_cast<const int*>(inputShape.dimensions.data()),
-                    getNumberOfDimensions(inputShape),
-                    reinterpret_cast<float*>(outputData),
-                    reinterpret_cast<const int*>(outputShape.dimensions.data()),
-                    getNumberOfDimensions(outputShape),
-                    axis, axisSize, keepDims, scratchBuffer, resolvedAxis,
-                    tempSumBuffer);
-            delete[] tempSumBuffer;
-        }
-    } else if (inputShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        int32_t* tempSumBuffer = new (std::nothrow) int32_t[getNumberOfElements(outputShape)];
-        if (!tempSumBuffer) {
-            LOG(ERROR) << "Failed to allocate tempSumBuffer for MEAN";
-            result = false;
-        } else {
-            NNTRACE_COMP_SWITCH("optimized_ops::Mean");
-            tflite::reference_ops::Mean<uint8_t, int32_t>(
-                    const_cast<uint8_t*>(inputData),
-                    reinterpret_cast<const int*>(inputShape.dimensions.data()),
-                    getNumberOfDimensions(inputShape),
-                    outputData,
-                    reinterpret_cast<const int*>(outputShape.dimensions.data()),
-                    getNumberOfDimensions(outputShape),
-                    axis, axisSize, keepDims, scratchBuffer, resolvedAxis,
-                    tempSumBuffer);
-            delete[] tempSumBuffer;
-        }
-    } else {
-        LOG(ERROR) << "Unsupported data type";
+    U* tempSumBuffer = new (std::nothrow) U[getNumberOfElements(outputShape)];
+    if (!tempSumBuffer) {
+        LOG(ERROR) << "Failed to allocate tempSumBuffer for MEAN";
         result = false;
+    } else {
+        NNTRACE_COMP_SWITCH("optimized_ops::Mean");
+        tflite::reference_ops::Mean<T, U>(
+                inputData, reinterpret_cast<const int*>(inputShape.dimensions.data()),
+                getNumberOfDimensions(inputShape), outputData,
+                reinterpret_cast<const int*>(outputShape.dimensions.data()),
+                getNumberOfDimensions(outputShape), axis, axisSize, keepDims, scratchBuffer,
+                resolvedAxis, tempSumBuffer);
+        delete[] tempSumBuffer;
     }
     delete[] scratchBuffer;
     delete[] resolvedAxis;
     return result;
 }
+template bool meanGeneric<float, float>(float* inputData, const Shape& inputShape,
+                                        const int32_t* axis, const Shape& axisShape, bool keepDims,
+                                        float* outputData, const Shape& outputShape);
+template bool meanGeneric<uint8_t, int32_t>(uint8_t* inputData, const Shape& inputShape,
+                                            const int32_t* axis, const Shape& axisShape,
+                                            bool keepDims, uint8_t* outputData,
+                                            const Shape& outputShape);
 
-bool pReluGeneric(const uint8_t* inputData, const Shape& inputShape, const uint8_t* alphaData,
-                  const Shape& alphaShape, uint8_t* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("pReluGeneric");
-    if (inputShape.type == OperandType::TENSOR_FLOAT32) {
-        return broadcastOpBase<float>(reinterpret_cast<const float*>(inputData), inputShape,
-                                      reinterpret_cast<const float*>(alphaData), alphaShape,
-                                      reinterpret_cast<float*>(outputData), outputShape,
-                                      [](const float& val1, const float& val2) {
-                                          return val1 >= 0.0f ? val1 : val1 * val2;
-                                      });
-    } else if (inputShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        const int32_t input_offset = -inputShape.offset;
-        const int32_t alpha_offset = -alphaShape.offset;
-        const int32_t output_offset = outputShape.offset;
-        const double input_product_scale = inputShape.scale * alphaShape.scale;
-        const double real_multiplier_pos = inputShape.scale / outputShape.scale;
-        const double real_multiplier_neg = input_product_scale / outputShape.scale;
-        int32_t output_multiplier_pos, output_shift_pos;
-        int32_t output_multiplier_neg, output_shift_neg;
-        if (!QuantizeMultiplierSmallerThanOne(real_multiplier_pos, &output_multiplier_pos,
-                                              &output_shift_pos)) {
-            return false;
-        }
-        if (!QuantizeMultiplierSmallerThanOne(real_multiplier_neg, &output_multiplier_neg,
-                                              &output_shift_neg)) {
-            return false;
-        }
-        return broadcastOpBase<uint8_t>(
-                reinterpret_cast<const uint8_t*>(inputData), inputShape,
-                reinterpret_cast<const uint8_t*>(alphaData), alphaShape,
-                reinterpret_cast<uint8_t*>(outputData), outputShape,
-                [&](const uint8_t& val1, const uint8_t& val2) {
-                    const int32_t input = input_offset + static_cast<int32_t>(val1);
-                    int32_t output_val;
-                    if (input >= 0) {
-                        output_val = output_offset +
-                                     tflite::MultiplyByQuantizedMultiplierSmallerThanOneExp(
-                                             input, output_multiplier_pos, -output_shift_pos);
-                    } else {
-                        const int32_t alpha = alpha_offset + static_cast<int32_t>(val2);
-                        output_val =
-                                output_offset +
-                                tflite::MultiplyByQuantizedMultiplierSmallerThanOneExp(
-                                        input * alpha, output_multiplier_neg, -output_shift_neg);
-                    }
-                    return static_cast<uint8_t>(output_val);
-                });
-    } else {
-        LOG(ERROR) << "Unsupported data type";
-        return false;
-    }
-}
 } // namespace nn
 } // namespace android

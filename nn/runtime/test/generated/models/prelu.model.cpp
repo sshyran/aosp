@@ -72,6 +72,29 @@ inline bool is_ignored_quant8(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_float16(Model *model) {
+  OperandType type5(Type::TENSOR_FLOAT16, {1, 1, 3});
+  OperandType type6(Type::TENSOR_FLOAT16, {1, 2, 2, 3});
+  // Phase 1, operands
+  auto input = model->addOperand(&type6);
+  auto alpha = model->addOperand(&type5);
+  auto output = model->addOperand(&type6);
+  // Phase 2, operations
+  static _Float16 alpha_init[] = {0.0f, 1.0f, 2.0f};
+  model->setOperandValue(alpha, alpha_init, sizeof(_Float16) * 3);
+  model->addOperation(ANEURALNETWORKS_PRELU, {input, alpha}, {output});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input},
+    {output});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
 void CreateModel_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 1, 3});
@@ -134,6 +157,27 @@ void CreateModel_weight_as_input_quant8(Model *model) {
 }
 
 inline bool is_ignored_weight_as_input_quant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_weight_as_input_float16(Model *model) {
+  OperandType type5(Type::TENSOR_FLOAT16, {1, 1, 3});
+  OperandType type6(Type::TENSOR_FLOAT16, {1, 2, 2, 3});
+  // Phase 1, operands
+  auto input = model->addOperand(&type6);
+  auto alpha = model->addOperand(&type5);
+  auto output = model->addOperand(&type6);
+  // Phase 2, operations
+  model->addOperation(ANEURALNETWORKS_PRELU, {input, alpha}, {output});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {input, alpha},
+    {output});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
