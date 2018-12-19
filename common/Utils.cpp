@@ -329,24 +329,25 @@ void logModelToInfo(const V1_1::Model& model) {
     LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
 }
 
-bool validateOperandQuant8SymmPerChannel(const ANeuralNetworksOperandType& type, const char* tag) {
-    const auto& channelQuant = type.extraParams.channelQuant;
+bool validateOperandSymmPerChannelQuantParams(
+        const Operand& halOperand, const ANeuralNetworksSymmPerChannelQuantParams& channelQuant,
+        const char* tag) {
+    if (halOperand.type != OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        return false;
+    }
 
-    NN_RET_CHECK_EQ(type.zeroPoint, 0)
-            << tag << " OperandType invalid zeroPoint " << type.zeroPoint;
-    NN_RET_CHECK_EQ(type.scale, 0.f) << tag << " OperandType invalid scale " << type.scale;
-    NN_RET_CHECK_LT(channelQuant.channelDim, type.dimensionCount)
+    NN_RET_CHECK_LT(channelQuant.channelDim, halOperand.dimensions.size())
             << tag << " OperandType invalid channelQuant.channelDim " << channelQuant.channelDim
-            << " should be in range[0, " << type.dimensionCount << ")";
+            << " should be in range[0, " << halOperand.dimensions.size() << ")";
     NN_RET_CHECK(channelQuant.scales != nullptr)
             << tag << " OperandType invalid channelQuant.scales " << channelQuant.scales;
-    NN_RET_CHECK_EQ(channelQuant.scaleCount, type.dimensions[channelQuant.channelDim])
+    NN_RET_CHECK_EQ(channelQuant.scaleCount, halOperand.dimensions[channelQuant.channelDim])
             << tag << " OperandType invalid channelQuant.scalesCount " << channelQuant.scaleCount
-            << ", expected " << type.dimensions[channelQuant.channelDim];
-    NN_RET_CHECK_NE(type.dimensions[channelQuant.channelDim], 0U)
+            << ", expected " << halOperand.dimensions[channelQuant.channelDim];
+    NN_RET_CHECK_NE(halOperand.dimensions[channelQuant.channelDim], 0U)
             << tag << " Channel dimension " << channelQuant.channelDim
             << " is underspecified (can't be 0)";
-    for (uint32_t i = 0; i < type.dimensions[channelQuant.channelDim]; i++) {
+    for (uint32_t i = 0; i < halOperand.dimensions[channelQuant.channelDim]; i++) {
         NN_RET_CHECK_GT(channelQuant.scales[i], 0.0f)
                 << tag << " OperandType invalid scaleArray[" << i << "]=" << channelQuant.scales[i];
     }
@@ -389,7 +390,8 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
-    if (type.type == ANEURALNETWORKS_TENSOR_BOOL8) {
+    if (type.type == ANEURALNETWORKS_TENSOR_BOOL8 ||
+        type.type == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
         if (type.zeroPoint != 0) {
             LOG(ERROR) << tag << " OperandType zeroPoint is not zero:" << type.zeroPoint;
             return ANEURALNETWORKS_BAD_DATA;
@@ -399,6 +401,7 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
+
     if (type.type == ANEURALNETWORKS_FLOAT16 || type.type == ANEURALNETWORKS_FLOAT32 ||
         type.type == ANEURALNETWORKS_INT32 || type.type == ANEURALNETWORKS_UINT32 ||
         type.type == ANEURALNETWORKS_BOOL || type.type == ANEURALNETWORKS_OEM_SCALAR) {
@@ -407,12 +410,6 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
-    if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-        if (!validateOperandQuant8SymmPerChannel(type, tag)) {
-            return ANEURALNETWORKS_BAD_DATA;
-        }
-    }
-
     return ANEURALNETWORKS_NO_ERROR;
 }
 

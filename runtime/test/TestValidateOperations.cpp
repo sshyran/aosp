@@ -18,6 +18,7 @@
 #include "NeuralNetworksOEM.h"
 
 #include <gtest/gtest.h>
+#include <optional>
 #include <set>
 
 using namespace android::nn::wrapper;
@@ -42,41 +43,70 @@ ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0, uint
             .zeroPoint = zeroPoint};
 }
 
+struct OperandTypeWithExtraParams {
+    OperandTypeWithExtraParams(const ANeuralNetworksOperandType& operandType)
+        : operandType(operandType), channelQuant(std::nullopt) {}
+
+    ANeuralNetworksOperandType operandType;
+    std::optional<ANeuralNetworksSymmPerChannelQuantParams> channelQuant;
+};
+
 class OperationTestBase {
 public:
-    OperationTestBase(ANeuralNetworksOperationType opCode,
-                      std::vector<ANeuralNetworksOperandType> validInputs,
-                      std::vector<ANeuralNetworksOperandType> validOutputs)
-        : mOpCode(opCode),
-          mValidInputs(std::move(validInputs)),
-          mValidOutputs(std::move(validOutputs)) {}
+ OperationTestBase(ANeuralNetworksOperationType opCode,
+                   std::vector<ANeuralNetworksOperandType> validInputs,
+                   std::vector<ANeuralNetworksOperandType> validOutputs)
+     : mOpCode(opCode) {
+     for (ANeuralNetworksOperandType input : validInputs) {
+         mValidInputs.push_back(input);
+     }
+     for (ANeuralNetworksOperandType output : validOutputs) {
+         mValidOutputs.push_back(output);
+     }
+ }
 
-    // Add each operand separately and add the operation using these operands.
-    // This function does not cover the cases that a operand used mutiple times.
-    int32_t addOperation(const std::vector<ANeuralNetworksOperandType>& inputs,
-                         const std::vector<ANeuralNetworksOperandType>& outputs) {
-        ANeuralNetworksModel* model = nullptr;
-        ANeuralNetworksModel_create(&model);
+ void setInputSymmPerChannelQuantParams(
+         int32_t index, const ANeuralNetworksSymmPerChannelQuantParams& channelQuant) {
+     mValidInputs[index].channelQuant = channelQuant;
+ }
 
-        uint32_t opIdx = 0;
-        std::vector<uint32_t> inputIds;
-        std::vector<uint32_t> outputIds;
-        for (uint32_t i = 0; i < inputs.size(); i++) {
-            ANeuralNetworksModel_addOperand(model, &inputs[i]);
-            inputIds.push_back(opIdx++);
-        }
-        for (uint32_t i = 0; i < outputs.size(); i++) {
-            ANeuralNetworksModel_addOperand(model, &outputs[i]);
-            outputIds.push_back(opIdx++);
-        }
+ void setOutputSymmPerChannelQuantParams(
+         int32_t index, const ANeuralNetworksSymmPerChannelQuantParams& channelQuant) {
+     mValidOutputs[index].channelQuant = channelQuant;
+ }
 
-        int32_t result = ANeuralNetworksModel_addOperation(model, mOpCode,
-                                                 static_cast<uint32_t>(inputIds.size()),
-                                                 inputIds.data(),
-                                                 static_cast<uint32_t>(outputIds.size()),
-                                                 outputIds.data());
-        ANeuralNetworksModel_free(model);
-        return result;
+ // Add each operand separately and add the operation using these operands.
+ // This function does not cover the cases that an operand is used mutiple times.
+ int32_t addOperation(const std::vector<OperandTypeWithExtraParams>& inputs,
+                      const std::vector<OperandTypeWithExtraParams>& outputs) {
+     ANeuralNetworksModel* model = nullptr;
+     ANeuralNetworksModel_create(&model);
+
+     uint32_t opIdx = 0;
+     std::vector<uint32_t> inputIds;
+     std::vector<uint32_t> outputIds;
+     for (uint32_t i = 0; i < inputs.size(); i++) {
+         ANeuralNetworksModel_addOperand(model, &inputs[i].operandType);
+         if (inputs[i].channelQuant) {
+             ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(
+                     model, opIdx, &inputs[i].channelQuant.value());
+         }
+         inputIds.push_back(opIdx++);
+     }
+     for (uint32_t i = 0; i < outputs.size(); i++) {
+         ANeuralNetworksModel_addOperand(model, &outputs[i].operandType);
+         if (outputs[i].channelQuant) {
+             ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(
+                     model, opIdx, &outputs[i].channelQuant.value());
+         }
+         outputIds.push_back(opIdx++);
+     }
+
+     int32_t result = ANeuralNetworksModel_addOperation(
+             model, mOpCode, static_cast<uint32_t>(inputIds.size()), inputIds.data(),
+             static_cast<uint32_t>(outputIds.size()), outputIds.data());
+     ANeuralNetworksModel_free(model);
+     return result;
     }
 
     bool testMutatingInputOperandCode() {
@@ -89,8 +119,8 @@ public:
             if (mOpCode == ANEURALNETWORKS_LSH_PROJECTION && i == 1) {
                 continue;
             }
-            ANeuralNetworksOperandType newType = mValidInputs[i];
-            int32_t originalOperandCode = mValidInputs[i].type;
+            OperandTypeWithExtraParams newType = mValidInputs[i];
+            int32_t originalOperandCode = mValidInputs[i].operandType.type;
             std::set<int32_t> operandTypesToSkip;
             // SPARSE_TO_DENSE's first two inputs have fixed types. And the
             // third argument can be both TENSOR_QUANT8_ASYMM and TENSOR_INT32
@@ -120,8 +150,8 @@ public:
                     }
                 }
 
-                newType.type = newOperandCode;
-                std::vector<ANeuralNetworksOperandType> inputs = mValidInputs;
+                newType.operandType.type = newOperandCode;
+                std::vector<OperandTypeWithExtraParams> inputs = mValidInputs;
                 inputs[i] = newType;
                 int32_t result = addOperation(inputs, mValidOutputs);
                 if (ANEURALNETWORKS_NO_ERROR == result) {
@@ -142,8 +172,8 @@ public:
             if (mOpCode == ANEURALNETWORKS_LSH_PROJECTION && i == 1) {
                 continue;
             }
-            ANeuralNetworksOperandType newType = mValidOutputs[i];
-            int32_t originalOperandCode = mValidOutputs[i].type;
+            OperandTypeWithExtraParams newType = mValidOutputs[i].operandType;
+            int32_t originalOperandCode = mValidOutputs[i].operandType.type;
             for (int32_t newOperandCode : kAvailableOperandCodes) {
                 if (newOperandCode == originalOperandCode) {
                     continue;
@@ -154,8 +184,8 @@ public:
                      newOperandCode == ANEURALNETWORKS_TENSOR_FLOAT32)) {
                     continue;
                 }
-                newType.type = newOperandCode;
-                std::vector<ANeuralNetworksOperandType> outputs = mValidOutputs;
+                newType.operandType.type = newOperandCode;
+                std::vector<OperandTypeWithExtraParams> outputs = mValidOutputs;
                 outputs[i] = newType;
                 int32_t result = addOperation(mValidInputs, outputs);
                 if (ANEURALNETWORKS_NO_ERROR == result) {
@@ -167,7 +197,7 @@ public:
     }
 
     bool testMutatingInputOperandCounts(uint32_t numToAdd = 5) {
-        std::vector<ANeuralNetworksOperandType> inputs = mValidInputs;
+        std::vector<OperandTypeWithExtraParams> inputs = mValidInputs;
         for (uint32_t i = 0; i < numToAdd; i++) {
             inputs.push_back(inputs[0]);
             if (ANEURALNETWORKS_NO_ERROR == addOperation(inputs, mValidOutputs)) {
@@ -178,7 +208,7 @@ public:
     }
 
     bool testMutatingOutputOperandCounts() {
-        std::vector<ANeuralNetworksOperandType> outputs = mValidOutputs;
+        std::vector<OperandTypeWithExtraParams> outputs = mValidOutputs;
         for (int i = 0; i < 5; i++) {
             outputs.push_back(outputs[0]);
             if (ANEURALNETWORKS_NO_ERROR == addOperation(mValidInputs, outputs)) {
@@ -191,8 +221,8 @@ public:
 private:
     ANeuralNetworksOperationType mOpCode;
     // The dimensions in the ANeuralNetworksOperandType must outlive the test object.
-    std::vector<ANeuralNetworksOperandType> mValidInputs;
-    std::vector<ANeuralNetworksOperandType> mValidOutputs;
+    std::vector<OperandTypeWithExtraParams> mValidInputs;
+    std::vector<OperandTypeWithExtraParams> mValidOutputs;
 };
 
 TEST(OperationValidationTest, DEQUANTIZE_float16) {
@@ -831,10 +861,11 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
     if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
         filter.scale = 0.5f;
     }
-    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-        filter.extraParams.channelQuant = {
-                .scales = filterScales, .channelDim = 0, .scaleCount = 2};
-    }
+    ANeuralNetworksSymmPerChannelQuantParams filterChannelQuantParams = {
+            .channelDim = 0,
+            .scaleCount = 2,
+            .scales = filterScales,
+    };
 
     uint32_t biasDimensions[1] = {2};
     ANeuralNetworksOperandType bias = {.type = inputOperandCode,
@@ -872,6 +903,9 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
                                         strideWidth, strideHeight,
                                         activation},
                                        {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        explicitConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(explicitConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(explicitConvTest.testMutatingInputOperandCounts());
@@ -885,6 +919,9 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
                                         strideWidth, strideHeight,
                                         activation},
                                        {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        implicitConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(implicitConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(implicitConvTest.testMutatingInputOperandCounts());
@@ -902,6 +939,9 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
             {input, filter, bias, padLeft, padRight, padTop, padBottom, strideWidth, strideHeight,
              activation, layout},
             {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        explicitNchwConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(explicitNchwConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(explicitNchwConvTest.testMutatingInputOperandCounts());
@@ -912,6 +952,9 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
             ANEURALNETWORKS_CONV_2D,
             {input, filter, bias, padImplicit, strideWidth, strideHeight, activation, layout},
             {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        implicitNchwConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(implicitNchwConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(implicitNchwConvTest.testMutatingInputOperandCounts());
@@ -974,10 +1017,11 @@ void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
     if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
         filter.scale = 0.5f;
     }
-    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-        filter.extraParams.channelQuant = {
-                .scales = filterScales, .channelDim = 3, .scaleCount = 2};
-    }
+    ANeuralNetworksSymmPerChannelQuantParams filterChannelQuantParams = {
+            .channelDim = 3,
+            .scaleCount = 2,
+            .scales = filterScales,
+    };
 
     uint32_t biasDimensions[1] = {2};
     ANeuralNetworksOperandType bias = {.type = inputOperandCode,
@@ -1014,6 +1058,9 @@ void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
                                                  strideWidth, strideHeight,
                                                  multiplier, activation},
                                                 {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        explicitDepthwiseConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(explicitDepthwiseConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(explicitDepthwiseConvTest.testMutatingInputOperandCounts());
@@ -1027,6 +1074,9 @@ void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
                                                  strideWidth, strideHeight,
                                                  multiplier, activation},
                                                 {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        implicitDepthwiseConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(implicitDepthwiseConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(implicitDepthwiseConvTest.testMutatingInputOperandCounts());
@@ -1044,6 +1094,10 @@ void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
             {input, filter, bias, padLeft, padRight, padTop, padBottom, strideWidth, strideHeight,
              multiplier, activation, layout},
             {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        explicitNchwDepthwiseConvTest.setInputSymmPerChannelQuantParams(1,
+                                                                        filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(explicitNchwDepthwiseConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(explicitNchwDepthwiseConvTest.testMutatingInputOperandCounts());
@@ -1054,6 +1108,10 @@ void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
                                                     {input, filter, bias, padImplicit, strideWidth,
                                                      strideHeight, multiplier, activation, layout},
                                                     {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        implicitNchwDepthwiseConvTest.setInputSymmPerChannelQuantParams(1,
+                                                                        filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(implicitNchwDepthwiseConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(implicitNchwDepthwiseConvTest.testMutatingInputOperandCounts());
