@@ -19,27 +19,16 @@ def test(name, input0, input1, output0, input0_data, input1_data, output_data):
 
   quant8 = DataTypeConverter().Identify({
       input0: ["TENSOR_QUANT8_ASYMM", 0.5, 127],
-      input1: ["TENSOR_QUANT8_ASYMM", 0.5, 127],
-      output0: ["TENSOR_QUANT8_ASYMM", 0.5, 127],
-  })
-
-  int32 = DataTypeConverter().Identify({
-      input0: ["TENSOR_INT32"],
-      input1: ["TENSOR_INT32"],
-      output0: ["TENSOR_INT32"],
-  })
-
-  float16 = DataTypeConverter().Identify({
-      input0: ["TENSOR_FLOAT16"],
-      input1: ["TENSOR_FLOAT16"],
-      output0: ["TENSOR_FLOAT16"],
+      input1: ["TENSOR_QUANT8_ASYMM", 1.0, 100],
+      output0: ["TENSOR_QUANT8_ASYMM", 2.0, 80],
   })
 
   Example({
       input0: input0_data,
       input1: input1_data,
       output0: output_data,
-  }, model=model, name=name).AddVariations("relaxed", quant8, int32, float16)
+  }, model=model, name=name).AddVariations("relaxed", "float16", "int32", quant8)
+
 
 test(
     name="simple",
