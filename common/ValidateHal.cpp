@@ -72,6 +72,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
         V1_2::Operand operand = convertToV1_2(versionedOperand);
         // Validate type and dimensions.
         switch (operand.type) {
+            case OperandType::FLOAT16:
             case OperandType::FLOAT32:
             case OperandType::INT32:
             case OperandType::UINT32:
@@ -111,6 +112,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
 
         // Validate the scale.
         switch (operand.type) {
+            case OperandType::FLOAT16:
             case OperandType::FLOAT32:
             case OperandType::INT32:
             case OperandType::UINT32:
@@ -156,6 +158,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
 
         // Validate the zeroPoint.
         switch (operand.type) {
+            case OperandType::FLOAT16:
             case OperandType::FLOAT32:
             case OperandType::INT32:
             case OperandType::UINT32:
@@ -515,6 +518,7 @@ bool validOperandType(V1_0::OperandType operandType) {
 
 bool validOperandType(V1_2::OperandType operandType) {
     switch (operandType) {
+        case V1_2::OperandType::FLOAT16:
         case V1_2::OperandType::FLOAT32:
         case V1_2::OperandType::INT32:
         case V1_2::OperandType::UINT32:

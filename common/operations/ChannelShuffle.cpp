@@ -78,7 +78,7 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK(handleNegativeAxis(input, &axis));
     NN_RET_CHECK(numGroups > 0);
     NN_RET_CHECK(getSizeOfDimension(input, axis) % numGroups == 0);
-    return context->resizeOutputTensor(kOutputTensor, input);
+    return context->setOutputShape(kOutputTensor, input);
 }
 
 bool execute(IOperationExecutionContext* context) {
