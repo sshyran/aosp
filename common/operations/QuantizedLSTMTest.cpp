@@ -55,27 +55,15 @@ class QuantizedLSTMOpModel {
         // clang-format on
 
         std::vector<std::vector<uint32_t>> output_shapes = {
-                {numBatches, inputSize + outputSize},  // concatTemp
-                {numBatches, 4 * cellSize},            // activationTemp
-                {numBatches, outputSize},              // outputStateOut
                 {numBatches, cellSize},                // cellStateOut
                 {numBatches, outputSize}};             // output
 
         std::vector<uint32_t> outputs;
         // clang-format off
-        OperandType concatTempOperandType(Type::TENSOR_QUANT8_ASYMM, output_shapes[0],
-                                          1. / 128., 128);
-        outputs.push_back(model_.addOperand(&concatTempOperandType));
-        OperandType activationTempOperandType(Type::TENSOR_QUANT16_SYMM, output_shapes[1],
-                                              1. / 128., 0);
-        outputs.push_back(model_.addOperand(&activationTempOperandType));
-        OperandType outputStateOutOperandType(Type::TENSOR_QUANT8_ASYMM, output_shapes[2],
-                                              1. / 128., 128);
-        outputs.push_back(model_.addOperand(&outputStateOutOperandType));
-        OperandType cellStateOutOperandType(Type::TENSOR_QUANT16_SYMM, output_shapes[3],
+        OperandType cellStateOutOperandType(Type::TENSOR_QUANT16_SYMM, output_shapes[0],
                                             1. / 2048., 0);
         outputs.push_back(model_.addOperand(&cellStateOutOperandType));
-        OperandType outputOperandType(Type::TENSOR_QUANT8_ASYMM, output_shapes[4],
+        OperandType outputOperandType(Type::TENSOR_QUANT8_ASYMM, output_shapes[1],
                                       1. / 128., 128);
         outputs.push_back(model_.addOperand(&outputOperandType));
         // clang-format on
@@ -87,11 +75,8 @@ class QuantizedLSTMOpModel {
         prevOutput_.insert(prevOutput_.end(), numBatches * outputSize, 128);
         prevCellState_.insert(prevCellState_.end(), numBatches * cellSize, 0);
 
-        reserveOutputTensor(&concatTemp_, output_shapes[0]);
-        reserveOutputTensor(&activationTemp_, output_shapes[1]);
-        reserveOutputTensor(&outputStateOut_, output_shapes[2]);
-        reserveOutputTensor(&cellStateOut_, output_shapes[3]);
-        reserveOutputTensor(&output_, output_shapes[4]);
+        reserveOutputTensor(&cellStateOut_, output_shapes[0]);
+        reserveOutputTensor(&output_, output_shapes[1]);
 
         model_.finish();
     }
@@ -116,14 +101,6 @@ class QuantizedLSTMOpModel {
                 setInputTensor(&execution, QuantizedLSTMCell::kPrevCellStateTensor, prevCellState_),
                 Result::NO_ERROR);
         // Set all the outputs.
-        ASSERT_EQ(setOutputTensor(&execution, QuantizedLSTMCell::kConcatTempTensor, &concatTemp_),
-                  Result::NO_ERROR);
-        ASSERT_EQ(setOutputTensor(&execution, QuantizedLSTMCell::kActivationTempTensor,
-                                  &activationTemp_),
-                  Result::NO_ERROR);
-        ASSERT_EQ(setOutputTensor(&execution, QuantizedLSTMCell::kOutputStateOutTensor,
-                                  &outputStateOut_),
-                  Result::NO_ERROR);
         ASSERT_EQ(
                 setOutputTensor(&execution, QuantizedLSTMCell::kCellStateOutTensor, &cellStateOut_),
                 Result::NO_ERROR);
@@ -133,8 +110,8 @@ class QuantizedLSTMOpModel {
         ASSERT_EQ(execution.compute(), Result::NO_ERROR);
 
         // Put state outputs into inputs for the next step
-        prevOutput_.swap(outputStateOut_);
-        prevCellState_.swap(cellStateOut_);
+        prevOutput_ = output_;
+        prevCellState_ = cellStateOut_;
     }
 
     int inputSize() { return inputSize_; }
@@ -153,9 +130,6 @@ class QuantizedLSTMOpModel {
     std::vector<int32_t> bias_;
     std::vector<int16_t> prevCellState_;
     // Outputs
-    std::vector<uint8_t> concatTemp_;
-    std::vector<int16_t> activationTemp_;
-    std::vector<uint8_t> outputStateOut_;
     std::vector<int16_t> cellStateOut_;
     std::vector<uint8_t> output_;
 
