@@ -29,9 +29,6 @@ weights = Input("weights", ("TENSOR_QUANT8_ASYMM", (4 * n_cell, n_input + n_outp
 bias = Input("bias", ("TENSOR_INT32", (4 * n_cell,), weights_scale / 128, 0))
 prev_cell_state = Input("prevCellState", ("TENSOR_QUANT16_SYMM", (n_batch, n_cell), 1 / 2048, 0))
 
-concat_temp = IgnoredOutput("concatTemp", ("TENSOR_QUANT8_ASYMM", (n_batch, n_input + n_output), 1 / 128, 128))
-activation_temp = IgnoredOutput("activationTemp", ("TENSOR_QUANT16_SYMM", (n_batch, 4 * n_cell), 1 / 128, 0))
-output_state_out = Output("outputStateOut", ("TENSOR_QUANT8_ASYMM", (n_batch, n_output), 1 / 128, 128))
 cell_state_out = Output("cellStateOut", ("TENSOR_QUANT16_SYMM", (n_batch, n_cell), 1 / 2048, 0))
 output = Output("output", ("TENSOR_QUANT8_ASYMM", (n_batch, n_output), 1 / 128, 128))
 
@@ -42,7 +39,7 @@ model = model.Operation("QUANTIZED_16BIT_LSTM",
                         weights,
                         bias,
                         prev_cell_state
-).To([concat_temp, activation_temp, output_state_out, cell_state_out, output])
+).To([cell_state_out, output])
 
 input_dict = {
     input_: [166, 179, 50,  150],
@@ -68,12 +65,8 @@ input_dict = {
     prev_cell_state: [876, 1034, 955, -909, 761, 1029, 796, -1036]
 }
 
-golden_output = [140, 151, 146, 112, 136, 156, 142, 112]
 output_dict = {
-    concat_temp: [0] * (n_batch * (n_input + n_output)),
-    activation_temp: [0] * (n_batch * 4 * n_cell),
-    output_state_out: golden_output,
     cell_state_out: [1485, 1177, 1373, -1023, 1019, 1355, 1097, -1235],
-    output: golden_output
+    output: [140, 151, 146, 112, 136, 156, 142, 112]
 }
 Example((input_dict, output_dict), model=model)
