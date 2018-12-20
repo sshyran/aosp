@@ -1279,7 +1279,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
 
                 const Operand& output = operands[outputIndexes[0]];
-                for (uint32_t i = 0; i < inputCount; ++i) {
+                for (uint32_t i = 0; i < inputCount - 1; ++i) {
                     const Operand& input = operands[inputIndexes[i]];
                     if (input.scale != output.scale || input.zeroPoint != output.zeroPoint) {
                         NN_RETURN_IF_ERROR(
