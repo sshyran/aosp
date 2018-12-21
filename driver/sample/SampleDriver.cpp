@@ -221,6 +221,29 @@ Return<ErrorStatus> SamplePreparedModel::execute_1_2(const Request& request,
     return executeBase(request, mModel, mPoolInfos, callback);
 }
 
+Return<ErrorStatus> SamplePreparedModel::executeSynchronously(const Request& request) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
+                 "SampleDriver::executeSynchronously");
+    VLOG(DRIVER) << "executeSynchronously(" << SHOW_IF_DEBUG(toString(request)) << ")";
+    if (!validateRequest(request, mModel)) {
+        return ErrorStatus::INVALID_ARGUMENT;
+    }
+
+    NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
+                        "SampleDriver::executeSynchronously");
+    std::vector<RunTimePoolInfo> requestPoolInfos;
+    if (!setRunTimePoolInfosFromHidlMemories(&requestPoolInfos, request.pools)) {
+        return ErrorStatus::GENERAL_FAILURE;
+    }
+
+    NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
+                        "SampleDriver::executeSynchronously");
+    CpuExecutor executor;
+    int n = executor.run(mModel, request, mPoolInfos, requestPoolInfos);
+    VLOG(DRIVER) << "executor.run returned " << n;
+    return n == ANEURALNETWORKS_NO_ERROR ? ErrorStatus::NONE : ErrorStatus::GENERAL_FAILURE;
+}
+
 } // namespace sample_driver
 } // namespace nn
 } // namespace android
