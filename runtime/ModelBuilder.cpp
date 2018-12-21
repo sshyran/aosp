@@ -76,6 +76,11 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
         return ANEURALNETWORKS_BAD_STATE;
     }
 
+    OperandType operandType = static_cast<OperandType>(type.type);
+    if (operandType == OperandType::OEM || operandType == OperandType::TENSOR_OEM_BYTE) {
+        LOG(WARNING) << "OEM data type is deprecated. Use Extensions instead.";
+    }
+
     int n = validateOperandType(type, "ANeuralNetworksModel_addOperand", true);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return n;
@@ -87,7 +92,7 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
     }
 
     mOperands.push_back({
-            .type = static_cast<OperandType>(type.type),
+            .type = operandType,
             .dimensions =
                     hidl_vec<uint32_t>(type.dimensions, type.dimensions + type.dimensionCount),
             .numberOfConsumers = 0,
@@ -234,6 +239,11 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
         return ANEURALNETWORKS_BAD_STATE;
     }
 
+    OperationType operationType = static_cast<OperationType>(type);
+    if (operationType == OperationType::OEM_OPERATION) {
+        LOG(WARNING) << "OEM_OPERATION is deprecated. Use Extensions instead.";
+    }
+
     if (!validCode(kNumberOfOperationTypes, kNumberOfOperationTypesOEM, type)) {
         LOG(ERROR) << "ANeuralNetworksModel_addOperation invalid operations type " << type;
         return ANEURALNETWORKS_BAD_DATA;
@@ -251,14 +261,14 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
     }
 
     mOperations.push_back({
-        .type = static_cast<OperationType>(type),
-        .inputs = hidl_vec<uint32_t>(inputs, inputs + inputCount),
-        .outputs = hidl_vec<uint32_t>(outputs, outputs + outputCount),
+            .type = operationType,
+            .inputs = hidl_vec<uint32_t>(inputs, inputs + inputCount),
+            .outputs = hidl_vec<uint32_t>(outputs, outputs + outputCount),
     });
     for (uint32_t i : mOperations.back().inputs) {
         mOperands[i].numberOfConsumers++;
     }
-    mHasOEMOperation |= (mOperations.back().type == OperationType::OEM_OPERATION);
+    mHasOEMOperation |= (operationType == OperationType::OEM_OPERATION);
 
     return ANEURALNETWORKS_NO_ERROR;
 }
