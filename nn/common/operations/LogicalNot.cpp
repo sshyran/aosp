@@ -31,9 +31,6 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
-// sizeof(bool) is implementation defined.
-typedef uint8_t bool8;  // TODO: Here or in android::nn?
-
 bool compute(const bool8* input, const Shape& shape, bool8* output) {
     const auto size = getNumberOfElements(shape);
     for (uint32_t i = 0; i < size; ++i) {
