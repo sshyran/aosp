@@ -613,20 +613,28 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
     // in the design document.
     sp<ExecutionCallback> executionCallback = new ExecutionCallback();
 
-    VLOG(EXECUTION) << "Before mPreparedModel->execute() " << SHOW_IF_DEBUG(toString(request));
-    // Execute.
-    // TODO: What happens to the Callback if the service dies abnormally
-    // -- won't that keep the Callback live forever, because the service
-    // never has the opportunity to bump the reference count down? Or
-    // maybe the HIDL infrastructure handles this magically? At worst,
-    // it seems like this is a small memory leak, if the Callback stays
-    // alive forever.
-    Return<ErrorStatus> executeStatus = mPreparedModel->execute(request, executionCallback);
-    if (!executeStatus.isOk() || executeStatus != ErrorStatus::NONE) {
-        VLOG(EXECUTION) << "**Execute failed**";
-        return executeStatus.isOk()
-                ? convertErrorStatusToResultCode(executeStatus)
-                : ANEURALNETWORKS_OP_FAILED;
+    if (DeviceManager::get()->syncExecHal()) {
+        VLOG(EXECUTION) << "Before mPreparedModel->executeSynchronously() "
+                        << SHOW_IF_DEBUG(toString(request));
+        Return<ErrorStatus> syncCallbackStatus = mPreparedModel->executeSynchronously(request);
+        executionCallback->notify(syncCallbackStatus.isOk()
+                                          ? static_cast<ErrorStatus>(syncCallbackStatus)
+                                          : ErrorStatus::GENERAL_FAILURE);
+    } else {
+        VLOG(EXECUTION) << "Before mPreparedModel->execute() " << SHOW_IF_DEBUG(toString(request));
+        // Execute.
+        // TODO: What happens to the Callback if the service dies abnormally
+        // -- won't that keep the Callback live forever, because the service
+        // never has the opportunity to bump the reference count down? Or
+        // maybe the HIDL infrastructure handles this magically? At worst,
+        // it seems like this is a small memory leak, if the Callback stays
+        // alive forever.
+        Return<ErrorStatus> executeStatus = mPreparedModel->execute(request, executionCallback);
+        if (!executeStatus.isOk() || executeStatus != ErrorStatus::NONE) {
+            VLOG(EXECUTION) << "**Execute launch failed**";
+            return executeStatus.isOk() ? convertErrorStatusToResultCode(executeStatus)
+                                        : ANEURALNETWORKS_OP_FAILED;
+        }
     }
 
     // TODO: Remove this synchronization point when the block of code below is
@@ -636,7 +644,7 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
                         "StepExecutor::startComputeOnDevice::waited");
     Return<ErrorStatus> callbackStatus = executionCallback->getStatus();
     if (!callbackStatus.isOk() || callbackStatus != ErrorStatus::NONE) {
-        VLOG(EXECUTION) << "**Execute async failed**";
+        VLOG(EXECUTION) << "**Execution failed**";
         return callbackStatus.isOk()
                 ? convertErrorStatusToResultCode(callbackStatus)
                 : ANEURALNETWORKS_OP_FAILED;
