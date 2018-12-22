@@ -83,6 +83,15 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
         }
     }
 
+    Return<ErrorStatus> executeSynchronously(const Request& request) override {
+        CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
+        if (mErrorStatus == ErrorStatus::NONE) {
+            return mPreparedModelV1_2->executeSynchronously(request);
+        } else {
+            return mErrorStatus;
+        }
+    }
+
    private:
     sp<V1_0::IPreparedModel> mPreparedModelV1_0;
     sp<V1_2::IPreparedModel> mPreparedModelV1_2;

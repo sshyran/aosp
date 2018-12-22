@@ -16,10 +16,13 @@
 
 #include "VersionedInterfaces.h"
 
+#include "Callbacks.h"
 #include "Tracing.h"
 #include "Utils.h"
 
 #include <android-base/logging.h>
+
+using ::android::hardware::neuralnetworks::V1_2::implementation::ExecutionCallback;
 
 namespace android {
 namespace nn {
@@ -43,6 +46,26 @@ ErrorStatus VersionedIPreparedModel::execute(const Request& request,
     } else {
         LOG(ERROR) << "execute called with no preparedModel";
         return ErrorStatus::GENERAL_FAILURE;
+    }
+}
+
+ErrorStatus VersionedIPreparedModel::executeSynchronously(const Request& request) {
+    if (mPreparedModelV1_2 != nullptr) {
+        Return<ErrorStatus> ret = mPreparedModelV1_2->executeSynchronously(request);
+        if (!ret.isOk()) {
+            LOG(ERROR) << "executeSynchronously failure: " << ret.description();
+            return ErrorStatus::GENERAL_FAILURE;
+        }
+        return static_cast<ErrorStatus>(ret);
+    } else {
+        // Simulate synchronous execution.
+        sp<ExecutionCallback> callback = new ExecutionCallback();
+        ErrorStatus ret = execute(request, callback);
+        if (ret != ErrorStatus::NONE) {
+            return ret;
+        }
+        callback->wait();
+        return callback->getStatus();
     }
 }
 
