@@ -2472,4 +2472,25 @@ TEST(OperationValidationTest, EMBEDDING_LOOKUP_SPARSE) {
     embeddingLookupSparseTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+void powTest(int32_t inputOperandType) {
+    const uint32_t inputDimensions[] = {3, 3};
+    ANeuralNetworksOperandType inputType = {.type = inputOperandType,
+                                            .dimensionCount = 2,
+                                            .dimensions = inputDimensions,
+                                            .scale = 0.0f,
+                                            .zeroPoint = 0};
+
+    OperationTestBase test(ANEURALNETWORKS_POW, {inputType, inputType}, {inputType});
+
+    EXPECT_TRUE(test.testMutatingInputOperandCode());
+    EXPECT_TRUE(test.testMutatingInputOperandCounts());
+    EXPECT_TRUE(test.testMutatingOutputOperandCode());
+    EXPECT_TRUE(test.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, POW) {
+    powTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+    powTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
 }  // end namespace
