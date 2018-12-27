@@ -672,7 +672,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             const RunTimeOperandInfo& input  = mOperands[ins[0]];
             const RunTimeOperandInfo& filter = mOperands[ins[1]];
-            const Operand& filterOperand = mModel->operands[ins[1]];
             const RunTimeOperandInfo& bias   = mOperands[ins[2]];
 
             int32_t padding_left, padding_right;
@@ -735,7 +734,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
 
             if (!depthwiseConvPrepare(input_tmp.shape(), filter.shape(), bias.shape(), padding_left,
                                       padding_right, padding_top, padding_bottom, stride_width,
-                                      stride_height, &outShape) ||
+                                      stride_height, depth_multiplier, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape)) {
                 success = false;
                 break;
@@ -761,7 +760,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                     success = depthwiseConvQuant8PerChannel(
                             reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
                             reinterpret_cast<const int8_t*>(filter.buffer), filter.shape(),
-                            filterOperand.extraParams.channelQuant().scales.data(),
+                            filter.extraParams.channelQuant().scales.data(),
                             reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
                             padding_left, padding_right, padding_top, padding_bottom, stride_width,
                             stride_height, depth_multiplier, activation,
