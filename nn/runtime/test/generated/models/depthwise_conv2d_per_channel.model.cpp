@@ -55,13 +55,13 @@ inline bool is_ignored_same(int i) {
 
 void CreateModel_same_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 2}, 0.5f, 0);
-  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.5f},3));
+  OperandType type11(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.5f},3));
   OperandType type2(Type::TENSOR_INT32, {2});
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 2}, 1.0f, 0);
   OperandType type4(Type::INT32, {});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
-  auto op2 = model->addOperand(&type10);
+  auto op2 = model->addOperand(&type11);
   auto op3 = model->addOperand(&type2);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type4);
@@ -103,15 +103,15 @@ inline bool is_ignored_same_weight_as_input(int i) {
 }
 
 void CreateModel_different(Model *model) {
-  OperandType type2(Type::TENSOR_INT32, {2});
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::TENSOR_QUANT8_ASYMM, {1, 3, 3, 2}, 0.5f, 128);
-  OperandType type6(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 2}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f},3));
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 2}, 1.0f, 128);
+  OperandType type6(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 4}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f, 1.0f, 0.5f},3));
+  OperandType type7(Type::TENSOR_INT32, {4});
+  OperandType type8(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 4}, 1.0f, 128);
   // Phase 1, operands
   auto op11 = model->addOperand(&type5);
   auto op21 = model->addOperand(&type6);
-  auto op31 = model->addOperand(&type2);
+  auto op31 = model->addOperand(&type7);
   auto param8 = model->addOperand(&type4);
   auto param9 = model->addOperand(&type4);
   auto param10 = model->addOperand(&type4);
@@ -120,12 +120,12 @@ void CreateModel_different(Model *model) {
   auto param13 = model->addOperand(&type4);
   auto param14 = model->addOperand(&type4);
   auto param15 = model->addOperand(&type4);
-  auto op41 = model->addOperand(&type7);
+  auto op41 = model->addOperand(&type8);
   // Phase 2, operations
-  static int8_t op21_init[] = {1, 1, 1, 1, 1, 1, 1, 1};
-  model->setOperandValue(op21, op21_init, sizeof(int8_t) * 8);
-  static int32_t op31_init[] = {4, 4};
-  model->setOperandValue(op31, op31_init, sizeof(int32_t) * 2);
+  static int8_t op21_init[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+  model->setOperandValue(op21, op21_init, sizeof(int8_t) * 16);
+  static int32_t op31_init[] = {4, 4, 4, 4};
+  model->setOperandValue(op31, op31_init, sizeof(int32_t) * 4);
   static int32_t param8_init[] = {0};
   model->setOperandValue(param8, param8_init, sizeof(int32_t) * 1);
   static int32_t param9_init[] = {0};
@@ -156,15 +156,15 @@ inline bool is_ignored_different(int i) {
 }
 
 void CreateModel_different_weight_as_input(Model *model) {
-  OperandType type11(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 2}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f},3));
-  OperandType type2(Type::TENSOR_INT32, {2});
+  OperandType type12(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 4}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f, 1.0f, 0.5f},3));
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::TENSOR_QUANT8_ASYMM, {1, 3, 3, 2}, 0.5f, 128);
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 2}, 1.0f, 128);
+  OperandType type7(Type::TENSOR_INT32, {4});
+  OperandType type8(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 4}, 1.0f, 128);
   // Phase 1, operands
   auto op11 = model->addOperand(&type5);
-  auto op21 = model->addOperand(&type11);
-  auto op31 = model->addOperand(&type2);
+  auto op21 = model->addOperand(&type12);
+  auto op31 = model->addOperand(&type7);
   auto param8 = model->addOperand(&type4);
   auto param9 = model->addOperand(&type4);
   auto param10 = model->addOperand(&type4);
@@ -173,7 +173,7 @@ void CreateModel_different_weight_as_input(Model *model) {
   auto param13 = model->addOperand(&type4);
   auto param14 = model->addOperand(&type4);
   auto param15 = model->addOperand(&type4);
-  auto op41 = model->addOperand(&type7);
+  auto op41 = model->addOperand(&type8);
   // Phase 2, operations
   static int32_t param8_init[] = {0};
   model->setOperandValue(param8, param8_init, sizeof(int32_t) * 1);
@@ -205,16 +205,16 @@ inline bool is_ignored_different_weight_as_input(int i) {
 }
 
 void CreateModel_layout_nhwc(Model *model) {
-  OperandType type2(Type::TENSOR_INT32, {2});
+  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 4}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f, 1.0f, 0.5f},3));
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::TENSOR_QUANT8_ASYMM, {1, 3, 3, 2}, 0.5f, 128);
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 2}, 1.0f, 128);
-  OperandType type8(Type::BOOL, {});
-  OperandType type9(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 2}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f},3));
+  OperandType type7(Type::TENSOR_INT32, {4});
+  OperandType type8(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 4}, 1.0f, 128);
+  OperandType type9(Type::BOOL, {});
   // Phase 1, operands
   auto op12 = model->addOperand(&type5);
-  auto op22 = model->addOperand(&type9);
-  auto op32 = model->addOperand(&type2);
+  auto op22 = model->addOperand(&type10);
+  auto op32 = model->addOperand(&type7);
   auto param16 = model->addOperand(&type4);
   auto param17 = model->addOperand(&type4);
   auto param18 = model->addOperand(&type4);
@@ -223,13 +223,13 @@ void CreateModel_layout_nhwc(Model *model) {
   auto param21 = model->addOperand(&type4);
   auto param22 = model->addOperand(&type4);
   auto param23 = model->addOperand(&type4);
-  auto layout = model->addOperand(&type8);
-  auto op42 = model->addOperand(&type7);
+  auto layout = model->addOperand(&type9);
+  auto op42 = model->addOperand(&type8);
   // Phase 2, operations
-  static int8_t op22_init[] = {1, 1, 1, 1, 1, 1, 1, 1};
-  model->setOperandValue(op22, op22_init, sizeof(int8_t) * 8);
-  static int32_t op32_init[] = {4, 4};
-  model->setOperandValue(op32, op32_init, sizeof(int32_t) * 2);
+  static int8_t op22_init[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+  model->setOperandValue(op22, op22_init, sizeof(int8_t) * 16);
+  static int32_t op32_init[] = {4, 4, 4, 4};
+  model->setOperandValue(op32, op32_init, sizeof(int32_t) * 4);
   static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
   static int32_t param17_init[] = {0};
@@ -262,16 +262,16 @@ inline bool is_ignored_layout_nhwc(int i) {
 }
 
 void CreateModel_layout_nhwc_weight_as_input(Model *model) {
-  OperandType type12(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 2}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f},3));
-  OperandType type2(Type::TENSOR_INT32, {2});
+  OperandType type13(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 4}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f, 1.0f, 0.5f},3));
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::TENSOR_QUANT8_ASYMM, {1, 3, 3, 2}, 0.5f, 128);
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 2}, 1.0f, 128);
-  OperandType type8(Type::BOOL, {});
+  OperandType type7(Type::TENSOR_INT32, {4});
+  OperandType type8(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 4}, 1.0f, 128);
+  OperandType type9(Type::BOOL, {});
   // Phase 1, operands
   auto op12 = model->addOperand(&type5);
-  auto op22 = model->addOperand(&type12);
-  auto op32 = model->addOperand(&type2);
+  auto op22 = model->addOperand(&type13);
+  auto op32 = model->addOperand(&type7);
   auto param16 = model->addOperand(&type4);
   auto param17 = model->addOperand(&type4);
   auto param18 = model->addOperand(&type4);
@@ -280,8 +280,8 @@ void CreateModel_layout_nhwc_weight_as_input(Model *model) {
   auto param21 = model->addOperand(&type4);
   auto param22 = model->addOperand(&type4);
   auto param23 = model->addOperand(&type4);
-  auto layout = model->addOperand(&type8);
-  auto op42 = model->addOperand(&type7);
+  auto layout = model->addOperand(&type9);
+  auto op42 = model->addOperand(&type8);
   // Phase 2, operations
   static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
@@ -315,16 +315,16 @@ inline bool is_ignored_layout_nhwc_weight_as_input(int i) {
 }
 
 void CreateModel_layout_nchw(Model *model) {
-  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {1, 2, 3, 3}, 0.5f, 128);
-  OperandType type2(Type::TENSOR_INT32, {2});
+  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 4}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f, 1.0f, 0.5f},3));
+  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {1, 2, 3, 3}, 0.5f, 128);
+  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {1, 4, 2, 2}, 1.0f, 128);
   OperandType type4(Type::INT32, {});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 2}, 1.0f, 128);
-  OperandType type8(Type::BOOL, {});
-  OperandType type9(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 2}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f},3));
+  OperandType type7(Type::TENSOR_INT32, {4});
+  OperandType type9(Type::BOOL, {});
   // Phase 1, operands
-  auto op12 = model->addOperand(&type13);
-  auto op22 = model->addOperand(&type9);
-  auto op32 = model->addOperand(&type2);
+  auto op12 = model->addOperand(&type14);
+  auto op22 = model->addOperand(&type10);
+  auto op32 = model->addOperand(&type7);
   auto param16 = model->addOperand(&type4);
   auto param17 = model->addOperand(&type4);
   auto param18 = model->addOperand(&type4);
@@ -333,13 +333,13 @@ void CreateModel_layout_nchw(Model *model) {
   auto param21 = model->addOperand(&type4);
   auto param22 = model->addOperand(&type4);
   auto param23 = model->addOperand(&type4);
-  auto layout = model->addOperand(&type8);
-  auto op42 = model->addOperand(&type7);
+  auto layout = model->addOperand(&type9);
+  auto op42 = model->addOperand(&type15);
   // Phase 2, operations
-  static int8_t op22_init[] = {1, 1, 1, 1, 1, 1, 1, 1};
-  model->setOperandValue(op22, op22_init, sizeof(int8_t) * 8);
-  static int32_t op32_init[] = {4, 4};
-  model->setOperandValue(op32, op32_init, sizeof(int32_t) * 2);
+  static int8_t op22_init[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+  model->setOperandValue(op22, op22_init, sizeof(int8_t) * 16);
+  static int32_t op32_init[] = {4, 4, 4, 4};
+  model->setOperandValue(op32, op32_init, sizeof(int32_t) * 4);
   static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
   static int32_t param17_init[] = {0};
@@ -372,16 +372,16 @@ inline bool is_ignored_layout_nchw(int i) {
 }
 
 void CreateModel_layout_nchw_weight_as_input(Model *model) {
-  OperandType type13(Type::TENSOR_QUANT8_ASYMM, {1, 2, 3, 3}, 0.5f, 128);
-  OperandType type14(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 2}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f},3));
-  OperandType type2(Type::TENSOR_INT32, {2});
+  OperandType type14(Type::TENSOR_QUANT8_ASYMM, {1, 2, 3, 3}, 0.5f, 128);
+  OperandType type15(Type::TENSOR_QUANT8_ASYMM, {1, 4, 2, 2}, 1.0f, 128);
+  OperandType type16(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {1, 2, 2, 4}, 0.0f, 0, SymmPerChannelQuantParams({1.0f, 0.5f, 1.0f, 0.5f},3));
   OperandType type4(Type::INT32, {});
-  OperandType type7(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 2}, 1.0f, 128);
-  OperandType type8(Type::BOOL, {});
+  OperandType type7(Type::TENSOR_INT32, {4});
+  OperandType type9(Type::BOOL, {});
   // Phase 1, operands
-  auto op12 = model->addOperand(&type13);
-  auto op22 = model->addOperand(&type14);
-  auto op32 = model->addOperand(&type2);
+  auto op12 = model->addOperand(&type14);
+  auto op22 = model->addOperand(&type16);
+  auto op32 = model->addOperand(&type7);
   auto param16 = model->addOperand(&type4);
   auto param17 = model->addOperand(&type4);
   auto param18 = model->addOperand(&type4);
@@ -390,8 +390,8 @@ void CreateModel_layout_nchw_weight_as_input(Model *model) {
   auto param21 = model->addOperand(&type4);
   auto param22 = model->addOperand(&type4);
   auto param23 = model->addOperand(&type4);
-  auto layout = model->addOperand(&type8);
-  auto op42 = model->addOperand(&type7);
+  auto layout = model->addOperand(&type9);
+  auto op42 = model->addOperand(&type15);
   // Phase 2, operations
   static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
