@@ -1462,15 +1462,15 @@ TEST(OperationValidationTest, LSTM_float32) {
     EXPECT_TRUE(lstmTest.testMutatingOutputOperandCounts());
 }
 
-TEST(OperationValidationTest, LSTM_V1_2_float32) {
+void lstmTestV1_2(int32_t operandCode) {
     uint32_t oneDimensional[1] = {5};
     uint32_t twoDimensional[2] = {5, 5};
-    ANeuralNetworksOperandType floatTensor1D = {.type = ANEURALNETWORKS_TENSOR_FLOAT32,
+    ANeuralNetworksOperandType floatTensor1D = {.type = operandCode,
                                                 .dimensionCount = 1,
                                                 .dimensions = oneDimensional,
                                                 .scale = 0.0f,
                                                 .zeroPoint = 0};
-    ANeuralNetworksOperandType floatTensor2D = {.type = ANEURALNETWORKS_TENSOR_FLOAT32,
+    ANeuralNetworksOperandType floatTensor2D = {.type = operandCode,
                                                 .dimensionCount = 2,
                                                 .dimensions = twoDimensional,
                                                 .scale = 0.0f,
@@ -1553,6 +1553,11 @@ TEST(OperationValidationTest, LSTM_V1_2_float32) {
     EXPECT_TRUE(lstmTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(lstmTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(lstmTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, LSTM_V1_2) {
+    lstmTestV1_2(ANEURALNETWORKS_TENSOR_FLOAT32);
+    lstmTestV1_2(ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, RANDOM_MULTINOMIAL_float16) {

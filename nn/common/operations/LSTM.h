@@ -101,6 +101,37 @@ class LSTMCell {
     bool CheckInputTensorDimensions(const Operation& operation,
                                     std::vector<RunTimeOperandInfo>& operands, uint32_t n_input,
                                     uint32_t n_output, uint32_t n_cell);
+    // clang-format off
+    bool EvalFloat32(
+            const float* input_buffer,
+            const float* input_to_input_weights_buffer,
+            const float* input_to_forget_weights_buffer,
+            const float* input_to_cell_weights_buffer,
+            const float* input_to_output_weights_buffer,
+            const float* recurrent_to_input_weights_buffer,
+            const float* recurrent_to_forget_weights_buffer,
+            const float* recurrent_to_cell_weights_buffer,
+            const float* recurrent_to_output_weights_buffer,
+            const float* cell_to_input_weights_buffer,
+            const float* cell_to_forget_weights_buffer,
+            const float* cell_to_output_weights_buffer,
+            const float* input_gate_bias_buffer,
+            const float* forget_gate_bias_buffer,
+            const float* cell_bias_buffer,
+            const float* output_gate_bias_buffer,
+            const float* projection_weights_buffer,
+            const float* projection_bias_buffer,
+            const float* output_state_in_buffer,
+            const float* cell_state_in_buffer,
+            const float* input_layer_norm_weights_buffer,
+            const float* forget_layer_norm_weights_buffer,
+            const float* cell_layer_norm_weights_buffer,
+            const float* output_layer_norm_weights_buffer,
+            float* output_state_out_buffer,
+            float* cell_state_out_buffer,
+            float* output_buffer,
+            float* scratch_buffer_buffer);
+    // clang-format on
     LSTMParams params_;
 
     const RunTimeOperandInfo* input_;
