@@ -55,7 +55,7 @@ def Dequantize(v, ty):
     if ty.scale != 0:
         v *= ty.scale
     if isinstance(ty.extraParams, SymmPerChannelQuantParams):
-        v *= ty.extraParams.GetScalesBroadcastArray()
+        v *= ty.extraParams.GetScalesBroadcastArray(ty.dimensions)
     return v
 
 # Transform float32 to target data type
@@ -63,7 +63,7 @@ def Quantize(v, ty):
     if ty.scale != 0:
         v /= ty.scale
     if isinstance(ty.extraParams, SymmPerChannelQuantParams):
-        v = v / ty.extraParams.GetScalesBroadcastArray()
+        v = v / ty.extraParams.GetScalesBroadcastArray(ty.dimensions)
     v += ty.zeroPoint
     if not ty.IsFloat():
         v = np.round(v)
@@ -262,12 +262,13 @@ class ImplicitParameter():
 
 # ExtraParams with per-channel quantization.
 class SymmPerChannelQuantParams():
-  def __init__(self, channelDim, scales):
+  def __init__(self, channelDim, scales, hide = False):
     self.channelDim = channelDim
     self.scales = scales
+    self.hide = hide
 
-  def GetScalesBroadcastArray(self):
-    bshape = [1,1,1,1]
+  def GetScalesBroadcastArray(self, dimensions):
+    bshape = [1] * len(dimensions)
     bshape[self.channelDim] = len(self.scales)
     return np.array(self.scales).reshape(bshape)
 
@@ -716,7 +717,9 @@ class DataTypeConverter(ModelVariation, ImplicitVariation):
             return self
         # get all target types
         targetTypes = list(zip(*self.targetOperands.values()))[0]
-        if "TENSOR_QUANT8_ASYMM" in targetTypes:
+        if "TENSOR_QUANT8_SYMM_PER_CHANNEL" in targetTypes:
+            self.name = "channelQuant8"
+        elif "TENSOR_QUANT8_ASYMM" in targetTypes:
             self.name = "quant8"
         elif "TENSOR_INT32" in targetTypes:
             self.name = "int32"
