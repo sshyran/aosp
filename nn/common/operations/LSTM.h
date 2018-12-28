@@ -24,128 +24,122 @@
 #include <algorithm>
 #include <cmath>
 
-// TODO(levp): Format the file.
-// clang-format off
 namespace android {
 namespace nn {
 
 struct LSTMParams {
-  TfLiteFusedActivation activation_;
-  float cell_clip_;
-  float proj_clip_;
+    TfLiteFusedActivation activation_;
+    float cell_clip_;
+    float proj_clip_;
 };
 
 struct RunTimeOperandInfo;
 struct Shape;
 
 class LSTMCell {
- public:
-  LSTMCell(const Operation &operation,
-           std::vector<RunTimeOperandInfo> &operands);
+   public:
+    LSTMCell(const Operation& operation, std::vector<RunTimeOperandInfo>& operands);
 
-  bool Prepare(const Operation &operation,
-               std::vector<RunTimeOperandInfo> &operands,
-               Shape *scratchShape,
-               Shape *outputStateShape,
-               Shape *cellStateShape,
-               Shape *outputShape);
-  bool Eval();
+    bool Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+                 Shape* scratchShape, Shape* outputStateShape, Shape* cellStateShape,
+                 Shape* outputShape);
+    bool Eval();
 
-  // Input Tensors of size {n_batch, n_input}
-  static constexpr int kInputTensor = 0;
+    // Input Tensors of size {n_batch, n_input}
+    static constexpr int kInputTensor = 0;
 
-  // Input weight tensors of size: {n_cell, n_input}
-  static constexpr int kInputToInputWeightsTensor = 1;  // Optional
-  static constexpr int kInputToForgetWeightsTensor = 2;
-  static constexpr int kInputToCellWeightsTensor = 3;
-  static constexpr int kInputToOutputWeightsTensor = 4;
+    // Input weight tensors of size: {n_cell, n_input}
+    static constexpr int kInputToInputWeightsTensor = 1;  // Optional
+    static constexpr int kInputToForgetWeightsTensor = 2;
+    static constexpr int kInputToCellWeightsTensor = 3;
+    static constexpr int kInputToOutputWeightsTensor = 4;
 
-  // Recurrent weight tensors of size {n_cell, n_output}
-  static constexpr int kRecurrentToInputWeightsTensor = 5;  // Optional
-  static constexpr int kRecurrentToForgetWeightsTensor = 6;
-  static constexpr int kRecurrentToCellWeightsTensor = 7;
-  static constexpr int kRecurrentToOutputWeightsTensor = 8;
+    // Recurrent weight tensors of size {n_cell, n_output}
+    static constexpr int kRecurrentToInputWeightsTensor = 5;  // Optional
+    static constexpr int kRecurrentToForgetWeightsTensor = 6;
+    static constexpr int kRecurrentToCellWeightsTensor = 7;
+    static constexpr int kRecurrentToOutputWeightsTensor = 8;
 
-  // Peephole weights tensors of size {n_cell}, representing a diagonal matrix.
-  static constexpr int kCellToInputWeightsTensor = 9;    // Optional
-  static constexpr int kCellToForgetWeightsTensor = 10;  // Optional
-  static constexpr int kCellToOutputWeightsTensor = 11;  // Optional
+    // Peephole weights tensors of size {n_cell}, representing a diagonal matrix.
+    static constexpr int kCellToInputWeightsTensor = 9;    // Optional
+    static constexpr int kCellToForgetWeightsTensor = 10;  // Optional
+    static constexpr int kCellToOutputWeightsTensor = 11;  // Optional
 
-  // Gates bias tensors of size {n_cell}
-  static constexpr int kInputGateBiasTensor = 12;  // Optional
-  static constexpr int kForgetGateBiasTensor = 13;
-  static constexpr int kCellGateBiasTensor = 14;
-  static constexpr int kOutputGateBiasTensor = 15;
+    // Gates bias tensors of size {n_cell}
+    static constexpr int kInputGateBiasTensor = 12;  // Optional
+    static constexpr int kForgetGateBiasTensor = 13;
+    static constexpr int kCellGateBiasTensor = 14;
+    static constexpr int kOutputGateBiasTensor = 15;
 
-  // Projection weight tensor of size {n_output, n_cell}
-  static constexpr int kProjectionWeightsTensor = 16;  // Optional
-  // Projection bias tensor of size {n_output}
-  static constexpr int kProjectionBiasTensor = 17;  // Optional
+    // Projection weight tensor of size {n_output, n_cell}
+    static constexpr int kProjectionWeightsTensor = 16;  // Optional
+    // Projection bias tensor of size {n_output}
+    static constexpr int kProjectionBiasTensor = 17;  // Optional
 
-  static constexpr int kOutputStateInTensor = 18;
-  static constexpr int kCellStateInTensor = 19;
+    static constexpr int kOutputStateInTensor = 18;
+    static constexpr int kCellStateInTensor = 19;
 
-  static constexpr int kActivationParam = 20;
-  static constexpr int kCellClipParam = 21;
-  static constexpr int kProjClipParam = 22;
+    static constexpr int kActivationParam = 20;
+    static constexpr int kCellClipParam = 21;
+    static constexpr int kProjClipParam = 22;
 
-  // Layer norm weights tensors of size {n_cell}, representing a diagonal matrix.
-  static constexpr int kInputLayerNormWeightsTensor = 23;
-  static constexpr int kForgetLayerNormWeightsTensor = 24;
-  static constexpr int kCellLayerNormWeightsTensor = 25;
-  static constexpr int kOutputLayerNormWeightsTensor = 26;
+    // Layer norm weights tensors of size {n_cell}, representing a diagonal matrix.
+    static constexpr int kInputLayerNormWeightsTensor = 23;
+    static constexpr int kForgetLayerNormWeightsTensor = 24;
+    static constexpr int kCellLayerNormWeightsTensor = 25;
+    static constexpr int kOutputLayerNormWeightsTensor = 26;
 
-  // Output tensors.
-  static constexpr int kScratchBufferTensor = 0;
-  static constexpr int kOutputStateOutTensor = 1;
-  static constexpr int kCellStateOutTensor = 2;
-  static constexpr int kOutputTensor = 3;
+    // Output tensors.
+    static constexpr int kScratchBufferTensor = 0;
+    static constexpr int kOutputStateOutTensor = 1;
+    static constexpr int kCellStateOutTensor = 2;
+    static constexpr int kOutputTensor = 3;
 
-  static constexpr float kLayerNormEpsilon = 1e-8;
+    static constexpr float kLayerNormEpsilon = 1e-8;
 
- private:
-  bool CheckInputTensorDimensions(const Operation& operation,
-                                  std::vector<RunTimeOperandInfo>& operands,
-                                  uint32_t n_input, uint32_t n_output, uint32_t n_cell);
-  LSTMParams params_;
+   private:
+    bool CheckInputTensorDimensions(const Operation& operation,
+                                    std::vector<RunTimeOperandInfo>& operands, uint32_t n_input,
+                                    uint32_t n_output, uint32_t n_cell);
+    LSTMParams params_;
 
-  const RunTimeOperandInfo *input_;
+    const RunTimeOperandInfo* input_;
 
-  const RunTimeOperandInfo *input_to_input_weights_;
-  const RunTimeOperandInfo *input_to_forget_weights_;
-  const RunTimeOperandInfo *input_to_cell_weights_;
-  const RunTimeOperandInfo *input_to_output_weights_;
+    const RunTimeOperandInfo* input_to_input_weights_;
+    const RunTimeOperandInfo* input_to_forget_weights_;
+    const RunTimeOperandInfo* input_to_cell_weights_;
+    const RunTimeOperandInfo* input_to_output_weights_;
 
-  const RunTimeOperandInfo *recurrent_to_input_weights_;
-  const RunTimeOperandInfo *recurrent_to_forget_weights_;
-  const RunTimeOperandInfo *recurrent_to_cell_weights_;
-  const RunTimeOperandInfo *recurrent_to_output_weights_;
+    const RunTimeOperandInfo* recurrent_to_input_weights_;
+    const RunTimeOperandInfo* recurrent_to_forget_weights_;
+    const RunTimeOperandInfo* recurrent_to_cell_weights_;
+    const RunTimeOperandInfo* recurrent_to_output_weights_;
 
-  const RunTimeOperandInfo *cell_to_input_weights_;
-  const RunTimeOperandInfo *cell_to_forget_weights_;
-  const RunTimeOperandInfo *cell_to_output_weights_;
+    const RunTimeOperandInfo* cell_to_input_weights_;
+    const RunTimeOperandInfo* cell_to_forget_weights_;
+    const RunTimeOperandInfo* cell_to_output_weights_;
 
-  const RunTimeOperandInfo *input_gate_bias_;
-  const RunTimeOperandInfo *forget_gate_bias_;
-  const RunTimeOperandInfo *cell_bias_;
-  const RunTimeOperandInfo *output_gate_bias_;
+    const RunTimeOperandInfo* input_gate_bias_;
+    const RunTimeOperandInfo* forget_gate_bias_;
+    const RunTimeOperandInfo* cell_bias_;
+    const RunTimeOperandInfo* output_gate_bias_;
 
-  const RunTimeOperandInfo *projection_weights_;
-  const RunTimeOperandInfo *projection_bias_;
+    const RunTimeOperandInfo* projection_weights_;
+    const RunTimeOperandInfo* projection_bias_;
 
-  const RunTimeOperandInfo *output_state_in_;
-  const RunTimeOperandInfo *cell_state_in_;
+    const RunTimeOperandInfo* output_state_in_;
+    const RunTimeOperandInfo* cell_state_in_;
 
-  const RunTimeOperandInfo *input_layer_norm_weights_;
-  const RunTimeOperandInfo *forget_layer_norm_weights_;
-  const RunTimeOperandInfo *cell_layer_norm_weights_;
-  const RunTimeOperandInfo *output_layer_norm_weights_;
+    const RunTimeOperandInfo* input_layer_norm_weights_;
+    const RunTimeOperandInfo* forget_layer_norm_weights_;
+    const RunTimeOperandInfo* cell_layer_norm_weights_;
+    const RunTimeOperandInfo* output_layer_norm_weights_;
 
-  RunTimeOperandInfo *output_state_out_;
-  RunTimeOperandInfo *cell_state_out_;
-  RunTimeOperandInfo *output_;
+    RunTimeOperandInfo* output_state_out_;
+    RunTimeOperandInfo* cell_state_out_;
+    RunTimeOperandInfo* output_;
 
-  RunTimeOperandInfo *scratch_buffer_;
+    RunTimeOperandInfo* scratch_buffer_;
 };
 
 }  // namespace nn
