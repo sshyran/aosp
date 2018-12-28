@@ -1031,7 +1031,11 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
                         int32_t padding_left, int32_t padding_right, int32_t padding_top,
                         int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
                         int32_t numGroups, Shape* output) {
-    NN_OPS_CHECK(input.type == filter.type);
+    if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        NN_OPS_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM);
+    } else {
+        NN_OPS_CHECK(input.type == filter.type);
+    }
     if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
         NN_OPS_CHECK(bias.type == OperandType::TENSOR_INT32);
     } else {
