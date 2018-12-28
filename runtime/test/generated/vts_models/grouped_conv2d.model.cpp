@@ -915,6 +915,316 @@ inline bool is_ignored_nhwc_none_quant8_weight_as_input(int i) {
 }
 
 // Create the model
+Model createTestModel_nhwc_none_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nhwc_none_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nhwc_none_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nhwc_none_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_nhwc_none_float16() {
     const std::vector<Operand> operands = {
         {
@@ -2128,6 +2438,316 @@ Model createTestModel_nhwc_relu_quant8_weight_as_input() {
 }
 
 inline bool is_ignored_nhwc_relu_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nhwc_relu_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nhwc_relu_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nhwc_relu_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nhwc_relu_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -3351,6 +3971,316 @@ inline bool is_ignored_nhwc_relu1_quant8_weight_as_input(int i) {
 }
 
 // Create the model
+Model createTestModel_nhwc_relu1_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nhwc_relu1_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nhwc_relu1_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nhwc_relu1_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_nhwc_relu1_float16() {
     const std::vector<Operand> operands = {
         {
@@ -4564,6 +5494,316 @@ Model createTestModel_nhwc_relu6_quant8_weight_as_input() {
 }
 
 inline bool is_ignored_nhwc_relu6_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nhwc_relu6_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nhwc_relu6_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nhwc_relu6_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nhwc_relu6_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -5787,6 +7027,316 @@ inline bool is_ignored_nchw_none_quant8_weight_as_input(int i) {
 }
 
 // Create the model
+Model createTestModel_nchw_none_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nchw_none_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nchw_none_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nchw_none_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_nchw_none_float16() {
     const std::vector<Operand> operands = {
         {
@@ -7000,6 +8550,316 @@ Model createTestModel_nchw_relu_quant8_weight_as_input() {
 }
 
 inline bool is_ignored_nchw_relu_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nchw_relu_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nchw_relu_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nchw_relu_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nchw_relu_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -8223,6 +10083,316 @@ inline bool is_ignored_nchw_relu1_quant8_weight_as_input(int i) {
 }
 
 // Create the model
+Model createTestModel_nchw_relu1_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nchw_relu1_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nchw_relu1_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nchw_relu1_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_nchw_relu1_float16() {
     const std::vector<Operand> operands = {
         {
@@ -9436,6 +11606,316 @@ Model createTestModel_nchw_relu6_quant8_weight_as_input() {
 }
 
 inline bool is_ignored_nchw_relu6_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nchw_relu6_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nchw_relu6_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_nchw_relu6_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_nchw_relu6_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -10659,6 +13139,316 @@ inline bool is_ignored_dynamic_output_shape_nhwc_none_quant8_weight_as_input(int
 }
 
 // Create the model
+Model createTestModel_dynamic_output_shape_nhwc_none_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_none_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_dynamic_output_shape_nhwc_none_float16() {
     const std::vector<Operand> operands = {
         {
@@ -11872,6 +14662,316 @@ Model createTestModel_dynamic_output_shape_nhwc_relu_quant8_weight_as_input() {
 }
 
 inline bool is_ignored_dynamic_output_shape_nhwc_relu_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nhwc_relu_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_relu_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -13095,6 +16195,316 @@ inline bool is_ignored_dynamic_output_shape_nhwc_relu1_quant8_weight_as_input(in
 }
 
 // Create the model
+Model createTestModel_dynamic_output_shape_nhwc_relu1_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_relu1_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_dynamic_output_shape_nhwc_relu1_float16() {
     const std::vector<Operand> operands = {
         {
@@ -14308,6 +17718,316 @@ Model createTestModel_dynamic_output_shape_nhwc_relu6_quant8_weight_as_input() {
 }
 
 inline bool is_ignored_dynamic_output_shape_nhwc_relu6_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nhwc_relu6_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_relu6_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -15531,6 +19251,316 @@ inline bool is_ignored_dynamic_output_shape_nchw_none_quant8_weight_as_input(int
 }
 
 // Create the model
+Model createTestModel_dynamic_output_shape_nchw_none_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_none_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_dynamic_output_shape_nchw_none_float16() {
     const std::vector<Operand> operands = {
         {
@@ -16744,6 +20774,316 @@ Model createTestModel_dynamic_output_shape_nchw_relu_quant8_weight_as_input() {
 }
 
 inline bool is_ignored_dynamic_output_shape_nchw_relu_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nchw_relu_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_relu_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -17967,6 +22307,316 @@ inline bool is_ignored_dynamic_output_shape_nchw_relu1_quant8_weight_as_input(in
 }
 
 // Create the model
+Model createTestModel_dynamic_output_shape_nchw_relu1_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_relu1_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_dynamic_output_shape_nchw_relu1_float16() {
     const std::vector<Operand> operands = {
         {
@@ -19185,6 +23835,316 @@ inline bool is_ignored_dynamic_output_shape_nchw_relu6_quant8_weight_as_input(in
 }
 
 // Create the model
+Model createTestModel_dynamic_output_shape_nchw_relu6_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 8},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 44, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 48, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 8, 4, 8, 6, 4, 2, 160, 0, 0, 0, 244, 254, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_relu6_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 2, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.5f,
+            .zeroPoint = 80,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+            .outputs = {12},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {12};
+    std::vector<uint8_t> operandValues = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_dynamic_output_shape_nchw_relu6_float16() {
     const std::vector<Operand> operands = {
         {
@@ -20241,6 +25201,262 @@ inline bool is_ignored_large_nhwc_quant8_weight_as_input(int i) {
 }
 
 // Create the model
+Model createTestModel_large_nhwc_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={2.0f, 2.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 3, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 12},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 10.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      50, 10, 0, 100, 5, 1, 80, 12, 0, 40, 8, 1, 232, 3, 0, 0, 192, 249, 255, 255, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_large_nhwc_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_large_nhwc_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={2.0f, 2.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 3, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 10.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_large_nhwc_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_large_nhwc_float16() {
     const std::vector<Operand> operands = {
         {
@@ -21238,6 +26454,262 @@ Model createTestModel_large_nchw_quant8_weight_as_input() {
 }
 
 inline bool is_ignored_large_nchw_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_large_nchw_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={2.0f, 2.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 3, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 12},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 2},
+            .numberOfConsumers = 0,
+            .scale = 10.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      50, 10, 0, 100, 5, 1, 80, 12, 0, 40, 8, 1, 232, 3, 0, 0, 192, 249, 255, 255, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_large_nchw_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_large_nchw_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={2.0f, 2.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 3, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 2},
+            .numberOfConsumers = 0,
+            .scale = 10.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_large_nchw_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -22245,6 +27717,262 @@ inline bool is_ignored_large_dynamic_output_shape_nhwc_quant8_weight_as_input(in
 }
 
 // Create the model
+Model createTestModel_large_dynamic_output_shape_nhwc_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={2.0f, 2.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 3, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 12},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 10.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      50, 10, 0, 100, 5, 1, 80, 12, 0, 40, 8, 1, 232, 3, 0, 0, 192, 249, 255, 255, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_large_dynamic_output_shape_nhwc_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_large_dynamic_output_shape_nhwc_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={2.0f, 2.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 3, 2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 3, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 10.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_large_dynamic_output_shape_nhwc_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_large_dynamic_output_shape_nhwc_float16() {
     const std::vector<Operand> operands = {
         {
@@ -23242,6 +28970,262 @@ Model createTestModel_large_dynamic_output_shape_nchw_quant8_weight_as_input() {
 }
 
 inline bool is_ignored_large_dynamic_output_shape_nchw_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_large_dynamic_output_shape_nchw_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={2.0f, 2.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 3, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 12},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 8},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 24, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 28, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 32, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 36, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 40, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 10.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      50, 10, 0, 100, 5, 1, 80, 12, 0, 40, 8, 1, 232, 3, 0, 0, 192, 249, 255, 255, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_large_dynamic_output_shape_nchw_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_large_dynamic_output_shape_nchw_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={2.0f, 2.5f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 3, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.25f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {2, 2, 3, 1},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 10.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_large_dynamic_output_shape_nchw_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -24249,6 +30233,262 @@ inline bool is_ignored_channel_nhwc_quant8_weight_as_input(int i) {
 }
 
 // Create the model
+Model createTestModel_channel_nhwc_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.3f, 0.25f, 0.3f, 0.25f, 0.3f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 9},
+            .numberOfConsumers = 1,
+            .scale = 0.5f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {6, 1, 1, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 18},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {6},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 18, .length = 24},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 42, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 46, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 50, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 54, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 58, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 62, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 6},
+            .numberOfConsumers = 0,
+            .scale = 2.0f,
+            .zeroPoint = 60,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 12, 7, 3, 0, 8, 12, 12, 20, 20, 20, 36, 32, 20, 7, 3, 3, 80, 0, 0, 0, 123, 255, 255, 255, 240, 0, 0, 0, 245, 254, 255, 255, 144, 1, 0, 0, 112, 254, 255, 255, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_channel_nhwc_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_channel_nhwc_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.3f, 0.25f, 0.3f, 0.25f, 0.3f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 9},
+            .numberOfConsumers = 1,
+            .scale = 0.5f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {6, 1, 1, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {6},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 6},
+            .numberOfConsumers = 0,
+            .scale = 2.0f,
+            .zeroPoint = 60,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_channel_nhwc_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_channel_nhwc_float16() {
     const std::vector<Operand> operands = {
         {
@@ -25246,6 +31486,262 @@ Model createTestModel_channel_nchw_quant8_weight_as_input() {
 }
 
 inline bool is_ignored_channel_nchw_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_channel_nchw_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.3f, 0.25f, 0.3f, 0.25f, 0.3f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 9, 2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.5f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {6, 1, 1, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 18},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {6},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 18, .length = 24},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 42, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 46, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 50, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 54, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 58, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 62, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 6, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 2.0f,
+            .zeroPoint = 60,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 12, 7, 3, 0, 8, 12, 12, 20, 20, 20, 36, 32, 20, 7, 3, 3, 80, 0, 0, 0, 123, 255, 255, 255, 240, 0, 0, 0, 245, 254, 255, 255, 144, 1, 0, 0, 112, 254, 255, 255, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_channel_nchw_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_channel_nchw_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.3f, 0.25f, 0.3f, 0.25f, 0.3f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 9, 2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.5f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {6, 1, 1, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {6},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 6, 2, 2},
+            .numberOfConsumers = 0,
+            .scale = 2.0f,
+            .zeroPoint = 60,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_channel_nchw_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -26253,6 +32749,262 @@ inline bool is_ignored_channel_dynamic_output_shape_nhwc_quant8_weight_as_input(
 }
 
 // Create the model
+Model createTestModel_channel_dynamic_output_shape_nhwc_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.3f, 0.25f, 0.3f, 0.25f, 0.3f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 9},
+            .numberOfConsumers = 1,
+            .scale = 0.5f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {6, 1, 1, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 18},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {6},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 18, .length = 24},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 42, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 46, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 50, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 54, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 58, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 62, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 2.0f,
+            .zeroPoint = 60,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 12, 7, 3, 0, 8, 12, 12, 20, 20, 20, 36, 32, 20, 7, 3, 3, 80, 0, 0, 0, 123, 255, 255, 255, 240, 0, 0, 0, 245, 254, 255, 255, 144, 1, 0, 0, 112, 254, 255, 255, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_channel_dynamic_output_shape_nhwc_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_channel_dynamic_output_shape_nhwc_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.3f, 0.25f, 0.3f, 0.25f, 0.3f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 2, 2, 9},
+            .numberOfConsumers = 1,
+            .scale = 0.5f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {6, 1, 1, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {6},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 2.0f,
+            .zeroPoint = 60,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_channel_dynamic_output_shape_nhwc_channelQuant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_channel_dynamic_output_shape_nhwc_float16() {
     const std::vector<Operand> operands = {
         {
@@ -27250,6 +34002,262 @@ Model createTestModel_channel_dynamic_output_shape_nchw_quant8_weight_as_input()
 }
 
 inline bool is_ignored_channel_dynamic_output_shape_nchw_quant8_weight_as_input(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_channel_dynamic_output_shape_nchw_channelQuant8() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.3f, 0.25f, 0.3f, 0.25f, 0.3f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 9, 2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.5f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {6, 1, 1, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 18},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {6},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 18, .length = 24},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 42, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 46, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 50, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 54, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 58, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 62, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 2.0f,
+            .zeroPoint = 60,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      4, 8, 12, 7, 3, 0, 8, 12, 12, 20, 20, 20, 36, 32, 20, 7, 3, 3, 80, 0, 0, 0, 123, 255, 255, 255, 240, 0, 0, 0, 245, 254, 255, 255, 144, 1, 0, 0, 112, 254, 255, 255, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_channel_dynamic_output_shape_nchw_channelQuant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_channel_dynamic_output_shape_nchw_channelQuant8_weight_as_input() {
+    Operand::ExtraParams extraParams1;
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={0.25f, 0.3f, 0.25f, 0.3f, 0.25f, 0.3f}, .channelDim=0});
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {1, 9, 2, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.5f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensions = {6, 1, 1, 3},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = std::move(extraParams1),
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {6},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 0, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::BOOL,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 1},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0, 0, 0, 0},
+            .numberOfConsumers = 0,
+            .scale = 2.0f,
+            .zeroPoint = 60,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::GROUPED_CONV_2D,
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2};
+    const std::vector<uint32_t> outputIndexes = {9};
+    std::vector<uint8_t> operandValues = {
+      1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_channel_dynamic_output_shape_nchw_channelQuant8_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
