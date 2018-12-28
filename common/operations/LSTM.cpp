@@ -17,6 +17,7 @@
 #include "LSTM.h"
 
 #include "CpuExecutor.h"
+#include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
 
 #include "Tracing.h"
@@ -72,8 +73,15 @@ LSTMCell::LSTMCell(const Operation& operation, std::vector<RunTimeOperandInfo>& 
 
     params_.activation_ = static_cast<TfLiteFusedActivation>(
             getScalarData<int32_t>(*GetInput(operation, operands, kActivationParam)));
-    params_.cell_clip_ = getScalarData<float>(*GetInput(operation, operands, kCellClipParam));
-    params_.proj_clip_ = getScalarData<float>(*GetInput(operation, operands, kProjClipParam));
+    if (input_->type == OperandType::TENSOR_FLOAT32) {
+        params_.cell_clip_ = getScalarData<float>(*GetInput(operation, operands, kCellClipParam));
+        params_.proj_clip_ = getScalarData<float>(*GetInput(operation, operands, kProjClipParam));
+    } else {
+        params_.cell_clip_ = static_cast<float>(
+                getScalarData<_Float16>(*GetInput(operation, operands, kCellClipParam)));
+        params_.proj_clip_ = static_cast<float>(
+                getScalarData<_Float16>(*GetInput(operation, operands, kProjClipParam)));
+    }
 
     // We check the version of LSTM by checking the number of the inputs to the
     // op. For LSTM version 1.0 there were 23 inputs and for 1.2 there are 27.
@@ -103,19 +111,11 @@ LSTMCell::LSTMCell(const Operation& operation, std::vector<RunTimeOperandInfo>& 
 bool LSTMCell::CheckInputTensorDimensions(const Operation& operation,
                                           std::vector<RunTimeOperandInfo>& operands,
                                           uint32_t n_input, uint32_t n_output, uint32_t n_cell) {
-    LSTMParams params = {
-            .activation_ = static_cast<TfLiteFusedActivation>(getScalarData<int32_t>(
-                    *GetInput(operation, operands, LSTMCell::kActivationParam))),
-            .cell_clip_ =
-                    getScalarData<float>(*GetInput(operation, operands, LSTMCell::kCellClipParam)),
-            .proj_clip_ =
-                    getScalarData<float>(*GetInput(operation, operands, LSTMCell::kProjClipParam))};
-
     // Making sure clipping parameters have valid values.
     // == 0 means no clipping
     //  > 0 means clipping
-    NN_CHECK(params.cell_clip_ >= 0);
-    NN_CHECK(params.proj_clip_ >= 0);
+    NN_CHECK(params_.cell_clip_ >= 0);
+    NN_CHECK(params_.proj_clip_ >= 0);
 
     if (!IsNullInput(input_to_input_weights_)) {
         NN_CHECK_EQ(NumDimensions(input_to_input_weights_), 2);
@@ -300,7 +300,22 @@ bool LSTMCell::Prepare(const Operation& operation, std::vector<RunTimeOperandInf
     return true;
 }
 
-bool LSTMCell::Eval() {
+bool LSTMCell::EvalFloat32(
+        const float* input_buffer, const float* input_to_input_weights_buffer,
+        const float* input_to_forget_weights_buffer, const float* input_to_cell_weights_buffer,
+        const float* input_to_output_weights_buffer, const float* recurrent_to_input_weights_buffer,
+        const float* recurrent_to_forget_weights_buffer,
+        const float* recurrent_to_cell_weights_buffer,
+        const float* recurrent_to_output_weights_buffer, const float* cell_to_input_weights_buffer,
+        const float* cell_to_forget_weights_buffer, const float* cell_to_output_weights_buffer,
+        const float* input_gate_bias_buffer, const float* forget_gate_bias_buffer,
+        const float* cell_bias_buffer, const float* output_gate_bias_buffer,
+        const float* projection_weights_buffer, const float* projection_bias_buffer,
+        const float* output_state_in_buffer, const float* cell_state_in_buffer,
+        const float* input_layer_norm_weights_buffer, const float* forget_layer_norm_weights_buffer,
+        const float* cell_layer_norm_weights_buffer, const float* output_layer_norm_weights_buffer,
+        float* output_state_out_buffer, float* cell_state_out_buffer, float* output_buffer,
+        float* scratch_buffer_buffer) {
     NNTRACE_COMP("LSTMCell::Eval");
 
     const uint32_t n_batch = input_->shape().dimensions[0];
@@ -321,11 +336,11 @@ bool LSTMCell::Eval() {
     float* forget_gate_scratch = nullptr;
     float* output_gate_scratch = nullptr;
     if (use_cifg) {
-        cell_scratch = reinterpret_cast<float*>(scratch_buffer_->buffer);
+        cell_scratch = scratch_buffer_buffer;
         forget_gate_scratch = cell_scratch + n_cell * n_batch;
         output_gate_scratch = cell_scratch + 2 * n_cell * n_batch;
     } else {
-        input_gate_scratch = reinterpret_cast<float*>(scratch_buffer_->buffer);
+        input_gate_scratch = scratch_buffer_buffer;
         cell_scratch = input_gate_scratch + n_cell * n_batch;
         forget_gate_scratch = input_gate_scratch + 2 * n_cell * n_batch;
         output_gate_scratch = input_gate_scratch + 3 * n_cell * n_batch;
@@ -334,15 +349,15 @@ bool LSTMCell::Eval() {
     if (!use_layer_norm) {
         // Initialize scratch buffers with bias.
         if (!use_cifg) {
-            tflite::tensor_utils::VectorBatchVectorAssign(GetBuffer<float>(input_gate_bias_),
-                                                          n_cell, n_batch, input_gate_scratch);
+            tflite::tensor_utils::VectorBatchVectorAssign(input_gate_bias_buffer, n_cell, n_batch,
+                                                          input_gate_scratch);
         }
-        tflite::tensor_utils::VectorBatchVectorAssign(GetBuffer<float>(forget_gate_bias_), n_cell,
-                                                      n_batch, forget_gate_scratch);
-        tflite::tensor_utils::VectorBatchVectorAssign(GetBuffer<float>(cell_bias_), n_cell, n_batch,
+        tflite::tensor_utils::VectorBatchVectorAssign(forget_gate_bias_buffer, n_cell, n_batch,
+                                                      forget_gate_scratch);
+        tflite::tensor_utils::VectorBatchVectorAssign(cell_bias_buffer, n_cell, n_batch,
                                                       cell_scratch);
-        tflite::tensor_utils::VectorBatchVectorAssign(GetBuffer<float>(output_gate_bias_), n_cell,
-                                                      n_batch, output_gate_scratch);
+        tflite::tensor_utils::VectorBatchVectorAssign(output_gate_bias_buffer, n_cell, n_batch,
+                                                      output_gate_scratch);
     } else {
         // Initialize scratch buffers with zeroes.
         if (!use_cifg) {
@@ -356,51 +371,51 @@ bool LSTMCell::Eval() {
     // For each batch and cell: compute input_weight * input.
     if (!use_cifg) {
         tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-                GetBuffer<float>(input_to_input_weights_), n_cell, n_input,
-                GetBuffer<float>(input_), n_batch, input_gate_scratch, /*result_stride*/ 1);
+                input_to_input_weights_buffer, n_cell, n_input, input_buffer, n_batch,
+                input_gate_scratch, /*result_stride*/ 1);
     }
     tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-            GetBuffer<float>(input_to_forget_weights_), n_cell, n_input, GetBuffer<float>(input_),
-            n_batch, forget_gate_scratch, /*result_stride*/ 1);
+            input_to_forget_weights_buffer, n_cell, n_input, input_buffer, n_batch,
+            forget_gate_scratch, /*result_stride*/ 1);
+    tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(input_to_cell_weights_buffer, n_cell,
+                                                              n_input, input_buffer, n_batch,
+                                                              cell_scratch, /*result_stride*/ 1);
     tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-            GetBuffer<float>(input_to_cell_weights_), n_cell, n_input, GetBuffer<float>(input_),
-            n_batch, cell_scratch, /*result_stride*/ 1);
-    tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-            GetBuffer<float>(input_to_output_weights_), n_cell, n_input, GetBuffer<float>(input_),
-            n_batch, output_gate_scratch, /*result_stride*/ 1);
+            input_to_output_weights_buffer, n_cell, n_input, input_buffer, n_batch,
+            output_gate_scratch, /*result_stride*/ 1);
 
     // For each batch and cell: compute recurrent_weight * output_state.
     if (!use_cifg) {
         tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-                GetBuffer<float>(recurrent_to_input_weights_), n_cell, n_output,
-                GetBuffer<float>(output_state_in_), n_batch, input_gate_scratch,
+                recurrent_to_input_weights_buffer, n_cell, n_output, output_state_in_buffer,
+                n_batch, input_gate_scratch,
                 /*result_stride*/ 1);
     }
     tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-            GetBuffer<float>(recurrent_to_forget_weights_), n_cell, n_output,
-            GetBuffer<float>(output_state_in_), n_batch, forget_gate_scratch, /*result_stride*/ 1);
+            recurrent_to_forget_weights_buffer, n_cell, n_output, output_state_in_buffer, n_batch,
+            forget_gate_scratch, /*result_stride*/ 1);
     tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-            GetBuffer<float>(recurrent_to_cell_weights_), n_cell, n_output,
-            GetBuffer<float>(output_state_in_), n_batch, cell_scratch, /*result_stride*/ 1);
+            recurrent_to_cell_weights_buffer, n_cell, n_output, output_state_in_buffer, n_batch,
+            cell_scratch, /*result_stride*/ 1);
     tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-            GetBuffer<float>(recurrent_to_output_weights_), n_cell, n_output,
-            GetBuffer<float>(output_state_in_), n_batch, output_gate_scratch, /*result_stride*/ 1);
+            recurrent_to_output_weights_buffer, n_cell, n_output, output_state_in_buffer, n_batch,
+            output_gate_scratch, /*result_stride*/ 1);
 
     // For each batch and cell: update input gate.
     if (!use_cifg) {
         if (use_peephole) {
             tflite::tensor_utils::VectorBatchVectorCwiseProductAccumulate(
-                    GetBuffer<float>(cell_to_input_weights_), n_cell,
-                    GetBuffer<float>(cell_state_in_), n_batch, input_gate_scratch);
+                    cell_to_input_weights_buffer, n_cell, cell_state_in_buffer, n_batch,
+                    input_gate_scratch);
         }
         if (use_layer_norm) {
             tflite::tensor_utils::MeanStddevNormalization(input_gate_scratch, input_gate_scratch,
                                                           n_cell, n_batch, kLayerNormEpsilon);
-            tflite::tensor_utils::VectorBatchVectorCwiseProduct(
-                    GetBuffer<float>(input_layer_norm_weights_), n_cell, input_gate_scratch,
-                    n_batch, input_gate_scratch);
-            tflite::tensor_utils::VectorBatchVectorAdd(GetBuffer<float>(input_gate_bias_), n_cell,
-                                                       n_batch, input_gate_scratch);
+            tflite::tensor_utils::VectorBatchVectorCwiseProduct(input_layer_norm_weights_buffer,
+                                                                n_cell, input_gate_scratch, n_batch,
+                                                                input_gate_scratch);
+            tflite::tensor_utils::VectorBatchVectorAdd(input_gate_bias_buffer, n_cell, n_batch,
+                                                       input_gate_scratch);
         }
         tflite::tensor_utils::ApplySigmoidToVector(input_gate_scratch, n_cell * n_batch,
                                                    input_gate_scratch);
@@ -408,18 +423,18 @@ bool LSTMCell::Eval() {
 
     // For each batch and cell: update forget gate.
     if (use_peephole) {
-        tflite::tensor_utils::VectorBatchVectorCwiseProductAccumulate(
-                GetBuffer<float>(cell_to_forget_weights_), n_cell, GetBuffer<float>(cell_state_in_),
-                n_batch, forget_gate_scratch);
+        tflite::tensor_utils::VectorBatchVectorCwiseProductAccumulate(cell_to_forget_weights_buffer,
+                                                                      n_cell, cell_state_in_buffer,
+                                                                      n_batch, forget_gate_scratch);
     }
     if (use_layer_norm) {
         tflite::tensor_utils::MeanStddevNormalization(forget_gate_scratch, forget_gate_scratch,
                                                       n_cell, n_batch, kLayerNormEpsilon);
-        tflite::tensor_utils::VectorBatchVectorCwiseProduct(
-                GetBuffer<float>(forget_layer_norm_weights_), n_cell, forget_gate_scratch, n_batch,
-                forget_gate_scratch);
-        tflite::tensor_utils::VectorBatchVectorAdd(GetBuffer<float>(forget_gate_bias_), n_cell,
-                                                   n_batch, forget_gate_scratch);
+        tflite::tensor_utils::VectorBatchVectorCwiseProduct(forget_layer_norm_weights_buffer,
+                                                            n_cell, forget_gate_scratch, n_batch,
+                                                            forget_gate_scratch);
+        tflite::tensor_utils::VectorBatchVectorAdd(forget_gate_bias_buffer, n_cell, n_batch,
+                                                   forget_gate_scratch);
     }
     tflite::tensor_utils::ApplySigmoidToVector(forget_gate_scratch, n_cell * n_batch,
                                                forget_gate_scratch);
@@ -428,52 +443,47 @@ bool LSTMCell::Eval() {
     if (use_layer_norm) {
         tflite::tensor_utils::MeanStddevNormalization(cell_scratch, cell_scratch, n_cell, n_batch,
                                                       kLayerNormEpsilon);
-        tflite::tensor_utils::VectorBatchVectorCwiseProduct(
-                GetBuffer<float>(cell_layer_norm_weights_), n_cell, cell_scratch, n_batch,
-                cell_scratch);
-        tflite::tensor_utils::VectorBatchVectorAdd(GetBuffer<float>(cell_bias_), n_cell, n_batch,
-                                                   cell_scratch);
+        tflite::tensor_utils::VectorBatchVectorCwiseProduct(cell_layer_norm_weights_buffer, n_cell,
+                                                            cell_scratch, n_batch, cell_scratch);
+        tflite::tensor_utils::VectorBatchVectorAdd(cell_bias_buffer, n_cell, n_batch, cell_scratch);
     }
-    tflite::tensor_utils::VectorVectorCwiseProduct(
-            forget_gate_scratch, GetBuffer<float>(cell_state_in_), n_batch * n_cell,
-            GetBuffer<float>(cell_state_out_));
+    tflite::tensor_utils::VectorVectorCwiseProduct(forget_gate_scratch, cell_state_in_buffer,
+                                                   n_batch * n_cell, cell_state_out_buffer);
     tflite::tensor_utils::ApplyActivationToVector(cell_scratch, n_batch * n_cell,
                                                   params_.activation_, cell_scratch);
     if (use_cifg) {
         tflite::tensor_utils::Sub1Vector(forget_gate_scratch, n_batch * n_cell,
                                          forget_gate_scratch);
-        tflite::tensor_utils::VectorVectorCwiseProductAccumulate(cell_scratch, forget_gate_scratch,
-                                                                 n_batch * n_cell,
-                                                                 GetBuffer<float>(cell_state_out_));
+        tflite::tensor_utils::VectorVectorCwiseProductAccumulate(
+                cell_scratch, forget_gate_scratch, n_batch * n_cell, cell_state_out_buffer);
     } else {
-        tflite::tensor_utils::VectorVectorCwiseProductAccumulate(cell_scratch, input_gate_scratch,
-                                                                 n_batch * n_cell,
-                                                                 GetBuffer<float>(cell_state_out_));
+        tflite::tensor_utils::VectorVectorCwiseProductAccumulate(
+                cell_scratch, input_gate_scratch, n_batch * n_cell, cell_state_out_buffer);
     }
     if (params_.cell_clip_ > 0.0) {
-        tflite::tensor_utils::ClipVector(GetBuffer<float>(cell_state_out_), n_batch * n_cell,
-                                         params_.cell_clip_, GetBuffer<float>(cell_state_out_));
+        tflite::tensor_utils::ClipVector(cell_state_out_buffer, n_batch * n_cell,
+                                         params_.cell_clip_, cell_state_out_buffer);
     }
 
     // For each batch and cell: update the output gate.
     if (use_peephole) {
-        tflite::tensor_utils::VectorBatchVectorCwiseProductAccumulate(
-                GetBuffer<float>(cell_to_output_weights_), n_cell,
-                GetBuffer<float>(cell_state_out_), n_batch, output_gate_scratch);
+        tflite::tensor_utils::VectorBatchVectorCwiseProductAccumulate(cell_to_output_weights_buffer,
+                                                                      n_cell, cell_state_out_buffer,
+                                                                      n_batch, output_gate_scratch);
     }
     if (use_layer_norm) {
         tflite::tensor_utils::MeanStddevNormalization(output_gate_scratch, output_gate_scratch,
                                                       n_cell, n_batch, kLayerNormEpsilon);
-        tflite::tensor_utils::VectorBatchVectorCwiseProduct(
-                GetBuffer<float>(output_layer_norm_weights_), n_cell, output_gate_scratch, n_batch,
-                output_gate_scratch);
-        tflite::tensor_utils::VectorBatchVectorAdd(GetBuffer<float>(output_gate_bias_), n_cell,
-                                                   n_batch, output_gate_scratch);
+        tflite::tensor_utils::VectorBatchVectorCwiseProduct(output_layer_norm_weights_buffer,
+                                                            n_cell, output_gate_scratch, n_batch,
+                                                            output_gate_scratch);
+        tflite::tensor_utils::VectorBatchVectorAdd(output_gate_bias_buffer, n_cell, n_batch,
+                                                   output_gate_scratch);
     }
     tflite::tensor_utils::ApplySigmoidToVector(output_gate_scratch, n_batch * n_cell,
                                                output_gate_scratch);
-    tflite::tensor_utils::ApplyActivationToVector(
-            GetBuffer<float>(cell_state_out_), n_batch * n_cell, params_.activation_, cell_scratch);
+    tflite::tensor_utils::ApplyActivationToVector(cell_state_out_buffer, n_batch * n_cell,
+                                                  params_.activation_, cell_scratch);
     tflite::tensor_utils::VectorVectorCwiseProduct(output_gate_scratch, cell_scratch,
                                                    n_batch * n_cell, output_gate_scratch);
 
@@ -482,27 +492,256 @@ bool LSTMCell::Eval() {
     const bool use_projection_bias = (projection_bias_->lifetime != OperandLifeTime::NO_VALUE);
     if (use_projection_weight) {
         if (use_projection_bias) {
-            tflite::tensor_utils::VectorBatchVectorAssign(GetBuffer<float>(projection_bias_),
-                                                          n_output, n_batch,
-                                                          GetBuffer<float>(output_));
+            tflite::tensor_utils::VectorBatchVectorAssign(projection_bias_buffer, n_output, n_batch,
+                                                          output_buffer);
         } else {
-            tflite::tensor_utils::ZeroVector(GetBuffer<float>(output_), n_batch * n_output);
+            tflite::tensor_utils::ZeroVector(output_buffer, n_batch * n_output);
         }
         tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-                GetBuffer<float>(projection_weights_), n_output, n_cell, output_gate_scratch,
-                n_batch, GetBuffer<float>(output_),
+                projection_weights_buffer, n_output, n_cell, output_gate_scratch, n_batch,
+                output_buffer,
                 /*result_stride*/ 1);
         if (params_.proj_clip_ > 0.0) {
-            tflite::tensor_utils::ClipVector(GetBuffer<float>(output_), n_batch * n_output,
-                                             params_.proj_clip_, GetBuffer<float>(output_));
+            tflite::tensor_utils::ClipVector(output_buffer, n_batch * n_output, params_.proj_clip_,
+                                             output_buffer);
         }
     } else {
-        tflite::tensor_utils::CopyVector(output_gate_scratch, n_batch * n_output,
-                                         GetBuffer<float>(output_));
+        tflite::tensor_utils::CopyVector(output_gate_scratch, n_batch * n_output, output_buffer);
     }
-    tflite::tensor_utils::CopyVector(GetBuffer<float>(output_), n_batch * n_output,
-                                     GetBuffer<float>(output_state_out_));
+    tflite::tensor_utils::CopyVector(output_buffer, n_batch * n_output, output_state_out_buffer);
+    return true;
+}
 
+bool LSTMCell::Eval() {
+    switch (input_->type) {
+        case OperandType::TENSOR_FLOAT32: {
+            // clang-format off
+            EvalFloat32(
+                    GetBuffer<const float>(input_),
+                    GetBuffer<const float>(input_to_input_weights_),
+                    GetBuffer<const float>(input_to_forget_weights_),
+                    GetBuffer<const float>(input_to_cell_weights_),
+                    GetBuffer<const float>(input_to_output_weights_),
+                    GetBuffer<const float>(recurrent_to_input_weights_),
+                    GetBuffer<const float>(recurrent_to_forget_weights_),
+                    GetBuffer<const float>(recurrent_to_cell_weights_),
+                    GetBuffer<const float>(recurrent_to_output_weights_),
+                    GetBuffer<const float>(cell_to_input_weights_),
+                    GetBuffer<const float>(cell_to_forget_weights_),
+                    GetBuffer<const float>(cell_to_output_weights_),
+                    GetBuffer<const float>(input_gate_bias_),
+                    GetBuffer<const float>(forget_gate_bias_),
+                    GetBuffer<const float>(cell_bias_),
+                    GetBuffer<const float>(output_gate_bias_),
+                    GetBuffer<const float>(projection_weights_),
+                    GetBuffer<const float>(projection_bias_),
+                    GetBuffer<const float>(output_state_in_),
+                    GetBuffer<const float>(cell_state_in_),
+                    GetBuffer<const float>(input_layer_norm_weights_),
+                    GetBuffer<const float>(forget_layer_norm_weights_),
+                    GetBuffer<const float>(cell_layer_norm_weights_),
+                    GetBuffer<const float>(output_layer_norm_weights_),
+                    GetBuffer<float>(output_state_out_),
+                    GetBuffer<float>(cell_state_out_),
+                    GetBuffer<float>(output_),
+                    GetBuffer<float>(scratch_buffer_));
+            // clang-format on
+        } break;
+        case OperandType::TENSOR_FLOAT16: {
+            std::vector<float> input_float32(getNumberOfElements(input_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(input_), &input_float32);
+            const float* input_to_input_weights_buffer = nullptr;
+            std::vector<float> input_to_input_weights_float32(
+                    getNumberOfElements(input_to_input_weights_->shape()));
+            if (!IsNullInput(input_to_input_weights_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(input_to_input_weights_),
+                                        &input_to_input_weights_float32);
+                input_to_input_weights_buffer = input_to_input_weights_float32.data();
+            }
+            std::vector<float> input_to_forget_weights_float32(
+                    getNumberOfElements(input_to_forget_weights_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(input_to_forget_weights_),
+                                    &input_to_forget_weights_float32);
+            std::vector<float> input_to_cell_weights_float32(
+                    getNumberOfElements(input_to_cell_weights_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(input_to_cell_weights_),
+                                    &input_to_cell_weights_float32);
+            std::vector<float> input_to_output_weights_float32(
+                    getNumberOfElements(input_to_output_weights_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(input_to_output_weights_),
+                                    &input_to_output_weights_float32);
+            const float* recurrent_to_input_weights_buffer = nullptr;
+            std::vector<float> recurrent_to_input_weights_float32(
+                    getNumberOfElements(recurrent_to_input_weights_->shape()));
+            if (!IsNullInput(recurrent_to_input_weights_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(recurrent_to_input_weights_),
+                                        &recurrent_to_input_weights_float32);
+                recurrent_to_input_weights_buffer = recurrent_to_input_weights_float32.data();
+            }
+            std::vector<float> recurrent_to_forget_weights_float32(
+                    getNumberOfElements(recurrent_to_forget_weights_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(recurrent_to_forget_weights_),
+                                    &recurrent_to_forget_weights_float32);
+            std::vector<float> recurrent_to_cell_weights_float32(
+                    getNumberOfElements(recurrent_to_cell_weights_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(recurrent_to_cell_weights_),
+                                    &recurrent_to_cell_weights_float32);
+            std::vector<float> recurrent_to_output_weights_float32(
+                    getNumberOfElements(recurrent_to_output_weights_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(recurrent_to_output_weights_),
+                                    &recurrent_to_output_weights_float32);
+            const float* cell_to_input_weights_buffer = nullptr;
+            std::vector<float> cell_to_input_weights_float32(
+                    getNumberOfElements(cell_to_input_weights_->shape()));
+            if (!IsNullInput(cell_to_input_weights_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(cell_to_input_weights_),
+                                        &cell_to_input_weights_float32);
+                cell_to_input_weights_buffer = cell_to_input_weights_float32.data();
+            }
+            const float* cell_to_forget_weights_buffer = nullptr;
+            std::vector<float> cell_to_forget_weights_float32(
+                    getNumberOfElements(cell_to_forget_weights_->shape()));
+            if (!IsNullInput(cell_to_forget_weights_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(cell_to_forget_weights_),
+                                        &cell_to_forget_weights_float32);
+                cell_to_forget_weights_buffer = cell_to_forget_weights_float32.data();
+            }
+            const float* cell_to_output_weights_buffer = nullptr;
+            std::vector<float> cell_to_output_weights_float32(
+                    getNumberOfElements(cell_to_output_weights_->shape()));
+            if (!IsNullInput(cell_to_output_weights_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(cell_to_output_weights_),
+                                        &cell_to_output_weights_float32);
+                cell_to_output_weights_buffer = cell_to_output_weights_float32.data();
+            }
+            const float* input_gate_bias_buffer = nullptr;
+            std::vector<float> input_gate_bias_float32(
+                    getNumberOfElements(input_gate_bias_->shape()));
+            if (!IsNullInput(input_gate_bias_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(input_gate_bias_),
+                                        &input_gate_bias_float32);
+                input_gate_bias_buffer = input_gate_bias_float32.data();
+            }
+            std::vector<float> forget_gate_bias_float32(
+                    getNumberOfElements(forget_gate_bias_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(forget_gate_bias_),
+                                    &forget_gate_bias_float32);
+            std::vector<float> cell_bias_float32(getNumberOfElements(cell_bias_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(cell_bias_), &cell_bias_float32);
+            std::vector<float> output_gate_bias_float32(
+                    getNumberOfElements(output_gate_bias_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(output_gate_bias_),
+                                    &output_gate_bias_float32);
+            const float* projection_weights_buffer = nullptr;
+            std::vector<float> projection_weights_float32(
+                    getNumberOfElements(projection_weights_->shape()));
+            if (!IsNullInput(projection_weights_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(projection_weights_),
+                                        &projection_weights_float32);
+                projection_weights_buffer = projection_weights_float32.data();
+            }
+            const float* projection_bias_buffer = nullptr;
+            std::vector<float> projection_bias_float32(
+                    getNumberOfElements(projection_bias_->shape()));
+            if (!IsNullInput(projection_bias_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(projection_bias_),
+                                        &projection_bias_float32);
+                projection_bias_buffer = projection_bias_float32.data();
+            }
+            std::vector<float> output_state_in_float32(
+                    getNumberOfElements(output_state_in_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(output_state_in_),
+                                    &output_state_in_float32);
+            std::vector<float> cell_state_in_float32(getNumberOfElements(cell_state_in_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(cell_state_in_), &cell_state_in_float32);
+            const float* input_layer_norm_weights_buffer = nullptr;
+            std::vector<float> input_layer_norm_weights_float32(
+                    getNumberOfElements(input_layer_norm_weights_->shape()));
+            if (!IsNullInput(input_layer_norm_weights_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(input_layer_norm_weights_),
+                                        &input_layer_norm_weights_float32);
+                input_layer_norm_weights_buffer = input_layer_norm_weights_float32.data();
+            }
+            const float* forget_layer_norm_weights_buffer = nullptr;
+            std::vector<float> forget_layer_norm_weights_float32(
+                    getNumberOfElements(forget_layer_norm_weights_->shape()));
+            if (!IsNullInput(forget_layer_norm_weights_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(forget_layer_norm_weights_),
+                                        &forget_layer_norm_weights_float32);
+                forget_layer_norm_weights_buffer = forget_layer_norm_weights_float32.data();
+            }
+            const float* cell_layer_norm_weights_buffer = nullptr;
+            std::vector<float> cell_layer_norm_weights_float32(
+                    getNumberOfElements(cell_layer_norm_weights_->shape()));
+            if (!IsNullInput(cell_layer_norm_weights_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(cell_layer_norm_weights_),
+                                        &cell_layer_norm_weights_float32);
+                cell_layer_norm_weights_buffer = cell_layer_norm_weights_float32.data();
+            }
+            const float* output_layer_norm_weights_buffer = nullptr;
+            std::vector<float> output_layer_norm_weights_float32(
+                    getNumberOfElements(output_layer_norm_weights_->shape()));
+            if (!IsNullInput(output_layer_norm_weights_)) {
+                convertFloat16ToFloat32(GetBuffer<_Float16>(output_layer_norm_weights_),
+                                        &output_layer_norm_weights_float32);
+                output_layer_norm_weights_buffer = output_layer_norm_weights_float32.data();
+            }
+            std::vector<float> output_state_out_float32(
+                    getNumberOfElements(output_state_out_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(output_state_out_),
+                                    &output_state_out_float32);
+            std::vector<float> cell_state_out_float32(
+                    getNumberOfElements(cell_state_out_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(cell_state_out_), &cell_state_out_float32);
+            std::vector<float> output_float32(getNumberOfElements(output_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(output_), &output_float32);
+            std::vector<float> scratch_buffer_float32(
+                    getNumberOfElements(scratch_buffer_->shape()));
+            convertFloat16ToFloat32(GetBuffer<_Float16>(scratch_buffer_), &scratch_buffer_float32);
+
+            // clang-format off
+            EvalFloat32(
+                    input_float32.data(),
+                    input_to_input_weights_buffer,
+                    input_to_forget_weights_float32.data(),
+                    input_to_cell_weights_float32.data(),
+                    input_to_output_weights_float32.data(),
+                    recurrent_to_input_weights_buffer,
+                    recurrent_to_forget_weights_float32.data(),
+                    recurrent_to_cell_weights_float32.data(),
+                    recurrent_to_output_weights_float32.data(),
+                    cell_to_input_weights_buffer,
+                    cell_to_forget_weights_buffer,
+                    cell_to_output_weights_buffer,
+                    input_gate_bias_buffer,
+                    forget_gate_bias_float32.data(),
+                    cell_bias_float32.data(),
+                    output_gate_bias_float32.data(),
+                    projection_weights_buffer,
+                    projection_bias_buffer,
+                    output_state_in_float32.data(),
+                    cell_state_in_float32.data(),
+                    input_layer_norm_weights_buffer,
+                    forget_layer_norm_weights_buffer,
+                    cell_layer_norm_weights_buffer,
+                    output_layer_norm_weights_buffer,
+                    output_state_out_float32.data(),
+                    cell_state_out_float32.data(),
+                    output_float32.data(),
+                    scratch_buffer_float32.data());
+            // clang-format on
+
+            convertFloat32ToFloat16(output_state_out_float32,
+                                    GetBuffer<_Float16>(output_state_out_));
+            convertFloat32ToFloat16(cell_state_out_float32, GetBuffer<_Float16>(cell_state_out_));
+            convertFloat32ToFloat16(output_float32, GetBuffer<_Float16>(output_));
+            convertFloat32ToFloat16(scratch_buffer_float32, GetBuffer<_Float16>(scratch_buffer_));
+        } break;
+        default: {
+            LOG(ERROR) << "Unsupported data type: " << static_cast<int>(input_->type);
+            return false;
+        }
+    }
     return true;
 }
 
