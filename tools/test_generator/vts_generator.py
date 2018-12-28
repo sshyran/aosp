@@ -96,6 +96,7 @@ def generate_vts_operands(model):
   extra_params_definitions = []
   for index, o in enumerate(model.operands):
     length = o.type.GetByteSize() if isinstance(o, Parameter) else 0
+    add_extra_params = o.type.extraParams is not None and not o.type.extraParams.hide
     op = {
         "operand_type": o.type.type,
         "shape": o.type.GetDimensionsString(),
@@ -105,7 +106,7 @@ def generate_vts_operands(model):
         "lifetime": o.lifetime,
         "offset": offset if isinstance(o, Parameter) else 0,
         "length": length,
-        "extraParams": "" if o.type.extraParams is None else "\n            .extraParams = std::move(extraParams%d)," % (index,),
+        "extraParams": "" if not add_extra_params else "\n            .extraParams = std::move(extraParams%d)," % (index,),
     }
     offset += length
     op_definitions.append(op_def.format(**op))
@@ -115,8 +116,8 @@ def generate_vts_operands(model):
     extraParams{index}.{setMethodName}({param});
 """
 
-    ep = o.type.extraParams
-    if ep is not None:
+    if add_extra_params:
+      ep = o.type.extraParams
       op = {
           "index": index,
           "setMethodName": ep.GetVtsSetter(),
@@ -136,8 +137,10 @@ def generate_vts_operand_values(operands):
     binit = []
     for w in weights:
         ty = w.type.type
-        if ty in ("TENSOR_QUANT8_ASYMM", "TENSOR_QUANT8_SYMM_PER_CHANNEL"):
+        if ty == "TENSOR_QUANT8_ASYMM":
             binit += w.value
+        elif ty == "TENSOR_QUANT8_SYMM_PER_CHANNEL":
+            binit += [struct.pack("b", value)[0] for value in w.value]
         elif ty == "BOOL" or ty == "TENSOR_BOOL8":
             binit += [1 if x else 0 for x in w.value]
         elif ty == "TENSOR_FLOAT16" or ty == "FLOAT16":
