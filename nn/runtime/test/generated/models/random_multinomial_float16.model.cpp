@@ -1,7 +1,7 @@
 // clang-format off
-// Generated file (from: random_multinomial.mod.py). Do not edit
+// Generated file (from: random_multinomial_float16.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {1, 1024});
+  OperandType type0(Type::TENSOR_FLOAT16, {1, 1024});
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::TENSOR_INT32, {2});
   OperandType type3(Type::TENSOR_INT32, {1, 128});
