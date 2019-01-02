@@ -1343,6 +1343,31 @@ TEST(OperationValidationTest, LSTM_V1_2_float32) {
     EXPECT_TRUE(lstmTest.testMutatingOutputOperandCounts());
 }
 
+TEST(OperationValidationTest, RANDOM_MULTINOMIAL_float16) {
+    uint32_t twoDimensional[2] = {5, 5};
+    ANeuralNetworksOperandType floatTensor2D = {.type = ANEURALNETWORKS_TENSOR_FLOAT16,
+                                                .dimensionCount = 2,
+                                                .dimensions = twoDimensional,
+                                                .scale = 0.0f,
+                                                .zeroPoint = 0};
+    ANeuralNetworksOperandType intScalar = {.type = ANEURALNETWORKS_INT32,
+                                            .dimensionCount = 0,
+                                            .dimensions = nullptr,
+                                            .scale = 0.0f,
+                                            .zeroPoint = 0};
+
+    ANeuralNetworksOperandType input = floatTensor2D;
+    ANeuralNetworksOperandType sample_count = intScalar;
+    ANeuralNetworksOperandType output = floatTensor2D;
+
+    OperationTestBase rnnTest(ANEURALNETWORKS_RNN, {input, sample_count}, {output});
+
+    EXPECT_TRUE(rnnTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(rnnTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCounts());
+}
+
 TEST(OperationValidationTest, RANDOM_MULTINOMIAL_float32) {
     uint32_t twoDimensional[2] = {5, 5};
     ANeuralNetworksOperandType floatTensor2D = {.type = ANEURALNETWORKS_TENSOR_FLOAT32,
