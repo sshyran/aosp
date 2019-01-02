@@ -390,6 +390,7 @@
 #include "../generated/tests/neg.mod.py.cpp"
 #include "../generated/tests/not_equal.mod.py.cpp"
 #include "../generated/tests/pad_float16.mod.py.cpp"
+#include "../generated/tests/pad_quant8.mod.py.cpp"
 #include "../generated/tests/pad_v2_1_float.mod.py.cpp"
 #include "../generated/tests/pad_v2_1_float_relaxed.mod.py.cpp"
 #include "../generated/tests/pad_v2_1_quant8.mod.py.cpp"
