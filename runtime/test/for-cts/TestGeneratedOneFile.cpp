@@ -390,6 +390,7 @@
 #include "../generated/tests/quantize.mod.py.cpp"
 #include "../generated/tests/quantized_lstm.mod.py.cpp"
 #include "../generated/tests/random_multinomial.mod.py.cpp"
+#include "../generated/tests/random_multinomial_float16.mod.py.cpp"
 #include "../generated/tests/relu1_float16_1.mod.py.cpp"
 #include "../generated/tests/relu1_float16_2.mod.py.cpp"
 #include "../generated/tests/relu6_float16_1.mod.py.cpp"
