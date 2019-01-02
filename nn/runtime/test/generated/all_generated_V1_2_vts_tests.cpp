@@ -17291,6 +17291,29 @@ TEST_F(ValidationTest, pad_float16) {
 }
 
 
+// Generated from: pad_quant8.mod.py.
+namespace pad_quant8 {
+// Generated pad_quant8 test
+#include "examples/pad_quant8.example.cpp"
+// Generated model constructor
+#include "vts_models/pad_quant8.model.cpp"
+} // namespace pad_quant8
+
+TEST_F(NeuralnetworksHidlTest, pad_quant8) {
+  generated_tests::Execute(device,
+                           pad_quant8::createTestModel,
+                           pad_quant8::is_ignored,
+                           pad_quant8::get_examples());
+}
+
+TEST_F(ValidationTest, pad_quant8) {
+  const Model model = pad_quant8::createTestModel();
+  const std::vector<Request> requests = createRequests(pad_quant8::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: pad_v2_1_float.mod.py.
 namespace pad_v2_1_float {
 // Generated pad_v2_1_float test
