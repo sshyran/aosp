@@ -64,8 +64,13 @@ class DeviceManager {
     // For testing only:
     void setUseCpuOnly(bool useCpuOnly) { mSetCpuOnly = useCpuOnly; }
     bool getUseCpuOnly() const { return mSetCpuOnly; }
+    void setSyncExecHal(bool val) {
+        mSyncExecHal = val;
+        mSyncExecHalSetter = true;
+    }
 
     bool syncExecCpu() const { return mSyncExecCpu; }
+    bool syncExecHal() const { return mSyncExecHal; }
     bool syncExecRuntime() const { return mSyncExecRuntime; }
 
     // How to handle graph partitioning?
@@ -117,7 +122,7 @@ class DeviceManager {
     // List of all the devices we discovered (including CpuDevice).
     std::vector<std::shared_ptr<Device>> mDevices;
 
-    // We set this one to have CpuDevice only. To be used when mUseCpuOnly is true.
+    // We set this one to have CpuDevice only. To be used when m*CpuOnly is true.
     std::vector<std::shared_ptr<Device>> mDevicesCpuOnly;
 
     // If either of these is true, we'll ignore the drivers that are
@@ -127,6 +132,10 @@ class DeviceManager {
 
     // synchronous execution
     bool mSyncExecCpu = false;
+    bool mSyncExecHal = true;         // Call executeSynchronously() when available on device.
+    bool mSyncExecHalSetter = false;  // Has mSyncExecHal been set by setSyncExecHal()?
+                                      // If so, don't allow the setting to be overridden
+                                      //     by system property debug.nn.syncexec-hal
     bool mSyncExecRuntime = false;
 
     static const uint32_t kPartitioningDefault = kPartitioningWithFallback;
