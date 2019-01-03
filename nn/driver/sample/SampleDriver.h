@@ -66,6 +66,7 @@ public:
                                 const sp<V1_0::IExecutionCallback>& callback) override;
     Return<ErrorStatus> execute_1_2(const Request& request,
                                     const sp<V1_2::IExecutionCallback>& callback) override;
+    Return<ErrorStatus> executeSynchronously(const Request& request) override;
 
    private:
     Model mModel;
