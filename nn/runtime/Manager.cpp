@@ -329,6 +329,9 @@ DeviceManager::DeviceManager() {
     mPartitioning = getProp("debug.nn.partition", kPartitioningDefault);
     mDebugNNCpuOnly = (getProp("debug.nn.cpuonly") != 0);
     mSyncExecCpu = (getProp("debug.nn.syncexec-cpu") != 0);
+    if (!mSyncExecHalSetter) {
+        mSyncExecHal = (getProp("debug.nn.syncexec-hal", 1) != 0);
+    }
     mSyncExecRuntime = (getProp("debug.nn.syncexec-runtime") != 0);
 #endif  // NN_DEBUGGABLE
 }
