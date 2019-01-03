@@ -288,8 +288,9 @@ class VersionedIPreparedModel {
      * and complete successfully (ErrorStatus::NONE). There must be
      * no failure unless the device itself is in a bad state.
      *
-     * Multiple threads can call the execute function on the same IPreparedModel
-     * object concurrently with different requests.
+     * Multiple threads can call the execute and ExecuteSynchronously functions
+     * on the same VersionedIPreparedModel object concurrently with different
+     * requests.
      *
      * @param request The input and output information on which the prepared
      *                model is to be executed.
@@ -307,6 +308,40 @@ class VersionedIPreparedModel {
      *                  invalid
      */
     ErrorStatus execute(const Request& request, const sp<IExecutionCallback>& callback);
+
+    /**
+     * Performs a synchronous execution on a prepared model.
+     *
+     * The execution is performed synchronously with respect to the caller.
+     * executeSynchronously must verify the inputs to the function are
+     * correct. If there is an error, executeSynchronously must immediately
+     * return with the appropriate ErrorStatus value. If the inputs to the
+     * function are valid and there is no error, executeSynchronously must
+     * perform the execution, and must not return until the execution is
+     * complete.
+     *
+     * If the prepared model was prepared from a model wherein all tensor
+     * operands have fully specified dimensions, and the inputs to the function
+     * are valid, then the execution should complete successfully
+     * (ErrorStatus::NONE). There must be no failure unless the device itself is
+     * in a bad state.
+     *
+     * Any number of calls to the execute and executeSynchronously
+     * functions, in any combination, may be made concurrently, even on the same
+     * VersionedIPreparedModel object.
+     *
+     * @param request The input and output information on which the prepared
+     *                model is to be executed.
+     * @return status Error status of the execution, must be:
+     *                - NONE if execution is performed successfully
+     *                - DEVICE_UNAVAILABLE if driver is offline or busy
+     *                - GENERAL_FAILURE if there is an unspecified error
+     *                - OUTPUT_INSUFFICIENT_SIZE if provided output buffer is
+     *                  not large enough to store the resultant values
+     *                - INVALID_ARGUMENT if one of the input arguments is
+     *                  invalid
+     */
+    ErrorStatus executeSynchronously(const Request& request);
 
     /**
      * Returns whether this handle to an IPreparedModel object is valid or not.
