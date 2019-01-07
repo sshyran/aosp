@@ -98,7 +98,7 @@ inline uint32_t sizeOfData(const Operand& operand) {
 }
 
 // Returns the name of the operation type in ASCII.
-const char* getOperationName(OperationType opCode);
+std::string getOperationName(OperationType opCode);
 
 // Returns the name of the operand type in ASCII.
 const char* getOperandTypeName(OperandType type);
