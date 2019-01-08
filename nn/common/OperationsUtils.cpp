@@ -319,13 +319,10 @@ bool quantizePrepare(const Shape& input, Shape* output) {
     return true;
 }
 
-bool convPrepare(const Shape& input,
-                 const Shape& filter,
-                 const Shape& bias,
-                 int32_t padding_left, int32_t padding_right,
-                 int32_t padding_top, int32_t padding_bottom,
-                 int32_t stride_width, int32_t stride_height,
-                 Shape* output) {
+bool convPrepare(const Shape& input, const Shape& filter, const Shape& bias, int32_t padding_left,
+                 int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                 int32_t stride_width, int32_t stride_height, int32_t dilation_width_factor,
+                 int32_t dilation_height_factor, Shape* output) {
     if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
         NN_OPS_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM);
     } else {
@@ -350,9 +347,9 @@ bool convPrepare(const Shape& input,
     uint32_t filterHeight = getSizeOfDimension(filter, 1);
     uint32_t batches      = getSizeOfDimension(input, 0);
 
-    uint32_t outWidth = computeOutSize(width, filterWidth, stride_width,
+    uint32_t outWidth = computeOutSize(width, filterWidth, stride_width, dilation_width_factor,
                                        padding_left, padding_right);
-    uint32_t outHeight = computeOutSize(height, filterHeight, stride_height,
+    uint32_t outHeight = computeOutSize(height, filterHeight, stride_height, dilation_height_factor,
                                         padding_top, padding_bottom);
 
     output->type = input.type;
