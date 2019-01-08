@@ -722,10 +722,11 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outExpectedTypes);
         }
         case ANEURALNETWORKS_CONV_2D: {
-            if ((inputCount != 11 && inputCount != 10 && inputCount != 8 && inputCount != 7) ||
+            if ((inputCount != 13 && inputCount != 11 && inputCount != 10 && inputCount != 8 &&
+                 inputCount != 7) ||
                 outputCount != 1) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
-                           << ", expected 11, 10, 8 or 7) or output operands (" << outputCount
+                           << ", expected 13, 11, 10, 8 or 7) or output operands (" << outputCount
                            << ", expected 1) for operation " << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
@@ -780,21 +781,39 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
-            if (inputCount >= 10) {
-                std::vector<OperandType> explicitScalarTypes(3, OperandType::INT32);
-                inExpectedTypes.insert(inExpectedTypes.end(),
-                                       explicitScalarTypes.begin(),
-                                       explicitScalarTypes.end());
+            bool withExplicitPadding = false;
+            bool withLayout = false;
+            bool withDilation = false;
+            if (inputCount >= 8) {
+                if (operands[inputIndexes[7]].type == OperandType::INT32 && inputCount >= 10) {
+                    std::vector<OperandType> explicitScalarTypes(3, OperandType::INT32);
+                    inExpectedTypes.insert(inExpectedTypes.end(), explicitScalarTypes.begin(),
+                                           explicitScalarTypes.end());
+                    withExplicitPadding = true;
+                }
+                int inputOffset = withExplicitPadding ? 3 : 0;
+                if (inputCount >= 8 + inputOffset) {
+                    inExpectedTypes.push_back(OperandType::BOOL);
+                    withLayout = true;
+                }
+                if (inputCount == 9 + inputOffset) {
+                    LOG(ERROR) << "Provided only one dilation factor value, two values are requred "
+                                  "for operation "
+                               << getOperationName(opType);
+                    return ANEURALNETWORKS_BAD_DATA;
+                }
+                if (inputCount == 10 + inputOffset) {
+                    inExpectedTypes.push_back(OperandType::INT32);
+                    inExpectedTypes.push_back(OperandType::INT32);
+                    withDilation = true;
+                }
             }
-            if (inputCount == 11 || inputCount == 8) {
-                inExpectedTypes.push_back(OperandType::BOOL);
+
+            if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout ||
+                withDilation) {
                 NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
-                } else {
-                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
-                }
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
             }
             return validateOperationOperandTypes(operands,
                                                  inputCount, inputIndexes,
