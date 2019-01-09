@@ -290,9 +290,6 @@ bool roiPoolingGeneric(const uint8_t* inputData, const Shape& inputShape, const 
                        const Shape& roiShape, float spatialScale, uint8_t* outputData,
                        const Shape& outputShape);
 
-bool heatmapMaxKeypoint(const float* heatmap, const Shape& heatmapShape, const float* boxes,
-                        const Shape& boxesShape, float* outputData, const Shape& outputShape);
-
 bool groupedConvFloat16(const _Float16* inputData, const Shape& inputShape,
                         const _Float16* filterData, const Shape& filterShape,
                         const _Float16* biasData, const Shape& biasShape, int32_t numGroups,
