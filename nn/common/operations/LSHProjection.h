@@ -40,6 +40,7 @@ class LSHProjection {
 
     static bool Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
                         Shape* outputShape);
+    template <typename T>
     bool Eval();
 
     static constexpr int kHashTensor = 0;
@@ -59,6 +60,18 @@ class LSHProjection {
 
     RunTimeOperandInfo* output_;
 };
+
+template <typename T>
+int runningSignBit(const RunTimeOperandInfo* input, const RunTimeOperandInfo* weight, T seed);
+
+template <typename T>
+void SparseLshProjection(LSHProjectionType type, const RunTimeOperandInfo* hash,
+                         const RunTimeOperandInfo* input, const RunTimeOperandInfo* weight,
+                         int32_t* outBuffer);
+
+template <typename T>
+void DenseLshProjection(const RunTimeOperandInfo* hash, const RunTimeOperandInfo* input,
+                        const RunTimeOperandInfo* weight, int32_t* outBuffer);
 
 }  // namespace nn
 }  // namespace android

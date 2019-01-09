@@ -326,6 +326,9 @@ inline int32_t ClampedIndex(int32_t index, int dim, bool pos_stride) {
 // shape. Returns true on success and false on error.
 bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out);
 
+// Dequantizes a value and quantizes it back using new scale and offset.
+uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape);
+
 // Preparation functions for the corresponding ops
 bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out1);
 
@@ -443,10 +446,6 @@ bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output);
 
 bool splitPrepare(const Shape& input, int32_t axis, int32_t numOutputs, std::vector<Shape>* output);
 
-bool roiAlignPrepare(const Shape& input, const float* roiData, const Shape& roiShape,
-                     const int32_t* outputShapeData, const Shape& outputShapeShape,
-                     const float spatialScale, Shape* output);
-
 bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
                         int32_t padding_left, int32_t padding_right, int32_t padding_top,
                         int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
@@ -456,17 +455,6 @@ bool transposeConvPrepare(const Shape& input, const Shape& filter, const Shape& 
                           int32_t padding_left, int32_t padding_right, int32_t padding_top,
                           int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
                           Shape* output);
-
-bool axisAlignedBBoxTransformPrepare(const float* roiData, const Shape& roiShape,
-                                     const Shape& bboxDeltasShape, const Shape& imageInfoShape,
-                                     const Shape& weightsShape, Shape* outputShape,
-                                     Shape* batchSplitShape);
-
-bool rotatedBBoxTransformPrepare(const float* roiData, const Shape& roiShape,
-                                 const Shape& bboxDeltasShape, const Shape& imageInfoShape,
-                                 const Shape& weightsShape, bool angleBoundOn,
-                                 int32_t angleBoundLow, int32_t angleBoundHigh, Shape* outputShape,
-                                 Shape* batchSplitShape);
 } // namespace nn
 } // namespace android
 

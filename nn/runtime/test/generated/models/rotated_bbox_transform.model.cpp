@@ -96,6 +96,53 @@ inline bool is_ignored_relaxed(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_float16(Model *model) {
+  OperandType type12(Type::TENSOR_FLOAT16, {8, 10});
+  OperandType type13(Type::TENSOR_FLOAT16, {5, 3});
+  OperandType type14(Type::TENSOR_FLOAT16, {4});
+  OperandType type15(Type::FLOAT16, {});
+  OperandType type16(Type::TENSOR_FLOAT16, {8, 6});
+  OperandType type3(Type::TENSOR_INT32, {5});
+  OperandType type5(Type::BOOL, {});
+  OperandType type6(Type::INT32, {});
+  // Phase 1, operands
+  auto roi = model->addOperand(&type16);
+  auto bboxDeltas = model->addOperand(&type12);
+  auto imageInfo = model->addOperand(&type13);
+  auto param = model->addOperand(&type14);
+  auto param1 = model->addOperand(&type5);
+  auto param2 = model->addOperand(&type5);
+  auto param3 = model->addOperand(&type6);
+  auto param4 = model->addOperand(&type6);
+  auto param5 = model->addOperand(&type15);
+  auto out = model->addOperand(&type12);
+  auto batchSplit = model->addOperand(&type3);
+  // Phase 2, operations
+  static _Float16 param_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
+  model->setOperandValue(param, param_init, sizeof(_Float16) * 4);
+  static bool8 param1_init[] = {false};
+  model->setOperandValue(param1, param1_init, sizeof(bool8) * 1);
+  static bool8 param2_init[] = {true};
+  model->setOperandValue(param2, param2_init, sizeof(bool8) * 1);
+  static int32_t param3_init[] = {-90};
+  model->setOperandValue(param3, param3_init, sizeof(int32_t) * 1);
+  static int32_t param4_init[] = {90};
+  model->setOperandValue(param4, param4_init, sizeof(int32_t) * 1);
+  static _Float16 param5_init[] = {1.0f};
+  model->setOperandValue(param5, param5_init, sizeof(_Float16) * 1);
+  model->addOperation(ANEURALNETWORKS_ROTATED_BBOX_TRANSFORM, {roi, bboxDeltas, imageInfo, param, param1, param2, param3, param4, param5}, {out, batchSplit});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {roi, bboxDeltas, imageInfo},
+    {out, batchSplit});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
 void CreateModel_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {8, 6});
   OperandType type1(Type::TENSOR_FLOAT32, {8, 10});
@@ -188,6 +235,53 @@ void CreateModel_relaxed_2(Model *model) {
 }
 
 inline bool is_ignored_relaxed_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_float16_2(Model *model) {
+  OperandType type12(Type::TENSOR_FLOAT16, {8, 10});
+  OperandType type13(Type::TENSOR_FLOAT16, {5, 3});
+  OperandType type14(Type::TENSOR_FLOAT16, {4});
+  OperandType type15(Type::FLOAT16, {});
+  OperandType type16(Type::TENSOR_FLOAT16, {8, 6});
+  OperandType type3(Type::TENSOR_INT32, {5});
+  OperandType type5(Type::BOOL, {});
+  OperandType type6(Type::INT32, {});
+  // Phase 1, operands
+  auto roi = model->addOperand(&type16);
+  auto bboxDeltas = model->addOperand(&type12);
+  auto imageInfo = model->addOperand(&type13);
+  auto param6 = model->addOperand(&type14);
+  auto param7 = model->addOperand(&type5);
+  auto param8 = model->addOperand(&type5);
+  auto param9 = model->addOperand(&type6);
+  auto param10 = model->addOperand(&type6);
+  auto param11 = model->addOperand(&type15);
+  auto out = model->addOperand(&type12);
+  auto batchSplit = model->addOperand(&type3);
+  // Phase 2, operations
+  static _Float16 param6_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
+  model->setOperandValue(param6, param6_init, sizeof(_Float16) * 4);
+  static bool8 param7_init[] = {true};
+  model->setOperandValue(param7, param7_init, sizeof(bool8) * 1);
+  static bool8 param8_init[] = {false};
+  model->setOperandValue(param8, param8_init, sizeof(bool8) * 1);
+  static int32_t param9_init[] = {-90};
+  model->setOperandValue(param9, param9_init, sizeof(int32_t) * 1);
+  static int32_t param10_init[] = {90};
+  model->setOperandValue(param10, param10_init, sizeof(int32_t) * 1);
+  static _Float16 param11_init[] = {1.0f};
+  model->setOperandValue(param11, param11_init, sizeof(_Float16) * 1);
+  model->addOperation(ANEURALNETWORKS_ROTATED_BBOX_TRANSFORM, {roi, bboxDeltas, imageInfo, param6, param7, param8, param9, param10, param11}, {out, batchSplit});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {roi, bboxDeltas, imageInfo},
+    {out, batchSplit});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -288,6 +382,53 @@ inline bool is_ignored_relaxed_3(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_float16_3(Model *model) {
+  OperandType type12(Type::TENSOR_FLOAT16, {8, 10});
+  OperandType type13(Type::TENSOR_FLOAT16, {5, 3});
+  OperandType type14(Type::TENSOR_FLOAT16, {4});
+  OperandType type15(Type::FLOAT16, {});
+  OperandType type16(Type::TENSOR_FLOAT16, {8, 6});
+  OperandType type3(Type::TENSOR_INT32, {5});
+  OperandType type5(Type::BOOL, {});
+  OperandType type6(Type::INT32, {});
+  // Phase 1, operands
+  auto roi = model->addOperand(&type16);
+  auto bboxDeltas = model->addOperand(&type12);
+  auto imageInfo = model->addOperand(&type13);
+  auto param12 = model->addOperand(&type14);
+  auto param13 = model->addOperand(&type5);
+  auto param14 = model->addOperand(&type5);
+  auto param15 = model->addOperand(&type6);
+  auto param16 = model->addOperand(&type6);
+  auto param17 = model->addOperand(&type15);
+  auto out = model->addOperand(&type12);
+  auto batchSplit = model->addOperand(&type3);
+  // Phase 2, operations
+  static _Float16 param12_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
+  model->setOperandValue(param12, param12_init, sizeof(_Float16) * 4);
+  static bool8 param13_init[] = {true};
+  model->setOperandValue(param13, param13_init, sizeof(bool8) * 1);
+  static bool8 param14_init[] = {true};
+  model->setOperandValue(param14, param14_init, sizeof(bool8) * 1);
+  static int32_t param15_init[] = {-90};
+  model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
+  static int32_t param16_init[] = {90};
+  model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
+  static _Float16 param17_init[] = {-1.0f};
+  model->setOperandValue(param17, param17_init, sizeof(_Float16) * 1);
+  model->addOperation(ANEURALNETWORKS_ROTATED_BBOX_TRANSFORM, {roi, bboxDeltas, imageInfo, param12, param13, param14, param15, param16, param17}, {out, batchSplit});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {roi, bboxDeltas, imageInfo},
+    {out, batchSplit});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_float16_3(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
 void CreateModel_single_batch(Model *model) {
   OperandType type10(Type::TENSOR_FLOAT32, {1, 3});
   OperandType type11(Type::TENSOR_INT32, {1});
@@ -380,6 +521,53 @@ void CreateModel_single_batch_relaxed(Model *model) {
 }
 
 inline bool is_ignored_single_batch_relaxed(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_single_batch_float16(Model *model) {
+  OperandType type11(Type::TENSOR_INT32, {1});
+  OperandType type14(Type::TENSOR_FLOAT16, {4});
+  OperandType type15(Type::FLOAT16, {});
+  OperandType type17(Type::TENSOR_FLOAT16, {4, 10});
+  OperandType type18(Type::TENSOR_FLOAT16, {1, 3});
+  OperandType type19(Type::TENSOR_FLOAT16, {4, 5});
+  OperandType type5(Type::BOOL, {});
+  OperandType type6(Type::INT32, {});
+  // Phase 1, operands
+  auto roi1 = model->addOperand(&type19);
+  auto bboxDeltas1 = model->addOperand(&type17);
+  auto imageInfo1 = model->addOperand(&type18);
+  auto param18 = model->addOperand(&type14);
+  auto param19 = model->addOperand(&type5);
+  auto param20 = model->addOperand(&type5);
+  auto param21 = model->addOperand(&type6);
+  auto param22 = model->addOperand(&type6);
+  auto param23 = model->addOperand(&type15);
+  auto out1 = model->addOperand(&type17);
+  auto batchSplit1 = model->addOperand(&type11);
+  // Phase 2, operations
+  static _Float16 param18_init[] = {2.0f, 2.0f, 0.5f, 0.5f};
+  model->setOperandValue(param18, param18_init, sizeof(_Float16) * 4);
+  static bool8 param19_init[] = {true};
+  model->setOperandValue(param19, param19_init, sizeof(bool8) * 1);
+  static bool8 param20_init[] = {true};
+  model->setOperandValue(param20, param20_init, sizeof(bool8) * 1);
+  static int32_t param21_init[] = {-90};
+  model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
+  static int32_t param22_init[] = {90};
+  model->setOperandValue(param22, param22_init, sizeof(int32_t) * 1);
+  static _Float16 param23_init[] = {-1.0f};
+  model->setOperandValue(param23, param23_init, sizeof(_Float16) * 1);
+  model->addOperation(ANEURALNETWORKS_ROTATED_BBOX_TRANSFORM, {roi1, bboxDeltas1, imageInfo1, param18, param19, param20, param21, param22, param23}, {out1, batchSplit1});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {roi1, bboxDeltas1, imageInfo1},
+    {out1, batchSplit1});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_single_batch_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
