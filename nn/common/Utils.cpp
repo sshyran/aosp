@@ -1609,17 +1609,11 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             OperandType inputType = operands[inputIndexes[0]].type;
             std::vector<OperandType> inExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
+            if (inputType == OperandType::TENSOR_FLOAT32 ||
+                inputType == OperandType::TENSOR_FLOAT16) {
                 NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
                 inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT32,
-                        OperandType::INT32,
-                        OperandType::TENSOR_INT32,
-                };
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT16,
+                        inputType,
                         OperandType::INT32,
                         OperandType::TENSOR_INT32,
                 };
