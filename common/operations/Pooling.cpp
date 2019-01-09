@@ -205,6 +205,24 @@ bool maxPoolQuant8(const uint8_t* inputData, const Shape& inputShape,
     return true;
 }
 
+bool maxPoolFloat16(const _Float16* inputData, const Shape& inputShape, int32_t padding_left,
+                    int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                    int32_t stride_width, int32_t stride_height, int32_t filter_width,
+                    int32_t filter_height, int32_t activation, _Float16* outputData,
+                    const Shape& outputShape) {
+    NNTRACE_TRANS("maxPoolFloat16");
+    std::vector<float> inputData_float32(getNumberOfElements(inputShape));
+    std::vector<float> outputData_float32(getNumberOfElements(outputShape));
+
+    convertFloat16ToFloat32(inputData, &inputData_float32);
+    maxPoolFloat32(inputData_float32.data(), inputShape, padding_left, padding_right, padding_top,
+                   padding_bottom, stride_width, stride_height, filter_width, filter_height,
+                   activation, outputData_float32.data(), outputShape);
+    convertFloat32ToFloat16(outputData_float32, outputData);
+
+    return true;
+}
+
 #undef ANDROID_NN_POOLING_PARAMETERS
 }  // namespace nn
 }  // namespace android

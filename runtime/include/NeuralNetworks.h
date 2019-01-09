@@ -914,6 +914,7 @@ typedef enum {
      * Projects an input to a bit vector via locality senstive hashing.
      *
      * Supported input tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
@@ -935,7 +936,7 @@ typedef enum {
      *      Tensor[1].Dim[0] == Tensor[2].Dim[0]
      * * 3: Type:
      *        Sparse:
-     *          Value LSHProjectionType_SPARSE(=3).
+     *          Value LSHProjectionType_SPARSE(=3) (since API level 29).
      *          Computed bit vector is considered to be sparse.
      *          Each output element is an int32 made up of multiple bits
      *          computed from hash functions.
@@ -963,7 +964,7 @@ typedef enum {
      *      A flattened tensor that represents projected bit vectors.
      *
      * Available since API level 27.
-     * The offset value for sparse projections was added in API level 28.
+     * The offset value for sparse projections was added in API level 29.
      */
     ANEURALNETWORKS_LSH_PROJECTION = 15,
 
@@ -2133,6 +2134,7 @@ typedef enum {
      * the image.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Inputs:
@@ -2940,6 +2942,32 @@ typedef enum {
      */
     ANEURALNETWORKS_ROI_ALIGN = 74,
     ANEURALNETWORKS_RSQRT = 75,
+    /**
+     * Using a tensor of booleans c and input tensors x and y select values
+     * elementwise from both input tensors:
+     *
+     * O[i] = C[i] ? x[i] : y[i].
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1
+     *
+     * Inputs:
+     * * 0: A tensor of type {@link ANEURALNETWORKS_TENSOR_BOOL8} acting as a
+     *      mask that chooses, based on the value at each element, whether the
+     *      corresponding element in the output should be taken from input1 (if
+     *      true) or input2 (if false).
+     * * 1: An input tensor of the same shape as input0.
+     * * 2: An input tensor of the same shape and type as input1.
+     *
+     * Outputs:
+     * * 0: A tensor of the same type and shape as input1 and input2.
+     *
+     */
     ANEURALNETWORKS_SELECT = 76,
     ANEURALNETWORKS_SIN = 77,
     /**
@@ -3169,6 +3197,7 @@ typedef enum {
      * boxes with angle less than a threshold are cliped.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Inputs:
@@ -3200,7 +3229,7 @@ typedef enum {
      *      the upper bound of the angle in degree. The bounded region
      *      (angle_bound_high - angle_bound_low) should be a multiple of 180
      *      degrees. If input5 is negative, this field is ignored.
-     * * 8: An {@link ANEURALNETWORKS_INT32} scalar, specifying the angle
+     * * 8: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the angle
      *      threshold for box clipping. For all bounding boxes with absolute
      *      value of angle less than the threshold, they are considered to be
      *      almost upright and will be clipped against the image edges. Set
@@ -3248,6 +3277,11 @@ typedef enum {
      *
      * Rounding is applied in this operation to ensure integer boundary for
      * regions of interest and pooling bins.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
      * With the default data layout NHWC, the data is stored in the order of:
