@@ -28,10 +28,12 @@ cc_defaults {
         "operations/ChannelShuffle.cpp",
         "operations/Comparisons.cpp",
         "operations/Gather.cpp",
+        "operations/HeatmapMaxKeypoint.cpp",
         "operations/LogicalAndOr.cpp",
         "operations/LogicalNot.cpp",
         "operations/LogSoftmax.cpp",
         "operations/PRelu.cpp",
+        "operations/Reduce.cpp",
     ],
 }
 
@@ -100,7 +102,6 @@ cc_library_static {
         "operations/GenerateProposals.cpp",
         "operations/GroupedConv2D.cpp",
         "operations/HashtableLookup.cpp",
-        "operations/HeatmapMaxKeypoint.cpp",
         "operations/LSHProjection.cpp",
         "operations/LSTM.cpp",
         "operations/MaximumMinimum.cpp",
