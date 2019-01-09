@@ -27,6 +27,12 @@ TEST_F(GeneratedTests, max_pool_v1_2_nhwc_quant8) {
             max_pool_v1_2::get_examples_nhwc_quant8());
 }
 
+TEST_F(GeneratedTests, max_pool_v1_2_nhwc_float16) {
+    execute(max_pool_v1_2::CreateModel_nhwc_float16,
+            max_pool_v1_2::is_ignored_nhwc_float16,
+            max_pool_v1_2::get_examples_nhwc_float16());
+}
+
 TEST_F(GeneratedTests, max_pool_v1_2_nchw) {
     execute(max_pool_v1_2::CreateModel_nchw,
             max_pool_v1_2::is_ignored_nchw,
@@ -43,6 +49,12 @@ TEST_F(GeneratedTests, max_pool_v1_2_nchw_quant8) {
     execute(max_pool_v1_2::CreateModel_nchw_quant8,
             max_pool_v1_2::is_ignored_nchw_quant8,
             max_pool_v1_2::get_examples_nchw_quant8());
+}
+
+TEST_F(GeneratedTests, max_pool_v1_2_nchw_float16) {
+    execute(max_pool_v1_2::CreateModel_nchw_float16,
+            max_pool_v1_2::is_ignored_nchw_float16,
+            max_pool_v1_2::get_examples_nchw_float16());
 }
 
 TEST_F(GeneratedTests, max_pool_v1_2_nhwc_2) {
@@ -63,6 +75,12 @@ TEST_F(GeneratedTests, max_pool_v1_2_nhwc_quant8_2) {
             max_pool_v1_2::get_examples_nhwc_quant8_2());
 }
 
+TEST_F(GeneratedTests, max_pool_v1_2_nhwc_float16_2) {
+    execute(max_pool_v1_2::CreateModel_nhwc_float16_2,
+            max_pool_v1_2::is_ignored_nhwc_float16_2,
+            max_pool_v1_2::get_examples_nhwc_float16_2());
+}
+
 TEST_F(GeneratedTests, max_pool_v1_2_nchw_2) {
     execute(max_pool_v1_2::CreateModel_nchw_2,
             max_pool_v1_2::is_ignored_nchw_2,
@@ -79,6 +97,12 @@ TEST_F(GeneratedTests, max_pool_v1_2_nchw_quant8_2) {
     execute(max_pool_v1_2::CreateModel_nchw_quant8_2,
             max_pool_v1_2::is_ignored_nchw_quant8_2,
             max_pool_v1_2::get_examples_nchw_quant8_2());
+}
+
+TEST_F(GeneratedTests, max_pool_v1_2_nchw_float16_2) {
+    execute(max_pool_v1_2::CreateModel_nchw_float16_2,
+            max_pool_v1_2::is_ignored_nchw_float16_2,
+            max_pool_v1_2::get_examples_nchw_float16_2());
 }
 
 TEST_F(GeneratedTests, max_pool_v1_2_nhwc_3) {
@@ -99,6 +123,12 @@ TEST_F(GeneratedTests, max_pool_v1_2_nhwc_quant8_3) {
             max_pool_v1_2::get_examples_nhwc_quant8_3());
 }
 
+TEST_F(GeneratedTests, max_pool_v1_2_nhwc_float16_3) {
+    execute(max_pool_v1_2::CreateModel_nhwc_float16_3,
+            max_pool_v1_2::is_ignored_nhwc_float16_3,
+            max_pool_v1_2::get_examples_nhwc_float16_3());
+}
+
 TEST_F(GeneratedTests, max_pool_v1_2_nchw_3) {
     execute(max_pool_v1_2::CreateModel_nchw_3,
             max_pool_v1_2::is_ignored_nchw_3,
@@ -115,6 +145,12 @@ TEST_F(GeneratedTests, max_pool_v1_2_nchw_quant8_3) {
     execute(max_pool_v1_2::CreateModel_nchw_quant8_3,
             max_pool_v1_2::is_ignored_nchw_quant8_3,
             max_pool_v1_2::get_examples_nchw_quant8_3());
+}
+
+TEST_F(GeneratedTests, max_pool_v1_2_nchw_float16_3) {
+    execute(max_pool_v1_2::CreateModel_nchw_float16_3,
+            max_pool_v1_2::is_ignored_nchw_float16_3,
+            max_pool_v1_2::get_examples_nchw_float16_3());
 }
 
 TEST_F(GeneratedTests, max_pool_v1_2_nhwc_4) {
@@ -135,6 +171,12 @@ TEST_F(GeneratedTests, max_pool_v1_2_nhwc_quant8_4) {
             max_pool_v1_2::get_examples_nhwc_quant8_4());
 }
 
+TEST_F(GeneratedTests, max_pool_v1_2_nhwc_float16_4) {
+    execute(max_pool_v1_2::CreateModel_nhwc_float16_4,
+            max_pool_v1_2::is_ignored_nhwc_float16_4,
+            max_pool_v1_2::get_examples_nhwc_float16_4());
+}
+
 TEST_F(GeneratedTests, max_pool_v1_2_nchw_4) {
     execute(max_pool_v1_2::CreateModel_nchw_4,
             max_pool_v1_2::is_ignored_nchw_4,
@@ -151,5 +193,11 @@ TEST_F(GeneratedTests, max_pool_v1_2_nchw_quant8_4) {
     execute(max_pool_v1_2::CreateModel_nchw_quant8_4,
             max_pool_v1_2::is_ignored_nchw_quant8_4,
             max_pool_v1_2::get_examples_nchw_quant8_4());
+}
+
+TEST_F(GeneratedTests, max_pool_v1_2_nchw_float16_4) {
+    execute(max_pool_v1_2::CreateModel_nchw_float16_4,
+            max_pool_v1_2::is_ignored_nchw_float16_4,
+            max_pool_v1_2::get_examples_nchw_float16_4());
 }
 
