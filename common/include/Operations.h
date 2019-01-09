@@ -125,6 +125,12 @@ bool l2PoolFloat32(const float* inputData, const Shape& inputShape, int32_t padd
                    int32_t stride_width, int32_t stride_height, int32_t filter_width,
                    int32_t filter_height, int32_t activation, float* outputData,
                    const Shape& outputShape);
+
+bool maxPoolFloat16(const _Float16* inputData, const Shape& inputShape, int32_t padding_left,
+                    int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                    int32_t stride_width, int32_t stride_height, int32_t filter_width,
+                    int32_t filter_height, int32_t activation, _Float16* outputData,
+                    const Shape& outputShape);
 bool maxPoolFloat32(const float* inputData, const Shape& inputShape, int32_t padding_left,
                     int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
                     int32_t stride_width, int32_t stride_height, int32_t filter_width,
@@ -278,18 +284,6 @@ bool splitQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_
                  const std::vector<uint8_t*>* outputDataPtrs,
                  const std::vector<Shape>& outputShapes);
 
-bool roiAlignFloat32(const float* inputData, const Shape& inputShape, const float* roiData,
-                     const Shape& roiShape, float spatialScale, int32_t samplingRatio,
-                     float* outputData, const Shape& outputShape);
-
-bool roiAlignQuant8(const uint8_t* inputData, const Shape& inputShape, const float* roiData,
-                    const Shape& roiShape, float spatialScale, int32_t samplingRatio,
-                    uint8_t* outputData, const Shape& outputShape);
-
-bool roiPoolingGeneric(const uint8_t* inputData, const Shape& inputShape, const uint8_t* roiData,
-                       const Shape& roiShape, float spatialScale, uint8_t* outputData,
-                       const Shape& outputShape);
-
 bool groupedConvFloat16(const _Float16* inputData, const Shape& inputShape,
                         const _Float16* filterData, const Shape& filterShape,
                         const _Float16* biasData, const Shape& biasShape, int32_t numGroups,
@@ -333,21 +327,6 @@ bool transposeConvQuant8(const uint8_t* inputData, const Shape& inputShape,
                          int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
                          int32_t stride_width, int32_t stride_height, int32_t activation,
                          uint8_t* outputData, const Shape& outputShape);
-
-bool axisAlignedBBoxTransform(const float* roiData, const Shape& roiShape,
-                              const float* bboxDeltasData, const Shape& bboxDeltasShape,
-                              const float* imageInfoData, const Shape& imageInfoDataShape,
-                              const float* weightsData, const Shape& weightsDataShape,
-                              bool applyScale, float* outputData, const Shape& outputShape,
-                              int32_t* batchSplitData, const Shape& batchSplitShape);
-
-bool rotatedBBoxTransform(const float* roiData, const Shape& roiShape, const float* bboxDeltasData,
-                          const Shape& bboxDeltasShape, const float* imageInfoData,
-                          const Shape& imageInfoDataShape, const float* weightsData,
-                          const Shape& weightsDataShape, bool applyScale, bool angleBoundOn,
-                          int32_t angleBoundLow, int32_t angleBoundHigh, float clipAngleThreshold,
-                          float* outputData, const Shape& outputShape, int32_t* batchSplitData,
-                          const Shape& batchSplitShape);
 }  // namespace nn
 }  // namespace android
 #endif  // ANDROID_ML_NN_COMMON_OPERATIONS_H

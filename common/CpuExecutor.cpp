@@ -1144,6 +1144,12 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                          padding_top, padding_bottom, stride_width, stride_height,
                                          filter_width, filter_height, activation,
                                          reinterpret_cast<float*>(output_tmp.buffer), outShape);
+            } else if (input_tmp.type == OperandType::TENSOR_FLOAT16) {
+                success = maxPoolFloat16(reinterpret_cast<const _Float16*>(input_tmp.buffer),
+                                         input_tmp.shape(), padding_left, padding_right,
+                                         padding_top, padding_bottom, stride_width, stride_height,
+                                         filter_width, filter_height, activation,
+                                         reinterpret_cast<_Float16*>(output_tmp.buffer), outShape);
             } else if (input_tmp.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 success = maxPoolQuant8(reinterpret_cast<const uint8_t*>(input_tmp.buffer),
                                         input_tmp.shape(), padding_left, padding_right, padding_top,
@@ -1675,16 +1681,29 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 lookup.Eval();
         } break;
         case OperationType::LSH_PROJECTION: {
-            RunTimeOperandInfo &output =
-                mOperands[outs[LSHProjection::kOutputTensor]];
-
+            RunTimeOperandInfo& output = mOperands[outs[LSHProjection::kOutputTensor]];
             Shape outputShape;
-            LSHProjection lsh(operation, mOperands);
+            if (!LSHProjection::Prepare(operation, mOperands, &outputShape) ||
+                !setInfoAndAllocateIfNeeded(&output, outputShape)) {
+                break;
+            }
 
-            success = LSHProjection::Prepare(operation, mOperands,
-                                             &outputShape) &&
-                setInfoAndAllocateIfNeeded(&output, outputShape) &&
-                lsh.Eval();
+            LSHProjection lsh(operation, mOperands);
+            const RunTimeOperandInfo& hash = mOperands[ins[LSHProjection::kHashTensor]];
+            switch (hash.type) {
+                case OperandType::TENSOR_FLOAT32: {
+                    success = lsh.Eval<float>();
+                    break;
+                }
+                case OperandType::TENSOR_FLOAT16: {
+                    success = lsh.Eval<_Float16>();
+                    break;
+                }
+                default: {
+                    success = false;
+                    LOG(ERROR) << "Unsupported data type";
+                }
+            }
         } break;
         case OperationType::LSTM: {
             RunTimeOperandInfo& scratch = mOperands[outs[LSTMCell::kScratchBufferTensor]];
@@ -2201,98 +2220,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 default: { return ANEURALNETWORKS_BAD_DATA; }
             }
         } break;
-        case OperationType::ROI_ALIGN: {
-            if (!allParametersPresent(6, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& roi = mOperands[ins[1]];
-            const RunTimeOperandInfo& outputShape = mOperands[ins[2]];
-            const float spatialScale = getScalarData<float>(mOperands[ins[3]]);
-            const int32_t samplingRatio = getScalarData<int32_t>(mOperands[ins[4]]);
-            const bool data_layout = getScalarData<bool>(mOperands[ins[5]]);
-
-            RunTimeOperandInfo& out = mOperands[outs[0]];
-            Shape outShape = out.shape();
-
-            RunTimeOperandInfo input_tmp, out_tmp;
-            std::unique_ptr<uint8_t[]> input_tmp_guard, out_tmp_guard;
-            if (!convertToNhwc(input_tmp, input, input_tmp_guard, data_layout)) {
-                success = false;
-                break;
-            }
-            out_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
-            out_tmp.buffer = data_layout ? nullptr : out.buffer;
-
-            if (!roiAlignPrepare(input_tmp.shape(), reinterpret_cast<const float*>(roi.buffer),
-                                 roi.shape(), reinterpret_cast<const int32_t*>(outputShape.buffer),
-                                 outputShape.shape(), spatialScale, &outShape) ||
-                !setInfoAndAllocateIfNeeded(&out_tmp, outShape)) {
-                success = false;
-                break;
-            }
-
-            if (input_tmp.type == OperandType::TENSOR_FLOAT32) {
-                success = roiAlignFloat32(
-                        reinterpret_cast<const float*>(input_tmp.buffer), input_tmp.shape(),
-                        reinterpret_cast<const float*>(roi.buffer), roi.shape(), spatialScale,
-                        samplingRatio, reinterpret_cast<float*>(out_tmp.buffer), outShape);
-            } else if (input_tmp.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = roiAlignQuant8(
-                        reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
-                        reinterpret_cast<const float*>(roi.buffer), roi.shape(), spatialScale,
-                        samplingRatio, reinterpret_cast<uint8_t*>(out_tmp.buffer), outShape);
-            }
-
-            if (data_layout) {
-                out_tmp_guard.reset(out_tmp.buffer);
-            }
-            if (!success || !convertFromNhwc(out, out_tmp, data_layout)) {
-                success = false;
-                break;
-            }
-        } break;
-        case OperationType::ROI_POOLING: {
-            if (!allParametersPresent(5, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& roi = mOperands[ins[1]];
-            const RunTimeOperandInfo& outputShape = mOperands[ins[2]];
-            const float spatialScale = getScalarData<float>(mOperands[ins[3]]);
-            const bool data_layout = getScalarData<bool>(mOperands[ins[4]]);
-
-            RunTimeOperandInfo& out = mOperands[outs[0]];
-            Shape outShape = out.shape();
-
-            RunTimeOperandInfo input_tmp, out_tmp;
-            std::unique_ptr<uint8_t[]> input_tmp_guard, out_tmp_guard;
-            if (!convertToNhwc(input_tmp, input, input_tmp_guard, data_layout)) {
-                success = false;
-                break;
-            }
-            out_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
-            out_tmp.buffer = data_layout ? nullptr : out.buffer;
-
-            if (!roiAlignPrepare(input_tmp.shape(), reinterpret_cast<const float*>(roi.buffer),
-                                 roi.shape(), reinterpret_cast<const int32_t*>(outputShape.buffer),
-                                 outputShape.shape(), spatialScale, &outShape) ||
-                !setInfoAndAllocateIfNeeded(&out_tmp, outShape)) {
-                success = false;
-                break;
-            }
-
-            success = roiPoolingGeneric(input_tmp.buffer, input_tmp.shape(), roi.buffer,
-                                        roi.shape(), spatialScale, out_tmp.buffer, outShape);
-
-            if (data_layout) {
-                out_tmp_guard.reset(out_tmp.buffer);
-            }
-            if (!success || !convertFromNhwc(out, out_tmp, data_layout)) {
-                success = false;
-                break;
-            }
-        } break;
         case OperationType::MAXIMUM:
         case OperationType::MINIMUM: {
             if (!allParametersPresent(2, 1)) {
@@ -2557,78 +2484,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       setInfoAndAllocateIfNeeded(&outputStateOut, outputStateOutShape) &&
                       setInfoAndAllocateIfNeeded(&cellStateOut, cellStateOutShape) &&
                       setInfoAndAllocateIfNeeded(&output, outputShape) && quantizedLSTMCell.eval();
-        } break;
-        case OperationType::AXIS_ALIGNED_BBOX_TRANSFORM: {
-            if (!allParametersPresent(5, 2)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& roi = mOperands[ins[0]];
-            const RunTimeOperandInfo& bboxDeltas = mOperands[ins[1]];
-            const RunTimeOperandInfo& imageInfo = mOperands[ins[2]];
-            const RunTimeOperandInfo& weights = mOperands[ins[3]];
-            const bool applyScale = getScalarData<bool>(mOperands[ins[4]]);
-
-            RunTimeOperandInfo& out = mOperands[outs[0]];
-            RunTimeOperandInfo& batchSplit = mOperands[outs[1]];
-            Shape outShape = out.shape();
-            Shape batchSplitShape = batchSplit.shape();
-
-            if (roi.type == OperandType::TENSOR_FLOAT32) {
-                success =
-                        axisAlignedBBoxTransformPrepare(reinterpret_cast<const float*>(roi.buffer),
-                                                        roi.shape(), bboxDeltas.shape(),
-                                                        imageInfo.shape(), weights.shape(),
-                                                        &outShape, &batchSplitShape) &&
-                        setInfoAndAllocateIfNeeded(&out, outShape) &&
-                        setInfoAndAllocateIfNeeded(&batchSplit, batchSplitShape) &&
-                        axisAlignedBBoxTransform(
-                                reinterpret_cast<const float*>(roi.buffer), roi.shape(),
-                                reinterpret_cast<const float*>(bboxDeltas.buffer),
-                                bboxDeltas.shape(),
-                                reinterpret_cast<const float*>(imageInfo.buffer), imageInfo.shape(),
-                                reinterpret_cast<const float*>(weights.buffer), weights.shape(),
-                                applyScale, reinterpret_cast<float*>(out.buffer), outShape,
-                                reinterpret_cast<int32_t*>(batchSplit.buffer), batchSplitShape);
-            }
-        } break;
-        case OperationType::ROTATED_BBOX_TRANSFORM: {
-            if (!allParametersPresent(9, 2)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& roi = mOperands[ins[0]];
-            const RunTimeOperandInfo& bboxDeltas = mOperands[ins[1]];
-            const RunTimeOperandInfo& imageInfo = mOperands[ins[2]];
-            const RunTimeOperandInfo& weights = mOperands[ins[3]];
-            const bool applyScale = getScalarData<bool>(mOperands[ins[4]]);
-            const bool angleBoundOn = getScalarData<bool>(mOperands[ins[5]]);
-            const int32_t angleBoundLow = getScalarData<int32_t>(mOperands[ins[6]]);
-            const int32_t angleBoundHigh = getScalarData<int32_t>(mOperands[ins[7]]);
-            const float clipAngleThreshold = getScalarData<float>(mOperands[ins[8]]);
-
-            RunTimeOperandInfo& out = mOperands[outs[0]];
-            RunTimeOperandInfo& batchSplit = mOperands[outs[1]];
-            Shape outShape = out.shape();
-            Shape batchSplitShape = batchSplit.shape();
-
-            if (roi.type == OperandType::TENSOR_FLOAT32) {
-                success =
-                        rotatedBBoxTransformPrepare(reinterpret_cast<const float*>(roi.buffer),
-                                                    roi.shape(), bboxDeltas.shape(),
-                                                    imageInfo.shape(), weights.shape(),
-                                                    angleBoundOn, angleBoundLow, angleBoundHigh,
-                                                    &outShape, &batchSplitShape) &&
-                        setInfoAndAllocateIfNeeded(&out, outShape) &&
-                        setInfoAndAllocateIfNeeded(&batchSplit, batchSplitShape) &&
-                        rotatedBBoxTransform(
-                                reinterpret_cast<const float*>(roi.buffer), roi.shape(),
-                                reinterpret_cast<const float*>(bboxDeltas.buffer),
-                                bboxDeltas.shape(),
-                                reinterpret_cast<const float*>(imageInfo.buffer), imageInfo.shape(),
-                                reinterpret_cast<const float*>(weights.buffer), weights.shape(),
-                                applyScale, angleBoundOn, angleBoundLow, angleBoundHigh,
-                                clipAngleThreshold, reinterpret_cast<float*>(out.buffer), outShape,
-                                reinterpret_cast<int32_t*>(batchSplit.buffer), batchSplitShape);
-            }
         } break;
         case OperationType::POW: {
             if (!allParametersPresent(2, 1)) {

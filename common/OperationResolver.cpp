@@ -25,6 +25,7 @@ namespace nn {
 
 // TODO(b/119608412): Find a way to not reference every operation here.
 const OperationRegistration* register_ABS();
+const OperationRegistration* register_AXIS_ALIGNED_BBOX_TRANSFORM();
 const OperationRegistration* register_CHANNEL_SHUFFLE();
 const OperationRegistration* register_EQUAL();
 const OperationRegistration* register_GATHER();
@@ -45,9 +46,14 @@ const OperationRegistration* register_REDUCE_MAX();
 const OperationRegistration* register_REDUCE_MIN();
 const OperationRegistration* register_REDUCE_PROD();
 const OperationRegistration* register_REDUCE_SUM();
+const OperationRegistration* register_ROI_ALIGN();
+const OperationRegistration* register_ROI_POOLING();
+const OperationRegistration* register_ROTATED_BBOX_TRANSFORM();
+const OperationRegistration* register_SELECT();
 
 OperationResolver::OperationResolver() {
     registerOperation(register_ABS());
+    registerOperation(register_AXIS_ALIGNED_BBOX_TRANSFORM());
     registerOperation(register_CHANNEL_SHUFFLE());
     registerOperation(register_EQUAL());
     registerOperation(register_GATHER());
@@ -68,6 +74,10 @@ OperationResolver::OperationResolver() {
     registerOperation(register_REDUCE_MIN());
     registerOperation(register_REDUCE_PROD());
     registerOperation(register_REDUCE_SUM());
+    registerOperation(register_ROI_ALIGN());
+    registerOperation(register_ROI_POOLING());
+    registerOperation(register_ROTATED_BBOX_TRANSFORM());
+    registerOperation(register_SELECT());
 }
 
 const OperationRegistration* OperationResolver::findOperation(OperationType operationType) const {
