@@ -1360,12 +1360,13 @@ TEST(OperationValidationTest, RANDOM_MULTINOMIAL_float16) {
     ANeuralNetworksOperandType sample_count = intScalar;
     ANeuralNetworksOperandType output = floatTensor2D;
 
-    OperationTestBase rnnTest(ANEURALNETWORKS_RNN, {input, sample_count}, {output});
+    OperationTestBase multinomialTest(ANEURALNETWORKS_RANDOM_MULTINOMIAL, {input, sample_count},
+                                      {output});
 
-    EXPECT_TRUE(rnnTest.testMutatingInputOperandCode());
-    EXPECT_TRUE(rnnTest.testMutatingInputOperandCounts());
-    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCode());
-    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCounts());
+    EXPECT_TRUE(multinomialTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(multinomialTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(multinomialTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(multinomialTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, RANDOM_MULTINOMIAL_float32) {
@@ -1385,12 +1386,13 @@ TEST(OperationValidationTest, RANDOM_MULTINOMIAL_float32) {
     ANeuralNetworksOperandType sample_count = intScalar;
     ANeuralNetworksOperandType output = floatTensor2D;
 
-    OperationTestBase rnnTest(ANEURALNETWORKS_RNN, {input, sample_count}, {output});
+    OperationTestBase multinomialTest(ANEURALNETWORKS_RANDOM_MULTINOMIAL, {input, sample_count},
+                                      {output});
 
-    EXPECT_TRUE(rnnTest.testMutatingInputOperandCode());
-    EXPECT_TRUE(rnnTest.testMutatingInputOperandCounts());
-    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCode());
-    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCounts());
+    EXPECT_TRUE(multinomialTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(multinomialTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(multinomialTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(multinomialTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, RNN_float32) {
