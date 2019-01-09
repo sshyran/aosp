@@ -82,14 +82,14 @@ bool LSHProjection::Prepare(const Operation& operation, std::vector<RunTimeOpera
 //       to match the trained model. This is going to be changed once the new
 //       model is trained in an optimized method.
 //
-int running_sign_bit(const RunTimeOperandInfo* input, const RunTimeOperandInfo* weight,
-                     float seed) {
+template <typename T>
+int runningSignBit(const RunTimeOperandInfo* input, const RunTimeOperandInfo* weight, float seed) {
     double score = 0.0;
     int input_item_bytes = sizeOfData(input->type, input->dimensions) / SizeOfDimension(input, 0);
     char* input_ptr = (char*)(input->buffer);
 
-    const size_t seed_size = sizeof(float);
-    const size_t key_bytes = sizeof(float) + input_item_bytes;
+    const size_t seed_size = sizeof(seed);
+    const size_t key_bytes = seed_size + input_item_bytes;
     std::unique_ptr<char[]> key(new char[key_bytes]);
 
     for (uint32_t i = 0; i < SizeOfDimension(input, 0); ++i) {
@@ -103,13 +103,14 @@ int running_sign_bit(const RunTimeOperandInfo* input, const RunTimeOperandInfo* 
         if (weight->lifetime == OperandLifeTime::NO_VALUE) {
             score += running_value;
         } else {
-            score += reinterpret_cast<float*>(weight->buffer)[i] * running_value;
+            score += static_cast<double>(reinterpret_cast<T*>(weight->buffer)[i]) * running_value;
         }
     }
 
     return (score > 0) ? 1 : 0;
 }
 
+template <typename T>
 void SparseLshProjection(LSHProjectionType type, const RunTimeOperandInfo* hash,
                          const RunTimeOperandInfo* input, const RunTimeOperandInfo* weight,
                          int32_t* out_buf) {
@@ -118,8 +119,8 @@ void SparseLshProjection(LSHProjectionType type, const RunTimeOperandInfo* hash,
     for (int i = 0; i < num_hash; i++) {
         int32_t hash_signature = 0;
         for (int j = 0; j < num_bits; j++) {
-            float seed = reinterpret_cast<float*>(hash->buffer)[i * num_bits + j];
-            int bit = running_sign_bit(input, weight, seed);
+            T seed = reinterpret_cast<T*>(hash->buffer)[i * num_bits + j];
+            int bit = runningSignBit<T>(input, weight, static_cast<float>(seed));
             hash_signature = (hash_signature << 1) | bit;
         }
         if (type == LSHProjectionType_SPARSE_DEPRECATED) {
@@ -130,19 +131,21 @@ void SparseLshProjection(LSHProjectionType type, const RunTimeOperandInfo* hash,
     }
 }
 
+template <typename T>
 void DenseLshProjection(const RunTimeOperandInfo* hash, const RunTimeOperandInfo* input,
                         const RunTimeOperandInfo* weight, int32_t* out_buf) {
     int num_hash = SizeOfDimension(hash, 0);
     int num_bits = SizeOfDimension(hash, 1);
     for (int i = 0; i < num_hash; i++) {
         for (int j = 0; j < num_bits; j++) {
-            float seed = reinterpret_cast<float*>(hash->buffer)[i * num_bits + j];
-            int bit = running_sign_bit(input, weight, seed);
+            T seed = reinterpret_cast<T*>(hash->buffer)[i * num_bits + j];
+            int bit = runningSignBit<T>(input, weight, static_cast<float>(seed));
             *out_buf++ = bit;
         }
     }
 }
 
+template <typename T>
 bool LSHProjection::Eval() {
     NNTRACE_COMP("LSHProjection::Eval");
 
@@ -150,17 +153,39 @@ bool LSHProjection::Eval() {
 
     switch (type_) {
         case LSHProjectionType_DENSE:
-            DenseLshProjection(hash_, input_, weight_, out_buf);
+            DenseLshProjection<T>(hash_, input_, weight_, out_buf);
             break;
         case LSHProjectionType_SPARSE:
         case LSHProjectionType_SPARSE_DEPRECATED:
-            SparseLshProjection(type_, hash_, input_, weight_, out_buf);
+            SparseLshProjection<T>(type_, hash_, input_, weight_, out_buf);
             break;
         default:
             return false;
     }
     return true;
 }
+
+template bool LSHProjection::Eval<float>();
+template bool LSHProjection::Eval<_Float16>();
+
+template int runningSignBit<float>(const RunTimeOperandInfo* input,
+                                   const RunTimeOperandInfo* weight, float seed);
+template int runningSignBit<_Float16>(const RunTimeOperandInfo* input,
+                                      const RunTimeOperandInfo* weight, float seed);
+
+template void SparseLshProjection<float>(LSHProjectionType type, const RunTimeOperandInfo* hash,
+                                         const RunTimeOperandInfo* input,
+                                         const RunTimeOperandInfo* weight, int32_t* outBuffer);
+template void SparseLshProjection<_Float16>(LSHProjectionType type, const RunTimeOperandInfo* hash,
+                                            const RunTimeOperandInfo* input,
+                                            const RunTimeOperandInfo* weight, int32_t* outBuffer);
+
+template void DenseLshProjection<float>(const RunTimeOperandInfo* hash,
+                                        const RunTimeOperandInfo* input,
+                                        const RunTimeOperandInfo* weight, int32_t* outBuffer);
+template void DenseLshProjection<_Float16>(const RunTimeOperandInfo* hash,
+                                           const RunTimeOperandInfo* input,
+                                           const RunTimeOperandInfo* weight, int32_t* outBuffer);
 
 }  // namespace nn
 }  // namespace android

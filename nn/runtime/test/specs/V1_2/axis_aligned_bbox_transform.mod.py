@@ -59,7 +59,7 @@ Example((inputs, {
          0.000000, 334.398193, 255.000000, 511.000000,
          255.000000, 374.348328, 255.000000, 511.000000],
     b1: [1, 1, 2, 1, 0]
-}), model=model1).AddVariations("relaxed")
+}), model=model1).AddVariations("relaxed", "float16")
 
 Example((inputs, {
     o1: [96.778885, 146.992920, 463.421143, 489.207092,
@@ -73,7 +73,7 @@ Example((inputs, {
          0.000000, 668.796387, 510.000000, 1022.000000,
          510.000000, 748.696655, 510.000000, 1022.000000],
     b1: [1, 1, 2, 1, 0]
-}), model=model2).AddVariations("relaxed")
+}), model=model2).AddVariations("relaxed", "float16")
 
 
 # TEST 3: AXIS_ALIGNED_BBOX_TRANSFORM_SINGLE_BATCH, weight = [2, 2, .5, .5], applyScale = true
@@ -97,4 +97,4 @@ Example({
          110.295189, 198.398071, 109.844810, 197.741898,
          58.956318, 0.000000, 241.743698, 255.500000],
     b3: [2]
-}).AddVariations("relaxed")
+}).AddVariations("relaxed", "float16")

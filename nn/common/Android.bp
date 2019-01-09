@@ -28,12 +28,16 @@ cc_defaults {
         "operations/ChannelShuffle.cpp",
         "operations/Comparisons.cpp",
         "operations/Gather.cpp",
+        "operations/GenerateProposals.cpp",
         "operations/HeatmapMaxKeypoint.cpp",
         "operations/LogicalAndOr.cpp",
         "operations/LogicalNot.cpp",
         "operations/LogSoftmax.cpp",
         "operations/PRelu.cpp",
         "operations/Reduce.cpp",
+        "operations/RoiAlign.cpp",
+        "operations/RoiPooling.cpp",
+        "operations/Select.cpp",
     ],
 }
 
@@ -81,8 +85,9 @@ cc_library_static {
     vendor_available: true,
     // b/109953668, disable OpenMP
     // openmp: true,
-    export_include_dirs: ["include"],
-
+    export_include_dirs: [
+        "include",
+    ],
     srcs: [
         "CpuExecutor.cpp",
         "GraphDump.cpp",
@@ -99,7 +104,6 @@ cc_library_static {
         "operations/EmbeddingLookup.cpp",
         "operations/ExpandDims.cpp",
         "operations/FullyConnected.cpp",
-        "operations/GenerateProposals.cpp",
         "operations/GroupedConv2D.cpp",
         "operations/HashtableLookup.cpp",
         "operations/LSHProjection.cpp",
@@ -113,8 +117,6 @@ cc_library_static {
         "operations/QuantizedLSTM.cpp",
         "operations/Reshape.cpp",
         "operations/RNN.cpp",
-        "operations/RoiAlign.cpp",
-        "operations/RoiPooling.cpp",
         "operations/SimpleMath.cpp",
         "operations/Slice.cpp",
         "operations/Split.cpp",
