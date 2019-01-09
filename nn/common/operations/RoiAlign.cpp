@@ -15,7 +15,8 @@
  */
 
 #include "CpuOperationUtils.h"
-#include "Operations.h"
+#include "OperationResolver.h"
+#include "OperationsUtils.h"
 
 #include <cfloat>
 #include <cmath>
@@ -25,11 +26,28 @@
 
 namespace android {
 namespace nn {
+namespace roi_align {
 
-bool roiAlignFloat32(const float* inputData, const Shape& inputShape, const float* roiData,
-                     const Shape& roiShape, float spatialScale, int32_t samplingRatio,
-                     float* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("RoiAlignFloat32");
+constexpr char kOperationName[] = "ROI_ALIGN";
+
+constexpr uint32_t kNumInputs = 6;
+constexpr uint32_t kInputTensor = 0;
+constexpr uint32_t kRoiTensor = 1;
+constexpr uint32_t kOutputShapeTensor = 2;
+constexpr uint32_t kSpacialScaleScalar = 3;
+constexpr uint32_t kSamplingRatioScalar = 4;
+constexpr uint32_t kLayoutScalar = 5;
+
+constexpr uint32_t kNumOutputs = 1;
+constexpr uint32_t kOutputTensor = 0;
+
+namespace {
+
+template <typename T_Input, typename T_Roi>
+inline bool roiAlignNhwc(const T_Input* inputData, const Shape& inputShape, const T_Roi* roiData,
+                         const Shape& roiShape, T_Roi spatialScale, int32_t samplingRatio,
+                         T_Input* outputData, const Shape& outputShape) {
+    NNTRACE_TRANS("RoiAlign");
 
     const uint32_t kRoiDim = 4;
 
@@ -42,53 +60,73 @@ bool roiAlignFloat32(const float* inputData, const Shape& inputShape, const floa
     uint32_t numRois = getSizeOfDimension(roiShape, 0);
     uint32_t roiInfoLength = getSizeOfDimension(roiShape, 1);
 
-    float* outPtr = outputData;
-    const float* roiDataEnd = roiData + numRois * roiInfoLength;
-    for (const float* roiInfo = roiData; roiInfo < roiDataEnd; roiInfo += kRoiDim) {
+    T_Input* outPtr = outputData;
+    const T_Roi* roiDataEnd = roiData + numRois * roiInfoLength;
+    for (const T_Roi* roiInfo = roiData; roiInfo < roiDataEnd; roiInfo += kRoiDim) {
         uint32_t batchId = 0;
         // get optional batch id
         if (roiInfoLength == kRoiDim + 1) {
-            batchId = std::round(roiInfo[0]);
+            batchId = std::round(static_cast<float>(roiInfo[0]));
             roiInfo++;
         }
-        const float* batchBase = inputData + batchId * inHeight * inWidth * inDepth;
 
-        float wRoiStart = roiInfo[0] * spatialScale;
-        float hRoiStart = roiInfo[1] * spatialScale;
-        float wRoiEnd = roiInfo[2] * spatialScale;
-        float hRoiEnd = roiInfo[3] * spatialScale;
+        // Check for malformed data
+        // 1. invalid batch id
+        // 2. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
+        // 3. Invalid region: x2 <= x1 || y2 <= y1
+        NN_RET_CHECK_GE(batchId, 0);
+        NN_RET_CHECK_LT(batchId, numBatches);
+        NN_RET_CHECK(roiInfo[0] >= 0);
+        NN_RET_CHECK(roiInfo[1] >= 0);
+        NN_RET_CHECK(roiInfo[2] >= 0);
+        NN_RET_CHECK(roiInfo[3] >= 0);
+        NN_RET_CHECK(roiInfo[0] * spatialScale <= inWidth);
+        NN_RET_CHECK(roiInfo[1] * spatialScale <= inHeight);
+        NN_RET_CHECK(roiInfo[2] * spatialScale <= inWidth);
+        NN_RET_CHECK(roiInfo[3] * spatialScale <= inHeight);
+        NN_RET_CHECK(roiInfo[0] < roiInfo[2]);
+        NN_RET_CHECK(roiInfo[1] < roiInfo[3]);
 
-        float roiWidth = std::max(wRoiEnd - wRoiStart, 1.0f);
-        float roiHeight = std::max(hRoiEnd - hRoiStart, 1.0f);
-        float wStepSize = roiWidth / static_cast<float>(outWidth);
-        float hStepSize = roiHeight / static_cast<float>(outHeight);
+        T_Roi wRoiStart = roiInfo[0] * spatialScale;
+        T_Roi hRoiStart = roiInfo[1] * spatialScale;
+        T_Roi wRoiEnd = roiInfo[2] * spatialScale;
+        T_Roi hRoiEnd = roiInfo[3] * spatialScale;
+
+        T_Roi roiWidth = std::max(static_cast<float>(wRoiEnd - wRoiStart), 1.0f);
+        T_Roi roiHeight = std::max(static_cast<float>(hRoiEnd - hRoiStart), 1.0f);
+        T_Roi wStepSize = roiWidth / static_cast<T_Roi>(outWidth);
+        T_Roi hStepSize = roiHeight / static_cast<T_Roi>(outHeight);
 
         // if samplingRatio <= 0, use adaptive value of ceil(roiWidth/outWidth), same for height
-        int32_t wSamplingRatio = samplingRatio > 0 ? samplingRatio : std::ceil(wStepSize);
-        int32_t hSamplingRatio = samplingRatio > 0 ? samplingRatio : std::ceil(hStepSize);
+        int32_t wSamplingRatio =
+                samplingRatio > 0 ? samplingRatio : std::ceil(static_cast<float>(wStepSize));
+        int32_t hSamplingRatio =
+                samplingRatio > 0 ? samplingRatio : std::ceil(static_cast<float>(hStepSize));
         int32_t numSamplingPoints = wSamplingRatio * hSamplingRatio;
-        float wBinSize = wStepSize / static_cast<float>(wSamplingRatio);
-        float hBinSize = hStepSize / static_cast<float>(hSamplingRatio);
+        T_Roi wBinSize = wStepSize / static_cast<T_Roi>(wSamplingRatio);
+        T_Roi hBinSize = hStepSize / static_cast<T_Roi>(hSamplingRatio);
 
+        const T_Input* batchBase = inputData + batchId * inHeight * inWidth * inDepth;
         for (uint32_t i = 0; i < outHeight; i++) {
             for (uint32_t j = 0; j < outWidth; j++) {
-                float wStart = wStepSize * j + wRoiStart;
-                float wEnd = wStepSize * (j + 1) + wRoiStart;
-                float hStart = hStepSize * i + hRoiStart;
-                float hEnd = hStepSize * (i + 1) + hRoiStart;
+                T_Roi wStart = wStepSize * j + wRoiStart;
+                T_Roi wEnd = wStepSize * (j + 1) + wRoiStart;
+                T_Roi hStart = hStepSize * i + hRoiStart;
+                T_Roi hEnd = hStepSize * (i + 1) + hRoiStart;
 
                 // initialize output to zero
                 for (uint32_t k = 0; k < inDepth; k++) outPtr[k] = 0;
 
                 // calculate the sum of the sampling points
-                for (float y = hStart + hBinSize / 2; y < hEnd; y += hBinSize) {
-                    for (float x = wStart + wBinSize / 2; x < wEnd; x += wBinSize) {
+                for (T_Roi y = hStart + hBinSize / 2; y < hEnd; y += hBinSize) {
+                    for (T_Roi x = wStart + wBinSize / 2; x < wEnd; x += wBinSize) {
                         // bilinear interpolation of point (x,y)
                         // w.r.t box [(x1,y1), (x1,y2), (x2,y1), (x2,y2)]
-                        uint32_t x1 = std::floor(x), y1 = std::floor(y);
+                        uint32_t x1 = std::floor(static_cast<float>(x));
+                        uint32_t y1 = std::floor(static_cast<float>(y));
                         uint32_t x2 = x1 + 1, y2 = y1 + 1;
-                        float dx1 = x - static_cast<float>(x1);
-                        float dy1 = y - static_cast<float>(y1);
+                        T_Roi dx1 = x - static_cast<T_Roi>(x1);
+                        T_Roi dy1 = y - static_cast<T_Roi>(y1);
 
                         // dealing with out of bound samples
                         if (x1 >= inWidth - 1) {
@@ -100,15 +138,15 @@ bool roiAlignFloat32(const float* inputData, const Shape& inputShape, const floa
                             dy1 = 0;
                         }
 
-                        float dx2 = 1.0f - dx1, dy2 = 1.0f - dy1;
-                        float ws[] = {dx2 * dy2, dx1 * dy2, dx2 * dy1, dx1 * dy1};
+                        T_Roi dx2 = 1.0f - dx1, dy2 = 1.0f - dy1;
+                        T_Roi ws[] = {dx2 * dy2, dx1 * dy2, dx2 * dy1, dx1 * dy1};
                         uint32_t offsets[] = {y1 * inWidth * inDepth + x1 * inDepth,
                                               y1 * inWidth * inDepth + x2 * inDepth,
                                               y2 * inWidth * inDepth + x1 * inDepth,
                                               y2 * inWidth * inDepth + x2 * inDepth};
 
                         for (uint32_t k = 0; k < inDepth; k++) {
-                            float interpolation = 0;
+                            T_Input interpolation = 0;
                             for (uint32_t c = 0; c < 4; c++) {
                                 interpolation += ws[c] * batchBase[offsets[c] + k];
                             }
@@ -119,7 +157,7 @@ bool roiAlignFloat32(const float* inputData, const Shape& inputShape, const floa
 
                 // take average
                 for (uint32_t k = 0; k < inDepth; k++)
-                    outPtr[k] /= static_cast<float>(numSamplingPoints);
+                    outPtr[k] /= static_cast<T_Input>(numSamplingPoints);
                 outPtr += inDepth;
             }
         }
@@ -127,9 +165,11 @@ bool roiAlignFloat32(const float* inputData, const Shape& inputShape, const floa
     return true;
 }
 
-bool roiAlignQuant8(const uint8_t* inputData, const Shape& inputShape, const float* roiData,
-                    const Shape& roiShape, float spatialScale, int32_t samplingRatio,
-                    uint8_t* outputData, const Shape& outputShape) {
+template <>
+inline bool roiAlignNhwc<uint8_t, float>(const uint8_t* inputData, const Shape& inputShape,
+                                         const float* roiData, const Shape& roiShape,
+                                         float spatialScale, int32_t samplingRatio,
+                                         uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("RoiAlignQuant8");
 
     constexpr float wScale = 1.0f / 255.0f;
@@ -153,7 +193,23 @@ bool roiAlignQuant8(const uint8_t* inputData, const Shape& inputShape, const flo
             batchId = std::round(roiInfo[0]);
             roiInfo++;
         }
-        const uint8_t* batchBase = inputData + batchId * inHeight * inWidth * inDepth;
+
+        // Check for malformed data
+        // 1. invalid batch id
+        // 2. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
+        // 3. Invalid region: x2 <= x1 || y2 <= y1
+        NN_RET_CHECK_GE(batchId, 0);
+        NN_RET_CHECK_LT(batchId, numBatches);
+        NN_RET_CHECK(roiInfo[0] >= 0);
+        NN_RET_CHECK(roiInfo[1] >= 0);
+        NN_RET_CHECK(roiInfo[2] >= 0);
+        NN_RET_CHECK(roiInfo[3] >= 0);
+        NN_RET_CHECK(roiInfo[0] * spatialScale <= inWidth);
+        NN_RET_CHECK(roiInfo[1] * spatialScale <= inHeight);
+        NN_RET_CHECK(roiInfo[2] * spatialScale <= inWidth);
+        NN_RET_CHECK(roiInfo[3] * spatialScale <= inHeight);
+        NN_RET_CHECK(roiInfo[0] < roiInfo[2]);
+        NN_RET_CHECK(roiInfo[1] < roiInfo[3]);
 
         float wRoiStart = roiInfo[0] * spatialScale;
         float hRoiStart = roiInfo[1] * spatialScale;
@@ -179,6 +235,7 @@ bool roiAlignQuant8(const uint8_t* inputData, const Shape& inputShape, const flo
             return false;
         }
 
+        const uint8_t* batchBase = inputData + batchId * inHeight * inWidth * inDepth;
         for (uint32_t i = 0; i < outHeight; i++) {
             for (uint32_t j = 0; j < outWidth; j++) {
                 float wStart = wStepSize * j + wRoiStart;
@@ -241,6 +298,128 @@ bool roiAlignQuant8(const uint8_t* inputData, const Shape& inputShape, const flo
     }
     return true;
 }
+
+template <typename T_Input, typename T_Roi>
+inline bool roiAlign(const T_Input* inputData, const Shape& inputShape, const T_Roi* roiData,
+                     const Shape& roiShape, T_Roi spatialScale, int32_t samplingRatio, bool useNchw,
+                     T_Input* outputData, const Shape& outputShape) {
+    InputWithLayout<T_Input> input(useNchw);
+    OutputWithLayout<T_Input> output(useNchw);
+    NN_RET_CHECK(input.initialize(inputData, inputShape));
+    NN_RET_CHECK(output.initialize(outputData, outputShape));
+    NN_RET_CHECK(roiAlignNhwc(input.getNhwcBuffer(), input.getNhwcShape(), roiData, roiShape,
+                              spatialScale, samplingRatio, output.getNhwcBuffer(),
+                              output.getNhwcShape()));
+    NN_RET_CHECK(output.commit());
+    return true;
+}
+
+}  // namespace
+
+bool validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
+    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
+    std::vector<OperandType> inExpectedTypes;
+    auto inputType = context->getInputType(kInputTensor);
+    if (inputType == OperandType::TENSOR_FLOAT32) {
+        inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                           OperandType::TENSOR_INT32,   OperandType::FLOAT32,
+                           OperandType::INT32,          OperandType::BOOL};
+    } else if (inputType == OperandType::TENSOR_FLOAT16) {
+        inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
+                           OperandType::TENSOR_INT32,   OperandType::FLOAT16,
+                           OperandType::INT32,          OperandType::BOOL};
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+        inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
+                           OperandType::TENSOR_FLOAT32,
+                           OperandType::TENSOR_INT32,
+                           OperandType::FLOAT32,
+                           OperandType::INT32,
+                           OperandType::BOOL};
+    } else {
+        LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
+        return false;
+    }
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return validateHalVersion(context, HalVersion::V1_2);
+}
+
+bool prepare(IOperationExecutionContext* context) {
+    bool useNchw = context->getInputValue<bool>(kLayoutScalar);
+    Shape input = context->getInputShape(kInputTensor);
+    Shape roiShape = context->getInputShape(kRoiTensor);
+    auto outputShapeData = context->getInputBuffer<int32_t>(kOutputShapeTensor);
+    Shape outputShapeShape = context->getInputShape(kOutputShapeTensor);
+
+    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(roiShape), 2);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(outputShapeShape), 1);
+
+    uint32_t numBatches = getSizeOfDimension(input, 0);
+    uint32_t inHeight = getSizeOfDimension(input, useNchw ? 2 : 1);
+    uint32_t inWidth = getSizeOfDimension(input, useNchw ? 3 : 2);
+    uint32_t inDepth = getSizeOfDimension(input, useNchw ? 1 : 3);
+    uint32_t numRois = getSizeOfDimension(roiShape, 0);
+    uint32_t roiInfoLength = getSizeOfDimension(roiShape, 1);
+
+    const uint32_t kRoiDim = 4;
+    NN_RET_CHECK(roiInfoLength == (kRoiDim + 1) || (roiInfoLength == kRoiDim && numBatches == 1));
+    NN_RET_CHECK_EQ(getSizeOfDimension(outputShapeShape, 0), 2);
+
+    Shape output = context->getOutputShape(kOutputTensor);
+    output.type = input.type;
+    if (useNchw) {
+        output.dimensions = {numRois, inDepth, static_cast<uint32_t>(outputShapeData[0]),
+                             static_cast<uint32_t>(outputShapeData[1])};
+    } else {
+        output.dimensions = {numRois, static_cast<uint32_t>(outputShapeData[0]),
+                             static_cast<uint32_t>(outputShapeData[1]), inDepth};
+    }
+    return context->setOutputShape(kOutputTensor, output);
+}
+
+bool execute(IOperationExecutionContext* context) {
+    switch (context->getInputType(kInputTensor)) {
+        case OperandType::TENSOR_FLOAT16:
+            return roiAlign(context->getInputBuffer<_Float16>(kInputTensor),
+                            context->getInputShape(kInputTensor),
+                            context->getInputBuffer<_Float16>(kRoiTensor),
+                            context->getInputShape(kRoiTensor),
+                            context->getInputValue<_Float16>(kSpacialScaleScalar),
+                            context->getInputValue<int32_t>(kSamplingRatioScalar),
+                            context->getInputValue<bool>(kLayoutScalar),
+                            context->getOutputBuffer<_Float16>(kOutputTensor),
+                            context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_FLOAT32:
+            return roiAlign(context->getInputBuffer<float>(kInputTensor),
+                            context->getInputShape(kInputTensor),
+                            context->getInputBuffer<float>(kRoiTensor),
+                            context->getInputShape(kRoiTensor),
+                            context->getInputValue<float>(kSpacialScaleScalar),
+                            context->getInputValue<int32_t>(kSamplingRatioScalar),
+                            context->getInputValue<bool>(kLayoutScalar),
+                            context->getOutputBuffer<float>(kOutputTensor),
+                            context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM:
+            return roiAlign(context->getInputBuffer<uint8_t>(kInputTensor),
+                            context->getInputShape(kInputTensor),
+                            context->getInputBuffer<float>(kRoiTensor),
+                            context->getInputShape(kRoiTensor),
+                            context->getInputValue<float>(kSpacialScaleScalar),
+                            context->getInputValue<int32_t>(kSamplingRatioScalar),
+                            context->getInputValue<bool>(kLayoutScalar),
+                            context->getOutputBuffer<uint8_t>(kOutputTensor),
+                            context->getOutputShape(kOutputTensor));
+        default:
+            NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
+    }
+}
+
+}  // namespace roi_align
+
+NN_REGISTER_OPERATION(ROI_ALIGN, roi_align::kOperationName, roi_align::validate, roi_align::prepare,
+                      roi_align::execute);
 
 }  // namespace nn
 }  // namespace android

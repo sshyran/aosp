@@ -47,7 +47,7 @@ Example({
         -1, 9, 10, 3,
         -2, 9,  7, 3
     ]
-}).AddNchw(i1, o1, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i1, o1, layout).AddVariations("relaxed", quant8, "float16")
 
 
 # TEST 2: ROI_ALIGN_2, outputShape = [2, 3], spatialScale = 0.25, samplingRatio = 4
@@ -91,4 +91,4 @@ Example({
         9.50, 6.73, 9.50, 9.28, 6.89, 8.97, 6.18, 9.63, 9.99, 9.85, 9.99, 9.85,
         7.29, 6.94, 7.29, 6.94, 2.31, 6.88, 7.90, 6.78, 7.90, 6.82, 4.64, 6.82
     ]
-}).AddNchw(i2, o2, layout).AddVariations("relaxed", quant8)
+}).AddNchw(i2, o2, layout).AddVariations("relaxed", quant8, "float16")
