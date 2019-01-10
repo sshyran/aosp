@@ -16,11 +16,11 @@
 
 layout = BoolScalar("layout", False) # NHWC
 
-# TEST 1: ROI_ALIGN_1, outputShape = [2, 2], spatialScale = 0.5, samplingRatio = 4
+# TEST 1: ROI_ALIGN_1, outputShape = [2, 2], spatialScale = [0.5, 0.5], samplingRatio = [4, 4]
 i1 = Input("in", "TENSOR_FLOAT32", "{1, 4, 4, 1}")
 roi1 = Input("roi", "TENSOR_FLOAT32", "{4, 4}")
 o1 = Output("out", "TENSOR_FLOAT32", "{4, 2, 2, 1}")
-Model().Operation("ROI_ALIGN", i1, roi1, [2, 2], 0.5, 4, layout).To(o1)
+Model().Operation("ROI_ALIGN", i1, roi1, 2, 2, 0.5, 0.5, 4, 4, layout).To(o1)
 
 quant8 = DataTypeConverter().Identify({
     i1: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
@@ -50,11 +50,11 @@ Example({
 }).AddNchw(i1, o1, layout).AddVariations("relaxed", quant8, "float16")
 
 
-# TEST 2: ROI_ALIGN_2, outputShape = [2, 3], spatialScale = 0.25, samplingRatio = 4
+# TEST 2: ROI_ALIGN_2, outputShape = [2, 3], spatialScale = [0.25, 0.25], samplingRatio = [4, 4]
 i2 = Input("in", "TENSOR_FLOAT32", "{2, 4, 8, 2}")
 roi2 = Input("roi", "TENSOR_FLOAT32", "{4, 5}")
 o2 = Output("out", "TENSOR_FLOAT32", "{4, 2, 3, 2}")
-Model().Operation("ROI_ALIGN", i2, roi2, [2, 3], 0.25, 4, layout).To(o2)
+Model().Operation("ROI_ALIGN", i2, roi2, 2, 3, 0.25, 0.25, 4, 4, layout).To(o2)
 
 quant8 = DataTypeConverter().Identify({
     i2: ("TENSOR_QUANT8_ASYMM", 0.04, 0),
@@ -102,11 +102,11 @@ Example({
 }).AddNchw(i2, o2, layout).AddVariations("relaxed", quant8, "float16")
 
 
-# TEST 3: ROI_ALIGN_3, outputShape = [2, 3], spatialScale = 0.25, samplingRatio = 0
+# TEST 3: ROI_ALIGN_3, outputShape = [2, 3], spatialScale = [0.25, 0.25], samplingRatio = [0, 0]
 i3 = Input("in", "TENSOR_FLOAT32", "{2, 4, 8, 2}")
 roi3 = Input("roi", "TENSOR_FLOAT32", "{4, 5}")
 o3 = Output("out", "TENSOR_FLOAT32", "{4, 2, 3, 2}")
-Model().Operation("ROI_ALIGN", i3, roi3, [2, 3], 0.25, 0, layout).To(o3)
+Model().Operation("ROI_ALIGN", i3, roi3, 2, 3, 0.25, 0.25, 0, 0, layout).To(o3)
 
 quant8 = DataTypeConverter().Identify({
     i3: ("TENSOR_QUANT8_ASYMM", 0.04, 0),
@@ -152,3 +152,39 @@ Example({
         5.106667, 5.612500
     ]
 }).AddNchw(i3, o3, layout).AddVariations("relaxed", quant8, "float16")
+
+
+# TEST 4: ROI_ALIGN_4, outputShape = [2, 2], spatialScale = [0.5, 1.0], samplingRatio = [0, 4]
+i4 = Input("in", "TENSOR_FLOAT32", "{1, 4, 4, 1}")
+roi4 = Input("roi", "TENSOR_FLOAT32", "{5, 4}")
+o4 = Output("out", "TENSOR_FLOAT32", "{5, 2, 2, 1}")
+Model().Operation("ROI_ALIGN", i4, roi4, 2, 2, 0.5, 1.0, 0, 4, layout).To(o4)
+
+quant8 = DataTypeConverter().Identify({
+    i4: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
+    o4: ("TENSOR_QUANT8_ASYMM", 0.0625, 128)
+})
+
+# Instantiate an example
+Example({
+    i4: [
+        -10, -1,  4, -5,
+         -8, -2,  9,  1,
+          7, -2,  3, -7,
+         -2, 10, -3,  5
+    ],
+    roi4: [
+        1, 2, 2, 4,
+        0, 0, 4, 8,
+        1, 0, 2, 8,
+        0, 2, 4, 4,
+        0, 0, 0, 0
+    ],
+    o4: [
+        0.375, 5.125, -0.375, 2.875,
+        -0.5, -0.3125, 3.1875, 1.125,
+         0.25, 4.25, 4.875, 0.625,
+        -0.1875, 1.125, 0.9375, -2.625,
+        -7.4375, -3.3125, -6.8125, -3.4375
+    ]
+}).AddNchw(i4, o4, layout).AddVariations("relaxed", quant8, "float16")
