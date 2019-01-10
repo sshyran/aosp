@@ -53,7 +53,6 @@ const OperationRegistration* register_REDUCE_PROD();
 const OperationRegistration* register_REDUCE_SUM();
 const OperationRegistration* register_ROI_ALIGN();
 const OperationRegistration* register_ROI_POOLING();
-const OperationRegistration* register_ROTATED_BBOX_TRANSFORM();
 const OperationRegistration* register_RSQRT();
 const OperationRegistration* register_SELECT();
 const OperationRegistration* register_SIN();
@@ -90,7 +89,6 @@ OperationResolver::OperationResolver() {
     registerOperation(register_REDUCE_SUM());
     registerOperation(register_ROI_ALIGN());
     registerOperation(register_ROI_POOLING());
-    registerOperation(register_ROTATED_BBOX_TRANSFORM());
     registerOperation(register_RSQRT());
     registerOperation(register_SELECT());
     registerOperation(register_SIN());
