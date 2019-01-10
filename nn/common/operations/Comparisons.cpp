@@ -34,8 +34,6 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
-typedef uint8_t bool8;
-
 template <typename T>
 bool compute(const std::function<bool(T, T)>& func, const T* aData, const Shape& aShape,
              const T* bData, const Shape& bShape, bool8* outputData, const Shape& outputShape) {
