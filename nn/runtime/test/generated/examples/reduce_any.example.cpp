@@ -19,6 +19,8 @@ static std::vector<MixedTypedExample> examples = {
   {},
   // int -> BOOL8 map
   {{0, {false}}},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -34,6 +36,8 @@ static std::vector<MixedTypedExample> examples = {
   {},
   // int -> BOOL8 map
   {{0, {false}}},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  {},
 }
 },
 }, // End of an example
@@ -60,6 +64,8 @@ static std::vector<MixedTypedExample> examples_2 = {
   {},
   // int -> BOOL8 map
   {{0, {false, false, false, false, false, false, false, true, false, false, false, true}}},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -75,6 +81,8 @@ static std::vector<MixedTypedExample> examples_2 = {
   {},
   // int -> BOOL8 map
   {{0, {false, true}}},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  {},
 }
 },
 }, // End of an example
@@ -101,6 +109,8 @@ static std::vector<MixedTypedExample> examples_3 = {
   {},
   // int -> BOOL8 map
   {{0, {false, false, false, false, false, false, false, true, false, false, false, true}}},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -116,6 +126,8 @@ static std::vector<MixedTypedExample> examples_3 = {
   {},
   // int -> BOOL8 map
   {{0, {true, false, true}}},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  {},
 }
 },
 }, // End of an example
