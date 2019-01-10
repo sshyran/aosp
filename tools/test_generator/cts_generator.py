@@ -39,6 +39,7 @@ from test_generator import Configuration
 from test_generator import DataTypeConverter
 from test_generator import DataLayoutConverter
 from test_generator import Example
+from test_generator import Float16Scalar
 from test_generator import Float32Scalar
 from test_generator import Float32Vector
 from test_generator import GetJointStr
@@ -54,6 +55,7 @@ from test_generator import Parameter
 from test_generator import ParameterAsInputConverter
 from test_generator import RelaxedModeConverter
 from test_generator import SmartOpen
+from test_generator import SymmPerChannelQuantParams
 
 def IndentedPrint(s, indent=2, *args, **kwargs):
     print('\n'.join([" " * indent + i for i in s.split('\n')]), *args, **kwargs)
@@ -133,11 +135,17 @@ def DumpCtsModel(model, model_fd):
 
     # Phase 0: types
     for t in model.GetTypes():
-        if t.scale == 0.0 and t.zeroPoint == 0:
+        if t.scale == 0.0 and t.zeroPoint == 0 and t.extraParams is None:
             typeDef = "OperandType %s(Type::%s, %s);"%(t, t.type, t.GetDimensionsString())
         else:
-            typeDef = "OperandType %s(Type::%s, %s, %s, %d);"%(
-                t, t.type, t.GetDimensionsString(), tg.PrettyPrintAsFloat(t.scale), t.zeroPoint)
+            if t.extraParams is None:
+                typeDef = "OperandType %s(Type::%s, %s, %s, %d);"%(
+                    t, t.type, t.GetDimensionsString(), tg.PrettyPrintAsFloat(t.scale), t.zeroPoint)
+            else:
+                typeDef = "OperandType %s(Type::%s, %s, %s, %d, %s);"%(
+                    t, t.type, t.GetDimensionsString(), tg.PrettyPrintAsFloat(t.scale), t.zeroPoint,
+                    t.extraParams.GetConstructor())
+
         IndentedPrint(typeDef, file=model_fd)
 
     # Phase 1: add operands
@@ -181,6 +189,7 @@ def DumpMixedType(operands, feedDict):
         "TENSOR_QUANT16_SYMM",
         "TENSOR_FLOAT16",
         "TENSOR_BOOL8",
+        "TENSOR_QUANT8_SYMM_PER_CHANNEL",
     ]
     typedMap = {t: [] for t in supportedTensors}
     FeedAndGet = lambda op, d: op.Feed(d).GetListInitialization()
@@ -205,6 +214,8 @@ def DumpMixedType(operands, feedDict):
   {{{float16_map}}},
   // int -> BOOL8 map
   {{{bool8_map}}},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  {{{int8_map}}},
 }}"""
     return mixedTypeTemplate.format(
         float32_map=tg.GetJointStr(typedMap.get("TENSOR_FLOAT32", [])),
@@ -213,6 +224,7 @@ def DumpMixedType(operands, feedDict):
                                  typedMap.get("TENSOR_OEM_BYTE", [])),
         int16_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT16_SYMM", [])),
         float16_map=tg.GetJointStr(typedMap.get("TENSOR_FLOAT16", [])),
+        int8_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT8_SYMM_PER_CHANNEL", [])),
         bool8_map=tg.GetJointStr(typedMap.get("TENSOR_BOOL8", [])))
 
 # Dump Example file for Cts tests

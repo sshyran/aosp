@@ -48,6 +48,10 @@ class RNN {
   static constexpr int kOutputTensor = 1;
 
  private:
+  bool EvalFloat32(const float* inputData, const float* hiddenStateInputData, const float* biasData,
+                   const float* weightsData, const float* recurrentWeightsData, float* outputData,
+                   float* hiddenStateOutputData);
+
   ActivationFn activation_;
 
   const RunTimeOperandInfo *input_;

@@ -27,8 +27,6 @@ namespace android {
 namespace nn {
 namespace reduce {
 
-typedef uint8_t bool8;  // TODO: Where to define this?
-
 constexpr uint32_t kNumInputs = 3;
 constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kInputAxes = 1;

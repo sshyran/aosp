@@ -32,6 +32,7 @@
 #include "Tracing.h"
 #include "Utils.h"
 
+#include <cstddef>
 #include <memory>
 #include <vector>
 
@@ -51,6 +52,8 @@ static_assert(ANEURALNETWORKS_TENSOR_QUANT16_SYMM == 7,
 static_assert(ANEURALNETWORKS_TENSOR_FLOAT16 == 8, "ANEURALNETWORKS_TENSOR_FLOAT16 has changed");
 static_assert(ANEURALNETWORKS_TENSOR_BOOL8 == 9, "ANEURALNETWORKS_TENSOR_BOOL8 has changed");
 static_assert(ANEURALNETWORKS_FLOAT16 == 10, "ANEURALNETWORKS_FLOAT16 has changed");
+static_assert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL == 11,
+              "ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL has changed");
 static_assert(ANEURALNETWORKS_OEM_SCALAR == 10000, "ANEURALNETWORKS_OEM_SCALAR has changed");
 static_assert(ANEURALNETWORKS_TENSOR_OEM_BYTE == 10001,
               "ANEURALNETWORKS_TENSOR_OEM_BYTE has changed");
@@ -161,6 +164,9 @@ static_assert(static_cast<int32_t>(OperandType::TENSOR_QUANT16_SYMM) ==
               "TENSOR_QUANT16_SYMM != ANEURALNETWORKS_TENSOR_QUANT16_SYMM");
 static_assert(static_cast<int32_t>(OperandType::TENSOR_BOOL8) == ANEURALNETWORKS_TENSOR_BOOL8,
               "TENSOR_BOOL8 != ANEURALNETWORKS_TENSOR_BOOL8");
+static_assert(static_cast<int32_t>(OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) ==
+                      ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
+              "TENSOR_QUANT8_SYMM_PER_CHANNEL != ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL");
 
 static_assert(static_cast<int32_t>(OperationType::ADD) == ANEURALNETWORKS_ADD,
               "OperationType::ADD != ANEURALNETWORKS_ADD");
@@ -260,6 +266,34 @@ static_assert(static_cast<int32_t>(FusedActivationFunc::RELU1) == ANEURALNETWORK
               "FusedActivationFunc::RELU1 != ANEURALNETWORKS_FUSED_RELU1");
 static_assert(static_cast<int32_t>(FusedActivationFunc::RELU6) == ANEURALNETWORKS_FUSED_RELU6,
               "FusedActivationFunc::RELU6 != ANEURALNETWORKS_FUSED_RELU6");
+
+// Asserts for ANeuralNetworksOperandType memory layout
+static_assert(offsetof(ANeuralNetworksOperandType, type) == 0,
+              "ANeuralNetworksOperandType.type offset != 0");
+static_assert(offsetof(ANeuralNetworksOperandType, dimensionCount) == 4,
+              "ANeuralNetworksOperandType.dimensionCount offset != 4");
+static_assert(offsetof(ANeuralNetworksOperandType, dimensions) == 8,
+              "ANeuralNetworksOperandType.dimensions offset != 8");
+static_assert(offsetof(ANeuralNetworksOperandType, scale) == 8 + sizeof(void*),
+              "ANeuralNetworksOperandType.scale offset != 8 + sizeof(void*)");
+static_assert(offsetof(ANeuralNetworksOperandType, zeroPoint) == 12 + sizeof(void*),
+              "ANeuralNetworksOperandType.zeroPoint offset != 12 + sizeof(void*)");
+static_assert(sizeof(ANeuralNetworksOperandType) == 16 + sizeof(void*),
+              "ANeuralNetworksOperandType size changed");
+static_assert(alignof(ANeuralNetworksOperandType) == alignof(void*),
+              "ANeuralNetworksOperandType alignment changed");
+
+// Asserts for ANeuralNetworksSymmPerChannelQuantParams memory layout
+static_assert(offsetof(ANeuralNetworksSymmPerChannelQuantParams, channelDim) == 0,
+              "ANeuralNetworksSymmPerChannelQuantParams.channelDim offset != 4 + sizeof(void*)");
+static_assert(offsetof(ANeuralNetworksSymmPerChannelQuantParams, scaleCount) == 4,
+              "ANeuralNetworksSymmPerChannelQuantParams.scaleCount offset != 0");
+static_assert(offsetof(ANeuralNetworksSymmPerChannelQuantParams, scales) == 8,
+              "ANeuralNetworksSymmPerChannelQuantParams.scales offset != 4");
+static_assert(sizeof(ANeuralNetworksSymmPerChannelQuantParams) == 8 + sizeof(void*),
+              "ANeuralNetworksSymmPerChannelQuantParams size != 8 + sizeof(void*)");
+static_assert(alignof(ANeuralNetworksSymmPerChannelQuantParams) == alignof(void*),
+              "ANeuralNetworksOperandType alignment changed");
 
 using android::sp;
 using namespace android::nn;
@@ -535,6 +569,19 @@ int ANeuralNetworksModel_addOperation(ANeuralNetworksModel* model,
     }
     ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model);
     return m->addOperation(type, inputCount, inputs, outputCount, outputs);
+}
+
+int ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(
+        ANeuralNetworksModel* model, int32_t index,
+        const ANeuralNetworksSymmPerChannelQuantParams* channelQuant) {
+    NNTRACE_RT(NNTRACE_PHASE_PREPARATION,
+               "ANeuralNetworksModel_setOperandSymmPerChannelQuantParams");
+    if (!model || !channelQuant) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandSymmPerChannelQuantParams passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model);
+    return m->setOperandSymmPerChannelQuantParams(index, *channelQuant);
 }
 
 int ANeuralNetworksModel_identifyInputsAndOutputs(ANeuralNetworksModel* model, uint32_t inputCount,

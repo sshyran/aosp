@@ -59,14 +59,17 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
         LOG(ERROR) << "ANeuralNetworksModel_addOperand exceed max operands";
         return ANEURALNETWORKS_BAD_DATA;
     }
+
     mOperands.push_back({
-        .type = static_cast<OperandType>(type.type),
-        .dimensions = hidl_vec<uint32_t>(type.dimensions, type.dimensions + type.dimensionCount),
-        .numberOfConsumers = 0,
-        .scale = type.scale,
-        .zeroPoint = type.zeroPoint,
-        .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
-        .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .type = static_cast<OperandType>(type.type),
+            .dimensions =
+                    hidl_vec<uint32_t>(type.dimensions, type.dimensions + type.dimensionCount),
+            .numberOfConsumers = 0,
+            .scale = type.scale,
+            .zeroPoint = type.zeroPoint,
+            .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+            .extraParams = Operand::ExtraParams(),
     });
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -128,6 +131,40 @@ int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t len
             // once we know the total size, to avoid needless copies.
             mLargeOperandValues.push_back(LargeValue{.operandIndex = index, .buffer = buffer});
         }
+    }
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ModelBuilder::setOperandSymmPerChannelQuantParams(
+        uint32_t index, const ANeuralNetworksSymmPerChannelQuantParams& channelQuant) {
+    if (badState("setOperandSymmPerChannelQuantParams")) {
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+
+    if (index >= operandCount()) {
+        LOG(ERROR) << "setOperandSymmPerChannelQuantParams "
+                   << "setting operand extra params " << index << " of " << operandCount();
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    Operand& operand = mOperands[index];
+
+    if (!validateOperandSymmPerChannelQuantParams(
+                operand, channelQuant,
+                "ANeuralNetworksModel_setOperandSymmPerChannelQuantParams")) {
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    switch (operand.type) {
+        case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
+            operand.extraParams.channelQuant({
+                    .scales = hidl_vec<float>(channelQuant.scales,
+                                              channelQuant.scales + channelQuant.scaleCount),
+                    .channelDim = channelQuant.channelDim,
+            });
+            break;
+        default:
+            LOG(ERROR) << "ANeuralNetworksModel_setOperandSymmPerChannelQuantParams "
+                       << "invalid operand type " << static_cast<int32_t>(operand.type);
+            return ANEURALNETWORKS_BAD_DATA;
     }
     return ANEURALNETWORKS_NO_ERROR;
 }

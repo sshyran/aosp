@@ -105,3 +105,51 @@ TEST_F(GeneratedTests, roi_pooling_nchw_float16_2) {
             roi_pooling::get_examples_nchw_float16_2());
 }
 
+TEST_F(GeneratedTests, roi_pooling_nhwc_3) {
+    execute(roi_pooling::CreateModel_nhwc_3,
+            roi_pooling::is_ignored_nhwc_3,
+            roi_pooling::get_examples_nhwc_3());
+}
+
+TEST_F(GeneratedTests, roi_pooling_nhwc_relaxed_3) {
+    execute(roi_pooling::CreateModel_nhwc_relaxed_3,
+            roi_pooling::is_ignored_nhwc_relaxed_3,
+            roi_pooling::get_examples_nhwc_relaxed_3());
+}
+
+TEST_F(GeneratedTests, roi_pooling_nhwc_quant8_3) {
+    execute(roi_pooling::CreateModel_nhwc_quant8_3,
+            roi_pooling::is_ignored_nhwc_quant8_3,
+            roi_pooling::get_examples_nhwc_quant8_3());
+}
+
+TEST_F(GeneratedTests, roi_pooling_nhwc_float16_3) {
+    execute(roi_pooling::CreateModel_nhwc_float16_3,
+            roi_pooling::is_ignored_nhwc_float16_3,
+            roi_pooling::get_examples_nhwc_float16_3());
+}
+
+TEST_F(GeneratedTests, roi_pooling_nchw_3) {
+    execute(roi_pooling::CreateModel_nchw_3,
+            roi_pooling::is_ignored_nchw_3,
+            roi_pooling::get_examples_nchw_3());
+}
+
+TEST_F(GeneratedTests, roi_pooling_nchw_relaxed_3) {
+    execute(roi_pooling::CreateModel_nchw_relaxed_3,
+            roi_pooling::is_ignored_nchw_relaxed_3,
+            roi_pooling::get_examples_nchw_relaxed_3());
+}
+
+TEST_F(GeneratedTests, roi_pooling_nchw_quant8_3) {
+    execute(roi_pooling::CreateModel_nchw_quant8_3,
+            roi_pooling::is_ignored_nchw_quant8_3,
+            roi_pooling::get_examples_nchw_quant8_3());
+}
+
+TEST_F(GeneratedTests, roi_pooling_nchw_float16_3) {
+    execute(roi_pooling::CreateModel_nchw_float16_3,
+            roi_pooling::is_ignored_nchw_float16_3,
+            roi_pooling::get_examples_nchw_float16_3());
+}
+

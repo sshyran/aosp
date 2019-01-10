@@ -83,6 +83,14 @@ bool depthwiseConvQuant8(const uint8_t* inputData, const Shape& inputShape,
                          int32_t paddingRight, int32_t paddingTop, int32_t paddingBottom,
                          int32_t strideWidth, int32_t strideHeight, int32_t depthMultiplier,
                          int32_t activation, uint8_t* outputData, const Shape& outputShape);
+bool depthwiseConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
+                                   const int8_t* filterData, const Shape& filterShape,
+                                   const float* filterScales, const int32_t* biasData,
+                                   const Shape& biasShape, int32_t paddingLeft,
+                                   int32_t paddingRight, int32_t paddingTop, int32_t paddingBottom,
+                                   int32_t strideWidth, int32_t strideHeight,
+                                   int32_t depthMultiplier, int32_t activation, uint8_t* outputData,
+                                   const Shape& outputShape);
 
 bool convFloat16(const _Float16* inputData, const Shape& inputShape, const _Float16* filterData,
                  const Shape& filterShape, const _Float16* biasData, const Shape& biasShape,
@@ -99,6 +107,13 @@ bool convQuant8(const uint8_t* inputData, const Shape& inputShape, const uint8_t
                 int32_t padding_left, int32_t padding_right, int32_t padding_top,
                 int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
                 int32_t activation, uint8_t* outputData, const Shape& outputShape);
+bool convQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
+                          const int8_t* filterData, const Shape& filterShape,
+                          const float* filterScales, const int32_t* biasData,
+                          const Shape& biasShape, int32_t paddingLeft, int32_t paddingRight,
+                          int32_t paddingTop, int32_t paddingBottom, int32_t strideWidth,
+                          int32_t strideHeight, int32_t activation, uint8_t* outputData,
+                          const Shape& outputShape);
 
 bool averagePoolFloat16(const _Float16* inputData, const Shape& inputShape, int32_t padding_left,
                         int32_t padding_right, int32_t padding_top, int32_t padding_bottom,

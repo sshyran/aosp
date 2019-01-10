@@ -28,10 +28,10 @@ namespace android {
 namespace nn {
 
 // The number of data types (OperandCode) defined in NeuralNetworks.h.
-const int kNumberOfDataTypes = 11;
+const int kNumberOfDataTypes = 12;
 
 // The number of operation types (OperationCode) defined in NeuralNetworks.h.
-const int kNumberOfOperationTypes = 97;
+const int kNumberOfOperationTypes = 98;
 
 // The number of execution preferences defined in NeuralNetworks.h.
 const int kNumberOfPreferences = 3;
@@ -151,6 +151,10 @@ inline std::string toString(HalVersion halVersion) {
 inline bool validCode(uint32_t codeCount, uint32_t codeCountOEM, uint32_t code) {
     return (code < codeCount) || (code >= kOEMCodeBase && (code - kOEMCodeBase) < codeCountOEM);
 }
+
+bool validateOperandSymmPerChannelQuantParams(
+        const Operand& halOperand, const ANeuralNetworksSymmPerChannelQuantParams& channelQuant,
+        const char* tag);
 
 int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag, bool allowPartial);
 int validateOperandList(uint32_t count, const uint32_t* list, uint32_t operandCount,

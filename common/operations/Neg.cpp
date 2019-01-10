@@ -25,9 +25,9 @@
 
 namespace android {
 namespace nn {
-namespace abs {
+namespace neg {
 
-constexpr char kOperationName[] = "ABS";
+constexpr char kOperationName[] = "NEG";
 
 constexpr uint32_t kNumInputs = 1;
 constexpr uint32_t kInputTensor = 0;
@@ -41,7 +41,7 @@ template <typename T>
 inline bool compute(const T* input, const Shape& shape, T* output) {
     const auto size = getNumberOfElements(shape);
     for (uint32_t i = 0; i < size; ++i) {
-        output[i] = static_cast<T>(std::abs(static_cast<float>(input[i])));
+        output[i] = -input[i];
     }
     return true;
 }
@@ -53,7 +53,7 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
     NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32)
+                 inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_INT32)
             << "Unsupported tensor type for operation " << kOperationName;
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
@@ -77,14 +77,18 @@ bool execute(IOperationExecutionContext* context) {
             return compute(context->getInputBuffer<float>(kInputTensor),
                            context->getInputShape(kInputTensor),
                            context->getOutputBuffer<float>(kOutputTensor));
+        case OperandType::TENSOR_INT32:
+            return compute(context->getInputBuffer<int32_t>(kInputTensor),
+                           context->getInputShape(kInputTensor),
+                           context->getOutputBuffer<int32_t>(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
 }
 
-}  // namespace abs
+}  // namespace neg
 
-NN_REGISTER_OPERATION(ABS, abs::kOperationName, abs::validate, abs::prepare, abs::execute);
+NN_REGISTER_OPERATION(NEG, neg::kOperationName, neg::validate, neg::prepare, neg::execute);
 
 }  // namespace nn
 }  // namespace android

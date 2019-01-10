@@ -36,9 +36,10 @@
 namespace android {
 namespace nn {
 
-static int compile(std::shared_ptr<Device> device, const ModelBuilder* model,
-                   int32_t executionPreference,
-                   std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+namespace {
+
+int compile(std::shared_ptr<Device> device, const ModelBuilder* model, int32_t executionPreference,
+            std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
     nnAssert(device != nullptr);
     Model hidlModel;
     model->setHidlModel(&hidlModel);
@@ -47,6 +48,51 @@ static int compile(std::shared_ptr<Device> device, const ModelBuilder* model,
 }
 
 typedef std::function<void(uint32_t)> OperationReadyCallback;
+
+bool createSymmPerChannelQuantParams(ANeuralNetworksSymmPerChannelQuantParams* outChannelQuant,
+                                     const Operand::ExtraParams& extraParams) {
+    if (extraParams.getDiscriminator() !=
+        V1_2::Operand::ExtraParams::hidl_discriminator::channelQuant) {
+        LOG(ERROR) << "Unexpected extraParams discriminator, expected channelQuant"
+                   << " received " << static_cast<int>(extraParams.getDiscriminator());
+        return false;
+    }
+    auto& fromChannelQuant = extraParams.channelQuant();
+    *outChannelQuant = {
+            .channelDim = fromChannelQuant.channelDim,
+            .scaleCount = static_cast<uint32_t>(fromChannelQuant.scales.size()),
+            .scales = fromChannelQuant.scales.data(),
+    };
+    return true;
+}
+
+int copyOperandExtraParams(ModelBuilder& model, uint32_t toOperandIndex,
+                           const Operand& fromOperand) {
+    switch (fromOperand.type) {
+        case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL: {
+            ANeuralNetworksSymmPerChannelQuantParams toChannelQuant;
+            if (!createSymmPerChannelQuantParams(&toChannelQuant, fromOperand.extraParams)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            int n = model.setOperandSymmPerChannelQuantParams(toOperandIndex, toChannelQuant);
+            if (n != ANEURALNETWORKS_NO_ERROR) {
+                LOG(ERROR) << "Failed setOperandSymmPerChannelQuantParams";
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+        } break;
+
+        default: {
+            if (fromOperand.extraParams.getDiscriminator() !=
+                V1_2::Operand::ExtraParams::hidl_discriminator::none) {
+                LOG(ERROR) << "Unexpected extraParams discriminator, expected none"
+                           << " received "
+                           << static_cast<int>(fromOperand.extraParams.getDiscriminator());
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+        }
+    }
+    return ANEURALNETWORKS_NO_ERROR;
+}
 
 // This class tracks whether we know the value of an operand as operations
 // are processed.
@@ -103,6 +149,8 @@ void OperandTracker::markProcessed(uint32_t operationIndex, OperationReadyCallba
     }
 }
 
+}  // namespace
+
 ExecutionStep::ExecutionStep(ExecutionPlan* plan, uint32_t stepIndex,
                              std::shared_ptr<Device> device)
     : mPlan(plan), mIndex(stepIndex), mSubModel(), mDevice(device) {}
@@ -126,15 +174,22 @@ int ExecutionStep::addOperand(uint32_t fromOperandIndex, uint32_t* toOperandInde
     // Add the operand to the submodel.
     const Operand& operand = fromModel.getOperand(fromOperandIndex);
     ANeuralNetworksOperandType type = {
-        .type = static_cast<int32_t>(operand.type),
-        .dimensionCount = static_cast<uint32_t>(operand.dimensions.size()),
-        .dimensions = operand.dimensions.size() > 0 ? operand.dimensions.data() : nullptr,
-        .scale = operand.scale,
-        .zeroPoint = operand.zeroPoint
+            .type = static_cast<int32_t>(operand.type),
+            .dimensionCount = static_cast<uint32_t>(operand.dimensions.size()),
+            .dimensions = operand.dimensions.size() > 0 ? operand.dimensions.data() : nullptr,
+            .scale = operand.scale,
+            .zeroPoint = operand.zeroPoint,
     };
+
     int n = mSubModel.addOperand(type);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         LOG(ERROR) << "Previous error occurred when partitioning the graph";
+        return n;
+    }
+
+    n = copyOperandExtraParams(mSubModel, *toOperandIndex, operand);
+    if (n != ANEURALNETWORKS_NO_ERROR) {
+        LOG(ERROR) << "Error when copying extra parameters to the operand";
         return n;
     }
 
@@ -845,6 +900,7 @@ PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> d
         case OperandType::TENSOR_QUANT8_ASYMM:
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_BOOL8:
+        case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
             // For OEM, the real selection will be made from who can run the operand.
         case OperandType::OEM:
         case OperandType::TENSOR_OEM_BYTE:
