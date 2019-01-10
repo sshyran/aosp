@@ -19,20 +19,21 @@ import numpy as np
 num_values = 300
 values = list(np.linspace(-10, 10, num_values))
 
-for scale, offset in [(1.0, 0),
-                      (1.0, 1),
-                      (0.01, 120),
-                      (10.0, 120)]:
-  input0 = Input("input0", "TENSOR_FLOAT32", "{%d}" % num_values)
-  output0 = Output("output0", "TENSOR_FLOAT32", "{%d}" % num_values)
+for input_type in ["TENSOR_FLOAT32", "TENSOR_FLOAT16"]:
+  for scale, offset in [(1.0, 0),
+                        (1.0, 1),
+                        (0.01, 120),
+                        (10.0, 120)]:
+    input0 = Input("input0", input_type, "{%d}" % num_values)
+    output0 = Output("output0", input_type, "{%d}" % num_values)
 
-  model = Model().Operation("QUANTIZE", input0).To(output0)
+    model = Model().Operation("QUANTIZE", input0).To(output0)
 
-  quantizeOutput = DataTypeConverter().Identify({
-      output0: ["TENSOR_QUANT8_ASYMM", scale, offset],
-  })
+    quantizeOutput = DataTypeConverter().Identify({
+        output0: ["TENSOR_QUANT8_ASYMM", scale, offset],
+    })
 
-  Example({
-      input0: values,
-      output0: values,
-  }).AddVariations(quantizeOutput, includeDefault=False)
+    Example({
+        input0: values,
+        output0: values,
+    }).AddVariations(quantizeOutput, includeDefault=False)

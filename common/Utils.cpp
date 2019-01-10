@@ -742,7 +742,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             auto inputType = operands[inputIndexes[0]].type;
             std::vector<OperandType> inExpectedTypes;
             std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
+            if (inputType == OperandType::TENSOR_FLOAT16 ||
+                inputType == OperandType::TENSOR_FLOAT32) {
                 inExpectedTypes = {inputType};
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
             } else {
