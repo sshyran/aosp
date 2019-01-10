@@ -27,6 +27,7 @@ cc_defaults {
         "operations/Abs.cpp",
         "operations/ChannelShuffle.cpp",
         "operations/Comparisons.cpp",
+        "operations/Exp.cpp",
         "operations/Gather.cpp",
         "operations/GenerateProposals.cpp",
         "operations/HeatmapMaxKeypoint.cpp",
