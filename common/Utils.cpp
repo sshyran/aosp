@@ -303,6 +303,7 @@ const char* kOperationNames[kNumberOfOperationTypes] = {
         "REDUCE_MIN",
         "REDUCE_ANY",
         "REDUCE_ALL",
+        "INSTANCE_NORMALIZATION",
 };
 
 static_assert(COUNT(kOperationNames) == kNumberOfOperationTypes, "kOperationNames is incorrect");
