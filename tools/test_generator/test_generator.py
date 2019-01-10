@@ -149,6 +149,7 @@ class Type(NamedVariable):
         "BOOL": "bool8",
         "TENSOR_QUANT16_SYMM": "int16_t",
         "TENSOR_BOOL8": "bool8",
+        "TENSOR_QUANT8_SYMM_PER_CHANNEL": "int8_t",
 #     "OEM_SCALAR": this is service-defined.
         "TENSOR_OEM_BYTE": "uint8_t",
     }
@@ -216,7 +217,7 @@ class Type(NamedVariable):
 
     def GetElementByteSize(self):
         cppTypeString = self.GetCppTypeString()
-        if cppTypeString in ["uint8_t", "bool8"]:
+        if cppTypeString in ["uint8_t", "int8_t", "bool8"]:
             return 1
         elif cppTypeString in ["int16_t", "_Float16"]:
             return 2
