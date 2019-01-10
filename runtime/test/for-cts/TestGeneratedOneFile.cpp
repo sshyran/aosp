@@ -350,6 +350,7 @@
 #include "../generated/tests/dequantize_float16.mod.py.cpp"
 #include "../generated/tests/div_broadcast_float16.mod.py.cpp"
 #include "../generated/tests/div_float16.mod.py.cpp"
+#include "../generated/tests/embedding_lookup_sparse.mod.py.cpp"
 #include "../generated/tests/equal.mod.py.cpp"
 #include "../generated/tests/exp.mod.py.cpp"
 #include "../generated/tests/expand_dims.mod.py.cpp"

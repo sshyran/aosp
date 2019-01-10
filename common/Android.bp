@@ -27,6 +27,7 @@ cc_defaults {
         "operations/ChannelShuffle.cpp",
         "operations/Comparisons.cpp",
         "operations/Elementwise.cpp",
+        "operations/EmbeddingLookupSparse.cpp",
         "operations/Gather.cpp",
         "operations/GenerateProposals.cpp",
         "operations/HeatmapMaxKeypoint.cpp",
