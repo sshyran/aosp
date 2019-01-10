@@ -177,6 +177,34 @@ TEST_F(ValidationTestModel, AddOperand) {
               ANEURALNETWORKS_BAD_STATE);
 }
 
+TEST_F(ValidationTestModel, SetOperandSymmPerChannelQuantParams) {
+    uint32_t dim = 2;
+
+    ANeuralNetworksOperandType quant8SymmPerChannel{
+            .type = ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            .dimensionCount = 1,
+            .dimensions = &dim,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+    };
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &quant8SymmPerChannel),
+              ANEURALNETWORKS_NO_ERROR);
+
+    float scale = 1.0f;
+    ANeuralNetworksSymmPerChannelQuantParams channelQuant{
+            .channelDim = 0,
+            .scaleCount = 1,
+            .scales = &scale,
+    };
+
+    EXPECT_EQ(ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(nullptr, 0, &channelQuant),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(mModel, 0, nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(mModel, 100, &channelQuant),
+              ANEURALNETWORKS_BAD_DATA);
+}
+
 TEST_F(ValidationTestModel, SetOptionalOperand) {
     ANeuralNetworksOperandType floatType{
                 .type = ANEURALNETWORKS_FLOAT32, .dimensionCount = 0, .dimensions = nullptr};
