@@ -2955,6 +2955,7 @@ typedef enum {
      *     output = max(0, min(255, round(input / scale) + zeroPoint)
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Supported tensor rank: from 1
