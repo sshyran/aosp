@@ -295,7 +295,7 @@ inline bool is_ignored_same_weight_as_input(int i) {
 // Create the model
 Model createTestModel_different() {
     Operand::ExtraParams extraParams1;
-    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f}, .channelDim=3});
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f, 1.0f, 0.5f}, .channelDim=3});
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -441,7 +441,7 @@ inline bool is_ignored_different(int i) {
 // Create the model
 Model createTestModel_different_weight_as_input() {
     Operand::ExtraParams extraParams1;
-    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f}, .channelDim=3});
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f, 1.0f, 0.5f}, .channelDim=3});
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -587,7 +587,7 @@ inline bool is_ignored_different_weight_as_input(int i) {
 // Create the model
 Model createTestModel_layout_nhwc() {
     Operand::ExtraParams extraParams1;
-    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f}, .channelDim=3});
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f, 1.0f, 0.5f}, .channelDim=3});
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -742,7 +742,7 @@ inline bool is_ignored_layout_nhwc(int i) {
 // Create the model
 Model createTestModel_layout_nhwc_weight_as_input() {
     Operand::ExtraParams extraParams1;
-    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f}, .channelDim=3});
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f, 1.0f, 0.5f}, .channelDim=3});
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -897,7 +897,7 @@ inline bool is_ignored_layout_nhwc_weight_as_input(int i) {
 // Create the model
 Model createTestModel_layout_nchw() {
     Operand::ExtraParams extraParams1;
-    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f}, .channelDim=3});
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f, 1.0f, 0.5f}, .channelDim=3});
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -1052,7 +1052,7 @@ inline bool is_ignored_layout_nchw(int i) {
 // Create the model
 Model createTestModel_layout_nchw_weight_as_input() {
     Operand::ExtraParams extraParams1;
-    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f}, .channelDim=3});
+    extraParams1.channelQuant(SymmPerChannelQuantParams{.scales={1.0f, 0.5f, 1.0f, 0.5f}, .channelDim=3});
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
