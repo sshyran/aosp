@@ -99,6 +99,9 @@ class FalseyErrorStream {
     std::ostringstream mBuffer;
 };
 
+// An 8-bit boolean type (sizeof(bool) is implementation-defined).
+typedef uint8_t bool8;
+
 enum PaddingScheme {
     kPaddingUnknown = 0,
     kPaddingSame = 1,

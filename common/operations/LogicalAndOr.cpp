@@ -34,9 +34,6 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
-// sizeof(bool) is implementation defined.
-typedef uint8_t bool8;  // TODO: Here or in android::nn?
-
 bool compute(const std::function<bool(bool, bool)>& func, const bool8* aData, const Shape& aShape,
              const bool8* bData, const Shape& bShape, bool8* outputData, const Shape& outputShape) {
     IndexedShapeWrapper aShapeIndexed(aShape);
