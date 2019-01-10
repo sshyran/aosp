@@ -31,7 +31,7 @@ namespace nn {
 const int kNumberOfDataTypes = 12;
 
 // The number of operation types (OperationCode) defined in NeuralNetworks.h.
-const int kNumberOfOperationTypes = 97;
+const int kNumberOfOperationTypes = 98;
 
 // The number of execution preferences defined in NeuralNetworks.h.
 const int kNumberOfPreferences = 3;
