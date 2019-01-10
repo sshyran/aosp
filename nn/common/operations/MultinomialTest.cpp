@@ -43,7 +43,7 @@ class MultinomialOpModel {
         inputs.push_back(model_.addOperand(&logitsType));
         OperandType samplesType(Type::INT32, {});
         inputs.push_back(model_.addOperand(&samplesType));
-        OperandType seedsType(Type::TENSOR_FLOAT32, {2});
+        OperandType seedsType(Type::TENSOR_INT32, {2});
         inputs.push_back(model_.addOperand(&seedsType));
 
         std::vector<uint32_t> outputs;
