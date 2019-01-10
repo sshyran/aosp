@@ -31,6 +31,7 @@ LIBNEURALNETWORKS {
     ANeuralNetworksModel_free;
     ANeuralNetworksModel_finish;
     ANeuralNetworksModel_addOperand;
+    ANeuralNetworksModel_setOperandSymmPerChannelQuantParams;
     ANeuralNetworksModel_setOperandValue;
     ANeuralNetworksModel_setOperandValueFromMemory;
     ANeuralNetworksModel_addOperation;
