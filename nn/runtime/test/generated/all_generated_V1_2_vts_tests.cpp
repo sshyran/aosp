@@ -5059,6 +5059,134 @@ TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_3) {
 }
 
 
+// Generated from: depthwise_conv2d_per_channel.mod.py.
+namespace depthwise_conv2d_per_channel {
+// Generated depthwise_conv2d_per_channel test
+#include "examples/depthwise_conv2d_per_channel.example.cpp"
+// Generated model constructor
+#include "vts_models/depthwise_conv2d_per_channel.model.cpp"
+} // namespace depthwise_conv2d_per_channel
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_same) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_per_channel::createTestModel_same,
+                           depthwise_conv2d_per_channel::is_ignored_same,
+                           depthwise_conv2d_per_channel::get_examples_same());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_same) {
+  const Model model = depthwise_conv2d_per_channel::createTestModel_same();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_per_channel::get_examples_same());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_same_weight_as_input) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_per_channel::createTestModel_same_weight_as_input,
+                           depthwise_conv2d_per_channel::is_ignored_same_weight_as_input,
+                           depthwise_conv2d_per_channel::get_examples_same_weight_as_input());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_same_weight_as_input) {
+  const Model model = depthwise_conv2d_per_channel::createTestModel_same_weight_as_input();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_per_channel::get_examples_same_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_different) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_per_channel::createTestModel_different,
+                           depthwise_conv2d_per_channel::is_ignored_different,
+                           depthwise_conv2d_per_channel::get_examples_different());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_different) {
+  const Model model = depthwise_conv2d_per_channel::createTestModel_different();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_per_channel::get_examples_different());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_different_weight_as_input) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_per_channel::createTestModel_different_weight_as_input,
+                           depthwise_conv2d_per_channel::is_ignored_different_weight_as_input,
+                           depthwise_conv2d_per_channel::get_examples_different_weight_as_input());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_different_weight_as_input) {
+  const Model model = depthwise_conv2d_per_channel::createTestModel_different_weight_as_input();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_per_channel::get_examples_different_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nhwc) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_per_channel::createTestModel_layout_nhwc,
+                           depthwise_conv2d_per_channel::is_ignored_layout_nhwc,
+                           depthwise_conv2d_per_channel::get_examples_layout_nhwc());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc) {
+  const Model model = depthwise_conv2d_per_channel::createTestModel_layout_nhwc();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_per_channel::get_examples_layout_nhwc());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nhwc_weight_as_input) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_per_channel::createTestModel_layout_nhwc_weight_as_input,
+                           depthwise_conv2d_per_channel::is_ignored_layout_nhwc_weight_as_input,
+                           depthwise_conv2d_per_channel::get_examples_layout_nhwc_weight_as_input());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc_weight_as_input) {
+  const Model model = depthwise_conv2d_per_channel::createTestModel_layout_nhwc_weight_as_input();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_per_channel::get_examples_layout_nhwc_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nchw) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_per_channel::createTestModel_layout_nchw,
+                           depthwise_conv2d_per_channel::is_ignored_layout_nchw,
+                           depthwise_conv2d_per_channel::get_examples_layout_nchw());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw) {
+  const Model model = depthwise_conv2d_per_channel::createTestModel_layout_nchw();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_per_channel::get_examples_layout_nchw());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nchw_weight_as_input) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_per_channel::createTestModel_layout_nchw_weight_as_input,
+                           depthwise_conv2d_per_channel::is_ignored_layout_nchw_weight_as_input,
+                           depthwise_conv2d_per_channel::get_examples_layout_nchw_weight_as_input());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw_weight_as_input) {
+  const Model model = depthwise_conv2d_per_channel::createTestModel_layout_nchw_weight_as_input();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_per_channel::get_examples_layout_nchw_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: depthwise_conv2d_v1_2.mod.py.
 namespace depthwise_conv2d_v1_2 {
 // Generated depthwise_conv2d_v1_2 test
@@ -6091,6 +6219,194 @@ TEST_F(NeuralnetworksHidlTest, div_float16) {
 TEST_F(ValidationTest, div_float16) {
   const Model model = div_float16::createTestModel();
   const std::vector<Request> requests = createRequests(div_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: embedding_lookup_sparse.mod.py.
+namespace embedding_lookup_sparse {
+// Generated embedding_lookup_sparse test
+#include "examples/embedding_lookup_sparse.example.cpp"
+// Generated model constructor
+#include "vts_models/embedding_lookup_sparse.model.cpp"
+} // namespace embedding_lookup_sparse
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_simple_sum) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel,
+                           embedding_lookup_sparse::is_ignored,
+                           embedding_lookup_sparse::get_examples_simple_sum());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_simple_sum) {
+  const Model model = embedding_lookup_sparse::createTestModel();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_simple_sum());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_simple_sum_relaxed) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_relaxed,
+                           embedding_lookup_sparse::is_ignored_relaxed,
+                           embedding_lookup_sparse::get_examples_simple_sum_relaxed());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_simple_sum_relaxed) {
+  const Model model = embedding_lookup_sparse::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_simple_sum_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_simple_sum_float16) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_float16,
+                           embedding_lookup_sparse::is_ignored_float16,
+                           embedding_lookup_sparse::get_examples_simple_sum_float16());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_simple_sum_float16) {
+  const Model model = embedding_lookup_sparse::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_simple_sum_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_simple_mean) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_2,
+                           embedding_lookup_sparse::is_ignored_2,
+                           embedding_lookup_sparse::get_examples_simple_mean());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_simple_mean) {
+  const Model model = embedding_lookup_sparse::createTestModel_2();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_simple_mean());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_simple_mean_relaxed) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_relaxed_2,
+                           embedding_lookup_sparse::is_ignored_relaxed_2,
+                           embedding_lookup_sparse::get_examples_simple_mean_relaxed());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_simple_mean_relaxed) {
+  const Model model = embedding_lookup_sparse::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_simple_mean_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_simple_mean_float16) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_float16_2,
+                           embedding_lookup_sparse::is_ignored_float16_2,
+                           embedding_lookup_sparse::get_examples_simple_mean_float16());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_simple_mean_float16) {
+  const Model model = embedding_lookup_sparse::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_simple_mean_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_simple_sqrtn) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_3,
+                           embedding_lookup_sparse::is_ignored_3,
+                           embedding_lookup_sparse::get_examples_simple_sqrtn());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_simple_sqrtn) {
+  const Model model = embedding_lookup_sparse::createTestModel_3();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_simple_sqrtn());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_simple_sqrtn_relaxed) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_relaxed_3,
+                           embedding_lookup_sparse::is_ignored_relaxed_3,
+                           embedding_lookup_sparse::get_examples_simple_sqrtn_relaxed());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_simple_sqrtn_relaxed) {
+  const Model model = embedding_lookup_sparse::createTestModel_relaxed_3();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_simple_sqrtn_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_simple_sqrtn_float16) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_float16_3,
+                           embedding_lookup_sparse::is_ignored_float16_3,
+                           embedding_lookup_sparse::get_examples_simple_sqrtn_float16());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_simple_sqrtn_float16) {
+  const Model model = embedding_lookup_sparse::createTestModel_float16_3();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_simple_sqrtn_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_3d_indices) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_4,
+                           embedding_lookup_sparse::is_ignored_4,
+                           embedding_lookup_sparse::get_examples_3d_indices());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_3d_indices) {
+  const Model model = embedding_lookup_sparse::createTestModel_4();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_3d_indices());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_3d_indices_relaxed) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_relaxed_4,
+                           embedding_lookup_sparse::is_ignored_relaxed_4,
+                           embedding_lookup_sparse::get_examples_3d_indices_relaxed());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_3d_indices_relaxed) {
+  const Model model = embedding_lookup_sparse::createTestModel_relaxed_4();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_3d_indices_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_sparse_3d_indices_float16) {
+  generated_tests::Execute(device,
+                           embedding_lookup_sparse::createTestModel_float16_4,
+                           embedding_lookup_sparse::is_ignored_float16_4,
+                           embedding_lookup_sparse::get_examples_3d_indices_float16());
+}
+
+TEST_F(ValidationTest, embedding_lookup_sparse_3d_indices_float16) {
+  const Model model = embedding_lookup_sparse::createTestModel_float16_4();
+  const std::vector<Request> requests = createRequests(embedding_lookup_sparse::get_examples_3d_indices_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
