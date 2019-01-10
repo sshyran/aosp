@@ -19,6 +19,8 @@ static std::vector<MixedTypedExample> examples = {
   {{0, {2.0f, 32.0f, 16.0f}}},
   // int -> BOOL8 map
   {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -33,6 +35,8 @@ static std::vector<MixedTypedExample> examples = {
   // int -> FLOAT16 map
   {{0, {8.0f, 68.0f, 36.0f}}},
   // int -> BOOL8 map
+  {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
   {},
 }
 },
