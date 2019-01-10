@@ -1757,12 +1757,14 @@ TEST(OperationValidationTest, ROI_ALIGN_quant8) {
 }
 
 void roiPoolingOpTest(int32_t inputOperandCode, int32_t roiOperandCode, int32_t scalarOperandCode) {
-    uint32_t inDim[] = {1, 4, 4, 1}, roiDim[] = {4, 4}, outShapeDim[] = {2};
+    uint32_t inDim[] = {1, 4, 4, 1}, roiDim[] = {4, 4};
     uint32_t outDim[] = {4, 2, 2, 1};
     OperationTestBase roiPoolingTest(
             ANEURALNETWORKS_ROI_POOLING,
             {getOpType(inputOperandCode, 4, inDim), getOpType(roiOperandCode, 2, roiDim),
-             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim), getOpType(scalarOperandCode)},
+             getOpType(ANEURALNETWORKS_INT32), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(scalarOperandCode), getOpType(scalarOperandCode),
+             getOpType(ANEURALNETWORKS_BOOL)},
             {getOpType(inputOperandCode, 4, outDim)});
 
     EXPECT_TRUE(roiPoolingTest.testMutatingInputOperandCode());
