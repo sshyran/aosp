@@ -54,6 +54,7 @@ cc_defaults {
         "generated/tests/*.cpp",
         "GeneratedUtils.cpp",
         "TestMemory.cpp",
+        "TestOperandExtraParams.cpp",
         "TestTrivialModel.cpp",
         "TestUnknownDimensions.cpp",
         "TestValidateOperations.cpp",
