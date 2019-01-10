@@ -16,11 +16,11 @@
 
 layout = BoolScalar("layout", False) # NHWC
 
-# TEST 1: ROI_ALIGN_1, outputShape = [2, 2], spatialScale = 0.5, samplingRatio = 4
+# TEST 1: ROI_POOLING_1, outputShape = [2, 2], spatialScale = [0.5, 0.5]
 i1 = Input("in", "TENSOR_FLOAT32", "{1, 4, 4, 1}")
 roi1 = Input("roi", "TENSOR_FLOAT32", "{4, 4}")
 o1 = Output("out", "TENSOR_FLOAT32", "{4, 2, 2, 1}")
-Model().Operation("ROI_POOLING", i1, roi1, [2, 2], 0.5, layout).To(o1)
+Model().Operation("ROI_POOLING", i1, roi1, 2, 2, 0.5, 0.5, layout).To(o1)
 
 quant8 = DataTypeConverter().Identify({
     i1: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
@@ -50,11 +50,11 @@ Example({
 }).AddNchw(i1, o1, layout).AddVariations("relaxed", quant8, "float16")
 
 
-# TEST 2: ROI_ALIGN_2, outputShape = [2, 3], spatialScale = 0.25, samplingRatio = 4
+# TEST 2: ROI_POOLING_2, outputShape = [2, 3], spatialScale = 0.25
 i2 = Input("in", "TENSOR_FLOAT32", "{2, 4, 8, 2}")
 roi2 = Input("roi", "TENSOR_FLOAT32", "{4, 5}")
 o2 = Output("out", "TENSOR_FLOAT32", "{4, 2, 3, 2}")
-Model().Operation("ROI_POOLING", i2, roi2, [2, 3], 0.25, layout).To(o2)
+Model().Operation("ROI_POOLING", i2, roi2, 2, 3, 0.25, 0.25, layout).To(o2)
 
 quant8 = DataTypeConverter().Identify({
     i2: ("TENSOR_QUANT8_ASYMM", 0.04, 0),
@@ -92,3 +92,39 @@ Example({
         7.29, 6.94, 7.29, 6.94, 2.31, 6.88, 7.90, 6.78, 7.90, 6.82, 4.64, 6.82
     ]
 }).AddNchw(i2, o2, layout).AddVariations("relaxed", quant8, "float16")
+
+
+# TEST 3: ROI_POOLING_3, outputShape = [2, 2], spatialScale = [0.5, 1]
+i3 = Input("in", "TENSOR_FLOAT32", "{1, 4, 4, 1}")
+roi3 = Input("roi", "TENSOR_FLOAT32", "{5, 4}")
+o3 = Output("out", "TENSOR_FLOAT32", "{5, 2, 2, 1}")
+Model().Operation("ROI_POOLING", i3, roi3, 2, 2, 0.5, 1.0, layout).To(o3)
+
+quant8 = DataTypeConverter().Identify({
+    i3: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
+    o3: ("TENSOR_QUANT8_ASYMM", 0.25, 128)
+})
+
+# Instantiate an example
+Example({
+    i3: [
+        -10, -1,  4, -5,
+        -8, -2,  9,  1,
+         7, -2,  3, -7,
+        -2, 10, -3,  5
+    ],
+    roi3: [
+        1, 2, 2, 4,
+        0, 0, 3, 6,
+        1, 0, 2, 6,
+        0, 2, 3, 4,
+        0, 0, 0, 0
+    ],
+    o3: [
+        -2, 9, -2, 3,
+        -1, 9, 10, 5,
+        -1, 9, 10, 3,
+        -2, 9,  7, 3,
+        -10, -10, -10, -10
+    ]
+}).AddNchw(i3, o3, layout).AddVariations("relaxed", quant8, "float16")
