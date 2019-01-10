@@ -119,7 +119,7 @@ static std::vector<MixedTypedExample> examples_different = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {132, 130, 128, 128, 132, 130, 129, 128}}},
+  {{0, {132, 130, 134, 131, 132, 130, 134, 131, 132, 130, 134, 131, 132, 130, 134, 131}}},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
@@ -145,7 +145,7 @@ static std::vector<MixedTypedExample> examples_different_weight_as_input = {
   // int -> FLOAT32 map
   {},
   // int -> INT32 map
-  {{2, {4, 4}}},
+  {{2, {4, 4, 4, 4}}},
   // int -> QUANT8_ASYMM map
   {{0, {129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130}}},
   // int -> QUANT16_SYMM map
@@ -155,7 +155,7 @@ static std::vector<MixedTypedExample> examples_different_weight_as_input = {
   // int -> BOOL8 map
   {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {1, 1, 1, 1, 1, 1, 1, 1}}},
+  {{1, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -164,7 +164,7 @@ static std::vector<MixedTypedExample> examples_different_weight_as_input = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {132, 130, 128, 128, 132, 130, 129, 128}}},
+  {{0, {132, 130, 134, 131, 132, 130, 134, 131, 132, 130, 134, 131, 132, 130, 134, 131}}},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
@@ -209,7 +209,7 @@ static std::vector<MixedTypedExample> examples_layout_nhwc = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {132, 130, 128, 128, 132, 130, 129, 128}}},
+  {{0, {132, 130, 134, 131, 132, 130, 134, 131, 132, 130, 134, 131, 132, 130, 134, 131}}},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
@@ -235,7 +235,7 @@ static std::vector<MixedTypedExample> examples_layout_nhwc_weight_as_input = {
   // int -> FLOAT32 map
   {},
   // int -> INT32 map
-  {{2, {4, 4}}},
+  {{2, {4, 4, 4, 4}}},
   // int -> QUANT8_ASYMM map
   {{0, {129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130}}},
   // int -> QUANT16_SYMM map
@@ -245,7 +245,7 @@ static std::vector<MixedTypedExample> examples_layout_nhwc_weight_as_input = {
   // int -> BOOL8 map
   {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {1, 1, 1, 1, 1, 1, 1, 1}}},
+  {{1, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -254,7 +254,7 @@ static std::vector<MixedTypedExample> examples_layout_nhwc_weight_as_input = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {132, 130, 128, 128, 132, 130, 129, 128}}},
+  {{0, {132, 130, 134, 131, 132, 130, 134, 131, 132, 130, 134, 131, 132, 130, 134, 131}}},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
@@ -299,7 +299,7 @@ static std::vector<MixedTypedExample> examples_layout_nchw = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {132, 128, 132, 129, 130, 128, 130, 128}}},
+  {{0, {132, 132, 132, 132, 130, 130, 130, 130, 134, 134, 134, 134, 131, 131, 131, 131}}},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
@@ -325,7 +325,7 @@ static std::vector<MixedTypedExample> examples_layout_nchw_weight_as_input = {
   // int -> FLOAT32 map
   {},
   // int -> INT32 map
-  {{2, {4, 4}}},
+  {{2, {4, 4, 4, 4}}},
   // int -> QUANT8_ASYMM map
   {{0, {129, 129, 129, 129, 129, 129, 129, 129, 129, 130, 130, 130, 130, 130, 130, 130, 130, 130}}},
   // int -> QUANT16_SYMM map
@@ -335,7 +335,7 @@ static std::vector<MixedTypedExample> examples_layout_nchw_weight_as_input = {
   // int -> BOOL8 map
   {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {1, 1, 1, 1, 1, 1, 1, 1}}},
+  {{1, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -344,7 +344,7 @@ static std::vector<MixedTypedExample> examples_layout_nchw_weight_as_input = {
   // int -> INT32 map
   {},
   // int -> QUANT8_ASYMM map
-  {{0, {132, 128, 132, 129, 130, 128, 130, 128}}},
+  {{0, {132, 132, 132, 132, 130, 130, 130, 130, 134, 134, 134, 134, 131, 131, 131, 131}}},
   // int -> QUANT16_SYMM map
   {},
   // int -> FLOAT16 map
