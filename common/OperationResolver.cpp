@@ -55,6 +55,7 @@ const OperationRegistration* register_ROTATED_BBOX_TRANSFORM();
 const OperationRegistration* register_RSQRT();
 const OperationRegistration* register_SELECT();
 const OperationRegistration* register_SIN();
+const OperationRegistration* register_SPARSE_TO_DENSE();
 const OperationRegistration* register_SQRT();
 
 OperationResolver::OperationResolver() {
@@ -89,6 +90,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_RSQRT());
     registerOperation(register_SELECT());
     registerOperation(register_SIN());
+    registerOperation(register_SPARSE_TO_DENSE());
     registerOperation(register_SQRT());
 }
 
