@@ -44,6 +44,7 @@ class OperandExtraParamsTest : public ::testing::Test {
         static uint32_t dims[4] = {1, 2, 3, CHANNEL_DIM_SIZE};
         switch (dataType) {
             case ANEURALNETWORKS_FLOAT32:
+            case ANEURALNETWORKS_FLOAT16:
             case ANEURALNETWORKS_INT32:
             case ANEURALNETWORKS_UINT32:
             case ANEURALNETWORKS_BOOL:
@@ -58,6 +59,7 @@ class OperandExtraParamsTest : public ::testing::Test {
             case ANEURALNETWORKS_TENSOR_FLOAT32:
             case ANEURALNETWORKS_TENSOR_FLOAT16:
             case ANEURALNETWORKS_TENSOR_INT32:
+            case ANEURALNETWORKS_TENSOR_BOOL8:
             case ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL:
                 return {.type = dataType,
                         .dimensionCount = 4,
@@ -141,16 +143,16 @@ const uint32_t kOperandCodeChannelQuant[]{
 TEST_F(OperandExtraParamsTest, TestIgnoring) {
     // Test for operands that are expected to ignore extensions
     for (uint32_t dataType : kOperandCodeIgnoringExt) {
-        testAddingOperand(dataType, createExtNone(), true);
-        testAddingOperand(dataType, createExtChannelQuant(), true);
+        testAddingOperand(dataType, createExtNone(), /*expectSuccess=*/true);
+        testAddingOperand(dataType, createExtChannelQuant(), /*expectSuccess=*/true);
     }
 }
 
 TEST_F(OperandExtraParamsTest, TestChannelQuant) {
     // Test for operands that are expected to see ChannelQuant extension
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        testAddingOperand(dataType, createExtNone(), false);
-        testAddingOperand(dataType, createExtChannelQuant(), true);
+        testAddingOperand(dataType, createExtNone(), /*expectSuccess=*/false);
+        testAddingOperand(dataType, createExtChannelQuant(), /*expectSuccess=*/true);
     }
 }
 
@@ -163,7 +165,7 @@ TEST_F(OperandExtraParamsTest, TestChannelQuantValuesBadDim) {
                                                         .scaleCount = 4,
                                                 }};
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        testAddingOperand(dataType, ext, false);
+        testAddingOperand(dataType, ext, /*expectSuccess=*/false);
     }
 }
 
@@ -182,8 +184,8 @@ TEST_F(OperandExtraParamsTest, TestChannelQuantValuesBadScalesCount) {
                                                               }};
 
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        testAddingOperand(dataType, lowScaleCountExt, false);
-        testAddingOperand(dataType, highScaleCountExt, false);
+        testAddingOperand(dataType, lowScaleCountExt, /*expectSuccess=*/false);
+        testAddingOperand(dataType, highScaleCountExt, /*expectSuccess=*/false);
     }
 }
 
@@ -196,7 +198,7 @@ TEST_F(OperandExtraParamsTest, TestChannelQuantValuesBadScalesNegative) {
                                                         .scaleCount = 4,
                                                 }};
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        testAddingOperand(dataType, ext, false);
+        testAddingOperand(dataType, ext, /*expectSuccess=*/false);
     }
 }
 
@@ -208,7 +210,7 @@ TEST_F(OperandExtraParamsTest, TestChannelQuantValuesNullScales) {
                                                         .scaleCount = 4,
                                                 }};
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        testAddingOperand(dataType, ext, false);
+        testAddingOperand(dataType, ext, /*expectSuccess=*/false);
     }
 }
 
