@@ -54,18 +54,24 @@ def Dequantize(v, ty):
     v -= ty.zeroPoint
     if ty.scale != 0:
         v *= ty.scale
+    if isinstance(ty.extraParams, SymmPerChannelQuantParams):
+        v *= ty.extraParams.GetScalesBroadcastArray()
     return v
 
 # Transform float32 to target data type
 def Quantize(v, ty):
     if ty.scale != 0:
         v /= ty.scale
+    if isinstance(ty.extraParams, SymmPerChannelQuantParams):
+        v = v / ty.extraParams.GetScalesBroadcastArray()
     v += ty.zeroPoint
     if not ty.IsFloat():
         v = np.round(v)
         v = int(v) if np.isscalar(v) else v.astype(int)
     if ty.type == "TENSOR_QUANT8_ASYMM":
         v = np.minimum(np.maximum(v, 0), 255)
+    if ty.type == "TENSOR_QUANT8_SYMM_PER_CHANNEL":
+        v = np.minimum(np.maximum(v, -127), 127)
     elif ty.type == "UINT32":
         v = np.maximum(v, 0)
     return v
@@ -155,20 +161,22 @@ class Type(NamedVariable):
     }
 
     # types are named as "type0", "type1", ...
-    def __init__(self, vt, dimensions, scale, zeroPoint, name="type", skipRenaming=False):
+    def __init__(self, vt, dimensions, scale, zeroPoint, name="type", skipRenaming=False,
+                 extraParams=None):
         NamedVariable.__init__(self, name, sep="", showZero=True, skipRenaming=skipRenaming)
         self.type = vt
         self.dimensions = dimensions
         self.scale = float(scale)
         self.zeroPoint = int(zeroPoint)
+        self.extraParams = extraParams
 
     # Factory for Type object, only create a new Type if requested type does
     # not have a match with all existing types
     @staticmethod
-    def GetType(vt, dimensions, scale=0, zeroPoint=0):
-        key = ",".join([vt, str(dimensions), str(scale), str(zeroPoint)])
+    def GetType(vt, dimensions, scale=0, zeroPoint=0, extraParams=None):
+        key = ",".join([vt, str(dimensions), str(scale), str(zeroPoint), str(extraParams)])
         if key not in Type.typesMap:
-            Type.typesMap[key] = Type(vt, dimensions, scale, zeroPoint)
+            Type.typesMap[key] = Type(vt, dimensions, scale, zeroPoint, extraParams=extraParams)
         return Type.typesMap[key]
 
     @staticmethod
@@ -178,11 +186,11 @@ class Type(NamedVariable):
 
     # For backward-compatibility
     @staticmethod
-    def GetTypeFromString(vt, shape):
+    def GetTypeFromString(vt, shape, extraParams=None):
         dimensions, scale, zeroPoint = Type.GetParsedShape(shape)
         scale = float(scale)
         zeroPoint = int(zeroPoint)
-        return Type.GetType(vt, dimensions, scale, zeroPoint)
+        return Type.GetType(vt, dimensions, scale, zeroPoint, extraParams)
 
     # For backward-compatibility
     @staticmethod
@@ -251,14 +259,38 @@ class ImplicitParameter():
                 return implicitType("param", value)
         assert False, "%s not supported for implicit parameter"%value
 
+
+# ExtraParams with per-channel quantization.
+class SymmPerChannelQuantParams():
+  def __init__(self, channelDim, scales):
+    self.channelDim = channelDim
+    self.scales = scales
+
+  def GetScalesBroadcastArray(self):
+    bshape = [1,1,1,1]
+    bshape[self.channelDim] = len(self.scales)
+    return np.array(self.scales).reshape(bshape)
+
+  def GetConstructor(self):
+    return "SymmPerChannelQuantParams({%s},%d)" % (
+        ", ".join(str(x) + "f" for x in self.scales), self.channelDim)
+
+  def GetVtsSetter(self):
+    return "channelQuant"
+
+  def GetVtsConstructor(self):
+    return "SymmPerChannelQuantParams{.scales={%s}, .channelDim=%d}" % (
+        ", ".join(str(x) + "f" for x in self.scales), self.channelDim)
+
+
 # An operand that can be fed into operations. Also, an operand is always
 # declared before operations.
 class Operand(NamedVariable):
 
-    def __init__(self, name, opType, value, backward=None, skipRenaming=False):
+    def __init__(self, name, opType, value, backward=None, skipRenaming=False, extraParams=None):
         NamedVariable.__init__(self, name, sep="", skipRenaming=skipRenaming)
         if type(opType) is str:
-            self.type = Type.GetTypeFromString(opType, value)
+            self.type = Type.GetTypeFromString(opType, value, extraParams)
             value = backward
         else:
             self.type = Type.GetType(*opType)
@@ -327,8 +359,9 @@ class IgnoredOutput(Output):
 
 # An explicitly declared parameter
 class Parameter(Operand):
-    def __init__(self, name, opType, value, backward=None, skipRenaming=False):
-        Operand.__init__(self, name, opType, value, backward, skipRenaming=skipRenaming)
+    def __init__(self, name, opType, value, backward=None, skipRenaming=False, extraParams=None):
+        Operand.__init__(self, name, opType, value, backward, skipRenaming=skipRenaming,
+                         extraParams=extraParams)
         self.initializer = NamedVariable(str(self) + "_init")
         self.lifetime = "CONSTANT_REFERENCE" if Configuration.useSHM() else "CONSTANT_COPY"
 
