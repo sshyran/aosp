@@ -31,6 +31,7 @@ class OperandExtraParamsTest : public ::testing::Test {
     virtual void SetUp() {
         ::testing::Test::SetUp();
         ASSERT_EQ(ANeuralNetworksModel_create(&mModel), ANEURALNETWORKS_NO_ERROR);
+        nextOperandIndex = 0;
     }
     virtual void TearDown() {
         ANeuralNetworksModel_free(mModel);
@@ -39,8 +40,7 @@ class OperandExtraParamsTest : public ::testing::Test {
 
     static const uint32_t CHANNEL_DIM_SIZE = 4;
 
-    ANeuralNetworksOperandType createOperandWithExt(int32_t dataType,
-                                                    ANeuralNetworksOperandType::ExtraParams ext) {
+    ANeuralNetworksOperandType createOperand(int32_t dataType) {
         static uint32_t dims[4] = {1, 2, 3, CHANNEL_DIM_SIZE};
         switch (dataType) {
             case ANEURALNETWORKS_FLOAT32:
@@ -53,8 +53,7 @@ class OperandExtraParamsTest : public ::testing::Test {
                         .dimensionCount = 0,
                         .dimensions = nullptr,
                         .scale = 0.0f,
-                        .zeroPoint = 0,
-                        .extraParams = ext};
+                        .zeroPoint = 0};
             case ANEURALNETWORKS_TENSOR_OEM_BYTE:
             case ANEURALNETWORKS_TENSOR_FLOAT32:
             case ANEURALNETWORKS_TENSOR_FLOAT16:
@@ -65,55 +64,50 @@ class OperandExtraParamsTest : public ::testing::Test {
                         .dimensionCount = 4,
                         .dimensions = dims,
                         .scale = 0.0f,
-                        .zeroPoint = 0,
-                        .extraParams = ext};
+                        .zeroPoint = 0};
             case ANEURALNETWORKS_TENSOR_QUANT8_ASYMM:
                 return {.type = dataType,
                         .dimensionCount = 4,
                         .dimensions = dims,
                         .scale = 1.0,
-                        .zeroPoint = 128,
-                        .extraParams = ext};
+                        .zeroPoint = 128};
             case ANEURALNETWORKS_TENSOR_QUANT16_SYMM:
                 return {.type = dataType,
                         .dimensionCount = 4,
                         .dimensions = dims,
                         .scale = 1.0,
-                        .zeroPoint = 0,
-                        .extraParams = ext};
+                        .zeroPoint = 0};
             default:
                 ADD_FAILURE();
                 return {};
         }
     }
 
-    ANeuralNetworksOperandType::ExtraParams createExtNone() { return {.none = nullptr}; }
-
-    ANeuralNetworksOperandType::ExtraParams createExtChannelQuant() {
+    ANeuralNetworksSymmPerChannelQuantParams createSymmPerChannelQuantParams() {
         static float scales[CHANNEL_DIM_SIZE] = {1.0, 2.0, 3.0, 4.0};
-        return {.channelQuant = {
-                        .scales = scales,
-                        .scaleCount = CHANNEL_DIM_SIZE,
-                        .channelDim = 3,
-                }};
+        return {
+                .channelDim = 3,
+                .scaleCount = CHANNEL_DIM_SIZE,
+                .scales = scales,
+        };
     }
 
-    void testAddingOperand(int32_t dataType, ANeuralNetworksOperandType::ExtraParams ext,
-                           bool expectSuccess) {
-        ANeuralNetworksOperandType operandType = createOperandWithExt(dataType, ext);
-        if (expectSuccess) {
-            EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &operandType),
-                      ANEURALNETWORKS_NO_ERROR);
-        } else {
-            EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &operandType),
-                      ANEURALNETWORKS_BAD_DATA);
-        }
+    void testAddingWithSymmPerChannelQuantParams(int32_t dataType,
+                                                 ANeuralNetworksSymmPerChannelQuantParams params,
+                                                 bool expectExtraParamsSuccess) {
+        ANeuralNetworksOperandType operandType = createOperand(dataType);
+        EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &operandType), ANEURALNETWORKS_NO_ERROR);
+        int operandIndex = nextOperandIndex++;
+        EXPECT_EQ(ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(mModel, operandIndex,
+                                                                           &params),
+                  expectExtraParamsSuccess ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_BAD_DATA);
     }
 
     ANeuralNetworksModel* mModel = nullptr;
+    int nextOperandIndex = 0;
 };
 
-const uint32_t kOperandCodeIgnoringExt[]{
+const uint32_t kOperandCodeNoExtraParams[]{
         ANEURALNETWORKS_FLOAT32,
         ANEURALNETWORKS_FLOAT16,
         ANEURALNETWORKS_INT32,
@@ -131,7 +125,7 @@ const uint32_t kOperandCodeIgnoringExt[]{
 
 #ifndef NNTEST_ONLY_PUBLIC_API
 // android::nn::k* consts are defined in private headers
-static_assert(sizeof(kOperandCodeIgnoringExt) / sizeof(kOperandCodeIgnoringExt[0]) ==
+static_assert(sizeof(kOperandCodeNoExtraParams) / sizeof(kOperandCodeNoExtraParams[0]) ==
                       android::nn::kNumberOfDataTypes + android::nn::kNumberOfDataTypesOEM - 1,
               "New type added, OperandExtraParamsTest needs an update");
 #endif
@@ -140,95 +134,93 @@ const uint32_t kOperandCodeChannelQuant[]{
         ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
 };
 
-TEST_F(OperandExtraParamsTest, TestIgnoring) {
-    // Test for operands that are expected to ignore extensions
-    for (uint32_t dataType : kOperandCodeIgnoringExt) {
-        testAddingOperand(dataType, createExtNone(), /*expectSuccess=*/true);
-        testAddingOperand(dataType, createExtChannelQuant(), /*expectSuccess=*/true);
+TEST_F(OperandExtraParamsTest, TestNoExtraParams) {
+    // Test for operands that are expected to not have additonal parameters
+    for (uint32_t dataType : kOperandCodeNoExtraParams) {
+        testAddingWithSymmPerChannelQuantParams(dataType, createSymmPerChannelQuantParams(),
+                                                /*expectExtraParamsSuccess=*/false);
     }
 }
 
 TEST_F(OperandExtraParamsTest, TestChannelQuant) {
-    // Test for operands that are expected to see ChannelQuant extension
+    // Test for operands that are expected to have SymmPerChannelQuantParams value associated
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        testAddingOperand(dataType, createExtNone(), /*expectSuccess=*/false);
-        testAddingOperand(dataType, createExtChannelQuant(), /*expectSuccess=*/true);
+        testAddingWithSymmPerChannelQuantParams(dataType, createSymmPerChannelQuantParams(),
+                                                /*expectExtraParamsSuccess=*/true);
     }
 }
 
 TEST_F(OperandExtraParamsTest, TestChannelQuantValuesBadDim) {
     // Bad .channelDim value
     static float scales[4] = {1.0, 2.0, 3.0, 4.0};
-    ANeuralNetworksOperandType::ExtraParams ext{.channelQuant = {
-                                                        .channelDim = 7,
-                                                        .scales = scales,
-                                                        .scaleCount = 4,
-                                                }};
+    ANeuralNetworksSymmPerChannelQuantParams ext = {
+            .channelDim = 7,
+            .scaleCount = 4,
+            .scales = scales,
+    };
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        testAddingOperand(dataType, ext, /*expectSuccess=*/false);
+        testAddingWithSymmPerChannelQuantParams(dataType, ext, /*expectExtraParamsSuccess=*/false);
     }
 }
 
 TEST_F(OperandExtraParamsTest, TestChannelQuantValuesBadScalesCount) {
     // Bad .scaleCount value
     static float scales[4] = {1.0, 2.0, 3.0, 4.0};
-    ANeuralNetworksOperandType::ExtraParams lowScaleCountExt{.channelQuant = {
-                                                                     .channelDim = 3,
-                                                                     .scales = scales,
-                                                                     .scaleCount = 3,
-                                                             }};
-    ANeuralNetworksOperandType::ExtraParams highScaleCountExt{.channelQuant = {
-                                                                      .channelDim = 3,
-                                                                      .scales = scales,
-                                                                      .scaleCount = 10,
-                                                              }};
+    ANeuralNetworksSymmPerChannelQuantParams lowScaleCountExt = {
+            .channelDim = 3,
+            .scaleCount = 3,
+            .scales = scales,
+    };
+    ANeuralNetworksSymmPerChannelQuantParams highScaleCountExt = {
+            .channelDim = 3,
+            .scaleCount = 10,
+            .scales = scales,
+    };
 
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        testAddingOperand(dataType, lowScaleCountExt, /*expectSuccess=*/false);
-        testAddingOperand(dataType, highScaleCountExt, /*expectSuccess=*/false);
+        testAddingWithSymmPerChannelQuantParams(dataType, lowScaleCountExt,
+                                                /*expectExtraParamsSuccess=*/false);
+        testAddingWithSymmPerChannelQuantParams(dataType, highScaleCountExt,
+                                                /*expectExtraParamsSuccess=*/false);
     }
 }
 
 TEST_F(OperandExtraParamsTest, TestChannelQuantValuesBadScalesNegative) {
     // Bad .scales value
     static float scales[4] = {1.0, 2.0, -3.0, 4.0};
-    ANeuralNetworksOperandType::ExtraParams ext{.channelQuant = {
-                                                        .channelDim = 3,
-                                                        .scales = scales,
-                                                        .scaleCount = 4,
-                                                }};
+    ANeuralNetworksSymmPerChannelQuantParams ext = {
+            .channelDim = 3,
+            .scaleCount = 4,
+            .scales = scales,
+    };
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        testAddingOperand(dataType, ext, /*expectSuccess=*/false);
+        testAddingWithSymmPerChannelQuantParams(dataType, ext, /*expectExtraParamsSuccess=*/false);
     }
 }
 
 TEST_F(OperandExtraParamsTest, TestChannelQuantValuesNullScales) {
     // .scales == nullptr value
-    ANeuralNetworksOperandType::ExtraParams ext{.channelQuant = {
-                                                        .channelDim = 3,
-                                                        .scales = nullptr,
-                                                        .scaleCount = 4,
-                                                }};
+    ANeuralNetworksSymmPerChannelQuantParams ext = {
+            .channelDim = 3,
+            .scaleCount = 4,
+            .scales = nullptr,
+    };
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        testAddingOperand(dataType, ext, /*expectSuccess=*/false);
+        testAddingWithSymmPerChannelQuantParams(dataType, ext, /*expectExtraParamsSuccess=*/false);
     }
 }
 
 TEST_F(OperandExtraParamsTest, TestChannelQuantValuesOperandScale) {
-    ANeuralNetworksOperandType::ExtraParams ext = createExtChannelQuant();
-
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        ANeuralNetworksOperandType operandType = createOperandWithExt(dataType, ext);
+        ANeuralNetworksOperandType operandType = createOperand(dataType);
         operandType.scale = 1.0f;
         EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &operandType), ANEURALNETWORKS_BAD_DATA);
     }
 }
 
 TEST_F(OperandExtraParamsTest, TestChannelQuantValuesOperandZeroPoint) {
-    ANeuralNetworksOperandType::ExtraParams ext = createExtChannelQuant();
-
     for (uint32_t dataType : kOperandCodeChannelQuant) {
-        ANeuralNetworksOperandType operandType = createOperandWithExt(dataType, ext);
+        ANeuralNetworksOperandType operandType = createOperand(dataType);
         operandType.zeroPoint = 1;
         EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &operandType), ANEURALNETWORKS_BAD_DATA);
     }

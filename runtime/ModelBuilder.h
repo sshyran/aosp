@@ -40,6 +40,8 @@ public:
     int setOperandValue(uint32_t index, const void* buffer, size_t length);
     int setOperandValueFromMemory(uint32_t index, const Memory* memory, uint32_t offset,
                                   size_t length);
+    int setOperandSymmPerChannelQuantParams(
+            uint32_t index, const ANeuralNetworksSymmPerChannelQuantParams& extraParams);
 
     int addOperation(ANeuralNetworksOperationType type, uint32_t inputCount, const uint32_t* inputs,
                      uint32_t outputCount, const uint32_t* outputs);
@@ -90,8 +92,6 @@ public:
 
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
                          uint32_t preference, ExecutionPlan* plan) const;
-
-    static Operand::ExtraParams createOperandExtraParams(const ANeuralNetworksOperandType& type);
 
    private:
     // TODO: move partitionTheWork, findBestDeviceForEachOperation,
