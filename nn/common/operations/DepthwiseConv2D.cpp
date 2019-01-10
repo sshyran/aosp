@@ -125,6 +125,102 @@ bool depthwiseConvQuant8(const uint8_t* inputData, const Shape& inputShape,
     return true;
 }
 
+bool depthwiseConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
+                                   const int8_t* filterData, const Shape& filterShape,
+                                   const float* filterScales, const int32_t* biasData,
+                                   const Shape& biasShape, int32_t paddingLeft,
+                                   int32_t paddingRight, int32_t paddingTop, int32_t paddingBottom,
+                                   int32_t strideWidth, int32_t strideHeight,
+                                   int32_t depthMultiplier, int32_t activation, uint8_t* outputData,
+                                   const Shape& outputShape) {
+    NNTRACE_TRANS("depthwiseConvQuant8");
+
+    uint32_t paddingHeight = (uint32_t)paddingTop;
+    uint32_t paddingWidth = (uint32_t)paddingLeft;
+
+    uint32_t numBatches = getSizeOfDimension(inputShape, 0);
+    uint32_t inputHeight = getSizeOfDimension(inputShape, 1);
+    uint32_t inputWidth = getSizeOfDimension(inputShape, 2);
+    uint32_t inputDepth = getSizeOfDimension(inputShape, 3);
+    uint32_t filterHeight = getSizeOfDimension(filterShape, 1);
+    uint32_t filterWidth = getSizeOfDimension(filterShape, 2);
+    uint32_t filterDepth = getSizeOfDimension(filterShape, 3);
+    uint32_t outputHeight = getSizeOfDimension(outputShape, 1);
+    uint32_t outputWidth = getSizeOfDimension(outputShape, 2);
+    uint32_t outputDepth = getSizeOfDimension(outputShape, 3);
+
+    int32_t inputOffset = -inputShape.offset;
+    int32_t outputOffset = outputShape.offset;
+
+    auto realMultiplier = std::vector<float>(outputDepth, .0f);
+    auto outputMultiplier = std::vector<int32_t>(outputDepth, 0);
+    auto outputShift = std::vector<int32_t>(outputDepth, .0f);
+
+    for (int i = 0; i < outputDepth; ++i) {
+        Shape filterChannelShape = filterShape;
+        filterChannelShape.scale = filterScales[i];
+        Shape biasChannelShape = biasShape;
+        biasChannelShape.scale = filterScales[i] * inputShape.scale;
+
+        if (!GetQuantizedConvolutionMultipler(inputShape, filterChannelShape, biasChannelShape,
+                                              outputShape, &realMultiplier[i]) ||
+            !QuantizeMultiplierSmallerThanOne(realMultiplier[i], &outputMultiplier[i],
+                                              &outputShift[i])) {
+            return false;
+        }
+    }
+
+    int32_t output_activation_min = 0, output_activation_max = 0;
+    CalculateActivationRangeUint8(activation, outputShape, &output_activation_min,
+                                  &output_activation_max);
+
+    const uint8_t* inputBase = inputData;
+    uint8_t* outPtr = outputData;
+    for (uint32_t b = 0; b < numBatches; b++) {
+        for (uint32_t h = 0; h < outputHeight; h++) {
+            for (uint32_t w = 0; w < outputWidth; w++) {
+                for (uint32_t ic = 0; ic < inputDepth; ic++) {
+                    for (uint32_t m = 0; m < depthMultiplier; m++) {
+                        int32_t wInputOrigin = static_cast<int32_t>(w) * strideWidth - paddingLeft;
+                        int32_t hInputOrigin = static_cast<int32_t>(h) * strideHeight - paddingTop;
+                        const int oc = m + ic * depthMultiplier;
+
+                        int32_t sum = 0.0f;
+                        for (uint32_t i = 0; i < filterHeight; i++) {
+                            for (uint32_t j = 0; j < filterWidth; j++) {
+                                int32_t hInput = hInputOrigin + static_cast<int32_t>(i);
+                                int32_t wInput = wInputOrigin + static_cast<int32_t>(j);
+
+                                if (hInput >= 0 && hInput < static_cast<int32_t>(inputHeight) &&
+                                    wInput >= 0 && wInput < static_cast<int32_t>(inputWidth)) {
+                                    uint32_t filterIndex =
+                                            i * filterWidth * filterDepth + j * filterDepth + oc;
+                                    uint32_t inputIndex = hInput * inputWidth * inputDepth +
+                                                          wInput * inputDepth + ic;
+                                    sum += (static_cast<int32_t>(filterData[filterIndex])) *
+                                           (static_cast<int32_t>(inputBase[inputIndex]) +
+                                            inputOffset);
+                                }
+                            }
+                        }
+
+                        sum += biasData[oc];
+                        sum = tflite::MultiplyByQuantizedMultiplier(sum, outputMultiplier[oc],
+                                                                    -outputShift[oc]);
+                        sum += outputOffset;
+                        sum = std::max(std::min(sum, output_activation_max), output_activation_min);
+                        outPtr[m] = static_cast<uint8_t>(sum);
+                    }
+                    outPtr += depthMultiplier;
+                }
+            }
+        }
+        inputBase += inputHeight * inputWidth * inputDepth;
+    }
+
+    return true;
+}
+
 #undef ANDROID_NN_DEPTHWISE_CONV_PARAMETERS
 }  // namespace nn
 }  // namespace android

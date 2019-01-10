@@ -99,6 +99,9 @@ class FalseyErrorStream {
     std::ostringstream mBuffer;
 };
 
+// An 8-bit boolean type (sizeof(bool) is implementation-defined).
+typedef uint8_t bool8;
+
 enum PaddingScheme {
     kPaddingUnknown = 0,
     kPaddingSame = 1,
@@ -338,13 +341,10 @@ bool dequantizePrepare(const Shape& input, Shape* output);
 
 bool quantizePrepare(const Shape& input, Shape* output);
 
-bool depthwiseConvPrepare(const Shape& input,
-                          const Shape& filter,
-                          const Shape& bias,
-                          int32_t padding_left, int32_t padding_right,
-                          int32_t padding_top, int32_t padding_bottom,
-                          int32_t stride_width, int32_t stride_height,
-                          Shape* output);
+bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
+                          int32_t padding_left, int32_t padding_right, int32_t padding_top,
+                          int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                          int32_t depth_multiplier, Shape* output);
 
 bool convPrepare(const Shape& input,
                  const Shape& filter,

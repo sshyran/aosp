@@ -55,6 +55,8 @@ struct RunTimeOperandInfo {
     // always 0.
     uint32_t numberOfUsesLeft;
 
+    Operand::ExtraParams extraParams;
+
     Shape shape() const {
         return Shape{.type = type, .dimensions = dimensions, .scale = scale, .offset = zeroPoint};
     }
