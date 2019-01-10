@@ -153,3 +153,51 @@ TEST_F(GeneratedTests, roi_align_nchw_float16_3) {
             roi_align::get_examples_nchw_float16_3());
 }
 
+TEST_F(GeneratedTests, roi_align_nhwc_4) {
+    execute(roi_align::CreateModel_nhwc_4,
+            roi_align::is_ignored_nhwc_4,
+            roi_align::get_examples_nhwc_4());
+}
+
+TEST_F(GeneratedTests, roi_align_nhwc_relaxed_4) {
+    execute(roi_align::CreateModel_nhwc_relaxed_4,
+            roi_align::is_ignored_nhwc_relaxed_4,
+            roi_align::get_examples_nhwc_relaxed_4());
+}
+
+TEST_F(GeneratedTests, roi_align_nhwc_quant8_4) {
+    execute(roi_align::CreateModel_nhwc_quant8_4,
+            roi_align::is_ignored_nhwc_quant8_4,
+            roi_align::get_examples_nhwc_quant8_4());
+}
+
+TEST_F(GeneratedTests, roi_align_nhwc_float16_4) {
+    execute(roi_align::CreateModel_nhwc_float16_4,
+            roi_align::is_ignored_nhwc_float16_4,
+            roi_align::get_examples_nhwc_float16_4());
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_4) {
+    execute(roi_align::CreateModel_nchw_4,
+            roi_align::is_ignored_nchw_4,
+            roi_align::get_examples_nchw_4());
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_relaxed_4) {
+    execute(roi_align::CreateModel_nchw_relaxed_4,
+            roi_align::is_ignored_nchw_relaxed_4,
+            roi_align::get_examples_nchw_relaxed_4());
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_quant8_4) {
+    execute(roi_align::CreateModel_nchw_quant8_4,
+            roi_align::is_ignored_nchw_quant8_4,
+            roi_align::get_examples_nchw_quant8_4());
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_float16_4) {
+    execute(roi_align::CreateModel_nchw_float16_4,
+            roi_align::is_ignored_nchw_float16_4,
+            roi_align::get_examples_nchw_float16_4());
+}
+
