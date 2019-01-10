@@ -302,6 +302,18 @@ bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData,
     return true;
 }
 
+bool quantizeFloat16ToQuant8(const _Float16* inputData, uint8_t* outputData,
+                             const Shape& outputShape) {
+    NNTRACE_COMP("quantizeFloat16ToQuant8");
+    uint32_t size = getNumberOfElements(outputShape);
+    for (uint32_t i = 0; i < size; ++i) {
+        outputData[i] = static_cast<uint8_t>(std::max<float>(
+                0, std::min<float>(255, outputShape.offset +
+                                                std::round(inputData[i] / outputShape.scale))));
+    }
+    return true;
+}
+
 bool subFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
                 int32_t activation, _Float16* out, const Shape& shapeOut) {
     NNTRACE_TRANS("subFloat16");
