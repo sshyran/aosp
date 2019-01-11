@@ -30,18 +30,12 @@ quant8 = DataTypeConverter().Identify({
     b1: ("TENSOR_INT32", 0.0625, 0),
     o1: ("TENSOR_QUANT8_ASYMM", 0.125, 0)
 })
-channelQuant8 = DataTypeConverter().Identify({
-    i1: ("TENSOR_QUANT8_ASYMM", 0.5, 0),
-    f1: ("TENSOR_QUANT8_SYMM_PER_CHANNEL", 0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.125])),
-    b1: ("TENSOR_INT32", 0.0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.0625], hide=True)),
-    o1: ("TENSOR_QUANT8_ASYMM", 0.125, 0)
-})
 
 # Instantiate an example
 example = Example({
     i1: [1.0, 1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0],
     o1: [.875, .875, .875, .875]
-}).AddNchw(i1, o1, layout).AddInput(f1, b1).AddVariations("relaxed", quant8, channelQuant8, "float16")
+}).AddNchw(i1, o1, layout).AddInput(f1, b1).AddVariations("relaxed", quant8, "float16")
 
 
 # TEST 2: CONV_NCHW_2
@@ -58,18 +52,12 @@ quant8 = DataTypeConverter().Identify({
     b2: ("TENSOR_INT32", 0.25, 0),
     o2: ("TENSOR_QUANT8_ASYMM", 1.0, 50)
 })
-channelQuant8 = DataTypeConverter().Identify({
-    i2: ("TENSOR_QUANT8_ASYMM", 0.5, 127),
-    f2: ("TENSOR_QUANT8_SYMM_PER_CHANNEL", 0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.5])),
-    b2: ("TENSOR_INT32", 0.0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.25], hide=True)),
-    o2: ("TENSOR_QUANT8_ASYMM", 1.0, 50)
-})
 
 # Instantiate an example
 example = Example({
     i2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     o2: [0, 0, 0, 0, 35, 112, 157, 0, 0, 34, 61, 0]
-}).AddNchw(i2, o2, layout).AddInput(f2, b2).AddVariations("relaxed", quant8, channelQuant8, "float16")
+}).AddNchw(i2, o2, layout).AddInput(f2, b2).AddVariations("relaxed", quant8, "float16")
 
 
 # TEST 3: CONV_NCHW_CHANNEL
@@ -86,18 +74,12 @@ quant8 = DataTypeConverter().Identify({
     b3: ("TENSOR_INT32", 0.25, 0),
     o3: ("TENSOR_QUANT8_ASYMM", 0.5, 0)
 })
-channelQuant8 = DataTypeConverter().Identify({
-    i3: ("TENSOR_QUANT8_ASYMM", 0.5, 0),
-    f3: ("TENSOR_QUANT8_SYMM_PER_CHANNEL", 0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.5, 0.4, 0.3])),
-    b3: ("TENSOR_INT32", 0.0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.25, 0.2, 0.15], hide=True)),
-    o3: ("TENSOR_QUANT8_ASYMM", 0.5, 0)
-})
 
 # Instantiate an example
 example = Example({
     i3: [5.,  5.,   5.],
     o3: [15., 37.5, 60.]
-}).AddNchw(i3, o3, layout).AddInput(f3, b3).AddVariations("relaxed", quant8, channelQuant8, "float16")
+}).AddNchw(i3, o3, layout).AddInput(f3, b3).AddVariations("relaxed", quant8, "float16")
 
 
 # TEST 4: CONV_NCHW_LARGE
@@ -114,12 +96,6 @@ quant8 = DataTypeConverter().Identify({
     b4: ("TENSOR_INT32", 0.25, 0),
     o4: ("TENSOR_QUANT8_ASYMM", 2.0, 0)
 })
-channelQuant8 = DataTypeConverter().Identify({
-    i4: ("TENSOR_QUANT8_ASYMM", 0.5, 128),
-    f4: ("TENSOR_QUANT8_SYMM_PER_CHANNEL", 0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.5, 1.0, 0.5])),
-    b4: ("TENSOR_INT32", 0.0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.25, 0.5, 0.25], hide=True)),
-    o4: ("TENSOR_QUANT8_ASYMM", 2.0, 0)
-})
 
 # Instantiate an example
 example = Example({
@@ -131,7 +107,7 @@ example = Example({
          138.,  171.,  204.,
          174.,  216.,  258.,
          210.,  261.,  312.]
-}).AddNchw(i4, o4, layout).AddInput(f4, b4).AddVariations("relaxed", quant8, channelQuant8, "float16")
+}).AddNchw(i4, o4, layout).AddInput(f4, b4).AddVariations("relaxed", quant8, "float16")
 
 
 # TEST 5/6: CONV_1_H3_W2_[SAME|VALID]
