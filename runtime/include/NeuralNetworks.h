@@ -2967,7 +2967,7 @@ typedef enum {
      * Supported tensor rank: from 1
      *
      * Inputs:
-     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}.
+     * * 0: A tensor.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0, but with

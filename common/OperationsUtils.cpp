@@ -303,14 +303,6 @@ bool dequantizePrepare(const Shape& input, Shape* output) {
 }
 
 bool quantizePrepare(const Shape& input, Shape* output) {
-    if (input.type != OperandType::TENSOR_FLOAT32) {
-        LOG(ERROR) << "QUANTIZE input must be TENSOR_FLOAT32";
-        return false;
-    }
-    if (output->type != OperandType::TENSOR_QUANT8_ASYMM) {
-        LOG(ERROR) << "QUANTIZE output must be TENSOR_QUANT8_ASYMM";
-        return false;
-    }
     if (input.dimensions.size() != output->dimensions.size()) {
         LOG(ERROR) << "QUANTIZE input and output tensors must have the same rank";
         return false;
