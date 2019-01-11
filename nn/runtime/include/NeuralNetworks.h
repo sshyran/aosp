@@ -2220,10 +2220,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Inputs:
-     * * 0: A 2-D Tensor of shape [num_rois, 5 or 4], specifying the locations
-     *      of the bounding box proposals, each line with format
-     *      [<optional batch_id>, x1, y1, x2, y2]. The batch_id is optional if
-     *      there is only one batch.
+     * * 0: A 2-D Tensor of shape [num_rois, 4], specifying the locations of the
+     *      bounding box proposals, each line with format [x1, y1, x2, y2].
      * * 1: A 2-D Tensor of shape [num_rois, num_classes * 4], specifying the
      *      bounding box delta for each region of interest and each class. The
      *      bounding box deltas are organized in the following order
@@ -2231,20 +2229,16 @@ typedef enum {
      *      for the center position of the bounding box with respect to the width
      *      and height, dw and dh is the log-scale relative correction factor
      *      for the width and height.
-     * * 2: A 2-D Tensor of shape [batches, 3], specifying the information of
+     * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
+     *      [batches], specifying the number of output boxes for each batch.
+     * * 3: A 2-D Tensor of shape [batches, 3], specifying the information of
      *      each image in the batch, each line with format
      *      [image_height, image_width, image_scale].
-     * * 3: An 1-D Tensor of shape [4], specifying the weights for the deltas.
-     *      The weights are organized in the order of [wx, wy, ww, wh].
-     * * 4: An {@link ANEURALNETWORKS_BOOL} scalar, apply_scale. If true,
-     *      apply the image scale to the boxes after the transformation.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
      *      [num_rois, num_classes * 4], specifying the coordinates of each
      *      output bounding box for each class, with format [x1, y1, x2, y2].
-     * * 1: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
-     *      [batches], specifying the number of output boxes for each batch.
      *
      * Available since API level 29.
      */
@@ -3476,68 +3470,7 @@ typedef enum {
 
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM = 85,
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN = 86,
-
-    /**
-     * Transform rotated bounding box proposals using bounding box deltas.
-     *
-     * Given the positions and rotations of bounding box proposals and the
-     * corresponding bounding box deltas for each class, return the refined
-     * bounding box regions.
-     *
-     * Optionally, the angles can be bounded into a specified range due to the
-     * fact that rotations are the same if they are 180 degrees apart. Only
-     * boxes with angle less than a threshold are cliped.
-     *
-     * Supported tensor {@link OperandCode}:
-     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
-     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
-     *
-     * Inputs:
-     * * 0: A 2-D Tensor of shape [num_rois, 6 or 5], specifying the locations
-     *      of the bounding box proposals, each line with format
-     *      [<optional batch_id>, center_x, center_y, width, height, angle].
-     *      The batch_id is optional if there is only one batch.
-     * * 1: A 2-D Tensor of shape [num_rois, num_classes * 5], specifying the
-     *      bounding box delta for each region of interest and each class. The
-     *      bounding box deltas are organized in the following order
-     *      [dx, dy, dw, dh, da], where dx and dy is the relative correction
-     *      factor for the center position of the bounding box with respect to
-     *      the width and height, dw and dh is the log-scale relative correction
-     *      factor for the width and height, da is the correction factor for
-     *      the angle in radix.
-     * * 2: A 2-D Tensor of shape [batches, 3], specifying the information of
-     *      each image in the batch, each line with format
-     *      [image_height, image_width, image_scale].
-     * * 3: An 1-D Tensor of shape [4], specifying the weights for the deltas.
-     *      The weights are organized in the order of [wx, wy, ww, wh].
-     * * 4: An {@link ANEURALNETWORKS_BOOL} scalar, apply_scale. If true,
-     *      apply the image scale to the boxes after the transformation.
-     * * 5: An {@link ANEURALNETWORKS_BOOL} scalar, angle_bound_on. If true,
-     *      normalized the angle into a specified bound.
-     * * 6: An {@link ANEURALNETWORKS_INT32} scalar, angle_bound_low, specifying
-     *      the lower bound of the angle in degree. If input5 is negative, this
-     *      field is ignored.
-     * * 7: An {@link ANEURALNETWORKS_INT32} scalar, angle_bound_high, specifying
-     *      the upper bound of the angle in degree. The bounded region
-     *      (angle_bound_high - angle_bound_low) should be a multiple of 180
-     *      degrees. If input5 is negative, this field is ignored.
-     * * 8: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the angle
-     *      threshold for box clipping. For all bounding boxes with absolute
-     *      value of angle less than the threshold, they are considered to be
-     *      almost upright and will be clipped against the image edges. Set
-     *      to a negative value to disbale all the clipping.
-     *
-     * Outputs:
-     * * 0: A tensor of the same {@link OperandCode} as input0, with shape
-     *      [num_rois, num_classes * 5], specifying the coordinates of each
-     *      output bounding box for each class, with format
-     *      [center_x, center_y, width, height, angle].
-     * * 1: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
-     *      [batches], specifying the number of output boxes for each batch.
-     *
-     * Available since API level 29.
-     */
-    ANEURALNETWORKS_ROTATED_BBOX_TRANSFORM = 87,
+    ANEURALNETWORKS_DETECTION_POSTPROCESS = 87,
 
     /**
      * Computes the absolute value of a tensor, element-wise.

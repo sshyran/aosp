@@ -428,7 +428,6 @@
 #include "../generated/tests/rnn_float16.mod.py.cpp"
 #include "../generated/tests/roi_align.mod.py.cpp"
 #include "../generated/tests/roi_pooling.mod.py.cpp"
-#include "../generated/tests/rotated_bbox_transform.mod.py.cpp"
 #include "../generated/tests/rsqrt.mod.py.cpp"
 #include "../generated/tests/select_v1_2.mod.py.cpp"
 #include "../generated/tests/sin.mod.py.cpp"
