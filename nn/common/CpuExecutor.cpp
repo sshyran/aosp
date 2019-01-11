@@ -662,6 +662,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 success = quantizeFloat32ToQuant8(reinterpret_cast<const float*>(input.buffer),
                                                   reinterpret_cast<uint8_t*>(output.buffer),
                                                   output.shape());
+            } else if (input.type == OperandType::TENSOR_FLOAT16) {
+                success = quantizeFloat16ToQuant8(reinterpret_cast<const _Float16*>(input.buffer),
+                                                  reinterpret_cast<uint8_t*>(output.buffer),
+                                                  output.shape());
             }
         } break;
         case OperationType::DEPTHWISE_CONV_2D: {
