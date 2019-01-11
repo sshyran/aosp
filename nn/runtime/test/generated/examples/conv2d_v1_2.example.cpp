@@ -135,51 +135,6 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8 = {
 return examples_nhwc_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_nhwc_channelQuant8() {
-static std::vector<MixedTypedExample> examples_nhwc_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {2, 2, 2, 2, 1, 2, 2, 2, 2}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {7, 7, 7, 7}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_nhwc_channelQuant8;
-};
-
 std::vector<MixedTypedExample>& get_examples_nhwc_float16() {
 static std::vector<MixedTypedExample> examples_nhwc_float16 = {
 // Begin of an example
@@ -358,51 +313,6 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_quant8 = {
 }, // End of an example
 };
 return examples_nhwc_weight_as_input_quant8;
-};
-
-std::vector<MixedTypedExample>& get_examples_nhwc_weight_as_input_channelQuant8() {
-static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {{2, {0}}},
-  // int -> QUANT8_ASYMM map
-  {{0, {2, 2, 2, 2, 1, 2, 2, 2, 2}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {2, 2, 2, 2}}},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {7, 7, 7, 7}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_nhwc_weight_as_input_channelQuant8;
 };
 
 std::vector<MixedTypedExample>& get_examples_nhwc_weight_as_input_float16() {
@@ -585,51 +495,6 @@ static std::vector<MixedTypedExample> examples_nchw_quant8 = {
 return examples_nchw_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_nchw_channelQuant8() {
-static std::vector<MixedTypedExample> examples_nchw_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {2, 2, 2, 2, 1, 2, 2, 2, 2}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {7, 7, 7, 7}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_nchw_channelQuant8;
-};
-
 std::vector<MixedTypedExample>& get_examples_nchw_float16() {
 static std::vector<MixedTypedExample> examples_nchw_float16 = {
 // Begin of an example
@@ -808,51 +673,6 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_quant8 = {
 }, // End of an example
 };
 return examples_nchw_weight_as_input_quant8;
-};
-
-std::vector<MixedTypedExample>& get_examples_nchw_weight_as_input_channelQuant8() {
-static std::vector<MixedTypedExample> examples_nchw_weight_as_input_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {{2, {0}}},
-  // int -> QUANT8_ASYMM map
-  {{0, {2, 2, 2, 2, 1, 2, 2, 2, 2}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {2, 2, 2, 2}}},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {7, 7, 7, 7}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_nchw_weight_as_input_channelQuant8;
 };
 
 std::vector<MixedTypedExample>& get_examples_nchw_weight_as_input_float16() {
@@ -1035,51 +855,6 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
 return examples_nhwc_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_nhwc_channelQuant8_2() {
-static std::vector<MixedTypedExample> examples_nhwc_channelQuant8_2 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {50, 50, 50, 50, 85, 162, 207, 50, 50, 84, 111, 50}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_nhwc_channelQuant8_2;
-};
-
 std::vector<MixedTypedExample>& get_examples_nhwc_float16_2() {
 static std::vector<MixedTypedExample> examples_nhwc_float16_2 = {
 // Begin of an example
@@ -1258,51 +1033,6 @@ static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_quant8_2 = {
 }, // End of an example
 };
 return examples_nhwc_weight_as_input_quant8_2;
-};
-
-std::vector<MixedTypedExample>& get_examples_nhwc_weight_as_input_channelQuant8_2() {
-static std::vector<MixedTypedExample> examples_nhwc_weight_as_input_channelQuant8_2 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {{2, {-800}}},
-  // int -> QUANT8_ASYMM map
-  {{0, {129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {2, 8, 14, 4, 10, 16, 6, 12, 18}}},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {50, 50, 50, 50, 85, 162, 207, 50, 50, 84, 111, 50}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_nhwc_weight_as_input_channelQuant8_2;
 };
 
 std::vector<MixedTypedExample>& get_examples_nhwc_weight_as_input_float16_2() {
@@ -1485,51 +1215,6 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
 return examples_nchw_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_nchw_channelQuant8_2() {
-static std::vector<MixedTypedExample> examples_nchw_channelQuant8_2 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {50, 50, 50, 50, 85, 162, 207, 50, 50, 84, 111, 50}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_nchw_channelQuant8_2;
-};
-
 std::vector<MixedTypedExample>& get_examples_nchw_float16_2() {
 static std::vector<MixedTypedExample> examples_nchw_float16_2 = {
 // Begin of an example
@@ -1708,51 +1393,6 @@ static std::vector<MixedTypedExample> examples_nchw_weight_as_input_quant8_2 = {
 }, // End of an example
 };
 return examples_nchw_weight_as_input_quant8_2;
-};
-
-std::vector<MixedTypedExample>& get_examples_nchw_weight_as_input_channelQuant8_2() {
-static std::vector<MixedTypedExample> examples_nchw_weight_as_input_channelQuant8_2 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {{2, {-800}}},
-  // int -> QUANT8_ASYMM map
-  {{0, {129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {2, 8, 14, 4, 10, 16, 6, 12, 18}}},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {50, 50, 50, 50, 85, 162, 207, 50, 50, 84, 111, 50}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_nchw_weight_as_input_channelQuant8_2;
 };
 
 std::vector<MixedTypedExample>& get_examples_nchw_weight_as_input_float16_2() {
@@ -1935,51 +1575,6 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_quant8 = {
 return examples_channel_nhwc_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_channel_nhwc_channelQuant8() {
-static std::vector<MixedTypedExample> examples_channel_nhwc_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {10, 10, 10}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {30, 75, 120}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_channel_nhwc_channelQuant8;
-};
-
 std::vector<MixedTypedExample>& get_examples_channel_nhwc_float16() {
 static std::vector<MixedTypedExample> examples_channel_nhwc_float16 = {
 // Begin of an example
@@ -2158,51 +1753,6 @@ static std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input_quan
 }, // End of an example
 };
 return examples_channel_nhwc_weight_as_input_quant8;
-};
-
-std::vector<MixedTypedExample>& get_examples_channel_nhwc_weight_as_input_channelQuant8() {
-static std::vector<MixedTypedExample> examples_channel_nhwc_weight_as_input_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {{2, {0, 0, 0}}},
-  // int -> QUANT8_ASYMM map
-  {{0, {10, 10, 10}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {1, 2, 3, 5, 6, 8, 12, 13, 15}}},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {30, 75, 120}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_channel_nhwc_weight_as_input_channelQuant8;
 };
 
 std::vector<MixedTypedExample>& get_examples_channel_nhwc_weight_as_input_float16() {
@@ -2385,51 +1935,6 @@ static std::vector<MixedTypedExample> examples_channel_nchw_quant8 = {
 return examples_channel_nchw_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_channel_nchw_channelQuant8() {
-static std::vector<MixedTypedExample> examples_channel_nchw_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {10, 10, 10}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {30, 75, 120}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_channel_nchw_channelQuant8;
-};
-
 std::vector<MixedTypedExample>& get_examples_channel_nchw_float16() {
 static std::vector<MixedTypedExample> examples_channel_nchw_float16 = {
 // Begin of an example
@@ -2608,51 +2113,6 @@ static std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input_quan
 }, // End of an example
 };
 return examples_channel_nchw_weight_as_input_quant8;
-};
-
-std::vector<MixedTypedExample>& get_examples_channel_nchw_weight_as_input_channelQuant8() {
-static std::vector<MixedTypedExample> examples_channel_nchw_weight_as_input_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {{2, {0, 0, 0}}},
-  // int -> QUANT8_ASYMM map
-  {{0, {10, 10, 10}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {1, 2, 3, 5, 6, 8, 12, 13, 15}}},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {30, 75, 120}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_channel_nchw_weight_as_input_channelQuant8;
 };
 
 std::vector<MixedTypedExample>& get_examples_channel_nchw_weight_as_input_float16() {
@@ -2835,51 +2295,6 @@ static std::vector<MixedTypedExample> examples_large_nhwc_quant8 = {
 return examples_large_nhwc_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_large_nhwc_channelQuant8() {
-static std::vector<MixedTypedExample> examples_large_nhwc_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160, 162, 164}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {15, 18, 21, 33, 40, 48, 51, 63, 75, 69, 86, 102, 87, 108, 129, 105, 130, 156}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_large_nhwc_channelQuant8;
-};
-
 std::vector<MixedTypedExample>& get_examples_large_nhwc_float16() {
 static std::vector<MixedTypedExample> examples_large_nhwc_float16 = {
 // Begin of an example
@@ -3058,51 +2473,6 @@ static std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input_quant8
 }, // End of an example
 };
 return examples_large_nhwc_weight_as_input_quant8;
-};
-
-std::vector<MixedTypedExample>& get_examples_large_nhwc_weight_as_input_channelQuant8() {
-static std::vector<MixedTypedExample> examples_large_nhwc_weight_as_input_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {{2, {0, 0, 0}}},
-  // int -> QUANT8_ASYMM map
-  {{0, {130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160, 162, 164}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {2, 8, 14, 2, 5, 8, 6, 12, 18}}},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {15, 18, 21, 33, 40, 48, 51, 63, 75, 69, 86, 102, 87, 108, 129, 105, 130, 156}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_large_nhwc_weight_as_input_channelQuant8;
 };
 
 std::vector<MixedTypedExample>& get_examples_large_nhwc_weight_as_input_float16() {
@@ -3285,51 +2655,6 @@ static std::vector<MixedTypedExample> examples_large_nchw_quant8 = {
 return examples_large_nchw_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_large_nchw_channelQuant8() {
-static std::vector<MixedTypedExample> examples_large_nchw_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {130, 136, 142, 148, 154, 160, 132, 138, 144, 150, 156, 162, 134, 140, 146, 152, 158, 164}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {15, 33, 51, 69, 87, 105, 18, 40, 63, 86, 108, 130, 21, 48, 75, 102, 129, 156}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_large_nchw_channelQuant8;
-};
-
 std::vector<MixedTypedExample>& get_examples_large_nchw_float16() {
 static std::vector<MixedTypedExample> examples_large_nchw_float16 = {
 // Begin of an example
@@ -3508,51 +2833,6 @@ static std::vector<MixedTypedExample> examples_large_nchw_weight_as_input_quant8
 }, // End of an example
 };
 return examples_large_nchw_weight_as_input_quant8;
-};
-
-std::vector<MixedTypedExample>& get_examples_large_nchw_weight_as_input_channelQuant8() {
-static std::vector<MixedTypedExample> examples_large_nchw_weight_as_input_channelQuant8 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {{2, {0, 0, 0}}},
-  // int -> QUANT8_ASYMM map
-  {{0, {130, 136, 142, 148, 154, 160, 132, 138, 144, 150, 156, 162, 134, 140, 146, 152, 158, 164}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {{1, {2, 8, 14, 2, 5, 8, 6, 12, 18}}},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> FLOAT32 map
-  {},
-  // int -> INT32 map
-  {},
-  // int -> QUANT8_ASYMM map
-  {{0, {15, 33, 51, 69, 87, 105, 18, 40, 63, 86, 108, 130, 21, 48, 75, 102, 129, 156}}},
-  // int -> QUANT16_SYMM map
-  {},
-  // int -> FLOAT16 map
-  {},
-  // int -> BOOL8 map
-  {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  {},
-}
-},
-}, // End of an example
-};
-return examples_large_nchw_weight_as_input_channelQuant8;
 };
 
 std::vector<MixedTypedExample>& get_examples_large_nchw_weight_as_input_float16() {
