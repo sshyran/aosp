@@ -96,6 +96,7 @@ def generate_vts_operands(model):
   extra_params_definitions = []
   for index, o in enumerate(model.operands):
     length = o.type.GetByteSize() if isinstance(o, Parameter) else 0
+    add_extra_params = o.type.extraParams is not None and not o.type.extraParams.hide
     op = {
         "operand_type": o.type.type,
         "shape": o.type.GetDimensionsString(),
@@ -105,7 +106,7 @@ def generate_vts_operands(model):
         "lifetime": o.lifetime,
         "offset": offset if isinstance(o, Parameter) else 0,
         "length": length,
-        "extraParams": "" if o.type.extraParams is None else "\n            .extraParams = std::move(extraParams%d)," % (index,),
+        "extraParams": "" if not add_extra_params else "\n            .extraParams = std::move(extraParams%d)," % (index,),
     }
     offset += length
     op_definitions.append(op_def.format(**op))
@@ -115,8 +116,8 @@ def generate_vts_operands(model):
     extraParams{index}.{setMethodName}({param});
 """
 
-    ep = o.type.extraParams
-    if ep is not None:
+    if add_extra_params:
+      ep = o.type.extraParams
       op = {
           "index": index,
           "setMethodName": ep.GetVtsSetter(),
