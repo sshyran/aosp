@@ -215,8 +215,9 @@ private:
      Return<ErrorStatus> execute_1_2(const Request&, const sp<V1_2::IExecutionCallback>&) override {
          return ErrorStatus::DEVICE_UNAVAILABLE;
      }
-     Return<ErrorStatus> executeSynchronously(const Request&) override {
-         return ErrorStatus::DEVICE_UNAVAILABLE;
+     Return<void> executeSynchronously(const Request&, executeSynchronously_cb cb) override {
+         cb(ErrorStatus::DEVICE_UNAVAILABLE, {});
+         return Void();
      }
     };
 public:
