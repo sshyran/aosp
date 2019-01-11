@@ -955,6 +955,9 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
             {input, filter, bias, padLeft, padRight, padTop, padBottom, strideWidth, strideHeight,
              activation, layout, dilationWidthFactor, dilationHeightFactor},
             {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        explicitDilateConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(explicitDilateConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(explicitDilateConvTest.testMutatingInputOperandCounts());
@@ -966,6 +969,9 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
             {input, filter, bias, padImplicit, strideWidth, strideHeight, activation, layout,
              dilationWidthFactor, dilationHeightFactor},
             {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        implicitDilateConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(implicitDilateConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(implicitDilateConvTest.testMutatingInputOperandCounts());
