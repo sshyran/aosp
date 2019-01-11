@@ -16612,6 +16612,236 @@ TEST_F(ValidationTest, lsh_projection_float16_float16) {
 }
 
 
+// Generated from: lstm2_float16.mod.py.
+namespace lstm2_float16 {
+// Generated lstm2_float16 test
+#include "examples/lstm2_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lstm2_float16.model.cpp"
+} // namespace lstm2_float16
+
+TEST_F(NeuralnetworksHidlTest, lstm2_float16) {
+  generated_tests::Execute(device,
+                           lstm2_float16::createTestModel,
+                           lstm2_float16::is_ignored,
+                           lstm2_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lstm2_float16) {
+  const Model model = lstm2_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm2_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: lstm2_state2_float16.mod.py.
+namespace lstm2_state2_float16 {
+// Generated lstm2_state2_float16 test
+#include "examples/lstm2_state2_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lstm2_state2_float16.model.cpp"
+} // namespace lstm2_state2_float16
+
+TEST_F(NeuralnetworksHidlTest, lstm2_state2_float16) {
+  generated_tests::Execute(device,
+                           lstm2_state2_float16::createTestModel,
+                           lstm2_state2_float16::is_ignored,
+                           lstm2_state2_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lstm2_state2_float16) {
+  const Model model = lstm2_state2_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm2_state2_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: lstm2_state_float16.mod.py.
+namespace lstm2_state_float16 {
+// Generated lstm2_state_float16 test
+#include "examples/lstm2_state_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lstm2_state_float16.model.cpp"
+} // namespace lstm2_state_float16
+
+TEST_F(NeuralnetworksHidlTest, lstm2_state_float16) {
+  generated_tests::Execute(device,
+                           lstm2_state_float16::createTestModel,
+                           lstm2_state_float16::is_ignored,
+                           lstm2_state_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lstm2_state_float16) {
+  const Model model = lstm2_state_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm2_state_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: lstm3_float16.mod.py.
+namespace lstm3_float16 {
+// Generated lstm3_float16 test
+#include "examples/lstm3_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lstm3_float16.model.cpp"
+} // namespace lstm3_float16
+
+TEST_F(NeuralnetworksHidlTest, lstm3_float16) {
+  generated_tests::Execute(device,
+                           lstm3_float16::createTestModel,
+                           lstm3_float16::is_ignored,
+                           lstm3_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lstm3_float16) {
+  const Model model = lstm3_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm3_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: lstm3_state2_float16.mod.py.
+namespace lstm3_state2_float16 {
+// Generated lstm3_state2_float16 test
+#include "examples/lstm3_state2_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lstm3_state2_float16.model.cpp"
+} // namespace lstm3_state2_float16
+
+TEST_F(NeuralnetworksHidlTest, lstm3_state2_float16) {
+  generated_tests::Execute(device,
+                           lstm3_state2_float16::createTestModel,
+                           lstm3_state2_float16::is_ignored,
+                           lstm3_state2_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lstm3_state2_float16) {
+  const Model model = lstm3_state2_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm3_state2_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: lstm3_state3_float16.mod.py.
+namespace lstm3_state3_float16 {
+// Generated lstm3_state3_float16 test
+#include "examples/lstm3_state3_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lstm3_state3_float16.model.cpp"
+} // namespace lstm3_state3_float16
+
+TEST_F(NeuralnetworksHidlTest, lstm3_state3_float16) {
+  generated_tests::Execute(device,
+                           lstm3_state3_float16::createTestModel,
+                           lstm3_state3_float16::is_ignored,
+                           lstm3_state3_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lstm3_state3_float16) {
+  const Model model = lstm3_state3_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm3_state3_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: lstm3_state_float16.mod.py.
+namespace lstm3_state_float16 {
+// Generated lstm3_state_float16 test
+#include "examples/lstm3_state_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lstm3_state_float16.model.cpp"
+} // namespace lstm3_state_float16
+
+TEST_F(NeuralnetworksHidlTest, lstm3_state_float16) {
+  generated_tests::Execute(device,
+                           lstm3_state_float16::createTestModel,
+                           lstm3_state_float16::is_ignored,
+                           lstm3_state_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lstm3_state_float16) {
+  const Model model = lstm3_state_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm3_state_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: lstm_float16.mod.py.
+namespace lstm_float16 {
+// Generated lstm_float16 test
+#include "examples/lstm_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lstm_float16.model.cpp"
+} // namespace lstm_float16
+
+TEST_F(NeuralnetworksHidlTest, lstm_float16) {
+  generated_tests::Execute(device,
+                           lstm_float16::createTestModel,
+                           lstm_float16::is_ignored,
+                           lstm_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lstm_float16) {
+  const Model model = lstm_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: lstm_state2_float16.mod.py.
+namespace lstm_state2_float16 {
+// Generated lstm_state2_float16 test
+#include "examples/lstm_state2_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lstm_state2_float16.model.cpp"
+} // namespace lstm_state2_float16
+
+TEST_F(NeuralnetworksHidlTest, lstm_state2_float16) {
+  generated_tests::Execute(device,
+                           lstm_state2_float16::createTestModel,
+                           lstm_state2_float16::is_ignored,
+                           lstm_state2_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lstm_state2_float16) {
+  const Model model = lstm_state2_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm_state2_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+// Generated from: lstm_state_float16.mod.py.
+namespace lstm_state_float16 {
+// Generated lstm_state_float16 test
+#include "examples/lstm_state_float16.example.cpp"
+// Generated model constructor
+#include "vts_models/lstm_state_float16.model.cpp"
+} // namespace lstm_state_float16
+
+TEST_F(NeuralnetworksHidlTest, lstm_state_float16) {
+  generated_tests::Execute(device,
+                           lstm_state_float16::createTestModel,
+                           lstm_state_float16::is_ignored,
+                           lstm_state_float16::get_examples());
+}
+
+TEST_F(ValidationTest, lstm_state_float16) {
+  const Model model = lstm_state_float16::createTestModel();
+  const std::vector<Request> requests = createRequests(lstm_state_float16::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: max_pool_v1_2.mod.py.
 namespace max_pool_v1_2 {
 // Generated max_pool_v1_2 test
@@ -17879,6 +18109,21 @@ TEST_F(ValidationTest, pow_relaxed) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, pow_float16) {
+  generated_tests::Execute(device,
+                           pow::createTestModel_float16,
+                           pow::is_ignored_float16,
+                           pow::get_examples_float16());
+}
+
+TEST_F(ValidationTest, pow_float16) {
+  const Model model = pow::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(pow::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, pow_2) {
   generated_tests::Execute(device,
                            pow::createTestModel_2,
@@ -17909,6 +18154,21 @@ TEST_F(ValidationTest, pow_relaxed_2) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, pow_float16_2) {
+  generated_tests::Execute(device,
+                           pow::createTestModel_float16_2,
+                           pow::is_ignored_float16_2,
+                           pow::get_examples_float16_2());
+}
+
+TEST_F(ValidationTest, pow_float16_2) {
+  const Model model = pow::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(pow::get_examples_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, pow_3) {
   generated_tests::Execute(device,
                            pow::createTestModel_3,
@@ -17934,6 +18194,21 @@ TEST_F(NeuralnetworksHidlTest, pow_relaxed_3) {
 TEST_F(ValidationTest, pow_relaxed_3) {
   const Model model = pow::createTestModel_relaxed_3();
   const std::vector<Request> requests = createRequests(pow::get_examples_relaxed_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, pow_float16_3) {
+  generated_tests::Execute(device,
+                           pow::createTestModel_float16_3,
+                           pow::is_ignored_float16_3,
+                           pow::get_examples_float16_3());
+}
+
+TEST_F(ValidationTest, pow_float16_3) {
+  const Model model = pow::createTestModel_float16_3();
+  const std::vector<Request> requests = createRequests(pow::get_examples_float16_3());
   validateModel(model);
   validateRequests(model, requests);
 }
