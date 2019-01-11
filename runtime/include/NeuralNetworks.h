@@ -2285,6 +2285,59 @@ typedef enum {
     ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM = 41,
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_LSTM = 42,
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_RNN = 43,
+
+    /**
+     * Greedily selects a subset of bounding boxes in descending order of score.
+     *
+     * This op applies hard NMS algorithm to each class. In each loop of
+     * execution, the box with maximum score gets selected, and any boxes with
+     * the intersection-over-union (IOU) greater than a threshold are removed
+     * from the pending set.
+     *
+     * Axis-aligned bounding boxes are represented by its upper-left corner
+     * coordinate (x1,y1) and lower-right corner coordinate (x2,y2). A valid
+     * bounding box should satisfy x1 <= x2 and y1 <= y2.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Inputs:
+     * * 0: A 2-D Tensor of shape [num_rois, num_classes], specifying the score
+     *      of each bounding box proposal. The boxes are grouped by batches in the
+     *      first dimension.
+     * * 1: A 2-D Tensor specifying the bounding boxes of shape
+     *      [num_rois, num_classes * 4], organized in the order [x1, y1, x2, y2].
+     *      The boxes are grouped by batches in the first dimension. The sequential
+     *      order of the boxes corresponds with input0.
+     * * 2: A 1-D Tensor of shape [batches], specifying the number of boxes
+     *      for each image in the batch.
+     * * 3: An {@link ANEURALNETWORKS_FLOAT32} scalar, score_threshold. Boxes
+     *      with scores lower than the threshold are filtered before sending
+     *      to the NMS algorithm.
+     * * 4: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the IoU
+     *      threshold.
+     * * 5: An {@link ANEURALNETWORKS_INT32} scalar, specifying the maximum
+     *      number of selected bounding boxes for each image. Set to a negative
+     *      value for unlimited number of output bounding boxes.
+     *
+     * Outputs:
+     * * 0: A 1-D Tensor of the same {@link OperandCode} as input0, with shape
+     *      [num_output_rois], specifying the score of each output box. The boxes
+     *      are grouped by batches, but the sequential order in each batch is not
+     *      guaranteed.
+     * * 1: A 2-D Tensor of the same {@link OperandCode} as input1, with shape
+     *      [num_output_rois, 4], specifying the coordinates of each
+     *      output bounding box with the same format as input1. The sequential
+     *      order of the boxes corresponds with output0.
+     * * 2: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
+     *      [num_output_rois], specifying the class of each output box. The
+     *      sequential order of the boxes corresponds with output0.
+     * * 3: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
+     *      [batches], specifying the number of output boxes for each image.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_BOX_WITH_NMS_LIMIT = 44,
 
     /**
