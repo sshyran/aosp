@@ -33,3 +33,27 @@ TEST_F(GeneratedTests, quantize_quant8_4) {
             quantize::get_examples_quant8_4());
 }
 
+TEST_F(GeneratedTests, quantize_quant8_5) {
+    execute(quantize::CreateModel_quant8_5,
+            quantize::is_ignored_quant8_5,
+            quantize::get_examples_quant8_5());
+}
+
+TEST_F(GeneratedTests, quantize_quant8_6) {
+    execute(quantize::CreateModel_quant8_6,
+            quantize::is_ignored_quant8_6,
+            quantize::get_examples_quant8_6());
+}
+
+TEST_F(GeneratedTests, quantize_quant8_7) {
+    execute(quantize::CreateModel_quant8_7,
+            quantize::is_ignored_quant8_7,
+            quantize::get_examples_quant8_7());
+}
+
+TEST_F(GeneratedTests, quantize_quant8_8) {
+    execute(quantize::CreateModel_quant8_8,
+            quantize::is_ignored_quant8_8,
+            quantize::get_examples_quant8_8());
+}
+
