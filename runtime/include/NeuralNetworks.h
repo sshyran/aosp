@@ -3516,19 +3516,19 @@ typedef enum {
      *
      * Inputs:
      * * 0: A 4-D tensor, specifying the feature map.
-     * * 1: A 2-D Tensor of shape [num_rois, 5 or 4], specifying the locations
-     *      of the regions of interest, each line with format
-     *      [<optional batch_id>, x1, y1, x2, y2]. The batch_id is optional if
-     *      there is only one batch.
-     * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
-     *      height of the output tensor.
+     * * 1: A 2-D Tensor of shape [num_rois, 4], specifying the locations of
+     *      the regions of interest, each line with format [x1, y1, x2, y2].
+     * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
+     *      [batches], specifying the number of output boxes for each batch.
      * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
+     *      height of the output tensor.
+     * * 4: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
      *      width of the output tensor.
-     * * 4: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the spatial
-     *      scaling factor from the height of original image to feature map.
-     * * 5: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the spatial
-     *      scaling factor from the width of original image to feature map.
-     * * 6: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
+     * * 5: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the ratio
+     *      from the height of original image to the height of feature map.
+     * * 6: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the ratio
+     *      from the width of original image to the width of feature map.
+     * * 7: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
      *      NCHW data layout for input0 and output0. Set to false for NHWC.
      *
      * Outputs:
