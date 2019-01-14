@@ -2538,12 +2538,24 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                         padding_right, padding_top, padding_bottom, stride_width, stride_height,
                         activation, reinterpret_cast<float*>(output_tmp.buffer), outShape);
             } else if (input_tmp.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = transposeConvQuant8(
-                        reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
-                        reinterpret_cast<const uint8_t*>(filter.buffer), filter.shape(),
-                        reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(), padding_left,
-                        padding_right, padding_top, padding_bottom, stride_width, stride_height,
-                        activation, reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+                if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+                    success = transposeConvQuant8PerChannel(
+                            reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            reinterpret_cast<const uint8_t*>(filter.buffer), filter.shape(),
+                            filter.extraParams.channelQuant().scales.data(),
+                            reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
+                            padding_left, padding_right, padding_top, padding_bottom, stride_width,
+                            stride_height, activation,
+                            reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+                } else if (filter.type == OperandType::TENSOR_QUANT8_ASYMM) {
+                    success = transposeConvQuant8(
+                            reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            reinterpret_cast<const uint8_t*>(filter.buffer), filter.shape(),
+                            reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
+                            padding_left, padding_right, padding_top, padding_bottom, stride_width,
+                            stride_height, activation,
+                            reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+                }
             } else if (input_tmp.type == OperandType::TENSOR_FLOAT16) {
                 success = transposeConvFloat16(
                         reinterpret_cast<const _Float16*>(input_tmp.buffer), input_tmp.shape(),
