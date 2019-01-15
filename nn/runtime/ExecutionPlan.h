@@ -23,10 +23,14 @@
 #include "Memory.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
+#include "TokenHasher.h"
 #include "Utils.h"
 #include "VersionedInterfaces.h"
 
+#include <openssl/sha.h>
+
 #include <set>
+#include <string>
 
 namespace android {
 namespace nn {
@@ -100,7 +104,10 @@ public:
 
     void dump() const;
 
-private:
+    // For test only, get the transformed cache token.
+    const uint8_t* forTest_getCacheToken() const { return mToken.getCacheToken(); }
+
+   private:
     void logSubModel() const;
 
     // TODO: Some of the data is working state information that
@@ -153,6 +160,9 @@ private:
     //     mainModelOutputs[mOutputsAsSubModelInputsIndexToFromModel[i]] ==
     //     mOutputsAsSubModelInputs[i].first
     std::vector<uint32_t> mOutputsAsSubModelInputsIndexToFromModel;
+
+    // The compilation caching token.
+    TokenHasher mToken;
 };
 
 class ExecutionPlan {
@@ -229,6 +239,13 @@ public:
 
     bool isValid() const { return mState != EMPTY && mBody != nullptr && mBody->mSuccessfulFinish; }
 
+    void setCaching(const std::string* cacheDir, const uint8_t* token) {
+        mCacheDir = cacheDir;
+        mToken = token;
+    }
+    const std::string* getCacheDir() const { return mCacheDir; }
+    const uint8_t* getCacheToken() const { return mToken; }
+
     // These functions are solely intended for use by unit tests of
     // the partitioning algorithm.
     enum class Kind { ERROR, EMPTY, SIMPLE, COMPOUND };
@@ -236,8 +253,9 @@ public:
     std::shared_ptr<const Device> forTest_simpleGetDevice() const;
     const std::vector<std::shared_ptr<ExecutionStep>>& forTest_compoundGetSteps() const;
     bool forTest_hasSubModelOutputsOfUnknownSize() const;
+    const uint8_t* forTest_simpleGetCacheToken() const;
 
-private:
+   private:
     void findTempsAsSubModelOutputs();
 
     struct Body {
@@ -249,8 +267,9 @@ private:
     };
 
     struct SimpleBody : Body {
-        SimpleBody(std::shared_ptr<Device> device, const ModelBuilder* model)
-            : mDevice(device), mModel(model) {}
+        SimpleBody(std::shared_ptr<Device> device, const ModelBuilder* model,
+                   const std::string* cacheDir, const uint8_t* token)
+            : mDevice(device), mModel(model), mCacheDir(cacheDir), mToken(token) {}
 
         void dump() const override;
         int finish(const ModelBuilder* fromModel, int32_t executionPreference) override;
@@ -259,6 +278,9 @@ private:
         std::shared_ptr<Device> mDevice;
         const ModelBuilder* mModel;
         std::shared_ptr<VersionedIPreparedModel> mPreparedModel;  // not used for CPU
+
+        const std::string* mCacheDir;
+        TokenHasher mToken;
     };
 
     struct CompoundBody : Body {
@@ -293,6 +315,10 @@ private:
         nnAssert(mState == COMPOUND);
         return static_cast<const CompoundBody*>(mBody);
     }
+
+    // Pointers to compilation caching information in CompilationBuilder.
+    const std::string* mCacheDir = nullptr;
+    const uint8_t* mToken = nullptr;
 };
 
 }  // namespace nn
