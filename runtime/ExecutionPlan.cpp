@@ -25,28 +25,145 @@
 #include "ExecutionBurstController.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
+#include "OperationsUtils.h"
+#include "TokenHasher.h"
 #include "Tracing.h"
 #include "Utils.h"
 
+#include <cutils/native_handle.h>
+#include <fcntl.h>
+#include <openssl/sha.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <functional>
 #include <map>
+#include <mutex>
 #include <queue>
 #include <unordered_set>
 #include <utility>
 #include <vector>
 
+using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
+
 namespace android {
 namespace nn {
 
+// compilationCachingMutex is used to protect concurrent access of the caching files
+// std::mutex is safe for pthreads on Android.
+// TODO(xusongw): Consider switching to a file lock per cache entry.
+static std::mutex compilationCachingMutex;
+
 namespace {
 
+enum class AccessMode { READ_ONLY, WRITE_ONLY };
+
+// Opens cache file by filename and sets the handle to the opened fd. Returns false on fail. The
+// handle is expected to come in as empty, and is only set to a fd when the function returns true.
+bool createCacheHandle(const std::string& cache, AccessMode mode, hidl_handle* handle) {
+    CHECK(handle->getNativeHandle() == nullptr);
+    int fd;
+    if (mode == AccessMode::READ_ONLY) {
+        fd = open(cache.c_str(), O_RDONLY);
+    } else if (mode == AccessMode::WRITE_ONLY) {
+        fd = open(cache.c_str(), O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+    } else {
+        NN_RET_CHECK_FAIL();
+    }
+    NN_RET_CHECK_GE(fd, 0);
+    native_handle_t* cacheNativeHandle = native_handle_create(1, 0);
+    if (cacheNativeHandle == nullptr) {
+        close(fd);
+        return false;
+    }
+    cacheNativeHandle->data[0] = fd;
+    handle->setTo(cacheNativeHandle, /*shouldOwn=*/true);
+    return true;
+}
+
+// Maps token to cache file names and sets the handles to the opened fds. Returns false on fail.
+// Each handle is expected to come in as empty, and is only set a fd when the function returns true.
+bool getCacheHandle(const std::string& cacheDir, const uint8_t* token, AccessMode mode,
+                    hidl_handle* cache1, hidl_handle* cache2) {
+    std::string filename(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2, '0');
+    for (uint32_t i = 0; i < ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN; i++) {
+        filename[i * 2] = 'A' + (token[i] & 0x0F);
+        filename[i * 2 + 1] = 'A' + (token[i] >> 4);
+    }
+    CHECK(cacheDir.empty() || cacheDir.back() == '/');
+    std::string cacheFileName = cacheDir + filename;
+
+    cacheFileName.push_back('1');
+    VLOG(COMPILATION) << "Compilation cache 1: " << cacheFileName;
+    NN_RET_CHECK(createCacheHandle(cacheFileName, mode, cache1));
+
+    cacheFileName.back() = '2';
+    VLOG(COMPILATION) << "Compilation cache 2: " << cacheFileName;
+    NN_RET_CHECK(createCacheHandle(cacheFileName, mode, cache2));
+    return true;
+}
+
+// Tries to compile directly from cache, returns false on fail.
+bool compileFromCache(const std::shared_ptr<Device>& device, const std::string& cacheDir,
+                      const uint8_t* token,
+                      std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+    CHECK(token != nullptr && device != nullptr);
+    VLOG(COMPILATION) << "compileFromCache";
+    std::unique_lock<std::mutex> lock(compilationCachingMutex);
+    *preparedModel = nullptr;
+    hidl_handle cache1, cache2;
+    NN_RET_CHECK(getCacheHandle(cacheDir, token, AccessMode::READ_ONLY, &cache1, &cache2));
+    HidlToken cacheToken(token);
+
+    int ret = device->prepareModelFromCache(cache1, cache2, cacheToken, preparedModel);
+    if (ret != ANEURALNETWORKS_NO_ERROR || *preparedModel == nullptr) {
+        LOG(ERROR) << "Failed to prepare from cache files" << ret;
+        *preparedModel = nullptr;
+        return false;
+    }
+    return true;
+}
+
+bool saveToCache(const std::shared_ptr<VersionedIPreparedModel>& preparedModel,
+                 const std::string& cacheDir, const uint8_t* token) {
+    CHECK(token != nullptr && preparedModel != nullptr);
+    VLOG(COMPILATION) << "saveToCache";
+    std::unique_lock<std::mutex> lock(compilationCachingMutex);
+    hidl_handle cache1, cache2;
+    NN_RET_CHECK(getCacheHandle(cacheDir, token, AccessMode::WRITE_ONLY, &cache1, &cache2));
+    HidlToken cacheToken(token);
+
+    ErrorStatus ret = preparedModel->saveToCache(cache1, cache2, cacheToken);
+    if (ret != ErrorStatus::NONE) {
+        LOG(ERROR) << "Failed to save the prepared model to cache files";
+        return false;
+    }
+    return true;
+}
+
+// Compiles the model on device.
+// If compilation caching is available, depending on ExecutionPlan::mState, the token may only have
+// been initialized by the user provided token (SIMPLE body), or is already re-hashed by the
+// operation indices to be executed (COMPOUND body). The token will be re-hashed further by the
+// device name, device version string, and the execution preference in this function.
 int compile(std::shared_ptr<Device> device, const ModelBuilder* model, int32_t executionPreference,
+            const std::string& cacheDir, TokenHasher* token,
             std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
     nnAssert(device != nullptr);
+    if (device->isCachingSupported() && token->ok() && token->updateFromString(device->getName()) &&
+        token->updateFromString(device->getVersionString()) &&
+        token->update(&executionPreference, sizeof(executionPreference)) && token->finish() &&
+        compileFromCache(device, cacheDir, token->getCacheToken(), preparedModel)) {
+        return ANEURALNETWORKS_NO_ERROR;
+    }
+
     Model hidlModel;
     model->setHidlModel(&hidlModel);
-    return device->prepareModel(hidlModel, static_cast<ExecutionPreference>(executionPreference),
-                                preparedModel);
+    NN_RETURN_IF_ERROR(device->prepareModel(
+            hidlModel, static_cast<ExecutionPreference>(executionPreference), preparedModel));
+    if (device->isCachingSupported() && token->ok()) {
+        saveToCache(*preparedModel, cacheDir, token->getCacheToken());
+    }
+    return ANEURALNETWORKS_NO_ERROR;
 }
 
 typedef std::function<void(uint32_t)> OperationReadyCallback;
@@ -140,7 +257,7 @@ void OperandTracker::markProcessed(uint32_t operationIndex, OperationReadyCallba
 
 ExecutionStep::ExecutionStep(ExecutionPlan* plan, uint32_t stepIndex,
                              std::shared_ptr<Device> device)
-    : mPlan(plan), mIndex(stepIndex), mSubModel(), mDevice(device) {}
+    : mPlan(plan), mIndex(stepIndex), mSubModel(), mDevice(device), mToken(plan->getCacheToken()) {}
 
 // Adds an operand if it has not been added already.
 // Sets the index in the submodel for the corresponding operand.
@@ -245,6 +362,9 @@ int ExecutionStep::addOperand(uint32_t fromOperandIndex, uint32_t* toOperandInde
 
 int ExecutionStep::addOperation(int operationIndex, const ModelBuilder& fromModel) {
     const Operation& operation = fromModel.getOperation(operationIndex);
+    if (mToken.ok()) {
+        mToken.update(&operationIndex, sizeof(operationIndex));
+    }
 
     // Convert the input and output operand indexes.
     //
@@ -449,7 +569,8 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
 
     // TODO: Move compilation elsewhere?
     VLOG(COMPILATION) << "ExecutionStep::finishSubModel, compilation";
-    return compile(mDevice, &mSubModel, executionPreference, &mPreparedSubModel);
+    return compile(mDevice, &mSubModel, executionPreference, *mPlan->getCacheDir(), &mToken,
+                   &mPreparedSubModel);
 }
 
 void ExecutionStep::dump() const {
@@ -485,7 +606,8 @@ int ExecutionPlan::SimpleBody::finish([[maybe_unused]] const ModelBuilder* fromM
                                       int32_t executionPreference) {
     nnAssert(mDevice != nullptr);
     VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish, compilation";
-    const int n = compile(mDevice, mModel, executionPreference, &mPreparedModel);
+    const int n =
+            compile(mDevice, mModel, executionPreference, *mCacheDir, &mToken, &mPreparedModel);
     mSuccessfulFinish = (n == ANEURALNETWORKS_NO_ERROR);
     return n;
 }
@@ -769,7 +891,7 @@ std::shared_ptr<ExecutionStep> ExecutionPlan::createNewStep(const std::shared_pt
 void ExecutionPlan::becomeSingleStep(const std::shared_ptr<Device> device,
                                      const ModelBuilder* model) {
     nnAssert(mState == EMPTY);
-    mBody = new SimpleBody(device, model);
+    mBody = new SimpleBody(device, model, mCacheDir, mToken);
     mState = SIMPLE;
 }
 
@@ -816,6 +938,12 @@ const std::vector<std::shared_ptr<ExecutionStep>>& ExecutionPlan::forTest_compou
 
 bool ExecutionPlan::forTest_hasSubModelOutputsOfUnknownSize() const {
     return mBody->hasSubModelOutputsOfUnknownSize();
+}
+
+const uint8_t* ExecutionPlan::forTest_simpleGetCacheToken() const {
+    CHECK(mState == SIMPLE)
+            << "Calling forTest_simpleGetCacheToken from execution plan with a non-SIMPLE body";
+    return static_cast<const SimpleBody*>(mBody)->mToken.getCacheToken();
 }
 
 void ExecutionPlan::SimpleBody::dump() const {
