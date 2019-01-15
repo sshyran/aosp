@@ -309,6 +309,10 @@ static_assert(sizeof(ANeuralNetworksSymmPerChannelQuantParams) == 8 + sizeof(voi
 static_assert(alignof(ANeuralNetworksSymmPerChannelQuantParams) == alignof(void*),
               "ANeuralNetworksOperandType alignment changed");
 
+// Asserts for compilation caching
+static_assert(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN == 32,
+              "ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN has changed");
+
 using android::sp;
 using namespace android::nn;
 
@@ -697,6 +701,17 @@ int ANeuralNetworksCompilation_setPreference(ANeuralNetworksCompilation* compila
     }
     CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(compilation);
     return c->setPreference(preference);
+}
+
+int ANeuralNetworksCompilation_setCaching(ANeuralNetworksCompilation* compilation,
+                                          const char* cacheDir, const uint8_t* token) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksCompilation_setCaching");
+    if (!compilation || !cacheDir || !token) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_setCaching passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(compilation);
+    return c->setCaching(cacheDir, token);
 }
 
 int ANeuralNetworksCompilation_finish(ANeuralNetworksCompilation* compilation) {
