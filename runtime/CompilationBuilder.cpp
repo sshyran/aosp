@@ -90,6 +90,22 @@ int CompilationBuilder::setPreference(int32_t preference) {
     return ANEURALNETWORKS_NO_ERROR;
 }
 
+int CompilationBuilder::setCaching(const std::string& cacheDir, const uint8_t* token) {
+    if (mFinished) {
+        LOG(ERROR)
+                << "ANeuralNetworksCompilation_setCaching can't modify after compilation finished";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    mCacheDir = cacheDir;
+    // Make sure the cache dir can concat with the filename.
+    if (!mCacheDir.empty() && mCacheDir.back() != '/') {
+        mCacheDir.push_back('/');
+    }
+    mToken.resize(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN);
+    std::copy(token, token + ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, mToken.data());
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 int CompilationBuilder::setPartitioning(uint32_t partitioning) {
     if (mFinished) {
         LOG(ERROR) <<

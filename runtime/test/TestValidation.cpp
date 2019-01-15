@@ -512,6 +512,17 @@ TEST_F(ValidationTestCompilation, SetPreference) {
     EXPECT_EQ(ANeuralNetworksCompilation_setPreference(mCompilation, 40), ANEURALNETWORKS_BAD_DATA);
 }
 
+// Also see TEST_F(ValidationTestCompilationForDevices, SetCaching)
+TEST_F(ValidationTestCompilation, SetCaching) {
+    std::vector<uint8_t> token(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
+    EXPECT_EQ(ANeuralNetworksCompilation_setCaching(nullptr, "/data/local/tmp", token.data()),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksCompilation_setCaching(mCompilation, nullptr, token.data()),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksCompilation_setCaching(mCompilation, "/data/local/tmp", nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+}
+
 // Also see TEST_F(ValidationTestCompilationForDevices, CreateExecution)
 TEST_F(ValidationTestCompilation, CreateExecution) {
     ANeuralNetworksExecution* execution = nullptr;
@@ -528,6 +539,9 @@ TEST_F(ValidationTestCompilation, Finish) {
     EXPECT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(ANeuralNetworksCompilation_setPreference(mCompilation,
                                                        ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER),
+              ANEURALNETWORKS_BAD_STATE);
+    std::vector<uint8_t> token(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
+    EXPECT_EQ(ANeuralNetworksCompilation_setCaching(mCompilation, "/data/local/tmp", token.data()),
               ANEURALNETWORKS_BAD_STATE);
     EXPECT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_BAD_STATE);
 }
@@ -873,6 +887,20 @@ TEST_F(ValidationTestCompilationForDevices, SetPreference) {
     EXPECT_EQ(ANeuralNetworksCompilation_setPreference(mCompilation, 40), ANEURALNETWORKS_BAD_DATA);
 }
 
+// Also see TEST_F(ValidationTestCompilation, SetCaching)
+TEST_F(ValidationTestCompilationForDevices, SetCaching) {
+    std::vector<uint8_t> token(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
+    EXPECT_EQ(ANeuralNetworksCompilation_setCaching(nullptr, "/data/local/tmp", token.data()),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    if (!mCompilation) {
+        return;
+    }
+    EXPECT_EQ(ANeuralNetworksCompilation_setCaching(mCompilation, nullptr, token.data()),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksCompilation_setCaching(mCompilation, "/data/local/tmp", nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+}
+
 // Also see TEST_F(ValidationTestCompilation, CreateExecution)
 TEST_F(ValidationTestCompilationForDevices, CreateExecution) {
     ANeuralNetworksExecution* execution = nullptr;
@@ -895,6 +923,9 @@ TEST_F(ValidationTestCompilationForDevices, Finish) {
     EXPECT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(ANeuralNetworksCompilation_setPreference(mCompilation,
                                                        ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER),
+              ANEURALNETWORKS_BAD_STATE);
+    std::vector<uint8_t> token(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
+    EXPECT_EQ(ANeuralNetworksCompilation_setCaching(mCompilation, "/data/local/tmp", token.data()),
               ANEURALNETWORKS_BAD_STATE);
     EXPECT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_BAD_STATE);
 }
