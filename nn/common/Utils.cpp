@@ -178,32 +178,9 @@ Shape OperationValidationContext::getOutputShape(uint32_t index) const {
 
 #define COUNT(X) (sizeof(X) / sizeof(X[0]))
 
-const char* kTypeNames[kNumberOfDataTypes] = {
-        "FLOAT32",        "INT32",
-        "UINT32",         "TENSOR_FLOAT32",
-        "TENSOR_INT32",   "TENSOR_QUANT8_ASYMM",
-        "BOOL",           "TENSOR_QUANT16_SYMM",
-        "TENSOR_FLOAT16", "TENSOR_BOOL8",
-        "FLOAT16",        "TENSOR_QUANT8_SYMM_PER_CHANNEL",
-};
-
-static_assert(COUNT(kTypeNames) == kNumberOfDataTypes, "kTypeNames is incorrect");
-
-const char* kTypeNamesOEM[kNumberOfDataTypesOEM] = {
-        "OEM",            "TENSOR_OEM_BYTE",
-};
-
-static_assert(COUNT(kTypeNamesOEM) == kNumberOfDataTypesOEM, "kTypeNamesOEM is incorrect");
-
-const char* getOperandTypeName(OperandType type) {
-    uint32_t n = static_cast<uint32_t>(type);
-    return tableLookup(kTypeNames, kTypeNamesOEM, n);
+std::string getOperandTypeName(OperandType type) {
+    return toString(type);
 }
-
-// TODO Check if this useful
-const char* kErrorNames[] = {
-        "NO_ERROR", "OUT_OF_MEMORY", "INCOMPLETE", "NULL", "BAD_DATA",
-};
 
 static std::string getOperationName(uint32_t code) {
     return getOperationName(static_cast<OperationType>(code));
