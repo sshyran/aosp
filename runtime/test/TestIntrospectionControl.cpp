@@ -185,7 +185,7 @@ TEST_F(IntrospectionControlTest, SimpleAddModel) {
     // This is needed before we have the CPU fallback path being treated as a Device.
     // TODO(miaowang): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
-        return;
+        GTEST_SKIP();
     }
 
     createSimpleAddModel(&mModel);
@@ -257,7 +257,7 @@ TEST_F(IntrospectionControlTest, PartialModelNotSupported) {
     // This is needed before we have the CPU fallback path being treated as a Device.
     // TODO(miaowang): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
-        return;
+        GTEST_SKIP();
     }
 
     createAddMulModel(&mModel, false);
@@ -283,7 +283,7 @@ TEST_F(IntrospectionControlTest, PartialModelNotSupportedOrder) {
     // This is needed before we have the CPU fallback path being treated as a Device.
     // TODO(miaowang): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
-        return;
+        GTEST_SKIP();
     }
 
     createAddMulModel(&mModel, true);
@@ -309,7 +309,7 @@ TEST_F(IntrospectionControlTest, ModelNeedTwoDevices) {
     // This is needed before we have the CPU fallback path being treated as a Device.
     // TODO(miaowang): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
-        return;
+        GTEST_SKIP();
     }
 
     createAddMulModel(&mModel, false);
