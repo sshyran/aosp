@@ -287,6 +287,72 @@ TEST_F(ValidationTestModel, SetOperandValueFromMemory) {
               ANEURALNETWORKS_BAD_STATE);
 }
 
+TEST_F(ValidationTestModel, SetOperandValueFromAHardwareBuffer) {
+    uint32_t dimensions[]{1};
+    ANeuralNetworksOperandType quant8Type{.type = ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                                          .dimensionCount = 1,
+                                          .dimensions = dimensions,
+                                          .scale = 1.0,
+                                          .zeroPoint = 0};
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &quant8Type), ANEURALNETWORKS_NO_ERROR);
+
+    AHardwareBuffer_Desc desc{
+            .width = 16,
+            .height = 16,
+            .layers = 1,
+            .format = AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM,
+            .usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN,
+    };
+
+    AHardwareBuffer* buffer = nullptr;
+    ASSERT_EQ(AHardwareBuffer_allocate(&desc, &buffer), 0);
+
+    ANeuralNetworksMemory* memory;
+    EXPECT_EQ(ANeuralNetworksMemory_createFromAHardwareBuffer(buffer, &memory),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // This should fail, since non-BLOB AHardwareBuffer is not allowed.
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromMemory(mModel, 0, memory, 0, sizeof(uint8_t)),
+              ANEURALNETWORKS_UNMAPPABLE);
+
+    AHardwareBuffer_release(buffer);
+}
+
+TEST_F(ValidationTestModel, SetOperandValueFromAHardwareBufferBlob) {
+    uint32_t dimensions[]{1};
+    ANeuralNetworksOperandType floatType{
+            .type = ANEURALNETWORKS_TENSOR_FLOAT32, .dimensionCount = 1, .dimensions = dimensions};
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &floatType), ANEURALNETWORKS_NO_ERROR);
+
+    const size_t memorySize = 20;
+    AHardwareBuffer_Desc desc{
+            .width = memorySize,
+            .height = 1,
+            .layers = 1,
+            .format = AHARDWAREBUFFER_FORMAT_BLOB,
+            .usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN,
+    };
+
+    AHardwareBuffer* buffer = nullptr;
+    ASSERT_EQ(AHardwareBuffer_allocate(&desc, &buffer), 0);
+
+    ANeuralNetworksMemory* memory;
+    EXPECT_EQ(ANeuralNetworksMemory_createFromAHardwareBuffer(buffer, &memory),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // This should fail, since offset is larger than memorySize.
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromMemory(mModel, 0, memory, memorySize + 1,
+                                                             sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+
+    // This should fail, since requested size is larger than the memory.
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromMemory(mModel, 0, memory, memorySize - 3,
+                                                             sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+
+    AHardwareBuffer_release(buffer);
+}
+
 TEST_F(ValidationTestModel, AddOEMOperand) {
     ANeuralNetworksOperandType OEMScalarType{
             .type = ANEURALNETWORKS_OEM_SCALAR, .dimensionCount = 0, .dimensions = nullptr};
@@ -533,55 +599,46 @@ TEST_F(ValidationTestCompilation, Finish) {
 }
 
 TEST_F(ValidationTestExecution, SetInput) {
-    ANeuralNetworksExecution* execution;
-    EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
-
     char buffer[20];
     EXPECT_EQ(ANeuralNetworksExecution_setInput(nullptr, 0, nullptr, buffer, sizeof(float)),
               ANEURALNETWORKS_UNEXPECTED_NULL);
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, nullptr, sizeof(float)),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, nullptr, nullptr, sizeof(float)),
               ANEURALNETWORKS_UNEXPECTED_NULL);
 
     // This should fail, since memory is not the size of a float32.
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, buffer, 20),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, nullptr, buffer, 20),
               ANEURALNETWORKS_BAD_DATA);
 
     // This should fail, as this operand does not exist.
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 999, nullptr, buffer, sizeof(float)),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 999, nullptr, buffer, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 
     // This should fail, as this operand does not exist.
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, -1, nullptr, buffer, sizeof(float)),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, -1, nullptr, buffer, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 }
 
 TEST_F(ValidationTestExecution, SetOutput) {
-    ANeuralNetworksExecution* execution;
-    EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
-
     char buffer[20];
     EXPECT_EQ(ANeuralNetworksExecution_setOutput(nullptr, 0, nullptr, buffer, sizeof(float)),
               ANEURALNETWORKS_UNEXPECTED_NULL);
-    EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution, 0, nullptr, nullptr, sizeof(float)),
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 0, nullptr, nullptr, sizeof(float)),
               ANEURALNETWORKS_UNEXPECTED_NULL);
 
     // This should fail, since memory is not the size of a float32.
-    EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution, 0, nullptr, buffer, 20),
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 0, nullptr, buffer, 20),
               ANEURALNETWORKS_BAD_DATA);
 
     // This should fail, as this operand does not exist.
-    EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution, 999, nullptr, buffer, sizeof(float)),
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 999, nullptr, buffer, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 
     // This should fail, as this operand does not exist.
-    EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution, -1, nullptr, buffer, sizeof(float)),
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, -1, nullptr, buffer, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 }
 
 TEST_F(ValidationTestExecution, SetInputFromMemory) {
-    ANeuralNetworksExecution* execution;
-    EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
-
     const size_t memorySize = 20;
     int memoryFd = ASharedMemory_create("nnMemory", memorySize);
     ASSERT_GT(memoryFd, 0);
@@ -594,34 +651,69 @@ TEST_F(ValidationTestExecution, SetInputFromMemory) {
     EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(nullptr, 0, nullptr, memory, 0,
                                                           sizeof(float)),
               ANEURALNETWORKS_UNEXPECTED_NULL);
-    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(execution, 0, nullptr, nullptr, 0,
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, nullptr, 0,
                                                           sizeof(float)),
               ANEURALNETWORKS_UNEXPECTED_NULL);
 
     // This should fail, since the operand does not exist.
-    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(execution, 999, nullptr, memory, 0,
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 999, nullptr, memory, 0,
                                                           sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 
     // This should fail, since the operand does not exist.
-    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(execution, -1, nullptr, memory, 0,
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, -1, nullptr, memory, 0,
                                                           sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 
     // This should fail, since memory is not the size of a float32.
-    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(execution, 0, nullptr, memory, 0,
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, memory, 0,
                                                           memorySize),
               ANEURALNETWORKS_BAD_DATA);
 
     // This should fail, since offset is larger than memorySize.
-    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(execution, 0, nullptr, memory,
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, memory,
                                                           memorySize + 1, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 
     // This should fail, since requested size is larger than the memory.
-    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(execution, 0, nullptr, memory,
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, memory,
                                                           memorySize - 3, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+}
+
+TEST_F(ValidationTestExecution, SetInputFromAHardwareBufferBlob) {
+    const size_t memorySize = 20;
+
+    AHardwareBuffer_Desc desc{
+            .width = memorySize,
+            .height = 1,
+            .layers = 1,
+            .format = AHARDWAREBUFFER_FORMAT_BLOB,
+            .usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN,
+    };
+
+    AHardwareBuffer* buffer = nullptr;
+    ASSERT_EQ(AHardwareBuffer_allocate(&desc, &buffer), 0);
+
+    ANeuralNetworksMemory* memory;
+    EXPECT_EQ(ANeuralNetworksMemory_createFromAHardwareBuffer(buffer, &memory),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // This should fail, since memory is not the size of a float32.
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, memory, 0,
+                                                          memorySize),
+              ANEURALNETWORKS_BAD_DATA);
+
+    // This should fail, since offset is larger than memorySize.
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, memory,
+                                                          memorySize + 1, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+    // This should fail, since requested size is larger than the memory.
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, memory,
+                                                          memorySize - 3, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+
+    AHardwareBuffer_release(buffer);
 }
 
 TEST_F(ValidationTestExecution, SetOutputFromMemory) {
@@ -668,6 +760,42 @@ TEST_F(ValidationTestExecution, SetOutputFromMemory) {
     EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(execution, 0, nullptr, memory,
                                                            memorySize - 3, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+}
+
+TEST_F(ValidationTestExecution, SetOutputFromAHardwareBufferBlob) {
+    const size_t memorySize = 20;
+
+    AHardwareBuffer_Desc desc{
+            .width = memorySize,
+            .height = 1,
+            .layers = 1,
+            .format = AHARDWAREBUFFER_FORMAT_BLOB,
+            .usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN,
+    };
+
+    AHardwareBuffer* buffer = nullptr;
+    ASSERT_EQ(AHardwareBuffer_allocate(&desc, &buffer), 0);
+
+    ANeuralNetworksMemory* memory;
+    EXPECT_EQ(ANeuralNetworksMemory_createFromAHardwareBuffer(buffer, &memory),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // This should fail, since memory is not the size of a float32.
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(mExecution, 0, nullptr, memory, 0,
+                                                           memorySize),
+              ANEURALNETWORKS_BAD_DATA);
+
+    // This should fail, since offset is larger than memorySize.
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(mExecution, 0, nullptr, memory,
+                                                           memorySize + 1, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+
+    // This should fail, since requested size is larger than the memory.
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(mExecution, 0, nullptr, memory,
+                                                           memorySize - 3, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+
+    AHardwareBuffer_release(buffer);
 }
 
 TEST_F(ValidationTestExecution, Compute) {

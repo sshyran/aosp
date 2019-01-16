@@ -99,9 +99,7 @@ int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t len
         }
         operand.lifetime = OperandLifeTime::NO_VALUE;
         // The location is unused and is set to zeros.
-        operand.location = {.poolIndex = 0,
-                            .offset = 0,
-                            .length = 0};
+        operand.location = {.poolIndex = 0, .offset = 0, .length = 0};
     } else {
         if (length > 0xFFFFFFFF) {
             LOG(ERROR) << "ANeuralNetworksModel_setOperandValue value length of " << length
@@ -121,7 +119,7 @@ int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t len
             mSmallOperandValues.resize(existingSize + extraBytes + valueLength);
             operand.lifetime = OperandLifeTime::CONSTANT_COPY;
             operand.location = {
-                .poolIndex = 0, .offset = existingSize + extraBytes, .length = valueLength};
+                    .poolIndex = 0, .offset = existingSize + extraBytes, .length = valueLength};
             memcpy(&mSmallOperandValues[operand.location.offset], buffer, valueLength);
             VLOG(MODEL) << "Copied small value to offset " << operand.location.offset;
         } else {
@@ -130,7 +128,8 @@ int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t len
             // The values for poolIndex and offset will be set when the model is finished.
             typedef decltype(operand.location.poolIndex) PoolIndexType;
             typedef decltype(operand.location.offset) OffsetType;
-            operand.location = {.poolIndex = ~PoolIndexType(0), .offset = ~OffsetType(0),
+            operand.location = {.poolIndex = ~PoolIndexType(0),
+                                .offset = ~OffsetType(0),
                                 .length = valueLength};
             // We keep track of the buffers. We'll allocate the shared memory only
             // once we know the total size, to avoid needless copies.
@@ -180,7 +179,7 @@ int ModelBuilder::copyLargeValuesToSharedMemory() {
         // Calculate the size of the shared memory needed for all the large values.
         // Also sets the offset for each value within the memory.
         size_t poolSize = 0;
-        for (LargeValue& l: mLargeOperandValues) {
+        for (LargeValue& l : mLargeOperandValues) {
             Operand& operand = mOperands[l.operandIndex];
             nnAssert(operand.lifetime == OperandLifeTime::CONSTANT_REFERENCE);
             poolSize += alignBytesNeeded(poolSize, operand.location.length);
@@ -203,7 +202,7 @@ int ModelBuilder::copyLargeValuesToSharedMemory() {
                     << poolIndex;
 
         // Copy the values to this memory.
-        for (LargeValue& l: mLargeOperandValues) {
+        for (LargeValue& l : mLargeOperandValues) {
             Operand& operand = mOperands[l.operandIndex];
             operand.location.poolIndex = poolIndex;
             memcpy(memoryPointer + operand.location.offset, l.buffer, operand.location.length);
@@ -214,7 +213,8 @@ int ModelBuilder::copyLargeValuesToSharedMemory() {
 
 int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory, uint32_t offset,
                                             size_t length) {
-    VLOG(MODEL) << __func__ << " for operand " << index << " offset " << offset << " size " << length;
+    VLOG(MODEL) << __func__ << " for operand " << index << " offset " << offset << " size "
+                << length;
     if (badState("setOperandValueFromMemory")) {
         return ANEURALNETWORKS_BAD_STATE;
     }
@@ -226,6 +226,12 @@ int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory
     }
     Operand& operand = mOperands[index];
     uint32_t neededLength = sizeOfData(operand.type, operand.dimensions);
+    // Only BLOB format AHardwareBuffer can be used for constant data.
+    if (memory->getHidlMemory().name() == "hardware_buffer") {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory passed an AHardwareBuffer"
+                   << " that is not in AHARDWAREBUFFER_FORMAT_BLOB format";
+        return ANEURALNETWORKS_UNMAPPABLE;
+    }
     if (neededLength != length) {
         LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory setting " << length
                    << " bytes when needing " << neededLength;
@@ -236,7 +242,7 @@ int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory
     }
     operand.lifetime = OperandLifeTime::CONSTANT_REFERENCE;
     operand.location = {
-                .poolIndex = mMemories.add(memory), .offset = offset, .length = neededLength};
+            .poolIndex = mMemories.add(memory), .offset = offset, .length = neededLength};
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -282,7 +288,7 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
 }
 
 int ModelBuilder::identifyInputsAndOutputs(uint32_t inputCount, const uint32_t* inputs,
-                                      uint32_t outputCount, const uint32_t* outputs) {
+                                           uint32_t outputCount, const uint32_t* outputs) {
     if (badState("identifyInputsAndOutputs")) {
         return ANEURALNETWORKS_BAD_STATE;
     }
@@ -306,7 +312,8 @@ int ModelBuilder::identifyInputsAndOutputs(uint32_t inputCount, const uint32_t* 
         for (uint32_t i = 0; i < indexCount; i++) {
             const uint32_t operandIndex = indexList[i];
             if (operandIndex >= mOperands.size()) {
-                LOG(ERROR) << "ANeuralNetworksModel_identifyInputsAndOutputs Can't set input or output "
+                LOG(ERROR) << "ANeuralNetworksModel_identifyInputsAndOutputs Can't set input or "
+                              "output "
                               "to be "
                            << operandIndex << " as this exceeds the numbe of operands "
                            << mOperands.size();
@@ -414,7 +421,7 @@ void ModelBuilder::sortIntoRunOrder() {
                 lifetime == OperandLifeTime::MODEL_OUTPUT) {
                 count++;
                 operandToOperations.insert(
-                            std::pair<uint32_t, uint32_t>(operandIndex, operationIndex));
+                        std::pair<uint32_t, uint32_t>(operandIndex, operationIndex));
             }
         }
         if (count == 0) {

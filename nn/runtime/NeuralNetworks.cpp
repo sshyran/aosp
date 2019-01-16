@@ -32,6 +32,8 @@
 #include "Tracing.h"
 #include "Utils.h"
 
+#include "vndk/hardware_buffer.h"
+
 #include <cstddef>
 #include <memory>
 #include <vector>
@@ -535,6 +537,22 @@ int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd, size_t off
         return ANEURALNETWORKS_OUT_OF_MEMORY;
     }
     int n = m->set(size, prot, fd, offset);
+    if (n != ANEURALNETWORKS_NO_ERROR) {
+        return n;
+    }
+    *memory = reinterpret_cast<ANeuralNetworksMemory*>(m.release());
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ANeuralNetworksMemory_createFromAHardwareBuffer(const AHardwareBuffer* ahwb,
+                                                    ANeuralNetworksMemory** memory) {
+    NNTRACE_RT(NNTRACE_PHASE_PREPARATION, "ANeuralNetworksMemory_createFromAHardwareBuffer");
+    *memory = nullptr;
+    std::unique_ptr<MemoryAHWB> m = std::make_unique<MemoryAHWB>();
+    if (m == nullptr) {
+        return ANEURALNETWORKS_OUT_OF_MEMORY;
+    }
+    int n = m->set(ahwb);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return n;
     }

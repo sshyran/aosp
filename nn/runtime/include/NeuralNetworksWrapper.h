@@ -113,6 +113,11 @@ public:
                  ANEURALNETWORKS_NO_ERROR;
     }
 
+    Memory(AHardwareBuffer* buffer) {
+        mValid = ANeuralNetworksMemory_createFromAHardwareBuffer(buffer, &mMemory) ==
+                 ANEURALNETWORKS_NO_ERROR;
+    }
+
     ~Memory() { ANeuralNetworksMemory_free(mMemory); }
 
     // Disallow copy semantics to ensure the runtime object can only be freed
