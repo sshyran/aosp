@@ -42,6 +42,7 @@
  *   - DO NOT CHANGE THE LAYOUT OR SIZE OF STRUCTURES
  */
 
+#include <android/hardware_buffer.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <sys/cdefs.h>
@@ -4225,7 +4226,8 @@ typedef enum {
 
     /**
      * Failure caused by not being able to map a file into memory.
-     * This may be caused by a file descriptor not being mappable.
+     * This may be caused by a file descriptor not being mappable, or an AHardwareBuffer
+     * not supported by the device.
      * Mitigate by reading its content into memory.
      */
     ANEURALNETWORKS_UNMAPPABLE = 7,
@@ -4254,9 +4256,11 @@ enum { ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES = 128 };
  * By using shared memory, a program can efficiently communicate to the
  * runtime and drivers the tensors that define a model. See
  * {@link ANeuralNetworksModel_setOperandValueFromMemory}. An application
- * should typically create one shared memory object that contains every tensor
+ * should typically create one shared memory object that contains every constant tensor
  * needed to define a model. {@link ANeuralNetworksMemory_createFromFd} can be
  * used to create shared memory from a file handle.
+ * {@link ANeuralNetworksMemory_createFromAHardwareBuffer} can be used to
+ * create shared memory from an AHardwareBuffer handle.
  *
  * Memory objects can also be used to specify the input and output arguments of
  * an execution. See {@link ANeuralNetworksExecution_setInputFromMemory}
@@ -4693,6 +4697,8 @@ int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
  * @param execution The execution to be scheduled and executed.
  *
  * @return ANEURALNETWORKS_NO_ERROR if the execution completed normally.
+ *         ANEURALNETWORKS_UNMAPPABLE if the execution input or output memory cannot
+ *         be properly mapped.
  */
 int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution);
 
@@ -4796,6 +4802,41 @@ void ANeuralNetworksBurst_free(ANeuralNetworksBurst* burst) __INTRODUCED_IN(29);
 int ANeuralNetworksExecution_burstCompute(ANeuralNetworksExecution* execution,
                                           ANeuralNetworksBurst* burst) __INTRODUCED_IN(29);
 
+/**
+ * Creates a shared memory object from an AHardwareBuffer handle.
+ *
+ * If the shared memory is backed by an AHardwareBuffer of AHARDWAREBUFFER_FORMAT_BLOB
+ * format, it can be used the same way as shared memory created from a file handle. See
+ * {@link ANeuralNetworksMemory} for a description on how to use this shared memory.
+ *
+ * If the shared memory is backed by an AHardwareBuffer of a format other than
+ * AHARDWAREBUFFER_FORMAT_BLOB, it can only be used for Model inputs and outputs.
+ * When calling {@link ANeuralNetworksExecution_setInputFromMemory} or
+ * {@link ANeuralNetworksExecution_setOutputFromMemory} with the shared memory, both
+ * offset and length must be set to zero and the entire memory region will be
+ * associated with the specified input or output operand. There is no guarantee
+ * that an arbitrary AHardwareBuffer_Format and AHardwareBuffer_UsageFlags combination
+ * can be used by arbitrary devices. The execution will fail if selected set of devices
+ * cannot consume the buffer.
+ *
+ * Calling {@link ANeuralNetworksModel_setOperandValueFromMemory} with shared memory
+ * backed by an AHardwareBuffer of a format other than AHARDWAREBUFFER_FORMAT_BLOB is
+ * disallowed.
+ *
+ * TODO(miaowang): add documentation about intended usage with introspection API.
+ *
+ * Available since API level 29.
+ *
+ * @param ahwb The AHardwareBuffer handle.
+ * @param memory The memory object to be created.
+ *               Set to NULL if unsuccessful.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if the request completed normally.
+ *
+ * @see AHardwareBuffer
+ */
+int ANeuralNetworksMemory_createFromAHardwareBuffer(const AHardwareBuffer* ahwb,
+                                                    ANeuralNetworksMemory** memory);
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
 #if __ANDROID_API__ >= 27
@@ -5029,10 +5070,15 @@ int ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(
  * To indicate that an optional operand should be considered missing,
  * use {@link ANeuralNetworksModel_setOperandValue} instead, passing nullptr for buffer.
  *
+ * Is disallowed to set an operand value with shared memory backed by an AHardwareBuffer
+ * of a format other than AHARDWAREBUFFER_FORMAT_BLOB.
+ *
  * Attempting to modify a model once {@link ANeuralNetworksModel_finish} has been
  * called will return an error.
  *
  * See {@link ANeuralNetworksModel} for information on multithreaded usage.
+ * See {@link ANeuralNetworksMemory_createFromAHardwarBuffer} for information on
+ * AHardwareBuffer usage.
  *
  * Available since API level 27.
  *
@@ -5308,6 +5354,8 @@ int ANeuralNetworksExecution_setInput(ANeuralNetworksExecution* execution, int32
  * and 0 for length.
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
+ * See {@link ANeuralNetworksMemory_createFromAHardwarBuffer} for information on
+ * AHardwareBuffer usage.
  *
  * Available since API level 27.
  *
@@ -5387,6 +5435,8 @@ int ANeuralNetworksExecution_setOutput(ANeuralNetworksExecution* execution, int3
  * <p>The provided memory must outlive the execution.</p>
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
+ * See {@link ANeuralNetworksMemory_createFromAHardwarBuffer} for information on
+ * AHardwareBuffer usage.
  *
  * Available since API level 27.
  *
@@ -5456,6 +5506,8 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
  * Available since API level 27.
  *
  * @return ANEURALNETWORKS_NO_ERROR if the execution completed normally.
+ *         ANEURALNETWORKS_UNMAPPABLE if the execution input or output memory cannot
+ *         be properly mapped.
  */
 int ANeuralNetworksEvent_wait(ANeuralNetworksEvent* event) __INTRODUCED_IN(27);
 
