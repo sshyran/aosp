@@ -115,6 +115,10 @@ class Memory {
         mValid = ANeuralNetworksMemory_createFromFd(size, protect, fd, offset, &mMemory) ==
                  ANEURALNETWORKS_NO_ERROR;
     }
+    Memory(AHardwareBuffer* buffer) {
+        mValid = ANeuralNetworksMemory_createFromAHardwareBuffer(buffer, &mMemory) ==
+                 ANEURALNETWORKS_NO_ERROR;
+    }
 
     ~Memory() { ANeuralNetworksMemory_free(mMemory); }
 
