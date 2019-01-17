@@ -66,6 +66,7 @@ static bool validateOperandExtraParams(const V1_2::Operand& operand, uint32_t in
         case OperandType::TENSOR_FLOAT16:
         case OperandType::TENSOR_INT32:
         case OperandType::TENSOR_QUANT8_ASYMM:
+        case OperandType::TENSOR_QUANT16_ASYMM:
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_BOOL8:
             NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
@@ -144,6 +145,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::TENSOR_FLOAT32:
             case OperandType::TENSOR_INT32:
             case OperandType::TENSOR_QUANT8_ASYMM:
+            case OperandType::TENSOR_QUANT16_ASYMM:
             case OperandType::TENSOR_QUANT16_SYMM:
             case OperandType::TENSOR_BOOL8:
             case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
@@ -194,12 +196,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                 }
                 break;
             case OperandType::TENSOR_QUANT8_ASYMM:
-                if (operand.scale <= 0.f) {
-                    LOG(ERROR) << "Operand " << index << ": Operand of type "
-                               << getOperandTypeName(operand.type) << " with a non-positive scale";
-                    return false;
-                }
-                break;
+            case OperandType::TENSOR_QUANT16_ASYMM:
             case OperandType::TENSOR_QUANT16_SYMM:
                 if (operand.scale <= 0.f) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
@@ -238,6 +235,14 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with an invalid zeroPoint "
                                << operand.zeroPoint << ", must be in range [0, 255]";
+                    return false;
+                }
+                break;
+            case OperandType::TENSOR_QUANT16_ASYMM:
+                if (operand.zeroPoint < 0 || operand.zeroPoint > 65535) {
+                    LOG(ERROR) << "Operand " << index << ": Operand of type "
+                               << getOperandTypeName(operand.type) << " with an invalid zeroPoint "
+                               << operand.zeroPoint << ", must be in range [0, 65535]";
                     return false;
                 }
                 break;
@@ -595,6 +600,7 @@ bool validOperandType(V1_2::OperandType operandType) {
         case V1_2::OperandType::TENSOR_FLOAT32:
         case V1_2::OperandType::TENSOR_INT32:
         case V1_2::OperandType::TENSOR_QUANT8_ASYMM:
+        case V1_2::OperandType::TENSOR_QUANT16_ASYMM:
         case V1_2::OperandType::TENSOR_QUANT16_SYMM:
         case V1_2::OperandType::TENSOR_BOOL8:
         case V1_2::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:

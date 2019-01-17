@@ -898,6 +898,7 @@ PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> d
         case OperandType::BOOL:
         case OperandType::TENSOR_INT32:
         case OperandType::TENSOR_QUANT8_ASYMM:
+        case OperandType::TENSOR_QUANT16_ASYMM:
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_BOOL8:
         case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
