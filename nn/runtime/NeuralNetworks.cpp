@@ -321,6 +321,9 @@ static_assert(alignof(ANeuralNetworksSymmPerChannelQuantParams) == alignof(void*
 // Asserts for compilation caching
 static_assert(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN == 32,
               "ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN has changed");
+static_assert(static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN) ==
+                      ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN,
+              "Constant::BYTE_SIZE_OF_CACHE_TOKEN != ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN");
 
 using android::sp;
 using namespace android::nn;
