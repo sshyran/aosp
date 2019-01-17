@@ -32,7 +32,7 @@ Model createTestModel() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {4, 3},
+            .dimensions = {4, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -110,7 +110,7 @@ Model createTestModel_relaxed() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {4, 3},
+            .dimensions = {4, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -189,7 +189,7 @@ Model createTestModel_float16() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {4, 3},
+            .dimensions = {4, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -236,6 +236,84 @@ inline bool is_ignored_float16(int i) {
 }
 
 // Create the model
+Model createTestModel_quant8() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {5, 4},
+            .numberOfConsumers = 1,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {5, 8},
+            .numberOfConsumers = 1,
+            .scale = 0.05f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {4},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {4, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {5, 8},
+            .numberOfConsumers = 0,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::AXIS_ALIGNED_BBOX_TRANSFORM,
+            .inputs = {0, 1, 2, 3},
+            .outputs = {4},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3};
+    const std::vector<uint32_t> outputIndexes = {4};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_quant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_dynamic_output_shape() {
     const std::vector<Operand> operands = {
         {
@@ -267,7 +345,7 @@ Model createTestModel_dynamic_output_shape() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {4, 3},
+            .dimensions = {4, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -345,7 +423,7 @@ Model createTestModel_dynamic_output_shape_relaxed() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {4, 3},
+            .dimensions = {4, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -424,7 +502,7 @@ Model createTestModel_dynamic_output_shape_float16() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {4, 3},
+            .dimensions = {4, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -471,6 +549,84 @@ inline bool is_ignored_dynamic_output_shape_float16(int i) {
 }
 
 // Create the model
+Model createTestModel_dynamic_output_shape_quant8() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {5, 4},
+            .numberOfConsumers = 1,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {5, 8},
+            .numberOfConsumers = 1,
+            .scale = 0.05f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {4},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {4, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::AXIS_ALIGNED_BBOX_TRANSFORM,
+            .inputs = {0, 1, 2, 3},
+            .outputs = {4},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3};
+    const std::vector<uint32_t> outputIndexes = {4};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_quant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_2() {
     const std::vector<Operand> operands = {
         {
@@ -502,7 +658,7 @@ Model createTestModel_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {7, 3},
+            .dimensions = {7, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -580,7 +736,7 @@ Model createTestModel_relaxed_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {7, 3},
+            .dimensions = {7, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -659,7 +815,7 @@ Model createTestModel_float16_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {7, 3},
+            .dimensions = {7, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -706,6 +862,84 @@ inline bool is_ignored_float16_2(int i) {
 }
 
 // Create the model
+Model createTestModel_quant8_2() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {5, 4},
+            .numberOfConsumers = 1,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {5, 8},
+            .numberOfConsumers = 1,
+            .scale = 0.05f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {7},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {7, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {5, 8},
+            .numberOfConsumers = 0,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::AXIS_ALIGNED_BBOX_TRANSFORM,
+            .inputs = {0, 1, 2, 3},
+            .outputs = {4},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3};
+    const std::vector<uint32_t> outputIndexes = {4};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_quant8_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
 Model createTestModel_dynamic_output_shape_2() {
     const std::vector<Operand> operands = {
         {
@@ -737,7 +971,7 @@ Model createTestModel_dynamic_output_shape_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {7, 3},
+            .dimensions = {7, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -815,7 +1049,7 @@ Model createTestModel_dynamic_output_shape_relaxed_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {7, 3},
+            .dimensions = {7, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -894,7 +1128,7 @@ Model createTestModel_dynamic_output_shape_float16_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {7, 3},
+            .dimensions = {7, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -936,6 +1170,84 @@ Model createTestModel_dynamic_output_shape_float16_2() {
 }
 
 inline bool is_ignored_dynamic_output_shape_float16_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_quant8_2() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {5, 4},
+            .numberOfConsumers = 1,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {5, 8},
+            .numberOfConsumers = 1,
+            .scale = 0.05f,
+            .zeroPoint = 128,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {7},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {7, 2},
+            .numberOfConsumers = 1,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT16_ASYMM,
+            .dimensions = {0, 0},
+            .numberOfConsumers = 0,
+            .scale = 0.125f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::AXIS_ALIGNED_BBOX_TRANSFORM,
+            .inputs = {0, 1, 2, 3},
+            .outputs = {4},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3};
+    const std::vector<uint32_t> outputIndexes = {4};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }

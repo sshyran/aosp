@@ -2669,7 +2669,7 @@ typedef enum {
      *
      * The bounding box is represented by its upper-left corner coordinate
      * (x1,y1) and lower-right corner coordinate (x2,y2) in the original image.
-     * A valid bounding box should satisfy x1 < x2 and y1 < y2.
+     * A valid bounding box should satisfy x1 <= x2 and y1 <= y2.
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -2691,9 +2691,11 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
-     *      [num_boxes, 3, num_keypoints], specifying the location and score of
+     *      [num_boxes, num_keypoints], specifying score of the keypoints.
+     * * 1: A tensor of the same {@link OperandCode} as input1, with shape
+     *      [num_boxes, num_keypoints, 2], specifying the location of
      *      the keypoints, the second dimension is organized as
-     *      [keypoint_x, keypoint_y, score].
+     *      [keypoint_x, keypoint_y].
      *
      * Available since API level 29.
      */

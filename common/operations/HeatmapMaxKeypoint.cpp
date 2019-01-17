@@ -34,8 +34,9 @@ constexpr uint32_t kHeatmapTensor = 0;
 constexpr uint32_t kBoxesTensor = 1;
 constexpr uint32_t kLayoutScalar = 2;
 
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+constexpr uint32_t kNumOutputs = 2;
+constexpr uint32_t kOutputScoreTensor = 0;
+constexpr uint32_t kOutputKeypointTensor = 1;
 
 namespace {
 
@@ -80,7 +81,9 @@ static void solveForDelta(const float grid[3][3], float* delta, float* deltaScor
 
 inline bool heatmapMaxKeypointFloat32Nhwc(const float* heatmap, const Shape& heatmapShape,
                                           const float* boxes, const Shape& boxesShape,
-                                          float* outputData, const Shape& outputShape, float fpAtol,
+                                          float* outputScoreData, const Shape& outputScoreShape,
+                                          float* outputKeypointData,
+                                          const Shape& outputKeypointShape, float fpAtol,
                                           float fpRtol) {
     NNTRACE_TRANS("HeatmapMaxKeypoint");
 
@@ -88,14 +91,14 @@ inline bool heatmapMaxKeypointFloat32Nhwc(const float* heatmap, const Shape& hea
     uint32_t heatmapSize = getSizeOfDimension(heatmapShape, 1);
     uint32_t numKeypoints = getSizeOfDimension(heatmapShape, 3);
     uint32_t boxInfoLength = getSizeOfDimension(boxesShape, 1);
-    uint32_t outputInfoLength = getSizeOfDimension(outputShape, 1);
 
     const float* heatmapBase = heatmap;
     const float* boxInfoBase = boxes;
-    float* outputBase = outputData;
+    float* outputScoreBase = outputScoreData;
+    float* outputKeypointBase = outputKeypointData;
     for (uint32_t i = 0; i < numBoxes; i++) {
-        NN_RET_CHECK_LT(boxInfoBase[0], boxInfoBase[2]);
-        NN_RET_CHECK_LT(boxInfoBase[1], boxInfoBase[3]);
+        NN_RET_CHECK_LE(boxInfoBase[0], boxInfoBase[2]);
+        NN_RET_CHECK_LE(boxInfoBase[1], boxInfoBase[3]);
         for (uint32_t j = 0; j < numKeypoints; j++) {
             // find max score and its index
             uint32_t maxIndex = 0;
@@ -143,13 +146,13 @@ inline bool heatmapMaxKeypointFloat32Nhwc(const float* heatmap, const Shape& hea
                                  static_cast<float>(heatmapSize);
             float hRelativePos = (static_cast<float>(maxIndexHeight) + delta[1] + 0.5f) /
                                  static_cast<float>(heatmapSize);
-            outputBase[j] = wRelativePos * roiWidth + wRoiStart;
-            outputBase[numKeypoints + j] = hRelativePos * roiHeight + hRoiStart;
-            outputBase[numKeypoints * 2 + j] = deltaScore;
+            *outputScoreBase++ = deltaScore;
+            outputKeypointBase[0] = wRelativePos * roiWidth + wRoiStart;
+            outputKeypointBase[1] = hRelativePos * roiHeight + hRoiStart;
+            outputKeypointBase += 2;
         }
         boxInfoBase += boxInfoLength;
         heatmapBase += heatmapSize * heatmapSize * numKeypoints;
-        outputBase += numKeypoints * outputInfoLength;
     }
 
     return true;
@@ -157,8 +160,9 @@ inline bool heatmapMaxKeypointFloat32Nhwc(const float* heatmap, const Shape& hea
 
 inline bool heatmapMaxKeypointFloat32(const float* heatmap, const Shape& heatmapShape,
                                       const float* boxes, const Shape& boxesShape, bool layout,
-                                      float* outputData, const Shape& outputShape, float fpAtol,
-                                      float fpRtol) {
+                                      float* outputScoreData, const Shape& outputScoreShape,
+                                      float* outputKeypointData, const Shape& outputKeypointShape,
+                                      float fpAtol, float fpRtol) {
     std::vector<float> heatmap_nhwc;
     Shape heatmapShape_nhwc;
     if (layout) {
@@ -167,7 +171,8 @@ inline bool heatmapMaxKeypointFloat32(const float* heatmap, const Shape& heatmap
     const float* heatmap_tmp = layout ? heatmap_nhwc.data() : heatmap;
     const Shape& heatmapShape_tmp = layout ? heatmapShape_nhwc : heatmapShape;
     return heatmapMaxKeypointFloat32Nhwc(heatmap_tmp, heatmapShape_tmp, boxes, boxesShape,
-                                         outputData, outputShape, fpAtol, fpRtol);
+                                         outputScoreData, outputScoreShape, outputKeypointData,
+                                         outputKeypointShape, fpAtol, fpRtol);
 }
 
 }  // namespace
@@ -180,7 +185,7 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_FLOAT32)
             << "Unsupported tensor type for operation " << kOperationName;
     NN_RET_CHECK(validateInputTypes(context, {inputType, inputType, OperandType::BOOL}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType, inputType}));
     return validateHalVersion(context, HalVersion::V1_2);
 }
 
@@ -200,13 +205,20 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK_EQ(getSizeOfDimension(boxesShape, 0), numBoxes);
     NN_RET_CHECK_EQ(boxInfoLength, 4);
 
-    Shape output = context->getOutputShape(kOutputTensor);
-    output.type = heatmapShape.type;
-    output.dimensions = {numBoxes, 3, numKeypoints};
-    output.offset = heatmapShape.offset;
-    output.scale = heatmapShape.scale;
+    Shape outputScore = context->getOutputShape(kOutputScoreTensor);
+    outputScore.type = heatmapShape.type;
+    outputScore.dimensions = {numBoxes, numKeypoints};
+    outputScore.offset = heatmapShape.offset;
+    outputScore.scale = heatmapShape.scale;
+    NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, outputScore));
 
-    return context->setOutputShape(kOutputTensor, output);
+    Shape outputKeypoint = context->getOutputShape(kOutputKeypointTensor);
+    outputKeypoint.type = boxesShape.type;
+    outputKeypoint.dimensions = {numBoxes, numKeypoints, 2};
+    outputKeypoint.offset = boxesShape.offset;
+    outputKeypoint.scale = boxesShape.scale;
+    NN_RET_CHECK(context->setOutputShape(kOutputKeypointTensor, outputKeypoint));
+    return true;
 }
 
 bool execute(IOperationExecutionContext* context) {
@@ -217,17 +229,22 @@ bool execute(IOperationExecutionContext* context) {
             const auto heatmapShape = context->getInputShape(kHeatmapTensor);
             const auto boxes = context->getInputBuffer<_Float16>(kBoxesTensor);
             const auto boxesShape = context->getInputShape(kBoxesTensor);
-            auto outputData = context->getOutputBuffer<_Float16>(kOutputTensor);
-            const auto outputShape = context->getOutputShape(kOutputTensor);
+            auto outputScoreData = context->getOutputBuffer<_Float16>(kOutputScoreTensor);
+            const auto outputScoreShape = context->getOutputShape(kOutputScoreTensor);
+            auto outputKeypointData = context->getOutputBuffer<_Float16>(kOutputKeypointTensor);
+            const auto outputKeypointShape = context->getOutputShape(kOutputKeypointTensor);
             std::vector<float> heatmap_float32(getNumberOfElements(heatmapShape));
             convertFloat16ToFloat32(heatmap, &heatmap_float32);
             std::vector<float> boxes_float32(getNumberOfElements(boxesShape));
             convertFloat16ToFloat32(boxes, &boxes_float32);
-            std::vector<float> output_float32(getNumberOfElements(outputShape));
+            std::vector<float> outputScore_float32(getNumberOfElements(outputScoreShape));
+            std::vector<float> outputKeypoint_float32(getNumberOfElements(outputKeypointShape));
             NN_RET_CHECK(heatmapMaxKeypointFloat32(
                     heatmap_float32.data(), heatmapShape, boxes_float32.data(), boxesShape, layout,
-                    output_float32.data(), outputShape, 1e-3f, 1e-3f));
-            convertFloat32ToFloat16(output_float32, outputData);
+                    outputScore_float32.data(), outputScoreShape, outputKeypoint_float32.data(),
+                    outputKeypointShape, 1e-3f, 1e-3f));
+            convertFloat32ToFloat16(outputScore_float32, outputScoreData);
+            convertFloat32ToFloat16(outputKeypoint_float32, outputKeypointData);
             return true;
         }
         case OperandType::TENSOR_FLOAT32: {
@@ -235,8 +252,11 @@ bool execute(IOperationExecutionContext* context) {
                                              context->getInputShape(kHeatmapTensor),
                                              context->getInputBuffer<float>(kBoxesTensor),
                                              context->getInputShape(kBoxesTensor), layout,
-                                             context->getOutputBuffer<float>(kOutputTensor),
-                                             context->getOutputShape(kOutputTensor), 1e-5f, 1e-5f);
+                                             context->getOutputBuffer<float>(kOutputScoreTensor),
+                                             context->getOutputShape(kOutputScoreTensor),
+                                             context->getOutputBuffer<float>(kOutputKeypointTensor),
+                                             context->getOutputShape(kOutputKeypointTensor), 1e-5f,
+                                             1e-5f);
         }
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
