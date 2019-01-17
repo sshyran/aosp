@@ -111,6 +111,12 @@ TEST_F(GeneratedTests, heatmap_max_keypoint_nhwc_float16_2) {
             heatmap_max_keypoint::get_examples_nhwc_float16_2());
 }
 
+TEST_F(GeneratedTests, heatmap_max_keypoint_nhwc_quant8) {
+    execute(heatmap_max_keypoint::CreateModel_nhwc_quant8,
+            heatmap_max_keypoint::is_ignored_nhwc_quant8,
+            heatmap_max_keypoint::get_examples_nhwc_quant8());
+}
+
 TEST_F(GeneratedTests, heatmap_max_keypoint_nchw_2) {
     execute(heatmap_max_keypoint::CreateModel_nchw_2,
             heatmap_max_keypoint::is_ignored_nchw_2,
@@ -127,6 +133,12 @@ TEST_F(GeneratedTests, heatmap_max_keypoint_nchw_float16_2) {
     execute(heatmap_max_keypoint::CreateModel_nchw_float16_2,
             heatmap_max_keypoint::is_ignored_nchw_float16_2,
             heatmap_max_keypoint::get_examples_nchw_float16_2());
+}
+
+TEST_F(GeneratedTests, heatmap_max_keypoint_nchw_quant8) {
+    execute(heatmap_max_keypoint::CreateModel_nchw_quant8,
+            heatmap_max_keypoint::is_ignored_nchw_quant8,
+            heatmap_max_keypoint::get_examples_nchw_quant8());
 }
 
 #if 0
@@ -154,6 +166,14 @@ TEST_F(DynamicOutputShapeTests, heatmap_max_keypoint_dynamic_output_shape_nhwc_f
 
 #endif
 #if 0
+TEST_F(DynamicOutputShapeTests, heatmap_max_keypoint_dynamic_output_shape_nhwc_quant8) {
+    execute(heatmap_max_keypoint::CreateModel_dynamic_output_shape_nhwc_quant8,
+            heatmap_max_keypoint::is_ignored_dynamic_output_shape_nhwc_quant8,
+            heatmap_max_keypoint::get_examples_dynamic_output_shape_nhwc_quant8());
+}
+
+#endif
+#if 0
 TEST_F(DynamicOutputShapeTests, heatmap_max_keypoint_dynamic_output_shape_nchw_2) {
     execute(heatmap_max_keypoint::CreateModel_dynamic_output_shape_nchw_2,
             heatmap_max_keypoint::is_ignored_dynamic_output_shape_nchw_2,
@@ -174,6 +194,42 @@ TEST_F(DynamicOutputShapeTests, heatmap_max_keypoint_dynamic_output_shape_nchw_f
     execute(heatmap_max_keypoint::CreateModel_dynamic_output_shape_nchw_float16_2,
             heatmap_max_keypoint::is_ignored_dynamic_output_shape_nchw_float16_2,
             heatmap_max_keypoint::get_examples_dynamic_output_shape_nchw_float16_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, heatmap_max_keypoint_dynamic_output_shape_nchw_quant8) {
+    execute(heatmap_max_keypoint::CreateModel_dynamic_output_shape_nchw_quant8,
+            heatmap_max_keypoint::is_ignored_dynamic_output_shape_nchw_quant8,
+            heatmap_max_keypoint::get_examples_dynamic_output_shape_nchw_quant8());
+}
+
+#endif
+TEST_F(GeneratedTests, heatmap_max_keypoint_nhwc_quant8_2) {
+    execute(heatmap_max_keypoint::CreateModel_nhwc_quant8_2,
+            heatmap_max_keypoint::is_ignored_nhwc_quant8_2,
+            heatmap_max_keypoint::get_examples_nhwc_quant8_2());
+}
+
+TEST_F(GeneratedTests, heatmap_max_keypoint_nchw_quant8_2) {
+    execute(heatmap_max_keypoint::CreateModel_nchw_quant8_2,
+            heatmap_max_keypoint::is_ignored_nchw_quant8_2,
+            heatmap_max_keypoint::get_examples_nchw_quant8_2());
+}
+
+#if 0
+TEST_F(DynamicOutputShapeTests, heatmap_max_keypoint_dynamic_output_shape_nhwc_quant8_2) {
+    execute(heatmap_max_keypoint::CreateModel_dynamic_output_shape_nhwc_quant8_2,
+            heatmap_max_keypoint::is_ignored_dynamic_output_shape_nhwc_quant8_2,
+            heatmap_max_keypoint::get_examples_dynamic_output_shape_nhwc_quant8_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, heatmap_max_keypoint_dynamic_output_shape_nchw_quant8_2) {
+    execute(heatmap_max_keypoint::CreateModel_dynamic_output_shape_nchw_quant8_2,
+            heatmap_max_keypoint::is_ignored_dynamic_output_shape_nchw_quant8_2,
+            heatmap_max_keypoint::get_examples_dynamic_output_shape_nchw_quant8_2());
 }
 
 #endif
