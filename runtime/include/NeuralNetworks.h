@@ -2672,7 +2672,9 @@ typedef enum {
      * A valid bounding box should satisfy x1 <= x2 and y1 <= y2.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
      * With the default data layout NHWC, the data is stored in the order of:
@@ -2685,7 +2687,10 @@ typedef enum {
      *      specifying the heatmaps, the height and width of heatmaps should
      *      be the same, and must be greater than or equal to 2.
      * * 1: A 2-D Tensor of shape [num_boxes, 4], specifying the bounding boxes,
-     *      each with format [x1, y1, x2, y2].
+     *      each with format [x1, y1, x2, y2]. For input0 of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should
+     *      be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, with zeroPoint
+     *      of 0 and scale of 0.125.
      * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
      *      NCHW data layout for input0. Set to false for NHWC.
      *
