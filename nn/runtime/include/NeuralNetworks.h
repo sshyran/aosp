@@ -149,6 +149,21 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL = 11,
+
+    /**
+     * A tensor of 16 bit unsigned integers that represent real numbers.
+     *
+     * Attached to this tensor are two numbers that can be used to convert the
+     * 16 bit integer to the real value and vice versa. These two numbers are:
+     * - scale: a 32 bit floating point value greater than zero.
+     * - zeroPoint: a 32 bit integer, in range [0, 65535].
+     *
+     * The formula is:
+     * real_value = (integer_value - zeroPoint) * scale.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_TENSOR_QUANT16_ASYMM = 12,
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
 } OperandCode;

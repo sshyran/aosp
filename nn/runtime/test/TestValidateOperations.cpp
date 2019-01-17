@@ -25,14 +25,20 @@ using namespace android::nn::wrapper;
 
 namespace {
 
-static const int32_t kAvailableOperandCodes[] = {
-        ANEURALNETWORKS_FLOAT32,        ANEURALNETWORKS_INT32,
-        ANEURALNETWORKS_UINT32,         ANEURALNETWORKS_TENSOR_FLOAT32,
-        ANEURALNETWORKS_TENSOR_INT32,   ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
-        ANEURALNETWORKS_BOOL,           ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
-        ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_BOOL8,
-        ANEURALNETWORKS_FLOAT16,        ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
-        ANEURALNETWORKS_TENSOR_OEM_BYTE};
+static const int32_t kAvailableOperandCodes[] = {ANEURALNETWORKS_FLOAT32,
+                                                 ANEURALNETWORKS_INT32,
+                                                 ANEURALNETWORKS_UINT32,
+                                                 ANEURALNETWORKS_TENSOR_FLOAT32,
+                                                 ANEURALNETWORKS_TENSOR_INT32,
+                                                 ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                                                 ANEURALNETWORKS_BOOL,
+                                                 ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
+                                                 ANEURALNETWORKS_TENSOR_FLOAT16,
+                                                 ANEURALNETWORKS_TENSOR_BOOL8,
+                                                 ANEURALNETWORKS_FLOAT16,
+                                                 ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
+                                                 ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+                                                 ANEURALNETWORKS_TENSOR_OEM_BYTE};
 
 ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0, uint32_t* dim = nullptr,
                                      float scale = 0.0f, int32_t zeroPoint = 0) {
