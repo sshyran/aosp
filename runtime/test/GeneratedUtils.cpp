@@ -71,12 +71,13 @@ void print<_Float16>(std::ostream& os, const std::map<int, std::vector<_Float16>
 static void printAll(std::ostream& os, const MixedTyped& test) {
     print(os, test.float32Operands);
     print(os, test.int32Operands);
-    print(os, test.quant8Operands);
-    print(os, test.quant16Operands);
+    print(os, test.quant8AsymmOperands);
+    print(os, test.quant16SymmOperands);
     print(os, test.float16Operands);
     print(os, test.bool8Operands);
     print(os, test.quant8ChannelOperands);
-    static_assert(7 == MixedTyped::kNumTypes,
+    print(os, test.quant16AsymmOperands);
+    static_assert(8 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but printAll function wasn't updated");
 }
 
