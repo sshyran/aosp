@@ -101,7 +101,7 @@ inline uint32_t sizeOfData(const Operand& operand) {
 std::string getOperationName(OperationType opCode);
 
 // Returns the name of the operand type in ASCII.
-const char* getOperandTypeName(OperandType type);
+std::string getOperandTypeName(OperandType type);
 
 // Memory is unmapped.
 // Memory is reference counted by hidl_memory instances, and is deallocated
