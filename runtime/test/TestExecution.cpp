@@ -111,7 +111,7 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
             return mPreparedModelV1_2->configureExecutionBurst(callback, requestChannel,
                                                                resultChannel, cb);
         } else {
-            cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
+            cb(mErrorStatus, nullptr);
             return Void();
         }
     }
