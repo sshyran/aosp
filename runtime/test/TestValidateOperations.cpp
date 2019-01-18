@@ -2598,4 +2598,9 @@ TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_float32) {
                           ANEURALNETWORKS_FLOAT32);
 }
 
+TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_quant) {
+    boxWithNmsLimitOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+                          ANEURALNETWORKS_FLOAT32);
+}
+
 }  // end namespace

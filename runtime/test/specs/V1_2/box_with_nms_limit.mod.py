@@ -27,6 +27,13 @@ o4 = Output("batchSplitOut", "TENSOR_INT32", "{2}") # batch split out
 model = model.Operation("BOX_WITH_NMS_LIMIT",
     i1, i2, i3, 0.3, 0.4, -1).To(o1, o2, o3, o4)
 
+quant8 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.01, 0),
+    i2: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.01, 0),
+    o2: ("TENSOR_QUANT16_ASYMM", 0.125, 0)
+})
+
 input0 = {
     i1: [   # scores
         0.90, 0.95, 0.75,
@@ -93,7 +100,7 @@ output0 = {
     o4: [5, 7],
 }
 
-Example((input0, output0)).AddVariations("relaxed", "float16")
+Example((input0, output0)).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 2: BOX_WITH_NMS_LIMIT, score_threshold = 0.3, nms_threshold = 0.4, max_detections = 5
@@ -108,6 +115,13 @@ o3 = Output("classesOut", "TENSOR_INT32", "{10}") # classes out
 o4 = Output("batchSplitOut", "TENSOR_INT32", "{2}") # batch split out
 model = model.Operation("BOX_WITH_NMS_LIMIT",
     i1, i2, i3, 0.3, 0.4, 5).To(o1, o2, o3, o4)
+
+quant8 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.01, 128),
+    i2: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.01, 128),
+    o2: ("TENSOR_QUANT16_ASYMM", 0.125, 0)
+})
 
 input0 = {
     i1: [   # scores
@@ -173,4 +187,4 @@ output0 = {
     o4: [5, 5],
 }
 
-Example((input0, output0)).AddVariations("relaxed", "float16")
+Example((input0, output0)).AddVariations("relaxed", "float16", quant8)

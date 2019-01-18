@@ -2301,6 +2301,7 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
      * Inputs:
      * * 0: A 2-D Tensor of shape [num_rois, num_classes], specifying the score
@@ -2309,7 +2310,10 @@ typedef enum {
      * * 1: A 2-D Tensor specifying the bounding boxes of shape
      *      [num_rois, num_classes * 4], organized in the order [x1, y1, x2, y2].
      *      The boxes are grouped by batches in the first dimension. The sequential
-     *      order of the boxes corresponds with input0.
+     *      order of the boxes corresponds with input0. For input0 of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should be of
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, with zeroPoint of 0 and
+     *      scale of 0.125.
      * * 2: A 1-D Tensor of shape [batches], specifying the number of boxes
      *      for each image in the batch.
      * * 3: An {@link ANEURALNETWORKS_FLOAT32} scalar, score_threshold. Boxes
@@ -2325,11 +2329,14 @@ typedef enum {
      * * 0: A 1-D Tensor of the same {@link OperandCode} as input0, with shape
      *      [num_output_rois], specifying the score of each output box. The boxes
      *      are grouped by batches, but the sequential order in each batch is not
-     *      guaranteed.
+     *      guaranteed. For type of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      the scale and zero point must be the same as input0.
      * * 1: A 2-D Tensor of the same {@link OperandCode} as input1, with shape
      *      [num_output_rois, 4], specifying the coordinates of each
      *      output bounding box with the same format as input1. The sequential
-     *      order of the boxes corresponds with output0.
+     *      order of the boxes corresponds with output0. For type of
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, the scale must be
+     *      0.125 and the zero point must be 0.
      * * 2: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [num_output_rois], specifying the class of each output box. The
      *      sequential order of the boxes corresponds with output0.
