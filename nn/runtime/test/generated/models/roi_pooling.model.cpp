@@ -94,13 +94,13 @@ void CreateModel_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type13(Type::TENSOR_QUANT8_ASYMM, {1, 4, 4, 1}, 0.25f, 128);
   OperandType type14(Type::TENSOR_QUANT8_ASYMM, {4, 2, 2, 1}, 0.25f, 128);
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
+  OperandType type15(Type::TENSOR_QUANT16_ASYMM, {4, 4}, 0.125f, 0);
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   // Phase 1, operands
   auto in = model->addOperand(&type13);
-  auto roi = model->addOperand(&type2);
+  auto roi = model->addOperand(&type15);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
   auto param2 = model->addOperand(&type5);
@@ -136,22 +136,22 @@ inline bool is_ignored_nhwc_quant8(int i) {
 
 void CreateModel_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type15(Type::TENSOR_FLOAT16, {1, 4, 4, 1});
-  OperandType type16(Type::TENSOR_FLOAT16, {4, 2, 2, 1});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {4, 4});
+  OperandType type16(Type::TENSOR_FLOAT16, {1, 4, 4, 1});
+  OperandType type17(Type::TENSOR_FLOAT16, {4, 2, 2, 1});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type19(Type::TENSOR_FLOAT16, {4, 4});
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   // Phase 1, operands
-  auto in = model->addOperand(&type15);
-  auto roi = model->addOperand(&type18);
+  auto in = model->addOperand(&type16);
+  auto roi = model->addOperand(&type19);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
   auto param2 = model->addOperand(&type5);
-  auto param3 = model->addOperand(&type17);
-  auto param4 = model->addOperand(&type17);
+  auto param3 = model->addOperand(&type18);
+  auto param4 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type16);
+  auto out = model->addOperand(&type17);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -180,14 +180,14 @@ inline bool is_ignored_nhwc_float16(int i) {
 
 void CreateModel_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type20(Type::TENSOR_FLOAT32, {4, 1, 2, 2});
+  OperandType type20(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
+  OperandType type21(Type::TENSOR_FLOAT32, {4, 1, 2, 2});
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   // Phase 1, operands
-  auto in = model->addOperand(&type19);
+  auto in = model->addOperand(&type20);
   auto roi = model->addOperand(&type2);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
@@ -195,7 +195,7 @@ void CreateModel_nchw(Model *model) {
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type20);
+  auto out = model->addOperand(&type21);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -224,14 +224,14 @@ inline bool is_ignored_nchw(int i) {
 
 void CreateModel_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type20(Type::TENSOR_FLOAT32, {4, 1, 2, 2});
+  OperandType type20(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
+  OperandType type21(Type::TENSOR_FLOAT32, {4, 1, 2, 2});
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   // Phase 1, operands
-  auto in = model->addOperand(&type19);
+  auto in = model->addOperand(&type20);
   auto roi = model->addOperand(&type2);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
@@ -239,7 +239,7 @@ void CreateModel_nchw_relaxed(Model *model) {
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type20);
+  auto out = model->addOperand(&type21);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -270,22 +270,22 @@ inline bool is_ignored_nchw_relaxed(int i) {
 
 void CreateModel_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type21(Type::TENSOR_QUANT8_ASYMM, {1, 1, 4, 4}, 0.25f, 128);
-  OperandType type22(Type::TENSOR_QUANT8_ASYMM, {4, 1, 2, 2}, 0.25f, 128);
+  OperandType type15(Type::TENSOR_QUANT16_ASYMM, {4, 4}, 0.125f, 0);
+  OperandType type22(Type::TENSOR_QUANT8_ASYMM, {1, 1, 4, 4}, 0.25f, 128);
+  OperandType type23(Type::TENSOR_QUANT8_ASYMM, {4, 1, 2, 2}, 0.25f, 128);
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   // Phase 1, operands
-  auto in = model->addOperand(&type21);
-  auto roi = model->addOperand(&type2);
+  auto in = model->addOperand(&type22);
+  auto roi = model->addOperand(&type15);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
   auto param2 = model->addOperand(&type5);
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type22);
+  auto out = model->addOperand(&type23);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -314,22 +314,22 @@ inline bool is_ignored_nchw_quant8(int i) {
 
 void CreateModel_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {4, 4});
-  OperandType type23(Type::TENSOR_FLOAT16, {1, 1, 4, 4});
-  OperandType type24(Type::TENSOR_FLOAT16, {4, 1, 2, 2});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type19(Type::TENSOR_FLOAT16, {4, 4});
+  OperandType type24(Type::TENSOR_FLOAT16, {1, 1, 4, 4});
+  OperandType type25(Type::TENSOR_FLOAT16, {4, 1, 2, 2});
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   // Phase 1, operands
-  auto in = model->addOperand(&type23);
-  auto roi = model->addOperand(&type18);
+  auto in = model->addOperand(&type24);
+  auto roi = model->addOperand(&type19);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
   auto param2 = model->addOperand(&type5);
-  auto param3 = model->addOperand(&type17);
-  auto param4 = model->addOperand(&type17);
+  auto param3 = model->addOperand(&type18);
+  auto param4 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type24);
+  auto out = model->addOperand(&type25);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -360,7 +360,7 @@ void CreateModel_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 4, 4, 1});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
@@ -373,7 +373,7 @@ void CreateModel_dynamic_output_shape_nhwc(Model *model) {
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type25);
+  auto out = model->addOperand(&type26);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -404,7 +404,7 @@ void CreateModel_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 4, 4, 1});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
@@ -417,7 +417,7 @@ void CreateModel_dynamic_output_shape_nhwc_relaxed(Model *model) {
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type25);
+  auto out = model->addOperand(&type26);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -449,21 +449,21 @@ inline bool is_ignored_dynamic_output_shape_nhwc_relaxed(int i) {
 void CreateModel_dynamic_output_shape_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type13(Type::TENSOR_QUANT8_ASYMM, {1, 4, 4, 1}, 0.25f, 128);
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type26(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.25f, 128);
+  OperandType type15(Type::TENSOR_QUANT16_ASYMM, {4, 4}, 0.125f, 0);
+  OperandType type27(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.25f, 128);
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   // Phase 1, operands
   auto in = model->addOperand(&type13);
-  auto roi = model->addOperand(&type2);
+  auto roi = model->addOperand(&type15);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
   auto param2 = model->addOperand(&type5);
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type26);
+  auto out = model->addOperand(&type27);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -492,22 +492,22 @@ inline bool is_ignored_dynamic_output_shape_nhwc_quant8(int i) {
 
 void CreateModel_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type15(Type::TENSOR_FLOAT16, {1, 4, 4, 1});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {4, 4});
-  OperandType type27(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
+  OperandType type16(Type::TENSOR_FLOAT16, {1, 4, 4, 1});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type19(Type::TENSOR_FLOAT16, {4, 4});
+  OperandType type28(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   // Phase 1, operands
-  auto in = model->addOperand(&type15);
-  auto roi = model->addOperand(&type18);
+  auto in = model->addOperand(&type16);
+  auto roi = model->addOperand(&type19);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
   auto param2 = model->addOperand(&type5);
-  auto param3 = model->addOperand(&type17);
-  auto param4 = model->addOperand(&type17);
+  auto param3 = model->addOperand(&type18);
+  auto param4 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type27);
+  auto out = model->addOperand(&type28);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -536,14 +536,14 @@ inline bool is_ignored_dynamic_output_shape_nhwc_float16(int i) {
 
 void CreateModel_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type20(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   // Phase 1, operands
-  auto in = model->addOperand(&type19);
+  auto in = model->addOperand(&type20);
   auto roi = model->addOperand(&type2);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
@@ -551,7 +551,7 @@ void CreateModel_dynamic_output_shape_nchw(Model *model) {
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type25);
+  auto out = model->addOperand(&type26);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -580,14 +580,14 @@ inline bool is_ignored_dynamic_output_shape_nchw(int i) {
 
 void CreateModel_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type19(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type20(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   // Phase 1, operands
-  auto in = model->addOperand(&type19);
+  auto in = model->addOperand(&type20);
   auto roi = model->addOperand(&type2);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
@@ -595,7 +595,7 @@ void CreateModel_dynamic_output_shape_nchw_relaxed(Model *model) {
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type25);
+  auto out = model->addOperand(&type26);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -626,22 +626,22 @@ inline bool is_ignored_dynamic_output_shape_nchw_relaxed(int i) {
 
 void CreateModel_dynamic_output_shape_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type21(Type::TENSOR_QUANT8_ASYMM, {1, 1, 4, 4}, 0.25f, 128);
-  OperandType type26(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.25f, 128);
+  OperandType type15(Type::TENSOR_QUANT16_ASYMM, {4, 4}, 0.125f, 0);
+  OperandType type22(Type::TENSOR_QUANT8_ASYMM, {1, 1, 4, 4}, 0.25f, 128);
+  OperandType type27(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.25f, 128);
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   // Phase 1, operands
-  auto in = model->addOperand(&type21);
-  auto roi = model->addOperand(&type2);
+  auto in = model->addOperand(&type22);
+  auto roi = model->addOperand(&type15);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
   auto param2 = model->addOperand(&type5);
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type26);
+  auto out = model->addOperand(&type27);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -670,22 +670,22 @@ inline bool is_ignored_dynamic_output_shape_nchw_quant8(int i) {
 
 void CreateModel_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {4, 4});
-  OperandType type23(Type::TENSOR_FLOAT16, {1, 1, 4, 4});
-  OperandType type27(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type19(Type::TENSOR_FLOAT16, {4, 4});
+  OperandType type24(Type::TENSOR_FLOAT16, {1, 1, 4, 4});
+  OperandType type28(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
   OperandType type4(Type::TENSOR_INT32, {1});
   OperandType type5(Type::INT32, {});
   // Phase 1, operands
-  auto in = model->addOperand(&type23);
-  auto roi = model->addOperand(&type18);
+  auto in = model->addOperand(&type24);
+  auto roi = model->addOperand(&type19);
   auto param = model->addOperand(&type4);
   auto param1 = model->addOperand(&type5);
   auto param2 = model->addOperand(&type5);
-  auto param3 = model->addOperand(&type17);
-  auto param4 = model->addOperand(&type17);
+  auto param3 = model->addOperand(&type18);
+  auto param4 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out = model->addOperand(&type27);
+  auto out = model->addOperand(&type28);
   // Phase 2, operations
   static int32_t param_init[] = {4};
   model->setOperandValue(param, param_init, sizeof(int32_t) * 1);
@@ -804,22 +804,22 @@ inline bool is_ignored_nhwc_relaxed_2(int i) {
 
 void CreateModel_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type28(Type::TENSOR_QUANT8_ASYMM, {4, 4, 8, 2}, 0.04f, 0);
-  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {4, 2, 3, 2}, 0.04f, 0);
+  OperandType type15(Type::TENSOR_QUANT16_ASYMM, {4, 4}, 0.125f, 0);
+  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {4, 4, 8, 2}, 0.04f, 0);
+  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {4, 2, 3, 2}, 0.04f, 0);
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type28);
-  auto roi1 = model->addOperand(&type2);
+  auto in1 = model->addOperand(&type29);
+  auto roi1 = model->addOperand(&type15);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
   auto param7 = model->addOperand(&type5);
   auto param8 = model->addOperand(&type6);
   auto param9 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type29);
+  auto out1 = model->addOperand(&type30);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -848,22 +848,22 @@ inline bool is_ignored_nhwc_quant8_2(int i) {
 
 void CreateModel_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {4, 4});
-  OperandType type30(Type::TENSOR_FLOAT16, {4, 4, 8, 2});
-  OperandType type31(Type::TENSOR_FLOAT16, {4, 2, 3, 2});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type19(Type::TENSOR_FLOAT16, {4, 4});
+  OperandType type31(Type::TENSOR_FLOAT16, {4, 4, 8, 2});
+  OperandType type32(Type::TENSOR_FLOAT16, {4, 2, 3, 2});
   OperandType type5(Type::INT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type30);
-  auto roi1 = model->addOperand(&type18);
+  auto in1 = model->addOperand(&type31);
+  auto roi1 = model->addOperand(&type19);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
   auto param7 = model->addOperand(&type5);
-  auto param8 = model->addOperand(&type17);
-  auto param9 = model->addOperand(&type17);
+  auto param8 = model->addOperand(&type18);
+  auto param9 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type31);
+  auto out1 = model->addOperand(&type32);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -893,13 +893,13 @@ inline bool is_ignored_nhwc_float16_2(int i) {
 void CreateModel_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type32(Type::TENSOR_FLOAT32, {4, 2, 4, 8});
-  OperandType type33(Type::TENSOR_FLOAT32, {4, 2, 2, 3});
+  OperandType type33(Type::TENSOR_FLOAT32, {4, 2, 4, 8});
+  OperandType type34(Type::TENSOR_FLOAT32, {4, 2, 2, 3});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type32);
+  auto in1 = model->addOperand(&type33);
   auto roi1 = model->addOperand(&type2);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
@@ -907,7 +907,7 @@ void CreateModel_nchw_2(Model *model) {
   auto param8 = model->addOperand(&type6);
   auto param9 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type33);
+  auto out1 = model->addOperand(&type34);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -937,13 +937,13 @@ inline bool is_ignored_nchw_2(int i) {
 void CreateModel_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type32(Type::TENSOR_FLOAT32, {4, 2, 4, 8});
-  OperandType type33(Type::TENSOR_FLOAT32, {4, 2, 2, 3});
+  OperandType type33(Type::TENSOR_FLOAT32, {4, 2, 4, 8});
+  OperandType type34(Type::TENSOR_FLOAT32, {4, 2, 2, 3});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type32);
+  auto in1 = model->addOperand(&type33);
   auto roi1 = model->addOperand(&type2);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
@@ -951,7 +951,7 @@ void CreateModel_nchw_relaxed_2(Model *model) {
   auto param8 = model->addOperand(&type6);
   auto param9 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type33);
+  auto out1 = model->addOperand(&type34);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -982,22 +982,22 @@ inline bool is_ignored_nchw_relaxed_2(int i) {
 
 void CreateModel_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {4, 2, 4, 8}, 0.04f, 0);
-  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {4, 2, 2, 3}, 0.04f, 0);
+  OperandType type15(Type::TENSOR_QUANT16_ASYMM, {4, 4}, 0.125f, 0);
+  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {4, 2, 4, 8}, 0.04f, 0);
+  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {4, 2, 2, 3}, 0.04f, 0);
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type34);
-  auto roi1 = model->addOperand(&type2);
+  auto in1 = model->addOperand(&type35);
+  auto roi1 = model->addOperand(&type15);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
   auto param7 = model->addOperand(&type5);
   auto param8 = model->addOperand(&type6);
   auto param9 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type35);
+  auto out1 = model->addOperand(&type36);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -1026,22 +1026,22 @@ inline bool is_ignored_nchw_quant8_2(int i) {
 
 void CreateModel_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {4, 4});
-  OperandType type36(Type::TENSOR_FLOAT16, {4, 2, 4, 8});
-  OperandType type37(Type::TENSOR_FLOAT16, {4, 2, 2, 3});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type19(Type::TENSOR_FLOAT16, {4, 4});
+  OperandType type37(Type::TENSOR_FLOAT16, {4, 2, 4, 8});
+  OperandType type38(Type::TENSOR_FLOAT16, {4, 2, 2, 3});
   OperandType type5(Type::INT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type36);
-  auto roi1 = model->addOperand(&type18);
+  auto in1 = model->addOperand(&type37);
+  auto roi1 = model->addOperand(&type19);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
   auto param7 = model->addOperand(&type5);
-  auto param8 = model->addOperand(&type17);
-  auto param9 = model->addOperand(&type17);
+  auto param8 = model->addOperand(&type18);
+  auto param9 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type37);
+  auto out1 = model->addOperand(&type38);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -1071,7 +1071,7 @@ inline bool is_ignored_nchw_float16_2(int i) {
 void CreateModel_dynamic_output_shape_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type7(Type::TENSOR_FLOAT32, {4, 4, 8, 2});
@@ -1085,7 +1085,7 @@ void CreateModel_dynamic_output_shape_nhwc_2(Model *model) {
   auto param8 = model->addOperand(&type6);
   auto param9 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type25);
+  auto out1 = model->addOperand(&type26);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -1115,7 +1115,7 @@ inline bool is_ignored_dynamic_output_shape_nhwc_2(int i) {
 void CreateModel_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type7(Type::TENSOR_FLOAT32, {4, 4, 8, 2});
@@ -1129,7 +1129,7 @@ void CreateModel_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   auto param8 = model->addOperand(&type6);
   auto param9 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type25);
+  auto out1 = model->addOperand(&type26);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -1160,22 +1160,22 @@ inline bool is_ignored_dynamic_output_shape_nhwc_relaxed_2(int i) {
 
 void CreateModel_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type28(Type::TENSOR_QUANT8_ASYMM, {4, 4, 8, 2}, 0.04f, 0);
-  OperandType type38(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.04f, 0);
+  OperandType type15(Type::TENSOR_QUANT16_ASYMM, {4, 4}, 0.125f, 0);
+  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {4, 4, 8, 2}, 0.04f, 0);
+  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.04f, 0);
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type28);
-  auto roi1 = model->addOperand(&type2);
+  auto in1 = model->addOperand(&type29);
+  auto roi1 = model->addOperand(&type15);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
   auto param7 = model->addOperand(&type5);
   auto param8 = model->addOperand(&type6);
   auto param9 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type38);
+  auto out1 = model->addOperand(&type39);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -1204,22 +1204,22 @@ inline bool is_ignored_dynamic_output_shape_nhwc_quant8_2(int i) {
 
 void CreateModel_dynamic_output_shape_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {4, 4});
-  OperandType type27(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
-  OperandType type30(Type::TENSOR_FLOAT16, {4, 4, 8, 2});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type19(Type::TENSOR_FLOAT16, {4, 4});
+  OperandType type28(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
+  OperandType type31(Type::TENSOR_FLOAT16, {4, 4, 8, 2});
   OperandType type5(Type::INT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type30);
-  auto roi1 = model->addOperand(&type18);
+  auto in1 = model->addOperand(&type31);
+  auto roi1 = model->addOperand(&type19);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
   auto param7 = model->addOperand(&type5);
-  auto param8 = model->addOperand(&type17);
-  auto param9 = model->addOperand(&type17);
+  auto param8 = model->addOperand(&type18);
+  auto param9 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type27);
+  auto out1 = model->addOperand(&type28);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -1249,13 +1249,13 @@ inline bool is_ignored_dynamic_output_shape_nhwc_float16_2(int i) {
 void CreateModel_dynamic_output_shape_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
-  OperandType type32(Type::TENSOR_FLOAT32, {4, 2, 4, 8});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type33(Type::TENSOR_FLOAT32, {4, 2, 4, 8});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type32);
+  auto in1 = model->addOperand(&type33);
   auto roi1 = model->addOperand(&type2);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
@@ -1263,7 +1263,7 @@ void CreateModel_dynamic_output_shape_nchw_2(Model *model) {
   auto param8 = model->addOperand(&type6);
   auto param9 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type25);
+  auto out1 = model->addOperand(&type26);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -1293,13 +1293,13 @@ inline bool is_ignored_dynamic_output_shape_nchw_2(int i) {
 void CreateModel_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
-  OperandType type32(Type::TENSOR_FLOAT32, {4, 2, 4, 8});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type33(Type::TENSOR_FLOAT32, {4, 2, 4, 8});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type32);
+  auto in1 = model->addOperand(&type33);
   auto roi1 = model->addOperand(&type2);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
@@ -1307,7 +1307,7 @@ void CreateModel_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   auto param8 = model->addOperand(&type6);
   auto param9 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type25);
+  auto out1 = model->addOperand(&type26);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -1338,22 +1338,22 @@ inline bool is_ignored_dynamic_output_shape_nchw_relaxed_2(int i) {
 
 void CreateModel_dynamic_output_shape_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
-  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {4, 2, 4, 8}, 0.04f, 0);
-  OperandType type38(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.04f, 0);
+  OperandType type15(Type::TENSOR_QUANT16_ASYMM, {4, 4}, 0.125f, 0);
+  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {4, 2, 4, 8}, 0.04f, 0);
+  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.04f, 0);
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type34);
-  auto roi1 = model->addOperand(&type2);
+  auto in1 = model->addOperand(&type35);
+  auto roi1 = model->addOperand(&type15);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
   auto param7 = model->addOperand(&type5);
   auto param8 = model->addOperand(&type6);
   auto param9 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type38);
+  auto out1 = model->addOperand(&type39);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -1382,22 +1382,22 @@ inline bool is_ignored_dynamic_output_shape_nchw_quant8_2(int i) {
 
 void CreateModel_dynamic_output_shape_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {4, 4});
-  OperandType type27(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
-  OperandType type36(Type::TENSOR_FLOAT16, {4, 2, 4, 8});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type19(Type::TENSOR_FLOAT16, {4, 4});
+  OperandType type28(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
+  OperandType type37(Type::TENSOR_FLOAT16, {4, 2, 4, 8});
   OperandType type5(Type::INT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in1 = model->addOperand(&type36);
-  auto roi1 = model->addOperand(&type18);
+  auto in1 = model->addOperand(&type37);
+  auto roi1 = model->addOperand(&type19);
   auto param5 = model->addOperand(&type9);
   auto param6 = model->addOperand(&type5);
   auto param7 = model->addOperand(&type5);
-  auto param8 = model->addOperand(&type17);
-  auto param9 = model->addOperand(&type17);
+  auto param8 = model->addOperand(&type18);
+  auto param9 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out1 = model->addOperand(&type27);
+  auto out1 = model->addOperand(&type28);
   // Phase 2, operations
   static int32_t param5_init[] = {2, 0, 0, 2};
   model->setOperandValue(param5, param5_init, sizeof(int32_t) * 4);
@@ -1516,22 +1516,22 @@ inline bool is_ignored_nhwc_relaxed_3(int i) {
 
 void CreateModel_nhwc_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
-  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {4, 4, 4, 1}, 0.25f, 128);
-  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 1}, 0.25f, 128);
+  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {4, 4, 4, 1}, 0.25f, 128);
+  OperandType type41(Type::TENSOR_QUANT8_ASYMM, {5, 2, 2, 1}, 0.25f, 128);
+  OperandType type42(Type::TENSOR_QUANT16_ASYMM, {5, 4}, 0.125f, 0);
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in2 = model->addOperand(&type39);
-  auto roi2 = model->addOperand(&type11);
+  auto in2 = model->addOperand(&type40);
+  auto roi2 = model->addOperand(&type42);
   auto param10 = model->addOperand(&type9);
   auto param11 = model->addOperand(&type5);
   auto param12 = model->addOperand(&type5);
   auto param13 = model->addOperand(&type6);
   auto param14 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type40);
+  auto out2 = model->addOperand(&type41);
   // Phase 2, operations
   static int32_t param10_init[] = {0, 0, 5, 0};
   model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
@@ -1560,22 +1560,22 @@ inline bool is_ignored_nhwc_quant8_3(int i) {
 
 void CreateModel_nhwc_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type41(Type::TENSOR_FLOAT16, {4, 4, 4, 1});
-  OperandType type42(Type::TENSOR_FLOAT16, {5, 2, 2, 1});
-  OperandType type43(Type::TENSOR_FLOAT16, {5, 4});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type43(Type::TENSOR_FLOAT16, {4, 4, 4, 1});
+  OperandType type44(Type::TENSOR_FLOAT16, {5, 2, 2, 1});
+  OperandType type45(Type::TENSOR_FLOAT16, {5, 4});
   OperandType type5(Type::INT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in2 = model->addOperand(&type41);
-  auto roi2 = model->addOperand(&type43);
+  auto in2 = model->addOperand(&type43);
+  auto roi2 = model->addOperand(&type45);
   auto param10 = model->addOperand(&type9);
   auto param11 = model->addOperand(&type5);
   auto param12 = model->addOperand(&type5);
-  auto param13 = model->addOperand(&type17);
-  auto param14 = model->addOperand(&type17);
+  auto param13 = model->addOperand(&type18);
+  auto param14 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type42);
+  auto out2 = model->addOperand(&type44);
   // Phase 2, operations
   static int32_t param10_init[] = {0, 0, 5, 0};
   model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
@@ -1605,98 +1605,8 @@ inline bool is_ignored_nhwc_float16_3(int i) {
 void CreateModel_nchw_3(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
-  OperandType type44(Type::TENSOR_FLOAT32, {4, 1, 4, 4});
-  OperandType type45(Type::TENSOR_FLOAT32, {5, 1, 2, 2});
-  OperandType type5(Type::INT32, {});
-  OperandType type6(Type::FLOAT32, {});
-  OperandType type9(Type::TENSOR_INT32, {4});
-  // Phase 1, operands
-  auto in2 = model->addOperand(&type44);
-  auto roi2 = model->addOperand(&type11);
-  auto param10 = model->addOperand(&type9);
-  auto param11 = model->addOperand(&type5);
-  auto param12 = model->addOperand(&type5);
-  auto param13 = model->addOperand(&type6);
-  auto param14 = model->addOperand(&type6);
-  auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type45);
-  // Phase 2, operations
-  static int32_t param10_init[] = {0, 0, 5, 0};
-  model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
-  static int32_t param11_init[] = {2};
-  model->setOperandValue(param11, param11_init, sizeof(int32_t) * 1);
-  static int32_t param12_init[] = {2};
-  model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static float param13_init[] = {2.0f};
-  model->setOperandValue(param13, param13_init, sizeof(float) * 1);
-  static float param14_init[] = {1.0f};
-  model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static bool8 layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
-  model->addOperation(ANEURALNETWORKS_ROI_POOLING, {in2, roi2, param10, param11, param12, param13, param14, layout}, {out2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {in2, roi2},
-    {out2});
-  assert(model->isValid());
-}
-
-inline bool is_ignored_nchw_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_nchw_relaxed_3(Model *model) {
-  OperandType type0(Type::BOOL, {});
-  OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
-  OperandType type44(Type::TENSOR_FLOAT32, {4, 1, 4, 4});
-  OperandType type45(Type::TENSOR_FLOAT32, {5, 1, 2, 2});
-  OperandType type5(Type::INT32, {});
-  OperandType type6(Type::FLOAT32, {});
-  OperandType type9(Type::TENSOR_INT32, {4});
-  // Phase 1, operands
-  auto in2 = model->addOperand(&type44);
-  auto roi2 = model->addOperand(&type11);
-  auto param10 = model->addOperand(&type9);
-  auto param11 = model->addOperand(&type5);
-  auto param12 = model->addOperand(&type5);
-  auto param13 = model->addOperand(&type6);
-  auto param14 = model->addOperand(&type6);
-  auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type45);
-  // Phase 2, operations
-  static int32_t param10_init[] = {0, 0, 5, 0};
-  model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
-  static int32_t param11_init[] = {2};
-  model->setOperandValue(param11, param11_init, sizeof(int32_t) * 1);
-  static int32_t param12_init[] = {2};
-  model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static float param13_init[] = {2.0f};
-  model->setOperandValue(param13, param13_init, sizeof(float) * 1);
-  static float param14_init[] = {1.0f};
-  model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static bool8 layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
-  model->addOperation(ANEURALNETWORKS_ROI_POOLING, {in2, roi2, param10, param11, param12, param13, param14, layout}, {out2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {in2, roi2},
-    {out2});
-  // Phase 4: set relaxed execution
-  model->relaxComputationFloat32toFloat16(true);
-  assert(model->isValid());
-}
-
-inline bool is_ignored_nchw_relaxed_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_nchw_quant8_3(Model *model) {
-  OperandType type0(Type::BOOL, {});
-  OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
-  OperandType type46(Type::TENSOR_QUANT8_ASYMM, {4, 1, 4, 4}, 0.25f, 128);
-  OperandType type47(Type::TENSOR_QUANT8_ASYMM, {5, 1, 2, 2}, 0.25f, 128);
+  OperandType type46(Type::TENSOR_FLOAT32, {4, 1, 4, 4});
+  OperandType type47(Type::TENSOR_FLOAT32, {5, 1, 2, 2});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
@@ -1731,6 +1641,96 @@ void CreateModel_nchw_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
+inline bool is_ignored_nchw_3(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_relaxed_3(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
+  OperandType type46(Type::TENSOR_FLOAT32, {4, 1, 4, 4});
+  OperandType type47(Type::TENSOR_FLOAT32, {5, 1, 2, 2});
+  OperandType type5(Type::INT32, {});
+  OperandType type6(Type::FLOAT32, {});
+  OperandType type9(Type::TENSOR_INT32, {4});
+  // Phase 1, operands
+  auto in2 = model->addOperand(&type46);
+  auto roi2 = model->addOperand(&type11);
+  auto param10 = model->addOperand(&type9);
+  auto param11 = model->addOperand(&type5);
+  auto param12 = model->addOperand(&type5);
+  auto param13 = model->addOperand(&type6);
+  auto param14 = model->addOperand(&type6);
+  auto layout = model->addOperand(&type0);
+  auto out2 = model->addOperand(&type47);
+  // Phase 2, operations
+  static int32_t param10_init[] = {0, 0, 5, 0};
+  model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
+  static int32_t param11_init[] = {2};
+  model->setOperandValue(param11, param11_init, sizeof(int32_t) * 1);
+  static int32_t param12_init[] = {2};
+  model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
+  static float param13_init[] = {2.0f};
+  model->setOperandValue(param13, param13_init, sizeof(float) * 1);
+  static float param14_init[] = {1.0f};
+  model->setOperandValue(param14, param14_init, sizeof(float) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_ROI_POOLING, {in2, roi2, param10, param11, param12, param13, param14, layout}, {out2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {in2, roi2},
+    {out2});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_relaxed_3(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_quant8_3(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type42(Type::TENSOR_QUANT16_ASYMM, {5, 4}, 0.125f, 0);
+  OperandType type48(Type::TENSOR_QUANT8_ASYMM, {4, 1, 4, 4}, 0.25f, 128);
+  OperandType type49(Type::TENSOR_QUANT8_ASYMM, {5, 1, 2, 2}, 0.25f, 128);
+  OperandType type5(Type::INT32, {});
+  OperandType type6(Type::FLOAT32, {});
+  OperandType type9(Type::TENSOR_INT32, {4});
+  // Phase 1, operands
+  auto in2 = model->addOperand(&type48);
+  auto roi2 = model->addOperand(&type42);
+  auto param10 = model->addOperand(&type9);
+  auto param11 = model->addOperand(&type5);
+  auto param12 = model->addOperand(&type5);
+  auto param13 = model->addOperand(&type6);
+  auto param14 = model->addOperand(&type6);
+  auto layout = model->addOperand(&type0);
+  auto out2 = model->addOperand(&type49);
+  // Phase 2, operations
+  static int32_t param10_init[] = {0, 0, 5, 0};
+  model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
+  static int32_t param11_init[] = {2};
+  model->setOperandValue(param11, param11_init, sizeof(int32_t) * 1);
+  static int32_t param12_init[] = {2};
+  model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
+  static float param13_init[] = {2.0f};
+  model->setOperandValue(param13, param13_init, sizeof(float) * 1);
+  static float param14_init[] = {1.0f};
+  model->setOperandValue(param14, param14_init, sizeof(float) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_ROI_POOLING, {in2, roi2, param10, param11, param12, param13, param14, layout}, {out2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {in2, roi2},
+    {out2});
+  assert(model->isValid());
+}
+
 inline bool is_ignored_nchw_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
@@ -1738,22 +1738,22 @@ inline bool is_ignored_nchw_quant8_3(int i) {
 
 void CreateModel_nchw_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type43(Type::TENSOR_FLOAT16, {5, 4});
-  OperandType type48(Type::TENSOR_FLOAT16, {4, 1, 4, 4});
-  OperandType type49(Type::TENSOR_FLOAT16, {5, 1, 2, 2});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type45(Type::TENSOR_FLOAT16, {5, 4});
   OperandType type5(Type::INT32, {});
+  OperandType type50(Type::TENSOR_FLOAT16, {4, 1, 4, 4});
+  OperandType type51(Type::TENSOR_FLOAT16, {5, 1, 2, 2});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in2 = model->addOperand(&type48);
-  auto roi2 = model->addOperand(&type43);
+  auto in2 = model->addOperand(&type50);
+  auto roi2 = model->addOperand(&type45);
   auto param10 = model->addOperand(&type9);
   auto param11 = model->addOperand(&type5);
   auto param12 = model->addOperand(&type5);
-  auto param13 = model->addOperand(&type17);
-  auto param14 = model->addOperand(&type17);
+  auto param13 = model->addOperand(&type18);
+  auto param14 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type49);
+  auto out2 = model->addOperand(&type51);
   // Phase 2, operations
   static int32_t param10_init[] = {0, 0, 5, 0};
   model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
@@ -1784,7 +1784,7 @@ void CreateModel_dynamic_output_shape_nhwc_3(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type10(Type::TENSOR_FLOAT32, {4, 4, 4, 1});
   OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
@@ -1797,7 +1797,7 @@ void CreateModel_dynamic_output_shape_nhwc_3(Model *model) {
   auto param13 = model->addOperand(&type6);
   auto param14 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type25);
+  auto out2 = model->addOperand(&type26);
   // Phase 2, operations
   static int32_t param10_init[] = {0, 0, 5, 0};
   model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
@@ -1828,7 +1828,7 @@ void CreateModel_dynamic_output_shape_nhwc_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type10(Type::TENSOR_FLOAT32, {4, 4, 4, 1});
   OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
@@ -1841,7 +1841,7 @@ void CreateModel_dynamic_output_shape_nhwc_relaxed_3(Model *model) {
   auto param13 = model->addOperand(&type6);
   auto param14 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type25);
+  auto out2 = model->addOperand(&type26);
   // Phase 2, operations
   static int32_t param10_init[] = {0, 0, 5, 0};
   model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
@@ -1872,22 +1872,22 @@ inline bool is_ignored_dynamic_output_shape_nhwc_relaxed_3(int i) {
 
 void CreateModel_dynamic_output_shape_nhwc_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
-  OperandType type26(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.25f, 128);
-  OperandType type39(Type::TENSOR_QUANT8_ASYMM, {4, 4, 4, 1}, 0.25f, 128);
+  OperandType type27(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.25f, 128);
+  OperandType type40(Type::TENSOR_QUANT8_ASYMM, {4, 4, 4, 1}, 0.25f, 128);
+  OperandType type42(Type::TENSOR_QUANT16_ASYMM, {5, 4}, 0.125f, 0);
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in2 = model->addOperand(&type39);
-  auto roi2 = model->addOperand(&type11);
+  auto in2 = model->addOperand(&type40);
+  auto roi2 = model->addOperand(&type42);
   auto param10 = model->addOperand(&type9);
   auto param11 = model->addOperand(&type5);
   auto param12 = model->addOperand(&type5);
   auto param13 = model->addOperand(&type6);
   auto param14 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type26);
+  auto out2 = model->addOperand(&type27);
   // Phase 2, operations
   static int32_t param10_init[] = {0, 0, 5, 0};
   model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
@@ -1916,22 +1916,22 @@ inline bool is_ignored_dynamic_output_shape_nhwc_quant8_3(int i) {
 
 void CreateModel_dynamic_output_shape_nhwc_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type27(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
-  OperandType type41(Type::TENSOR_FLOAT16, {4, 4, 4, 1});
-  OperandType type43(Type::TENSOR_FLOAT16, {5, 4});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type28(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
+  OperandType type43(Type::TENSOR_FLOAT16, {4, 4, 4, 1});
+  OperandType type45(Type::TENSOR_FLOAT16, {5, 4});
   OperandType type5(Type::INT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in2 = model->addOperand(&type41);
-  auto roi2 = model->addOperand(&type43);
+  auto in2 = model->addOperand(&type43);
+  auto roi2 = model->addOperand(&type45);
   auto param10 = model->addOperand(&type9);
   auto param11 = model->addOperand(&type5);
   auto param12 = model->addOperand(&type5);
-  auto param13 = model->addOperand(&type17);
-  auto param14 = model->addOperand(&type17);
+  auto param13 = model->addOperand(&type18);
+  auto param14 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type27);
+  auto out2 = model->addOperand(&type28);
   // Phase 2, operations
   static int32_t param10_init[] = {0, 0, 5, 0};
   model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
@@ -1961,98 +1961,8 @@ inline bool is_ignored_dynamic_output_shape_nhwc_float16_3(int i) {
 void CreateModel_dynamic_output_shape_nchw_3(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
-  OperandType type44(Type::TENSOR_FLOAT32, {4, 1, 4, 4});
-  OperandType type5(Type::INT32, {});
-  OperandType type6(Type::FLOAT32, {});
-  OperandType type9(Type::TENSOR_INT32, {4});
-  // Phase 1, operands
-  auto in2 = model->addOperand(&type44);
-  auto roi2 = model->addOperand(&type11);
-  auto param10 = model->addOperand(&type9);
-  auto param11 = model->addOperand(&type5);
-  auto param12 = model->addOperand(&type5);
-  auto param13 = model->addOperand(&type6);
-  auto param14 = model->addOperand(&type6);
-  auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type25);
-  // Phase 2, operations
-  static int32_t param10_init[] = {0, 0, 5, 0};
-  model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
-  static int32_t param11_init[] = {2};
-  model->setOperandValue(param11, param11_init, sizeof(int32_t) * 1);
-  static int32_t param12_init[] = {2};
-  model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static float param13_init[] = {2.0f};
-  model->setOperandValue(param13, param13_init, sizeof(float) * 1);
-  static float param14_init[] = {1.0f};
-  model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static bool8 layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
-  model->addOperation(ANEURALNETWORKS_ROI_POOLING, {in2, roi2, param10, param11, param12, param13, param14, layout}, {out2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {in2, roi2},
-    {out2});
-  assert(model->isValid());
-}
-
-inline bool is_ignored_dynamic_output_shape_nchw_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_dynamic_output_shape_nchw_relaxed_3(Model *model) {
-  OperandType type0(Type::BOOL, {});
-  OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
-  OperandType type25(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
-  OperandType type44(Type::TENSOR_FLOAT32, {4, 1, 4, 4});
-  OperandType type5(Type::INT32, {});
-  OperandType type6(Type::FLOAT32, {});
-  OperandType type9(Type::TENSOR_INT32, {4});
-  // Phase 1, operands
-  auto in2 = model->addOperand(&type44);
-  auto roi2 = model->addOperand(&type11);
-  auto param10 = model->addOperand(&type9);
-  auto param11 = model->addOperand(&type5);
-  auto param12 = model->addOperand(&type5);
-  auto param13 = model->addOperand(&type6);
-  auto param14 = model->addOperand(&type6);
-  auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type25);
-  // Phase 2, operations
-  static int32_t param10_init[] = {0, 0, 5, 0};
-  model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
-  static int32_t param11_init[] = {2};
-  model->setOperandValue(param11, param11_init, sizeof(int32_t) * 1);
-  static int32_t param12_init[] = {2};
-  model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static float param13_init[] = {2.0f};
-  model->setOperandValue(param13, param13_init, sizeof(float) * 1);
-  static float param14_init[] = {1.0f};
-  model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static bool8 layout_init[] = {true};
-  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
-  model->addOperation(ANEURALNETWORKS_ROI_POOLING, {in2, roi2, param10, param11, param12, param13, param14, layout}, {out2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {in2, roi2},
-    {out2});
-  // Phase 4: set relaxed execution
-  model->relaxComputationFloat32toFloat16(true);
-  assert(model->isValid());
-}
-
-inline bool is_ignored_dynamic_output_shape_nchw_relaxed_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_dynamic_output_shape_nchw_quant8_3(Model *model) {
-  OperandType type0(Type::BOOL, {});
-  OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
-  OperandType type26(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.25f, 128);
-  OperandType type46(Type::TENSOR_QUANT8_ASYMM, {4, 1, 4, 4}, 0.25f, 128);
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type46(Type::TENSOR_FLOAT32, {4, 1, 4, 4});
   OperandType type5(Type::INT32, {});
   OperandType type6(Type::FLOAT32, {});
   OperandType type9(Type::TENSOR_INT32, {4});
@@ -2087,6 +1997,96 @@ void CreateModel_dynamic_output_shape_nchw_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
+inline bool is_ignored_dynamic_output_shape_nchw_3(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_relaxed_3(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type11(Type::TENSOR_FLOAT32, {5, 4});
+  OperandType type26(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type46(Type::TENSOR_FLOAT32, {4, 1, 4, 4});
+  OperandType type5(Type::INT32, {});
+  OperandType type6(Type::FLOAT32, {});
+  OperandType type9(Type::TENSOR_INT32, {4});
+  // Phase 1, operands
+  auto in2 = model->addOperand(&type46);
+  auto roi2 = model->addOperand(&type11);
+  auto param10 = model->addOperand(&type9);
+  auto param11 = model->addOperand(&type5);
+  auto param12 = model->addOperand(&type5);
+  auto param13 = model->addOperand(&type6);
+  auto param14 = model->addOperand(&type6);
+  auto layout = model->addOperand(&type0);
+  auto out2 = model->addOperand(&type26);
+  // Phase 2, operations
+  static int32_t param10_init[] = {0, 0, 5, 0};
+  model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
+  static int32_t param11_init[] = {2};
+  model->setOperandValue(param11, param11_init, sizeof(int32_t) * 1);
+  static int32_t param12_init[] = {2};
+  model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
+  static float param13_init[] = {2.0f};
+  model->setOperandValue(param13, param13_init, sizeof(float) * 1);
+  static float param14_init[] = {1.0f};
+  model->setOperandValue(param14, param14_init, sizeof(float) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_ROI_POOLING, {in2, roi2, param10, param11, param12, param13, param14, layout}, {out2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {in2, roi2},
+    {out2});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_relaxed_3(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_quant8_3(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type27(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.25f, 128);
+  OperandType type42(Type::TENSOR_QUANT16_ASYMM, {5, 4}, 0.125f, 0);
+  OperandType type48(Type::TENSOR_QUANT8_ASYMM, {4, 1, 4, 4}, 0.25f, 128);
+  OperandType type5(Type::INT32, {});
+  OperandType type6(Type::FLOAT32, {});
+  OperandType type9(Type::TENSOR_INT32, {4});
+  // Phase 1, operands
+  auto in2 = model->addOperand(&type48);
+  auto roi2 = model->addOperand(&type42);
+  auto param10 = model->addOperand(&type9);
+  auto param11 = model->addOperand(&type5);
+  auto param12 = model->addOperand(&type5);
+  auto param13 = model->addOperand(&type6);
+  auto param14 = model->addOperand(&type6);
+  auto layout = model->addOperand(&type0);
+  auto out2 = model->addOperand(&type27);
+  // Phase 2, operations
+  static int32_t param10_init[] = {0, 0, 5, 0};
+  model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);
+  static int32_t param11_init[] = {2};
+  model->setOperandValue(param11, param11_init, sizeof(int32_t) * 1);
+  static int32_t param12_init[] = {2};
+  model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
+  static float param13_init[] = {2.0f};
+  model->setOperandValue(param13, param13_init, sizeof(float) * 1);
+  static float param14_init[] = {1.0f};
+  model->setOperandValue(param14, param14_init, sizeof(float) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_ROI_POOLING, {in2, roi2, param10, param11, param12, param13, param14, layout}, {out2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {in2, roi2},
+    {out2});
+  assert(model->isValid());
+}
+
 inline bool is_ignored_dynamic_output_shape_nchw_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
@@ -2094,22 +2094,22 @@ inline bool is_ignored_dynamic_output_shape_nchw_quant8_3(int i) {
 
 void CreateModel_dynamic_output_shape_nchw_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type27(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
-  OperandType type43(Type::TENSOR_FLOAT16, {5, 4});
-  OperandType type48(Type::TENSOR_FLOAT16, {4, 1, 4, 4});
+  OperandType type18(Type::FLOAT16, {});
+  OperandType type28(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
+  OperandType type45(Type::TENSOR_FLOAT16, {5, 4});
   OperandType type5(Type::INT32, {});
+  OperandType type50(Type::TENSOR_FLOAT16, {4, 1, 4, 4});
   OperandType type9(Type::TENSOR_INT32, {4});
   // Phase 1, operands
-  auto in2 = model->addOperand(&type48);
-  auto roi2 = model->addOperand(&type43);
+  auto in2 = model->addOperand(&type50);
+  auto roi2 = model->addOperand(&type45);
   auto param10 = model->addOperand(&type9);
   auto param11 = model->addOperand(&type5);
   auto param12 = model->addOperand(&type5);
-  auto param13 = model->addOperand(&type17);
-  auto param14 = model->addOperand(&type17);
+  auto param13 = model->addOperand(&type18);
+  auto param14 = model->addOperand(&type18);
   auto layout = model->addOperand(&type0);
-  auto out2 = model->addOperand(&type27);
+  auto out2 = model->addOperand(&type28);
   // Phase 2, operations
   static int32_t param10_init[] = {0, 0, 5, 0};
   model->setOperandValue(param10, param10_init, sizeof(int32_t) * 4);

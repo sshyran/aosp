@@ -47,7 +47,7 @@ namespace {
 template <typename T_Input, typename T_Roi>
 inline bool roiPoolingNhwc(const T_Input* inputData, const Shape& inputShape, const T_Roi* roiData,
                            const Shape& roiShape, const int32_t* batchSplitData,
-                           const Shape& batchSplitShape, T_Roi heightStride, T_Roi widthStride,
+                           const Shape& batchSplitShape, float heightStride, float widthStride,
                            T_Input* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("RoiPooling");
 
@@ -140,7 +140,7 @@ inline bool roiPoolingNhwc(const T_Input* inputData, const Shape& inputShape, co
 template <typename T_Input, typename T_Roi>
 inline bool roiPooling(const T_Input* inputData, const Shape& inputShape, const T_Roi* roiData,
                        const Shape& roiShape, const int32_t* batchSplitData,
-                       const Shape& batchSplitShape, T_Roi heightStride, T_Roi widthStride,
+                       const Shape& batchSplitShape, float heightStride, float widthStride,
                        bool useNchw, T_Input* outputData, const Shape& outputShape) {
     InputWithLayout<T_Input> input(useNchw);
     OutputWithLayout<T_Input> output(useNchw);
@@ -150,6 +150,21 @@ inline bool roiPooling(const T_Input* inputData, const Shape& inputShape, const 
                                 batchSplitData, batchSplitShape, heightStride, widthStride,
                                 output.getNhwcBuffer(), output.getNhwcShape()));
     NN_RET_CHECK(output.commit());
+    return true;
+}
+
+template <>
+inline bool roiPooling<uint8_t, uint16_t>(const uint8_t* inputData, const Shape& inputShape,
+                                          const uint16_t* roiData, const Shape& roiShape,
+                                          const int32_t* batchSplitData,
+                                          const Shape& batchSplitShape, float heightStride,
+                                          float widthStride, bool useNchw, uint8_t* outputData,
+                                          const Shape& outputShape) {
+    std::vector<float> roi_float32(getNumberOfElements(roiShape));
+    convertQuantToFloat32(roiData, roiShape.scale, roiShape.offset, &roi_float32);
+    NN_RET_CHECK(roiPooling(inputData, inputShape, roi_float32.data(), roiShape, batchSplitData,
+                            batchSplitShape, heightStride, widthStride, useNchw, outputData,
+                            outputShape));
     return true;
 }
 
@@ -172,7 +187,7 @@ bool validate(const IOperationValidationContext* context) {
                            OperandType::FLOAT16,        OperandType::BOOL};
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
-                           OperandType::TENSOR_FLOAT32,
+                           OperandType::TENSOR_QUANT16_ASYMM,
                            OperandType::TENSOR_INT32,
                            OperandType::INT32,
                            OperandType::INT32,
@@ -219,6 +234,11 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK_GT(heightStride, 0);
     NN_RET_CHECK_GT(widthStride, 0);
 
+    if (roiShape.type == OperandType::TENSOR_QUANT16_ASYMM) {
+        NN_RET_CHECK_EQ(roiShape.scale, 0.125f);
+        NN_RET_CHECK_EQ(roiShape.offset, 0);
+    }
+
     Shape output = context->getOutputShape(kOutputTensor);
     output.type = input.type;
     if (useNchw) {
@@ -260,7 +280,7 @@ bool execute(IOperationExecutionContext* context) {
         case OperandType::TENSOR_QUANT8_ASYMM:
             return roiPooling(context->getInputBuffer<uint8_t>(kInputTensor),
                               context->getInputShape(kInputTensor),
-                              context->getInputBuffer<float>(kRoiTensor),
+                              context->getInputBuffer<uint16_t>(kRoiTensor),
                               context->getInputShape(kRoiTensor),
                               context->getInputBuffer<int32_t>(kBatchSplitTensor),
                               context->getInputShape(kBatchSplitTensor),
