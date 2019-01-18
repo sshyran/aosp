@@ -618,9 +618,9 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
         if (controller->mNextStepIndex == 0) {
             // First (and only) step.
             auto simpleBody = static_cast<const SimpleBody*>(mBody);
-            *executor = std::make_shared<StepExecutor>(
-                    controller->mExecutionBuilder, simpleBody->mModel,
-                    simpleBody->mDevice->getInterface(), simpleBody->mPreparedModel);
+            *executor = std::make_shared<StepExecutor>(controller->mExecutionBuilder,
+                                                       simpleBody->mModel, simpleBody->mDevice,
+                                                       simpleBody->mPreparedModel);
             (*executor)->mapInputsAndOutputsTrivially();
             controller->mNextStepIndex = 1;
             return ANEURALNETWORKS_NO_ERROR;
@@ -646,8 +646,7 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
 
     const auto step = compoundBody->mSteps[controller->mNextStepIndex];
     *executor = std::make_shared<StepExecutor>(controller->mExecutionBuilder, step->getSubModel(),
-                                               step->getDevice()->getInterface(),
-                                               step->getPreparedSubModel());
+                                               step->getDevice(), step->getPreparedSubModel());
     step->mapInputsAndOutputs(*executor);
     if (controller->mSubModelInputsAndOutputs != nullptr) {
         {
