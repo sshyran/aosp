@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include "Operations.h"
 #include "CpuOperationUtils.h"
+#include "Operations.h"
 
-#include "tensorflow/contrib/lite/kernels/internal/optimized/optimized_ops.h"
+#include "tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h"
 
 #include "Tracing.h"
 
@@ -89,8 +89,7 @@ bool convFloat32(const float* inputData, const Shape& inputShape, const float* f
     ANDROID_NN_CONV_PARAMETERS(float)
 
     float output_activation_min, output_activation_max;
-    CalculateActivationRangeFloat(activation, &output_activation_min,
-                                  &output_activation_max);
+    CalculateActivationRangeFloat(activation, &output_activation_min, &output_activation_max);
 
     // Prevent concurrent executions that may access the scratch buffer.
     std::unique_lock<std::mutex> lock(executionMutex);
@@ -124,14 +123,12 @@ bool convQuant8(const uint8_t* inputData, const Shape& inputShape, const uint8_t
     int32_t output_activation_min = 0;
     int32_t output_activation_max = 0;
 
-    if (!GetQuantizedConvolutionMultipler(inputShape, filterShape, biasShape,
-                                          outputShape, &real_multiplier) ||
-            !QuantizeMultiplierSmallerThanOne(real_multiplier, &output_multiplier,
-                                              &output_shift)){
+    if (!GetQuantizedConvolutionMultipler(inputShape, filterShape, biasShape, outputShape,
+                                          &real_multiplier) ||
+        !QuantizeMultiplierSmallerThanOne(real_multiplier, &output_multiplier, &output_shift)) {
         return false;
     }
-    CalculateActivationRangeUint8(activation, outputShape,
-                                  &output_activation_min,
+    CalculateActivationRangeUint8(activation, outputShape, &output_activation_min,
                                   &output_activation_max);
 
     static gemmlowp::GemmContext gemm_context;
