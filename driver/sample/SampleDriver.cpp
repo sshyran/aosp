@@ -48,6 +48,12 @@ Return<void> SampleDriver::getVersionString(getVersionString_cb cb) {
     return Void();
 }
 
+Return<void> SampleDriver::getType(getType_cb cb) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION, "SampleDriver::getType");
+    cb(ErrorStatus::NONE, V1_2::DeviceType::CPU);
+    return Void();
+}
+
 Return<void> SampleDriver::getSupportedOperations(const V1_0::Model& model,
                                                   getSupportedOperations_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
