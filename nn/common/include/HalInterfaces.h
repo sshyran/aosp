@@ -48,6 +48,7 @@ using ::android::hardware::neuralnetworks::V1_0::Request;
 using ::android::hardware::neuralnetworks::V1_0::RequestArgument;
 using ::android::hardware::neuralnetworks::V1_1::Capabilities;
 using ::android::hardware::neuralnetworks::V1_1::ExecutionPreference;
+using ::android::hardware::neuralnetworks::V1_2::DeviceType;
 using ::android::hardware::neuralnetworks::V1_2::IDevice;
 using ::android::hardware::neuralnetworks::V1_2::IExecutionCallback;
 using ::android::hardware::neuralnetworks::V1_2::IPreparedModel;
