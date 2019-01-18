@@ -19,6 +19,7 @@
 #include "SampleDriver.h"
 
 #include "CpuExecutor.h"
+#include "ExecutionBurstServer.h"
 #include "HalInterfaces.h"
 #include "Tracing.h"
 #include "ValidateHal.h"
@@ -308,15 +309,22 @@ Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
 }
 
 Return<void> SamplePreparedModel::configureExecutionBurst(
-        const sp<V1_2::IBurstCallback>& /*callback*/,
-        const MQDescriptorSync<V1_2::FmqRequestDatum>& /*requestChannel*/,
-        const MQDescriptorSync<V1_2::FmqResultDatum>& /*resultChannel*/,
+        const sp<V1_2::IBurstCallback>& callback,
+        const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
+        const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
         configureExecutionBurst_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SampleDriver::configureExecutionBurst");
 
-    // TODO in subsequent CL
-    cb(ErrorStatus::NONE, nullptr);
+    const sp<V1_2::IBurstContext> burst =
+            createBurstContext(callback, requestChannel, resultChannel, this);
+
+    if (burst == nullptr) {
+        cb(ErrorStatus::GENERAL_FAILURE, {});
+    } else {
+        cb(ErrorStatus::NONE, burst);
+    }
+
     return Void();
 }
 
