@@ -2685,4 +2685,73 @@ TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_quant) {
                           ANEURALNETWORKS_FLOAT32);
 }
 
+void unidirectionlSequenceRNNTest(int32_t inputOperandCode) {
+    const uint32_t batchSize = 2;
+    const uint32_t maxTime = 3;
+    const uint32_t inputSize = 4;
+    const uint32_t numUnits = 5;
+
+    uint32_t inputDims[3] = {maxTime, batchSize, inputSize};
+    uint32_t weightsDims[2] = {inputSize, numUnits};
+    uint32_t recurrentWeightsDims[2] = {numUnits, numUnits};
+    uint32_t biasDims[1] = {numUnits};
+    uint32_t hiddenStateDims[2] = {batchSize, numUnits};
+    uint32_t outputDims[2] = {batchSize, numUnits};
+
+    ANeuralNetworksOperandType input = {.type = inputOperandCode,
+                                        .dimensionCount = 3,
+                                        .dimensions = inputDims,
+                                        .scale = 0.0f,
+                                        .zeroPoint = 0};
+    ANeuralNetworksOperandType weights = {.type = inputOperandCode,
+                                          .dimensionCount = 2,
+                                          .dimensions = weightsDims,
+                                          .scale = 0.0f,
+                                          .zeroPoint = 0};
+    ANeuralNetworksOperandType recurrentWeights = {.type = inputOperandCode,
+                                                   .dimensionCount = 2,
+                                                   .dimensions = recurrentWeightsDims,
+                                                   .scale = 0.0f,
+                                                   .zeroPoint = 0};
+    ANeuralNetworksOperandType bias = {.type = inputOperandCode,
+                                       .dimensionCount = 1,
+                                       .dimensions = biasDims,
+                                       .scale = 0.0f,
+                                       .zeroPoint = 0};
+    ANeuralNetworksOperandType hiddenState = {.type = inputOperandCode,
+                                              .dimensionCount = 2,
+                                              .dimensions = hiddenStateDims,
+                                              .scale = 0.0f,
+                                              .zeroPoint = 0};
+    ANeuralNetworksOperandType output = {.type = inputOperandCode,
+                                         .dimensionCount = 2,
+                                         .dimensions = outputDims,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+    ANeuralNetworksOperandType intScalar = {.type = ANEURALNETWORKS_INT32,
+                                            .dimensionCount = 0,
+                                            .dimensions = nullptr,
+                                            .scale = 0.0f,
+                                            .zeroPoint = 0};
+    ANeuralNetworksOperandType activation = intScalar;
+    ANeuralNetworksOperandType timeMajor = intScalar;
+
+    OperationTestBase rnnTest(
+            ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN,
+            {input, weights, recurrentWeights, bias, hiddenState, activation, timeMajor}, {output});
+
+    EXPECT_TRUE(rnnTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(rnnTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(rnnTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, UNIDIRECTIONAL_SEQUENCE_RNN_float32) {
+    unidirectionlSequenceRNNTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, UNIDIRECTIONAL_SEQUENCE_RNN_float16) {
+    unidirectionlSequenceRNNTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 }  // end namespace
