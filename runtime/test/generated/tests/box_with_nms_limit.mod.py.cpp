@@ -27,6 +27,12 @@ TEST_F(GeneratedTests, box_with_nms_limit_float16) {
             box_with_nms_limit::get_examples_float16());
 }
 
+TEST_F(GeneratedTests, box_with_nms_limit_quant8) {
+    execute(box_with_nms_limit::CreateModel_quant8,
+            box_with_nms_limit::is_ignored_quant8,
+            box_with_nms_limit::get_examples_quant8());
+}
+
 #if 0
 TEST_F(DynamicOutputShapeTests, box_with_nms_limit_dynamic_output_shape) {
     execute(box_with_nms_limit::CreateModel_dynamic_output_shape,
@@ -51,6 +57,14 @@ TEST_F(DynamicOutputShapeTests, box_with_nms_limit_dynamic_output_shape_float16)
 }
 
 #endif
+#if 0
+TEST_F(DynamicOutputShapeTests, box_with_nms_limit_dynamic_output_shape_quant8) {
+    execute(box_with_nms_limit::CreateModel_dynamic_output_shape_quant8,
+            box_with_nms_limit::is_ignored_dynamic_output_shape_quant8,
+            box_with_nms_limit::get_examples_dynamic_output_shape_quant8());
+}
+
+#endif
 TEST_F(GeneratedTests, box_with_nms_limit_2) {
     execute(box_with_nms_limit::CreateModel_2,
             box_with_nms_limit::is_ignored_2,
@@ -67,6 +81,12 @@ TEST_F(GeneratedTests, box_with_nms_limit_float16_2) {
     execute(box_with_nms_limit::CreateModel_float16_2,
             box_with_nms_limit::is_ignored_float16_2,
             box_with_nms_limit::get_examples_float16_2());
+}
+
+TEST_F(GeneratedTests, box_with_nms_limit_quant8_2) {
+    execute(box_with_nms_limit::CreateModel_quant8_2,
+            box_with_nms_limit::is_ignored_quant8_2,
+            box_with_nms_limit::get_examples_quant8_2());
 }
 
 #if 0
@@ -90,6 +110,14 @@ TEST_F(DynamicOutputShapeTests, box_with_nms_limit_dynamic_output_shape_float16_
     execute(box_with_nms_limit::CreateModel_dynamic_output_shape_float16_2,
             box_with_nms_limit::is_ignored_dynamic_output_shape_float16_2,
             box_with_nms_limit::get_examples_dynamic_output_shape_float16_2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, box_with_nms_limit_dynamic_output_shape_quant8_2) {
+    execute(box_with_nms_limit::CreateModel_dynamic_output_shape_quant8_2,
+            box_with_nms_limit::is_ignored_dynamic_output_shape_quant8_2,
+            box_with_nms_limit::get_examples_dynamic_output_shape_quant8_2());
 }
 
 #endif
