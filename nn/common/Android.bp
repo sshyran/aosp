@@ -42,6 +42,7 @@ cc_defaults {
         "operations/RoiPooling.cpp",
         "operations/Select.cpp",
         "operations/SparseToDense.cpp",
+        "operations/UnidirectionalSequenceRNN.cpp",
     ],
 }
 
