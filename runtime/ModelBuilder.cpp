@@ -23,11 +23,16 @@
 #include "Utils.h"
 #include "ValidateHal.h"
 
+#include <base/stringpiece.h>
+#include <procpartition/procpartition.h>
 #include <map>
 #include <utility>
 
 namespace android {
 namespace nn {
+
+using ::android::procpartition::Partition;
+using ::art::StringPiece;
 
 // The maximum number of operands and operations that a model may have.
 const uint32_t MAX_NUMBER_OF_OPERANDS = 0xFFFFFFFE;
@@ -35,6 +40,17 @@ const uint32_t MAX_NUMBER_OF_OPERATIONS = 0xFFFFFFFE;
 const uint32_t MAX_NUMBER_OF_EXTENSIONS_IN_USE =
         // -2 because prefix 0x0000 corresponds to no extension.
         (1 << static_cast<uint8_t>(Model::ExtensionTypeEncoding::HIGH_BITS_PREFIX)) - 2;
+
+ModelBuilder::ModelBuilder() {
+    std::string path = ::android::procpartition::getExe(getpid());
+    Partition partition = ::android::procpartition::getPartition(getpid());
+
+    // Only bundled vendor applications (or tests) are allowed to use extensions.
+    if (partition == Partition::VENDOR || partition == Partition::ODM ||
+        StringPiece(path).starts_with("/data/nativetest")) {
+        mExtensionsAllowed = true;
+    }
+}
 
 bool ModelBuilder::badState(const char* name) {
     if (mCompletedModel) {
@@ -73,6 +89,10 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
     }
 
     OperandType operandType = static_cast<OperandType>(type.type);
+    if (isExtensionOperandType(operandType) && !mExtensionsAllowed) {
+        LOG(ERROR) << "Extensions are not supported for this process.";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
     if (operandType == OperandType::OEM || operandType == OperandType::TENSOR_OEM_BYTE) {
         LOG(WARNING) << "OEM data type is deprecated. Use Extensions instead.";
     }
@@ -318,6 +338,10 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
     }
 
     OperationType operationType = static_cast<OperationType>(type);
+    if (isExtensionOperationType(operationType) && !mExtensionsAllowed) {
+        LOG(ERROR) << "Extensions are not supported for this process.";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
     if (operationType == OperationType::OEM_OPERATION) {
         LOG(WARNING) << "OEM_OPERATION is deprecated. Use Extensions instead.";
     }
