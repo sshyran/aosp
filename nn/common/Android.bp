@@ -53,6 +53,8 @@ cc_library_static {
     export_include_dirs: ["include"],
     srcs: [
         "Utils.cpp",
+        "ExecutionBurstController.cpp",
+        "ExecutionBurstServer.cpp",
     ],
     header_libs: [
         "libneuralnetworks_headers",
@@ -64,6 +66,7 @@ cc_library_static {
         "libhidltransport",
         "libhidlmemory",
         "libnativewindow",
+        "libfmq",
         "android.hardware.neuralnetworks@1.0",
         "android.hardware.neuralnetworks@1.1",
         "android.hardware.neuralnetworks@1.2",
@@ -98,6 +101,8 @@ cc_library_static {
     ],
     srcs: [
         "CpuExecutor.cpp",
+        "ExecutionBurstController.cpp",
+        "ExecutionBurstServer.cpp",
         "GraphDump.cpp",
         "IndexedShapeWrapper.cpp",
         "OperationsUtils.cpp",
@@ -135,10 +140,12 @@ cc_library_static {
     ],
     shared_libs: [
         "libbase",
+        "libcutils",
         "libhidlbase",
         "libhidltransport",
         "libhidlmemory",
         "libnativewindow",
+        "libfmq",
         "libtextclassifier_hash",
         "liblog",
         "libutils",
