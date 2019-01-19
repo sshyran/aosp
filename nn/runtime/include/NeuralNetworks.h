@@ -149,6 +149,21 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL = 11,
+
+    /**
+     * A tensor of 16 bit unsigned integers that represent real numbers.
+     *
+     * Attached to this tensor are two numbers that can be used to convert the
+     * 16 bit integer to the real value and vice versa. These two numbers are:
+     * - scale: a 32 bit floating point value greater than zero.
+     * - zeroPoint: a 32 bit integer, in range [0, 65535].
+     *
+     * The formula is:
+     * real_value = (integer_value - zeroPoint) * scale.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_TENSOR_QUANT16_ASYMM = 12,
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
 } OperandCode;
@@ -2243,18 +2258,22 @@ typedef enum {
      * Inputs:
      * * 0: A 2-D Tensor of shape [num_rois, 4], specifying the locations of the
      *      bounding box proposals, each line with format [x1, y1, x2, y2].
+     *      For tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM},
+     *      the zeroPoint must be 0 and the scale must be 0.125.
      * * 1: A 2-D Tensor of shape [num_rois, num_classes * 4], specifying the
      *      bounding box delta for each region of interest and each class. The
      *      bounding box deltas are organized in the following order
      *      [dx, dy, dw, dh], where dx and dy is the relative correction factor
      *      for the center position of the bounding box with respect to the width
      *      and height, dw and dh is the log-scale relative correction factor
-     *      for the width and height.
+     *      for the width and height. For input0 of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, this tensor should be
+     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [batches], specifying the number of output boxes for each batch.
-     * * 3: A 2-D Tensor of shape [batches, 3], specifying the information of
+     * * 3: A 2-D Tensor of shape [batches, 2], specifying the information of
      *      each image in the batch, each line with format
-     *      [image_height, image_width, image_scale].
+     *      [image_height, image_width].
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
@@ -2266,6 +2285,66 @@ typedef enum {
     ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM = 41,
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_LSTM = 42,
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_RNN = 43,
+
+    /**
+     * Greedily selects a subset of bounding boxes in descending order of score.
+     *
+     * This op applies hard NMS algorithm to each class. In each loop of
+     * execution, the box with maximum score gets selected, and any boxes with
+     * the intersection-over-union (IOU) greater than a threshold are removed
+     * from the pending set.
+     *
+     * Axis-aligned bounding boxes are represented by its upper-left corner
+     * coordinate (x1,y1) and lower-right corner coordinate (x2,y2). A valid
+     * bounding box should satisfy x1 <= x2 and y1 <= y2.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Inputs:
+     * * 0: A 2-D Tensor of shape [num_rois, num_classes], specifying the score
+     *      of each bounding box proposal. The boxes are grouped by batches in the
+     *      first dimension.
+     * * 1: A 2-D Tensor specifying the bounding boxes of shape
+     *      [num_rois, num_classes * 4], organized in the order [x1, y1, x2, y2].
+     *      The boxes are grouped by batches in the first dimension. The sequential
+     *      order of the boxes corresponds with input0. For input0 of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should be of
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, with zeroPoint of 0 and
+     *      scale of 0.125.
+     * * 2: A 1-D Tensor of shape [batches], specifying the number of boxes
+     *      for each image in the batch.
+     * * 3: An {@link ANEURALNETWORKS_FLOAT32} scalar, score_threshold. Boxes
+     *      with scores lower than the threshold are filtered before sending
+     *      to the NMS algorithm.
+     * * 4: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the IoU
+     *      threshold.
+     * * 5: An {@link ANEURALNETWORKS_INT32} scalar, specifying the maximum
+     *      number of selected bounding boxes for each image. Set to a negative
+     *      value for unlimited number of output bounding boxes.
+     *
+     * Outputs:
+     * * 0: A 1-D Tensor of the same {@link OperandCode} as input0, with shape
+     *      [num_output_rois], specifying the score of each output box. The boxes
+     *      are grouped by batches, but the sequential order in each batch is not
+     *      guaranteed. For type of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      the scale and zero point must be the same as input0.
+     * * 1: A 2-D Tensor of the same {@link OperandCode} as input1, with shape
+     *      [num_output_rois, 4], specifying the coordinates of each
+     *      output bounding box with the same format as input1. The sequential
+     *      order of the boxes corresponds with output0. For type of
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, the scale must be
+     *      0.125 and the zero point must be 0.
+     * * 2: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
+     *      [num_output_rois], specifying the class of each output box. The
+     *      sequential order of the boxes corresponds with output0.
+     * * 3: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
+     *      [batches], specifying the number of output boxes for each image.
+     *
+     * Available since API level 29.
+     */
     ANEURALNETWORKS_BOX_WITH_NMS_LIMIT = 44,
 
     /**
@@ -2650,10 +2729,12 @@ typedef enum {
      *
      * The bounding box is represented by its upper-left corner coordinate
      * (x1,y1) and lower-right corner coordinate (x2,y2) in the original image.
-     * A valid bounding box should satisfy x1 < x2 and y1 < y2.
+     * A valid bounding box should satisfy x1 <= x2 and y1 <= y2.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
      * With the default data layout NHWC, the data is stored in the order of:
@@ -2666,15 +2747,20 @@ typedef enum {
      *      specifying the heatmaps, the height and width of heatmaps should
      *      be the same, and must be greater than or equal to 2.
      * * 1: A 2-D Tensor of shape [num_boxes, 4], specifying the bounding boxes,
-     *      each with format [x1, y1, x2, y2].
+     *      each with format [x1, y1, x2, y2]. For input0 of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should
+     *      be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, with zeroPoint
+     *      of 0 and scale of 0.125.
      * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
      *      NCHW data layout for input0. Set to false for NHWC.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
-     *      [num_boxes, 3, num_keypoints], specifying the location and score of
+     *      [num_boxes, num_keypoints], specifying score of the keypoints.
+     * * 1: A tensor of the same {@link OperandCode} as input1, with shape
+     *      [num_boxes, num_keypoints, 2], specifying the location of
      *      the keypoints, the second dimension is organized as
-     *      [keypoint_x, keypoint_y, score].
+     *      [keypoint_x, keypoint_y].
      *
      * Available since API level 29.
      */
@@ -3179,6 +3265,9 @@ typedef enum {
      * * 0: A 4-D tensor, specifying the feature map.
      * * 1: A 2-D Tensor of shape [num_rois, 4], specifying the locations of
      *      the regions of interest, each line with format [x1, y1, x2, y2].
+     *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      this tensor should be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM},
+     *      with zeroPoint of 0 and scale of 0.125.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [batches], specifying the number of output boxes for each batch.
      * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output

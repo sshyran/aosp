@@ -25,14 +25,20 @@ using namespace android::nn::wrapper;
 
 namespace {
 
-static const int32_t kAvailableOperandCodes[] = {
-        ANEURALNETWORKS_FLOAT32,        ANEURALNETWORKS_INT32,
-        ANEURALNETWORKS_UINT32,         ANEURALNETWORKS_TENSOR_FLOAT32,
-        ANEURALNETWORKS_TENSOR_INT32,   ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
-        ANEURALNETWORKS_BOOL,           ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
-        ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_BOOL8,
-        ANEURALNETWORKS_FLOAT16,        ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
-        ANEURALNETWORKS_TENSOR_OEM_BYTE};
+static const int32_t kAvailableOperandCodes[] = {ANEURALNETWORKS_FLOAT32,
+                                                 ANEURALNETWORKS_INT32,
+                                                 ANEURALNETWORKS_UINT32,
+                                                 ANEURALNETWORKS_TENSOR_FLOAT32,
+                                                 ANEURALNETWORKS_TENSOR_INT32,
+                                                 ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                                                 ANEURALNETWORKS_BOOL,
+                                                 ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
+                                                 ANEURALNETWORKS_TENSOR_FLOAT16,
+                                                 ANEURALNETWORKS_TENSOR_BOOL8,
+                                                 ANEURALNETWORKS_FLOAT16,
+                                                 ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
+                                                 ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+                                                 ANEURALNETWORKS_TENSOR_OEM_BYTE};
 
 ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0, uint32_t* dim = nullptr,
                                      float scale = 0.0f, int32_t zeroPoint = 0) {
@@ -1932,7 +1938,7 @@ TEST(OperationValidationTest, ROI_ALIGN_float32) {
 }
 
 TEST(OperationValidationTest, ROI_ALIGN_quant8) {
-    roiAlignOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_FLOAT32,
+    roiAlignOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
                    ANEURALNETWORKS_FLOAT32);
 }
 
@@ -1969,13 +1975,15 @@ TEST(OperationValidationTest, ROI_POOLING_quant8) {
                      ANEURALNETWORKS_FLOAT32);
 }
 
-void heatmapMaxKeypointOpTest(int32_t operandCode) {
-    uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outDim[] = {6, 3, 1};
+void heatmapMaxKeypointOpTest(int32_t heatmapOperandCode, int32_t roiOperandCode) {
+    uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outScoreDim[] = {6, 1},
+             outKeypointDim[] = {6, 1, 2};
     OperationTestBase heatmapMaxKeypointTest(
             ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT,
-            {getOpType(operandCode, 4, heatmapDim), getOpType(operandCode, 2, boxDim),
+            {getOpType(heatmapOperandCode, 4, heatmapDim), getOpType(roiOperandCode, 2, boxDim),
              getOpType(ANEURALNETWORKS_BOOL)},
-            {getOpType(operandCode, 3, outDim)});
+            {getOpType(heatmapOperandCode, 2, outScoreDim),
+             getOpType(roiOperandCode, 3, outKeypointDim)});
 
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCode());
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCounts());
@@ -1984,11 +1992,16 @@ void heatmapMaxKeypointOpTest(int32_t operandCode) {
 }
 
 TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float16) {
-    heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+    heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
-    heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+    heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_quant) {
+    heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                             ANEURALNETWORKS_TENSOR_QUANT16_ASYMM);
 }
 
 void groupedConvOpTest(int32_t operandCode) {
@@ -2178,15 +2191,15 @@ TEST(OperationValidationTest, LOCAL_RESPONSE_NORMALIZATION_float32) {
     localResponseNormOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
-void axisAlignedBBoxTransformOpTest(int32_t operandCode) {
-    uint32_t roiDim[] = {5, 4}, deltaDim[] = {5, 8}, bsDim[] = {5}, imageDim[] = {5, 3};
+void axisAlignedBBoxTransformOpTest(int32_t roiOperandCode, int32_t deltaOperandCode) {
+    uint32_t roiDim[] = {5, 4}, deltaDim[] = {5, 8}, bsDim[] = {5}, imageDim[] = {5, 2};
     uint32_t outDim[] = {5, 8};
     OperationTestBase axisAlignedBBoxTransformTest(
             ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM,
-            {getOpType(operandCode, 2, roiDim), getOpType(operandCode, 2, deltaDim),
+            {getOpType(roiOperandCode, 2, roiDim), getOpType(deltaOperandCode, 2, deltaDim),
              getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, bsDim),
-             getOpType(operandCode, 2, imageDim)},
-            {getOpType(operandCode, 2, outDim)});
+             getOpType(roiOperandCode, 2, imageDim)},
+            {getOpType(roiOperandCode, 2, outDim)});
 
     EXPECT_TRUE(axisAlignedBBoxTransformTest.testMutatingInputOperandCode());
     EXPECT_TRUE(axisAlignedBBoxTransformTest.testMutatingInputOperandCounts());
@@ -2195,11 +2208,16 @@ void axisAlignedBBoxTransformOpTest(int32_t operandCode) {
 }
 
 TEST(OperationValidationTest, AXIS_ALIGNED_BBOX_TRANSFORM_float16) {
-    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, AXIS_ALIGNED_BBOX_TRANSFORM_float32) {
-    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, AXIS_ALIGNED_BBOX_TRANSFORM_quant) {
+    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+                                   ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
 void sliceTest(int32_t operandCode) {
@@ -2549,6 +2567,40 @@ void powTest(int32_t inputOperandType) {
 TEST(OperationValidationTest, POW) {
     powTest(ANEURALNETWORKS_TENSOR_FLOAT16);
     powTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+void boxWithNmsLimitOpTest(int32_t scoreOperandCode, int32_t roiOperandCode,
+                           int32_t scalarOperandCode) {
+    uint32_t scoreDim[] = {19, 3}, roiDim[] = {19, 12}, splitDim[] = {2};
+    uint32_t outScoreDim[] = {12}, outRoiDim[] = {12, 4}, outClassDim[] = {12}, outSplitDim[] = {2};
+    OperationTestBase boxWithNmsLimitTest(
+            ANEURALNETWORKS_BOX_WITH_NMS_LIMIT,
+            {getOpType(scoreOperandCode, 2, scoreDim), getOpType(roiOperandCode, 2, roiDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, splitDim), getOpType(scalarOperandCode),
+             getOpType(scalarOperandCode), getOpType(ANEURALNETWORKS_INT32)},
+            {getOpType(scoreOperandCode, 1, outScoreDim), getOpType(roiOperandCode, 2, outRoiDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outClassDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outSplitDim)});
+
+    EXPECT_TRUE(boxWithNmsLimitTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(boxWithNmsLimitTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(boxWithNmsLimitTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(boxWithNmsLimitTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_float16) {
+    boxWithNmsLimitOpTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_FLOAT16,
+                          ANEURALNETWORKS_FLOAT16);
+}
+
+TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_float32) {
+    boxWithNmsLimitOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32,
+                          ANEURALNETWORKS_FLOAT32);
+}
+
+TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_quant) {
+    boxWithNmsLimitOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+                          ANEURALNETWORKS_FLOAT32);
 }
 
 }  // end namespace
