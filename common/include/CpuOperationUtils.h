@@ -19,6 +19,10 @@
 
 #include "OperationsUtils.h"
 
+#include <algorithm>
+#include <cmath>
+#include <limits>
+
 #include "tensorflow/contrib/lite/kernels/internal/types.h"
 
 namespace android {
@@ -66,6 +70,28 @@ inline void convertFloat32ToFloat16(const std::vector<float>& input, _Float16* o
     CHECK(output != nullptr);
     for (int i = 0; i < input.size(); ++i) {
         output[i] = input[i];
+    }
+}
+
+template <typename T>
+inline void convertQuantToFloat32(const T* input, float scale, int32_t zeroPoint,
+                                  std::vector<float>* output) {
+    CHECK(input != nullptr);
+    CHECK(output != nullptr);
+    for (int i = 0; i < output->size(); ++i) {
+        (*output)[i] = (static_cast<float>(input[i]) - zeroPoint) * scale;
+    }
+}
+
+template <typename T>
+inline void convertFloat32ToQuant(const std::vector<float>& input, float scale, int32_t zeroPoint,
+                                  T* output) {
+    CHECK(output != nullptr);
+    for (int i = 0; i < input.size(); ++i) {
+        int32_t intVal = std::round(input[i] / scale + zeroPoint);
+        intVal = std::min<int32_t>(std::max<int32_t>(intVal, std::numeric_limits<T>::min()),
+                                   std::numeric_limits<T>::max());
+        output[i] = static_cast<T>(intVal);
     }
 }
 
