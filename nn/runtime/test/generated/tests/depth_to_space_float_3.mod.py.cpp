@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, depth_to_space_float_3) {
             depth_to_space_float_3::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, depth_to_space_float_3_dynamic_output_shape) {
+    execute(depth_to_space_float_3::CreateModel_dynamic_output_shape,
+            depth_to_space_float_3::is_ignored_dynamic_output_shape,
+            depth_to_space_float_3::get_examples_dynamic_output_shape());
+}
+
+#endif

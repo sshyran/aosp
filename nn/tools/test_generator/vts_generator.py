@@ -264,11 +264,11 @@ def generate_vts(model, model_file):
 
 def generate_vts_test(example, test_file):
     testTemplate = """\
-TEST_F(NeuralnetworksHidlTest, {test_name}) {{
+TEST_F({test_case_name}, {test_name}) {{
   generated_tests::Execute(device,
                            {namespace}::{create_model_name},
                            {namespace}::{is_ignored_name},
-                           {namespace}::get_{examples_name}());\n}}
+                           {namespace}::get_{examples_name}(){test_dynamic_output_shape});\n}}
 
 TEST_F(ValidationTest, {test_name}) {{
   const Model model = {namespace}::{create_model_name}();
@@ -277,12 +277,20 @@ TEST_F(ValidationTest, {test_name}) {{
   validateRequests(model, requests);
 }}\n
 """
+    if example.model.hasDynamicOutputShape:
+        print("#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE", file=test_fd)
     print(testTemplate.format(
-        test_name=str(example.testName),
-        namespace=tg.FileNames.specName,
-        create_model_name=str(example.model.createTestFunctionName),
-        is_ignored_name=str(example.model.isIgnoredFunctionName),
-        examples_name=str(example.examplesName)), file=test_fd)
+            test_case_name="DynamicOutputShapeTest" if example.model.hasDynamicOutputShape \
+                           else "NeuralnetworksHidlTest",
+            test_name=str(example.testName),
+            namespace=tg.FileNames.specName,
+            create_model_name=str(example.model.createTestFunctionName),
+            is_ignored_name=str(example.model.isIgnoredFunctionName),
+            examples_name=str(example.examplesName),
+            test_dynamic_output_shape=", true" if example.model.hasDynamicOutputShape else ""
+        ), file=test_fd)
+    if example.model.hasDynamicOutputShape:
+        print("#endif", file=test_fd)
 
 def InitializeFiles(model_fd, example_fd, test_fd):
     fileHeader = "// clang-format off\n// Generated file (from: {spec_file}). Do not edit"

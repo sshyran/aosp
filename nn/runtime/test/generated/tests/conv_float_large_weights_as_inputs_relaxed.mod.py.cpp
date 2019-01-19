@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, conv_float_large_weights_as_inputs_relaxed) {
             conv_float_large_weights_as_inputs_relaxed::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, conv_float_large_weights_as_inputs_relaxed_dynamic_output_shape) {
+    execute(conv_float_large_weights_as_inputs_relaxed::CreateModel_dynamic_output_shape,
+            conv_float_large_weights_as_inputs_relaxed::is_ignored_dynamic_output_shape,
+            conv_float_large_weights_as_inputs_relaxed::get_examples_dynamic_output_shape());
+}
+
+#endif

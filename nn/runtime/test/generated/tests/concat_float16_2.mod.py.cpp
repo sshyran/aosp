@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, concat_float16_2) {
             concat_float16_2::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, concat_float16_2_dynamic_output_shape) {
+    execute(concat_float16_2::CreateModel_dynamic_output_shape,
+            concat_float16_2::is_ignored_dynamic_output_shape,
+            concat_float16_2::get_examples_dynamic_output_shape());
+}
+
+#endif

@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, dequantize) {
             dequantize::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, dequantize_dynamic_output_shape) {
+    execute(dequantize::CreateModel_dynamic_output_shape,
+            dequantize::is_ignored_dynamic_output_shape,
+            dequantize::get_examples_dynamic_output_shape());
+}
+
+#endif

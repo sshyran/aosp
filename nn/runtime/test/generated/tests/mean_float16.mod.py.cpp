@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, mean_float16) {
             mean_float16::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, mean_float16_dynamic_output_shape) {
+    execute(mean_float16::CreateModel_dynamic_output_shape,
+            mean_float16::is_ignored_dynamic_output_shape,
+            mean_float16::get_examples_dynamic_output_shape());
+}
+
+#endif

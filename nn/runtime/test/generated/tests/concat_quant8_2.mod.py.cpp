@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, concat_quant8_2) {
             concat_quant8_2::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, concat_quant8_2_dynamic_output_shape) {
+    execute(concat_quant8_2::CreateModel_dynamic_output_shape,
+            concat_quant8_2::is_ignored_dynamic_output_shape,
+            concat_quant8_2::get_examples_dynamic_output_shape());
+}
+
+#endif
