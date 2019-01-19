@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, sub_quantized) {
             sub_quantized::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, sub_quantized_dynamic_output_shape) {
+    execute(sub_quantized::CreateModel_dynamic_output_shape,
+            sub_quantized::is_ignored_dynamic_output_shape,
+            sub_quantized::get_examples_dynamic_output_shape());
+}
+
+#endif

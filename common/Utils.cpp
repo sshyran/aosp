@@ -249,6 +249,10 @@ uint32_t sizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) {
         return size;
     }
 
+    if (dimensions.empty()) {
+        return 0;
+    }
+
     for (auto d : dimensions) {
         size *= d;
     }
@@ -2419,6 +2423,9 @@ ErrorStatus convertResultCodeToErrorStatus(int resultCode) {
         case ANEURALNETWORKS_UNEXPECTED_NULL:
             return ErrorStatus::INVALID_ARGUMENT;
 
+        case ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE:
+            return ErrorStatus::OUTPUT_INSUFFICIENT_SIZE;
+
         default:
             LOG(ERROR) << "Unknown result code " << resultCode
                        << " mapped to ErrorStatus::GENERAL_FAILURE";
@@ -2440,13 +2447,15 @@ int convertErrorStatusToResultCode(ErrorStatus status) {
         case ErrorStatus::INVALID_ARGUMENT:
             return ANEURALNETWORKS_BAD_DATA;
 
+        case ErrorStatus::OUTPUT_INSUFFICIENT_SIZE:
+            return ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE;
+
         default:
             LOG(ERROR) << "Unknown ErrorStatus " << toString(status)
                        << " mapped to ANEURALNETWORKS_OP_FAILED";
             return ANEURALNETWORKS_OP_FAILED;
         case ErrorStatus::DEVICE_UNAVAILABLE:
         case ErrorStatus::GENERAL_FAILURE:
-        case ErrorStatus::OUTPUT_INSUFFICIENT_SIZE:
             return ANEURALNETWORKS_OP_FAILED;
     }
 }

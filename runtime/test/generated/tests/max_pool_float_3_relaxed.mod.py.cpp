@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, max_pool_float_3_relaxed) {
             max_pool_float_3_relaxed::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, max_pool_float_3_relaxed_dynamic_output_shape) {
+    execute(max_pool_float_3_relaxed::CreateModel_dynamic_output_shape,
+            max_pool_float_3_relaxed::is_ignored_dynamic_output_shape,
+            max_pool_float_3_relaxed::get_examples_dynamic_output_shape());
+}
+
+#endif

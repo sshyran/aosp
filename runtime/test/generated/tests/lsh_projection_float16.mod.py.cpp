@@ -21,3 +21,19 @@ TEST_F(GeneratedTests, lsh_projection_float16_float16) {
             lsh_projection_float16::get_examples_float16());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, lsh_projection_float16_dynamic_output_shape) {
+    execute(lsh_projection_float16::CreateModel_dynamic_output_shape,
+            lsh_projection_float16::is_ignored_dynamic_output_shape,
+            lsh_projection_float16::get_examples_dynamic_output_shape());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, lsh_projection_float16_dynamic_output_shape_float16) {
+    execute(lsh_projection_float16::CreateModel_dynamic_output_shape_float16,
+            lsh_projection_float16::is_ignored_dynamic_output_shape_float16,
+            lsh_projection_float16::get_examples_dynamic_output_shape_float16());
+}
+
+#endif

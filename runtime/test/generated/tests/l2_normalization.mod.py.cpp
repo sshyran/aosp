@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, l2_normalization) {
             l2_normalization::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, l2_normalization_dynamic_output_shape) {
+    execute(l2_normalization::CreateModel_dynamic_output_shape,
+            l2_normalization::is_ignored_dynamic_output_shape,
+            l2_normalization::get_examples_dynamic_output_shape());
+}
+
+#endif

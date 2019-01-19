@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, avg_pool_float_4_relaxed) {
             avg_pool_float_4_relaxed::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, avg_pool_float_4_relaxed_dynamic_output_shape) {
+    execute(avg_pool_float_4_relaxed::CreateModel_dynamic_output_shape,
+            avg_pool_float_4_relaxed::is_ignored_dynamic_output_shape,
+            avg_pool_float_4_relaxed::get_examples_dynamic_output_shape());
+}
+
+#endif

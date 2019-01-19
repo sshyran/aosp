@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, div) {
             div::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, div_dynamic_output_shape) {
+    execute(div::CreateModel_dynamic_output_shape,
+            div::is_ignored_dynamic_output_shape,
+            div::get_examples_dynamic_output_shape());
+}
+
+#endif

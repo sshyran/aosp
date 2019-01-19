@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, fully_connected_float_4d_simple) {
             fully_connected_float_4d_simple::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, fully_connected_float_4d_simple_dynamic_output_shape) {
+    execute(fully_connected_float_4d_simple::CreateModel_dynamic_output_shape,
+            fully_connected_float_4d_simple::is_ignored_dynamic_output_shape,
+            fully_connected_float_4d_simple::get_examples_dynamic_output_shape());
+}
+
+#endif

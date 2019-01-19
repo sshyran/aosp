@@ -27,3 +27,27 @@ TEST_F(GeneratedTests, rsqrt_float16) {
             rsqrt::get_examples_float16());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, rsqrt_dynamic_output_shape) {
+    execute(rsqrt::CreateModel_dynamic_output_shape,
+            rsqrt::is_ignored_dynamic_output_shape,
+            rsqrt::get_examples_dynamic_output_shape());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, rsqrt_dynamic_output_shape_relaxed) {
+    execute(rsqrt::CreateModel_dynamic_output_shape_relaxed,
+            rsqrt::is_ignored_dynamic_output_shape_relaxed,
+            rsqrt::get_examples_dynamic_output_shape_relaxed());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, rsqrt_dynamic_output_shape_float16) {
+    execute(rsqrt::CreateModel_dynamic_output_shape_float16,
+            rsqrt::is_ignored_dynamic_output_shape_float16,
+            rsqrt::get_examples_dynamic_output_shape_float16());
+}
+
+#endif

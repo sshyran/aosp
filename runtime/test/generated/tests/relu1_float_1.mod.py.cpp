@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, relu1_float_1) {
             relu1_float_1::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, relu1_float_1_dynamic_output_shape) {
+    execute(relu1_float_1::CreateModel_dynamic_output_shape,
+            relu1_float_1::is_ignored_dynamic_output_shape,
+            relu1_float_1::get_examples_dynamic_output_shape());
+}
+
+#endif

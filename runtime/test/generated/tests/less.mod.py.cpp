@@ -33,6 +33,38 @@ TEST_F(GeneratedTests, less_simple_relaxed) {
             less::get_examples_simple_relaxed());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, less_simple_dynamic_output_shape) {
+    execute(less::CreateModel_dynamic_output_shape,
+            less::is_ignored_dynamic_output_shape,
+            less::get_examples_simple_dynamic_output_shape());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, less_simple_dynamic_output_shape_int32) {
+    execute(less::CreateModel_dynamic_output_shape_int32,
+            less::is_ignored_dynamic_output_shape_int32,
+            less::get_examples_simple_dynamic_output_shape_int32());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, less_simple_dynamic_output_shape_float16) {
+    execute(less::CreateModel_dynamic_output_shape_float16,
+            less::is_ignored_dynamic_output_shape_float16,
+            less::get_examples_simple_dynamic_output_shape_float16());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, less_simple_dynamic_output_shape_relaxed) {
+    execute(less::CreateModel_dynamic_output_shape_relaxed,
+            less::is_ignored_dynamic_output_shape_relaxed,
+            less::get_examples_simple_dynamic_output_shape_relaxed());
+}
+
+#endif
 TEST_F(GeneratedTests, less_broadcast) {
     execute(less::CreateModel_2,
             less::is_ignored_2,
@@ -57,15 +89,63 @@ TEST_F(GeneratedTests, less_broadcast_relaxed) {
             less::get_examples_broadcast_relaxed());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, less_broadcast_dynamic_output_shape) {
+    execute(less::CreateModel_dynamic_output_shape_2,
+            less::is_ignored_dynamic_output_shape_2,
+            less::get_examples_broadcast_dynamic_output_shape());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, less_broadcast_dynamic_output_shape_int32) {
+    execute(less::CreateModel_dynamic_output_shape_int32_2,
+            less::is_ignored_dynamic_output_shape_int32_2,
+            less::get_examples_broadcast_dynamic_output_shape_int32());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, less_broadcast_dynamic_output_shape_float16) {
+    execute(less::CreateModel_dynamic_output_shape_float16_2,
+            less::is_ignored_dynamic_output_shape_float16_2,
+            less::get_examples_broadcast_dynamic_output_shape_float16());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, less_broadcast_dynamic_output_shape_relaxed) {
+    execute(less::CreateModel_dynamic_output_shape_relaxed_2,
+            less::is_ignored_dynamic_output_shape_relaxed_2,
+            less::get_examples_broadcast_dynamic_output_shape_relaxed());
+}
+
+#endif
 TEST_F(GeneratedTests, less_quantized_different_scale) {
     execute(less::CreateModel_3,
             less::is_ignored_3,
             less::get_examples_quantized_different_scale());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, less_quantized_different_scale_dynamic_output_shape) {
+    execute(less::CreateModel_dynamic_output_shape_3,
+            less::is_ignored_dynamic_output_shape_3,
+            less::get_examples_quantized_different_scale_dynamic_output_shape());
+}
+
+#endif
 TEST_F(GeneratedTests, less_quantized_different_zero_point) {
     execute(less::CreateModel_4,
             less::is_ignored_4,
             less::get_examples_quantized_different_zero_point());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, less_quantized_different_zero_point_dynamic_output_shape) {
+    execute(less::CreateModel_dynamic_output_shape_4,
+            less::is_ignored_dynamic_output_shape_4,
+            less::get_examples_quantized_different_zero_point_dynamic_output_shape());
+}
+
+#endif
