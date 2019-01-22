@@ -41,28 +41,37 @@ struct OperationRegistration {
     std::function<bool(IOperationExecutionContext*)> execute;
 };
 
-// A global singleton used to register operation implementations.
+// A registry of operation implementations.
+class IOperationResolver {
+   public:
+    virtual const OperationRegistration* findOperation(OperationType operationType) const = 0;
+    virtual ~IOperationResolver() {}
+};
+
+// A registry of builtin operation implementations.
+//
+// Note that some operations bypass BuiltinOperationResolver (b/124041202).
 //
 // Usage:
 //   const OperationRegistration* operationRegistration =
-//           OperationResolver::get()->findOperation(operationType);
+//           BuiltinOperationResolver::get()->findOperation(operationType);
 //   NN_RET_CHECK(operationRegistration != nullptr);
 //   NN_RET_CHECK(operationRegistration->validate != nullptr);
 //   NN_RET_CHECK(operationRegistration->validate(&context));
 //
-class OperationResolver {
-    DISALLOW_COPY_AND_ASSIGN(OperationResolver);
+class BuiltinOperationResolver : public IOperationResolver {
+    DISALLOW_COPY_AND_ASSIGN(BuiltinOperationResolver);
 
    public:
-    static const OperationResolver* get() {
-        static OperationResolver instance;
+    static const BuiltinOperationResolver* get() {
+        static BuiltinOperationResolver instance;
         return &instance;
     }
 
-    const OperationRegistration* findOperation(OperationType operationType) const;
+    const OperationRegistration* findOperation(OperationType operationType) const override;
 
    private:
-    OperationResolver();
+    BuiltinOperationResolver();
 
     void registerOperation(const OperationRegistration* operationRegistration);
 
