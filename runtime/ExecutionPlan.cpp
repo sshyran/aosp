@@ -683,6 +683,7 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
     const auto step = compoundBody->mSteps[controller->mNextStepIndex];
     *executor = std::make_shared<StepExecutor>(controller->mExecutionBuilder, step->getSubModel(),
                                                step->getDevice(), step->getPreparedSubModel());
+    (*executor)->setExecutionStep(step);
     step->mapInputsAndOutputs(*executor);
     if (burstController != nullptr && controller->mBurstBuilder != nullptr) {
         *burstController = controller->mBurstBuilder->getControllerAt(controller->mNextStepIndex);
