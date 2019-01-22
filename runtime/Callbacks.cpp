@@ -133,7 +133,7 @@ ExecutionCallback::ExecutionCallback()
     : mErrorStatus(ErrorStatus::GENERAL_FAILURE), mOnFinish(nullptr) {
     on_finish([this]() {
         if (mOnFinish != nullptr) {
-            ErrorStatus status = mOnFinish(mErrorStatus);
+            ErrorStatus status = mOnFinish(mErrorStatus, mOutputShapes);
             if (status != ErrorStatus::NONE) {
                 mErrorStatus = status;
             }
@@ -158,6 +158,24 @@ Return<void> ExecutionCallback::notify_1_2(ErrorStatus errorStatus,
     mErrorStatus = errorStatus;
     mOutputShapes = outputShapes;
     mTiming = timing;
+    if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+        // mOutputShapes must not be empty if OUTPUT_INSUFFICIENT_SIZE.
+        if (mOutputShapes.size() == 0) {
+            LOG(ERROR) << "Notified with empty output shape vector when OUTPUT_INSUFFICIENT_SIZE";
+            mErrorStatus = ErrorStatus::GENERAL_FAILURE;
+            mOutputShapes = {};
+            mTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+        }
+    } else if (mErrorStatus != ErrorStatus::NONE) {
+        // mOutputShapes must be empty if mErrorStatus is neither NONE nor OUTPUT_INSUFFICIENT_SIZE.
+        if (mOutputShapes.size() != 0) {
+            LOG(ERROR) << "Notified with non-empty output shape vector when error status is "
+                          "neither NONE nor OUTPUT_INSUFFICIENT_SIZE";
+            mErrorStatus = ErrorStatus::GENERAL_FAILURE;
+            mOutputShapes = {};
+            mTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+        }
+    }
     CallbackBase::notify();
     return Void();
 }
