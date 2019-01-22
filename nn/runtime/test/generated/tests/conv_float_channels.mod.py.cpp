@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, conv_float_channels) {
             conv_float_channels::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, conv_float_channels_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, conv_float_channels_dynamic_output_shape) {
     execute(conv_float_channels::CreateModel_dynamic_output_shape,
             conv_float_channels::is_ignored_dynamic_output_shape,
             conv_float_channels::get_examples_dynamic_output_shape());
 }
 
-#endif

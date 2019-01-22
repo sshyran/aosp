@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, l2_pool_float_large) {
             l2_pool_float_large::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_pool_float_large_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, l2_pool_float_large_dynamic_output_shape) {
     execute(l2_pool_float_large::CreateModel_dynamic_output_shape,
             l2_pool_float_large::is_ignored_dynamic_output_shape,
             l2_pool_float_large::get_examples_dynamic_output_shape());
 }
 
-#endif

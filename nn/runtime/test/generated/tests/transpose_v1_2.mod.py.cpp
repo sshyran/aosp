@@ -27,27 +27,21 @@ TEST_F(GeneratedTests, transpose_v1_2_quant8) {
             transpose_v1_2::get_examples_quant8());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, transpose_v1_2_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, transpose_v1_2_dynamic_output_shape) {
     execute(transpose_v1_2::CreateModel_dynamic_output_shape,
             transpose_v1_2::is_ignored_dynamic_output_shape,
             transpose_v1_2::get_examples_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, transpose_v1_2_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, transpose_v1_2_dynamic_output_shape_relaxed) {
     execute(transpose_v1_2::CreateModel_dynamic_output_shape_relaxed,
             transpose_v1_2::is_ignored_dynamic_output_shape_relaxed,
             transpose_v1_2::get_examples_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, transpose_v1_2_dynamic_output_shape_quant8) {
+TEST_F(DynamicOutputShapeTest, transpose_v1_2_dynamic_output_shape_quant8) {
     execute(transpose_v1_2::CreateModel_dynamic_output_shape_quant8,
             transpose_v1_2::is_ignored_dynamic_output_shape_quant8,
             transpose_v1_2::get_examples_dynamic_output_shape_quant8());
 }
 
-#endif

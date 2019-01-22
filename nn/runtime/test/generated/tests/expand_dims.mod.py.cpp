@@ -39,46 +39,36 @@ TEST_F(GeneratedTests, expand_dims_float16) {
             expand_dims::get_examples_float16());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape) {
     execute(expand_dims::CreateModel_dynamic_output_shape,
             expand_dims::is_ignored_dynamic_output_shape,
             expand_dims::get_examples_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_relaxed) {
     execute(expand_dims::CreateModel_dynamic_output_shape_relaxed,
             expand_dims::is_ignored_dynamic_output_shape_relaxed,
             expand_dims::get_examples_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_quant8) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_quant8) {
     execute(expand_dims::CreateModel_dynamic_output_shape_quant8,
             expand_dims::is_ignored_dynamic_output_shape_quant8,
             expand_dims::get_examples_dynamic_output_shape_quant8());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_int32) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_int32) {
     execute(expand_dims::CreateModel_dynamic_output_shape_int32,
             expand_dims::is_ignored_dynamic_output_shape_int32,
             expand_dims::get_examples_dynamic_output_shape_int32());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_float16) {
     execute(expand_dims::CreateModel_dynamic_output_shape_float16,
             expand_dims::is_ignored_dynamic_output_shape_float16,
             expand_dims::get_examples_dynamic_output_shape_float16());
 }
 
-#endif
 TEST_F(GeneratedTests, expand_dims_2) {
     execute(expand_dims::CreateModel_2,
             expand_dims::is_ignored_2,
@@ -109,46 +99,36 @@ TEST_F(GeneratedTests, expand_dims_float16_2) {
             expand_dims::get_examples_float16_2());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_2) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_2) {
     execute(expand_dims::CreateModel_dynamic_output_shape_2,
             expand_dims::is_ignored_dynamic_output_shape_2,
             expand_dims::get_examples_dynamic_output_shape_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_relaxed_2) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_relaxed_2) {
     execute(expand_dims::CreateModel_dynamic_output_shape_relaxed_2,
             expand_dims::is_ignored_dynamic_output_shape_relaxed_2,
             expand_dims::get_examples_dynamic_output_shape_relaxed_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_quant8_2) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_quant8_2) {
     execute(expand_dims::CreateModel_dynamic_output_shape_quant8_2,
             expand_dims::is_ignored_dynamic_output_shape_quant8_2,
             expand_dims::get_examples_dynamic_output_shape_quant8_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_int32_2) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_int32_2) {
     execute(expand_dims::CreateModel_dynamic_output_shape_int32_2,
             expand_dims::is_ignored_dynamic_output_shape_int32_2,
             expand_dims::get_examples_dynamic_output_shape_int32_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_float16_2) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_float16_2) {
     execute(expand_dims::CreateModel_dynamic_output_shape_float16_2,
             expand_dims::is_ignored_dynamic_output_shape_float16_2,
             expand_dims::get_examples_dynamic_output_shape_float16_2());
 }
 
-#endif
 TEST_F(GeneratedTests, expand_dims_3) {
     execute(expand_dims::CreateModel_3,
             expand_dims::is_ignored_3,
@@ -179,46 +159,36 @@ TEST_F(GeneratedTests, expand_dims_float16_3) {
             expand_dims::get_examples_float16_3());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_3) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_3) {
     execute(expand_dims::CreateModel_dynamic_output_shape_3,
             expand_dims::is_ignored_dynamic_output_shape_3,
             expand_dims::get_examples_dynamic_output_shape_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_relaxed_3) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_relaxed_3) {
     execute(expand_dims::CreateModel_dynamic_output_shape_relaxed_3,
             expand_dims::is_ignored_dynamic_output_shape_relaxed_3,
             expand_dims::get_examples_dynamic_output_shape_relaxed_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_quant8_3) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_quant8_3) {
     execute(expand_dims::CreateModel_dynamic_output_shape_quant8_3,
             expand_dims::is_ignored_dynamic_output_shape_quant8_3,
             expand_dims::get_examples_dynamic_output_shape_quant8_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_int32_3) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_int32_3) {
     execute(expand_dims::CreateModel_dynamic_output_shape_int32_3,
             expand_dims::is_ignored_dynamic_output_shape_int32_3,
             expand_dims::get_examples_dynamic_output_shape_int32_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_float16_3) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_float16_3) {
     execute(expand_dims::CreateModel_dynamic_output_shape_float16_3,
             expand_dims::is_ignored_dynamic_output_shape_float16_3,
             expand_dims::get_examples_dynamic_output_shape_float16_3());
 }
 
-#endif
 TEST_F(GeneratedTests, expand_dims_4) {
     execute(expand_dims::CreateModel_4,
             expand_dims::is_ignored_4,
@@ -249,43 +219,33 @@ TEST_F(GeneratedTests, expand_dims_float16_4) {
             expand_dims::get_examples_float16_4());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_4) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_4) {
     execute(expand_dims::CreateModel_dynamic_output_shape_4,
             expand_dims::is_ignored_dynamic_output_shape_4,
             expand_dims::get_examples_dynamic_output_shape_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_relaxed_4) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_relaxed_4) {
     execute(expand_dims::CreateModel_dynamic_output_shape_relaxed_4,
             expand_dims::is_ignored_dynamic_output_shape_relaxed_4,
             expand_dims::get_examples_dynamic_output_shape_relaxed_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_quant8_4) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_quant8_4) {
     execute(expand_dims::CreateModel_dynamic_output_shape_quant8_4,
             expand_dims::is_ignored_dynamic_output_shape_quant8_4,
             expand_dims::get_examples_dynamic_output_shape_quant8_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_int32_4) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_int32_4) {
     execute(expand_dims::CreateModel_dynamic_output_shape_int32_4,
             expand_dims::is_ignored_dynamic_output_shape_int32_4,
             expand_dims::get_examples_dynamic_output_shape_int32_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, expand_dims_dynamic_output_shape_float16_4) {
+TEST_F(DynamicOutputShapeTest, expand_dims_dynamic_output_shape_float16_4) {
     execute(expand_dims::CreateModel_dynamic_output_shape_float16_4,
             expand_dims::is_ignored_dynamic_output_shape_float16_4,
             expand_dims::get_examples_dynamic_output_shape_float16_4());
 }
 
-#endif

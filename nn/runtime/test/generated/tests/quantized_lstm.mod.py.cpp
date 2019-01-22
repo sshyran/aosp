@@ -21,19 +21,15 @@ TEST_F(GeneratedTests, quantized_lstm_relaxed) {
             quantized_lstm::get_examples_relaxed());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, quantized_lstm_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, quantized_lstm_dynamic_output_shape) {
     execute(quantized_lstm::CreateModel_dynamic_output_shape,
             quantized_lstm::is_ignored_dynamic_output_shape,
             quantized_lstm::get_examples_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, quantized_lstm_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, quantized_lstm_dynamic_output_shape_relaxed) {
     execute(quantized_lstm::CreateModel_dynamic_output_shape_relaxed,
             quantized_lstm::is_ignored_dynamic_output_shape_relaxed,
             quantized_lstm::get_examples_dynamic_output_shape_relaxed());
 }
 
-#endif

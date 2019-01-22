@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, relu6_float_2_relaxed) {
             relu6_float_2_relaxed::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, relu6_float_2_relaxed_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, relu6_float_2_relaxed_dynamic_output_shape) {
     execute(relu6_float_2_relaxed::CreateModel_dynamic_output_shape,
             relu6_float_2_relaxed::is_ignored_dynamic_output_shape,
             relu6_float_2_relaxed::get_examples_dynamic_output_shape());
 }
 
-#endif

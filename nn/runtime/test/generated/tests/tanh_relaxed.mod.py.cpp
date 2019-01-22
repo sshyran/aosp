@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, tanh_relaxed) {
             tanh_relaxed::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, tanh_relaxed_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, tanh_relaxed_dynamic_output_shape) {
     execute(tanh_relaxed::CreateModel_dynamic_output_shape,
             tanh_relaxed::is_ignored_dynamic_output_shape,
             tanh_relaxed::get_examples_dynamic_output_shape());
 }
 
-#endif

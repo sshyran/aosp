@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, lsh_projection_weights_as_inputs_relaxed) {
             lsh_projection_weights_as_inputs_relaxed::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, lsh_projection_weights_as_inputs_relaxed_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, lsh_projection_weights_as_inputs_relaxed_dynamic_output_shape) {
     execute(lsh_projection_weights_as_inputs_relaxed::CreateModel_dynamic_output_shape,
             lsh_projection_weights_as_inputs_relaxed::is_ignored_dynamic_output_shape,
             lsh_projection_weights_as_inputs_relaxed::get_examples_dynamic_output_shape());
 }
 
-#endif
