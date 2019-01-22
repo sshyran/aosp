@@ -268,7 +268,8 @@ class PreparedModelCallback : public CallbackBase, public IPreparedModelCallback
  * IPreparedModel::execute.
  */
 class ExecutionCallback : public CallbackBase,  public IExecutionCallback {
-    using ExecutionFinish = std::function<ErrorStatus(ErrorStatus)>;
+    using ExecutionFinish =
+            std::function<ErrorStatus(ErrorStatus, const std::vector<OutputShape>&)>;
 
    public:
     ExecutionCallback();
@@ -367,7 +368,13 @@ class ExecutionCallback : public CallbackBase,  public IExecutionCallback {
      *                      The index into "outputShapes" corresponds to the index
      *                      of the output operand in the Request outputs vector.
      *                      outputShapes must be empty unless the status is either
-     *                      NONE or OUTPUT_INSUFFICIENT_SIZE.
+     *                      NONE or OUTPUT_INSUFFICIENT_SIZE. outputShaps may be
+     *                      empty if the status is NONE and all model output operands
+     *                      are fully-specified at execution time. outputShapes must
+     *                      have the same number of elements as the number of model
+     *                      output operands if the status is OUTPUT_INSUFFICIENT_SIZE,
+     *                      or if the status is NONE and the model has at least one
+     *                      output operand that is not fully-specified.
      */
     const std::vector<OutputShape>& getOutputShapes();
 
