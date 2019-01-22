@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, sub_quantized_broadcast) {
             sub_quantized_broadcast::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, sub_quantized_broadcast_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, sub_quantized_broadcast_dynamic_output_shape) {
     execute(sub_quantized_broadcast::CreateModel_dynamic_output_shape,
             sub_quantized_broadcast::is_ignored_dynamic_output_shape,
             sub_quantized_broadcast::get_examples_dynamic_output_shape());
 }
 
-#endif

@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, tanh_float16) {
             tanh_float16::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, tanh_float16_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, tanh_float16_dynamic_output_shape) {
     execute(tanh_float16::CreateModel_dynamic_output_shape,
             tanh_float16::is_ignored_dynamic_output_shape,
             tanh_float16::get_examples_dynamic_output_shape());
 }
 
-#endif

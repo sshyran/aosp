@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, sub_relaxed) {
             sub_relaxed::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, sub_relaxed_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, sub_relaxed_dynamic_output_shape) {
     execute(sub_relaxed::CreateModel_dynamic_output_shape,
             sub_relaxed::is_ignored_dynamic_output_shape,
             sub_relaxed::get_examples_dynamic_output_shape());
 }
 
-#endif
