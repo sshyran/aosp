@@ -337,6 +337,7 @@
 #include "../generated/tests/avg_pool_v1_2.mod.py.cpp"
 #include "../generated/tests/axis_aligned_bbox_transform.mod.py.cpp"
 #include "../generated/tests/batch_to_space_v1_2.mod.py.cpp"
+#include "../generated/tests/bidirectional_sequence_rnn.mod.py.cpp"
 #include "../generated/tests/box_with_nms_limit.mod.py.cpp"
 #include "../generated/tests/cast.mod.py.cpp"
 #include "../generated/tests/channel_shuffle.mod.py.cpp"
