@@ -224,6 +224,112 @@ bool transposeConvFloat16(const _Float16* inputData, const Shape& inputShape,
     return true;
 }
 
+bool transposeConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
+                                   const uint8_t* filterData, const Shape& filterShape,
+                                   const float* filterScales, const int32_t* biasData,
+                                   const Shape& biasShape, int32_t padding_left,
+                                   int32_t padding_right, int32_t padding_top,
+                                   int32_t padding_bottom, int32_t stride_width,
+                                   int32_t stride_height, int32_t activation, uint8_t* outputData,
+                                   const Shape& outputShape) {
+    NNTRACE_TRANS("transposeConvQuant8PerChannel");
+    ANDROID_NN_TRANSPOSE_CONV_PARAMETERS
+
+    int32_t* tempBuffer = nullptr;
+    std::unique_ptr<int32_t[]> bufferGuard;
+    uint32_t tempBufferByteSize = getNumberOfElements(outputShape) * sizeof(int32_t);
+    if (tempBufferByteSize <= kStaticBufferSize) {
+        tempBuffer = reinterpret_cast<int32_t*>(static_scratch_buffer);
+    } else {
+        tempBuffer = new (std::nothrow) int32_t[tempBufferByteSize / sizeof(int32_t)];
+        if (tempBuffer == nullptr) {
+            LOG(ERROR) << "ConvTranspose size is too large, not enough memory";
+            return false;
+        }
+        bufferGuard.reset(tempBuffer);
+    }
+
+    int32_t inputOffset = -inputShape.offset;
+    int32_t outputOffset = outputShape.offset;
+
+    std::vector<float> realMultiplier(outputDepth, 0.0);
+    std::vector<int32_t> outputMultiplier(outputDepth, 0);
+    std::vector<int32_t> outputShift(outputDepth, 0);
+    for (int i = 0; i < outputDepth; ++i) {
+        Shape filterChannelShape = filterShape;
+        filterChannelShape.scale = filterScales[i];
+        Shape biasChannelShape = biasShape;
+        biasChannelShape.scale = filterScales[i] * inputShape.scale;
+
+        if (!GetQuantizedConvolutionMultipler(inputShape, filterChannelShape, biasChannelShape,
+                                              outputShape, &realMultiplier[i]) ||
+            !QuantizeMultiplierSmallerThanOne(realMultiplier[i], &outputMultiplier[i],
+                                              &outputShift[i])) {
+            return false;
+        }
+    }
+
+    int32_t output_activation_min = 0, output_activation_max = 0;
+    CalculateActivationRangeUint8(activation, outputShape, &output_activation_min,
+                                  &output_activation_max);
+
+    // Prevent concurrent executions that may access the scratch buffer
+    std::unique_lock<std::mutex> lock(executionMutex);
+    memset(tempBuffer, 0, tempBufferByteSize);
+
+    const uint8_t* inputPtr = inputData;
+    int32_t* outputBase = tempBuffer;
+    for (uint32_t b = 0; b < numBatches; b++) {
+        for (uint32_t h = 0; h < inputHeight; h++) {
+            for (uint32_t w = 0; w < inputWidth; w++) {
+                for (uint32_t d = 0; d < inputDepth; d++) {
+                    int32_t wOutputOrigin = static_cast<int32_t>(w) * stride_width - padding_left;
+                    int32_t hOutputOrigin = static_cast<int32_t>(h) * stride_height - padding_top;
+
+                    for (uint32_t i = 0; i < filterHeight; i++) {
+                        for (uint32_t j = 0; j < filterWidth; j++) {
+                            for (uint32_t k = 0; k < outputDepth; k++) {
+                                int32_t hOutput = hOutputOrigin + static_cast<int32_t>(i);
+                                int32_t wOutput = wOutputOrigin + static_cast<int32_t>(j);
+                                if (hOutput >= 0 && hOutput < static_cast<int32_t>(outputHeight) &&
+                                    wOutput >= 0 && wOutput < static_cast<int32_t>(outputWidth)) {
+                                    uint32_t filterIndex =
+                                            k * filterHeight * filterWidth * inputDepth +
+                                            i * filterWidth * inputDepth + j * inputDepth + d;
+                                    uint32_t outputIndex = hOutput * outputWidth * outputDepth +
+                                                           wOutput * outputDepth + k;
+                                    outputBase[outputIndex] +=
+                                            (static_cast<int32_t>(*inputPtr) + inputOffset) *
+                                            static_cast<int32_t>(filterData[filterIndex]);
+                                }
+                            }
+                        }
+                    }
+
+                    inputPtr++;
+                }
+            }
+        }
+        outputBase += outputHeight * outputWidth * outputDepth;
+    }
+
+    const uint32_t outerSize = numBatches * outputHeight * outputWidth;
+    int32_t* bufferPtr = tempBuffer;
+    uint8_t* outPtr = outputData;
+    for (uint32_t i = 0; i < outerSize; i++) {
+        for (uint32_t d = 0; d < outputDepth; d++, bufferPtr++, outPtr++) {
+            int32_t outVal = *bufferPtr + biasData[d];
+            outVal = tflite::MultiplyByQuantizedMultiplier(outVal, outputMultiplier[d],
+                                                           -outputShift[d]);
+            outVal += outputOffset;
+            outVal = std::max(std::min(outVal, output_activation_max), output_activation_min);
+            *outPtr = static_cast<uint8_t>(outVal);
+        }
+    }
+
+    return true;
+}
+
 #undef ANDROID_NN_TRANSPOSE_CONV_PARAMETERS
 }  // namespace nn
 }  // namespace android
