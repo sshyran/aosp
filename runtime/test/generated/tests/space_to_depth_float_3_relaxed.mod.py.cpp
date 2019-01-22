@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, space_to_depth_float_3_relaxed) {
             space_to_depth_float_3_relaxed::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_depth_float_3_relaxed_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, space_to_depth_float_3_relaxed_dynamic_output_shape) {
     execute(space_to_depth_float_3_relaxed::CreateModel_dynamic_output_shape,
             space_to_depth_float_3_relaxed::is_ignored_dynamic_output_shape,
             space_to_depth_float_3_relaxed::get_examples_dynamic_output_shape());
 }
 
-#endif

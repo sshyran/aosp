@@ -27,27 +27,21 @@ TEST_F(GeneratedTests, sqrt_float16) {
             sqrt::get_examples_float16());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, sqrt_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, sqrt_dynamic_output_shape) {
     execute(sqrt::CreateModel_dynamic_output_shape,
             sqrt::is_ignored_dynamic_output_shape,
             sqrt::get_examples_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, sqrt_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, sqrt_dynamic_output_shape_relaxed) {
     execute(sqrt::CreateModel_dynamic_output_shape_relaxed,
             sqrt::is_ignored_dynamic_output_shape_relaxed,
             sqrt::get_examples_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, sqrt_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, sqrt_dynamic_output_shape_float16) {
     execute(sqrt::CreateModel_dynamic_output_shape_float16,
             sqrt::is_ignored_dynamic_output_shape_float16,
             sqrt::get_examples_dynamic_output_shape_float16());
 }
 
-#endif

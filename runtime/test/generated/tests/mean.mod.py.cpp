@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, mean) {
             mean::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, mean_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, mean_dynamic_output_shape) {
     execute(mean::CreateModel_dynamic_output_shape,
             mean::is_ignored_dynamic_output_shape,
             mean::get_examples_dynamic_output_shape());
 }
 
-#endif
