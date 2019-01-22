@@ -361,6 +361,7 @@
 #include "../generated/tests/fully_connected_float16.mod.py.cpp"
 #include "../generated/tests/gather.mod.py.cpp"
 #include "../generated/tests/gather_higher_rank.mod.py.cpp"
+#include "../generated/tests/generate_proposals.mod.py.cpp"
 #include "../generated/tests/greater.mod.py.cpp"
 #include "../generated/tests/greater_equal.mod.py.cpp"
 #include "../generated/tests/grouped_conv2d.mod.py.cpp"
