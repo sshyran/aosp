@@ -24,6 +24,7 @@ cc_defaults {
     name: "neuralnetworks_operations",
     srcs: [
         "OperationResolver.cpp",
+        "operations/BidirectionalSequenceRNN.cpp",
         "operations/ChannelShuffle.cpp",
         "operations/Comparisons.cpp",
         "operations/Elementwise.cpp",
