@@ -27,27 +27,21 @@ TEST_F(GeneratedTests, log_float16) {
             log::get_examples_float16());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, log_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, log_dynamic_output_shape) {
     execute(log::CreateModel_dynamic_output_shape,
             log::is_ignored_dynamic_output_shape,
             log::get_examples_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, log_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, log_dynamic_output_shape_relaxed) {
     execute(log::CreateModel_dynamic_output_shape_relaxed,
             log::is_ignored_dynamic_output_shape_relaxed,
             log::get_examples_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, log_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, log_dynamic_output_shape_float16) {
     execute(log::CreateModel_dynamic_output_shape_float16,
             log::is_ignored_dynamic_output_shape_float16,
             log::get_examples_dynamic_output_shape_float16());
 }
 
-#endif

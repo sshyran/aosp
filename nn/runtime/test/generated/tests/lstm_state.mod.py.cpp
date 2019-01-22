@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, lstm_state) {
             lstm_state::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, lstm_state_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, lstm_state_dynamic_output_shape) {
     execute(lstm_state::CreateModel_dynamic_output_shape,
             lstm_state::is_ignored_dynamic_output_shape,
             lstm_state::get_examples_dynamic_output_shape());
 }
 
-#endif
