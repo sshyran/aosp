@@ -223,8 +223,7 @@ static void cpuFallbackFull(const ExecutionBuilder* executionBuilder,
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "cpuFallbackFull");
     VLOG(EXECUTION) << "cpuFallbackFull";
     StepExecutor executor(executionBuilder, executionBuilder->getModel(),
-                          nullptr /* no VersionedIDevice, so CPU */,
-                          nullptr /* no IPreparedModel */);
+                          DeviceManager::getCpuDevice(), /*preparedModel=*/nullptr);
     executor.mapInputsAndOutputsTrivially();
     sp<ExecutionCallback> fallbackCallback;
     int n = executor.startCompute(&fallbackCallback);
@@ -429,14 +428,16 @@ static void setRequestArgumentArray(const std::vector<ModelArgumentInfo>& argume
 }
 
 StepExecutor::StepExecutor(const ExecutionBuilder* executionBuilder, const ModelBuilder* model,
-                           VersionedIDevice* driver,
+                           std::shared_ptr<Device> device,
                            std::shared_ptr<VersionedIPreparedModel> preparedModel)
     : mExecutionBuilder(executionBuilder),
       mModel(model),
-      mDriver(driver),
+      mDevice(device),
       mPreparedModel(preparedModel),
       mInputs(model->inputCount()),
-      mOutputs(model->outputCount()) {}
+      mOutputs(model->outputCount()) {
+    CHECK(mDevice != nullptr);
+}
 
 void StepExecutor::mapInputsAndOutputsTrivially() {
     mInputs = mExecutionBuilder->mInputs;
@@ -505,12 +506,16 @@ static void logArguments(const char* kind, const std::vector<ModelArgumentInfo> 
     }
 }
 
+bool StepExecutor::isCpu() const {
+    return mDevice->getInterface() == nullptr;
+}
+
 int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback) {
     if (VLOG_IS_ON(EXECUTION)) {
         logArguments("input", mInputs);
         logArguments("output", mOutputs);
     }
-    if (mDriver == nullptr) {
+    if (isCpu()) {
         return startComputeOnCpu(synchronizationCallback);
     } else {
         return startComputeOnDevice(synchronizationCallback);
@@ -518,7 +523,7 @@ int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback) {
 }
 
 int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCallback) {
-    nnAssert(mDriver != nullptr);
+    CHECK(!isCpu());
 
     *synchronizationCallback = nullptr;
 
@@ -536,8 +541,8 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
         // encountered on an #if-removed code.
         ExecutionPreference preference =
             static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
-        ErrorStatus prepareLaunchStatus = mDriver->prepareModel(model, preference,
-                                                                preparedModelCallback);
+        ErrorStatus prepareLaunchStatus =
+                mDevice->getInterface()->prepareModel(model, preference, preparedModelCallback);
         if (prepareLaunchStatus != ErrorStatus::NONE) {
             return convertErrorStatusToResultCode(prepareLaunchStatus);
         }
