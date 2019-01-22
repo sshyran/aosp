@@ -32,6 +32,7 @@ const OperationRegistration* register_EMBEDDING_LOOKUP_SPARSE();
 const OperationRegistration* register_EQUAL();
 const OperationRegistration* register_EXP();
 const OperationRegistration* register_GATHER();
+const OperationRegistration* register_GENERATE_PROPOSALS();
 const OperationRegistration* register_GREATER();
 const OperationRegistration* register_GREATER_EQUAL();
 const OperationRegistration* register_HEATMAP_MAX_KEYPOINT();
@@ -70,6 +71,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_EQUAL());
     registerOperation(register_EXP());
     registerOperation(register_GATHER());
+    registerOperation(register_GENERATE_PROPOSALS());
     registerOperation(register_GREATER());
     registerOperation(register_GREATER_EQUAL());
     registerOperation(register_HEATMAP_MAX_KEYPOINT());
