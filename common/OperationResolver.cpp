@@ -63,7 +63,7 @@ const OperationRegistration* register_SQRT();
 const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_LSTM();
 const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_RNN();
 
-OperationResolver::OperationResolver() {
+BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_ABS());
     registerOperation(register_AXIS_ALIGNED_BBOX_TRANSFORM());
     registerOperation(register_BIDIRECTIONAL_SEQUENCE_RNN());
@@ -104,7 +104,8 @@ OperationResolver::OperationResolver() {
     registerOperation(register_UNIDIRECTIONAL_SEQUENCE_RNN());
 }
 
-const OperationRegistration* OperationResolver::findOperation(OperationType operationType) const {
+const OperationRegistration* BuiltinOperationResolver::findOperation(
+        OperationType operationType) const {
     auto index = static_cast<int32_t>(operationType);
     if (index < 0 || index >= kNumberOfOperationTypes) {
         return nullptr;
@@ -112,7 +113,8 @@ const OperationRegistration* OperationResolver::findOperation(OperationType oper
     return mRegistrations[index];
 }
 
-void OperationResolver::registerOperation(const OperationRegistration* operationRegistration) {
+void BuiltinOperationResolver::registerOperation(
+        const OperationRegistration* operationRegistration) {
     CHECK(operationRegistration != nullptr);
     auto index = static_cast<int32_t>(operationRegistration->type);
     CHECK_LE(0, index);

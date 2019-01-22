@@ -2699,7 +2699,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
         } break;
         default: {
             const OperationRegistration* operationRegistration =
-                    OperationResolver::get()->findOperation(operation.type);
+                    mOperationResolver->findOperation(operation.type);
             if (operationRegistration == nullptr) {
                 LOG(ERROR) << getOperationName(operation.type) << " not registered";
             } else if (operationRegistration->prepare == nullptr ||
