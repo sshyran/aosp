@@ -178,7 +178,8 @@ OperandType OperationValidationContext::getInputType(uint32_t index) const {
 
 Shape OperationValidationContext::getInputShape(uint32_t index) const {
     const Operand* operand = getInputOperand(index);
-    return Shape{operand->type, operand->dimensions, operand->scale, operand->zeroPoint};
+    return {operand->type, operand->dimensions, operand->scale, operand->zeroPoint,
+            operand->extraParams};
 }
 
 OperandType OperationValidationContext::getOutputType(uint32_t index) const {
@@ -187,7 +188,8 @@ OperandType OperationValidationContext::getOutputType(uint32_t index) const {
 
 Shape OperationValidationContext::getOutputShape(uint32_t index) const {
     const Operand* operand = getOutputOperand(index);
-    return Shape{operand->type, operand->dimensions, operand->scale, operand->zeroPoint};
+    return {operand->type, operand->dimensions, operand->scale, operand->zeroPoint,
+            operand->extraParams};
 }
 
 };  // anonymous namespace

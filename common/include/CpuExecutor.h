@@ -58,7 +58,13 @@ struct RunTimeOperandInfo {
     Operand::ExtraParams extraParams;
 
     Shape shape() const {
-        return Shape{.type = type, .dimensions = dimensions, .scale = scale, .offset = zeroPoint};
+        return {
+                .type = type,
+                .dimensions = dimensions,
+                .scale = scale,
+                .offset = zeroPoint,
+                .extraParams = extraParams,
+        };
     }
 
     bool isSufficient() const {
