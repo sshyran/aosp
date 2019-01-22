@@ -17,6 +17,7 @@
 #ifndef ANDROID_ML_NN_COMMON_OPERATIONS_H
 #define ANDROID_ML_NN_COMMON_OPERATIONS_H
 
+#include "operations/BidirectionalSequenceLSTM.h"
 #include "operations/Cast.h"
 #include "operations/EmbeddingLookup.h"
 #include "operations/ExpandDims.h"
