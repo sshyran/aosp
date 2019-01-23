@@ -3046,4 +3046,11 @@ TEST(OperationValidationTest, GENERATE_PROPOSALS_float32) {
                             ANEURALNETWORKS_FLOAT32);
 }
 
+TEST(OperationValidationTest, GENERATE_PROPOSALS_quant) {
+    generateProposalsOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                            ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                            ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
+                            ANEURALNETWORKS_TENSOR_QUANT16_ASYMM, ANEURALNETWORKS_FLOAT32);
+}
+
 }  // end namespace
