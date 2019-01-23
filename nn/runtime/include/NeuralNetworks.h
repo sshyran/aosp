@@ -4246,6 +4246,14 @@ typedef enum {
 enum { ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES = 128 };
 
 /**
+ * For {@link ANeuralNetworksCompilation_setCaching}, specify the size
+ * of the cache token expecting from the application. The size is in bytes.
+ *
+ * Available since API level 29.
+ */
+enum { ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN = 32 };
+
+/**
  * ANeuralNetworksMemory is an opaque type that represents memory.
  *
  * This type is used to represent shared memory, memory mapped files,
@@ -4675,6 +4683,33 @@ int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
                                                 const ANeuralNetworksDevice* const* devices,
                                                 uint32_t numDevices,
                                                 ANeuralNetworksCompilation** compilation);
+
+/**
+ * Sets the compilation caching signature and the cache directory.
+ *
+ * Provides optional caching information to the runtime for faster repeated
+ * compilation.
+ *
+ * See {@link ANeuralNetworksCompilation} for information on multithreaded usage.
+ *
+ * @param compilation The compilation to be modified.
+ * @param cacheDir The cache directory to store and retrieve caching data. It is
+ *                 recommended to use the code_cache provided by the Android runtime.
+ *                 If not using the code_cache, the user should choose a directory
+ *                 local to the application, and is responsible to manage and clean
+ *                 the cache entries.
+ * @param token The token provided by the user to specify a model, must be of length
+ *              ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN. The user should ensure that
+ *              the token is unique to a model within the application. The NNAPI
+ *              runtime will not detected token collisions. If there is a collision,
+ *              the compilation outcome may be incorrect without notifying with error.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksCompilation_setCaching(ANeuralNetworksCompilation* compilation,
+                                          const char* cacheDir, const uint8_t* token);
 
 /**
  * Schedule synchronous evaluation of the execution.
