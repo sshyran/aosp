@@ -268,7 +268,9 @@ class PreparedModelCallback : public CallbackBase, public IPreparedModelCallback
  * IPreparedModel::execute.
  */
 class ExecutionCallback : public CallbackBase,  public IExecutionCallback {
- public:
+    using ExecutionFinish = std::function<ErrorStatus(ErrorStatus)>;
+
+   public:
     ExecutionCallback();
     ~ExecutionCallback() override;
 
@@ -362,9 +364,13 @@ class ExecutionCallback : public CallbackBase,  public IExecutionCallback {
      */
     const std::vector<OutputShape>& getOutputShapes();
 
+    // The callback will invoke finish(mErrorStatus) on finish.
+    void setOnFinish(const ExecutionFinish& finish) { mOnFinish = finish; }
+
    private:
     ErrorStatus mErrorStatus;
     std::vector<OutputShape> mOutputShapes;
+    ExecutionFinish mOnFinish;
 };
 
 

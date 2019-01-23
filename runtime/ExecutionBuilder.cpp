@@ -216,6 +216,46 @@ int ExecutionBuilder::setOutputFromMemory(uint32_t index, const ANeuralNetworksO
                                          length);
 }
 
+int ExecutionBuilder::getOutputOperandDimensions(uint32_t index, uint32_t* dimensions) {
+    if (!mFinished) {
+        LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions called before the "
+                      "execution has finished.";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    uint32_t count = static_cast<uint32_t>(mOutputs.size());
+    if (index >= count) {
+        LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions bad index " << index
+                   << " " << count;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    const auto& dims = mOutputs[index].dimensions;
+    if (dims.empty()) {
+        LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions can not query "
+                      "dimensions of a scalar";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    std::copy(dims.begin(), dims.end(), dimensions);
+    return mOutputs[index].isSufficient ? ANEURALNETWORKS_NO_ERROR
+                                        : ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE;
+}
+
+int ExecutionBuilder::getOutputOperandRank(uint32_t index, uint32_t* rank) {
+    if (!mFinished) {
+        LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandRank called before the "
+                      "execution has finished.";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    uint32_t count = static_cast<uint32_t>(mOutputs.size());
+    if (index >= count) {
+        LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandRank bad index " << index << " "
+                   << count;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    *rank = static_cast<uint32_t>(mOutputs[index].dimensions.size());
+    return mOutputs[index].isSufficient ? ANEURALNETWORKS_NO_ERROR
+                                        : ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE;
+}
+
 // Attempt synchronous execution of full model on CPU.
 // Ensure that executionCallback->notify() is called.
 static void cpuFallbackFull(const ExecutionBuilder* executionBuilder,
@@ -350,6 +390,8 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback) {
         }
     }
 
+    auto wrappedFinish = [this](ErrorStatus error) { return finish(error); };
+
     // TODO: For asynchronous execution, entire plan-based-path should run in an
     // asynchronous thread -- take the asynchronous thread logic out of
     // startComputeOnCpu() and use it to wrap the plan-based-path.
@@ -358,6 +400,7 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback) {
     if (synchronous) {
         VLOG(EXECUTION) << "ExecutionBuilder::compute (synchronous API)";
         sp<ExecutionCallback> localSynchronizationCallback = new ExecutionCallback();
+        localSynchronizationCallback->setOnFinish(wrappedFinish);
         asyncStartComputePartitioned(this, mPlan, controller, allowFallback,
                                      localSynchronizationCallback);
         localSynchronizationCallback->wait();
@@ -371,6 +414,7 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback) {
         // nullptr is returned.  The executionCallback is
         // abstracted in the NN API as an "event".
         sp<ExecutionCallback> executionCallback = new ExecutionCallback();
+        executionCallback->setOnFinish(wrappedFinish);
         if (DeviceManager::get()->syncExecRuntime()) {
             VLOG(EXECUTION) << "ExecutionBuilder::compute (asynchronous API, non-threaded)";
             asyncStartComputePartitioned(this, mPlan, controller, allowFallback, executionCallback);
@@ -383,6 +427,12 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback) {
         *synchronizationCallback = executionCallback;
         return ANEURALNETWORKS_NO_ERROR;
     }
+}
+
+ErrorStatus ExecutionBuilder::finish(ErrorStatus) {
+    CHECK(!mFinished) << "ExecutionBuilder::finish is calling twice";
+    mFinished = true;
+    return ErrorStatus::NONE;
 }
 
 // Figures out how to place each of the input or outputs in a buffer. This just does the layout,
