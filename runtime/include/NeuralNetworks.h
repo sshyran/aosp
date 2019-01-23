@@ -4435,6 +4435,11 @@ typedef enum {
      * Failure caused by insufficient buffer size provided to a model output.
      */
     ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE = 8,
+
+    /**
+     * Failure caused by a device not being available.
+     */
+    ANEURALNETWORKS_UNAVAILABLE_DEVICE = 9,
 } ResultCode;
 
 /**
