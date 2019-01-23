@@ -80,6 +80,10 @@ public:
     int setOutputFromMemory(uint32_t index, const ANeuralNetworksOperandType* type,
                             const Memory* memory, size_t offset, size_t length);
 
+    int setMeasureTiming(bool measure);
+
+    int getDuration(int32_t durationCode, uint64_t* duration) const;
+
     int computeAsynchronously(sp<ExecutionCallback>* synchronizationCallback) {
         CHECK(synchronizationCallback != nullptr);
         return compute(synchronizationCallback);
@@ -88,6 +92,10 @@ public:
 
     int getOutputOperandDimensions(uint32_t index, uint32_t* dimensions);
     int getOutputOperandRank(uint32_t index, uint32_t* rank);
+
+    // Handshake with lower-level execution support
+    bool measureTiming() const { return mMeasureTiming; }
+    void reportTiming(Timing timing) { mTiming = timing; }
 
     const ModelBuilder* getModel() const { return mModel; }
 
@@ -119,6 +127,12 @@ public:
     std::vector<ModelArgumentInfo> mOutputs;
     MemoryTracker mMemories;
 
+    // Do we ask the driver to measure timing?
+    bool mMeasureTiming = false;
+
+    // Timing reported from the driver
+    Timing mTiming = {};
+
     // Output shapes can only be queried after the execution is finished.
     std::atomic_bool mFinished = false;
 };
@@ -138,7 +152,7 @@ class StepExecutor {
     //     The device on which to execute the "step", and the prepared
     //     model to execute on that device.  (Both are nullptr in the
     //     case of CPU.)
-    StepExecutor(const ExecutionBuilder* executionBuilder, const ModelBuilder* model,
+    StepExecutor(ExecutionBuilder* executionBuilder, const ModelBuilder* model,
                  std::shared_ptr<Device> device,
                  std::shared_ptr<VersionedIPreparedModel> preparedModel);
 
@@ -195,7 +209,7 @@ class StepExecutor {
                                             ModelArgumentInfo* inputOrOutputInfo);
 
     // describes the full (possibly multiple-"step") execution
-    const ExecutionBuilder* mExecutionBuilder;
+    ExecutionBuilder* mExecutionBuilder;
 
     // model to be executed on the executor, in both original and
     // compiled forms; and device on which to execute it
