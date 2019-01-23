@@ -146,6 +146,11 @@ static_assert(ANEURALNETWORKS_DEVICE_GPU == 3, "ANEURALNETWORKS_DEVICE_GPU has c
 static_assert(ANEURALNETWORKS_DEVICE_ACCELERATOR == 4,
               "ANEURALNETWORKS_DEVICE_ACCELERATOR has changed");
 
+static_assert(ANEURALNETWORKS_DURATION_ON_HARDWARE == 0,
+              "ANEURALNETWORKS_DURATION_ON_HARDWARE has changed");
+static_assert(ANEURALNETWORKS_DURATION_IN_DRIVER == 1,
+              "ANEURALNETWORKS_DURATION_IN_DRIVER has changed");
+
 // Make sure that the constants are compatible with the values defined in
 // hardware/interfaces/neuralnetworks/1.0/types.hal.
 static_assert(static_cast<int32_t>(OperandType::OEM) == ANEURALNETWORKS_OEM_SCALAR,
@@ -499,6 +504,36 @@ int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution) {
 
     ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
     return r->computeSynchronously();
+}
+
+int ANeuralNetworksExecution_setMeasureTiming(ANeuralNetworksExecution* execution, bool measure) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_setMeasureTiming");
+    if (!execution) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setMeasureTiming passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
+    return r->setMeasureTiming(measure);
+}
+
+int ANeuralNetworksExecution_getDuration(const ANeuralNetworksExecution* execution,
+                                         int32_t durationCode, uint64_t* duration) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_getDuration");
+    if (!execution || !duration) {
+        LOG(ERROR) << "ANeuralNetworksExecution_getDuration passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    switch (durationCode) {
+        case ANEURALNETWORKS_DURATION_ON_HARDWARE:
+        case ANEURALNETWORKS_DURATION_IN_DRIVER:
+            break;
+        default:
+            LOG(ERROR) << "ANeuralNetworksExecution_getDuration passed a bad durationCode "
+                       << durationCode;
+            return ANEURALNETWORKS_BAD_DATA;
+    }
+    const ExecutionBuilder* r = reinterpret_cast<const ExecutionBuilder*>(execution);
+    return r->getDuration(durationCode, duration);
 }
 
 int ANeuralNetworksBurst_create(ANeuralNetworksCompilation* compilation,

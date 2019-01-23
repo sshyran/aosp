@@ -53,12 +53,14 @@ using ::android::hardware::neuralnetworks::V1_2::IDevice;
 using ::android::hardware::neuralnetworks::V1_2::IExecutionCallback;
 using ::android::hardware::neuralnetworks::V1_2::IPreparedModel;
 using ::android::hardware::neuralnetworks::V1_2::IPreparedModelCallback;
+using ::android::hardware::neuralnetworks::V1_2::MeasureTiming;
 using ::android::hardware::neuralnetworks::V1_2::Model;
 using ::android::hardware::neuralnetworks::V1_2::Operand;
 using ::android::hardware::neuralnetworks::V1_2::OperandType;
 using ::android::hardware::neuralnetworks::V1_2::Operation;
 using ::android::hardware::neuralnetworks::V1_2::OperationType;
 using ::android::hardware::neuralnetworks::V1_2::OutputShape;
+using ::android::hardware::neuralnetworks::V1_2::Timing;
 using ::android::hidl::allocator::V1_0::IAllocator;
 using ::android::hidl::memory::V1_0::IMemory;
 

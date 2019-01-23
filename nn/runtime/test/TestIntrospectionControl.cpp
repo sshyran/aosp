@@ -213,11 +213,24 @@ TEST_F(IntrospectionControlTest, SimpleAddModel) {
               ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 0, nullptr, output, sizeof(output)),
               ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setMeasureTiming(mExecution, true),
+              ANEURALNETWORKS_NO_ERROR);
 
     EXPECT_EQ(ANeuralNetworksExecution_startCompute(mExecution, &mEvent), ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(ANeuralNetworksEvent_wait(mEvent), ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(output[0], input1[0] + input2[0]);
     EXPECT_EQ(output[1], input1[1] + input2[1]);
+
+    uint64_t timeOnHardware, timeInDriver;
+    EXPECT_EQ(ANeuralNetworksExecution_getDuration(mExecution, ANEURALNETWORKS_DURATION_ON_HARDWARE,
+                                                   &timeOnHardware),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_getDuration(mExecution, ANEURALNETWORKS_DURATION_IN_DRIVER,
+                                                   &timeInDriver),
+              ANEURALNETWORKS_NO_ERROR);
+    if (timeOnHardware != UINT64_MAX && timeInDriver != UINT64_MAX) {
+        EXPECT_LE(timeOnHardware, timeInDriver);
+    }
 }
 
 const float kSimpleMultiplier = 2.0f;
