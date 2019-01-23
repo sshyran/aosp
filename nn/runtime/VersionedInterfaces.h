@@ -72,6 +72,23 @@ class VersionedIDevice {
     std::pair<ErrorStatus, Capabilities> getCapabilities();
 
     /**
+     * Gets information about extensions supported by the driver implementation.
+     *
+     * Extensions of category ExtensionCategory::BASE must not appear
+     * in the list.
+     *
+     * All extension operations and operands must be fully supported for the
+     * extension to appear in the list of supported extensions.
+     *
+     * @return status Error status of the call, must be:
+     *     - NONE if successful
+     *     - DEVICE_UNAVAILABLE if driver is offline or busy
+     *     - GENERAL_FAILURE if there is an unspecified error
+     * @return extensions A list of supported extensions.
+     */
+    std::pair<ErrorStatus, hidl_vec<Extension>> getSupportedExtensions();
+
+    /**
      * Gets the supported operations in a model.
      *
      * getSupportedSubgraph indicates which operations of a model are fully

@@ -51,15 +51,14 @@ int ModelArgumentInfo::setFromPointer(const Operand& operand,
     if (data == nullptr) {
         state = ModelArgumentInfo::HAS_NO_VALUE;
     } else {
-        int n = updateDimensionInfo(operand, type);
-        if (n != ANEURALNETWORKS_NO_ERROR) {
-            return n;
-        }
-        uint32_t neededLength = sizeOfData(operand.type, dimensions);
-        if (operand.type != OperandType::OEM && neededLength != length) {
-            LOG(ERROR) << "Setting argument with invalid length: " << length
-                       << ", expected length: " << neededLength;
-            return ANEURALNETWORKS_BAD_DATA;
+        NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
+        if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM) {
+            uint32_t neededLength = sizeOfData(operand.type, dimensions);
+            if (neededLength != length) {
+                LOG(ERROR) << "Setting argument with invalid length: " << length
+                           << ", expected length: " << neededLength;
+                return ANEURALNETWORKS_BAD_DATA;
+            }
         }
         state = ModelArgumentInfo::POINTER;
     }
@@ -70,15 +69,14 @@ int ModelArgumentInfo::setFromPointer(const Operand& operand,
 
 int ModelArgumentInfo::setFromMemory(const Operand& operand, const ANeuralNetworksOperandType* type,
                                      uint32_t poolIndex, uint32_t offset, uint32_t length) {
-    int n = updateDimensionInfo(operand, type);
-    if (n != ANEURALNETWORKS_NO_ERROR) {
-        return n;
-    }
-    uint32_t neededLength = sizeOfData(operand.type, dimensions);
-    if (operand.type != OperandType::OEM && neededLength != length) {
-        LOG(ERROR) << "Setting argument with invalid length: " << length
-                   << ", expected length: " << neededLength;
-        return ANEURALNETWORKS_BAD_DATA;
+    NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
+    if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM) {
+        uint32_t neededLength = sizeOfData(operand.type, dimensions);
+        if (neededLength != length) {
+            LOG(ERROR) << "Setting argument with invalid length: " << length
+                       << ", expected length: " << neededLength;
+            return ANEURALNETWORKS_BAD_DATA;
+        }
     }
 
     state = ModelArgumentInfo::MEMORY;
@@ -88,13 +86,23 @@ int ModelArgumentInfo::setFromMemory(const Operand& operand, const ANeuralNetwor
 }
 
 int ModelArgumentInfo::setFromTemporaryMemory(const Operand& operand, uint32_t poolIndex,
-                                              uint32_t offset) {
-    int n = updateDimensionInfo(operand, nullptr);
-    if (n != ANEURALNETWORKS_NO_ERROR) {
-        return n;
+                                              uint32_t offset, uint32_t length) {
+    NN_RETURN_IF_ERROR(updateDimensionInfo(operand, nullptr));
+    if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM) {
+        uint32_t neededLength = sizeOfData(operand.type, dimensions);
+        if (neededLength != length) {
+            LOG(ERROR) << "Setting argument with invalid length: " << length
+                       << ", expected length: " << neededLength;
+            return ANEURALNETWORKS_BAD_DATA;
+        }
     }
+
     state = ModelArgumentInfo::MEMORY;
-    locationAndLength = {.poolIndex = poolIndex, .offset = offset, .length = sizeOfData(operand)};
+    locationAndLength = {
+            .poolIndex = poolIndex,
+            .offset = offset,
+            .length = length,
+    };
     buffer = nullptr;
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -570,7 +578,10 @@ int StepExecutor::setInputOrOutputFromTemporaryMemory(const Operand& inputOrOutp
     //     ExecutionBuilder::setOutputFromMemory()
 
     uint32_t poolIndex = mMemories.add(memory);
-    return inputOrOutputInfo->setFromTemporaryMemory(inputOrOutputOperand, poolIndex, offset);
+    uint32_t length =
+            mDevice->getSizeOfData(inputOrOutputOperand, mModel->getExtensionNameToPrefixMap());
+    return inputOrOutputInfo->setFromTemporaryMemory(inputOrOutputOperand, poolIndex, offset,
+                                                     length);
 }
 
 static void logArguments(const char* kind, const std::vector<ModelArgumentInfo>& args) {

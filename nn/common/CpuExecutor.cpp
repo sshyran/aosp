@@ -160,17 +160,24 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
     info->zeroPoint = shape.offset;
 
     // Allocate the buffer only if the combined dimension is fully specified
-    uint32_t length = sizeOfData(info->type, info->dimensions);
-    if (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE && length > 0 &&
-        info->buffer == nullptr) {
-        info->buffer = new uint8_t[length];
-        if (info->buffer == nullptr) {
-            *result = ANEURALNETWORKS_OUT_OF_MEMORY;
+    if (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info->buffer == nullptr) {
+        if (isExtensionOperandType(info->type)) {
+            LOG(ERROR) << "Cannot allocate a temporary variable of an extension type";
+            *result = ANEURALNETWORKS_OP_FAILED;
             return false;
         }
-        info->length = length;
+        uint32_t length = sizeOfData(info->type, info->dimensions);
+        if (length > 0) {
+            info->buffer = new uint8_t[length];
+            if (info->buffer == nullptr) {
+                *result = ANEURALNETWORKS_OUT_OF_MEMORY;
+                return false;
+            }
+            info->length = length;
+        }
     }
     if (!info->isSufficient()) {
+        uint32_t length = sizeOfData(info->type, info->dimensions);
         LOG(ERROR) << "Insufficient size for model operand: require = " << length
                    << ", provided = " << info->length;
         *result = ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE;

@@ -99,6 +99,7 @@ cc_defaults {
         "TestPartitioning.cpp",
         "TestPartitioningRandom.cpp",
         "TestIntrospectionControl.cpp",
+        "TestExtensions.cpp",
     ],
     static_libs: [
         "libgmock",
