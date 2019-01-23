@@ -63,7 +63,11 @@ int CompilationBuilder::finish() {
                     return n;
                 }
                 if (mModel->hasOEMOperation()) {
-                    LOG(ERROR) << "Because of OEM op cannot fall back to CPU";
+                    LOG(ERROR) << "Cannot fall back to CPU because of an OEM operation";
+                    return n;
+                }
+                if (mModel->hasExtensionOperation()) {
+                    LOG(ERROR) << "Cannot fall back to CPU because of an extension operation";
                     return n;
                 }
                 break;

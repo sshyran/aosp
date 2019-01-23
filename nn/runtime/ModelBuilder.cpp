@@ -32,6 +32,9 @@ namespace nn {
 // The maximum number of operands and operations that a model may have.
 const uint32_t MAX_NUMBER_OF_OPERANDS = 0xFFFFFFFE;
 const uint32_t MAX_NUMBER_OF_OPERATIONS = 0xFFFFFFFE;
+const uint32_t MAX_NUMBER_OF_EXTENSIONS_IN_USE =
+        // -2 because prefix 0x0000 corresponds to no extension.
+        (1 << static_cast<uint8_t>(Model::ExtensionTypeEncoding::HIGH_BITS_PREFIX)) - 2;
 
 bool ModelBuilder::badState(const char* name) {
     if (mCompletedModel) {
@@ -45,6 +48,25 @@ bool ModelBuilder::badState(const char* name) {
     return false;
 }
 
+int ModelBuilder::getExtensionType(const char* extensionName, uint16_t typeWithinExtension,
+                                   int32_t* type) {
+    uint16_t prefix;
+    auto it = mExtensionNameToPrefix.find(extensionName);
+    if (it != mExtensionNameToPrefix.end()) {
+        prefix = it->second;
+    } else {
+        if (mExtensionNameToPrefix.size() == MAX_NUMBER_OF_EXTENSIONS_IN_USE) {
+            LOG(ERROR) << "Too many extension types in use";
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+        prefix = mExtensionNameToPrefix.size() + 1;
+        mExtensionNameToPrefix[extensionName] = prefix;
+    }
+    *type = (prefix << static_cast<uint8_t>(Model::ExtensionTypeEncoding::LOW_BITS_TYPE)) |
+            typeWithinExtension;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
     if (badState("addOperand")) {
         return ANEURALNETWORKS_BAD_STATE;
@@ -55,10 +77,7 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
         LOG(WARNING) << "OEM data type is deprecated. Use Extensions instead.";
     }
 
-    int n = validateOperandType(type, "ANeuralNetworksModel_addOperand", true);
-    if (n != ANEURALNETWORKS_NO_ERROR) {
-        return n;
-    }
+    NN_RETURN_IF_ERROR(validateOperandType(type, "ANeuralNetworksModel_addOperand", true));
     size_t idx = mOperands.size();
     if (idx >= MAX_NUMBER_OF_OPERANDS) {
         LOG(ERROR) << "ANeuralNetworksModel_addOperand exceed max operands";
@@ -107,11 +126,13 @@ int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t len
             return ANEURALNETWORKS_BAD_DATA;
         }
         uint32_t valueLength = static_cast<uint32_t>(length);
-        uint32_t neededLength = sizeOfData(operand.type, operand.dimensions);
-        if (operand.type != OperandType::OEM && neededLength != valueLength) {
-            LOG(ERROR) << "ANeuralNetworksModel_setOperandValue setting " << valueLength
-                       << " bytes when needing " << neededLength;
-            return ANEURALNETWORKS_BAD_DATA;
+        if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM) {
+            uint32_t neededLength = sizeOfData(operand.type, operand.dimensions);
+            if (neededLength != valueLength) {
+                LOG(ERROR) << "ANeuralNetworksModel_setOperandValue setting " << valueLength
+                           << " bytes when needing " << neededLength;
+                return ANEURALNETWORKS_BAD_DATA;
+            }
         }
         if (valueLength <= ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES) {
             uint32_t existingSize = static_cast<uint32_t>(mSmallOperandValues.size());
@@ -146,8 +167,9 @@ int ModelBuilder::setOperandSymmPerChannelQuantParams(
     }
 
     if (index >= operandCount()) {
-        LOG(ERROR) << "setOperandSymmPerChannelQuantParams "
-                   << "setting operand extra params " << index << " of " << operandCount();
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandSymmPerChannelQuantParams "
+                   << "setting per-channel quantization parameters for operand " << index << " of "
+                   << operandCount();
         return ANEURALNETWORKS_BAD_DATA;
     }
     Operand& operand = mOperands[index];
@@ -169,6 +191,45 @@ int ModelBuilder::setOperandSymmPerChannelQuantParams(
             LOG(ERROR) << "ANeuralNetworksModel_setOperandSymmPerChannelQuantParams "
                        << "invalid operand type " << static_cast<int32_t>(operand.type);
             return ANEURALNETWORKS_BAD_DATA;
+    }
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ModelBuilder::setOperandExtensionData(uint32_t index, const void* data, size_t length) {
+    if (badState("setOperandExtensionData")) {
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+
+    if (index >= operandCount()) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandExtensionData "
+                   << "setting extension data for operand " << index << " of " << operandCount();
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    Operand& operand = mOperands[index];
+
+    if (data == nullptr && length != 0) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandExtensionData data is nullptr but length is "
+                   << length;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (data != nullptr && length == 0) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandExtensionData data is not nullptr but length "
+                   << "is zero";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (!isExtensionOperandType(operand.type)) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandExtensionData "
+                   << "setting extension data for a base operand type "
+                   << static_cast<int32_t>(operand.type);
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+
+    if (data == nullptr) {
+        operand.extraParams.none();
+    } else {
+        operand.extraParams.extension(
+                hidl_vec<uint8_t>(reinterpret_cast<const uint8_t*>(data),
+                                  reinterpret_cast<const uint8_t*>(data) + length));
     }
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -225,24 +286,27 @@ int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory
         return ANEURALNETWORKS_BAD_DATA;
     }
     Operand& operand = mOperands[index];
-    uint32_t neededLength = sizeOfData(operand.type, operand.dimensions);
     // Only BLOB format AHardwareBuffer can be used for constant data.
     if (memory->getHidlMemory().name() == "hardware_buffer") {
         LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory passed an AHardwareBuffer"
                    << " that is not in AHARDWAREBUFFER_FORMAT_BLOB format";
         return ANEURALNETWORKS_UNMAPPABLE;
     }
-    if (neededLength != length) {
-        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory setting " << length
-                   << " bytes when needing " << neededLength;
-        return ANEURALNETWORKS_BAD_DATA;
+    if (!isExtensionOperandType(operand.type)) {
+        uint32_t neededLength = sizeOfData(operand.type, operand.dimensions);
+        if (neededLength != length) {
+            LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory setting " << length
+                       << " bytes when needing " << neededLength;
+            return ANEURALNETWORKS_BAD_DATA;
+        }
     }
     if (!memory->validateSize(offset, length)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
     operand.lifetime = OperandLifeTime::CONSTANT_REFERENCE;
-    operand.location = {
-            .poolIndex = mMemories.add(memory), .offset = offset, .length = neededLength};
+    operand.location = {.poolIndex = mMemories.add(memory),
+                        .offset = offset,
+                        .length = static_cast<uint32_t>(length)};
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -258,15 +322,14 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
         LOG(WARNING) << "OEM_OPERATION is deprecated. Use Extensions instead.";
     }
 
-    if (!validCode(kNumberOfOperationTypes, kNumberOfOperationTypesOEM, type)) {
-        LOG(ERROR) << "ANeuralNetworksModel_addOperation invalid operations type " << type;
-        return ANEURALNETWORKS_BAD_DATA;
+    if (!isExtensionOperationType(operationType)) {
+        if (!validCode(kNumberOfOperationTypes, kNumberOfOperationTypesOEM, type)) {
+            LOG(ERROR) << "ANeuralNetworksModel_addOperation invalid operation type " << type;
+            return ANEURALNETWORKS_BAD_DATA;
+        }
     }
-    int n = validateOperation(type, inputCount, inputs, outputCount, outputs, mOperands,
-                              HalVersion::LATEST);
-    if (n != ANEURALNETWORKS_NO_ERROR) {
-        return n;
-    }
+    NN_RETURN_IF_ERROR(validateOperation(type, inputCount, inputs, outputCount, outputs, mOperands,
+                                         HalVersion::LATEST));
 
     uint32_t operationIndex = operationCount();
     if (operationIndex >= MAX_NUMBER_OF_OPERATIONS) {
@@ -283,6 +346,7 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
         mOperands[i].numberOfConsumers++;
     }
     mHasOEMOperation |= (operationType == OperationType::OEM_OPERATION);
+    mHasExtensionOperation |= isExtensionOperationType(operationType);
 
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -349,6 +413,15 @@ int ModelBuilder::relaxComputationFloat32toFloat16(bool allow) {
     mRelaxComputationFloat32toFloat16 = allow;
 
     return ANEURALNETWORKS_NO_ERROR;
+}
+
+void ModelBuilder::setExtensionNameToPrefixMap(
+        const std::map<std::string, uint16_t>& extensionNameToPrefix) {
+    mExtensionNameToPrefix = extensionNameToPrefix;
+}
+
+const std::map<std::string, uint16_t>& ModelBuilder::getExtensionNameToPrefixMap() const {
+    return mExtensionNameToPrefix;
 }
 
 int ModelBuilder::createCompilation(CompilationBuilder** compilation,
@@ -465,6 +538,15 @@ void ModelBuilder::setHidlModel(Model* model) const {
     for (uint32_t i = 0; i < count; i++) {
         model->pools[i] = mMemories[i]->getHidlMemory();
     }
+
+    std::vector<Model::ExtensionNameAndPrefix> extensionNameToPrefixVec;
+    for (auto& nameAndPrefix : mExtensionNameToPrefix) {
+        extensionNameToPrefixVec.push_back({
+                .name = nameAndPrefix.first,
+                .prefix = nameAndPrefix.second,
+        });
+    }
+    model->extensionNameToPrefix = extensionNameToPrefixVec;
 }
 
 }  // namespace nn
