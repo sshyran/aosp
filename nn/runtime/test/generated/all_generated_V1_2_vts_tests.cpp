@@ -65801,3 +65801,203 @@ TEST_F(ValidationTest, transpose_v1_2_dynamic_output_shape_quant8) {
 
 
 #endif
+// Generated from: unidirectional_sequence_rnn.mod.py.
+namespace unidirectional_sequence_rnn {
+// Generated unidirectional_sequence_rnn test
+#include "examples/unidirectional_sequence_rnn.example.cpp"
+// Generated model constructor
+#include "vts_models/unidirectional_sequence_rnn.model.cpp"
+} // namespace unidirectional_sequence_rnn
+
+TEST_F(NeuralnetworksHidlTest, unidirectional_sequence_rnn_blackbox) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel,
+                           unidirectional_sequence_rnn::is_ignored,
+                           unidirectional_sequence_rnn::get_examples_blackbox());
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox) {
+  const Model model = unidirectional_sequence_rnn::createTestModel();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, unidirectional_sequence_rnn_blackbox_relaxed) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_relaxed,
+                           unidirectional_sequence_rnn::is_ignored_relaxed,
+                           unidirectional_sequence_rnn::get_examples_blackbox_relaxed());
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_relaxed) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, unidirectional_sequence_rnn_blackbox_float16) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_float16,
+                           unidirectional_sequence_rnn::is_ignored_float16,
+                           unidirectional_sequence_rnn::get_examples_blackbox_float16());
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_float16) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_rnn_blackbox_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_dynamic_output_shape,
+                           unidirectional_sequence_rnn::is_ignored_dynamic_output_shape,
+                           unidirectional_sequence_rnn::get_examples_blackbox_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_dynamic_output_shape) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_rnn_blackbox_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_dynamic_output_shape_relaxed,
+                           unidirectional_sequence_rnn::is_ignored_dynamic_output_shape_relaxed,
+                           unidirectional_sequence_rnn::get_examples_blackbox_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_dynamic_output_shape_relaxed) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_rnn_blackbox_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_dynamic_output_shape_float16,
+                           unidirectional_sequence_rnn::is_ignored_dynamic_output_shape_float16,
+                           unidirectional_sequence_rnn::get_examples_blackbox_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_dynamic_output_shape_float16) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, unidirectional_sequence_rnn_blackbox_time_major) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_2,
+                           unidirectional_sequence_rnn::is_ignored_2,
+                           unidirectional_sequence_rnn::get_examples_blackbox_time_major());
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_time_major) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_2();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_time_major());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, unidirectional_sequence_rnn_blackbox_time_major_relaxed) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_relaxed_2,
+                           unidirectional_sequence_rnn::is_ignored_relaxed_2,
+                           unidirectional_sequence_rnn::get_examples_blackbox_time_major_relaxed());
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_time_major_relaxed) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_time_major_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, unidirectional_sequence_rnn_blackbox_time_major_float16) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_float16_2,
+                           unidirectional_sequence_rnn::is_ignored_float16_2,
+                           unidirectional_sequence_rnn::get_examples_blackbox_time_major_float16());
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_time_major_float16) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_time_major_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_rnn_blackbox_time_major_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_dynamic_output_shape_2,
+                           unidirectional_sequence_rnn::is_ignored_dynamic_output_shape_2,
+                           unidirectional_sequence_rnn::get_examples_blackbox_time_major_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_time_major_dynamic_output_shape) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_dynamic_output_shape_2();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_time_major_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_rnn_blackbox_time_major_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_dynamic_output_shape_relaxed_2,
+                           unidirectional_sequence_rnn::is_ignored_dynamic_output_shape_relaxed_2,
+                           unidirectional_sequence_rnn::get_examples_blackbox_time_major_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_time_major_dynamic_output_shape_relaxed) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_dynamic_output_shape_relaxed_2();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_time_major_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_rnn_blackbox_time_major_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_rnn::createTestModel_dynamic_output_shape_float16_2,
+                           unidirectional_sequence_rnn::is_ignored_dynamic_output_shape_float16_2,
+                           unidirectional_sequence_rnn::get_examples_blackbox_time_major_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_rnn_blackbox_time_major_dynamic_output_shape_float16) {
+  const Model model = unidirectional_sequence_rnn::createTestModel_dynamic_output_shape_float16_2();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_rnn::get_examples_blackbox_time_major_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
