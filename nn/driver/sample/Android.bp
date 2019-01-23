@@ -30,6 +30,7 @@ cc_defaults {
         "libbase",
         "libcutils",
         "libdl",
+        "libfmq",
         "libhardware",
         "libhidlbase",
         "libhidlmemory",
