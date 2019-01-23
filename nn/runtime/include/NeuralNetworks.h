@@ -3701,8 +3701,8 @@ typedef enum {
      * Outputs:
      * * 0: output.
      *      A 3-D tensor. The shape is defined by the input 6 (timeMajor). If
-     *      it is set to 1, then the input has a shape [maxTime, batchSize,
-     *      numUnits], otherwise the input has a shape [batchSize, maxTime,
+     *      it is set to 1, then the output has a shape [maxTime, batchSize,
+     *      numUnits], otherwise the output has a shape [batchSize, maxTime,
      *      numUnits].
      *
      * Available since API level 29.
