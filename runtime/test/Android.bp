@@ -106,6 +106,7 @@ cc_defaults {
         "libSampleDriver",
     ],
     shared_libs: [
+        "libfmq",
         "libcutils",
     ],
     header_libs: [
