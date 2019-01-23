@@ -258,6 +258,19 @@ Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
     return Void();
 }
 
+Return<void> SamplePreparedModel::configureExecutionBurst(
+        const sp<V1_2::IBurstCallback>& /*callback*/,
+        const MQDescriptorSync<V1_2::FmqRequestDatum>& /*requestChannel*/,
+        const MQDescriptorSync<V1_2::FmqResultDatum>& /*resultChannel*/,
+        configureExecutionBurst_cb cb) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
+                 "SampleDriver::configureExecutionBurst");
+
+    // TODO in subsequent CL
+    cb(ErrorStatus::NONE, nullptr);
+    return Void();
+}
+
 } // namespace sample_driver
 } // namespace nn
 } // namespace android
