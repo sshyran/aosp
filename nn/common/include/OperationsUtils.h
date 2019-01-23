@@ -474,6 +474,38 @@ bool transposeConvPrepare(const Shape& input, const Shape& filter, const Shape& 
                           int32_t padding_left, int32_t padding_right, int32_t padding_top,
                           int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
                           Shape* output);
+
+// Transposes the first two dimensions.
+template <typename T>
+inline bool transposeFirstTwoDimensions(const T* buffer, const Shape& shape, T* transposedBuffer) {
+    const int numDims = getNumberOfDimensions(shape);
+    NN_RET_CHECK(numDims >= 2);
+    const int firstDim = getSizeOfDimension(shape, 0);
+    const int secondDim = getSizeOfDimension(shape, 1);
+    int blockSize = 1;
+    for (int i = 2; i < numDims; ++i) {
+        blockSize *= getSizeOfDimension(shape, i);
+    }
+
+    for (int i = 0; i < firstDim; ++i) {
+        for (int j = 0; j < secondDim; ++j) {
+            for (int k = 0; k < blockSize; ++k) {
+                transposedBuffer[(j * firstDim + i) * blockSize + k] =
+                        buffer[(i * secondDim + j) * blockSize + k];
+            }
+        }
+    }
+    return true;
+}
+
+inline bool transposeFirstTwoDimensions(const Shape& shape, Shape* transposedShape) {
+    NN_RET_CHECK(getNumberOfDimensions(shape) >= 2);
+    *transposedShape = shape;
+    transposedShape->dimensions[0] = shape.dimensions[1];
+    transposedShape->dimensions[1] = shape.dimensions[0];
+    return true;
+}
+
 } // namespace nn
 } // namespace android
 
