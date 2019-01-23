@@ -117,6 +117,8 @@
 
 namespace {
 
+const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+
 using CompilationBuilder = ::android::nn::CompilationBuilder;
 using Device = ::android::nn::Device;
 using DeviceManager = ::android::nn::DeviceManager;
@@ -214,11 +216,13 @@ private:
      Return<ErrorStatus> execute(const Request&, const sp<V1_0::IExecutionCallback>&) override {
          return ErrorStatus::DEVICE_UNAVAILABLE;
      }
-     Return<ErrorStatus> execute_1_2(const Request&, const sp<V1_2::IExecutionCallback>&) override {
+     Return<ErrorStatus> execute_1_2(const Request&, MeasureTiming,
+                                     const sp<V1_2::IExecutionCallback>&) override {
          return ErrorStatus::DEVICE_UNAVAILABLE;
      }
-     Return<void> executeSynchronously(const Request&, executeSynchronously_cb cb) override {
-         cb(ErrorStatus::DEVICE_UNAVAILABLE, {});
+     Return<void> executeSynchronously(const Request&, MeasureTiming,
+                                       executeSynchronously_cb cb) override {
+         cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
          return Void();
      }
      Return<void> configureExecutionBurst(
