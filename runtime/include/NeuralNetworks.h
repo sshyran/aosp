@@ -4861,6 +4861,7 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
 
 /**
  * ANeuralNetworksOperandType describes the type of an operand.
+ *
  * This structure is used to describe both scalars and tensors.
  *
  * A tensor operand type must have a specified rank (number of
@@ -4903,14 +4904,28 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  * Available since API level 27.
  */
 typedef struct ANeuralNetworksOperandType {
-    /** The data type, e.g ANEURALNETWORKS_INT8. */
+    /**
+     * The data type, e.g ANEURALNETWORKS_FLOAT32.
+     */
     int32_t type;
-    /** The number of dimensions (rank). It should be 0 for scalars. */
+
+    /**
+     * The number of dimensions (rank).
+     *
+     * Must be 0 for scalars.
+     */
     uint32_t dimensionCount;
-    /** The dimensions of the tensor. It should be nullptr for scalars. */
+
+    /**
+     * The dimensions of the tensor.
+     *
+     * Must be nullptr for scalars.
+     */
     const uint32_t* dimensions;
-    /** These two fields are only used for quantized tensors.
-     * They should be zero for scalars and non-fixed point tensors.
+
+    /**
+     * These two fields are only used for quantized tensors.
+     * They must be zero for all other types.
      * The dequantized value of each entry is (value - zeroPoint) * scale.
      */
     float scale;

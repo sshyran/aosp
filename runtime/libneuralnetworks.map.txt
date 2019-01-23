@@ -66,3 +66,11 @@ LIBNEURALNETWORKS {
   local:
     *;
 };
+
+LIBNEURALNETWORKS_PLATFORM {
+  global:
+    ANeuralNetworksDevice_getExtensionSupport;
+    ANeuralNetworksModel_getExtensionOperandType;
+    ANeuralNetworksModel_getExtensionOperationType;
+    ANeuralNetworksModel_setOperandExtensionData;
+} LIBNEURALNETWORKS;
