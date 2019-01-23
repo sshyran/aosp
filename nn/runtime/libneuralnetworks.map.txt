@@ -44,6 +44,9 @@ LIBNEURALNETWORKS {
     ANeuralNetworksCompilation_free;
     ANeuralNetworksCompilation_setPreference;
     ANeuralNetworksCompilation_finish;
+    ANeuralNetworksBurst_create; # introduced=Q
+    ANeuralNetworksBurst_free; # introduced=Q
+    ANeuralNetworksExecution_burstCompute; # introduced=Q
     ANeuralNetworksExecution_compute; # introduced=Q
     ANeuralNetworksExecution_create;
     ANeuralNetworksExecution_free;
