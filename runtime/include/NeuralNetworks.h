@@ -2571,6 +2571,7 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
      * Inputs:
      * * 0: A 4-D Tensor specifying the score of each anchor at each
@@ -2587,7 +2588,9 @@ typedef enum {
      *      relative correction factor for the width and height. The last
      *      dimensions is the channel dimension.
      * * 2: A 2-D Tensor of shape [num_anchors, 4], specifying the shape of each
-     *      predefined anchor, with format [x1, y1, x2, y2].
+     *      predefined anchor, with format [x1, y1, x2, y2]. For input0 of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should be of
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}, with scale of 0.125.
      * * 3: A 2-D Tensor of shape [batches, 2], specifying the size of
      *      each image in the batch, with format [image_height, image_width].
      * * 4: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the ratio
@@ -2613,11 +2616,15 @@ typedef enum {
      * * 0: A tensor of the same {@link OperandCode} as input0, of shape
      *      [num_output_rois], specifying the score of each output box.
      *      The boxes are grouped by batches, but the sequential order in
-     *      each batch is not guaranteed.
+     *      each batch is not guaranteed. For type of
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the scale and zero
+     *      point must be the same as input0.
      * * 1: A tensor of the same {@link OperandCode} as input1, of shape
      *      [num_output_rois, 4], specifying the coordinates of each output
      *      bounding box for each class, with format [x1, y1, x2, y2].
      *      The sequential order of the boxes corresponds with output0.
+     *      For type of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, the
+     *      scale must be 0.125 and the zero point must be 0.
      * * 2: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [batches], specifying the number of output boxes for each image.
      *
