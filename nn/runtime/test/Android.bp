@@ -24,6 +24,7 @@ cc_defaults {
         "libandroid",
         "libbase",
         "libcutils",
+        "libfmq",
         "libhidlbase",
         "libhidltransport",
         "libhidlmemory",
@@ -107,7 +108,6 @@ cc_defaults {
         "libSampleDriver",
     ],
     shared_libs: [
-        "libfmq",
         "libcutils",
     ],
     header_libs: [

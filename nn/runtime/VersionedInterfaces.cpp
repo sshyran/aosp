@@ -17,6 +17,7 @@
 #include "VersionedInterfaces.h"
 
 #include "Callbacks.h"
+#include "ExecutionBurstController.h"
 #include "Tracing.h"
 #include "Utils.h"
 
@@ -77,6 +78,15 @@ VersionedIPreparedModel::executeSynchronously(const Request& request, MeasureTim
         // callback->getOutputShapes() will always return an empty hidl vector.
         // callback->getTiming() will always return values indicating no measurement.
         return {callback->getStatus(), callback->getOutputShapes(), callback->getTiming()};
+    }
+}
+
+std::unique_ptr<ExecutionBurstController> VersionedIPreparedModel::configureExecutionBurst(
+        bool blocking) const {
+    if (mPreparedModelV1_2 != nullptr) {
+        return createExecutionBurstController(mPreparedModelV1_2, blocking);
+    } else {
+        return nullptr;
     }
 }
 
