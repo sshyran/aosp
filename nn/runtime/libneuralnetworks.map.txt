@@ -52,8 +52,10 @@ LIBNEURALNETWORKS {
     ANeuralNetworksExecution_compute; # introduced=Q
     ANeuralNetworksExecution_create;
     ANeuralNetworksExecution_free;
+    ANeuralNetworksExecution_getDuration; # introduced=Q
     ANeuralNetworksExecution_setInput;
     ANeuralNetworksExecution_setInputFromMemory;
+    ANeuralNetworksExecution_setMeasureTiming; # introduced=Q
     ANeuralNetworksExecution_setOutput;
     ANeuralNetworksExecution_setOutputFromMemory;
     ANeuralNetworksExecution_startCompute;
