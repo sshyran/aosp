@@ -81,15 +81,14 @@ int ModelArgumentInfo::setFromMemory(const Operand& operand, const ANeuralNetwor
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int ModelArgumentInfo::setFromTemporaryMemory(const Operand& operand,
-                                              uint32_t poolIndex, uint32_t offset) {
+int ModelArgumentInfo::setFromTemporaryMemory(const Operand& operand, uint32_t poolIndex,
+                                              uint32_t offset) {
     int n = updateDimensionInfo(operand, nullptr);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return n;
     }
     state = ModelArgumentInfo::MEMORY;
-    locationAndLength =
-            {.poolIndex = poolIndex, .offset = offset, .length = sizeOfData(operand)};
+    locationAndLength = {.poolIndex = poolIndex, .offset = offset, .length = sizeOfData(operand)};
     buffer = nullptr;
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -126,12 +125,12 @@ int ModelArgumentInfo::updateDimensionInfo(const Operand& operand,
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-ExecutionBuilder::ExecutionBuilder(const CompilationBuilder* compilation) :
-        mModel(compilation->mModel),
-        mPlan(&compilation->mPlan),
-        mPartitioning(compilation->mPartitioning),
-        mInputs(mModel->inputCount()),
-        mOutputs(mModel->outputCount()) {
+ExecutionBuilder::ExecutionBuilder(const CompilationBuilder* compilation)
+    : mModel(compilation->mModel),
+      mPlan(&compilation->mPlan),
+      mPartitioning(compilation->mPartitioning),
+      mInputs(mModel->inputCount()),
+      mOutputs(mModel->outputCount()) {
     VLOG(EXECUTION) << "ExecutionBuilder::ExecutionBuilder";
 }
 
@@ -167,7 +166,12 @@ int ExecutionBuilder::setInputFromMemory(uint32_t index, const ANeuralNetworksOp
                    << count;
         return ANEURALNETWORKS_BAD_DATA;
     }
-    if (!memory->validateSize(offset, length)) {
+    // Both offset & length must be zero for Non-BLOB format AHardwareBuffer.
+    if (memory->getHidlMemory().name() == "hardware_buffer" && (offset != 0 || length != 0)) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setInputFromMemory has non-zero offset and length"
+                   << " for Non-BLOB format AHardwareBuffer.";
+        return ANEURALNETWORKS_BAD_DATA;
+    } else if (!memory->validateSize(offset, length)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
     // TODO validate the rest
@@ -176,8 +180,8 @@ int ExecutionBuilder::setInputFromMemory(uint32_t index, const ANeuralNetworksOp
                                         length);
 }
 
-int ExecutionBuilder::setOutput(uint32_t index, const ANeuralNetworksOperandType* type, void* buffer,
-                                size_t length) {
+int ExecutionBuilder::setOutput(uint32_t index, const ANeuralNetworksOperandType* type,
+                                void* buffer, size_t length) {
     uint32_t count = static_cast<uint32_t>(mOutputs.size());
     if (index >= count) {
         LOG(ERROR) << "ANeuralNetworksExecution_setOutput bad index " << index << " " << count;
@@ -207,7 +211,12 @@ int ExecutionBuilder::setOutputFromMemory(uint32_t index, const ANeuralNetworksO
                    << count;
         return ANEURALNETWORKS_BAD_DATA;
     }
-    if (!memory->validateSize(offset, length)) {
+    // Both offset & length must be zero for Non-BLOB format AHardwareBuffer.
+    if (memory->getHidlMemory().name() == "hardware_buffer" && (offset != 0 || length != 0)) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setOutputFromMemory has non-zero offset and length"
+                   << " for Non-BLOB format AHardwareBuffer.";
+        return ANEURALNETWORKS_BAD_DATA;
+    } else if (!memory->validateSize(offset, length)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
     // TODO validate the rest
@@ -281,8 +290,7 @@ static void cpuFallbackFull(const ExecutionBuilder* executionBuilder,
 // (2) If unsuccessful, attempt to execute the full model on CPU,
 //     ensure that executionCallback->notify() is called, and return
 //     false.
-static bool cpuFallbackPartial(const ExecutionBuilder* executionBuilder,
-                               const ExecutionPlan* plan,
+static bool cpuFallbackPartial(const ExecutionBuilder* executionBuilder, const ExecutionPlan* plan,
                                std::shared_ptr<ExecutionPlan::Controller> controller,
                                const sp<ExecutionCallback>& executionCallback) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "cpuFallbackPartial");
@@ -465,15 +473,16 @@ int StepExecutor::allocatePointerArgumentsToPool(std::vector<ModelArgumentInfo>*
 }
 
 static void setRequestArgumentArray(const std::vector<ModelArgumentInfo>& argumentInfos,
-                                     hidl_vec<RequestArgument>* ioInfos) {
+                                    hidl_vec<RequestArgument>* ioInfos) {
     size_t count = argumentInfos.size();
     ioInfos->resize(count);
     for (size_t i = 0; i < count; i++) {
         const auto& info = argumentInfos[i];
-        (*ioInfos)[i] = { .hasNoValue = info.state == ModelArgumentInfo::HAS_NO_VALUE,
-                          .location = info.locationAndLength,
-                          .dimensions = info.dimensions,
-                        };
+        (*ioInfos)[i] = {
+                .hasNoValue = info.state == ModelArgumentInfo::HAS_NO_VALUE,
+                .location = info.locationAndLength,
+                .dimensions = info.dimensions,
+        };
     }
 }
 
@@ -506,12 +515,10 @@ void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutpu
         case ModelArgumentInfo::UNSPECIFIED:
             break;
         case ModelArgumentInfo::MEMORY: {
-            const uint32_t builderPoolIndex =
-                    builderInputOrOutput.locationAndLength.poolIndex;
+            const uint32_t builderPoolIndex = builderInputOrOutput.locationAndLength.poolIndex;
             const Memory* memory = mExecutionBuilder->mMemories[builderPoolIndex];
             const uint32_t executorPoolIndex = mMemories.add(memory);
-            executorInputOrOutput->locationAndLength.poolIndex =
-                    executorPoolIndex;
+            executorInputOrOutput->locationAndLength.poolIndex = executorPoolIndex;
             break;
         }
     }
@@ -528,7 +535,7 @@ int StepExecutor::setInputOrOutputFromTemporaryMemory(const Operand& inputOrOutp
     return inputOrOutputInfo->setFromTemporaryMemory(inputOrOutputOperand, poolIndex, offset);
 }
 
-static void logArguments(const char* kind, const std::vector<ModelArgumentInfo> &args) {
+static void logArguments(const char* kind, const std::vector<ModelArgumentInfo>& args) {
     for (unsigned i = 0; i < args.size(); i++) {
         const auto& arg = args[i];
         std::string prefix = kind + std::string("[") + std::to_string(i) + "] = ";
@@ -538,10 +545,8 @@ static void logArguments(const char* kind, const std::vector<ModelArgumentInfo> 
                 break;
             case ModelArgumentInfo::MEMORY:
                 VLOG(EXECUTION) << prefix << "MEMORY("
-                                << "pool=" << arg.locationAndLength.poolIndex
-                                << ", "
-                                << "off=" << arg.locationAndLength.offset
-                                << ")";
+                                << "pool=" << arg.locationAndLength.poolIndex << ", "
+                                << "off=" << arg.locationAndLength.offset << ")";
                 break;
             case ModelArgumentInfo::HAS_NO_VALUE:
                 VLOG(EXECUTION) << prefix << "HAS_NO_VALUE";
@@ -590,7 +595,7 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
         // remove this entire block of code since it is a stale path that is only
         // encountered on an #if-removed code.
         ExecutionPreference preference =
-            static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
+                static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
         ErrorStatus prepareLaunchStatus =
                 mDevice->getInterface()->prepareModel(model, preference, preparedModelCallback);
         if (prepareLaunchStatus != ErrorStatus::NONE) {
@@ -698,9 +703,8 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
     Return<ErrorStatus> callbackStatus = executionCallback->getStatus();
     if (!callbackStatus.isOk() || callbackStatus != ErrorStatus::NONE) {
         VLOG(EXECUTION) << "**Execution failed**";
-        return callbackStatus.isOk()
-                ? convertErrorStatusToResultCode(callbackStatus)
-                : ANEURALNETWORKS_OP_FAILED;
+        return callbackStatus.isOk() ? convertErrorStatusToResultCode(callbackStatus)
+                                     : ANEURALNETWORKS_OP_FAILED;
     }
 
     // Copy the output data from shared memory to the output buffers.
@@ -770,7 +774,7 @@ int StepExecutor::startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallba
         for (ModelArgumentInfo& argumentInfo : argumentInfos) {
             if (argumentInfo.state == ModelArgumentInfo::POINTER) {
                 argumentInfo.locationAndLength.poolIndex =
-                            static_cast<uint32_t>(requestPoolInfos.size());
+                        static_cast<uint32_t>(requestPoolInfos.size());
                 argumentInfo.locationAndLength.offset = 0;
                 requestPoolInfos.emplace_back(static_cast<uint8_t*>(argumentInfo.buffer));
             }
