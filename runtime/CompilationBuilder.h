@@ -26,6 +26,7 @@
 namespace android {
 namespace nn {
 
+class BurstBuilder;
 class Device;
 class ExecutionBuilder;
 class ModelBuilder;
@@ -46,6 +47,8 @@ public:
     int finish();
 
     int createExecution(ExecutionBuilder** execution);
+
+    int createBurst(BurstBuilder** burst);
 
     const ExecutionPlan& forTest_getExecutionPlan() const { return mPlan; }
 
