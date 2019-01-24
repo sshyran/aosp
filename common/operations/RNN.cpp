@@ -123,22 +123,61 @@ bool RNN::RNNStep(const T* inputData, const Shape& inputShape, const T* hiddenSt
                   const int32_t activation, T* outputData) {
     NNTRACE_COMP("RNN::Eval");
 
+    Shape dummyShape;
+    uint32_t numUnits = weightsShape.dimensions[0];
+    return RNNStep<T>(inputData, inputShape, /*auxInputData=*/nullptr, /*auxInputShape=*/dummyShape,
+                      hiddenStateInputData, biasData, weightsData, weightsShape,
+                      /*auxWeightsData=*/nullptr, /*auxWeightsShape=*/dummyShape,
+                      recurrentWeightsData, recurrentWeightsShape, activation,
+                      /*outputBatchStride=*/numUnits, /*outputBatchOffset=*/0, outputData);
+}
+
+// A more general version of the RNNStep function.
+// Auxiliary input is treated as if it was concatenated to a regular input and
+// the result was multiplied by the weights matrix which was also concatenated
+// with auxiliary weights.
+template <typename T>
+bool RNN::RNNStep(const T* inputData, const Shape& inputShape, const T* auxInputData,
+                  const Shape& auxInputShape, const T* hiddenStateInputData, const T* biasData,
+                  const T* weightsData, const Shape& weightsShape, const T* auxWeightsData,
+                  const Shape& auxWeightsShape, const T* recurrentWeightsData,
+                  const Shape& recurrentWeightsShape, const int32_t activation,
+                  const uint32_t outputBatchStride, const uint32_t outputBatchOffset, T* outputData,
+                  T* hiddenStateOutput) {
+    NNTRACE_COMP("RNN::Eval");
+
     const uint32_t batch_size = inputShape.dimensions[0];
     const uint32_t num_units = weightsShape.dimensions[0];
     const uint32_t input_size = inputShape.dimensions[1];
     const uint32_t input_weights_stride = weightsShape.dimensions[1];
     const uint32_t recurrent_weights_stride = recurrentWeightsShape.dimensions[1];
 
+    uint32_t aux_input_size = 0;
+    uint32_t aux_input_weights_stride = 0;
+    bool hasAuxInput = (auxInputData != nullptr);
+    if (hasAuxInput) {
+        aux_input_size = auxInputShape.dimensions[1];
+        aux_input_weights_stride = auxWeightsShape.dimensions[1];
+    }
+
     // For each batch
     for (uint32_t b = 0; b < batch_size; b++) {
         // Initialize the pointer to input, output and bias.
         const T* input_ptr_batch = inputData + b * input_size;
         const T* hidden_state_in_ptr_batch = hiddenStateInputData + b * num_units;
-        T* output_ptr_batch = outputData + b * num_units;
+        const T* aux_input_ptr_batch = nullptr;
+        if (hasAuxInput) {
+            aux_input_ptr_batch = auxInputData + b * aux_input_size;
+        }
+        T* output_ptr_batch = outputData + b * outputBatchStride + outputBatchOffset;
 
         // Initialize input_weights and recurrent_weights.
         const T* input_weights_ptr = weightsData;
         const T* recurrent_weights_ptr = recurrentWeightsData;
+        const T* aux_input_weights_ptr = nullptr;
+        if (hasAuxInput) {
+            aux_input_weights_ptr = auxWeightsData;
+        }
 
         // Output = bias
         for (uint32_t o = 0; o < num_units; o++) {
@@ -153,6 +192,16 @@ bool RNN::RNNStep(const T* inputData, const Shape& inputShape, const T* hiddenSt
             input_weights_ptr += input_weights_stride;
         }
 
+        if (hasAuxInput) {
+            // Output += aux_input * aux_input_weights
+            for (uint32_t o = 0; o < num_units; o++) {
+                for (uint32_t i = 0; i < input_size; i++) {
+                    output_ptr_batch[o] += aux_input_ptr_batch[i] * aux_input_weights_ptr[i];
+                }
+                aux_input_weights_ptr += aux_input_weights_stride;
+            }
+        }
+
         // Output += recurrent_weights * hidden_state
         for (uint32_t o = 0; o < num_units; o++) {
             for (uint32_t h = 0; h < num_units; h++) {
@@ -165,6 +214,10 @@ bool RNN::RNNStep(const T* inputData, const Shape& inputShape, const T* hiddenSt
         for (uint32_t o = 0; o < num_units; o++) {
             output_ptr_batch[o] =
                     (ActivationFunctor(static_cast<ActivationFn>(activation)))(output_ptr_batch[o]);
+            if (hiddenStateOutput != nullptr) {
+                *hiddenStateOutput = output_ptr_batch[o];
+                ++hiddenStateOutput;
+            }
         }
     }
 

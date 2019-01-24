@@ -58,6 +58,8 @@ class OperationExecutionContext : public IOperationExecutionContext {
     bool setOutputShape(uint32_t index, const Shape& shape) override;
     int getResultCode() const;
 
+    bool isNullInput(uint32_t index) const override;
+
    private:
     const RunTimeOperandInfo* getInputInfo(uint32_t index) const;
     const RunTimeOperandInfo* getOutputInfo(uint32_t index) const;
@@ -180,6 +182,10 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
 
 bool OperationExecutionContext::setOutputShape(uint32_t index, const Shape& shape) {
     return setInfoAndAllocateIfNeeded(getOutputInfo(index), shape, &result);
+}
+
+bool OperationExecutionContext::isNullInput(uint32_t index) const {
+    return getInputInfo(index)->lifetime == OperandLifeTime::NO_VALUE;
 }
 
 }  // namespace
