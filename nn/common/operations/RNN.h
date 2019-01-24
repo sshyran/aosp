@@ -27,44 +27,49 @@ struct RunTimeOperandInfo;
 struct Shape;
 
 class RNN {
- public:
-  RNN(const Operation &operation,
-      std::vector<RunTimeOperandInfo> &operands);
+   public:
+    RNN(const Operation& operation, std::vector<RunTimeOperandInfo>& operands);
 
-  static bool Prepare(const Operation &operation,
-                      std::vector<RunTimeOperandInfo> &operands,
-                      Shape *hiddenStateShape,
-                      Shape *outputShape);
-  bool Eval();
+    static bool Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+                        Shape* hiddenStateShape, Shape* outputShape);
+    bool Eval();
 
-  static constexpr int kInputTensor = 0;
-  static constexpr int kWeightsTensor = 1;  // Optional
-  static constexpr int kRecurrentWeightsTensor = 2;
-  static constexpr int kBiasTensor = 3;
-  static constexpr int kHiddenStateInTensor = 4;
-  static constexpr int kActivationParam = 5;
+    static constexpr int kInputTensor = 0;
+    static constexpr int kWeightsTensor = 1;  // Optional
+    static constexpr int kRecurrentWeightsTensor = 2;
+    static constexpr int kBiasTensor = 3;
+    static constexpr int kHiddenStateInTensor = 4;
+    static constexpr int kActivationParam = 5;
 
-  static constexpr int kHiddenStateOutTensor = 0;
-  static constexpr int kOutputTensor = 1;
+    static constexpr int kHiddenStateOutTensor = 0;
+    static constexpr int kOutputTensor = 1;
 
-  template <typename T>
-  static bool RNNStep(const T* inputData, const Shape& inputShape, const T* hiddenStateInputData,
-                      const T* biasData, const T* weightsData, const Shape& weightsShape,
-                      const T* recurrentWeightsData, const Shape& recurrentWeightsShape,
-                      int32_t activation, T* outputData);
+    template <typename T>
+    static bool RNNStep(const T* inputData, const Shape& inputShape, const T* hiddenStateInputData,
+                        const T* biasData, const T* weightsData, const Shape& weightsShape,
+                        const T* recurrentWeightsData, const Shape& recurrentWeightsShape,
+                        int32_t activation, T* outputData);
 
- private:
+    template <typename T>
+    static bool RNNStep(const T* inputData, const Shape& inputShape, const T* auxInputData,
+                        const Shape& auxInputShape, const T* hiddenStateInputData,
+                        const T* biasData, const T* weightsData, const Shape& weightsShape,
+                        const T* auxWeightsData, const Shape& auxWeightsShape,
+                        const T* recurrentWeightsData, const Shape& recurrentWeightsShape,
+                        int32_t activation, uint32_t outputBatchStride, uint32_t outputBatchStep,
+                        T* outputData, T* hiddenStateOutput = nullptr);
 
-  ActivationFn activation_;
+   private:
+    ActivationFn activation_;
 
-  const RunTimeOperandInfo *input_;
-  const RunTimeOperandInfo *weights_;
-  const RunTimeOperandInfo *recurrent_weights_;
-  const RunTimeOperandInfo *bias_;
-  const RunTimeOperandInfo *hidden_state_in_;
+    const RunTimeOperandInfo* input_;
+    const RunTimeOperandInfo* weights_;
+    const RunTimeOperandInfo* recurrent_weights_;
+    const RunTimeOperandInfo* bias_;
+    const RunTimeOperandInfo* hidden_state_in_;
 
-  RunTimeOperandInfo *hidden_state_out_;
-  RunTimeOperandInfo *output_;
+    RunTimeOperandInfo* hidden_state_out_;
+    RunTimeOperandInfo* output_;
 };
 
 }  // namespace nn
