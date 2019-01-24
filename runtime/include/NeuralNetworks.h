@@ -165,6 +165,19 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_TENSOR_QUANT16_ASYMM = 12,
+
+    /**
+     * A tensor of 8 bit signed integers that represent real numbers.
+     *
+     * Attached to this tensor is a number representing real value scale that is
+     * used to convert the 8 bit number to a real value in the following way:
+     * realValue = integerValue * scale.
+     *
+     * scale is a 32 bit floating point with value greater then zero.
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_TENSOR_QUANT8_SYMM = 13,
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
 } OperandCode;
@@ -676,6 +689,8 @@ typedef enum {
      *
      * Supported input tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM} (since API level 29)
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} (since API level 29)
      *
      * Supported output tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
@@ -684,7 +699,7 @@ typedef enum {
      * Supported tensor rank: up to 4
      *
      * Inputs:
-     * * 0: A tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}.
+     * * 0: A tensor.
      *
      * Outputs:
      * * 0: A tensor with the same shape as input0.
