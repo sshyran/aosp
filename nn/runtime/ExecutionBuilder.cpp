@@ -20,6 +20,7 @@
 
 #include "CompilationBuilder.h"
 #include "CpuExecutor.h"
+#include "ExecutionBurstController.h"
 #include "HalInterfaces.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
@@ -132,7 +133,8 @@ int ModelArgumentInfo::updateDimensionInfo(const Operand& operand,
 }
 
 ExecutionBuilder::ExecutionBuilder(const CompilationBuilder* compilation)
-    : mModel(compilation->mModel),
+    : mCompilation(compilation),
+      mModel(compilation->mModel),
       mPlan(&compilation->mPlan),
       mPartitioning(compilation->mPartitioning),
       mInputs(mModel->inputCount()),
@@ -358,7 +360,8 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
     while (true) {
         std::shared_ptr<StepExecutor> executor;
         VLOG(EXECUTION) << "looking for next StepExecutor";
-        int n = plan->next(controller, &executor);
+        ExecutionBurstController* burstController = nullptr;
+        int n = plan->next(controller, &executor, &burstController);
         if (n != ANEURALNETWORKS_NO_ERROR) {
             if (allowFallback) {
                 cpuFallbackFull(executionBuilder, executionCallback);
@@ -373,7 +376,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
         }
 
         sp<ExecutionCallback> stepCallback;
-        n = executor->startCompute(&stepCallback);
+        n = executor->startCompute(&stepCallback, burstController);
         if (n != ANEURALNETWORKS_NO_ERROR) {
             if (allowFallback) {
                 if (cpuFallbackPartial(executionBuilder, plan, controller, executionCallback)) {
@@ -409,7 +412,10 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
     }
 }
 
-int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback) {
+int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
+                              BurstBuilder* burstBuilder) {
+    assert(synchronizationCallback == nullptr || burstBuilder == nullptr);
+
     const bool synchronous = (synchronizationCallback == nullptr);
 
     if (!synchronous) {
@@ -439,7 +445,8 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback) {
     // asynchronous thread -- take the asynchronous thread logic out of
     // startComputeOnCpu() and use it to wrap the plan-based-path.
     const bool allowFallback = DeviceManager::partitioningAllowsFallback(mPartitioning);
-    std::shared_ptr<ExecutionPlan::Controller> controller = mPlan->makeController(this);
+    std::shared_ptr<ExecutionPlan::Controller> controller =
+            mPlan->makeController(this, burstBuilder);
     if (synchronous) {
         VLOG(EXECUTION) << "ExecutionBuilder::compute (synchronous API)";
         sp<ExecutionCallback> localSynchronizationCallback = new ExecutionCallback();
@@ -603,7 +610,8 @@ bool StepExecutor::isCpu() const {
     return mDevice->getInterface() == nullptr;
 }
 
-int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback) {
+int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback,
+                               ExecutionBurstController* burstController) {
     if (VLOG_IS_ON(EXECUTION)) {
         logArguments("input", mInputs);
         logArguments("output", mOutputs);
@@ -611,11 +619,12 @@ int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback) {
     if (isCpu()) {
         return startComputeOnCpu(synchronizationCallback);
     } else {
-        return startComputeOnDevice(synchronizationCallback);
+        return startComputeOnDevice(synchronizationCallback, burstController);
     }
 }
 
-int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCallback) {
+int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCallback,
+                                       ExecutionBurstController* burstController) {
     CHECK(!isCpu());
 
     *synchronizationCallback = nullptr;
@@ -711,7 +720,19 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
     // in the design document.
     sp<ExecutionCallback> executionCallback = new ExecutionCallback();
 
-    if (DeviceManager::get()->syncExecHal()) {
+    if (burstController != nullptr) {
+        std::vector<intptr_t> memoryIds(mMemories.size());
+        for (size_t i = 0; i < mMemories.size(); ++i) {
+            memoryIds[i] = reinterpret_cast<intptr_t>(mMemories[i]);
+        }
+
+        VLOG(EXECUTION) << "Before ExecutionBurstController->compute() "
+                        << SHOW_IF_DEBUG(toString(request));
+        auto burstExecuteResult =
+                burstController->compute(request, measureTiming(mExecutionBuilder), memoryIds);
+        executionCallback->notify(std::get<0>(burstExecuteResult), std::get<1>(burstExecuteResult),
+                                  std::get<2>(burstExecuteResult));
+    } else if (DeviceManager::get()->syncExecHal()) {
         VLOG(EXECUTION) << "Before mPreparedModel->executeSynchronously() "
                         << SHOW_IF_DEBUG(toString(request));
         auto syncExecuteResult =
