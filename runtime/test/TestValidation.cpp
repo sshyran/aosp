@@ -1118,4 +1118,79 @@ TEST_F(ValidationTestInvalidCompilation, CreateExecutionWithInvalidCompilation) 
               ANEURALNETWORKS_BAD_STATE);
 }
 
+TEST_F(ValidationTestCompilationForDevices, ExecutionTiming) {
+    ASSERT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_NO_ERROR);
+
+    // Assume there's a single device.
+    // TODO:
+    // - Validate that we fail if there are multiple devices.
+    // - Validate that we fail if we have Compilation rather than CompilationForDevices.
+
+    ANeuralNetworksExecution* execution;
+    ASSERT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
+
+    EXPECT_EQ(ANeuralNetworksExecution_setMeasureTiming(nullptr, false),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksExecution_setMeasureTiming(nullptr, true),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksExecution_setMeasureTiming(execution, false),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setMeasureTiming(execution, true), ANEURALNETWORKS_NO_ERROR);
+
+    // TODO:
+    // - Validate that we cannot setMeasureTiming if the execution has started
+    // - Validate that we cannot getDuration until the execution has finished
+
+    float in0 = 0.0f, in1 = 1.0f, out0 = 0.0f;
+    int in2 = 0;
+    ASSERT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, &in0, sizeof(in0)),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksExecution_setInput(execution, 1, nullptr, &in1, sizeof(in1)),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksExecution_setInput(execution, 2, nullptr, &in2, sizeof(in2)),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksExecution_setOutput(execution, 0, nullptr, &out0, sizeof(out0)),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksExecution_compute(execution), ANEURALNETWORKS_NO_ERROR);
+
+    auto testDuration = [](ANeuralNetworksExecution* e, int32_t durationCode, bool nullDuration) {
+        SCOPED_TRACE(e);
+        SCOPED_TRACE(durationCode);
+        SCOPED_TRACE(nullDuration);
+
+        // Strictly speaking, a duration COULD have this value, but it is
+        // exceedingly unlikely. We'll use it as an initial value that we expect
+        // to be modified by getDuration().
+        const uint64_t kBogusDuration = UINT64_MAX - 1;
+
+        uint64_t duration = kBogusDuration;
+        uint64_t* durationPtr = nullDuration ? nullptr : &duration;
+
+        int expectedResultCode = ANEURALNETWORKS_NO_ERROR;
+        if (e == nullptr | durationPtr == nullptr) {
+            expectedResultCode = ANEURALNETWORKS_UNEXPECTED_NULL;
+        } else if (durationCode < 0) {
+            expectedResultCode = ANEURALNETWORKS_BAD_DATA;
+        }
+
+        EXPECT_EQ(ANeuralNetworksExecution_getDuration(e, durationCode, durationPtr),
+                  expectedResultCode);
+        if (expectedResultCode == ANEURALNETWORKS_NO_ERROR) {
+            EXPECT_NE(duration, kBogusDuration);
+        }
+    };
+
+    std::vector<ANeuralNetworksExecution*> executions = {nullptr, execution};
+    std::vector<int32_t> durationCodes = {-1, ANEURALNETWORKS_DURATION_ON_HARDWARE,
+                                          ANEURALNETWORKS_DURATION_IN_DRIVER};
+    std::vector<bool> nullDurations = {false, true};
+    for (auto e : executions) {
+        for (auto d : durationCodes) {
+            for (auto n : nullDurations) {
+                testDuration(e, d, n);
+            }
+        }
+    }
+}
+
 }  // namespace

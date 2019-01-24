@@ -52,6 +52,8 @@ using MQDescriptorSync = ::android::hardware::MQDescriptorSync<T>;
 
 namespace {
 
+const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+
 // Wraps an V1_2::IPreparedModel to allow dummying up the execution status.
 class TestPreparedModel12 : public V1_2::IPreparedModel {
    public:
@@ -75,26 +77,27 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
         }
     }
 
-    Return<ErrorStatus> execute_1_2(const Request& request,
+    Return<ErrorStatus> execute_1_2(const Request& request, MeasureTiming measure,
                                     const sp<V1_2::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
-            return mPreparedModelV1_2->execute_1_2(request, callback);
+            return mPreparedModelV1_2->execute_1_2(request, measure, callback);
         } else {
-            callback->notify_1_2(mErrorStatus, {});
+            callback->notify_1_2(mErrorStatus, {}, kBadTiming);
             return ErrorStatus::NONE;
         }
     }
 
-    Return<void> executeSynchronously(const Request& request, executeSynchronously_cb cb) override {
+    Return<void> executeSynchronously(const Request& request, MeasureTiming measure,
+                                      executeSynchronously_cb cb) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
             return mPreparedModelV1_2->executeSynchronously(
-                    request, [&cb](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes) {
-                        cb(error, outputShapes);
-                    });
+                    request, measure,
+                    [&cb](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
+                          const Timing& timing) { cb(error, outputShapes, timing); });
         } else {
-            cb(mErrorStatus, {});
+            cb(mErrorStatus, {}, kBadTiming);
             return Void();
         }
     }
