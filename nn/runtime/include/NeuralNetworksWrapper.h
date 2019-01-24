@@ -332,6 +332,9 @@ public:
     }
 
     Result setCaching(const std::string& cacheDir, const std::vector<uint8_t>& token) {
+        if (token.size() != ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN) {
+            return Result::BAD_DATA;
+        }
         return static_cast<Result>(ANeuralNetworksCompilation_setCaching(
                 mCompilation, cacheDir.c_str(), token.data()));
     }
