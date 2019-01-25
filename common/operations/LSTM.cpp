@@ -19,6 +19,7 @@
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
+#include "OperationsUtils.h"
 
 #include "Tracing.h"
 
@@ -367,6 +368,7 @@ bool LSTMCell::LSTMEvalFloat32(
     const uint32_t batchSize = (inputRank == 3) ? getSizeOfDimension(input_shape, timeMajor ? 1 : 0)
                                                 : getSizeOfDimension(input_shape, 0);
     const uint32_t inputSize = getSizeOfDimension(input_shape, inputRank - 1);
+    const uint32_t numCells = getSizeOfDimension(input_to_output_weights_shape, 0);
     const uint32_t outputSize = getSizeOfDimension(recurrent_to_output_weights_shape, 1);
 
     Shape batchInputShape = input_shape;
@@ -374,8 +376,25 @@ bool LSTMCell::LSTMEvalFloat32(
     const uint32_t batchInputSize = batchSize * inputSize;
     const uint32_t batchOutputSize = batchSize * outputSize;
 
-    const float* inputCurrentTimeStep = input_buffer;
-    float* outputCurrentTimeStep = output_buffer;
+    std::vector<float> transposedInput;
+    std::vector<float> transposedOutput;
+    Shape transposedInputShape;
+    Shape transposedOutputShape;
+    if (!timeMajor) {
+        transposedInput.resize(maxTime * batchInputSize);
+        transposedOutput.resize(maxTime * batchOutputSize);
+        transposeFirstTwoDimensions<float>(input_buffer, input_shape, transposedInput.data());
+        transposeFirstTwoDimensions(input_shape, &transposedInputShape);
+        transposedOutputShape = transposedInputShape;
+        transposedOutputShape.dimensions[2] = outputSize;
+    }
+    const float* inputCurrentTimeStep = timeMajor ? input_buffer : transposedInput.data();
+    float* outputCurrentTimeStep = timeMajor ? output_buffer : transposedOutput.data();
+
+    std::vector<float> outputStateInCurrentTimeStep(
+            output_state_in_buffer, output_state_in_buffer + batchSize * outputSize);
+    std::vector<float> cellStateInCurrentTimeStep(cell_state_in_buffer,
+                                                  cell_state_in_buffer + batchSize * numCells);
     for (int t = 0; t < maxTime; ++t) {
         LSTMStep(params, inputCurrentTimeStep, batchInputShape, input_to_input_weights_buffer,
                  input_to_forget_weights_buffer, input_to_cell_weights_buffer,
@@ -386,13 +405,24 @@ bool LSTMCell::LSTMEvalFloat32(
                  cell_to_forget_weights_buffer, cell_to_output_weights_buffer,
                  input_gate_bias_buffer, forget_gate_bias_buffer, cell_bias_buffer,
                  output_gate_bias_buffer, projection_weights_buffer, projection_bias_buffer,
-                 output_state_in_buffer, cell_state_in_buffer, input_layer_norm_weights_buffer,
-                 forget_layer_norm_weights_buffer, cell_layer_norm_weights_buffer,
-                 output_layer_norm_weights_buffer, output_state_out_buffer, cell_state_out_buffer,
-                 outputCurrentTimeStep, scratch_buffer_buffer);
+                 outputStateInCurrentTimeStep.data(), cellStateInCurrentTimeStep.data(),
+                 input_layer_norm_weights_buffer, forget_layer_norm_weights_buffer,
+                 cell_layer_norm_weights_buffer, output_layer_norm_weights_buffer,
+                 output_state_out_buffer, cell_state_out_buffer, outputCurrentTimeStep,
+                 scratch_buffer_buffer);
         inputCurrentTimeStep += batchInputSize;
         outputCurrentTimeStep += batchOutputSize;
+        outputStateInCurrentTimeStep.assign(output_state_out_buffer,
+                                            output_state_out_buffer + batchSize * outputSize);
+        cellStateInCurrentTimeStep.assign(cell_state_out_buffer,
+                                          cell_state_out_buffer + batchSize * numCells);
     }
+
+    if (!timeMajor) {
+        transposeFirstTwoDimensions<float>(transposedOutput.data(), transposedOutputShape,
+                                           output_buffer);
+    }
+
     return true;
 }
 
@@ -497,11 +527,6 @@ bool LSTMCell::LSTMEvalFloat16(
         convertFloat16ToFloat32(projection_bias_buffer, &projection_bias_float32);
     }
 
-    std::vector<float> output_state_in_float32(batchSize * outputSize);
-    convertFloat16ToFloat32(output_state_in_buffer, &output_state_in_float32);
-    std::vector<float> cell_state_in_float32(batchSize * numCells);
-    convertFloat16ToFloat32(cell_state_in_buffer, &cell_state_in_float32);
-
     std::vector<float> input_layer_norm_weights_float32(numCells);
     if (input_layer_norm_weights_buffer != nullptr) {
         convertFloat16ToFloat32(input_layer_norm_weights_buffer, &input_layer_norm_weights_float32);
@@ -532,8 +557,26 @@ bool LSTMCell::LSTMEvalFloat16(
                                                               : 4 * batchSize * numCells);
     convertFloat16ToFloat32(scratch_buffer_buffer, &scratch_buffer_float32);
 
-    const float* inputCurrentTimeStep = input_float32.data();
-    float* outputCurrentTimeStep = output_float32.data();
+    std::vector<float> transposedInput;
+    std::vector<float> transposedOutput;
+    Shape transposedInputShape;
+    Shape transposedOutputShape;
+    if (!timeMajor) {
+        transposedInput.resize(maxTime * batchInputSize);
+        transposedOutput.resize(maxTime * batchOutputSize);
+        transposeFirstTwoDimensions<float>(input_float32.data(), input_shape,
+                                           transposedInput.data());
+        transposeFirstTwoDimensions(input_shape, &transposedInputShape);
+        transposedOutputShape = transposedInputShape;
+        transposedOutputShape.dimensions[2] = outputSize;
+    }
+    const float* inputCurrentTimeStep = timeMajor ? input_float32.data() : transposedInput.data();
+    float* outputCurrentTimeStep = timeMajor ? output_float32.data() : transposedOutput.data();
+
+    std::vector<float> outputStateInCurrentTimeStep(batchSize * outputSize);
+    convertFloat16ToFloat32(output_state_in_buffer, &outputStateInCurrentTimeStep);
+    std::vector<float> cellStateInCurrentTimeStep(batchSize * numCells);
+    convertFloat16ToFloat32(cell_state_in_buffer, &cellStateInCurrentTimeStep);
     for (int t = 0; t < maxTime; ++t) {
         LSTMStep(params, inputCurrentTimeStep, batchInputShape,
                  input_to_input_weights_float32.data(), input_to_forget_weights_float32.data(),
@@ -546,14 +589,21 @@ bool LSTMCell::LSTMEvalFloat16(
                  cell_to_output_weights_float32.data(), input_gate_bias_float32.data(),
                  forget_gate_bias_float32.data(), cell_bias_float32.data(),
                  output_gate_bias_float32.data(), projection_weights_float32.data(),
-                 projection_bias_float32.data(), output_state_in_float32.data(),
-                 cell_state_in_float32.data(), input_layer_norm_weights_float32.data(),
+                 projection_bias_float32.data(), outputStateInCurrentTimeStep.data(),
+                 cellStateInCurrentTimeStep.data(), input_layer_norm_weights_float32.data(),
                  forget_layer_norm_weights_float32.data(), cell_layer_norm_weights_float32.data(),
                  output_layer_norm_weights_float32.data(), output_state_out_float32.data(),
                  cell_state_out_float32.data(), outputCurrentTimeStep,
                  scratch_buffer_float32.data());
         inputCurrentTimeStep += batchInputSize;
         outputCurrentTimeStep += batchOutputSize;
+        outputStateInCurrentTimeStep = output_state_out_float32;
+        cellStateInCurrentTimeStep = cell_state_out_float32;
+    }
+
+    if (!timeMajor) {
+        transposeFirstTwoDimensions<float>(transposedOutput.data(), transposedOutputShape,
+                                           output_float32.data());
     }
 
     convertFloat32ToFloat16(output_state_out_float32, output_state_out_buffer);
