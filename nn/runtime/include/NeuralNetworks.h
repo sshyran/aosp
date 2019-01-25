@@ -4374,7 +4374,7 @@ enum { ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES = 128 };
 
 /**
  * For {@link ANeuralNetworksCompilation_setCaching}, specify the size
- * of the cache token expecting from the application. The size is in bytes.
+ * of the cache token required from the application. The size is in bytes.
  *
  * Available since API level 29.
  */
@@ -4447,6 +4447,8 @@ typedef struct ANeuralNetworksModel ANeuralNetworksModel;
  *        {@link ANeuralNetworksCompilation_createForDevices}.</li>
  *    <li>Set any desired properties on the compilation (for example,
  *        {@link ANeuralNetworksCompilation_setPreference}).</li>
+ *    <li>Optionally, set the caching signature and the cache directory on the
+ *        compilation by calling {@link ANeuralNetworksCompilation_setCaching}.</li>
  *    <li>Complete the compilation with {@link ANeuralNetworksCompilation_finish}.</li>
  *    <li>Use the compilation as many times as needed
  *        with {@link ANeuralNetworksExecution_create} and
@@ -4822,16 +4824,17 @@ int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
  * See {@link ANeuralNetworksCompilation} for information on multithreaded usage.
  *
  * @param compilation The compilation to be modified.
- * @param cacheDir The cache directory to store and retrieve caching data. It is
- *                 recommended to use the code_cache provided by the Android runtime.
- *                 If not using the code_cache, the user should choose a directory
- *                 local to the application, and is responsible to manage and clean
- *                 the cache entries.
- * @param token The token provided by the user to specify a model, must be of length
+ * @param cacheDir The cache directory for the runtime to store and retrieve caching
+ *                 data. It is recommended to use the code cache directory provided
+ *                 by the Android runtime. If not using the code cache directory, the
+ *                 user should choose a directory local to the application, and is
+ *                 responsible to managing the cache entries.
+ * @param token The token provided by the user to specify a model must be of length
  *              ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN. The user should ensure that
  *              the token is unique to a model within the application. The NNAPI
- *              runtime will not detected token collisions. If there is a collision,
- *              the compilation outcome may be incorrect without notifying with error.
+ *              runtime cannot detect token collisions; a collision will result in a
+ *              failed execution or in a successful execution that produces incorrect
+ *              output values.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
  *

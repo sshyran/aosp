@@ -72,7 +72,8 @@ private:
 
     // Compilation caching information.
     std::string mCacheDir;
-    std::vector<uint8_t> mToken;
+    uint8_t mToken[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN];
+    bool mIsCacheInfoProvided = false;
 };
 
 } // namespace nn
