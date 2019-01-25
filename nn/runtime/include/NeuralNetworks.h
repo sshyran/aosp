@@ -2565,8 +2565,8 @@ typedef enum {
      * * 8: An {@link ANEURALNETWORKS_INT32} scalar, max_num_detections, specifying
      *      the maximum number of boxes for the output. Boxes with the lowest
      *      scores are discarded to meet the limit.
-     * * 9: An {@link ANEURALNETWORKS_INT32} scalar, specifying the maximum
-     *      number of classes per detection.
+     * * 9: An {@link ANEURALNETWORKS_INT32} scalar, only used when input7 is
+     *      set to false, specifying the maximum number of classes per detection.
      * * 10: An {@link ANEURALNETWORKS_INT32} scalar, only used when input7 is
      *       set to true, specifying the maximum number of detections when
      *       applying NMS algorithm for each single class.
@@ -2591,12 +2591,12 @@ typedef enum {
      * * 2: A 2-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [batches, max_num_detections], specifying the class label for each
      *      output detection.
-     * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the number of
-     *      valid output detections.
+     * * 3: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape [batches],
+     *      specifying the number of valid output detections for each batch.
      *
      * Available since API level 29.
      */
-    ANEURALNETWORKS_DETECTION_POSTPROCESS = 47,
+    ANEURALNETWORKS_DETECTION_POSTPROCESSING = 47,
 
     /**
      * For input tensors x and y, computes x == y elementwise.
