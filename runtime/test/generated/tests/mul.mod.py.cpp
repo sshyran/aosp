@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, mul) {
             mul::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, mul_dynamic_output_shape) {
+    execute(mul::CreateModel_dynamic_output_shape,
+            mul::is_ignored_dynamic_output_shape,
+            mul::get_examples_dynamic_output_shape());
+}
+
+#endif

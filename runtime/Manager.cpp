@@ -50,6 +50,7 @@ class DriverDevice : public Device {
     const char* getVersionString() const override { return mVersionString.c_str(); }
     VersionedIDevice* getInterface() override { return &mInterface; }
     int64_t getFeatureLevel() override { return mInterface.getFeatureLevel(); }
+    int32_t getType() const override { return mInterface.getType(); }
     void getSupportedOperations(const Model& hidlModel, hidl_vec<bool>* supported) override;
     PerformanceInfo getFloat32Performance() const override { return mFloat32Performance; }
     PerformanceInfo getQuantized8Performance() const override { return mQuantized8Performance; }
@@ -230,6 +231,7 @@ class CpuDevice : public Device {
     const char* getVersionString() const override { return kVersionString.c_str(); }
     VersionedIDevice* getInterface() override { return nullptr; }
     int64_t getFeatureLevel() override { return kFeatureLevel; }
+    int32_t getType() const override { return ANEURALNETWORKS_DEVICE_CPU; }
     void getSupportedOperations(const Model& hidlModel, hidl_vec<bool>* supported) override;
     PerformanceInfo getFloat32Performance() const override { return kPerformance; }
     PerformanceInfo getQuantized8Performance() const override { return kPerformance; }

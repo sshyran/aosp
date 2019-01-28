@@ -503,12 +503,13 @@ int ExecutionPlan::finish(const ModelBuilder* fromModel, int32_t executionPrefer
 }
 
 ExecutionPlan::Controller::Controller(
-    const ExecutionPlan* plan,
-    const ExecutionBuilder* executionBuilder,
-    std::shared_ptr<const SubModelInputsAndOutputsType> subModelInputsAndOutputs,
-    uint32_t totalSizeOfTemporaries) :
-        mPlan(plan), mExecutionBuilder(executionBuilder),
-        mSubModelInputsAndOutputs(subModelInputsAndOutputs), mNextStepIndex(0) {
+        const ExecutionPlan* plan, ExecutionBuilder* executionBuilder,
+        std::shared_ptr<const SubModelInputsAndOutputsType> subModelInputsAndOutputs,
+        uint32_t totalSizeOfTemporaries)
+    : mPlan(plan),
+      mExecutionBuilder(executionBuilder),
+      mSubModelInputsAndOutputs(subModelInputsAndOutputs),
+      mNextStepIndex(0) {
     if (totalSizeOfTemporaries) {
         if (mTemporaries.create(totalSizeOfTemporaries) != ANEURALNETWORKS_NO_ERROR) {
             LOG(ERROR) << "ExecutionPlan::Controller failed to allocate temporaries";
@@ -518,7 +519,7 @@ ExecutionPlan::Controller::Controller(
 }
 
 std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
-    const ExecutionBuilder* executionBuilder) const {
+        ExecutionBuilder* executionBuilder) const {
     nnAssert(isValid());
 
     // Create the layout for a Memory object big enough for to hold
@@ -618,9 +619,9 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
         if (controller->mNextStepIndex == 0) {
             // First (and only) step.
             auto simpleBody = static_cast<const SimpleBody*>(mBody);
-            *executor = std::make_shared<StepExecutor>(
-                    controller->mExecutionBuilder, simpleBody->mModel,
-                    simpleBody->mDevice->getInterface(), simpleBody->mPreparedModel);
+            *executor = std::make_shared<StepExecutor>(controller->mExecutionBuilder,
+                                                       simpleBody->mModel, simpleBody->mDevice,
+                                                       simpleBody->mPreparedModel);
             (*executor)->mapInputsAndOutputsTrivially();
             controller->mNextStepIndex = 1;
             return ANEURALNETWORKS_NO_ERROR;
@@ -646,8 +647,7 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
 
     const auto step = compoundBody->mSteps[controller->mNextStepIndex];
     *executor = std::make_shared<StepExecutor>(controller->mExecutionBuilder, step->getSubModel(),
-                                               step->getDevice()->getInterface(),
-                                               step->getPreparedSubModel());
+                                               step->getDevice(), step->getPreparedSubModel());
     step->mapInputsAndOutputs(*executor);
     if (controller->mSubModelInputsAndOutputs != nullptr) {
         {
@@ -898,6 +898,7 @@ PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> d
         case OperandType::BOOL:
         case OperandType::TENSOR_INT32:
         case OperandType::TENSOR_QUANT8_ASYMM:
+        case OperandType::TENSOR_QUANT16_ASYMM:
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_BOOL8:
         case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:

@@ -129,18 +129,35 @@ sp<V1_0::IPreparedModel> PreparedModelCallback::getPreparedModel() {
     return mPreparedModel;
 }
 
-ExecutionCallback::ExecutionCallback() : mErrorStatus(ErrorStatus::GENERAL_FAILURE) {}
+ExecutionCallback::ExecutionCallback()
+    : mErrorStatus(ErrorStatus::GENERAL_FAILURE), mOnFinish(nullptr) {
+    on_finish([this]() {
+        if (mOnFinish != nullptr) {
+            ErrorStatus status = mOnFinish(mErrorStatus);
+            if (status != ErrorStatus::NONE) {
+                mErrorStatus = status;
+            }
+        }
+        return true;
+    });
+}
 
 ExecutionCallback::~ExecutionCallback() {}
 
 Return<void> ExecutionCallback::notify(ErrorStatus errorStatus) {
     mErrorStatus = errorStatus;
+    mOutputShapes = {};
+    mTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
     CallbackBase::notify();
     return Void();
 }
 
-Return<void> ExecutionCallback::notify_1_2(ErrorStatus errorStatus) {
+Return<void> ExecutionCallback::notify_1_2(ErrorStatus errorStatus,
+                                           const hidl_vec<OutputShape>& outputShapes,
+                                           const Timing& timing) {
     mErrorStatus = errorStatus;
+    mOutputShapes = outputShapes;
+    mTiming = timing;
     CallbackBase::notify();
     return Void();
 }
@@ -148,6 +165,16 @@ Return<void> ExecutionCallback::notify_1_2(ErrorStatus errorStatus) {
 ErrorStatus ExecutionCallback::getStatus() {
     wait();
     return mErrorStatus;
+}
+
+const std::vector<OutputShape>& ExecutionCallback::getOutputShapes() {
+    wait();
+    return mOutputShapes;
+}
+
+Timing ExecutionCallback::getTiming() {
+    wait();
+    return mTiming;
 }
 
 }  // namespace implementation

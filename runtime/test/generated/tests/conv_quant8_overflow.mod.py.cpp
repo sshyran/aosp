@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, conv_quant8_overflow) {
             conv_quant8_overflow::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, conv_quant8_overflow_dynamic_output_shape) {
+    execute(conv_quant8_overflow::CreateModel_dynamic_output_shape,
+            conv_quant8_overflow::is_ignored_dynamic_output_shape,
+            conv_quant8_overflow::get_examples_dynamic_output_shape());
+}
+
+#endif

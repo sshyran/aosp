@@ -33,6 +33,14 @@ quant8 = DataTypeConverter().Identify({
     o1: ("TENSOR_QUANT8_ASYMM", 0.5, 0)
 })
 
+# Per-channel quantization
+channelQuant8 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.25, 100),
+    w1: ("TENSOR_QUANT8_SYMM_PER_CHANNEL", 0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.25, 0.5])),
+    b1: ("TENSOR_INT32", 0.0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.0625, 0.125], hide=True)),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.5, 80)
+})
+
 Example({
     i1: [1, 2, 3, 4],
     o1: [-0.5,  0,  1.5,  2,   5.5,   8,  4.5,  6,  8.5, 10,
@@ -40,7 +48,7 @@ Example({
          14.5, 18, 22.5, 26,  60.5,  70, 40.5, 46, 52.5, 58,
          19.5, 22, 25.5, 28,  59.5,  66, 34.5, 38, 42.5, 46,
          37.5, 40, 43.5, 46, 101.5, 108, 58.5, 62, 66.5, 70]
-}).AddNchw(i1, o1, s1, layout).AddAllActivations(o1, act).AddVariations("relaxed", quant8, "float16").AddInput(w1, b1)
+}).AddNchw(i1, o1, s1, layout).AddAllActivations(o1, act).AddVariations("relaxed", quant8, channelQuant8, "float16").AddInput(w1, b1)
 
 
 # TEST 2: TRANSPOSE_CONV2D_LARGE, pad = same, stride = 3, act = relu
@@ -59,12 +67,20 @@ quant8 = DataTypeConverter().Identify({
     o2: ("TENSOR_QUANT8_ASYMM", 20.0, 50)
 })
 
+# Per-channel quantization
+channelQuant8 = DataTypeConverter().Identify({
+    i2: ("TENSOR_QUANT8_ASYMM", 2.0, 0),
+    w2: ("TENSOR_QUANT8_SYMM_PER_CHANNEL", 0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.25])),
+    b2: ("TENSOR_INT32", 0.0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.5], hide=True)),
+    o2: ("TENSOR_QUANT8_ASYMM", 20.0, 50)
+})
+
 Example({
     i2: [300, 500],
     o2: [500.,  800.,  3500., 1500.,
          1400., 500.,  3500., 3000.,
          0.,    200.,  500.,  0.]
-}).AddNchw(i2, o2, s2, layout).AddVariations("relaxed", quant8, "float16").AddInput(w2, b2)
+}).AddNchw(i2, o2, s2, layout).AddVariations("relaxed", quant8, channelQuant8, "float16").AddInput(w2, b2)
 
 
 # TEST 3: TRANSPOSE_CONV2D_SAME, outputShape = [1, 4, 4, 1], pad = same, stride = 1, act = none

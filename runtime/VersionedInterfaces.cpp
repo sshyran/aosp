@@ -27,10 +27,12 @@ using ::android::hardware::neuralnetworks::V1_2::implementation::ExecutionCallba
 namespace android {
 namespace nn {
 
-ErrorStatus VersionedIPreparedModel::execute(const Request& request,
+const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+
+ErrorStatus VersionedIPreparedModel::execute(const Request& request, MeasureTiming measure,
                                              const sp<IExecutionCallback>& callback) {
     if (mPreparedModelV1_2 != nullptr) {
-        Return<ErrorStatus> ret = mPreparedModelV1_2->execute_1_2(request, callback);
+        Return<ErrorStatus> ret = mPreparedModelV1_2->execute_1_2(request, measure, callback);
         if (!ret.isOk()) {
             LOG(ERROR) << "execute_1_2 failure: " << ret.description();
             return ErrorStatus::GENERAL_FAILURE;
@@ -49,23 +51,32 @@ ErrorStatus VersionedIPreparedModel::execute(const Request& request,
     }
 }
 
-ErrorStatus VersionedIPreparedModel::executeSynchronously(const Request& request) {
+std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing>
+VersionedIPreparedModel::executeSynchronously(const Request& request, MeasureTiming measure) {
     if (mPreparedModelV1_2 != nullptr) {
-        Return<ErrorStatus> ret = mPreparedModelV1_2->executeSynchronously(request);
+        std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> result;
+        Return<void> ret = mPreparedModelV1_2->executeSynchronously(
+                request, measure,
+                [&result](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
+                          const Timing& timing) {
+                    result = std::make_tuple(error, outputShapes, timing);
+                });
         if (!ret.isOk()) {
             LOG(ERROR) << "executeSynchronously failure: " << ret.description();
-            return ErrorStatus::GENERAL_FAILURE;
+            return {ErrorStatus::GENERAL_FAILURE, {}, kBadTiming};
         }
-        return static_cast<ErrorStatus>(ret);
+        return result;
     } else {
         // Simulate synchronous execution.
         sp<ExecutionCallback> callback = new ExecutionCallback();
-        ErrorStatus ret = execute(request, callback);
+        ErrorStatus ret = execute(request, measure, callback);
         if (ret != ErrorStatus::NONE) {
-            return ret;
+            return {ret, {}, kBadTiming};
         }
         callback->wait();
-        return callback->getStatus();
+        // callback->getOutputShapes() will always return an empty hidl vector.
+        // callback->getTiming() will always return values indicating no measurement.
+        return {callback->getStatus(), callback->getOutputShapes(), callback->getTiming()};
     }
 }
 
@@ -255,6 +266,24 @@ int64_t VersionedIDevice::getFeatureLevel() {
     } else {
         LOG(ERROR) << "Device not available!";
         return -1;
+    }
+}
+
+int32_t VersionedIDevice::getType() const {
+    std::pair<ErrorStatus, DeviceType> result;
+    if (mDeviceV1_2 != nullptr) {
+        Return<void> ret =
+                mDeviceV1_2->getType([&result](ErrorStatus error, DeviceType deviceType) {
+                    result = std::make_pair(error, deviceType);
+                });
+        if (!ret.isOk()) {
+            LOG(ERROR) << "getType failure: " << ret.description();
+            return -1;
+        }
+        return static_cast<int32_t>(result.second);
+    } else {
+        LOG(INFO) << "Unkown NNAPI device type.";
+        return ANEURALNETWORKS_DEVICE_UNKNOWN;
     }
 }
 

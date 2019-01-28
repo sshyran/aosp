@@ -91,4 +91,61 @@ TEST_F(MemoryTest, TestFd) {
     unlink(path);
 }
 
+TEST_F(MemoryTest, TestAHardwareBuffer) {
+    const uint32_t offsetForMatrix2 = 20;
+    const uint32_t offsetForMatrix3 = 200;
+
+    AHardwareBuffer_Desc desc{
+            .width = offsetForMatrix3 + sizeof(matrix3),
+            .height = 1,
+            .layers = 1,
+            .format = AHARDWAREBUFFER_FORMAT_BLOB,
+            .usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN,
+    };
+    AHardwareBuffer* buffer = nullptr;
+    ASSERT_EQ(AHardwareBuffer_allocate(&desc, &buffer), 0);
+
+    void* bufferPtr = nullptr;
+    ASSERT_EQ(AHardwareBuffer_lock(buffer, desc.usage, -1, NULL, &bufferPtr), 0);
+    memcpy((uint8_t*)bufferPtr + offsetForMatrix2, matrix2, sizeof(matrix2));
+    memcpy((uint8_t*)bufferPtr + offsetForMatrix3, matrix3, sizeof(matrix3));
+    ASSERT_EQ(AHardwareBuffer_unlock(buffer, nullptr), 0);
+
+    WrapperMemory weights(buffer);
+    ASSERT_TRUE(weights.isValid());
+
+    WrapperModel model;
+    WrapperOperandType matrixType(WrapperType::TENSOR_FLOAT32, {3, 4});
+    WrapperOperandType scalarType(WrapperType::INT32, {});
+    int32_t activation(0);
+    auto a = model.addOperand(&matrixType);
+    auto b = model.addOperand(&matrixType);
+    auto c = model.addOperand(&matrixType);
+    auto d = model.addOperand(&matrixType);
+    auto e = model.addOperand(&matrixType);
+    auto f = model.addOperand(&scalarType);
+
+    model.setOperandValueFromMemory(e, &weights, offsetForMatrix2, sizeof(Matrix3x4));
+    model.setOperandValueFromMemory(a, &weights, offsetForMatrix3, sizeof(Matrix3x4));
+    model.setOperandValue(f, &activation, sizeof(activation));
+    model.addOperation(ANEURALNETWORKS_ADD, {a, c, f}, {b});
+    model.addOperation(ANEURALNETWORKS_ADD, {b, e, f}, {d});
+    model.identifyInputsAndOutputs({c}, {d});
+    ASSERT_TRUE(model.isValid());
+    model.finish();
+
+    // Test the three node model.
+    Matrix3x4 actual;
+    memset(&actual, 0, sizeof(actual));
+    WrapperCompilation compilation2(&model);
+    ASSERT_EQ(compilation2.finish(), WrapperResult::NO_ERROR);
+    WrapperExecution execution2(&compilation2);
+    ASSERT_EQ(execution2.setInput(0, matrix1, sizeof(Matrix3x4)), WrapperResult::NO_ERROR);
+    ASSERT_EQ(execution2.setOutput(0, actual, sizeof(Matrix3x4)), WrapperResult::NO_ERROR);
+    ASSERT_EQ(execution2.compute(), WrapperResult::NO_ERROR);
+    ASSERT_EQ(CompareMatrices(expected3, actual), 0);
+
+    AHardwareBuffer_release(buffer);
+    buffer = nullptr;
+}
 }  // end namespace

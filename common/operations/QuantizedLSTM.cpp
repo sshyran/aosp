@@ -55,8 +55,8 @@ void quantizedLstmStep(const uint8_t* input_data_uint8, const Dims<4>& input_dim
                        const Dims<4>& bias_dims, const int16_t* prevCellState_data_int16,
                        const Dims<4>& prevCellState_dims, int16_t* output_state_data_int16,
                        const Dims<4>& output_state_dims, uint8_t* output_activ_data_uint8,
-                       const Dims<4>& output_activ_dims, uint8_t* concatTemp_data_uint8,
-                       const Dims<4>& concatTemp_dims, int16_t* activ_temp_data_int16,
+                       const Dims<4>& output_activ_dims, uint8_t* concat_temp_data_uint8,
+                       const Dims<4>& concat_temp_dims, int16_t* activ_temp_data_int16,
                        const Dims<4>& activ_temp_dims, int32_t weights_zero_point,
                        int32_t accum_multiplier, int accum_shift) {
   // Gather dimensions information, and perform consistency checks.
@@ -90,7 +90,7 @@ void quantizedLstmStep(const uint8_t* input_data_uint8, const Dims<4>& input_dim
   Dims<4> const* concat_input_arrays_dims[2] = {&input_dims, &prev_activ_dims};
   tflite::reference_ops::Concatenation<tflite::FusedActivationFunctionType::kNone, uint8_t>(
       0, concat_input_arrays_data, concat_input_arrays_dims, 2,
-      concatTemp_data_uint8, concatTemp_dims);
+      concat_temp_data_uint8, concat_temp_dims);
 
   // Implementation of the fully connected node inside the LSTM cell.
   // The operands are 8-bit integers, the accumulators are internally 32bit
@@ -104,7 +104,7 @@ void quantizedLstmStep(const uint8_t* input_data_uint8, const Dims<4>& input_dim
       int32_t accum = bias_data_int32[out_c];
       // Accumulation loop.
       for (int d = 0; d < fc_accum_depth; ++d) {
-        int16_t input_val = concatTemp_data_uint8[b * fc_accum_depth + d] - 128;
+        int16_t input_val = concat_temp_data_uint8[b * fc_accum_depth + d] - 128;
         int16_t weights_val =
             weights_data_uint8[out_c * fc_accum_depth + d] - weights_zero_point;
         accum += input_val * weights_val;
@@ -197,59 +197,122 @@ void quantizedLstmStep(const uint8_t* input_data_uint8, const Dims<4>& input_dim
 }
 // clang-format on
 
+// The function assigns a 2D matrix to a submatrix of the weights at a given row
+// and column offsets.
+void assignWeightsSubmatrix(const RunTimeOperandInfo* submatrix, const int32_t offset_row,
+                            const int32_t offset_column, const std::vector<uint32_t>& weightsDims,
+                            uint8_t* weights) {
+    const uint8_t* submatrixValues = GetBuffer<uint8_t>(submatrix);
+    const std::vector<uint32_t> submatrixDims = submatrix->shape().dimensions;
+    for (uint32_t i = 0; i < submatrixDims[0] * submatrixDims[1]; ++i) {
+        const uint32_t row = i / submatrixDims[1];
+        const uint32_t column = i % submatrixDims[1];
+        weights[(row + offset_row) * weightsDims[1] + column + offset_column] = submatrixValues[i];
+    }
+}
+
 }  // namespace
 
 QuantizedLSTMCell::QuantizedLSTMCell(const Operation& operation,
                                      std::vector<RunTimeOperandInfo>& operands) {
     input_ = GetInput(operation, operands, kInputTensor);
-    prevOutput_ = GetInput(operation, operands, kPrevOutputTensor);
-    weights_ = GetInput(operation, operands, kWeightsTensor);
-    bias_ = GetInput(operation, operands, kBiasTensor);
-    prevCellState_ = GetInput(operation, operands, kPrevCellStateTensor);
 
-    concatTemp_ = GetOutput(operation, operands, kConcatTempTensor);
-    activationTemp_ = GetOutput(operation, operands, kActivationTempTensor);
-    outputStateOut_ = GetOutput(operation, operands, kOutputStateOutTensor);
+    inputToInputWeights_ = GetInput(operation, operands, kInputToInputWeightsTensor);
+    inputToForgetWeights_ = GetInput(operation, operands, kInputToForgetWeightsTensor);
+    inputToCellWeights_ = GetInput(operation, operands, kInputToCellWeightsTensor);
+    inputToOutputWeights_ = GetInput(operation, operands, kInputToOutputWeightsTensor);
+
+    recurrentToInputWeights_ = GetInput(operation, operands, kRecurrentToInputWeightsTensor);
+    recurrentToForgetWeights_ = GetInput(operation, operands, kRecurrentToForgetWeightsTensor);
+    recurrentToCellWeights_ = GetInput(operation, operands, kRecurrentToCellWeightsTensor);
+    recurrentToOutputWeights_ = GetInput(operation, operands, kRecurrentToOutputWeightsTensor);
+
+    inputGateBias_ = GetInput(operation, operands, kInputGateBiasTensor);
+    forgetGateBias_ = GetInput(operation, operands, kForgetGateBiasTensor);
+    cellGateBias_ = GetInput(operation, operands, kCellGateBiasTensor);
+    outputGateBias_ = GetInput(operation, operands, kOutputGateBiasTensor);
+
+    prevCellState_ = GetInput(operation, operands, kPrevCellStateTensor);
+    prevOutput_ = GetInput(operation, operands, kPrevOutputTensor);
+
     cellStateOut_ = GetOutput(operation, operands, kCellStateOutTensor);
     output_ = GetOutput(operation, operands, kOutputTensor);
 }
 
 bool QuantizedLSTMCell::prepare(const Operation& operation,
-                                std::vector<RunTimeOperandInfo>& operands, Shape* concatTempShape,
-                                Shape* activationTempShape, Shape* outputStateOutShape,
-                                Shape* cellStateOutShape, Shape* outputShape) {
+                                std::vector<RunTimeOperandInfo>& operands, Shape* cellStateOutShape,
+                                Shape* outputShape) {
     auto input = GetInput(operation, operands, kInputTensor);
-    NN_CHECK_EQ(NumDimensions(input), 2);
-    NN_CHECK_EQ(input->scale, 1. / 128.0);
-    NN_CHECK_EQ(input->zeroPoint, 128);
+    NN_RET_CHECK_EQ(NumDimensions(input), 2);
+    NN_RET_CHECK_EQ(input->scale, 1. / 128.0);
+    NN_RET_CHECK_EQ(input->zeroPoint, 128);
     const uint32_t numBatches = SizeOfDimension(input, 0);
-    const uint32_t inputDepth = SizeOfDimension(input, 1);
+    const uint32_t inputSize = SizeOfDimension(input, 1);
 
     auto prevOutput = GetInput(operation, operands, kPrevOutputTensor);
-    NN_CHECK_EQ(NumDimensions(prevOutput), 2);
-    NN_CHECK_EQ(SizeOfDimension(prevOutput, 0), numBatches);
-    NN_CHECK_EQ(prevOutput->scale, 1. / 128.0);
-    NN_CHECK_EQ(prevOutput->zeroPoint, 128);
-    const uint32_t activationDepth = SizeOfDimension(prevOutput, 1);
-    const uint32_t totalDepth = inputDepth + activationDepth;
+    NN_RET_CHECK_EQ(NumDimensions(prevOutput), 2);
+    NN_RET_CHECK_EQ(SizeOfDimension(prevOutput, 0), numBatches);
+    NN_RET_CHECK_EQ(prevOutput->scale, 1. / 128.0);
+    NN_RET_CHECK_EQ(prevOutput->zeroPoint, 128);
+    const uint32_t outputSize = SizeOfDimension(prevOutput, 1);
 
-    auto weights = GetInput(operation, operands, kWeightsTensor);
-    NN_CHECK_EQ(NumDimensions(weights), 2);
-    NN_CHECK_EQ(SizeOfDimension(weights, 0), 4 * activationDepth);
-    NN_CHECK_EQ(SizeOfDimension(weights, 1), totalDepth);
-    NN_CHECK(weights->scale != 0);
-    float weightsScale = weights->scale;
+    auto inputToInputWeights = GetInput(operation, operands, kInputToInputWeightsTensor);
+    const float weightsScale = inputToInputWeights->scale;
+    NN_RET_CHECK(weightsScale != 0);
+    const float weightsZeroPoint = inputToInputWeights->zeroPoint;
 
-    auto bias = GetInput(operation, operands, kBiasTensor);
-    NN_CHECK_EQ(NumDimensions(bias), 1);
-    NN_CHECK_EQ(SizeOfDimension(bias, 0), 4 * activationDepth);
-    NN_CHECK_EQ(bias->scale, weightsScale / 128.0);
-    NN_CHECK_EQ(bias->zeroPoint, 0);
+    auto checkWeightsShape = [&](const RunTimeOperandInfo* weights, uint32_t columns) -> bool {
+        NN_RET_CHECK_EQ(NumDimensions(weights), 2);
+        NN_RET_CHECK_EQ(SizeOfDimension(weights, 0), outputSize);
+        NN_RET_CHECK_EQ(SizeOfDimension(weights, 1), columns);
+        NN_RET_CHECK_EQ(weights->scale, weightsScale);
+        NN_RET_CHECK_EQ(weights->zeroPoint, weightsZeroPoint);
+        return true;
+    };
+
+    auto inputToForgetWeights = GetInput(operation, operands, kInputToForgetWeightsTensor);
+    auto inputToCellWeights = GetInput(operation, operands, kInputToCellWeightsTensor);
+    auto inputToOutputWeights = GetInput(operation, operands, kInputToOutputWeightsTensor);
+    NN_RET_CHECK(checkWeightsShape(inputToInputWeights, inputSize));
+    NN_RET_CHECK(checkWeightsShape(inputToForgetWeights, inputSize));
+    NN_RET_CHECK(checkWeightsShape(inputToCellWeights, inputSize));
+    NN_RET_CHECK(checkWeightsShape(inputToOutputWeights, inputSize));
+
+    auto recurrentToInputWeights = GetInput(operation, operands, kRecurrentToInputWeightsTensor);
+    auto recurrentToForgetWeights = GetInput(operation, operands, kRecurrentToForgetWeightsTensor);
+    auto recurrentToCellWeights = GetInput(operation, operands, kRecurrentToCellWeightsTensor);
+    auto recurrentToOutputWeights = GetInput(operation, operands, kRecurrentToOutputWeightsTensor);
+    NN_RET_CHECK(checkWeightsShape(recurrentToInputWeights, outputSize));
+    NN_RET_CHECK(checkWeightsShape(recurrentToForgetWeights, outputSize));
+    NN_RET_CHECK(checkWeightsShape(recurrentToCellWeights, outputSize));
+    NN_RET_CHECK(checkWeightsShape(recurrentToOutputWeights, outputSize));
+
+    auto inputGateBias = GetInput(operation, operands, kInputGateBiasTensor);
+    const float biasScale = inputGateBias->scale;
+    NN_RET_CHECK_EQ(biasScale, weightsScale / 128.0);
+    const float biasZeroPoint = inputGateBias->zeroPoint;
+    NN_RET_CHECK_EQ(biasZeroPoint, 0);
+
+    auto checkBiasShape = [&](const RunTimeOperandInfo* bias) -> bool {
+        NN_RET_CHECK_EQ(NumDimensions(bias), 1);
+        NN_RET_CHECK_EQ(SizeOfDimension(bias, 0), outputSize);
+        NN_RET_CHECK_EQ(bias->scale, biasScale);
+        NN_RET_CHECK_EQ(bias->zeroPoint, biasZeroPoint);
+        return true;
+    };
+
+    auto forgetGateBias = GetInput(operation, operands, kForgetGateBiasTensor);
+    auto cellGateBias = GetInput(operation, operands, kCellGateBiasTensor);
+    auto outputGateBias = GetInput(operation, operands, kOutputGateBiasTensor);
+    NN_RET_CHECK(checkBiasShape(inputGateBias));
+    NN_RET_CHECK(checkBiasShape(forgetGateBias));
+    NN_RET_CHECK(checkBiasShape(cellGateBias));
+    NN_RET_CHECK(checkBiasShape(outputGateBias));
 
     auto prevCellState = GetInput(operation, operands, kPrevCellStateTensor);
     NN_CHECK_EQ(NumDimensions(prevCellState), 2);
     NN_CHECK_EQ(SizeOfDimension(prevCellState, 0), numBatches);
-    NN_CHECK_EQ(SizeOfDimension(prevCellState, 1), activationDepth);
+    NN_CHECK_EQ(SizeOfDimension(prevCellState, 1), outputSize);
     NN_CHECK_EQ(prevCellState->zeroPoint, 0);
     // Cell state range for quantized LSTM is a function of StateIntegerBits and
     // can be calculated as:
@@ -264,22 +327,72 @@ bool QuantizedLSTMCell::prepare(const Operation& operation,
     // We only support StateIntegerBits == 4
     NN_CHECK(stateIntegerBits == 4);
 
-    *concatTempShape = input->shape();
-    concatTempShape->dimensions[1] = totalDepth;
-
-    activationTempShape->type = OperandType::TENSOR_QUANT16_SYMM;
-    activationTempShape->dimensions = {numBatches, 4 * activationDepth};
-    activationTempShape->scale = prevOutput->scale;
-    activationTempShape->offset = prevOutput->zeroPoint;
-
-    *outputStateOutShape = prevOutput->shape();
     *cellStateOutShape = prevCellState->shape();
     *outputShape = prevOutput->shape();
     return true;
 }
 
+// The function contatenates 8 input weight matrices into one. Resulting matrix
+// has a shape [4 * outputSize, outputSize + inputSize]. The matrix is
+// constructed as follows:
+// +-----------------------------------+
+// | recurrentToInput  | inputToInput  |
+// |-------------------+---------------|
+// | recurrentToCell   | inputToCell   |
+// |-------------------+---------------|
+// | recurrentToForget | inputToForget |
+// |-------------------+---------------|
+// | recurrentToOutput | inputToOutput |
+// +-----------------------------------+
+void QuantizedLSTMCell::concatenateWeights(const std::vector<uint32_t>& weightsDims,
+                                           uint8_t* weights) {
+    const int outputSize = SizeOfDimension(inputToInputWeights_, 0);
+
+    assignWeightsSubmatrix(inputToInputWeights_, 0 * outputSize, outputSize, weightsDims, weights);
+    assignWeightsSubmatrix(inputToCellWeights_, 1 * outputSize, outputSize, weightsDims, weights);
+    assignWeightsSubmatrix(inputToForgetWeights_, 2 * outputSize, outputSize, weightsDims, weights);
+    assignWeightsSubmatrix(inputToOutputWeights_, 3 * outputSize, outputSize, weightsDims, weights);
+    assignWeightsSubmatrix(recurrentToInputWeights_, 0 * outputSize, 0, weightsDims, weights);
+    assignWeightsSubmatrix(recurrentToCellWeights_, 1 * outputSize, 0, weightsDims, weights);
+    assignWeightsSubmatrix(recurrentToForgetWeights_, 2 * outputSize, 0, weightsDims, weights);
+    assignWeightsSubmatrix(recurrentToOutputWeights_, 3 * outputSize, 0, weightsDims, weights);
+}
+
+// The function concatenate four bias vectors of shape [outputSize] into one
+// vector of shape [4 * outputSize].
+void QuantizedLSTMCell::concatenateBiases(uint32_t outputSize, int32_t* bias) {
+    memcpy(bias + 0 * outputSize, GetBuffer<int32_t>(inputGateBias_), sizeof(int32_t) * outputSize);
+    memcpy(bias + 1 * outputSize, GetBuffer<int32_t>(cellGateBias_), sizeof(int32_t) * outputSize);
+    memcpy(bias + 2 * outputSize, GetBuffer<int32_t>(forgetGateBias_),
+           sizeof(int32_t) * outputSize);
+    memcpy(bias + 3 * outputSize, GetBuffer<int32_t>(outputGateBias_),
+           sizeof(int32_t) * outputSize);
+}
+
 bool QuantizedLSTMCell::eval() {
     NNTRACE_COMP("QuantizedLSTM::eval");
+
+    Shape weightsShape;
+    weightsShape.dimensions = {4 * SizeOfDimension(prevOutput_, 1),
+                               SizeOfDimension(input_, 1) + SizeOfDimension(prevOutput_, 1)};
+    std::vector<uint8_t> weights(getNumberOfElements(weightsShape));
+    concatenateWeights(weightsShape.dimensions, weights.data());
+
+    Shape biasShape;
+    biasShape.dimensions = {getSizeOfDimension(weightsShape, 0)};
+    std::vector<int32_t> bias(getNumberOfElements(biasShape));
+    concatenateBiases(SizeOfDimension(prevOutput_, 1), bias.data());
+
+    Shape concatTempShape;
+    concatTempShape.dimensions = {SizeOfDimension(input_, 0), getSizeOfDimension(weightsShape, 1)};
+
+    Shape activationTempShape;
+    activationTempShape.dimensions = {SizeOfDimension(input_, 0),
+                                      getSizeOfDimension(weightsShape, 0)};
+
+    std::vector<uint8_t> concatTemp(getNumberOfElements(concatTempShape));
+    std::vector<int16_t> activationTemp(getNumberOfElements(activationTempShape));
+
     // From https://arxiv.org/pdf/1712.05877, for a fully-connected layer,
     // accumulator multiplier is equal to:
     // (input scale) * (weights scale) / (fully-connected output scale)
@@ -288,7 +401,7 @@ bool QuantizedLSTMCell::eval() {
     // But bias scale is set to (input scale) * (weights scale) (also from the
     // paper), so we can multiply it to an inverse of the fc-output scale to get
     // the multiplier value:
-    double realAccumMultiplier = 4096 * bias_->scale;
+    double realAccumMultiplier = 4096 * inputGateBias_->scale;
     int32_t accumMultiplier;
     int accumShift;
     tflite::QuantizeMultiplier(realAccumMultiplier, &accumMultiplier, &accumShift);
@@ -296,20 +409,15 @@ bool QuantizedLSTMCell::eval() {
             // Inputs.
             GetBuffer<const uint8_t>(input_), convertShapeToDims(input_->shape()),
             GetBuffer<const uint8_t>(prevOutput_), convertShapeToDims(prevOutput_->shape()),
-            GetBuffer<const uint8_t>(weights_), convertShapeToDims(weights_->shape()),
-            GetBuffer<const int32_t>(bias_), convertShapeToDims(bias_->shape()),
-            GetBuffer<const int16_t>(prevCellState_), convertShapeToDims(prevCellState_->shape()),
+            weights.data(), convertShapeToDims(weightsShape), bias.data(),
+            convertShapeToDims(biasShape), GetBuffer<const int16_t>(prevCellState_),
+            convertShapeToDims(prevCellState_->shape()),
             // Outputs.
             GetBuffer<int16_t>(cellStateOut_), convertShapeToDims(cellStateOut_->shape()),
-            GetBuffer<uint8_t>(output_), convertShapeToDims(output_->shape()),
-            GetBuffer<uint8_t>(concatTemp_), convertShapeToDims(concatTemp_->shape()),
-            GetBuffer<int16_t>(activationTemp_), convertShapeToDims(activationTemp_->shape()),
-            weights_->zeroPoint, accumMultiplier, accumShift);
-    // Copy output_ to outputStateOut_ to use it in the next time step
-    const int flat_output_size = output_->shape().dimensions[0] * output_->shape().dimensions[1];
-    memcpy(outputStateOut_->buffer, output_->buffer, flat_output_size);
-    outputStateOut_->scale = output_->scale;
-    outputStateOut_->zeroPoint = output_->zeroPoint;
+            GetBuffer<uint8_t>(output_), convertShapeToDims(output_->shape()), concatTemp.data(),
+            convertShapeToDims(concatTempShape), activationTemp.data(),
+            convertShapeToDims(activationTempShape), inputToInputWeights_->zeroPoint,
+            accumMultiplier, accumShift);
     return true;
 }
 

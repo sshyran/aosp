@@ -85,43 +85,27 @@ bool RNN::Prepare(const Operation &operation,
 bool RNN::Eval() {
     switch (input_->type) {
         case OperandType::TENSOR_FLOAT16: {
-            std::vector<float> inputDataFloat32(getNumberOfElements(input_->shape()));
-            convertFloat16ToFloat32(reinterpret_cast<_Float16*>(input_->buffer), &inputDataFloat32);
-            std::vector<float> hiddenStateDataFloat32(
-                    getNumberOfElements(hidden_state_in_->shape()));
-            convertFloat16ToFloat32(reinterpret_cast<_Float16*>(hidden_state_in_->buffer),
-                                    &hiddenStateDataFloat32);
-            std::vector<float> biasDataFloat32(getNumberOfElements(bias_->shape()));
-            convertFloat16ToFloat32(reinterpret_cast<_Float16*>(bias_->buffer), &biasDataFloat32);
-            std::vector<float> weightsDataFloat32(getNumberOfElements(weights_->shape()));
-            convertFloat16ToFloat32(reinterpret_cast<_Float16*>(weights_->buffer),
-                                    &weightsDataFloat32);
-            std::vector<float> recurrentWeightsDataFloat32(
-                    getNumberOfElements(recurrent_weights_->shape()));
-            convertFloat16ToFloat32(reinterpret_cast<_Float16*>(recurrent_weights_->buffer),
-                                    &recurrentWeightsDataFloat32);
-            std::vector<float> outputDataFloat32(getNumberOfElements(output_->shape()));
-            std::vector<float> hiddenStateOutputDataFloat32(
-                    getNumberOfElements(hidden_state_out_->shape()));
-
-            EvalFloat32(inputDataFloat32.data(), hiddenStateDataFloat32.data(),
-                        biasDataFloat32.data(), weightsDataFloat32.data(),
-                        recurrentWeightsDataFloat32.data(), outputDataFloat32.data(),
-                        hiddenStateOutputDataFloat32.data());
-            convertFloat32ToFloat16(outputDataFloat32,
-                                    reinterpret_cast<_Float16*>(output_->buffer));
-            convertFloat32ToFloat16(hiddenStateOutputDataFloat32,
-                                    reinterpret_cast<_Float16*>(hidden_state_out_->buffer));
+            RNNStep<_Float16>(reinterpret_cast<_Float16*>(input_->buffer), input_->shape(),
+                              reinterpret_cast<_Float16*>(hidden_state_in_->buffer),
+                              reinterpret_cast<_Float16*>(bias_->buffer),
+                              reinterpret_cast<_Float16*>(weights_->buffer), weights_->shape(),
+                              reinterpret_cast<_Float16*>(recurrent_weights_->buffer),
+                              recurrent_weights_->shape(), activation_,
+                              reinterpret_cast<_Float16*>(output_->buffer));
+            memcpy(hidden_state_out_->buffer, output_->buffer,
+                   sizeof(_Float16) * getNumberOfElements(output_->shape()));
             break;
         }
         case OperandType::TENSOR_FLOAT32: {
-            EvalFloat32(reinterpret_cast<float*>(input_->buffer),
-                        reinterpret_cast<float*>(hidden_state_in_->buffer),
-                        reinterpret_cast<float*>(bias_->buffer),
-                        reinterpret_cast<float*>(weights_->buffer),
-                        reinterpret_cast<float*>(recurrent_weights_->buffer),
-                        reinterpret_cast<float*>(output_->buffer),
-                        reinterpret_cast<float*>(hidden_state_out_->buffer));
+            RNNStep<float>(reinterpret_cast<float*>(input_->buffer), input_->shape(),
+                           reinterpret_cast<float*>(hidden_state_in_->buffer),
+                           reinterpret_cast<float*>(bias_->buffer),
+                           reinterpret_cast<float*>(weights_->buffer), weights_->shape(),
+                           reinterpret_cast<float*>(recurrent_weights_->buffer),
+                           recurrent_weights_->shape(), activation_,
+                           reinterpret_cast<float*>(output_->buffer));
+            memcpy(hidden_state_out_->buffer, output_->buffer,
+                   sizeof(float) * getNumberOfElements(output_->shape()));
             break;
         }
         default: {
@@ -132,29 +116,68 @@ bool RNN::Eval() {
     return true;
 }
 
-bool RNN::EvalFloat32(const float* inputData, const float* hiddenStateInputData,
-                      const float* biasData, const float* weightsData,
-                      const float* recurrentWeightsData, float* outputData,
-                      float* hiddenStateOutputData) {
+template <typename T>
+bool RNN::RNNStep(const T* inputData, const Shape& inputShape, const T* hiddenStateInputData,
+                  const T* biasData, const T* weightsData, const Shape& weightsShape,
+                  const T* recurrentWeightsData, const Shape& recurrentWeightsShape,
+                  const int32_t activation, T* outputData) {
     NNTRACE_COMP("RNN::Eval");
 
-    const uint32_t batch_size = input_->shape().dimensions[0];
-    const uint32_t num_units = weights_->shape().dimensions[0];
-    const uint32_t input_size = input_->shape().dimensions[1];
-    const uint32_t input_weights_stride = weights_->shape().dimensions[1];
-    const uint32_t recurrent_weights_stride = recurrent_weights_->shape().dimensions[1];
+    Shape dummyShape;
+    uint32_t numUnits = weightsShape.dimensions[0];
+    return RNNStep<T>(inputData, inputShape, /*auxInputData=*/nullptr, /*auxInputShape=*/dummyShape,
+                      hiddenStateInputData, biasData, weightsData, weightsShape,
+                      /*auxWeightsData=*/nullptr, /*auxWeightsShape=*/dummyShape,
+                      recurrentWeightsData, recurrentWeightsShape, activation,
+                      /*outputBatchStride=*/numUnits, /*outputBatchOffset=*/0, outputData);
+}
+
+// A more general version of the RNNStep function.
+// Auxiliary input is treated as if it was concatenated to a regular input and
+// the result was multiplied by the weights matrix which was also concatenated
+// with auxiliary weights.
+template <typename T>
+bool RNN::RNNStep(const T* inputData, const Shape& inputShape, const T* auxInputData,
+                  const Shape& auxInputShape, const T* hiddenStateInputData, const T* biasData,
+                  const T* weightsData, const Shape& weightsShape, const T* auxWeightsData,
+                  const Shape& auxWeightsShape, const T* recurrentWeightsData,
+                  const Shape& recurrentWeightsShape, const int32_t activation,
+                  const uint32_t outputBatchStride, const uint32_t outputBatchOffset, T* outputData,
+                  T* hiddenStateOutput) {
+    NNTRACE_COMP("RNN::Eval");
+
+    const uint32_t batch_size = inputShape.dimensions[0];
+    const uint32_t num_units = weightsShape.dimensions[0];
+    const uint32_t input_size = inputShape.dimensions[1];
+    const uint32_t input_weights_stride = weightsShape.dimensions[1];
+    const uint32_t recurrent_weights_stride = recurrentWeightsShape.dimensions[1];
+
+    uint32_t aux_input_size = 0;
+    uint32_t aux_input_weights_stride = 0;
+    bool hasAuxInput = (auxInputData != nullptr);
+    if (hasAuxInput) {
+        aux_input_size = auxInputShape.dimensions[1];
+        aux_input_weights_stride = auxWeightsShape.dimensions[1];
+    }
 
     // For each batch
     for (uint32_t b = 0; b < batch_size; b++) {
         // Initialize the pointer to input, output and bias.
-        const float* input_ptr_batch = inputData + b * input_size;
-        const float* hidden_state_in_ptr_batch = hiddenStateInputData + b * num_units;
-        float* output_ptr_batch = outputData + b * num_units;
-        float* hidden_state_out_ptr_batch = hiddenStateOutputData + b * num_units;
+        const T* input_ptr_batch = inputData + b * input_size;
+        const T* hidden_state_in_ptr_batch = hiddenStateInputData + b * num_units;
+        const T* aux_input_ptr_batch = nullptr;
+        if (hasAuxInput) {
+            aux_input_ptr_batch = auxInputData + b * aux_input_size;
+        }
+        T* output_ptr_batch = outputData + b * outputBatchStride + outputBatchOffset;
 
         // Initialize input_weights and recurrent_weights.
-        const float* input_weights_ptr = weightsData;
-        const float* recurrent_weights_ptr = recurrentWeightsData;
+        const T* input_weights_ptr = weightsData;
+        const T* recurrent_weights_ptr = recurrentWeightsData;
+        const T* aux_input_weights_ptr = nullptr;
+        if (hasAuxInput) {
+            aux_input_weights_ptr = auxWeightsData;
+        }
 
         // Output = bias
         for (uint32_t o = 0; o < num_units; o++) {
@@ -169,6 +192,16 @@ bool RNN::EvalFloat32(const float* inputData, const float* hiddenStateInputData,
             input_weights_ptr += input_weights_stride;
         }
 
+        if (hasAuxInput) {
+            // Output += aux_input * aux_input_weights
+            for (uint32_t o = 0; o < num_units; o++) {
+                for (uint32_t i = 0; i < input_size; i++) {
+                    output_ptr_batch[o] += aux_input_ptr_batch[i] * aux_input_weights_ptr[i];
+                }
+                aux_input_weights_ptr += aux_input_weights_stride;
+            }
+        }
+
         // Output += recurrent_weights * hidden_state
         for (uint32_t o = 0; o < num_units; o++) {
             for (uint32_t h = 0; h < num_units; h++) {
@@ -177,10 +210,14 @@ bool RNN::EvalFloat32(const float* inputData, const float* hiddenStateInputData,
             recurrent_weights_ptr += recurrent_weights_stride;
         }
 
-        // Output = activation(Output) and update hidden_state
+        // Output = activation(Output)
         for (uint32_t o = 0; o < num_units; o++) {
-            output_ptr_batch[o] = (ActivationFunctor(activation_))(output_ptr_batch[o]);
-            hidden_state_out_ptr_batch[o] = output_ptr_batch[o];
+            output_ptr_batch[o] =
+                    (ActivationFunctor(static_cast<ActivationFn>(activation)))(output_ptr_batch[o]);
+            if (hiddenStateOutput != nullptr) {
+                *hiddenStateOutput = output_ptr_batch[o];
+                ++hiddenStateOutput;
+            }
         }
     }
 

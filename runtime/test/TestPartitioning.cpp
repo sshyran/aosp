@@ -117,6 +117,8 @@
 
 namespace {
 
+const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+
 using CompilationBuilder = ::android::nn::CompilationBuilder;
 using Device = ::android::nn::Device;
 using DeviceManager = ::android::nn::DeviceManager;
@@ -133,6 +135,8 @@ using WrapperOperandType = ::android::nn::test_wrapper::OperandType;
 using WrapperType = ::android::nn::test_wrapper::Type;
 
 template <typename T> using sp = ::android::sp<T>;
+template <typename T>
+using MQDescriptorSync = ::android::hardware::MQDescriptorSync<T>;
 
 // We employ an operation numbering scheme:
 // - 0..FuseCode-1 = ADD with the appropriate activation function
@@ -212,11 +216,22 @@ private:
      Return<ErrorStatus> execute(const Request&, const sp<V1_0::IExecutionCallback>&) override {
          return ErrorStatus::DEVICE_UNAVAILABLE;
      }
-     Return<ErrorStatus> execute_1_2(const Request&, const sp<V1_2::IExecutionCallback>&) override {
+     Return<ErrorStatus> execute_1_2(const Request&, MeasureTiming,
+                                     const sp<V1_2::IExecutionCallback>&) override {
          return ErrorStatus::DEVICE_UNAVAILABLE;
      }
-     Return<ErrorStatus> executeSynchronously(const Request&) override {
-         return ErrorStatus::DEVICE_UNAVAILABLE;
+     Return<void> executeSynchronously(const Request&, MeasureTiming,
+                                       executeSynchronously_cb cb) override {
+         cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
+         return Void();
+     }
+     Return<void> configureExecutionBurst(
+             const sp<V1_2::IBurstCallback>& /*callback*/,
+             const MQDescriptorSync<V1_2::FmqRequestDatum>& /*requestChannel*/,
+             const MQDescriptorSync<V1_2::FmqResultDatum>& /*resultChannel*/,
+             configureExecutionBurst_cb cb) override {
+         cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
+         return Void();
      }
     };
 public:
