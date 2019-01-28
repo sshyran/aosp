@@ -22,6 +22,7 @@
 
 #include "NeuralNetworks.h"
 
+#include "BurstBuilder.h"
 #include "Callbacks.h"
 #include "CompilationBuilder.h"
 #include "ExecutionBuilder.h"
@@ -549,15 +550,18 @@ int ANeuralNetworksBurst_create(ANeuralNetworksCompilation* compilation,
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
 
-    // TODO in subsequent CL
-    return ANEURALNETWORKS_NO_ERROR;
+    CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(compilation);
+    BurstBuilder* b = nullptr;
+    int result = c->createBurst(&b);
+    *burst = reinterpret_cast<ANeuralNetworksBurst*>(b);
+    return result;
 }
 
 void ANeuralNetworksBurst_free(ANeuralNetworksBurst* burst) {
     NNTRACE_RT(NNTRACE_PHASE_TERMINATION, "ANeuralNetworksBurst_free");
     // No validation.  Free of nullptr is valid.
-    (void)burst;
-    // TODO in subsequent CL
+    BurstBuilder* b = reinterpret_cast<BurstBuilder*>(burst);
+    delete b;
 }
 
 int ANeuralNetworksExecution_burstCompute(ANeuralNetworksExecution* execution,
@@ -568,8 +572,27 @@ int ANeuralNetworksExecution_burstCompute(ANeuralNetworksExecution* execution,
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
 
-    // TODO in subsequent CL
-    return ANEURALNETWORKS_NO_ERROR;
+    ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
+    BurstBuilder* b = reinterpret_cast<BurstBuilder*>(burst);
+
+    if (r->getCompilation() != b->getCompilation()) {
+        LOG(ERROR) << "ANeuralNetworksBurst and ANeuralNetworksExecution "
+                      "used in ANeuralNetworksExecution_burstCompute must "
+                      "originate from the same ANeuralNetworksCompilation";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+
+    const bool locked = b->tryLock();
+    if (!locked) {
+        LOG(ERROR) << "ANeuralNetworksBurst is already being used in another "
+                      "call to ANeuralNetworksExecution_burstCompute";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+
+    const int n = r->burstCompute(b);
+    b->unlock();
+
+    return n;
 }
 
 int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd, size_t offset,
