@@ -101,8 +101,8 @@ int CompilationBuilder::setCaching(const std::string& cacheDir, const uint8_t* t
     if (!mCacheDir.empty() && mCacheDir.back() != '/') {
         mCacheDir.push_back('/');
     }
-    mToken.resize(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN);
-    std::copy(token, token + ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, mToken.data());
+    std::copy(token, token + ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, mToken);
+    mIsCacheInfoProvided = true;
     return ANEURALNETWORKS_NO_ERROR;
 }
 
