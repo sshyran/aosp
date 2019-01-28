@@ -41,6 +41,7 @@ class Device {
     virtual const char* getName() const = 0;
     virtual const char* getVersionString() const = 0;
     virtual int64_t getFeatureLevel() = 0;
+    virtual int32_t getType() const = 0;
     virtual void getSupportedOperations(const Model& hidlModel, hidl_vec<bool>* supported) = 0;
     virtual PerformanceInfo getFloat32Performance() const = 0;
     virtual PerformanceInfo getQuantized8Performance() const = 0;

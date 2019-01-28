@@ -55,22 +55,27 @@ class bool8 {
 
 static_assert(sizeof(bool8) == 1, "size of bool8 must be 8 bits");
 
+typedef std::map<int, std::vector<uint32_t>> OperandDimensions;
 typedef std::map<int, std::vector<float>> Float32Operands;
 typedef std::map<int, std::vector<int32_t>> Int32Operands;
-typedef std::map<int, std::vector<uint8_t>> Quant8Operands;
-typedef std::map<int, std::vector<int16_t>> Quant16Operands;
+typedef std::map<int, std::vector<uint8_t>> Quant8AsymmOperands;
+typedef std::map<int, std::vector<int16_t>> Quant16SymmOperands;
 typedef std::map<int, std::vector<_Float16>> Float16Operands;
 typedef std::map<int, std::vector<bool8>> Bool8Operands;
 typedef std::map<int, std::vector<int8_t>> Quant8ChannelOperands;
-typedef std::tuple<Float32Operands,       // ANEURALNETWORKS_TENSOR_FLOAT32
-                   Int32Operands,         // ANEURALNETWORKS_TENSOR_INT32
-                   Quant8Operands,        // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM
-                   Quant16Operands,       // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
-                   Float16Operands,       // ANEURALNETWORKS_TENSOR_FLOAT16
-                   Bool8Operands,         // ANEURALNETWORKS_TENSOR_BOOL8
-                   Quant8ChannelOperands  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
-                   >
-        MixedTyped;
+typedef std::map<int, std::vector<uint16_t>> Quant16AsymmOperands;
+struct MixedTyped {
+    static constexpr size_t kNumTypes = 8;
+    OperandDimensions operandDimensions;
+    Float32Operands float32Operands;
+    Int32Operands int32Operands;
+    Quant8AsymmOperands quant8AsymmOperands;
+    Quant16SymmOperands quant16SymmOperands;
+    Float16Operands float16Operands;
+    Bool8Operands bool8Operands;
+    Quant8ChannelOperands quant8ChannelOperands;
+    Quant16AsymmOperands quant16AsymmOperands;
+};
 typedef std::pair<MixedTyped, MixedTyped> MixedTypedExampleType;
 
 // Mixed-typed examples
@@ -82,67 +87,51 @@ typedef struct {
     float expectedMultinomialDistributionTolerance = 0.0;
 } MixedTypedExample;
 
-template <typename T>
-struct MixedTypedIndex {};
-
-template <>
-struct MixedTypedIndex<float> {
-    static constexpr size_t index = 0;
-};
-template <>
-struct MixedTypedIndex<int32_t> {
-    static constexpr size_t index = 1;
-};
-template <>
-struct MixedTypedIndex<uint8_t> {
-    static constexpr size_t index = 2;
-};
-template <>
-struct MixedTypedIndex<int16_t> {
-    static constexpr size_t index = 3;
-};
-template <>
-struct MixedTypedIndex<_Float16> {
-    static constexpr size_t index = 4;
-};
-template <>
-struct MixedTypedIndex<bool8> {
-    static constexpr size_t index = 5;
-};
-template <>
-struct MixedTypedIndex<int8_t> {
-    static constexpr size_t index = 6;
-};
-
-template <size_t Index>
-struct MixedTypedTypes {
-    typedef typename std::tuple_element<Index, MixedTyped>::type::mapped_type VectorType;
-    typedef typename VectorType::value_type ValueType;
-};
-
 // Go through all index-value pairs of a given input type
 template <typename T>
-inline void for_each(const MixedTyped& idx_and_data,
+inline void for_each(const std::map<int, std::vector<T>>& idx_and_data,
                      std::function<void(int, const std::vector<T>&)> execute) {
-    for (auto& i : std::get<MixedTypedIndex<T>::index>(idx_and_data)) {
+    for (auto& i : idx_and_data) {
         execute(i.first, i.second);
     }
 }
 
 // non-const variant of for_each
 template <typename T>
-inline void for_each(MixedTyped& idx_and_data,
+inline void for_each(std::map<int, std::vector<T>>& idx_and_data,
                      std::function<void(int, std::vector<T>&)> execute) {
-    for (auto& i : std::get<MixedTypedIndex<T>::index>(idx_and_data)) {
+    for (auto& i : idx_and_data) {
         execute(i.first, i.second);
     }
 }
 
+// Go through all index-value pairs of a given input type
+template <typename T>
+inline void for_each(const std::map<int, std::vector<T>>& golden,
+                     std::map<int, std::vector<T>>& test,
+                     std::function<void(int, const std::vector<T>&, std::vector<T>&)> execute) {
+    for_each<T>(golden, [&test, &execute](int index, const std::vector<T>& g) {
+        auto& t = test[index];
+        execute(index, g, t);
+    });
+}
+
+// Go through all index-value pairs of a given input type
+template <typename T>
+inline void for_each(
+        const std::map<int, std::vector<T>>& golden, const std::map<int, std::vector<T>>& test,
+        std::function<void(int, const std::vector<T>&, const std::vector<T>&)> execute) {
+    for_each<T>(golden, [&test, &execute](int index, const std::vector<T>& g) {
+        auto t = test.find(index);
+        ASSERT_NE(t, test.end());
+        execute(index, g, t->second);
+    });
+}
+
 // internal helper for for_all
 template <typename T>
-inline void for_all_internal(
-        MixedTyped& idx_and_data,
-        std::function<void(int, void*, size_t)> execute_this) {
+inline void for_all_internal(std::map<int, std::vector<T>>& idx_and_data,
+                             std::function<void(int, void*, size_t)> execute_this) {
     for_each<T>(idx_and_data, [&execute_this](int idx, std::vector<T>& m) {
         execute_this(idx, static_cast<void*>(m.data()), m.size() * sizeof(T));
     });
@@ -152,22 +141,22 @@ inline void for_all_internal(
 // expects a functor that takes (int index, void *raw data, size_t sz)
 inline void for_all(MixedTyped& idx_and_data,
                     std::function<void(int, void*, size_t)> execute_this) {
-    for_all_internal<float>(idx_and_data, execute_this);
-    for_all_internal<int32_t>(idx_and_data, execute_this);
-    for_all_internal<uint8_t>(idx_and_data, execute_this);
-    for_all_internal<int16_t>(idx_and_data, execute_this);
-    for_all_internal<_Float16>(idx_and_data, execute_this);
-    for_all_internal<bool8>(idx_and_data, execute_this);
-    for_all_internal<int8_t>(idx_and_data, execute_this);
-    static_assert(7 == std::tuple_size<MixedTyped>::value,
+    for_all_internal(idx_and_data.float32Operands, execute_this);
+    for_all_internal(idx_and_data.int32Operands, execute_this);
+    for_all_internal(idx_and_data.quant8AsymmOperands, execute_this);
+    for_all_internal(idx_and_data.quant16SymmOperands, execute_this);
+    for_all_internal(idx_and_data.float16Operands, execute_this);
+    for_all_internal(idx_and_data.bool8Operands, execute_this);
+    for_all_internal(idx_and_data.quant8ChannelOperands, execute_this);
+    for_all_internal(idx_and_data.quant16AsymmOperands, execute_this);
+    static_assert(8 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but for_all function wasn't updated");
 }
 
 // Const variant of internal helper for for_all
 template <typename T>
-inline void for_all_internal(
-        const MixedTyped& idx_and_data,
-        std::function<void(int, const void*, size_t)> execute_this) {
+inline void for_all_internal(const std::map<int, std::vector<T>>& idx_and_data,
+                             std::function<void(int, const void*, size_t)> execute_this) {
     for_each<T>(idx_and_data, [&execute_this](int idx, const std::vector<T>& m) {
         execute_this(idx, static_cast<const void*>(m.data()), m.size() * sizeof(T));
     });
@@ -177,152 +166,178 @@ inline void for_all_internal(
 // expects a functor that takes (int index, const void *raw data, size_t sz)
 inline void for_all(const MixedTyped& idx_and_data,
                     std::function<void(int, const void*, size_t)> execute_this) {
-    for_all_internal<float>(idx_and_data, execute_this);
-    for_all_internal<int32_t>(idx_and_data, execute_this);
-    for_all_internal<uint8_t>(idx_and_data, execute_this);
-    for_all_internal<int16_t>(idx_and_data, execute_this);
-    for_all_internal<_Float16>(idx_and_data, execute_this);
-    for_all_internal<bool8>(idx_and_data, execute_this);
-    for_all_internal<int8_t>(idx_and_data, execute_this);
+    for_all_internal(idx_and_data.float32Operands, execute_this);
+    for_all_internal(idx_and_data.int32Operands, execute_this);
+    for_all_internal(idx_and_data.quant8AsymmOperands, execute_this);
+    for_all_internal(idx_and_data.quant16SymmOperands, execute_this);
+    for_all_internal(idx_and_data.float16Operands, execute_this);
+    for_all_internal(idx_and_data.bool8Operands, execute_this);
+    for_all_internal(idx_and_data.quant8ChannelOperands, execute_this);
+    for_all_internal(idx_and_data.quant16AsymmOperands, execute_this);
     static_assert(
-            7 == std::tuple_size<MixedTyped>::value,
+            8 == MixedTyped::kNumTypes,
             "Number of types in MixedTyped changed, but const for_all function wasn't updated");
 }
 
 // Helper template - resize test output per golden
-template <typename ty, size_t tuple_index>
-void resize_accordingly_(const MixedTyped& golden, MixedTyped& test) {
-    std::function<void(int, const std::vector<ty>&)> execute =
-            [&test](int index, const std::vector<ty>& m) {
-                auto& t = std::get<tuple_index>(test);
-                t[index].resize(m.size());
-            };
-    for_each<ty>(golden, execute);
+template <typename T>
+inline void resize_accordingly_(const std::map<int, std::vector<T>>& golden,
+                                std::map<int, std::vector<T>>& test) {
+    for_each<T>(golden, test,
+                [](int, const std::vector<T>& g, std::vector<T>& t) { t.resize(g.size()); });
+}
+
+template <>
+inline void resize_accordingly_<uint32_t>(const OperandDimensions& golden,
+                                          OperandDimensions& test) {
+    for_each<uint32_t>(
+            golden, test,
+            [](int, const std::vector<uint32_t>& g, std::vector<uint32_t>& t) { t = g; });
 }
 
 inline void resize_accordingly(const MixedTyped& golden, MixedTyped& test) {
-    resize_accordingly_<float, 0>(golden, test);
-    resize_accordingly_<int32_t, 1>(golden, test);
-    resize_accordingly_<uint8_t, 2>(golden, test);
-    resize_accordingly_<int16_t, 3>(golden, test);
-    resize_accordingly_<_Float16, 4>(golden, test);
-    resize_accordingly_<bool8, 5>(golden, test);
-    resize_accordingly_<int8_t, 6>(golden, test);
-    static_assert(7 == std::tuple_size<MixedTyped>::value,
+    resize_accordingly_(golden.operandDimensions, test.operandDimensions);
+    resize_accordingly_(golden.float32Operands, test.float32Operands);
+    resize_accordingly_(golden.int32Operands, test.int32Operands);
+    resize_accordingly_(golden.quant8AsymmOperands, test.quant8AsymmOperands);
+    resize_accordingly_(golden.quant16SymmOperands, test.quant16SymmOperands);
+    resize_accordingly_(golden.float16Operands, test.float16Operands);
+    resize_accordingly_(golden.bool8Operands, test.bool8Operands);
+    resize_accordingly_(golden.quant8ChannelOperands, test.quant8ChannelOperands);
+    resize_accordingly_(golden.quant16AsymmOperands, test.quant16AsymmOperands);
+    static_assert(8 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but resize_accordingly function wasn't "
                   "updated");
 }
 
-template <typename ty, size_t tuple_index>
-void filter_internal(const MixedTyped& golden, MixedTyped* filtered,
-                     std::function<bool(int)> is_ignored) {
-    for_each<ty>(golden,
-                 [filtered, &is_ignored](int index, const std::vector<ty>& m) {
-                     auto& g = std::get<tuple_index>(*filtered);
-                     if (!is_ignored(index)) g[index] = m;
-                 });
+template <typename T>
+void filter_internal(const std::map<int, std::vector<T>>& golden,
+                     std::map<int, std::vector<T>>* filtered, std::function<bool(int)> is_ignored) {
+    for_each<T>(golden, [filtered, &is_ignored](int index, const std::vector<T>& m) {
+        auto& g = *filtered;
+        if (!is_ignored(index)) g[index] = m;
+    });
 }
 
 inline MixedTyped filter(const MixedTyped& golden,
                          std::function<bool(int)> is_ignored) {
     MixedTyped filtered;
-    filter_internal<float, 0>(golden, &filtered, is_ignored);
-    filter_internal<int32_t, 1>(golden, &filtered, is_ignored);
-    filter_internal<uint8_t, 2>(golden, &filtered, is_ignored);
-    filter_internal<int16_t, 3>(golden, &filtered, is_ignored);
-    filter_internal<_Float16, 4>(golden, &filtered, is_ignored);
-    filter_internal<bool8, 5>(golden, &filtered, is_ignored);
-    filter_internal<int8_t, 6>(golden, &filtered, is_ignored);
-    static_assert(7 == std::tuple_size<MixedTyped>::value,
+    filter_internal(golden.operandDimensions, &filtered.operandDimensions, is_ignored);
+    filter_internal(golden.float32Operands, &filtered.float32Operands, is_ignored);
+    filter_internal(golden.int32Operands, &filtered.int32Operands, is_ignored);
+    filter_internal(golden.quant8AsymmOperands, &filtered.quant8AsymmOperands, is_ignored);
+    filter_internal(golden.quant16SymmOperands, &filtered.quant16SymmOperands, is_ignored);
+    filter_internal(golden.float16Operands, &filtered.float16Operands, is_ignored);
+    filter_internal(golden.bool8Operands, &filtered.bool8Operands, is_ignored);
+    filter_internal(golden.quant8ChannelOperands, &filtered.quant8ChannelOperands, is_ignored);
+    filter_internal(golden.quant16AsymmOperands, &filtered.quant16AsymmOperands, is_ignored);
+    static_assert(8 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but compare function wasn't updated");
     return filtered;
 }
 
 // Compare results
-// clang-format off
-template <size_t I>
-void compare_(const MixedTyped& golden, const MixedTyped& test,
-              std::function<void(typename MixedTypedTypes<I>::ValueType,
-                                 typename MixedTypedTypes<I>::ValueType)> cmp) {
-    for_each<typename MixedTypedTypes<I>::ValueType>(
-            golden, [&test, &cmp](int index, const typename MixedTypedTypes<I>::VectorType& m) {
-                const auto& test_operands = std::get<I>(test);
-                const auto& test_ty = test_operands.find(index);
-                ASSERT_NE(test_ty, test_operands.end());
-                for (unsigned int i = 0; i < m.size(); i++) {
-                    SCOPED_TRACE(testing::Message() << "When comparing element " << i);
-                    cmp(m[i], test_ty->second[i]);
-                }
-            });
+template <typename T>
+void compare_(const std::map<int, std::vector<T>>& golden,
+              const std::map<int, std::vector<T>>& test, std::function<void(T, T)> cmp) {
+    for_each<T>(golden, test, [&cmp](int index, const std::vector<T>& g, const std::vector<T>& t) {
+        for (unsigned int i = 0; i < g.size(); i++) {
+            SCOPED_TRACE(testing::Message()
+                         << "When comparing output " << index << " element " << i);
+            cmp(g[i], t[i]);
+        }
+    });
 }
-// clang-format on
 
 inline void compare(const MixedTyped& golden, const MixedTyped& test,
                     float fpAtol = 1e-5f, float fpRtol = 1e-5f) {
+    for_each<uint32_t>(
+            golden.operandDimensions, test.operandDimensions,
+            [](int index, const std::vector<uint32_t>& g, const std::vector<uint32_t>& t) {
+                SCOPED_TRACE(testing::Message()
+                             << "When comparing dimensions for output " << index);
+                EXPECT_EQ(g, t);
+            });
     size_t totalNumberOfErrors = 0;
-    compare_<0>(golden, test, [&totalNumberOfErrors, fpAtol, fpRtol](float expected, float actual) {
-        // Compute the range based on both absolute tolerance and relative tolerance
-        float fpRange = fpAtol + fpRtol * std::abs(expected);
-        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-            EXPECT_NEAR(expected, actual, fpRange);
-        }
-        if (std::abs(expected - actual) > fpRange) {
-            totalNumberOfErrors++;
-        }
-    });
-    compare_<1>(golden, test, [&totalNumberOfErrors](int32_t expected, int32_t actual) {
-        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-            EXPECT_EQ(expected, actual);
-        }
-        if (expected != actual) {
-            totalNumberOfErrors++;
-        }
-    });
-    compare_<2>(golden, test, [&totalNumberOfErrors](uint8_t expected, uint8_t actual) {
-        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-            EXPECT_NEAR(expected, actual, 1);
-        }
-        if (std::abs(expected - actual) > 1) {
-            totalNumberOfErrors++;
-        }
-    });
-    compare_<3>(golden, test, [&totalNumberOfErrors](int16_t expected, int16_t actual) {
-        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-            EXPECT_NEAR(expected, actual, 1);
-        }
-        if (std::abs(expected - actual) > 1) {
-            totalNumberOfErrors++;
-        }
-    });
-    compare_<4>(golden, test,
-                [&totalNumberOfErrors, fpAtol, fpRtol](_Float16 expected, _Float16 actual) {
-                    // Compute the range based on both absolute tolerance and relative tolerance
-                    float fpRange = fpAtol + fpRtol * std::abs(static_cast<float>(expected));
-                    if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-                        EXPECT_NEAR(expected, actual, fpRange);
-                    }
-                    if (std::abs(static_cast<float>(expected - actual)) > fpRange) {
-                        totalNumberOfErrors++;
-                    }
-                });
-    compare_<5>(golden, test, [&totalNumberOfErrors](bool expected, bool actual) {
-        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-            EXPECT_EQ(expected, actual);
-        }
-        if (expected != actual) {
-            totalNumberOfErrors++;
-        }
-    });
-    compare_<6>(golden, test, [&totalNumberOfErrors](int8_t expected, int8_t actual) {
-        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-            EXPECT_NEAR(expected, actual, 1);
-        }
-        if (std::abs(static_cast<int>(expected) - static_cast<int>(actual)) > 1) {
-            totalNumberOfErrors++;
-        }
-    });
+    compare_<float>(golden.float32Operands, test.float32Operands,
+                    [&totalNumberOfErrors, fpAtol, fpRtol](float expected, float actual) {
+                        // Compute the range based on both absolute tolerance and relative tolerance
+                        float fpRange = fpAtol + fpRtol * std::abs(expected);
+                        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                            EXPECT_NEAR(expected, actual, fpRange);
+                        }
+                        if (std::abs(expected - actual) > fpRange) {
+                            totalNumberOfErrors++;
+                        }
+                    });
+    compare_<int32_t>(golden.int32Operands, test.int32Operands,
+                      [&totalNumberOfErrors](int32_t expected, int32_t actual) {
+                          if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                              EXPECT_EQ(expected, actual);
+                          }
+                          if (expected != actual) {
+                              totalNumberOfErrors++;
+                          }
+                      });
+    compare_<uint8_t>(golden.quant8AsymmOperands, test.quant8AsymmOperands,
+                      [&totalNumberOfErrors](uint8_t expected, uint8_t actual) {
+                          if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                              EXPECT_NEAR(expected, actual, 1);
+                          }
+                          if (std::abs(expected - actual) > 1) {
+                              totalNumberOfErrors++;
+                          }
+                      });
+    compare_<int16_t>(golden.quant16SymmOperands, test.quant16SymmOperands,
+                      [&totalNumberOfErrors](int16_t expected, int16_t actual) {
+                          if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                              EXPECT_NEAR(expected, actual, 1);
+                          }
+                          if (std::abs(expected - actual) > 1) {
+                              totalNumberOfErrors++;
+                          }
+                      });
+    compare_<_Float16>(golden.float16Operands, test.float16Operands,
+                       [&totalNumberOfErrors, fpAtol, fpRtol](_Float16 expected, _Float16 actual) {
+                           // Compute the range based on both absolute tolerance and relative
+                           // tolerance
+                           float fpRange = fpAtol + fpRtol * std::abs(static_cast<float>(expected));
+                           if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                               EXPECT_NEAR(expected, actual, fpRange);
+                           }
+                           if (std::abs(static_cast<float>(expected - actual)) > fpRange) {
+                               totalNumberOfErrors++;
+                           }
+                       });
+    compare_<bool8>(golden.bool8Operands, test.bool8Operands,
+                    [&totalNumberOfErrors](bool expected, bool actual) {
+                        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                            EXPECT_EQ(expected, actual);
+                        }
+                        if (expected != actual) {
+                            totalNumberOfErrors++;
+                        }
+                    });
+    compare_<int8_t>(golden.quant8ChannelOperands, test.quant8ChannelOperands,
+                     [&totalNumberOfErrors](int8_t expected, int8_t actual) {
+                         if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                             EXPECT_NEAR(expected, actual, 1);
+                         }
+                         if (std::abs(static_cast<int>(expected) - static_cast<int>(actual)) > 1) {
+                             totalNumberOfErrors++;
+                         }
+                     });
+    compare_<uint16_t>(golden.quant16AsymmOperands, test.quant16AsymmOperands,
+                       [&totalNumberOfErrors](int16_t expected, int16_t actual) {
+                           if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                               EXPECT_NEAR(expected, actual, 1);
+                           }
+                           if (std::abs(expected - actual) > 1) {
+                               totalNumberOfErrors++;
+                           }
+                       });
 
-    static_assert(7 == std::tuple_size<MixedTyped>::value,
+    static_assert(8 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but compare function wasn't updated");
     EXPECT_EQ(size_t{0}, totalNumberOfErrors);
 }
@@ -337,20 +352,18 @@ inline void expectMultinomialDistributionWithinTolerance(const MixedTyped& test,
     const int kNumClasses = 1024;
     const int kNumSamples = 128;
 
-    std::vector<int32_t> output = std::get<MixedTypedIndex<int32_t>::index>(test).at(0);
+    std::vector<int32_t> output = test.int32Operands.at(0);
     std::vector<int> class_counts;
     class_counts.resize(kNumClasses);
     for (int index : output) {
         class_counts[index]++;
     }
     std::vector<float> input;
-    Float32Operands float32Operands =
-            std::get<MixedTypedIndex<float>::index>(example.operands.first);
+    Float32Operands float32Operands = example.operands.first.float32Operands;
     if (!float32Operands.empty()) {
-        input = std::get<MixedTypedIndex<float>::index>(example.operands.first).at(0);
+        input = example.operands.first.float32Operands.at(0);
     } else {
-        std::vector<_Float16> inputFloat16 =
-                std::get<MixedTypedIndex<_Float16>::index>(example.operands.first).at(0);
+        std::vector<_Float16> inputFloat16 = example.operands.first.float16Operands.at(0);
         input.resize(inputFloat16.size());
         convertFloat16ToFloat32(inputFloat16.data(), &input);
     }

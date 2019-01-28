@@ -20,9 +20,25 @@
 #include "gmock/gmock-matchers.h"
 #include "gtest/gtest.h"
 
+#include <iostream>
+
 namespace android {
 namespace nn {
 namespace wrapper {
+
+namespace {
+
+struct OperandTypeParams {
+    Type type;
+    std::vector<uint32_t> shape;
+    float scale;
+    int32_t zeroPoint;
+
+    OperandTypeParams(Type type, std::vector<uint32_t> shape, float scale, int32_t zeroPoint)
+        : type(type), shape(shape), scale(scale), zeroPoint(zeroPoint) {}
+};
+
+}  // namespace
 
 using ::testing::Each;
 using ::testing::ElementsAreArray;
@@ -31,67 +47,40 @@ using ::testing::Matcher;
 
 class QuantizedLSTMOpModel {
    public:
-    QuantizedLSTMOpModel(uint32_t numBatches, uint32_t inputSize, uint32_t cellSize,
-                         uint32_t outputSize, float weightsScale, int weightsZeroPoint,
-                         const std::vector<std::vector<uint32_t>>& input_shapes)
-        : inputSize_(inputSize), outputSize_(outputSize) {
+    QuantizedLSTMOpModel(const std::vector<OperandTypeParams>& inputOperandTypeParams) {
         std::vector<uint32_t> inputs;
-        // clang-format off
-        OperandType inputOperandType(Type::TENSOR_QUANT8_ASYMM, input_shapes[0],
-                                     1. / 128., 128);
-        inputs.push_back(model_.addOperand(&inputOperandType));
-        OperandType prevOutputOperandType(Type::TENSOR_QUANT8_ASYMM, input_shapes[1],
-                                          1. / 128., 128);
-        inputs.push_back(model_.addOperand(&prevOutputOperandType));
-        OperandType weightsOperandType(Type::TENSOR_QUANT8_ASYMM, input_shapes[2],
-                                       weightsScale, weightsZeroPoint);
-        inputs.push_back(model_.addOperand(&weightsOperandType));
-        OperandType biasOperandType(Type::TENSOR_INT32, input_shapes[3],
-                                    weightsScale / 128., 0);
-        inputs.push_back(model_.addOperand(&biasOperandType));
-        OperandType prevCellStateOperandType(Type::TENSOR_QUANT16_SYMM, input_shapes[4],
-                                             1. / 2048., 0);
-        inputs.push_back(model_.addOperand(&prevCellStateOperandType));
-        // clang-format on
 
-        std::vector<std::vector<uint32_t>> output_shapes = {
-                {numBatches, inputSize + outputSize},  // concatTemp
-                {numBatches, 4 * cellSize},            // activationTemp
-                {numBatches, outputSize},              // outputStateOut
-                {numBatches, cellSize},                // cellStateOut
-                {numBatches, outputSize}};             // output
+        for (int i = 0; i < NUM_INPUTS; ++i) {
+            const auto& curOTP = inputOperandTypeParams[i];
+            OperandType curType(curOTP.type, curOTP.shape, curOTP.scale, curOTP.zeroPoint);
+            inputs.push_back(model_.addOperand(&curType));
+        }
+
+        const uint32_t numBatches = inputOperandTypeParams[0].shape[0];
+        inputSize_ = inputOperandTypeParams[0].shape[0];
+        const uint32_t outputSize =
+                inputOperandTypeParams[QuantizedLSTMCell::kPrevCellStateTensor].shape[1];
+        outputSize_ = outputSize;
 
         std::vector<uint32_t> outputs;
-        // clang-format off
-        OperandType concatTempOperandType(Type::TENSOR_QUANT8_ASYMM, output_shapes[0],
-                                          1. / 128., 128);
-        outputs.push_back(model_.addOperand(&concatTempOperandType));
-        OperandType activationTempOperandType(Type::TENSOR_QUANT16_SYMM, output_shapes[1],
-                                              1. / 128., 0);
-        outputs.push_back(model_.addOperand(&activationTempOperandType));
-        OperandType outputStateOutOperandType(Type::TENSOR_QUANT8_ASYMM, output_shapes[2],
-                                              1. / 128., 128);
-        outputs.push_back(model_.addOperand(&outputStateOutOperandType));
-        OperandType cellStateOutOperandType(Type::TENSOR_QUANT16_SYMM, output_shapes[3],
+        OperandType cellStateOutOperandType(Type::TENSOR_QUANT16_SYMM, {numBatches, outputSize},
                                             1. / 2048., 0);
         outputs.push_back(model_.addOperand(&cellStateOutOperandType));
-        OperandType outputOperandType(Type::TENSOR_QUANT8_ASYMM, output_shapes[4],
+        OperandType outputOperandType(Type::TENSOR_QUANT8_ASYMM, {numBatches, outputSize},
                                       1. / 128., 128);
         outputs.push_back(model_.addOperand(&outputOperandType));
-        // clang-format on
 
         model_.addOperation(ANEURALNETWORKS_QUANTIZED_16BIT_LSTM, inputs, outputs);
         model_.identifyInputsAndOutputs(inputs, outputs);
 
-        input_.insert(input_.end(), numBatches * inputSize, 0);
-        prevOutput_.insert(prevOutput_.end(), numBatches * outputSize, 128);
-        prevCellState_.insert(prevCellState_.end(), numBatches * cellSize, 0);
+        initializeInputData(inputOperandTypeParams[QuantizedLSTMCell::kInputTensor], &input_);
+        initializeInputData(inputOperandTypeParams[QuantizedLSTMCell::kPrevOutputTensor],
+                            &prevOutput_);
+        initializeInputData(inputOperandTypeParams[QuantizedLSTMCell::kPrevCellStateTensor],
+                            &prevCellState_);
 
-        reserveOutputTensor(&concatTemp_, output_shapes[0]);
-        reserveOutputTensor(&activationTemp_, output_shapes[1]);
-        reserveOutputTensor(&outputStateOut_, output_shapes[2]);
-        reserveOutputTensor(&cellStateOut_, output_shapes[3]);
-        reserveOutputTensor(&output_, output_shapes[4]);
+        cellStateOut_.resize(numBatches * outputSize, 0);
+        output_.resize(numBatches * outputSize, 0);
 
         model_.finish();
     }
@@ -106,24 +95,47 @@ class QuantizedLSTMOpModel {
         // Set all the inputs.
         ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kInputTensor, input_),
                   Result::NO_ERROR);
-        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kPrevOutputTensor, prevOutput_),
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kInputToInputWeightsTensor,
+                                 inputToInputWeights_),
                   Result::NO_ERROR);
-        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kWeightsTensor, weights_),
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kInputToForgetWeightsTensor,
+                                 inputToForgetWeights_),
                   Result::NO_ERROR);
-        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kBiasTensor, bias_),
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kInputToCellWeightsTensor,
+                                 inputToCellWeights_),
+                  Result::NO_ERROR);
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kInputToOutputWeightsTensor,
+                                 inputToOutputWeights_),
+                  Result::NO_ERROR);
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kRecurrentToInputWeightsTensor,
+                                 recurrentToInputWeights_),
+                  Result::NO_ERROR);
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kRecurrentToForgetWeightsTensor,
+                                 recurrentToForgetWeights_),
+                  Result::NO_ERROR);
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kRecurrentToCellWeightsTensor,
+                                 recurrentToCellWeights_),
+                  Result::NO_ERROR);
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kRecurrentToOutputWeightsTensor,
+                                 recurrentToOutputWeights_),
+                  Result::NO_ERROR);
+        ASSERT_EQ(
+                setInputTensor(&execution, QuantizedLSTMCell::kInputGateBiasTensor, inputGateBias_),
+                Result::NO_ERROR);
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kForgetGateBiasTensor,
+                                 forgetGateBias_),
+                  Result::NO_ERROR);
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kCellGateBiasTensor, cellGateBias_),
+                  Result::NO_ERROR);
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kOutputGateBiasTensor,
+                                 outputGateBias_),
                   Result::NO_ERROR);
         ASSERT_EQ(
                 setInputTensor(&execution, QuantizedLSTMCell::kPrevCellStateTensor, prevCellState_),
                 Result::NO_ERROR);
+        ASSERT_EQ(setInputTensor(&execution, QuantizedLSTMCell::kPrevOutputTensor, prevOutput_),
+                  Result::NO_ERROR);
         // Set all the outputs.
-        ASSERT_EQ(setOutputTensor(&execution, QuantizedLSTMCell::kConcatTempTensor, &concatTemp_),
-                  Result::NO_ERROR);
-        ASSERT_EQ(setOutputTensor(&execution, QuantizedLSTMCell::kActivationTempTensor,
-                                  &activationTemp_),
-                  Result::NO_ERROR);
-        ASSERT_EQ(setOutputTensor(&execution, QuantizedLSTMCell::kOutputStateOutTensor,
-                                  &outputStateOut_),
-                  Result::NO_ERROR);
         ASSERT_EQ(
                 setOutputTensor(&execution, QuantizedLSTMCell::kCellStateOutTensor, &cellStateOut_),
                 Result::NO_ERROR);
@@ -133,29 +145,76 @@ class QuantizedLSTMOpModel {
         ASSERT_EQ(execution.compute(), Result::NO_ERROR);
 
         // Put state outputs into inputs for the next step
-        prevOutput_.swap(outputStateOut_);
-        prevCellState_.swap(cellStateOut_);
+        prevOutput_ = output_;
+        prevCellState_ = cellStateOut_;
     }
 
     int inputSize() { return inputSize_; }
+
     int outputSize() { return outputSize_; }
+
     void setInput(const std::vector<uint8_t>& input) { input_ = input; }
-    void setWeights(const std::vector<uint8_t>& weights) { weights_ = weights; }
-    void setBias(const std::vector<int32_t>& bias) { bias_ = bias; }
+
+    void setWeightsAndBiases(std::vector<uint8_t> inputToInputWeights,
+                             std::vector<uint8_t> inputToForgetWeights,
+                             std::vector<uint8_t> inputToCellWeights,
+                             std::vector<uint8_t> inputToOutputWeights,
+                             std::vector<uint8_t> recurrentToInputWeights,
+                             std::vector<uint8_t> recurrentToForgetWeights,
+                             std::vector<uint8_t> recurrentToCellWeights,
+                             std::vector<uint8_t> recurrentToOutputWeights,
+                             std::vector<int32_t> inputGateBias,
+                             std::vector<int32_t> forgetGateBias,
+                             std::vector<int32_t> cellGateBias,  //
+                             std::vector<int32_t> outputGateBias) {
+        inputToInputWeights_ = inputToInputWeights;
+        inputToForgetWeights_ = inputToForgetWeights;
+        inputToCellWeights_ = inputToCellWeights;
+        inputToOutputWeights_ = inputToOutputWeights;
+        recurrentToInputWeights_ = recurrentToInputWeights;
+        recurrentToForgetWeights_ = recurrentToForgetWeights;
+        recurrentToCellWeights_ = recurrentToCellWeights;
+        recurrentToOutputWeights_ = recurrentToOutputWeights;
+        inputGateBias_ = inputGateBias;
+        forgetGateBias_ = forgetGateBias;
+        cellGateBias_ = cellGateBias;
+        outputGateBias_ = outputGateBias;
+    }
+
+    template <typename T>
+    void initializeInputData(OperandTypeParams params, std::vector<T>* vec) {
+        int size = 1;
+        for (int d : params.shape) {
+            size *= d;
+        }
+        vec->clear();
+        vec->resize(size, params.zeroPoint);
+    }
+
     std::vector<uint8_t> getOutput() { return output_; }
 
    private:
+    static constexpr int NUM_INPUTS = 15;
+    static constexpr int NUM_OUTPUTS = 2;
+
     Model model_;
     // Inputs
     std::vector<uint8_t> input_;
-    std::vector<uint8_t> prevOutput_;
-    std::vector<uint8_t> weights_;
-    std::vector<int32_t> bias_;
+    std::vector<uint8_t> inputToInputWeights_;
+    std::vector<uint8_t> inputToForgetWeights_;
+    std::vector<uint8_t> inputToCellWeights_;
+    std::vector<uint8_t> inputToOutputWeights_;
+    std::vector<uint8_t> recurrentToInputWeights_;
+    std::vector<uint8_t> recurrentToForgetWeights_;
+    std::vector<uint8_t> recurrentToCellWeights_;
+    std::vector<uint8_t> recurrentToOutputWeights_;
+    std::vector<int32_t> inputGateBias_;
+    std::vector<int32_t> forgetGateBias_;
+    std::vector<int32_t> cellGateBias_;
+    std::vector<int32_t> outputGateBias_;
     std::vector<int16_t> prevCellState_;
+    std::vector<uint8_t> prevOutput_;
     // Outputs
-    std::vector<uint8_t> concatTemp_;
-    std::vector<int16_t> activationTemp_;
-    std::vector<uint8_t> outputStateOut_;
     std::vector<int16_t> cellStateOut_;
     std::vector<uint8_t> output_;
 
@@ -169,14 +228,6 @@ class QuantizedLSTMOpModel {
     template <typename T>
     Result setOutputTensor(Execution* execution, int tensor, std::vector<T>* data) {
         return execution->setOutput(tensor, data->data(), sizeof(T) * data->size());
-    }
-    template <typename T>
-    void reserveOutputTensor(std::vector<T>* tensor, const std::vector<uint32_t>& dims) {
-        int size = 1;
-        for (int d : dims) {
-            size *= d;
-        }
-        tensor->insert(tensor->end(), size, static_cast<T>(0));
     }
 };
 
@@ -219,43 +270,83 @@ class QuantizedLstmTest : public ::testing::Test {
 TEST_F(QuantizedLstmTest, BasicQuantizedLstmTest) {
     const int numBatches = 2;
     const int inputSize = 2;
-    const int cellSize = 4;
-    const int outputSize = cellSize;
+    const int outputSize = 4;
 
     float weightsScale = 0.00408021;
     int weightsZeroPoint = 100;
+    // OperandType biasOperandType(Type::TENSOR_INT32, input_shapes[3],
+    // weightsScale / 128., 0);
+    // inputs.push_back(model_.addOperand(&biasOperandType));
+    // OperandType prevCellStateOperandType(Type::TENSOR_QUANT16_SYMM, input_shapes[4],
+    // 1. / 2048., 0);
+    // inputs.push_back(model_.addOperand(&prevCellStateOperandType));
 
-    QuantizedLSTMOpModel lstm(numBatches, inputSize, cellSize, outputSize, weightsScale,
-                              weightsZeroPoint,
-                              {
-                                      {numBatches, inputSize},                 // input
-                                      {numBatches, outputSize},                // prevOutput
-                                      {4 * cellSize, inputSize + outputSize},  // weights
-                                      {4 * cellSize},                          // bias
-                                      {numBatches, cellSize}                   // prevCellState
-                              });
+    QuantizedLSTMOpModel lstm({
+            // input
+            OperandTypeParams(Type::TENSOR_QUANT8_ASYMM, {numBatches, inputSize}, 1. / 128., 128),
+            // inputToInputWeights
+            // inputToForgetWeights
+            // inputToCellWeights
+            // inputToOutputWeights
+            OperandTypeParams(Type::TENSOR_QUANT8_ASYMM, {outputSize, inputSize}, weightsScale,
+                              weightsZeroPoint),
+            OperandTypeParams(Type::TENSOR_QUANT8_ASYMM, {outputSize, inputSize}, weightsScale,
+                              weightsZeroPoint),
+            OperandTypeParams(Type::TENSOR_QUANT8_ASYMM, {outputSize, inputSize}, weightsScale,
+                              weightsZeroPoint),
+            OperandTypeParams(Type::TENSOR_QUANT8_ASYMM, {outputSize, inputSize}, weightsScale,
+                              weightsZeroPoint),
+            // recurrentToInputWeights
+            // recurrentToForgetWeights
+            // recurrentToCellWeights
+            // recurrentToOutputWeights
+            OperandTypeParams(Type::TENSOR_QUANT8_ASYMM, {outputSize, outputSize}, weightsScale,
+                              weightsZeroPoint),
+            OperandTypeParams(Type::TENSOR_QUANT8_ASYMM, {outputSize, outputSize}, weightsScale,
+                              weightsZeroPoint),
+            OperandTypeParams(Type::TENSOR_QUANT8_ASYMM, {outputSize, outputSize}, weightsScale,
+                              weightsZeroPoint),
+            OperandTypeParams(Type::TENSOR_QUANT8_ASYMM, {outputSize, outputSize}, weightsScale,
+                              weightsZeroPoint),
+            // inputGateBias
+            // forgetGateBias
+            // cellGateBias
+            // outputGateBias
+            OperandTypeParams(Type::TENSOR_INT32, {outputSize}, weightsScale / 128., 0),
+            OperandTypeParams(Type::TENSOR_INT32, {outputSize}, weightsScale / 128., 0),
+            OperandTypeParams(Type::TENSOR_INT32, {outputSize}, weightsScale / 128., 0),
+            OperandTypeParams(Type::TENSOR_INT32, {outputSize}, weightsScale / 128., 0),
+            // prevCellState
+            OperandTypeParams(Type::TENSOR_QUANT16_SYMM, {numBatches, outputSize}, 1. / 2048., 0),
+            // prevOutput
+            OperandTypeParams(Type::TENSOR_QUANT8_ASYMM, {numBatches, outputSize}, 1. / 128., 128),
+    });
 
-    // clang-format off
-    lstm.setWeights({254, 206, 77,  168, 146, 250,
-                     71,  20,  215, 6,   235, 171,
-                     223, 7,   118, 225, 10,  218,
-                     59,  130, 174, 26,  171, 108,
-                     172, 60,  205, 65,  133, 34,
-                     14,  0,   140, 168, 29,  49,
-                     240, 223, 133, 56,  206, 109,
-                     142, 64,  246, 216, 54,  183,
-                     137, 240, 103, 52,  24,  50,
-                     68,  51,  237, 112, 132, 179,
-                     0,   220, 89,  23,  158, 110,
-                     69,  4,   207, 253, 3,   169,
-                     106, 214, 67,  23,  195, 187,
-                     59,  158, 45,  3,   11,  99,
-                     119, 132, 49,  205, 109, 10,
-                     129, 218, 11,  98,  218, 48});
-    // clang-format on
-
-    lstm.setBias({-7876, 13488, -726, 32839, 39481, 48624, 48976, -21419, 9206, -46884, -11693,
-                  -38724, -58999, -17050, -41852, -40538});
+    lstm.setWeightsAndBiases(
+            // inputToInputWeights
+            {146, 250, 235, 171, 10, 218, 171, 108},
+            // inputToForgetWeights
+            {24, 50, 132, 179, 158, 110, 3, 169},
+            // inputToCellWeights
+            {133, 34, 29, 49, 206, 109, 54, 183},
+            // inputToOutputWeights
+            {195, 187, 11, 99, 109, 10, 218, 48},
+            // recurrentToInputWeights
+            {254, 206, 77, 168, 71, 20, 215, 6, 223, 7, 118, 225, 59, 130, 174, 26},
+            // recurrentToForgetWeights
+            {137, 240, 103, 52, 68, 51, 237, 112, 0, 220, 89, 23, 69, 4, 207, 253},
+            // recurrentToCellWeights
+            {172, 60, 205, 65, 14, 0, 140, 168, 240, 223, 133, 56, 142, 64, 246, 216},
+            // recurrentToOutputWeights
+            {106, 214, 67, 23, 59, 158, 45, 3, 119, 132, 49, 205, 129, 218, 11, 98},
+            // inputGateBias
+            {-7876, 13488, -726, 32839},
+            // forgetGateBias
+            {9206, -46884, -11693, -38724},
+            // cellGateBias
+            {39481, 48624, 48976, -21419},
+            // outputGateBias
+            {-58999, -17050, -41852, -40538});
 
     // LSTM input is stored as numBatches x (sequenceLength x inputSize) vector.
     std::vector<std::vector<uint8_t>> lstmInput;

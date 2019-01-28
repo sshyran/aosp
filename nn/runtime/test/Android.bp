@@ -28,6 +28,7 @@ cc_defaults {
         "libhidltransport",
         "libhidlmemory",
         "liblog",
+        "libnativewindow",
         "libtextclassifier_hash",
         "libutils",
         "android.hardware.neuralnetworks@1.0",
@@ -106,6 +107,7 @@ cc_defaults {
         "libSampleDriver",
     ],
     shared_libs: [
+        "libfmq",
         "libcutils",
     ],
     header_libs: [

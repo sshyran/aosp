@@ -33,3 +33,35 @@ TEST_F(GeneratedTests, gather_higher_rank_int32) {
             gather_higher_rank::get_examples_int32());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, gather_higher_rank_dynamic_output_shape) {
+    execute(gather_higher_rank::CreateModel_dynamic_output_shape,
+            gather_higher_rank::is_ignored_dynamic_output_shape,
+            gather_higher_rank::get_examples_dynamic_output_shape());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, gather_higher_rank_dynamic_output_shape_relaxed) {
+    execute(gather_higher_rank::CreateModel_dynamic_output_shape_relaxed,
+            gather_higher_rank::is_ignored_dynamic_output_shape_relaxed,
+            gather_higher_rank::get_examples_dynamic_output_shape_relaxed());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, gather_higher_rank_dynamic_output_shape_quant8) {
+    execute(gather_higher_rank::CreateModel_dynamic_output_shape_quant8,
+            gather_higher_rank::is_ignored_dynamic_output_shape_quant8,
+            gather_higher_rank::get_examples_dynamic_output_shape_quant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, gather_higher_rank_dynamic_output_shape_int32) {
+    execute(gather_higher_rank::CreateModel_dynamic_output_shape_int32,
+            gather_higher_rank::is_ignored_dynamic_output_shape_int32,
+            gather_higher_rank::get_examples_dynamic_output_shape_int32());
+}
+
+#endif

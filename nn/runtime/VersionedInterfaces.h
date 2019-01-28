@@ -167,8 +167,24 @@ class VersionedIDevice {
      * @return featureLevel The API level of the most advanced feature this driver implements.
      *                      For example, if the driver implements the features introduced in
      *                      Android P, the value would be 28.
+     *                      Return -1 if the driver is offline or busy, or the query resulted in
+     *                      an unspecified error.
      */
     int64_t getFeatureLevel();
+
+    /**
+     * Returns the device type of a driver.
+     *
+     * @return deviceType The type of a given device, which can help application developers
+     *                    developers to distribute Machine Learning workloads and other workloads
+     *                    such as graphical rendering. E.g., for an app which renders AR scenes
+     *                    based on real time object detection results, the developer could choose
+     *                    an ACCELERATOR type device for ML workloads, and reserve GPU for
+     *                    graphical rendering.
+     *                    Return -1 if the driver is offline or busy, or the query resulted in
+     *                    an unspecified error.
+     */
+    int32_t getType() const;
 
     /**
      * Get the version string of the driver implementation.
@@ -294,6 +310,7 @@ class VersionedIPreparedModel {
      *
      * @param request The input and output information on which the prepared
      *                model is to be executed.
+     * @param measure Specifies whether or not to measure duration of the execution.
      * @param callback A callback object used to return the error status of
      *                 the execution. The callback object's notify function must
      *                 be called exactly once, even if the execution was
@@ -307,7 +324,8 @@ class VersionedIPreparedModel {
      *                - INVALID_ARGUMENT if one of the input arguments is
      *                  invalid
      */
-    ErrorStatus execute(const Request& request, const sp<IExecutionCallback>& callback);
+    ErrorStatus execute(const Request& request, MeasureTiming timing,
+                        const sp<IExecutionCallback>& callback);
 
     /**
      * Performs a synchronous execution on a prepared model.
@@ -332,16 +350,28 @@ class VersionedIPreparedModel {
      *
      * @param request The input and output information on which the prepared
      *                model is to be executed.
+     * @param measure Specifies whether or not to measure duration of the execution.
      * @return status Error status of the execution, must be:
      *                - NONE if execution is performed successfully
      *                - DEVICE_UNAVAILABLE if driver is offline or busy
      *                - GENERAL_FAILURE if there is an unspecified error
-     *                - OUTPUT_INSUFFICIENT_SIZE if provided output buffer is
-     *                  not large enough to store the resultant values
+     *                - OUTPUT_INSUFFICIENT_SIZE if at least one output
+     *                  operand buffer is not large enough to store the
+     *                  corresponding output
      *                - INVALID_ARGUMENT if one of the input arguments is
      *                  invalid
+     * @return outputShapes A list of shape information of model output operands.
+     *                      The index into "outputShapes" corresponds with the index
+     *                      of the output operand in the Request outputs vector.
+     *                      outputShapes nust be empty unless the status is either
+     *                      NONE or OUTPUT_INSUFFICIENT_SIZE.
+     * @return Timing Duration of execution. Unless measure is YES and status is
+     *                NONE, all times must be reported as UINT64_MAX. A driver may
+     *                choose to report any time as UINT64_MAX, indicating that
+     *                measurement is not available.
      */
-    ErrorStatus executeSynchronously(const Request& request);
+    std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronously(
+            const Request& request, MeasureTiming measure);
 
     /**
      * Returns whether this handle to an IPreparedModel object is valid or not.

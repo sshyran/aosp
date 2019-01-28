@@ -25,11 +25,28 @@
 
 #include <android-base/logging.h>
 #include <hidl/LegacySupport.h>
+#include <chrono>
 #include <thread>
 
 namespace android {
 namespace nn {
 namespace sample_driver {
+
+namespace {
+
+using time_point = std::chrono::system_clock::time_point;
+
+auto now() {
+    return std::chrono::system_clock::now();
+};
+
+auto microsecondsDuration(decltype(now()) end, decltype(now()) start) {
+    return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+};
+
+}  // namespace
+
+static const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
 Return<void> SampleDriver::getCapabilities(getCapabilities_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
@@ -45,6 +62,12 @@ Return<void> SampleDriver::getVersionString(getVersionString_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
                  "SampleDriver::getVersionString");
     cb(ErrorStatus::NONE, "JUST_AN_EXAMPLE");
+    return Void();
+}
+
+Return<void> SampleDriver::getType(getType_cb cb) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION, "SampleDriver::getType");
+    cb(ErrorStatus::NONE, V1_2::DeviceType::CPU);
     return Void();
 }
 
@@ -152,60 +175,78 @@ bool SamplePreparedModel::initialize() {
     return setRunTimePoolInfosFromHidlMemories(&mPoolInfos, mModel.pools);
 }
 
-static Return<void> notify(const sp<V1_0::IExecutionCallback>& callback,
-                           const ErrorStatus& status) {
+static Return<void> notify(const sp<V1_0::IExecutionCallback>& callback, const ErrorStatus& status,
+                           const hidl_vec<OutputShape>&, Timing) {
     return callback->notify(status);
 }
 
-static Return<void> notify(const sp<V1_2::IExecutionCallback>& callback,
-                           const ErrorStatus& status) {
-    return callback->notify_1_2(status);
+static Return<void> notify(const sp<V1_2::IExecutionCallback>& callback, const ErrorStatus& status,
+                           const hidl_vec<OutputShape>& outputShapes, Timing timing) {
+    return callback->notify_1_2(status, outputShapes, timing);
 }
 
+// TODO(xusongw): Let callback notify actual output shape once dynamic output shape
+//                is supported in CpuExecutor.
 template <typename T_IExecutionCallback>
-void asyncExecute(const Request& request, const Model& model,
-                  const std::vector<RunTimePoolInfo>& poolInfos,
+void asyncExecute(const Request& request, MeasureTiming measure, time_point driverStart,
+                  const Model& model, const std::vector<RunTimePoolInfo>& poolInfos,
                   const sp<T_IExecutionCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
                  "SampleDriver::asyncExecute");
     std::vector<RunTimePoolInfo> requestPoolInfos;
     if (!setRunTimePoolInfosFromHidlMemories(&requestPoolInfos, request.pools)) {
-        notify(callback, ErrorStatus::GENERAL_FAILURE);
+        notify(callback, ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
         return;
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                         "SampleDriver::asyncExecute");
     CpuExecutor executor;
+    time_point driverEnd, deviceStart, deviceEnd;
+    if (measure == MeasureTiming::YES) deviceStart = now();
     int n = executor.run(model, request, poolInfos, requestPoolInfos);
+    if (measure == MeasureTiming::YES) deviceEnd = now();
     VLOG(DRIVER) << "executor.run returned " << n;
-    ErrorStatus executionStatus =
-            n == ANEURALNETWORKS_NO_ERROR ? ErrorStatus::NONE : ErrorStatus::GENERAL_FAILURE;
-    Return<void> returned = notify(callback, executionStatus);
+    ErrorStatus executionStatus = convertResultCodeToErrorStatus(n);
+    hidl_vec<OutputShape> outputShapes = executor.getOutputShapes();
+    Return<void> returned;
+    if (measure == MeasureTiming::YES && executionStatus == ErrorStatus::NONE) {
+        driverEnd = now();
+        Timing timing = {.timeOnDevice = uint64_t(microsecondsDuration(deviceEnd, deviceStart)),
+                         .timeInDriver = uint64_t(microsecondsDuration(driverEnd, driverStart))};
+        VLOG(DRIVER) << "SampleDriver::asyncExecute timing = " << toString(timing);
+        returned = notify(callback, executionStatus, outputShapes, timing);
+    } else {
+        returned = notify(callback, executionStatus, outputShapes, kNoTiming);
+    }
     if (!returned.isOk()) {
         LOG(ERROR) << " hidl callback failed to return properly: " << returned.description();
     }
 }
 
 template <typename T_IExecutionCallback>
-Return<ErrorStatus> executeBase(const Request& request, const Model& model,
+Return<ErrorStatus> executeBase(const Request& request, MeasureTiming measure, const Model& model,
                                 const std::vector<RunTimePoolInfo>& poolInfos,
                                 const sp<T_IExecutionCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION, "SampleDriver::executeBase");
     VLOG(DRIVER) << "executeBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
+
+    time_point driverStart;
+    if (measure == MeasureTiming::YES) driverStart = now();
+
     if (callback.get() == nullptr) {
         LOG(ERROR) << "invalid callback passed to executeBase";
         return ErrorStatus::INVALID_ARGUMENT;
     }
     if (!validateRequest(request, model)) {
-        notify(callback, ErrorStatus::INVALID_ARGUMENT);
+        notify(callback, ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
         return ErrorStatus::INVALID_ARGUMENT;
     }
 
     // This thread is intentionally detached because the sample driver service
     // is expected to live forever.
-    std::thread([&model, &poolInfos, request, callback] {
-        asyncExecute(request, model, poolInfos, callback);
+    std::thread([&model, &poolInfos, request, measure, driverStart, callback] {
+        asyncExecute(request, measure, driverStart, model, poolInfos, callback);
     })
             .detach();
 
@@ -214,35 +255,69 @@ Return<ErrorStatus> executeBase(const Request& request, const Model& model,
 
 Return<ErrorStatus> SamplePreparedModel::execute(const Request& request,
                                                  const sp<V1_0::IExecutionCallback>& callback) {
-    return executeBase(request, mModel, mPoolInfos, callback);
+    return executeBase(request, MeasureTiming::NO, mModel, mPoolInfos, callback);
 }
 
-Return<ErrorStatus> SamplePreparedModel::execute_1_2(const Request& request,
+Return<ErrorStatus> SamplePreparedModel::execute_1_2(const Request& request, MeasureTiming measure,
                                                      const sp<V1_2::IExecutionCallback>& callback) {
-    return executeBase(request, mModel, mPoolInfos, callback);
+    return executeBase(request, measure, mModel, mPoolInfos, callback);
 }
 
-Return<ErrorStatus> SamplePreparedModel::executeSynchronously(const Request& request) {
+Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
+                                                       MeasureTiming measure,
+                                                       executeSynchronously_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SampleDriver::executeSynchronously");
     VLOG(DRIVER) << "executeSynchronously(" << SHOW_IF_DEBUG(toString(request)) << ")";
+
+    time_point driverStart, driverEnd, deviceStart, deviceEnd;
+    if (measure == MeasureTiming::YES) driverStart = now();
+
     if (!validateRequest(request, mModel)) {
-        return ErrorStatus::INVALID_ARGUMENT;
+        cb(ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
+        return Void();
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
                         "SampleDriver::executeSynchronously");
     std::vector<RunTimePoolInfo> requestPoolInfos;
     if (!setRunTimePoolInfosFromHidlMemories(&requestPoolInfos, request.pools)) {
-        return ErrorStatus::GENERAL_FAILURE;
+        cb(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+        return Void();
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                         "SampleDriver::executeSynchronously");
     CpuExecutor executor;
+    if (measure == MeasureTiming::YES) deviceStart = now();
     int n = executor.run(mModel, request, mPoolInfos, requestPoolInfos);
+    if (measure == MeasureTiming::YES) deviceEnd = now();
     VLOG(DRIVER) << "executor.run returned " << n;
-    return n == ANEURALNETWORKS_NO_ERROR ? ErrorStatus::NONE : ErrorStatus::GENERAL_FAILURE;
+    ErrorStatus executionStatus = convertResultCodeToErrorStatus(n);
+    hidl_vec<OutputShape> outputShapes = executor.getOutputShapes();
+    if (measure == MeasureTiming::YES && executionStatus == ErrorStatus::NONE) {
+        driverEnd = now();
+        Timing timing = {.timeOnDevice = uint64_t(microsecondsDuration(deviceEnd, deviceStart)),
+                         .timeInDriver = uint64_t(microsecondsDuration(driverEnd, driverStart))};
+        VLOG(DRIVER) << "executeSynchronously timing = " << toString(timing);
+        cb(executionStatus, outputShapes, timing);
+    } else {
+        cb(executionStatus, outputShapes, kNoTiming);
+    }
+    return Void();
+}
+
+Return<void> SamplePreparedModel::configureExecutionBurst(
+        const sp<V1_2::IBurstCallback>& /*callback*/,
+        const MQDescriptorSync<V1_2::FmqRequestDatum>& /*requestChannel*/,
+        const MQDescriptorSync<V1_2::FmqResultDatum>& /*resultChannel*/,
+        configureExecutionBurst_cb cb) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
+                 "SampleDriver::configureExecutionBurst");
+
+    // TODO in subsequent CL
+    cb(ErrorStatus::NONE, nullptr);
+    return Void();
 }
 
 } // namespace sample_driver

@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, tanh) {
             tanh::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, tanh_dynamic_output_shape) {
+    execute(tanh::CreateModel_dynamic_output_shape,
+            tanh::is_ignored_dynamic_output_shape,
+            tanh::get_examples_dynamic_output_shape());
+}
+
+#endif

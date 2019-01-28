@@ -29,8 +29,9 @@ bool depthwiseConvFloat16(const _Float16* inputData, const Shape& inputShape,
                           const _Float16* filterData, const Shape& filterShape,
                           const _Float16* biasData, const Shape& biasShape, int32_t paddingLeft,
                           int32_t paddingRight, int32_t paddingTop, int32_t paddingBottom,
-                          int32_t strideWidth, int32_t strideHeight, int32_t depthMultiplier,
-                          int32_t activation, _Float16* outputData, const Shape& outputShape) {
+                          int32_t strideWidth, int32_t strideHeight, int32_t dilationWidthFactor,
+                          int32_t dilationHeightFactor, int32_t depthMultiplier, int32_t activation,
+                          _Float16* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("depthwiseConvFloat16");
     std::vector<float> inputDataFloat32(getNumberOfElements(inputShape));
     convertFloat16ToFloat32(inputData, &inputDataFloat32);
@@ -42,7 +43,8 @@ bool depthwiseConvFloat16(const _Float16* inputData, const Shape& inputShape,
     std::vector<float> outputDataFloat32(getNumberOfElements(outputShape));
     depthwiseConvFloat32(inputDataFloat32.data(), inputShape, filterDataFloat32.data(), filterShape,
                          biasDataFloat32.data(), biasShape, paddingLeft, paddingRight, paddingTop,
-                         paddingBottom, strideWidth, strideHeight, depthMultiplier, activation,
+                         paddingBottom, strideWidth, strideHeight, dilationWidthFactor,
+                         dilationHeightFactor, depthMultiplier, activation,
                          outputDataFloat32.data(), outputShape);
 
     convertFloat32ToFloat16(outputDataFloat32, outputData);
@@ -64,6 +66,7 @@ bool depthwiseConvFloat32(const float* inputData, const Shape& inputShape, const
                           const Shape& filterShape, const float* biasData, const Shape& biasShape,
                           int32_t paddingLeft, int32_t paddingRight, int32_t paddingTop,
                           int32_t paddingBottom, int32_t strideWidth, int32_t strideHeight,
+                          int32_t dilationWidthFactor, int32_t dilationHeightFactor,
                           int32_t depthMultiplier, int32_t activation, float* outputData,
                           const Shape& outputShape) {
     NNTRACE_TRANS("depthwiseConvFloat32");
@@ -76,9 +79,10 @@ bool depthwiseConvFloat32(const float* inputData, const Shape& inputShape, const
     NNTRACE_COMP_SWITCH("optimized_ops::DepthwiseConv");
     tflite::optimized_ops::DepthwiseConv(
             inputData, convertShapeToDims(inputShape), filterData, convertShapeToDims(filterShape),
-            biasData, convertShapeToDims(biasShape), strideWidth, strideHeight, paddingWidth,
-            paddingHeight, depthMultiplier, output_activation_min, output_activation_max,
-            outputData, convertShapeToDims(outputShape));
+            biasData, convertShapeToDims(biasShape), strideWidth, strideHeight, dilationWidthFactor,
+            dilationHeightFactor, paddingWidth, paddingHeight, depthMultiplier,
+            output_activation_min, output_activation_max, outputData,
+            convertShapeToDims(outputShape));
 
     return true;
 }
@@ -87,8 +91,9 @@ bool depthwiseConvQuant8(const uint8_t* inputData, const Shape& inputShape,
                          const uint8_t* filterData, const Shape& filterShape,
                          const int32_t* biasData, const Shape& biasShape, int32_t paddingLeft,
                          int32_t paddingRight, int32_t paddingTop, int32_t paddingBottom,
-                         int32_t strideWidth, int32_t strideHeight, int32_t depthMultiplier,
-                         int32_t activation, uint8_t* outputData, const Shape& outputShape) {
+                         int32_t strideWidth, int32_t strideHeight, int32_t dilationWidthFactor,
+                         int32_t dilationHeightFactor, int32_t depthMultiplier, int32_t activation,
+                         uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("depthwiseConvQuant8");
 
     ANDROID_NN_DEPTHWISE_CONV_PARAMETERS
@@ -118,9 +123,10 @@ bool depthwiseConvQuant8(const uint8_t* inputData, const Shape& inputShape,
     tflite::optimized_ops::DepthwiseConv(
             inputData, convertShapeToDims(inputShape), inputOffset, filterData,
             convertShapeToDims(filterShape), filterOffset, biasData, convertShapeToDims(biasShape),
-            strideWidth, strideHeight, paddingWidth, paddingHeight, depthMultiplier, outputOffset,
-            output_multiplier, output_shift, output_activation_min, output_activation_max,
-            outputData, convertShapeToDims(outputShape));
+            strideWidth, strideHeight, dilationWidthFactor, dilationHeightFactor, paddingWidth,
+            paddingHeight, depthMultiplier, outputOffset, output_multiplier, output_shift,
+            output_activation_min, output_activation_max, outputData,
+            convertShapeToDims(outputShape));
 
     return true;
 }
@@ -131,6 +137,8 @@ bool depthwiseConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputS
                                    const Shape& biasShape, int32_t paddingLeft,
                                    int32_t paddingRight, int32_t paddingTop, int32_t paddingBottom,
                                    int32_t strideWidth, int32_t strideHeight,
+                                   int32_t dilationWidthFactor, int32_t dilationHeightFactor,
+
                                    int32_t depthMultiplier, int32_t activation, uint8_t* outputData,
                                    const Shape& outputShape) {
     NNTRACE_TRANS("depthwiseConvQuant8");
@@ -188,8 +196,10 @@ bool depthwiseConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputS
                         int32_t sum = 0.0f;
                         for (uint32_t i = 0; i < filterHeight; i++) {
                             for (uint32_t j = 0; j < filterWidth; j++) {
-                                int32_t hInput = hInputOrigin + static_cast<int32_t>(i);
-                                int32_t wInput = wInputOrigin + static_cast<int32_t>(j);
+                                int32_t hInput = hInputOrigin +
+                                                 dilationHeightFactor * static_cast<int32_t>(i);
+                                int32_t wInput = wInputOrigin +
+                                                 dilationWidthFactor * static_cast<int32_t>(j);
 
                                 if (hInput >= 0 && hInput < static_cast<int32_t>(inputHeight) &&
                                     wInput >= 0 && wInput < static_cast<int32_t>(inputWidth)) {

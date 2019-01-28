@@ -173,6 +173,93 @@ bool groupedConvQuant8(const uint8_t* inputData, const Shape& inputShape, const 
     return true;
 }
 
+bool groupedConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
+                                 const int8_t* filterData, const Shape& filterShape,
+                                 const float* filterScales, const int32_t* biasData,
+                                 const Shape& biasShape, int32_t padding_left,
+                                 int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
+                                 int32_t stride_width, int32_t stride_height, int32_t numGroups,
+                                 int32_t activation, uint8_t* outputData,
+                                 const Shape& outputShape) {
+    NNTRACE_TRANS("groupConvQuant8");
+    ANDROID_NN_GROUPED_CONV_PARAMETERS
+
+    int32_t inputOffset = -inputShape.offset;
+    int32_t outputOffset = outputShape.offset;
+
+    auto realMultiplier = std::vector<float>(outputDepth, .0f);
+    auto outputMultiplier = std::vector<int32_t>(outputDepth, 0);
+    auto outputShift = std::vector<int32_t>(outputDepth, 0);
+
+    for (int i = 0; i < outputDepth; ++i) {
+        Shape filterChannelShape = filterShape;
+        filterChannelShape.scale = filterScales[i];
+        Shape biasChannelShape = biasShape;
+        biasChannelShape.scale = filterScales[i] * inputShape.scale;
+
+        if (!GetQuantizedConvolutionMultipler(inputShape, filterChannelShape, biasChannelShape,
+                                              outputShape, &realMultiplier[i]) ||
+            !QuantizeMultiplierSmallerThanOne(realMultiplier[i], &outputMultiplier[i],
+                                              &outputShift[i])) {
+            return false;
+        }
+    }
+
+    int32_t output_activation_min = 0, output_activation_max = 0;
+    CalculateActivationRangeUint8(activation, outputShape, &output_activation_min,
+                                  &output_activation_max);
+
+    const uint8_t* inputBase = inputData;
+    uint8_t* outPtr = outputData;
+    for (uint32_t b = 0; b < numBatches; b++) {
+        for (uint32_t h = 0; h < outputHeight; h++) {
+            for (uint32_t w = 0; w < outputWidth; w++) {
+                const int8_t* filterBase = filterData;
+                for (uint32_t g = 0; g < numGroups; g++) {
+                    for (uint32_t d = 0; d < outputGroupDepth; d++) {
+                        int32_t wInputOrigin =
+                                static_cast<int32_t>(w) * stride_width - padding_left;
+                        int32_t hInputOrigin =
+                                static_cast<int32_t>(h) * stride_height - padding_top;
+                        int32_t sum = 0.0f;
+                        for (uint32_t i = 0; i < filterHeight; i++) {
+                            for (uint32_t j = 0; j < filterWidth; j++) {
+                                for (uint32_t k = 0; k < filterDepth; k++) {
+                                    int32_t hInput = hInputOrigin + static_cast<int32_t>(i);
+                                    int32_t wInput = wInputOrigin + static_cast<int32_t>(j);
+                                    uint32_t dInput = filterDepth * g + k;
+                                    if (hInput >= 0 && hInput < static_cast<int32_t>(inputHeight) &&
+                                        wInput >= 0 && wInput < static_cast<int32_t>(inputWidth)) {
+                                        uint32_t filterIndex =
+                                                i * filterWidth * filterDepth + j * filterDepth + k;
+                                        uint32_t inputIndex = hInput * inputWidth * inputDepth +
+                                                              wInput * inputDepth + dInput;
+                                        sum += (static_cast<int32_t>(filterBase[filterIndex])) *
+                                               (static_cast<int32_t>(inputBase[inputIndex]) +
+                                                inputOffset);
+                                    }
+                                }
+                            }
+                        }
+                        int channelIndex = g * outputGroupDepth + d;
+                        sum += biasData[channelIndex];
+                        sum = tflite::MultiplyByQuantizedMultiplier(
+                                sum, outputMultiplier[channelIndex], -outputShift[channelIndex]);
+                        sum += outputOffset;
+                        sum = std::max(std::min(sum, output_activation_max), output_activation_min);
+                        outPtr[d] = static_cast<uint8_t>(sum);
+                        filterBase += filterHeight * filterWidth * filterDepth;
+                    }
+                    outPtr += outputGroupDepth;
+                }
+            }
+        }
+        inputBase += inputHeight * inputWidth * inputDepth;
+    }
+
+    return true;
+}
+
 bool groupedConvFloat16(const _Float16* inputData, const Shape& inputShape,
                         const _Float16* filterData, const Shape& filterShape,
                         const _Float16* biasData, const Shape& biasShape, int32_t padding_left,

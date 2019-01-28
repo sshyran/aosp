@@ -47,7 +47,12 @@ using WrapperModel = nn::test_wrapper::Model;
 using WrapperOperandType = nn::test_wrapper::OperandType;
 using WrapperType = nn::test_wrapper::Type;
 
+template <typename T>
+using MQDescriptorSync = ::android::hardware::MQDescriptorSync<T>;
+
 namespace {
+
+const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
 // Wraps an V1_2::IPreparedModel to allow dummying up the execution status.
 class TestPreparedModel12 : public V1_2::IPreparedModel {
@@ -72,23 +77,42 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
         }
     }
 
-    Return<ErrorStatus> execute_1_2(const Request& request,
+    Return<ErrorStatus> execute_1_2(const Request& request, MeasureTiming measure,
                                     const sp<V1_2::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
-            return mPreparedModelV1_2->execute_1_2(request, callback);
+            return mPreparedModelV1_2->execute_1_2(request, measure, callback);
         } else {
-            callback->notify_1_2(mErrorStatus);
+            callback->notify_1_2(mErrorStatus, {}, kBadTiming);
             return ErrorStatus::NONE;
         }
     }
 
-    Return<ErrorStatus> executeSynchronously(const Request& request) override {
+    Return<void> executeSynchronously(const Request& request, MeasureTiming measure,
+                                      executeSynchronously_cb cb) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
-            return mPreparedModelV1_2->executeSynchronously(request);
+            return mPreparedModelV1_2->executeSynchronously(
+                    request, measure,
+                    [&cb](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
+                          const Timing& timing) { cb(error, outputShapes, timing); });
         } else {
-            return mErrorStatus;
+            cb(mErrorStatus, {}, kBadTiming);
+            return Void();
+        }
+    }
+
+    Return<void> configureExecutionBurst(
+            const sp<V1_2::IBurstCallback>& callback,
+            const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
+            const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
+            configureExecutionBurst_cb cb) override {
+        if (mErrorStatus == ErrorStatus::NONE) {
+            return mPreparedModelV1_2->configureExecutionBurst(callback, requestChannel,
+                                                               resultChannel, cb);
+        } else {
+            cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
+            return Void();
         }
     }
 
@@ -341,7 +365,7 @@ protected:
     float mOutputBuffer;
     const float kOutputBufferExpected = 3;
 
-private:
+   private:
     static WrapperModel makeModel() {
         static const WrapperOperandType tensorType(WrapperType::TENSOR_FLOAT32, { 1 });
 
@@ -370,6 +394,7 @@ template<class DriverClass> void ExecutionTestTemplate<DriverClass>::TestWait() 
         if (kExpectResult == Result::NO_ERROR) {
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
         }
+        std::vector<uint32_t> dimensions;
     }
     {
         SCOPED_TRACE("compute");
@@ -382,16 +407,12 @@ template<class DriverClass> void ExecutionTestTemplate<DriverClass>::TestWait() 
     }
 }
 
-auto kTestValues = ::testing::Values(std::make_tuple(ErrorStatus::NONE,
-                                                     Result::NO_ERROR),
-                                     std::make_tuple(ErrorStatus::DEVICE_UNAVAILABLE,
-                                                     Result::OP_FAILED),
-                                     std::make_tuple(ErrorStatus::GENERAL_FAILURE,
-                                                     Result::OP_FAILED),
-                                     std::make_tuple(ErrorStatus::OUTPUT_INSUFFICIENT_SIZE,
-                                                     Result::OP_FAILED),
-                                     std::make_tuple(ErrorStatus::INVALID_ARGUMENT,
-                                                     Result::BAD_DATA));
+auto kTestValues = ::testing::Values(
+        std::make_tuple(ErrorStatus::NONE, Result::NO_ERROR),
+        std::make_tuple(ErrorStatus::DEVICE_UNAVAILABLE, Result::UNAVAILABLE_DEVICE),
+        std::make_tuple(ErrorStatus::GENERAL_FAILURE, Result::OP_FAILED),
+        std::make_tuple(ErrorStatus::OUTPUT_INSUFFICIENT_SIZE, Result::OUTPUT_INSUFFICIENT_SIZE),
+        std::make_tuple(ErrorStatus::INVALID_ARGUMENT, Result::BAD_DATA));
 
 class ExecutionTest12 : public ExecutionTestTemplate<TestDriver12> {};
 TEST_P(ExecutionTest12, Wait) {

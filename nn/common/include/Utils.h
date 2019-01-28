@@ -28,10 +28,10 @@ namespace android {
 namespace nn {
 
 // The number of data types (OperandCode) defined in NeuralNetworks.h.
-const int kNumberOfDataTypes = 12;
+const int kNumberOfDataTypes = 13;
 
 // The number of operation types (OperationCode) defined in NeuralNetworks.h.
-const int kNumberOfOperationTypes = 98;
+const int kNumberOfOperationTypes = 94;
 
 // The number of execution preferences defined in NeuralNetworks.h.
 const int kNumberOfPreferences = 3;
@@ -88,7 +88,8 @@ void initVLogMask();
     } while (0)
 
 // Returns the amount of space needed to store a value of the specified
-// dimensions and type.
+// dimensions and type. For a tensor with at least one
+// unspecified dimension, returns zero.
 uint32_t sizeOfData(OperandType type, const std::vector<uint32_t>& dimensions);
 
 // Returns the amount of space needed to store a value of the dimensions and
@@ -98,10 +99,10 @@ inline uint32_t sizeOfData(const Operand& operand) {
 }
 
 // Returns the name of the operation type in ASCII.
-const char* getOperationName(OperationType opCode);
+std::string getOperationName(OperationType opCode);
 
 // Returns the name of the operand type in ASCII.
-const char* getOperandTypeName(OperandType type);
+std::string getOperandTypeName(OperandType type);
 
 // Memory is unmapped.
 // Memory is reference counted by hidl_memory instances, and is deallocated

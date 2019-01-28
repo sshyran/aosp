@@ -27,6 +27,8 @@ namespace android {
 namespace nn {
 namespace sample_driver {
 
+using ::android::hardware::MQDescriptorSync;
+
 // Base class used to create sample drivers for the NN HAL.  This class
 // provides some implementation of the more common functions.
 //
@@ -38,6 +40,7 @@ public:
     ~SampleDriver() override {}
     Return<void> getCapabilities(getCapabilities_cb cb) override;
     Return<void> getVersionString(getVersionString_cb cb) override;
+    Return<void> getType(getType_cb cb) override;
     Return<void> getSupportedOperations(const V1_0::Model& model,
                                         getSupportedOperations_cb cb) override;
     Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
@@ -64,9 +67,15 @@ public:
     bool initialize();
     Return<ErrorStatus> execute(const Request& request,
                                 const sp<V1_0::IExecutionCallback>& callback) override;
-    Return<ErrorStatus> execute_1_2(const Request& request,
+    Return<ErrorStatus> execute_1_2(const Request& request, MeasureTiming measure,
                                     const sp<V1_2::IExecutionCallback>& callback) override;
-    Return<ErrorStatus> executeSynchronously(const Request& request) override;
+    Return<void> executeSynchronously(const Request& request, MeasureTiming measure,
+                                      executeSynchronously_cb cb) override;
+    Return<void> configureExecutionBurst(
+            const sp<V1_2::IBurstCallback>& callback,
+            const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
+            const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
+            configureExecutionBurst_cb cb) override;
 
    private:
     Model mModel;

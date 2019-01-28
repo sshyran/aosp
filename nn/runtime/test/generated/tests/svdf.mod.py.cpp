@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, svdf) {
             svdf::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, svdf_dynamic_output_shape) {
+    execute(svdf::CreateModel_dynamic_output_shape,
+            svdf::is_ignored_dynamic_output_shape,
+            svdf::get_examples_dynamic_output_shape());
+}
+
+#endif

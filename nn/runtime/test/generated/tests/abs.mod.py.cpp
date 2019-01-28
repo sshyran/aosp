@@ -27,3 +27,27 @@ TEST_F(GeneratedTests, abs_float16) {
             abs::get_examples_float16());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, abs_dynamic_output_shape) {
+    execute(abs::CreateModel_dynamic_output_shape,
+            abs::is_ignored_dynamic_output_shape,
+            abs::get_examples_dynamic_output_shape());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, abs_dynamic_output_shape_relaxed) {
+    execute(abs::CreateModel_dynamic_output_shape_relaxed,
+            abs::is_ignored_dynamic_output_shape_relaxed,
+            abs::get_examples_dynamic_output_shape_relaxed());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, abs_dynamic_output_shape_float16) {
+    execute(abs::CreateModel_dynamic_output_shape_float16,
+            abs::is_ignored_dynamic_output_shape_float16,
+            abs::get_examples_dynamic_output_shape_float16());
+}
+
+#endif

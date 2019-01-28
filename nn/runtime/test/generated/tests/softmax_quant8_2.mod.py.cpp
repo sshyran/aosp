@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, softmax_quant8_2) {
             softmax_quant8_2::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, softmax_quant8_2_dynamic_output_shape) {
+    execute(softmax_quant8_2::CreateModel_dynamic_output_shape,
+            softmax_quant8_2::is_ignored_dynamic_output_shape,
+            softmax_quant8_2::get_examples_dynamic_output_shape());
+}
+
+#endif

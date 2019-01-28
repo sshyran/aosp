@@ -66,6 +66,7 @@ static bool validateOperandExtraParams(const V1_2::Operand& operand, uint32_t in
         case OperandType::TENSOR_FLOAT16:
         case OperandType::TENSOR_INT32:
         case OperandType::TENSOR_QUANT8_ASYMM:
+        case OperandType::TENSOR_QUANT16_ASYMM:
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_BOOL8:
             NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
@@ -112,7 +113,7 @@ static bool validateOperandExtraParams(const V1_2::Operand& operand, uint32_t in
 template <typename VersionedOperand>
 static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                              const hidl_vec<uint8_t>& operandValues,
-                             const hidl_vec<hidl_memory>& pools) {
+                             const hidl_vec<hidl_memory>& pools, bool allowUnspecifiedRank) {
     uint32_t index = 0;
     MemoryAccessVerifier poolVerifier(pools);
     for (auto& versionedOperand : operands) {
@@ -144,11 +145,14 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::TENSOR_FLOAT32:
             case OperandType::TENSOR_INT32:
             case OperandType::TENSOR_QUANT8_ASYMM:
+            case OperandType::TENSOR_QUANT16_ASYMM:
             case OperandType::TENSOR_QUANT16_SYMM:
             case OperandType::TENSOR_BOOL8:
             case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
             case OperandType::TENSOR_OEM_BYTE: {
-                if (operand.dimensions.size() == 0) {
+                if ((!allowUnspecifiedRank || operand.lifetime == OperandLifeTime::CONSTANT_COPY ||
+                     operand.lifetime == OperandLifeTime::CONSTANT_REFERENCE) &&
+                    operand.dimensions.size() == 0) {
                     LOG(ERROR) << "Operand " << index << ": Tensor has dimensions of rank 0";
                     return false;
                 }
@@ -192,12 +196,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                 }
                 break;
             case OperandType::TENSOR_QUANT8_ASYMM:
-                if (operand.scale <= 0.f) {
-                    LOG(ERROR) << "Operand " << index << ": Operand of type "
-                               << getOperandTypeName(operand.type) << " with a non-positive scale";
-                    return false;
-                }
-                break;
+            case OperandType::TENSOR_QUANT16_ASYMM:
             case OperandType::TENSOR_QUANT16_SYMM:
                 if (operand.scale <= 0.f) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
@@ -236,6 +235,14 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with an invalid zeroPoint "
                                << operand.zeroPoint << ", must be in range [0, 255]";
+                    return false;
+                }
+                break;
+            case OperandType::TENSOR_QUANT16_ASYMM:
+                if (operand.zeroPoint < 0 || operand.zeroPoint > 65535) {
+                    LOG(ERROR) << "Operand " << index << ": Operand of type "
+                               << getOperandTypeName(operand.type) << " with an invalid zeroPoint "
+                               << operand.zeroPoint << ", must be in range [0, 65535]";
                     return false;
                 }
                 break;
@@ -386,7 +393,8 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
 static bool validatePools(const hidl_vec<hidl_memory>& pools) {
     for (const hidl_memory& memory : pools) {
         const auto& name = memory.name();
-        if (name != "ashmem" && name != "mmap_fd") {
+        if (name != "ashmem" && name != "mmap_fd" && name != "hardware_buffer_blob" &&
+            name != "hardware_buffer") {
             LOG(ERROR) << "Unsupported memory type " << name;
             return false;
         }
@@ -424,8 +432,8 @@ static bool validateModelInputOutputs(const hidl_vec<uint32_t> indexes,
     return true;
 }
 
-template<typename VersionedModel>
-static bool validateModelVersioned(const VersionedModel& model) {
+template <typename VersionedModel>
+static bool validateModelVersioned(const VersionedModel& model, bool allowUnspecifiedRank) {
     NNTRACE_FULL(NNTRACE_LAYER_UTILITY, NNTRACE_PHASE_UNSPECIFIED,
                  "validateModelVersioned");
     if (model.operations.size() == 0 || model.operands.size() == 0) {
@@ -435,7 +443,8 @@ static bool validateModelVersioned(const VersionedModel& model) {
     // We only need versioned operands for their validation. For all the other
     // validations we can use operands upcasted to the latest version.
     const hidl_vec<Operand> latestVersionOperands = convertToV1_2(model.operands);
-    return (validateOperands(model.operands, model.operandValues, model.pools) &&
+    return (validateOperands(model.operands, model.operandValues, model.pools,
+                             allowUnspecifiedRank) &&
             validateOperations(model.operations, latestVersionOperands) &&
             validateModelInputOutputs(model.inputIndexes, latestVersionOperands,
                                       OperandLifeTime::MODEL_INPUT) &&
@@ -445,15 +454,15 @@ static bool validateModelVersioned(const VersionedModel& model) {
 }
 
 bool validateModel(const V1_0::Model& model) {
-    return validateModelVersioned(model);
+    return validateModelVersioned(model, /*allowUnspecifiedRank=*/false);
 }
 
 bool validateModel(const V1_1::Model& model) {
-    return validateModelVersioned(model);
+    return validateModelVersioned(model, /*allowUnspecifiedRank=*/false);
 }
 
 bool validateModel(const V1_2::Model& model) {
-    return validateModelVersioned(model);
+    return validateModelVersioned(model, /*allowUnspecifiedRank=*/true);
 }
 
 // Validates the arguments of a request. type is either "input" or "output" and is used
@@ -462,7 +471,8 @@ bool validateModel(const V1_2::Model& model) {
 static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArguments,
                                      const hidl_vec<uint32_t>& operandIndexes,
                                      const hidl_vec<Operand>& operands,
-                                     const hidl_vec<hidl_memory>& pools, const char* type) {
+                                     const hidl_vec<hidl_memory>& pools, bool allowUnspecified,
+                                     const char* type) {
     MemoryAccessVerifier poolVerifier(pools);
     // The request should specify as many arguments as were described in the model.
     const size_t requestArgumentCount = requestArguments.size();
@@ -495,12 +505,14 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
             // If the argument specified a dimension, validate it.
             uint32_t rank = requestArgument.dimensions.size();
             if (rank == 0) {
-                // Validate that all the dimensions are specified in the model.
-                for (size_t i = 0; i < operand.dimensions.size(); i++) {
-                    if (operand.dimensions[i] == 0) {
-                        LOG(ERROR) << "Model has dimension " << i
-                                   << " set to 0 but the request does specify the dimension.";
-                        return false;
+                if (!allowUnspecified) {
+                    // Validate that all the dimensions are specified in the model.
+                    for (size_t i = 0; i < operand.dimensions.size(); i++) {
+                        if (operand.dimensions[i] == 0) {
+                            LOG(ERROR) << "Model has dimension " << i
+                                       << " set to 0 but the request does specify the dimension.";
+                            return false;
+                        }
                     }
                 }
             } else {
@@ -520,7 +532,7 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
                                    << " different than the model's " << operand.dimensions[i];
                         return false;
                     }
-                    if (requestArgument.dimensions[i] == 0) {
+                    if (requestArgument.dimensions[i] == 0 && !allowUnspecified) {
                         LOG(ERROR) << "Request " << type << " " << requestArgumentIndex
                                    << " has dimension " << i << " of zero";
                         return false;
@@ -532,25 +544,28 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
     return true;
 }
 
-template<typename VersionedModel>
-static bool validateRequestVersioned(const Request& request, const VersionedModel& model) {
+template <typename VersionedModel>
+static bool validateRequestVersioned(const Request& request, const VersionedModel& model,
+                                     bool allowDynamicOutputShape) {
     return (validateRequestArguments(request.inputs, model.inputIndexes,
-                                     convertToV1_2(model.operands), request.pools, "input") &&
+                                     convertToV1_2(model.operands), request.pools,
+                                     /*allowUnspecified=*/false, "input") &&
             validateRequestArguments(request.outputs, model.outputIndexes,
-                                     convertToV1_2(model.operands), request.pools, "output") &&
+                                     convertToV1_2(model.operands), request.pools,
+                                     /*allowUnspecified=*/allowDynamicOutputShape, "output") &&
             validatePools(request.pools));
 }
 
 bool validateRequest(const Request& request, const V1_0::Model& model) {
-    return validateRequestVersioned(request, model);
+    return validateRequestVersioned(request, model, /*allowDynamicOutputShape=*/false);
 }
 
 bool validateRequest(const Request& request, const V1_1::Model& model) {
-    return validateRequestVersioned(request, model);
+    return validateRequestVersioned(request, model, /*allowDynamicOutputShape=*/false);
 }
 
 bool validateRequest(const Request& request, const V1_2::Model& model) {
-    return validateRequestVersioned(request, model);
+    return validateRequestVersioned(request, model, /*allowDynamicOutputShape=*/true);
 }
 
 bool validateExecutionPreference(ExecutionPreference preference) {
@@ -586,6 +601,7 @@ bool validOperandType(V1_2::OperandType operandType) {
         case V1_2::OperandType::TENSOR_FLOAT32:
         case V1_2::OperandType::TENSOR_INT32:
         case V1_2::OperandType::TENSOR_QUANT8_ASYMM:
+        case V1_2::OperandType::TENSOR_QUANT16_ASYMM:
         case V1_2::OperandType::TENSOR_QUANT16_SYMM:
         case V1_2::OperandType::TENSOR_BOOL8:
         case V1_2::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
