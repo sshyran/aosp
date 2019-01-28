@@ -1119,6 +1119,9 @@ TEST_F(ValidationTestInvalidCompilation, CreateExecutionWithInvalidCompilation) 
 }
 
 TEST_F(ValidationTestCompilationForDevices, ExecutionTiming) {
+    if (!mCompilation) {
+        return;
+    }
     ASSERT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_NO_ERROR);
 
     // Assume there's a single device.

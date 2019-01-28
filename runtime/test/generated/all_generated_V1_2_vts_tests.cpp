@@ -16289,6 +16289,398 @@ TEST_F(ValidationTest, dequantize_float16_dynamic_output_shape) {
 
 
 #endif
+// Generated from: detection_postprocess.mod.py.
+namespace detection_postprocess {
+// Generated detection_postprocess test
+#include "examples/detection_postprocess.example.cpp"
+// Generated model constructor
+#include "vts_models/detection_postprocess.model.cpp"
+} // namespace detection_postprocess
+
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_regular) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_regular,
+                           detection_postprocess::is_ignored_regular,
+                           detection_postprocess::get_examples_regular());
+}
+
+TEST_F(ValidationTest, detection_postprocess_regular) {
+  const Model model = detection_postprocess::createTestModel_regular();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_regular());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_regular_relaxed) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_regular_relaxed,
+                           detection_postprocess::is_ignored_regular_relaxed,
+                           detection_postprocess::get_examples_regular_relaxed());
+}
+
+TEST_F(ValidationTest, detection_postprocess_regular_relaxed) {
+  const Model model = detection_postprocess::createTestModel_regular_relaxed();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_regular_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_regular_float16) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_regular_float16,
+                           detection_postprocess::is_ignored_regular_float16,
+                           detection_postprocess::get_examples_regular_float16());
+}
+
+TEST_F(ValidationTest, detection_postprocess_regular_float16) {
+  const Model model = detection_postprocess::createTestModel_regular_float16();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_regular_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_regular_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_regular_dynamic_output_shape,
+                           detection_postprocess::is_ignored_regular_dynamic_output_shape,
+                           detection_postprocess::get_examples_regular_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_regular_dynamic_output_shape) {
+  const Model model = detection_postprocess::createTestModel_regular_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_regular_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_regular_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_regular_dynamic_output_shape_relaxed,
+                           detection_postprocess::is_ignored_regular_dynamic_output_shape_relaxed,
+                           detection_postprocess::get_examples_regular_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_regular_dynamic_output_shape_relaxed) {
+  const Model model = detection_postprocess::createTestModel_regular_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_regular_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_regular_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_regular_dynamic_output_shape_float16,
+                           detection_postprocess::is_ignored_regular_dynamic_output_shape_float16,
+                           detection_postprocess::get_examples_regular_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_regular_dynamic_output_shape_float16) {
+  const Model model = detection_postprocess::createTestModel_regular_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_regular_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, detection_postprocess) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel,
+                           detection_postprocess::is_ignored,
+                           detection_postprocess::get_examples());
+}
+
+TEST_F(ValidationTest, detection_postprocess) {
+  const Model model = detection_postprocess::createTestModel();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_relaxed) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_relaxed,
+                           detection_postprocess::is_ignored_relaxed,
+                           detection_postprocess::get_examples_relaxed());
+}
+
+TEST_F(ValidationTest, detection_postprocess_relaxed) {
+  const Model model = detection_postprocess::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_float16) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_float16,
+                           detection_postprocess::is_ignored_float16,
+                           detection_postprocess::get_examples_float16());
+}
+
+TEST_F(ValidationTest, detection_postprocess_float16) {
+  const Model model = detection_postprocess::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_dynamic_output_shape,
+                           detection_postprocess::is_ignored_dynamic_output_shape,
+                           detection_postprocess::get_examples_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_dynamic_output_shape) {
+  const Model model = detection_postprocess::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_dynamic_output_shape_relaxed,
+                           detection_postprocess::is_ignored_dynamic_output_shape_relaxed,
+                           detection_postprocess::get_examples_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_dynamic_output_shape_relaxed) {
+  const Model model = detection_postprocess::createTestModel_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_dynamic_output_shape_float16,
+                           detection_postprocess::is_ignored_dynamic_output_shape_float16,
+                           detection_postprocess::get_examples_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_dynamic_output_shape_float16) {
+  const Model model = detection_postprocess::createTestModel_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_2) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_2,
+                           detection_postprocess::is_ignored_2,
+                           detection_postprocess::get_examples_2());
+}
+
+TEST_F(ValidationTest, detection_postprocess_2) {
+  const Model model = detection_postprocess::createTestModel_2();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_relaxed_2) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_relaxed_2,
+                           detection_postprocess::is_ignored_relaxed_2,
+                           detection_postprocess::get_examples_relaxed_2());
+}
+
+TEST_F(ValidationTest, detection_postprocess_relaxed_2) {
+  const Model model = detection_postprocess::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_relaxed_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_float16_2) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_float16_2,
+                           detection_postprocess::is_ignored_float16_2,
+                           detection_postprocess::get_examples_float16_2());
+}
+
+TEST_F(ValidationTest, detection_postprocess_float16_2) {
+  const Model model = detection_postprocess::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_dynamic_output_shape_2) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_dynamic_output_shape_2,
+                           detection_postprocess::is_ignored_dynamic_output_shape_2,
+                           detection_postprocess::get_examples_dynamic_output_shape_2(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_dynamic_output_shape_2) {
+  const Model model = detection_postprocess::createTestModel_dynamic_output_shape_2();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_dynamic_output_shape_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_dynamic_output_shape_relaxed_2) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_dynamic_output_shape_relaxed_2,
+                           detection_postprocess::is_ignored_dynamic_output_shape_relaxed_2,
+                           detection_postprocess::get_examples_dynamic_output_shape_relaxed_2(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_dynamic_output_shape_relaxed_2) {
+  const Model model = detection_postprocess::createTestModel_dynamic_output_shape_relaxed_2();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_dynamic_output_shape_relaxed_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_dynamic_output_shape_float16_2) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_dynamic_output_shape_float16_2,
+                           detection_postprocess::is_ignored_dynamic_output_shape_float16_2,
+                           detection_postprocess::get_examples_dynamic_output_shape_float16_2(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_dynamic_output_shape_float16_2) {
+  const Model model = detection_postprocess::createTestModel_dynamic_output_shape_float16_2();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_dynamic_output_shape_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_3) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_3,
+                           detection_postprocess::is_ignored_3,
+                           detection_postprocess::get_examples_3());
+}
+
+TEST_F(ValidationTest, detection_postprocess_3) {
+  const Model model = detection_postprocess::createTestModel_3();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_relaxed_3) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_relaxed_3,
+                           detection_postprocess::is_ignored_relaxed_3,
+                           detection_postprocess::get_examples_relaxed_3());
+}
+
+TEST_F(ValidationTest, detection_postprocess_relaxed_3) {
+  const Model model = detection_postprocess::createTestModel_relaxed_3();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_relaxed_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, detection_postprocess_float16_3) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_float16_3,
+                           detection_postprocess::is_ignored_float16_3,
+                           detection_postprocess::get_examples_float16_3());
+}
+
+TEST_F(ValidationTest, detection_postprocess_float16_3) {
+  const Model model = detection_postprocess::createTestModel_float16_3();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_float16_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_dynamic_output_shape_3) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_dynamic_output_shape_3,
+                           detection_postprocess::is_ignored_dynamic_output_shape_3,
+                           detection_postprocess::get_examples_dynamic_output_shape_3(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_dynamic_output_shape_3) {
+  const Model model = detection_postprocess::createTestModel_dynamic_output_shape_3();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_dynamic_output_shape_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_dynamic_output_shape_relaxed_3) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_dynamic_output_shape_relaxed_3,
+                           detection_postprocess::is_ignored_dynamic_output_shape_relaxed_3,
+                           detection_postprocess::get_examples_dynamic_output_shape_relaxed_3(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_dynamic_output_shape_relaxed_3) {
+  const Model model = detection_postprocess::createTestModel_dynamic_output_shape_relaxed_3();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_dynamic_output_shape_relaxed_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, detection_postprocess_dynamic_output_shape_float16_3) {
+  generated_tests::Execute(device,
+                           detection_postprocess::createTestModel_dynamic_output_shape_float16_3,
+                           detection_postprocess::is_ignored_dynamic_output_shape_float16_3,
+                           detection_postprocess::get_examples_dynamic_output_shape_float16_3(), true);
+}
+
+TEST_F(ValidationTest, detection_postprocess_dynamic_output_shape_float16_3) {
+  const Model model = detection_postprocess::createTestModel_dynamic_output_shape_float16_3();
+  const std::vector<Request> requests = createRequests(detection_postprocess::get_examples_dynamic_output_shape_float16_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
 // Generated from: div_broadcast_float16.mod.py.
 namespace div_broadcast_float16 {
 // Generated div_broadcast_float16 test
