@@ -59,6 +59,7 @@ const OperationRegistration* register_RSQRT();
 const OperationRegistration* register_SELECT();
 const OperationRegistration* register_SIN();
 const OperationRegistration* register_SQRT();
+const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_LSTM();
 const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_RNN();
 
 OperationResolver::OperationResolver() {
@@ -97,6 +98,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_SELECT());
     registerOperation(register_SIN());
     registerOperation(register_SQRT());
+    registerOperation(register_UNIDIRECTIONAL_SEQUENCE_LSTM());
     registerOperation(register_UNIDIRECTIONAL_SEQUENCE_RNN());
 }
 
