@@ -1900,6 +1900,172 @@ TEST(OperationValidationTest, LSTM_V1_2) {
     lstmTestV1_2(ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
+void lstmBidirectionalSequence(int32_t operandCode) {
+    uint32_t oneDimensional[1] = {5};
+    uint32_t twoDimensional[2] = {5, 5};
+    uint32_t threeDimensional[3] = {5, 5, 5};
+    ANeuralNetworksOperandType floatTensor1D = {
+            .type = operandCode,
+            .dimensionCount = 1,
+            .dimensions = oneDimensional,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+    };
+    ANeuralNetworksOperandType floatTensor2D = {
+            .type = operandCode,
+            .dimensionCount = 2,
+            .dimensions = twoDimensional,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+    };
+    ANeuralNetworksOperandType floatTensor3D = {
+            .type = operandCode,
+            .dimensionCount = 3,
+            .dimensions = threeDimensional,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+    };
+    ANeuralNetworksOperandType intScalar = {
+            .type = ANEURALNETWORKS_INT32,
+            .dimensionCount = 0,
+            .dimensions = nullptr,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+    };
+    ANeuralNetworksOperandType floatScalar = {
+            .type = operandCode == ANEURALNETWORKS_TENSOR_FLOAT32 ? ANEURALNETWORKS_FLOAT32
+                                                                  : ANEURALNETWORKS_FLOAT16,
+            .dimensionCount = 0,
+            .dimensions = nullptr,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+    };
+
+    ANeuralNetworksOperandType input = floatTensor3D;
+    ANeuralNetworksOperandType inputToInputFw = floatTensor2D;
+    ANeuralNetworksOperandType inputToForgetFw = floatTensor2D;
+    ANeuralNetworksOperandType inputToCellFw = floatTensor2D;
+    ANeuralNetworksOperandType inputToOutputFw = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToInputFw = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToForgetFw = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToCellFw = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToOutputFw = floatTensor2D;
+    ANeuralNetworksOperandType cellToInputFw = floatTensor1D;
+    ANeuralNetworksOperandType cellToForgetFw = floatTensor1D;
+    ANeuralNetworksOperandType cellToOutputFw = floatTensor1D;
+    ANeuralNetworksOperandType inputGateBiasFw = floatTensor1D;
+    ANeuralNetworksOperandType forgetGateBiasFw = floatTensor1D;
+    ANeuralNetworksOperandType cellBiasFw = floatTensor1D;
+    ANeuralNetworksOperandType outputGateBiasFw = floatTensor1D;
+    ANeuralNetworksOperandType projWeightsFw = floatTensor2D;
+    ANeuralNetworksOperandType projBiasFw = floatTensor1D;
+    ANeuralNetworksOperandType outputStateInFw = floatTensor2D;
+    ANeuralNetworksOperandType cellStateInFw = floatTensor2D;
+    ANeuralNetworksOperandType inputToInputBw = floatTensor2D;
+    ANeuralNetworksOperandType inputToForgetBw = floatTensor2D;
+    ANeuralNetworksOperandType inputToCellBw = floatTensor2D;
+    ANeuralNetworksOperandType inputToOutputBw = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToInputBw = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToForgetBw = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToCellBw = floatTensor2D;
+    ANeuralNetworksOperandType recurrentToOutputBw = floatTensor2D;
+    ANeuralNetworksOperandType cellToInputBw = floatTensor1D;
+    ANeuralNetworksOperandType cellToForgetBw = floatTensor1D;
+    ANeuralNetworksOperandType cellToOutputBw = floatTensor1D;
+    ANeuralNetworksOperandType inputGateBiasBw = floatTensor1D;
+    ANeuralNetworksOperandType forgetGateBiasBw = floatTensor1D;
+    ANeuralNetworksOperandType cellBiasBw = floatTensor1D;
+    ANeuralNetworksOperandType outputGateBiasBw = floatTensor1D;
+    ANeuralNetworksOperandType projWeightsBw = floatTensor2D;
+    ANeuralNetworksOperandType projBiasBw = floatTensor1D;
+    ANeuralNetworksOperandType outputStateInBw = floatTensor2D;
+    ANeuralNetworksOperandType cellStateInBw = floatTensor2D;
+    ANeuralNetworksOperandType auxInput = floatTensor3D;
+    ANeuralNetworksOperandType auxInputToInputFw = floatTensor2D;
+    ANeuralNetworksOperandType auxInputToForgetFw = floatTensor2D;
+    ANeuralNetworksOperandType auxInputToCellFw = floatTensor2D;
+    ANeuralNetworksOperandType auxInputToOutputFw = floatTensor2D;
+    ANeuralNetworksOperandType auxInputToInputBw = floatTensor2D;
+    ANeuralNetworksOperandType auxInputToForgetBw = floatTensor2D;
+    ANeuralNetworksOperandType auxInputToCellBw = floatTensor2D;
+    ANeuralNetworksOperandType auxInputToOutputBw = floatTensor2D;
+    ANeuralNetworksOperandType activation = intScalar;
+    ANeuralNetworksOperandType clipCellState = floatScalar;
+    ANeuralNetworksOperandType clipProjLayer = floatScalar;
+
+    ANeuralNetworksOperandType outputFw = floatTensor2D;
+    ANeuralNetworksOperandType outputBw = floatTensor2D;
+
+    OperationTestBase lstmTest(ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_LSTM,
+                               {
+                                       input,
+                                       inputToInputFw,
+                                       inputToForgetFw,
+                                       inputToCellFw,
+                                       inputToOutputFw,
+                                       recurrentToInputFw,
+                                       recurrentToForgetFw,
+                                       recurrentToCellFw,
+                                       recurrentToOutputFw,
+                                       cellToInputFw,
+                                       cellToForgetFw,
+                                       cellToOutputFw,
+                                       inputGateBiasFw,
+                                       forgetGateBiasFw,
+                                       cellBiasFw,
+                                       outputGateBiasFw,
+                                       projWeightsFw,
+                                       projBiasFw,
+                                       outputStateInFw,
+                                       cellStateInFw,
+                                       inputToInputBw,
+                                       inputToForgetBw,
+                                       inputToCellBw,
+                                       inputToOutputBw,
+                                       recurrentToInputBw,
+                                       recurrentToForgetBw,
+                                       recurrentToCellBw,
+                                       recurrentToOutputBw,
+                                       cellToInputBw,
+                                       cellToForgetBw,
+                                       cellToOutputBw,
+                                       inputGateBiasBw,
+                                       forgetGateBiasBw,
+                                       cellBiasBw,
+                                       outputGateBiasBw,
+                                       projWeightsBw,
+                                       projBiasBw,
+                                       outputStateInBw,
+                                       cellStateInBw,
+                                       auxInput,
+                                       auxInputToInputFw,
+                                       auxInputToForgetFw,
+                                       auxInputToCellFw,
+                                       auxInputToOutputFw,
+                                       auxInputToInputBw,
+                                       auxInputToForgetBw,
+                                       auxInputToCellBw,
+                                       auxInputToOutputBw,
+                                       activation,
+                                       clipCellState,
+                                       clipProjLayer,
+                               },
+                               {
+                                       outputFw,
+                                       outputBw,
+                               });
+
+    EXPECT_TRUE(lstmTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(lstmTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(lstmTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(lstmTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, LSTM_BIDIRECTIONAL_SEQUENCE) {
+    lstmBidirectionalSequence(ANEURALNETWORKS_TENSOR_FLOAT32);
+    lstmBidirectionalSequence(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 TEST(OperationValidationTest, RANDOM_MULTINOMIAL_float16) {
     uint32_t twoDimensional[2] = {5, 5};
     ANeuralNetworksOperandType floatTensor2D = {.type = ANEURALNETWORKS_TENSOR_FLOAT16,
