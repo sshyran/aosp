@@ -1823,6 +1823,18 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 }
             }
         } break;
+        case OperationType::BIDIRECTIONAL_SEQUENCE_LSTM: {
+            RunTimeOperandInfo& fwOutput =
+                    mOperands[outs[BidirectionalSequenceLSTM::kFwOutputTensor]];
+            RunTimeOperandInfo& bwOutput =
+                    mOperands[outs[BidirectionalSequenceLSTM::kBwOutputTensor]];
+            Shape fwOutputShape, bwOutputShape;
+
+            BidirectionalSequenceLSTM lstm(operation, mOperands);
+            success = lstm.Prepare(operation, mOperands, &fwOutputShape, &bwOutputShape) &&
+                      setInfoAndAllocateIfNeeded(&fwOutput, fwOutputShape, &result) &&
+                      setInfoAndAllocateIfNeeded(&bwOutput, bwOutputShape, &result) && lstm.Eval();
+        } break;
         case OperationType::LSTM: {
             RunTimeOperandInfo& scratch = mOperands[outs[LSTMCell::kScratchBufferTensor]];
             RunTimeOperandInfo& outputStateOut = mOperands[outs[LSTMCell::kOutputStateOutTensor]];
