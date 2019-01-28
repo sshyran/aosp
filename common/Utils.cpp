@@ -1689,7 +1689,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
         }
         case ANEURALNETWORKS_RANDOM_MULTINOMIAL: {
             if (inputCount != 3 || outputCount != 1) {
-                logInvalidInOutNumber(2, 1);
+                logInvalidInOutNumber(3, 1);
                 return ANEURALNETWORKS_BAD_DATA;
             }
             OperandType inputType = operands[inputIndexes[0]].type;
