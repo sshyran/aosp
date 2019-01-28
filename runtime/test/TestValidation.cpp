@@ -20,6 +20,7 @@
 #include <android/sharedmem.h>
 #include <gtest/gtest.h>
 #include <sys/mman.h>
+#include <future>
 #include <string>
 
 // This file tests all the validations done by the Neural Networks API.
@@ -123,6 +124,20 @@ class ValidationTestExecution : public ValidationTestCompilation {
         ValidationTestCompilation::TearDown();
     }
     ANeuralNetworksExecution* mExecution = nullptr;
+};
+
+class ValidationTestBurst : public ValidationTestExecution {
+   protected:
+    virtual void SetUp() {
+        ValidationTestExecution::SetUp();
+
+        ASSERT_EQ(ANeuralNetworksBurst_create(mCompilation, &mBurst), ANEURALNETWORKS_NO_ERROR);
+    }
+    virtual void TearDown() {
+        ANeuralNetworksBurst_free(mBurst);
+        ValidationTestExecution::TearDown();
+    }
+    ANeuralNetworksBurst* mBurst = nullptr;
 };
 
 TEST_F(ValidationTest, CreateModel) {
@@ -883,6 +898,72 @@ TEST_F(ValidationTestExecution, GetOutputOperandRankAndDimensions) {
               ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(rank, expectedRank);
     EXPECT_EQ(dims[0], expectedDims);
+}
+
+TEST_F(ValidationTestBurst, BurstComputeNull) {
+    EXPECT_EQ(ANeuralNetworksExecution_burstCompute(mExecution, nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksExecution_burstCompute(nullptr, mBurst),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+}
+
+TEST_F(ValidationTestBurst, BurstComputeDifferentCompilations) {
+    ANeuralNetworksCompilation* secondCompilation;
+    ASSERT_EQ(ANeuralNetworksCompilation_create(mModel, &secondCompilation),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksCompilation_finish(secondCompilation), ANEURALNETWORKS_NO_ERROR);
+
+    ANeuralNetworksBurst* burst;
+    EXPECT_EQ(ANeuralNetworksBurst_create(secondCompilation, &burst), ANEURALNETWORKS_NO_ERROR);
+
+    EXPECT_EQ(ANeuralNetworksExecution_burstCompute(mExecution, burst), ANEURALNETWORKS_BAD_DATA);
+
+    ANeuralNetworksBurst_free(burst);
+    ANeuralNetworksCompilation_free(secondCompilation);
+}
+
+TEST_F(ValidationTestBurst, BurstComputeConcurrent) {
+    ANeuralNetworksExecution* secondExecution;
+    EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &secondExecution),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // set inputs of first execution
+    float inputA0 = 1.0f, inputA1 = 2.0f, outputA0;
+    int32_t inputA2 = 0;
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, nullptr, &inputA0, sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 1, nullptr, &inputA1, sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 2, nullptr, &inputA2, sizeof(int32_t)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 0, nullptr, &outputA0, sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // set inputs of second execution
+    float inputB0 = 1.0f, inputB1 = 2.0f, outputB0;
+    int32_t inputB2 = 0;
+    EXPECT_EQ(
+            ANeuralNetworksExecution_setInput(secondExecution, 0, nullptr, &inputB0, sizeof(float)),
+            ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(
+            ANeuralNetworksExecution_setInput(secondExecution, 1, nullptr, &inputB1, sizeof(float)),
+            ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(secondExecution, 2, nullptr, &inputB2,
+                                                sizeof(int32_t)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(secondExecution, 0, nullptr, &outputB0,
+                                                 sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // execute on the same burst concurrently
+    auto first = std::async(std::launch::async, [this] {
+        const int result = ANeuralNetworksExecution_burstCompute(mExecution, mBurst);
+        EXPECT_TRUE(result == ANEURALNETWORKS_BAD_STATE || result == ANEURALNETWORKS_NO_ERROR);
+    });
+    auto second = std::async(std::launch::async, [this, secondExecution] {
+        const int result = ANeuralNetworksExecution_burstCompute(secondExecution, mBurst);
+        EXPECT_TRUE(result == ANEURALNETWORKS_BAD_STATE || result == ANEURALNETWORKS_NO_ERROR);
+    });
 }
 
 TEST(ValidationTestIntrospection, GetNumDevices) {

@@ -353,7 +353,7 @@ class Compilation {
 
 class Execution {
    public:
-    Execution(const Compilation* compilation) {
+    Execution(const Compilation* compilation) : mCompilation(compilation->getHandle()) {
         int result = ANeuralNetworksExecution_create(compilation->getHandle(), &mExecution);
         if (result != 0) {
             // TODO Handle the error
@@ -375,6 +375,8 @@ class Execution {
     Execution& operator=(Execution&& other) {
         if (this != &other) {
             ANeuralNetworksExecution_free(mExecution);
+            mCompilation = other.mCompilation;
+            other.mCompilation = nullptr;
             mExecution = other.mExecution;
             other.mExecution = nullptr;
         }
@@ -413,6 +415,18 @@ class Execution {
     }
 
     Result compute() {
+        if (mComputeUsesBurstAPI) {
+            ANeuralNetworksBurst* burst = nullptr;
+            Result result = static_cast<Result>(ANeuralNetworksBurst_create(mCompilation, &burst));
+            if (result != Result::NO_ERROR) {
+                ANeuralNetworksBurst_free(burst);
+                return result;
+            }
+            result = static_cast<Result>(ANeuralNetworksExecution_burstCompute(mExecution, burst));
+            ANeuralNetworksBurst_free(burst);
+            return result;
+        }
+
         if (!mComputeUsesSychronousAPI) {
             ANeuralNetworksEvent* event = nullptr;
             Result result =
@@ -436,6 +450,8 @@ class Execution {
     // computation to complete.
     static void setComputeUsesSynchronousAPI(bool val) { mComputeUsesSychronousAPI = val; }
 
+    static void setComputeUsesBurstAPI(bool val) { mComputeUsesBurstAPI = val; }
+
     Result getOutputOperandDimensions(uint32_t index, std::vector<uint32_t>* dimensions) {
         uint32_t rank = 0;
         Result result = static_cast<Result>(
@@ -451,7 +467,11 @@ class Execution {
     }
 
    private:
+    ANeuralNetworksCompilation* mCompilation = nullptr;
     ANeuralNetworksExecution* mExecution = nullptr;
+
+    // Initialized to false in TestNeuralNetworksWrapper.cpp.
+    static bool mComputeUsesBurstAPI;
 
     // Initialized to true in TestNeuralNetworksWrapper.cpp.
     static bool mComputeUsesSychronousAPI;

@@ -40,7 +40,8 @@ using namespace android::nn::test_wrapper;
 // non-public DeviceManager::setSyncExecHal(); we assume the setting is always
 // true, and if we are asked to set it to false, we return 0 ("success") without
 // running tests.
-static int test(bool useCpuOnly, bool computeUsesSynchronousAPI, bool allowSyncExecHal = true) {
+static int test(bool useCpuOnly, bool computeUsesSynchronousAPI, bool allowSyncExecHal = true,
+                bool computeUsesBurstAPI = false) {
 #ifdef NNTEST_ONLY_PUBLIC_API
     if (useCpuOnly || !allowSyncExecHal) {
         return 0;
@@ -51,6 +52,7 @@ static int test(bool useCpuOnly, bool computeUsesSynchronousAPI, bool allowSyncE
 #endif
 
     Execution::setComputeUsesSynchronousAPI(computeUsesSynchronousAPI);
+    Execution::setComputeUsesBurstAPI(computeUsesBurstAPI);
 
     LOG(INFO) << "test(useCpuOnly = " << useCpuOnly
               << ", computeUsesSynchronousAPI = " << computeUsesSynchronousAPI
@@ -76,6 +78,14 @@ int main(int argc, char** argv) {
     // difference when useCpuOnly = true; we already ran test(true, *, true) above,
     // so there's no reason to run test(true, *, false) now.
     n |= test(false, false, false) | test(false, true, false);
+
+    // Now try execution using a burst.
+    //
+    // The burst path is off by default in these tests. This is the first case
+    // where it is turned on. Both "computeUsesSynchronousAPI" and
+    // "allowSyncExecHal" are irrelevant here because the burst path is separate
+    // from both.
+    n |= test(false, false, false, true);
 
     return n;
 }
