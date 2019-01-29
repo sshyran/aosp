@@ -102,6 +102,53 @@ class LSTMCell {
 
     static constexpr float kLayerNormEpsilon = 1e-8;
 
+    static bool LSTMEvalFloat32(
+            const LSTMParams& params, const float* input_buffer, const Shape& input_shape,
+            const float* input_to_input_weights_buffer, const float* input_to_forget_weights_buffer,
+            const float* input_to_cell_weights_buffer, const float* input_to_output_weights_buffer,
+            const Shape& input_to_output_weights_shape,
+            const float* recurrent_to_input_weights_buffer,
+            const float* recurrent_to_forget_weights_buffer,
+            const float* recurrent_to_cell_weights_buffer,
+            const float* recurrent_to_output_weights_buffer,
+            const Shape& recurrent_to_output_weights_shape,
+            const float* cell_to_input_weights_buffer, const float* cell_to_forget_weights_buffer,
+            const float* cell_to_output_weights_buffer, const float* input_gate_bias_buffer,
+            const float* forget_gate_bias_buffer, const float* cell_bias_buffer,
+            const float* output_gate_bias_buffer, const float* projection_weights_buffer,
+            const float* projection_bias_buffer, const float* output_state_in_buffer,
+            const float* cell_state_in_buffer, const float* input_layer_norm_weights_buffer,
+            const float* forget_layer_norm_weights_buffer,
+            const float* cell_layer_norm_weights_buffer,
+            const float* output_layer_norm_weights_buffer, float* output_state_out_buffer,
+            float* cell_state_out_buffer, float* output_buffer, float* scratch_buffer_buffer,
+            bool timeMajor = true);
+
+    static bool LSTMEvalFloat16(
+            const LSTMParams& params, const _Float16* input_buffer, const Shape& input_shape,
+            const _Float16* input_to_input_weights_buffer,
+            const _Float16* input_to_forget_weights_buffer,
+            const _Float16* input_to_cell_weights_buffer,
+            const _Float16* input_to_output_weights_buffer,
+            const Shape& input_to_output_weights_shape,
+            const _Float16* recurrent_to_input_weights_buffer,
+            const _Float16* recurrent_to_forget_weights_buffer,
+            const _Float16* recurrent_to_cell_weights_buffer,
+            const _Float16* recurrent_to_output_weights_buffer,
+            const Shape& recurrent_to_output_weights_shape,
+            const _Float16* cell_to_input_weights_buffer,
+            const _Float16* cell_to_forget_weights_buffer,
+            const _Float16* cell_to_output_weights_buffer, const _Float16* input_gate_bias_buffer,
+            const _Float16* forget_gate_bias_buffer, const _Float16* cell_bias_buffer,
+            const _Float16* output_gate_bias_buffer, const _Float16* projection_weights_buffer,
+            const _Float16* projection_bias_buffer, const _Float16* output_state_in_buffer,
+            const _Float16* cell_state_in_buffer, const _Float16* input_layer_norm_weights_buffer,
+            const _Float16* forget_layer_norm_weights_buffer,
+            const _Float16* cell_layer_norm_weights_buffer,
+            const _Float16* output_layer_norm_weights_buffer, _Float16* output_state_out_buffer,
+            _Float16* cell_state_out_buffer, _Float16* output_buffer,
+            _Float16* scratch_buffer_buffer, bool timeMajor = true);
+
     static bool LSTMStep(
             const LSTMParams& params, const float* input_buffer, const Shape& input_shape,
             const float* input_to_input_weights_buffer, const float* input_to_forget_weights_buffer,
