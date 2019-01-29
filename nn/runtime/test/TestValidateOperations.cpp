@@ -150,8 +150,16 @@ class OperationTestBase {
                     }
                 }
 
-                newType.type = newOperandCode;
-                std::vector<ANeuralNetworksOperandType> inputs = mValidInputs;
+                // QUANTIZE supports both types below and its output type does
+                // not depend on the input type.
+                if (mOpCode == ANEURALNETWORKS_QUANTIZE && i == 0 &&
+                    (newOperandCode == ANEURALNETWORKS_TENSOR_FLOAT16 ||
+                     newOperandCode == ANEURALNETWORKS_TENSOR_FLOAT32)) {
+                    continue;
+                }
+
+                newType.operandType.type = newOperandCode;
+                std::vector<OperandTypeWithExtraParams> inputs = mValidInputs;
                 inputs[i] = newType;
                 int32_t result = addOperation(inputs, mValidOutputs);
                 if (ANEURALNETWORKS_NO_ERROR == result) {
@@ -263,6 +271,31 @@ TEST(OperationValidationTest, DEQUANTIZE_float32) {
     EXPECT_TRUE(dequantizeTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(dequantizeTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(dequantizeTest.testMutatingOutputOperandCounts());
+}
+
+void quantizeOpTest(int32_t operandCode) {
+    uint32_t inputDimensions[4] = {2, 2, 2, 2};
+    ANeuralNetworksOperandType input = {
+            .type = operandCode, .dimensionCount = 4, .dimensions = inputDimensions};
+    ANeuralNetworksOperandType output = {.type = ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                                         .dimensionCount = 4,
+                                         .dimensions = inputDimensions,
+                                         .scale = 1.0f,
+                                         .zeroPoint = 0};
+    OperationTestBase test(ANEURALNETWORKS_QUANTIZE, {input}, {output});
+
+    EXPECT_TRUE(test.testMutatingInputOperandCode());
+    EXPECT_TRUE(test.testMutatingInputOperandCounts());
+    EXPECT_TRUE(test.testMutatingOutputOperandCode());
+    EXPECT_TRUE(test.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, QUANTIZE_float16) {
+    quantizeOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, QUANTIZE_float32) {
+    quantizeOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
 void simpleMathOpTest(ANeuralNetworksOperationType operationCode, int32_t operandCode) {
