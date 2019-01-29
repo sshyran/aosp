@@ -18,11 +18,11 @@
 
 #define LOG_TAG "Operations"
 
-#include "Operations.h"
 #include "CpuOperationUtils.h"
+#include "Operations.h"
 
-#include "tensorflow/contrib/lite/kernels/internal/optimized/legacy_optimized_ops.h"
-#include "tensorflow/contrib/lite/kernels/internal/reference/reference_ops.h"
+#include "tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h"
+#include "tensorflow/lite/kernels/internal/reference/reference_ops.h"
 
 #include "Tracing.h"
 
@@ -50,8 +50,8 @@ bool resizeBilinearFloat16(const _Float16* inputData, const Shape& inputShape, _
     return true;
 }
 
-bool resizeBilinearFloat32(const float* inputData, const Shape& inputShape,
-                           float* outputData, const Shape& outputShape) {
+bool resizeBilinearFloat32(const float* inputData, const Shape& inputShape, float* outputData,
+                           const Shape& outputShape) {
     NNTRACE_TRANS("resizeBilinearFloat32");
     int32_t height = static_cast<int32_t>(getSizeOfDimension(outputShape, 1));
     int32_t width = static_cast<int32_t>(getSizeOfDimension(outputShape, 2));
@@ -62,10 +62,9 @@ bool resizeBilinearFloat32(const float* inputData, const Shape& inputShape,
     outDimShape.dimensions = {1, 1, 1, 2};
 
     NNTRACE_COMP_SWITCH("optimized_ops::ResizeBilinear");
-    tflite::optimized_ops::ResizeBilinear(
-            inputData, convertShapeToDims(inputShape),
-            outDimData, convertShapeToDims(outDimShape),
-            outputData, convertShapeToDims(outputShape));
+    tflite::optimized_ops::ResizeBilinear(inputData, convertShapeToDims(inputShape), outDimData,
+                                          convertShapeToDims(outDimShape), outputData,
+                                          convertShapeToDims(outputShape));
     return true;
 }
 
@@ -298,5 +297,5 @@ template bool transposeGeneric<uint8_t>(const uint8_t* inputData, const Shape& i
                                         const int32_t* perm, const Shape& permShape,
                                         uint8_t* outputData, const Shape& outputShape);
 
-} // namespace nn
-} // namespace android
+}  // namespace nn
+}  // namespace android
