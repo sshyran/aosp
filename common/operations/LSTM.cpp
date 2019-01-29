@@ -369,13 +369,15 @@ bool LSTMCell::LSTMEvalFloat32(
     const uint32_t inputSize = getSizeOfDimension(input_shape, inputRank - 1);
     const uint32_t outputSize = getSizeOfDimension(recurrent_to_output_weights_shape, 1);
 
+    Shape batchInputShape = input_shape;
+    batchInputShape.dimensions = {batchSize, inputSize};
     const uint32_t batchInputSize = batchSize * inputSize;
     const uint32_t batchOutputSize = batchSize * outputSize;
 
     const float* inputCurrentTimeStep = input_buffer;
     float* outputCurrentTimeStep = output_buffer;
     for (int t = 0; t < maxTime; ++t) {
-        LSTMStep(params, inputCurrentTimeStep, input_shape, input_to_input_weights_buffer,
+        LSTMStep(params, inputCurrentTimeStep, batchInputShape, input_to_input_weights_buffer,
                  input_to_forget_weights_buffer, input_to_cell_weights_buffer,
                  input_to_output_weights_buffer, input_to_output_weights_shape,
                  recurrent_to_input_weights_buffer, recurrent_to_forget_weights_buffer,
@@ -430,6 +432,8 @@ bool LSTMCell::LSTMEvalFloat16(
     const uint32_t numCells = getSizeOfDimension(input_to_output_weights_shape, 0);
     const uint32_t outputSize = getSizeOfDimension(recurrent_to_output_weights_shape, 1);
 
+    Shape batchInputShape = input_shape;
+    batchInputShape.dimensions = {batchSize, inputSize};
     const uint32_t batchInputSize = batchSize * inputSize;
     const uint32_t batchOutputSize = batchSize * outputSize;
 
@@ -531,10 +535,10 @@ bool LSTMCell::LSTMEvalFloat16(
     const float* inputCurrentTimeStep = input_float32.data();
     float* outputCurrentTimeStep = output_float32.data();
     for (int t = 0; t < maxTime; ++t) {
-        LSTMStep(params, inputCurrentTimeStep, input_shape, input_to_input_weights_float32.data(),
-                 input_to_forget_weights_float32.data(), input_to_cell_weights_float32.data(),
-                 input_to_output_weights_float32.data(), input_to_output_weights_shape,
-                 recurrent_to_input_weights_float32.data(),
+        LSTMStep(params, inputCurrentTimeStep, batchInputShape,
+                 input_to_input_weights_float32.data(), input_to_forget_weights_float32.data(),
+                 input_to_cell_weights_float32.data(), input_to_output_weights_float32.data(),
+                 input_to_output_weights_shape, recurrent_to_input_weights_float32.data(),
                  recurrent_to_forget_weights_float32.data(),
                  recurrent_to_cell_weights_float32.data(),
                  recurrent_to_output_weights_float32.data(), recurrent_to_output_weights_shape,
