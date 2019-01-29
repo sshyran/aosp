@@ -363,6 +363,79 @@ void hardNmsMultiClass(const float* scoresData, const float* roiData, std::vecto
               });
 }
 
+bool boxWithNmsLimitFloat32Compute(const float* scoresData, const Shape& scoresShape,
+                                   const float* roiData, const Shape& roiShape,
+                                   const int32_t* batchSplitData, const Shape& batchSplitShape,
+                                   float scoreThreshold, float iouThreshold,
+                                   int32_t maxNumDetections, int32_t* batchSplitOutData,
+                                   const Shape& batchSplitOutShape,
+                                   std::vector<uint32_t>* selected) {
+    const uint32_t kRoiDim = 4;
+    uint32_t numClasses = getSizeOfDimension(scoresShape, 1);
+    uint32_t numBatches = getSizeOfDimension(batchSplitShape, 0);
+
+    const float* scoresBase = scoresData;
+    const float* roiBase = roiData;
+    int32_t* batchSplitOutPtr = batchSplitOutData;
+    selected->clear();
+    for (uint32_t b = 0; b < numBatches; b++) {
+        std::vector<uint32_t> result;
+        hardNmsMultiClass(scoresBase, roiBase, result, numClasses, batchSplitData[b],
+                          scoreThreshold, iouThreshold, maxNumDetections);
+        selected->insert(selected->end(), result.begin(), result.end());
+        *batchSplitOutPtr++ = result.size();
+        scoresBase += batchSplitData[b] * numClasses;
+        roiBase += batchSplitData[b] * numClasses * kRoiDim;
+    }
+    return true;
+}
+
+template <typename T_Score, typename T_Roi>
+bool boxWithNmsLimitWriteOutput(const std::vector<uint32_t>& selected,
+                                IOperationExecutionContext* context) {
+    const uint32_t kRoiDim = 4;
+    Shape scoresShape = context->getInputShape(kScoreTensor);
+    Shape batchSplitShape = context->getInputShape(kBatchSplitTensor);
+    uint32_t numClasses = getSizeOfDimension(scoresShape, 1);
+    uint32_t numBatches = getSizeOfDimension(batchSplitShape, 0);
+
+    // Set output dimensions.
+    uint32_t numOutRois = selected.size();
+    Shape scoresOutShape = context->getOutputShape(kOutputScoreTensor);
+    scoresOutShape.dimensions = {numOutRois};
+    NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, scoresOutShape));
+
+    Shape roiOutShape = context->getOutputShape(kOutputRoiTensor);
+    roiOutShape.dimensions = {numOutRois, 4};
+    NN_RET_CHECK(context->setOutputShape(kOutputRoiTensor, roiOutShape));
+
+    Shape classesOutShape = context->getOutputShape(kOutputClassTensor);
+    classesOutShape.dimensions = {numOutRois};
+    NN_RET_CHECK(context->setOutputShape(kOutputClassTensor, classesOutShape));
+
+    // Write outputs.
+    const T_Score* scoresBase = context->getInputBuffer<T_Score>(kScoreTensor);
+    const T_Roi* roiBase = context->getInputBuffer<T_Roi>(kRoiTensor);
+    const int32_t* batchSplitData = context->getInputBuffer<int32_t>(kBatchSplitTensor);
+    const int32_t* batchSplitOutData = context->getOutputBuffer<int32_t>(kOutputBatchSplitTensor);
+    T_Score* scoresOutPtr = context->getOutputBuffer<T_Score>(kOutputScoreTensor);
+    T_Roi* roiOutPtr = context->getOutputBuffer<T_Roi>(kOutputRoiTensor);
+    int32_t* classesOutPtr = context->getOutputBuffer<int32_t>(kOutputClassTensor);
+    uint32_t i = 0;
+    for (uint32_t b = 0; b < numBatches; b++) {
+        for (uint32_t j = 0; j < batchSplitOutData[b]; j++) {
+            uint32_t index = selected[i++];
+            *scoresOutPtr++ = scoresBase[index];
+            memcpy(roiOutPtr, roiBase + index * kRoiDim, kRoiDim * sizeof(T_Roi));
+            roiOutPtr += kRoiDim;
+            *classesOutPtr++ = index % numClasses;
+        }
+        scoresBase += batchSplitData[b] * numClasses;
+        roiBase += batchSplitData[b] * numClasses * kRoiDim;
+    }
+    return true;
+}
+
 bool boxWithNmsLimitFloat32(const float* scoresData, const Shape& scoresShape, const float* roiData,
                             const Shape& roiShape, const int32_t* batchSplitData,
                             const Shape& batchSplitShape, float scoreThreshold, float iouThreshold,
@@ -371,52 +444,12 @@ bool boxWithNmsLimitFloat32(const float* scoresData, const Shape& scoresShape, c
                             Shape classesOutShape, int32_t* batchSplitOutData,
                             const Shape& batchSplitOutShape, IOperationExecutionContext* context) {
     NNTRACE_TRANS("boxWithNmsLimit");
-    const uint32_t kRoiDim = 4;
-    uint32_t numClasses = getSizeOfDimension(scoresShape, 1);
-    uint32_t numBatches = getSizeOfDimension(batchSplitShape, 0);
-
-    const float* scoresBase = scoresData;
-    const float* roiBase = roiData;
-    int32_t* batchSplitOutPtr = batchSplitOutData;
     std::vector<uint32_t> selected;
-    for (uint32_t b = 0; b < numBatches; b++) {
-        std::vector<uint32_t> result;
-        hardNmsMultiClass(scoresBase, roiBase, result, numClasses, batchSplitData[b],
-                          scoreThreshold, iouThreshold, maxNumDetections);
-        selected.insert(selected.end(), result.begin(), result.end());
-        *batchSplitOutPtr++ = result.size();
-        scoresBase += batchSplitData[b] * numClasses;
-        roiBase += batchSplitData[b] * numClasses * kRoiDim;
-    }
-
-    // Set output dimensions.
-    uint32_t numOutRois = selected.size();
-    scoresOutShape.dimensions = {numOutRois};
-    NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, scoresOutShape));
-    roiOutShape.dimensions = {numOutRois, 4};
-    NN_RET_CHECK(context->setOutputShape(kOutputRoiTensor, roiOutShape));
-    classesOutShape.dimensions = {numOutRois};
-    NN_RET_CHECK(context->setOutputShape(kOutputClassTensor, classesOutShape));
-
-    // Write outputs.
-    float* scoresOutPtr = scoresOutData;
-    float* roiOutPtr = roiOutData;
-    int32_t* classesOutPtr = classesOutData;
-    scoresBase = scoresData;
-    roiBase = roiData;
-    uint32_t i = 0;
-    for (uint32_t b = 0; b < numBatches; b++) {
-        for (uint32_t j = 0; j < batchSplitOutData[b]; j++) {
-            uint32_t index = selected[i++];
-            *scoresOutPtr++ = scoresBase[index];
-            memcpy(roiOutPtr, roiBase + index * kRoiDim, kRoiDim * sizeof(float));
-            roiOutPtr += kRoiDim;
-            *classesOutPtr++ = index % numClasses;
-        }
-        scoresBase += batchSplitData[b] * numClasses;
-        roiBase += batchSplitData[b] * numClasses * kRoiDim;
-    }
-    return true;
+    NN_RET_CHECK(boxWithNmsLimitFloat32Compute(scoresData, scoresShape, roiData, roiShape,
+                                               batchSplitData, batchSplitShape, scoreThreshold,
+                                               iouThreshold, maxNumDetections, batchSplitOutData,
+                                               batchSplitOutShape, &selected));
+    return boxWithNmsLimitWriteOutput<float, float>(selected, context);
 }
 
 bool boxWithNmsLimitFloat16(const _Float16* scoresData, const Shape& scoresShape,
@@ -432,16 +465,12 @@ bool boxWithNmsLimitFloat16(const _Float16* scoresData, const Shape& scoresShape
     convertFloat16ToFloat32(scoresData, &scores_float32);
     std::vector<float> roi_float32(getNumberOfElements(roiShape));
     convertFloat16ToFloat32(roiData, &roi_float32);
-    std::vector<float> outputScores_float32(getNumberOfElements(scoresOutShape));
-    std::vector<float> outputRoi_float32(getNumberOfElements(roiOutShape));
-    NN_RET_CHECK(boxWithNmsLimitFloat32(
+    std::vector<uint32_t> selected;
+    NN_RET_CHECK(boxWithNmsLimitFloat32Compute(
             scores_float32.data(), scoresShape, roi_float32.data(), roiShape, batchSplitData,
-            batchSplitShape, scoreThreshold, iouThreshold, maxNumDetections,
-            outputScores_float32.data(), scoresOutShape, outputRoi_float32.data(), roiOutShape,
-            classesOutData, classesOutShape, batchSplitOutData, batchSplitOutShape, context));
-    convertFloat32ToFloat16(outputScores_float32, scoresOutData);
-    convertFloat32ToFloat16(outputRoi_float32, roiOutData);
-    return true;
+            batchSplitShape, scoreThreshold, iouThreshold, maxNumDetections, batchSplitOutData,
+            batchSplitOutShape, &selected));
+    return boxWithNmsLimitWriteOutput<_Float16, _Float16>(selected, context);
 }
 
 bool boxWithNmsLimitQuant(const uint8_t* scoresData, const Shape& scoresShape,
@@ -456,17 +485,12 @@ bool boxWithNmsLimitQuant(const uint8_t* scoresData, const Shape& scoresShape,
     convertQuantToFloat32(scoresData, scoresShape.scale, scoresShape.offset, &scores_float32);
     std::vector<float> roi_float32(getNumberOfElements(roiShape));
     convertQuantToFloat32(roiData, roiShape.scale, roiShape.offset, &roi_float32);
-    std::vector<float> outputScores_float32(getNumberOfElements(scoresOutShape));
-    std::vector<float> outputRoi_float32(getNumberOfElements(roiOutShape));
-    NN_RET_CHECK(boxWithNmsLimitFloat32(
+    std::vector<uint32_t> selected;
+    NN_RET_CHECK(boxWithNmsLimitFloat32Compute(
             scores_float32.data(), scoresShape, roi_float32.data(), roiShape, batchSplitData,
-            batchSplitShape, scoreThreshold, iouThreshold, maxNumDetections,
-            outputScores_float32.data(), scoresOutShape, outputRoi_float32.data(), roiOutShape,
-            classesOutData, classesOutShape, batchSplitOutData, batchSplitOutShape, context));
-    convertFloat32ToQuant(outputScores_float32, scoresOutShape.scale, scoresOutShape.offset,
-                          scoresOutData);
-    convertFloat32ToQuant(outputRoi_float32, roiOutShape.scale, roiOutShape.offset, roiOutData);
-    return true;
+            batchSplitShape, scoreThreshold, iouThreshold, maxNumDetections, batchSplitOutData,
+            batchSplitOutShape, &selected));
+    return boxWithNmsLimitWriteOutput<uint8_t, uint16_t>(selected, context);
 }
 
 }  // namespace
