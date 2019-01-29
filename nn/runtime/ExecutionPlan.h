@@ -182,18 +182,18 @@ public:
 
         static const size_t kBadStepIndex = ~size_t(0);
 
-        Controller(const ExecutionPlan* plan, const ExecutionBuilder* executionBuilder,
+        Controller(const ExecutionPlan* plan, ExecutionBuilder* executionBuilder,
                    std::shared_ptr<const SubModelInputsAndOutputsType> subModelInputsAndOutputs,
                    uint32_t totalSizeOfTemporaries);
 
         const ExecutionPlan* mPlan;
-        const ExecutionBuilder* mExecutionBuilder;
+        ExecutionBuilder* mExecutionBuilder;
         std::shared_ptr<const SubModelInputsAndOutputsType> mSubModelInputsAndOutputs;  // may be nullptr
         Memory mTemporaries;
         size_t mNextStepIndex;
     };
 
-    std::shared_ptr<Controller> makeController(const ExecutionBuilder* executionBuilder) const;
+    std::shared_ptr<Controller> makeController(ExecutionBuilder* executionBuilder) const;
 
     int next(std::shared_ptr<Controller> controller, std::shared_ptr<StepExecutor>* executor) const;
 
