@@ -2257,18 +2257,22 @@ typedef enum {
      * Inputs:
      * * 0: A 2-D Tensor of shape [num_rois, 4], specifying the locations of the
      *      bounding box proposals, each line with format [x1, y1, x2, y2].
+     *      For tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM},
+     *      the zeroPoint must be 0 and the scale must be 0.125.
      * * 1: A 2-D Tensor of shape [num_rois, num_classes * 4], specifying the
      *      bounding box delta for each region of interest and each class. The
      *      bounding box deltas are organized in the following order
      *      [dx, dy, dw, dh], where dx and dy is the relative correction factor
      *      for the center position of the bounding box with respect to the width
      *      and height, dw and dh is the log-scale relative correction factor
-     *      for the width and height.
+     *      for the width and height. For input0 of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, this tensor should be
+     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [batches], specifying the number of output boxes for each batch.
-     * * 3: A 2-D Tensor of shape [batches, 3], specifying the information of
+     * * 3: A 2-D Tensor of shape [batches, 2], specifying the information of
      *      each image in the batch, each line with format
-     *      [image_height, image_width, image_scale].
+     *      [image_height, image_width].
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
