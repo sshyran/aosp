@@ -18157,6 +18157,66 @@ TEST_F(ValidationTest, quantize_quant8_4) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, quantize_quant8_5) {
+  generated_tests::Execute(device,
+                           quantize::createTestModel_quant8_5,
+                           quantize::is_ignored_quant8_5,
+                           quantize::get_examples_quant8_5());
+}
+
+TEST_F(ValidationTest, quantize_quant8_5) {
+  const Model model = quantize::createTestModel_quant8_5();
+  const std::vector<Request> requests = createRequests(quantize::get_examples_quant8_5());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, quantize_quant8_6) {
+  generated_tests::Execute(device,
+                           quantize::createTestModel_quant8_6,
+                           quantize::is_ignored_quant8_6,
+                           quantize::get_examples_quant8_6());
+}
+
+TEST_F(ValidationTest, quantize_quant8_6) {
+  const Model model = quantize::createTestModel_quant8_6();
+  const std::vector<Request> requests = createRequests(quantize::get_examples_quant8_6());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, quantize_quant8_7) {
+  generated_tests::Execute(device,
+                           quantize::createTestModel_quant8_7,
+                           quantize::is_ignored_quant8_7,
+                           quantize::get_examples_quant8_7());
+}
+
+TEST_F(ValidationTest, quantize_quant8_7) {
+  const Model model = quantize::createTestModel_quant8_7();
+  const std::vector<Request> requests = createRequests(quantize::get_examples_quant8_7());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, quantize_quant8_8) {
+  generated_tests::Execute(device,
+                           quantize::createTestModel_quant8_8,
+                           quantize::is_ignored_quant8_8,
+                           quantize::get_examples_quant8_8());
+}
+
+TEST_F(ValidationTest, quantize_quant8_8) {
+  const Model model = quantize::createTestModel_quant8_8();
+  const std::vector<Request> requests = createRequests(quantize::get_examples_quant8_8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: quantized_lstm.mod.py.
 namespace quantized_lstm {
 // Generated quantized_lstm test
