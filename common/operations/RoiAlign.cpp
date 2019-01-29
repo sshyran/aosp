@@ -50,7 +50,7 @@ namespace {
 template <typename T_Input, typename T_Roi>
 inline bool roiAlignNhwc(const T_Input* inputData, const Shape& inputShape, const T_Roi* roiData,
                          const Shape& roiShape, const int32_t* batchSplitData,
-                         const Shape& batchSplitShape, T_Roi heightStride, T_Roi widthStride,
+                         const Shape& batchSplitShape, float heightStride, float widthStride,
                          int32_t heightSamplingRatio, int32_t widthSamplingRatio,
                          T_Input* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("RoiAlign");
@@ -174,13 +174,13 @@ inline bool roiAlignNhwc(const T_Input* inputData, const Shape& inputShape, cons
 }
 
 template <>
-inline bool roiAlignNhwc<uint8_t, float>(const uint8_t* inputData, const Shape& inputShape,
-                                         const float* roiData, const Shape& roiShape,
-                                         const int32_t* batchSplitData,
-                                         const Shape& batchSplitShape, float heightStride,
-                                         float widthStride, int32_t heightSamplingRatio,
-                                         int32_t widthSamplingRatio, uint8_t* outputData,
-                                         const Shape& outputShape) {
+inline bool roiAlignNhwc<uint8_t, uint16_t>(const uint8_t* inputData, const Shape& inputShape,
+                                            const uint16_t* roiData, const Shape& roiShape,
+                                            const int32_t* batchSplitData,
+                                            const Shape& batchSplitShape, float heightStride,
+                                            float widthStride, int32_t heightSamplingRatio,
+                                            int32_t widthSamplingRatio, uint8_t* outputData,
+                                            const Shape& outputShape) {
     NNTRACE_TRANS("RoiAlignQuant8");
 
     constexpr float wScale = 1.0f / 255.0f;
@@ -198,13 +198,18 @@ inline bool roiAlignNhwc<uint8_t, float>(const uint8_t* inputData, const Shape& 
     uint32_t roiInfoLength = getSizeOfDimension(roiShape, 1);
 
     uint8_t* outPtr = outputData;
-    const float* roiDataEnd = roiData + numRois * roiInfoLength;
+    const uint16_t* roiDataEnd = roiData + numRois * roiInfoLength;
     uint32_t batchId = 0, roiIndex = 0;
-    for (const float* roiInfo = roiData; roiInfo < roiDataEnd; roiInfo += kRoiDim, roiIndex++) {
+    for (const uint16_t* roiInfo = roiData; roiInfo < roiDataEnd; roiInfo += kRoiDim, roiIndex++) {
         while (roiIndex >= batchSplitData[batchId]) {
             batchId++;
             roiIndex = 0;
         }
+
+        float wRoiStart = static_cast<float>(roiInfo[0]) * widthScale * 0.125f;
+        float hRoiStart = static_cast<float>(roiInfo[1]) * heightScale * 0.125f;
+        float wRoiEnd = static_cast<float>(roiInfo[2]) * widthScale * 0.125f;
+        float hRoiEnd = static_cast<float>(roiInfo[3]) * heightScale * 0.125f;
 
         // Check for malformed data
         // 1. invalid batch id
@@ -212,21 +217,16 @@ inline bool roiAlignNhwc<uint8_t, float>(const uint8_t* inputData, const Shape& 
         // 3. Invalid region: x2 <= x1 || y2 <= y1
         NN_RET_CHECK_GE(batchId, 0);
         NN_RET_CHECK_LT(batchId, numBatches);
-        NN_RET_CHECK(roiInfo[0] >= 0);
-        NN_RET_CHECK(roiInfo[1] >= 0);
-        NN_RET_CHECK(roiInfo[2] >= 0);
-        NN_RET_CHECK(roiInfo[3] >= 0);
-        NN_RET_CHECK(roiInfo[0] * widthScale <= inWidth);
-        NN_RET_CHECK(roiInfo[1] * heightScale <= inHeight);
-        NN_RET_CHECK(roiInfo[2] * widthScale <= inWidth);
-        NN_RET_CHECK(roiInfo[3] * heightScale <= inHeight);
-        NN_RET_CHECK(roiInfo[0] <= roiInfo[2]);
-        NN_RET_CHECK(roiInfo[1] <= roiInfo[3]);
-
-        float wRoiStart = roiInfo[0] * widthScale;
-        float hRoiStart = roiInfo[1] * heightScale;
-        float wRoiEnd = roiInfo[2] * widthScale;
-        float hRoiEnd = roiInfo[3] * heightScale;
+        NN_RET_CHECK(wRoiStart >= 0);
+        NN_RET_CHECK(hRoiStart >= 0);
+        NN_RET_CHECK(wRoiEnd >= 0);
+        NN_RET_CHECK(hRoiEnd >= 0);
+        NN_RET_CHECK(wRoiStart * widthScale <= inWidth);
+        NN_RET_CHECK(hRoiStart * heightScale <= inHeight);
+        NN_RET_CHECK(wRoiEnd * widthScale <= inWidth);
+        NN_RET_CHECK(hRoiEnd * heightScale <= inHeight);
+        NN_RET_CHECK(wRoiStart <= wRoiEnd);
+        NN_RET_CHECK(hRoiStart <= hRoiEnd);
 
         float roiWidth = std::max(wRoiEnd - wRoiStart, 1.0f);
         float roiHeight = std::max(hRoiEnd - hRoiStart, 1.0f);
@@ -316,7 +316,7 @@ inline bool roiAlignNhwc<uint8_t, float>(const uint8_t* inputData, const Shape& 
 template <typename T_Input, typename T_Roi>
 inline bool roiAlign(const T_Input* inputData, const Shape& inputShape, const T_Roi* roiData,
                      const Shape& roiShape, const int32_t* batchSplitData,
-                     const Shape& batchSplitShape, T_Roi heightStride, T_Roi widthStride,
+                     const Shape& batchSplitShape, float heightStride, float widthStride,
                      int32_t heightSamplingRatio, int32_t widthSamplingRatio, bool useNchw,
                      T_Input* outputData, const Shape& outputShape) {
     InputWithLayout<T_Input> input(useNchw);
@@ -352,7 +352,7 @@ bool validate(const IOperationValidationContext* context) {
                            OperandType::INT32,          OperandType::BOOL};
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
-                           OperandType::TENSOR_FLOAT32,
+                           OperandType::TENSOR_QUANT16_ASYMM,
                            OperandType::TENSOR_INT32,
                            OperandType::INT32,
                            OperandType::INT32,
@@ -406,6 +406,11 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK_GE(heightSamplingRatio, 0);
     NN_RET_CHECK_GE(widthSamplingRatio, 0);
 
+    if (roiShape.type == OperandType::TENSOR_QUANT16_ASYMM) {
+        NN_RET_CHECK_EQ(roiShape.scale, 0.125f);
+        NN_RET_CHECK_EQ(roiShape.offset, 0);
+    }
+
     Shape output = context->getOutputShape(kOutputTensor);
     output.type = input.type;
     if (useNchw) {
@@ -451,7 +456,7 @@ bool execute(IOperationExecutionContext* context) {
         case OperandType::TENSOR_QUANT8_ASYMM:
             return roiAlign(context->getInputBuffer<uint8_t>(kInputTensor),
                             context->getInputShape(kInputTensor),
-                            context->getInputBuffer<float>(kRoiTensor),
+                            context->getInputBuffer<uint16_t>(kRoiTensor),
                             context->getInputShape(kRoiTensor),
                             context->getInputBuffer<int32_t>(kBatchSplitTensor),
                             context->getInputShape(kBatchSplitTensor),

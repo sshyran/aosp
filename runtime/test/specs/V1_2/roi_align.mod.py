@@ -24,6 +24,7 @@ Model().Operation("ROI_ALIGN", i1, roi1, [4], 2, 2, 2.0, 2.0, 4, 4, layout).To(o
 
 quant8 = DataTypeConverter().Identify({
     i1: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
+    roi1: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
     o1: ("TENSOR_QUANT8_ASYMM", 0.0625, 128)
 })
 
@@ -58,6 +59,7 @@ Model().Operation("ROI_ALIGN", i2, roi2, [2, 0, 0, 2], 2, 3, 4.0, 4.0, 4, 4, lay
 
 quant8 = DataTypeConverter().Identify({
     i2: ("TENSOR_QUANT8_ASYMM", 0.04, 0),
+    roi2: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
     o2: ("TENSOR_QUANT8_ASYMM", 0.03125, 10)
 })
 
@@ -124,6 +126,7 @@ Model().Operation("ROI_ALIGN", i3, roi3, [2, 2], 2, 3, 4.0, 4.0, 0, 0, layout).T
 
 quant8 = DataTypeConverter().Identify({
     i3: ("TENSOR_QUANT8_ASYMM", 0.04, 0),
+    roi3: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
     o3: ("TENSOR_QUANT8_ASYMM", 0.03125, 10)
 })
 
@@ -176,6 +179,7 @@ Model().Operation("ROI_ALIGN", i4, roi4, [0, 0, 5, 0],  2, 2, 2.0, 1.0, 0, 4, la
 
 quant8 = DataTypeConverter().Identify({
     i4: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
+    roi4: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
     o4: ("TENSOR_QUANT8_ASYMM", 0.0625, 128)
 })
 
