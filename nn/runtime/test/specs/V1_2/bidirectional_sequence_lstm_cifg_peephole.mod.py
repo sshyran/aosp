@@ -15,7 +15,7 @@
 #
 
 # Bidirectional Sequence LSTM Test:
-# FLOAT32, No Layer Normalization, No Cifg, No Peephole, No Projection, and No Clipping.
+# FLOAT32, No Layer Normalization, Cifg, Peephole, No Projection, and No Clipping.
 
 n_batch = 1
 n_input = 2
@@ -302,65 +302,47 @@ def test(
       },
       model=model, name=name)
 
-
-fw_input_to_input_weights_data = [
-    -0.45018822, -0.02338299, -0.0870589,
-    -0.34550029, 0.04266912, -0.15680569,
-    -0.34856534, 0.43890524
-]
-bw_input_to_input_weights_data = fw_input_to_input_weights_data
-
 fw_input_to_forget_weights_data = [
-    0.09701663, 0.20334584, -0.50592935,
-    -0.31343272, -0.40032279, 0.44781327,
-    0.01387155, -0.35593212
+    -0.55291498, -0.42866567, 0.13056988, -0.3633365,
+    -0.22755712, 0.28253698, 0.24407166, 0.33826375
 ]
 bw_input_to_forget_weights_data = fw_input_to_forget_weights_data
 
 fw_input_to_cell_weights_data = [
-    -0.50013041, 0.1370284, 0.11810488, 0.2013163,
-    -0.20583314, 0.44344562, 0.22077113,
-    -0.29909778
+    -0.49770179, -0.27711356, -0.09624726, 0.05100781,
+    0.04717243, 0.48944736, -0.38535351, -0.17212132
 ]
 bw_input_to_cell_weights_data = fw_input_to_cell_weights_data
 
 fw_input_to_output_weights_data = [
-    -0.25065863, -0.28290087, 0.04613829,
-    0.40525138, 0.44272184, 0.03897077, -0.1556896,
-    0.19487578
+    0.10725588, -0.02335852, -0.55932593, -0.09426838,
+    -0.44257352, 0.54939759, 0.01533556, 0.42751634
 ]
 bw_input_to_output_weights_data = fw_input_to_output_weights_data
 
-fw_recurrent_to_input_weights_data = [
-    -0.0063535, -0.2042388, 0.31454784, -0.35746509, 0.28902304, 0.08183324,
-    -0.16555229, 0.02286911, -0.13566875, 0.03034258, 0.48091322,
-    -0.12528998, 0.24077177, -0.51332325, -0.33502164, 0.10629296
-]
-bw_recurrent_to_input_weights_data = fw_recurrent_to_input_weights_data
-
 fw_recurrent_to_forget_weights_data = [
-    -0.48684245, -0.06655136, 0.42224967, 0.2112639, 0.27654213, 0.20864892,
-    -0.07646349, 0.45877004, 0.00141793, -0.14609534, 0.36447752, 0.09196436,
-    0.28053468, 0.01560611, -0.20127171, -0.01140004
+    -0.13832897, -0.0515101, -0.2359007, -0.16661474,
+    -0.14340827, 0.36986142, 0.23414481, 0.55899,
+    0.10798943, -0.41174671, 0.17751795, -0.34484994,
+    -0.35874045, -0.11352962, 0.27268326, 0.54058349
 ]
 bw_recurrent_to_forget_weights_data = fw_recurrent_to_forget_weights_data
 
 fw_recurrent_to_cell_weights_data = [
-    -0.3407414, 0.24443203, -0.2078532, 0.26320225, 0.05695659, -0.00123841,
-    -0.4744786, -0.35869038, -0.06418842, -0.13502428, -0.501764, 0.22830659,
-    -0.46367589, 0.26016325, -0.03894562, -0.16368064
+    0.54066205, -0.32668582, -0.43562764, -0.56094903,
+    0.42957711, 0.01841056, -0.32764608, -0.33027974,
+    -0.10826075, 0.20675004, 0.19069612, -0.03026325,
+    -0.54532051, 0.33003211, 0.44901288, 0.21193194
 ]
 bw_recurrent_to_cell_weights_data = fw_recurrent_to_cell_weights_data
 
 fw_recurrent_to_output_weights_data = [
-    0.43385774, -0.17194885, 0.2718237, 0.09215671, 0.24107647, -0.39835793,
-    0.18212086, 0.01301402, 0.48572797, -0.50656658, 0.20047462, -0.20607421,
-    -0.51818722, -0.15390486, 0.0468148, 0.39922136
+    0.41613156, 0.42610586, -0.16495961, -0.5663873,
+    0.30579174, -0.05115908, -0.33941799, 0.23364776,
+    0.11178309, 0.09481031, -0.26424935, 0.46261835,
+    0.50248802, 0.26114327, -0.43736315, 0.33149987
 ]
 bw_recurrent_to_output_weights_data = fw_recurrent_to_output_weights_data
-
-fw_input_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
-bw_input_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
 
 fw_forget_gate_bias_data = [1.0, 1.0, 1.0, 1.0]
 bw_forget_gate_bias_data = [1.0, 1.0, 1.0, 1.0]
@@ -371,6 +353,12 @@ bw_cell_bias_data = [0.0, 0.0, 0.0, 0.0]
 fw_output_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
 bw_output_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
 
+fw_cell_to_forget_weights_data = [ 0.47485286, -0.51955009, -0.24458408, 0.31544167 ]
+bw_cell_to_forget_weights_data = fw_cell_to_forget_weights_data
+
+fw_cell_to_output_weights_data = [ -0.17135078, 0.82760304, 0.85573703, -0.77109635 ]
+bw_cell_to_output_weights_data = fw_cell_to_output_weights_data
+
 input_data = [2.0, 3.0, 3.0, 4.0, 1.0, 1.0]
 
 fw_activation_state_data = [0 for _ in range(n_batch * n_output)]
@@ -380,41 +368,39 @@ fw_cell_state_data = [0 for _ in range(n_batch * n_cell)]
 bw_cell_state_data = [0 for _ in range(n_batch * n_cell)]
 
 fw_golden_output_data = [
-    -0.02973187, 0.1229473,  0.20885126, -0.15358765,
-    -0.03716109, 0.12507336, 0.41193449, -0.20860538,
-    -0.15053082, 0.09120187, 0.24278517, -0.12222792
+    -0.36444446, -0.00352185, 0.12886585, -0.05163646,
+    -0.42312205, -0.01218222, 0.24201041, -0.08124574,
+    -0.358325,   -0.04621704, 0.21641694, -0.06471302
 ]
 bw_golden_output_data = [
-    -0.0806187, 0.139077, 0.400476, -0.197842,
-    -0.0332076, 0.123838, 0.309777, -0.17621,
-    -0.0490733, 0.0739237, 0.067706, -0.0208124
+    -0.401685, -0.0232794,  0.288642,  -0.123074,
+    -0.42915,  -0.00871577, 0.20912,   -0.103567,
+    -0.166398, -0.00486649, 0.0697471, -0.0537578
 ]
 
 
 test(
     name="blackbox",
     input_data=input_data,
-    fw_input_to_input_weights_data=fw_input_to_input_weights_data,
     fw_input_to_forget_weights_data=fw_input_to_forget_weights_data,
     fw_input_to_cell_weights_data=fw_input_to_cell_weights_data,
     fw_input_to_output_weights_data=fw_input_to_output_weights_data,
-    fw_recurrent_to_input_weights_data=fw_recurrent_to_input_weights_data,
     fw_recurrent_to_forget_weights_data=fw_recurrent_to_forget_weights_data,
     fw_recurrent_to_cell_weights_data=fw_recurrent_to_cell_weights_data,
     fw_recurrent_to_output_weights_data=fw_recurrent_to_output_weights_data,
-    fw_input_gate_bias_data=fw_input_gate_bias_data,
+    fw_cell_to_forget_weights_data = fw_cell_to_forget_weights_data,
+    fw_cell_to_output_weights_data = fw_cell_to_output_weights_data,
     fw_forget_gate_bias_data=fw_forget_gate_bias_data,
     fw_cell_bias_data=fw_cell_bias_data,
     fw_output_gate_bias_data=fw_output_gate_bias_data,
-    bw_input_to_input_weights_data=bw_input_to_input_weights_data,
     bw_input_to_forget_weights_data=bw_input_to_forget_weights_data,
     bw_input_to_cell_weights_data=bw_input_to_cell_weights_data,
     bw_input_to_output_weights_data=bw_input_to_output_weights_data,
-    bw_recurrent_to_input_weights_data=bw_recurrent_to_input_weights_data,
     bw_recurrent_to_forget_weights_data=bw_recurrent_to_forget_weights_data,
     bw_recurrent_to_cell_weights_data=bw_recurrent_to_cell_weights_data,
     bw_recurrent_to_output_weights_data=bw_recurrent_to_output_weights_data,
-    bw_input_gate_bias_data=bw_input_gate_bias_data,
+    bw_cell_to_forget_weights_data = bw_cell_to_forget_weights_data,
+    bw_cell_to_output_weights_data = bw_cell_to_output_weights_data,
     bw_forget_gate_bias_data=bw_forget_gate_bias_data,
     bw_cell_bias_data=bw_cell_bias_data,
     bw_output_gate_bias_data=bw_output_gate_bias_data,
