@@ -885,6 +885,49 @@ bool generateProposalsFloat16(const _Float16* scoresData, const Shape& scoresSha
     return true;
 }
 
+bool generateProposalsQuant(const uint8_t* scoresData, const Shape& scoresShape,
+                            const uint8_t* bboxDeltasData, const Shape& bboxDeltasShape,
+                            const int16_t* anchorsData, const Shape& anchorsShape,
+                            const uint16_t* imageInfoData, const Shape& imageInfoShape,
+                            float heightStride, float widthStride, int32_t preNmsTopN,
+                            int32_t postNmsTopN, float iouThreshold, float minSize, bool useNchw,
+                            int32_t* batchSplitData, const Shape& batchSplitShape,
+                            IOperationExecutionContext* context) {
+    std::vector<float> score_float32(getNumberOfElements(scoresShape));
+    convertQuantToFloat32(scoresData, scoresShape.scale, scoresShape.offset, &score_float32);
+    std::vector<float> delta_float32(getNumberOfElements(bboxDeltasShape));
+    convertQuantToFloat32(bboxDeltasData, bboxDeltasShape.scale, bboxDeltasShape.offset,
+                          &delta_float32);
+    std::vector<float> anchors_float32(getNumberOfElements(anchorsShape));
+    convertQuantToFloat32(anchorsData, anchorsShape.scale, anchorsShape.offset, &anchors_float32);
+    std::vector<float> imageInfo_float32(getNumberOfElements(imageInfoShape));
+    convertQuantToFloat32(imageInfoData, imageInfoShape.scale, imageInfoShape.offset,
+                          &imageInfo_float32);
+    std::vector<float> scoresOut_float32, roiOut_float32;
+    NN_RET_CHECK(generateProposalsFloat32Compute(
+            score_float32.data(), scoresShape, delta_float32.data(), bboxDeltasShape,
+            anchors_float32.data(), anchorsShape, imageInfo_float32.data(), imageInfoShape,
+            heightStride, widthStride, preNmsTopN, postNmsTopN, iouThreshold, minSize, useNchw,
+            &scoresOut_float32, &roiOut_float32, batchSplitData, batchSplitShape));
+
+    // Set output dimensions.
+    uint32_t numOutRois = scoresOut_float32.size();
+    Shape scoresOutShape = context->getOutputShape(kOutputScoreTensor);
+    scoresOutShape.dimensions = {numOutRois};
+    NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, scoresOutShape));
+    Shape roiOutShape = context->getOutputShape(kOutputRoiTensor);
+    roiOutShape.dimensions = {numOutRois, 4};
+    NN_RET_CHECK(context->setOutputShape(kOutputRoiTensor, roiOutShape));
+
+    // Write outputs.
+    uint8_t* scoresOutData = context->getOutputBuffer<uint8_t>(kOutputScoreTensor);
+    convertFloat32ToQuant(scoresOut_float32, scoresOutShape.scale, scoresOutShape.offset,
+                          scoresOutData);
+    uint16_t* roiOutData = context->getOutputBuffer<uint16_t>(kOutputRoiTensor);
+    convertFloat32ToQuant(roiOut_float32, roiOutShape.scale, roiOutShape.offset, roiOutData);
+    return true;
+}
+
 }  // namespace
 
 bool validate(const IOperationValidationContext* context) {
@@ -920,6 +963,20 @@ bool validate(const IOperationValidationContext* context) {
                            OperandType::FLOAT32,
                            OperandType::BOOL};
         outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                            OperandType::TENSOR_INT32};
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+        inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
+                           OperandType::TENSOR_QUANT8_ASYMM,
+                           OperandType::TENSOR_QUANT16_SYMM,
+                           OperandType::TENSOR_QUANT16_ASYMM,
+                           OperandType::FLOAT32,
+                           OperandType::FLOAT32,
+                           OperandType::INT32,
+                           OperandType::INT32,
+                           OperandType::FLOAT32,
+                           OperandType::FLOAT32,
+                           OperandType::BOOL};
+        outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM,
                             OperandType::TENSOR_INT32};
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
@@ -959,6 +1016,12 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK_EQ(getSizeOfDimension(anchorsShape, 0), numAnchors);
     NN_RET_CHECK_EQ(getSizeOfDimension(anchorsShape, 1), kRoiDim);
 
+    if (scoreShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
+        NN_RET_CHECK_EQ(anchorsShape.scale, 0.125f);
+        NN_RET_CHECK_EQ(imageInfoDataShape.scale, 0.125f);
+        NN_RET_CHECK_EQ(imageInfoDataShape.offset, 0);
+    }
+
     outputScoreShape.type = scoreShape.type;
     outputScoreShape.dimensions = {0};
     outputScoreShape.scale = scoreShape.scale;
@@ -966,6 +1029,10 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, outputScoreShape));
 
     outputRoiShape.dimensions = {0, 4};
+    if (scoreShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
+        outputRoiShape.scale = 0.125f;
+        outputRoiShape.offset = 0;
+    }
     NN_RET_CHECK(context->setOutputShape(kOutputRoiTensor, outputRoiShape));
 
     outputBatchSplitShape.dimensions = {numBatches};
@@ -1005,6 +1072,26 @@ bool execute(IOperationExecutionContext* context) {
                     context->getInputBuffer<float>(kAnchorTensor),
                     context->getInputShape(kAnchorTensor),
                     context->getInputBuffer<float>(kImageInfoTensor),
+                    context->getInputShape(kImageInfoTensor),
+                    context->getInputValue<float>(kHeightStrideSalar),
+                    context->getInputValue<float>(kWidthStrideScalar),
+                    context->getInputValue<int32_t>(kPreNmsMaxScalar),
+                    context->getInputValue<int32_t>(kPostNmsMaxScalar),
+                    context->getInputValue<float>(kIoUThresholdScalar),
+                    context->getInputValue<float>(kMinSizeScalar),
+                    context->getInputValue<bool>(kLayoutScalar),
+                    context->getOutputBuffer<int32_t>(kOutputBatchSplitTensor),
+                    context->getOutputShape(kOutputBatchSplitTensor), context);
+        }
+        case OperandType::TENSOR_QUANT8_ASYMM: {
+            return generateProposalsQuant(
+                    context->getInputBuffer<uint8_t>(kScoreTensor),
+                    context->getInputShape(kScoreTensor),
+                    context->getInputBuffer<uint8_t>(kDeltaTensor),
+                    context->getInputShape(kDeltaTensor),
+                    context->getInputBuffer<int16_t>(kAnchorTensor),
+                    context->getInputShape(kAnchorTensor),
+                    context->getInputBuffer<uint16_t>(kImageInfoTensor),
                     context->getInputShape(kImageInfoTensor),
                     context->getInputValue<float>(kHeightStrideSalar),
                     context->getInputValue<float>(kWidthStrideScalar),

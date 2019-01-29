@@ -28,6 +28,15 @@ o3 = Output("batchSplit", "TENSOR_INT32", "{1}") # batch split out
 model = model.Operation("GENERATE_PROPOSALS",
     i1, i2, i3, i4, 4.0, 4.0, -1, -1, 0.30, 1.0, layout).To(o1, o2, o3)
 
+quant8 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.01, 100),
+    i2: ("TENSOR_QUANT8_ASYMM", 0.05, 128),
+    i3: ("TENSOR_QUANT16_SYMM", 0.125, 0),
+    i4: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.01, 100),
+    o2: ("TENSOR_QUANT16_ASYMM", 0.125, 0)
+})
+
 input0 = {
     i1: [   # scores
         0.8, 0.9, 0.85, 0.85,
@@ -54,7 +63,7 @@ output0 = {
     o3: [4]
 }
 
-Example((input0, output0)).AddNchw(i1, i2, layout).AddVariations("relaxed", "float16")
+Example((input0, output0)).AddNchw(i1, i2, layout).AddVariations("relaxed", quant8, "float16")
 
 # TEST 2: GENERATE_PROPOSALS_2
 model = Model()
@@ -67,6 +76,15 @@ o2 = Output("roiOut", "TENSOR_FLOAT32", "{30, 4}") # roi out
 o3 = Output("batchSplit", "TENSOR_INT32", "{2}") # batch split out
 model = model.Operation("GENERATE_PROPOSALS",
     i1, i2, i3, i4, 10.0, 10.0, 32, 16, 0.20, 1.0, layout).To(o1, o2, o3)
+
+quant8 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.005, 0),
+    i2: ("TENSOR_QUANT8_ASYMM", 0.1, 128),
+    i3: ("TENSOR_QUANT16_SYMM", 0.125, 0),
+    i4: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.005, 0),
+    o2: ("TENSOR_QUANT16_ASYMM", 0.125, 0)
+})
 
 input0 = {
     i1: [   # scores
@@ -187,4 +205,4 @@ output0 = {
     o3: [16, 14]
 }
 
-Example((input0, output0)).AddNchw(i1, i2, layout).AddVariations("relaxed", "float16")
+Example((input0, output0)).AddNchw(i1, i2, layout).AddVariations("relaxed", quant8, "float16")
