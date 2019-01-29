@@ -14,15 +14,17 @@ static std::vector<MixedTypedExample> examples = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}}},
+  .quant8AsymmOperands = {{0, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -33,15 +35,17 @@ static std::vector<MixedTypedExample> examples = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {0, 0, 0, 5, 0, 0, 0, 6, 0, 1, 0, 7, 0, 2, 0, 8, 0, 3, 0, 9, 0, 4, 0, 10}}},
+  .quant8AsymmOperands = {{0, {0, 0, 0, 5, 0, 0, 0, 6, 0, 1, 0, 7, 0, 2, 0, 8, 0, 3, 0, 9, 0, 4, 0, 10}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 }
 },
 }, // End of an example
@@ -63,15 +67,17 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}}},
+  .quant8AsymmOperands = {{0, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -82,15 +88,17 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {0, 0, 0, 5, 0, 0, 0, 6, 0, 1, 0, 7, 0, 2, 0, 8, 0, 3, 0, 9, 0, 4, 0, 10}}},
+  .quant8AsymmOperands = {{0, {0, 0, 0, 5, 0, 0, 0, 6, 0, 1, 0, 7, 0, 2, 0, 8, 0, 3, 0, 9, 0, 4, 0, 10}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 }
 },
 }, // End of an example

@@ -14,15 +14,17 @@ static std::vector<MixedTypedExample> examples_quant8 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {139, 91, 79, 44}}, {1, {22, 62, 82, 142}}, {2, {136, 87, 76, 204}}, {3, {45, 114, 148, 252}}},
+  .quant8AsymmOperands = {{0, {139, 91, 79, 44}}, {1, {22, 62, 82, 142}}, {2, {136, 87, 76, 204}}, {3, {45, 114, 148, 252}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -33,15 +35,17 @@ static std::vector<MixedTypedExample> examples_quant8 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {137, 97, 138, 158, 139, 95, 140, 160, 87, 57, 168, 198, 85, 199, 170, 200}}},
+  .quant8AsymmOperands = {{0, {137, 97, 138, 158, 139, 95, 140, 160, 87, 57, 168, 198, 85, 199, 170, 200}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 }
 },
 }, // End of an example
@@ -63,15 +67,17 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {139, 91, 79, 44}}, {1, {22, 62, 82, 142}}, {2, {136, 87, 76, 204}}, {3, {45, 114, 148, 252}}},
+  .quant8AsymmOperands = {{0, {139, 91, 79, 44}}, {1, {22, 62, 82, 142}}, {2, {136, 87, 76, 204}}, {3, {45, 114, 148, 252}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -82,15 +88,17 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {137, 97, 138, 158, 139, 95, 140, 160, 87, 57, 168, 198, 85, 199, 170, 200}}},
+  .quant8AsymmOperands = {{0, {137, 97, 138, 158, 139, 95, 140, 160, 87, 57, 168, 198, 85, 199, 170, 200}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 }
 },
 }, // End of an example
@@ -112,15 +120,17 @@ static std::vector<MixedTypedExample> examples_quant8_2 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {139, 91, 79, 44}}, {1, {22, 62, 82, 142}}, {2, {136, 87, 76, 204}}, {3, {45, 114, 148, 252}}},
+  .quant8AsymmOperands = {{0, {139, 91, 79, 44}}, {1, {22, 62, 82, 142}}, {2, {136, 87, 76, 204}}, {3, {45, 114, 148, 252}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -131,15 +141,17 @@ static std::vector<MixedTypedExample> examples_quant8_2 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {255, 0, 255, 255, 255, 0, 255, 255, 0, 0, 255, 255, 0, 255, 255, 255}}},
+  .quant8AsymmOperands = {{0, {255, 0, 255, 255, 255, 0, 255, 255, 0, 0, 255, 255, 0, 255, 255, 255}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 }
 },
 }, // End of an example
@@ -161,15 +173,17 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_2 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {139, 91, 79, 44}}, {1, {22, 62, 82, 142}}, {2, {136, 87, 76, 204}}, {3, {45, 114, 148, 252}}},
+  .quant8AsymmOperands = {{0, {139, 91, 79, 44}}, {1, {22, 62, 82, 142}}, {2, {136, 87, 76, 204}}, {3, {45, 114, 148, 252}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -180,15 +194,17 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_2 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8Operands = {{0, {255, 0, 255, 255, 255, 0, 255, 255, 0, 0, 255, 255, 0, 255, 255, 255}}},
+  .quant8AsymmOperands = {{0, {255, 0, 255, 255, 255, 0, 255, 255, 0, 0, 255, 255, 0, 255, 255, 255}}},
   // int -> QUANT16_SYMM map
-  .quant16Operands = {},
+  .quant16SymmOperands = {},
   // int -> FLOAT16 map
   .float16Operands = {},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
   .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
 }
 },
 }, // End of an example
