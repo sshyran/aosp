@@ -468,3 +468,4 @@
 #include "../generated/tests/transpose_conv2d.mod.py.cpp"
 #include "../generated/tests/transpose_float16.mod.py.cpp"
 #include "../generated/tests/transpose_v1_2.mod.py.cpp"
+#include "../generated/tests/unidirectional_sequence_rnn.mod.py.cpp"
