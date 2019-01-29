@@ -41,6 +41,8 @@ public:
 
     int setPartitioning(uint32_t partitioning);
 
+    int setCaching(const std::string& cacheDir, const uint8_t* token);
+
     int finish();
 
     int createExecution(ExecutionBuilder** execution);
@@ -67,6 +69,10 @@ private:
     // The set of devices that the partitioning algorithm operates on when
     // finish() is called.
     std::vector<std::shared_ptr<Device>> mDevices;
+
+    // Compilation caching information.
+    std::string mCacheDir;
+    std::vector<uint8_t> mToken;
 };
 
 } // namespace nn
