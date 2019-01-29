@@ -444,27 +444,65 @@ bool boxWithNmsLimitFloat16(const _Float16* scoresData, const Shape& scoresShape
     return true;
 }
 
+bool boxWithNmsLimitQuant(const uint8_t* scoresData, const Shape& scoresShape,
+                          const uint16_t* roiData, const Shape& roiShape,
+                          const int32_t* batchSplitData, const Shape& batchSplitShape,
+                          float scoreThreshold, float iouThreshold, int32_t maxNumDetections,
+                          uint8_t* scoresOutData, const Shape& scoresOutShape, uint16_t* roiOutData,
+                          const Shape& roiOutShape, int32_t* classesOutData,
+                          const Shape& classesOutShape, int32_t* batchSplitOutData,
+                          const Shape& batchSplitOutShape, IOperationExecutionContext* context) {
+    std::vector<float> scores_float32(getNumberOfElements(scoresShape));
+    convertQuantToFloat32(scoresData, scoresShape.scale, scoresShape.offset, &scores_float32);
+    std::vector<float> roi_float32(getNumberOfElements(roiShape));
+    convertQuantToFloat32(roiData, roiShape.scale, roiShape.offset, &roi_float32);
+    std::vector<float> outputScores_float32(getNumberOfElements(scoresOutShape));
+    std::vector<float> outputRoi_float32(getNumberOfElements(roiOutShape));
+    NN_RET_CHECK(boxWithNmsLimitFloat32(
+            scores_float32.data(), scoresShape, roi_float32.data(), roiShape, batchSplitData,
+            batchSplitShape, scoreThreshold, iouThreshold, maxNumDetections,
+            outputScores_float32.data(), scoresOutShape, outputRoi_float32.data(), roiOutShape,
+            classesOutData, classesOutShape, batchSplitOutData, batchSplitOutShape, context));
+    convertFloat32ToQuant(outputScores_float32, scoresOutShape.scale, scoresOutShape.offset,
+                          scoresOutData);
+    convertFloat32ToQuant(outputRoi_float32, roiOutShape.scale, roiOutShape.offset, roiOutData);
+    return true;
+}
+
 }  // namespace
 
 bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
+    std::vector<OperandType> outExpectedTypes;
     auto inputType = context->getInputType(kScoreTensor);
     if (inputType == OperandType::TENSOR_FLOAT16) {
         inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
                            OperandType::TENSOR_INT32,   OperandType::FLOAT16,
                            OperandType::FLOAT16,        OperandType::INT32};
+        outExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
+                            OperandType::TENSOR_INT32, OperandType::TENSOR_INT32};
     } else if (inputType == OperandType::TENSOR_FLOAT32) {
         inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
                            OperandType::TENSOR_INT32,   OperandType::FLOAT32,
                            OperandType::FLOAT32,        OperandType::INT32};
+        outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                            OperandType::TENSOR_INT32, OperandType::TENSOR_INT32};
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+        inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
+                           OperandType::TENSOR_QUANT16_ASYMM,
+                           OperandType::TENSOR_INT32,
+                           OperandType::FLOAT32,
+                           OperandType::FLOAT32,
+                           OperandType::INT32};
+        outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM,
+                            OperandType::TENSOR_INT32, OperandType::TENSOR_INT32};
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(
-            context, {inputType, inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}));
+    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     return validateHalVersion(context, HalVersion::V1_2);
 }
 
@@ -489,12 +527,21 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK(getSizeOfDimension(roiShape, 1) == kRoiDim * numClasses);
     NN_RET_CHECK_GT(numClasses, 1);
 
+    if (scoreShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
+        NN_RET_CHECK_EQ(roiShape.scale, 0.125f);
+        NN_RET_CHECK_EQ(roiShape.offset, 0);
+    }
+
     outputScoreShape.type = scoreShape.type;
     outputScoreShape.dimensions = {0};
+    outputScoreShape.scale = scoreShape.scale;
+    outputScoreShape.offset = scoreShape.offset;
     NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, outputScoreShape));
 
     outputRoiShape.type = roiShape.type;
     outputRoiShape.dimensions = {0, 4};
+    outputRoiShape.scale = 0.125f;
+    outputRoiShape.offset = 0;
     NN_RET_CHECK(context->setOutputShape(kOutputRoiTensor, outputRoiShape));
 
     outputClassShape.type = OperandType::TENSOR_INT32;
@@ -548,6 +595,25 @@ bool execute(IOperationExecutionContext* context) {
                     context->getOutputShape(kOutputClassTensor),
                     context->getOutputBuffer<int32_t>(kOutputBatchSplitTensor),
                     context->getOutputShape(kOutputBatchSplitTensor), context);
+        }
+        case OperandType::TENSOR_QUANT8_ASYMM: {
+            return boxWithNmsLimitQuant(context->getInputBuffer<uint8_t>(kScoreTensor),
+                                        context->getInputShape(kScoreTensor),
+                                        context->getInputBuffer<uint16_t>(kRoiTensor),
+                                        context->getInputShape(kRoiTensor),
+                                        context->getInputBuffer<int32_t>(kBatchSplitTensor),
+                                        context->getInputShape(kBatchSplitTensor),
+                                        context->getInputValue<float>(kScoreThresholdScalar),
+                                        context->getInputValue<float>(kIoUThresholdScalar),
+                                        context->getInputValue<int32_t>(kMaxNumDetectionScalar),
+                                        context->getOutputBuffer<uint8_t>(kOutputScoreTensor),
+                                        context->getOutputShape(kOutputScoreTensor),
+                                        context->getOutputBuffer<uint16_t>(kOutputRoiTensor),
+                                        context->getOutputShape(kOutputRoiTensor),
+                                        context->getOutputBuffer<int32_t>(kOutputClassTensor),
+                                        context->getOutputShape(kOutputClassTensor),
+                                        context->getOutputBuffer<int32_t>(kOutputBatchSplitTensor),
+                                        context->getOutputShape(kOutputBatchSplitTensor), context);
         }
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
