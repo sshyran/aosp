@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-#include "Operations.h"
 #include "CpuOperationUtils.h"
+#include "Operations.h"
 
-#include "tensorflow/contrib/lite/kernels/internal/optimized/legacy_optimized_ops.h"
-#include "tensorflow/contrib/lite/kernels/internal/optimized/optimized_ops.h"
+#include "tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h"
+#include "tensorflow/lite/kernels/internal/optimized/optimized_ops.h"
 
 #include "Tracing.h"
 
@@ -72,11 +72,11 @@ bool tanhFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* o
     return true;
 }
 
-bool tanhFloat32(const float* inputData, const Shape& inputShape,
-                 float* outputData, const Shape& outputShape) {
+bool tanhFloat32(const float* inputData, const Shape& inputShape, float* outputData,
+                 const Shape& outputShape) {
     NNTRACE_COMP("tanhFloat32");
     int numElements = getNumberOfElements(inputShape);
-    for (int i=0; i<numElements; i++, inputData++, outputData++) {
+    for (int i = 0; i < numElements; i++, inputData++, outputData++) {
         *outputData = std::tanh(*inputData);
     }
     return true;
@@ -159,37 +159,35 @@ bool softmaxFloat32(const float* inputData, const Shape& inputShape, const float
     }
 }
 
-#define ANDROID_NN_RELUX_QUANT8(activation)                             \
-    int numElements = getNumberOfElements(inputShape);                  \
-    int32_t output_activation_min = 0;                                  \
-    int32_t output_activation_max = 0;                                  \
-                                                                        \
-    CalculateActivationRangeUint8(activation, inputShape,               \
-                                  &output_activation_min,               \
-                                  &output_activation_max);              \
-                                                                        \
-    for (int i=0; i<numElements; i++, inputData++, outputData++) {      \
-        *outputData = std::min((uint8_t)output_activation_max,          \
-                std::max((uint8_t)output_activation_min, *inputData));  \
+#define ANDROID_NN_RELUX_QUANT8(activation)                                           \
+    int numElements = getNumberOfElements(inputShape);                                \
+    int32_t output_activation_min = 0;                                                \
+    int32_t output_activation_max = 0;                                                \
+                                                                                      \
+    CalculateActivationRangeUint8(activation, inputShape, &output_activation_min,     \
+                                  &output_activation_max);                            \
+                                                                                      \
+    for (int i = 0; i < numElements; i++, inputData++, outputData++) {                \
+        *outputData = std::min((uint8_t)output_activation_max,                        \
+                               std::max((uint8_t)output_activation_min, *inputData)); \
     }
 
-
-bool reluQuant8(const uint8_t* inputData, const Shape& inputShape,
-                uint8_t* outputData, const Shape& outputShape) {
+bool reluQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                const Shape& outputShape) {
     NNTRACE_COMP("reluQuant8");
     ANDROID_NN_RELUX_QUANT8(kActivationRelu)
     return true;
 }
 
-bool relu1Quant8(const uint8_t* inputData, const Shape& inputShape,
-                 uint8_t* outputData, const Shape& outputShape) {
+bool relu1Quant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                 const Shape& outputShape) {
     NNTRACE_COMP("relu1Quant8");
     ANDROID_NN_RELUX_QUANT8(kActivationRelu1)
     return true;
 }
 
-bool relu6Quant8(const uint8_t* inputData, const Shape& inputShape,
-                 uint8_t* outputData, const Shape& outputShape) {
+bool relu6Quant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                 const Shape& outputShape) {
     NNTRACE_COMP("relu6Quant8");
     ANDROID_NN_RELUX_QUANT8(kActivationRelu6)
     return true;
@@ -227,8 +225,8 @@ bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outp
     return true;
 }
 
-bool logisticQuant8(const uint8_t* inputData, const Shape& inputShape,
-                    uint8_t* outputData, const Shape& outputShape) {
+bool logisticQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                    const Shape& outputShape) {
     NNTRACE_TRANS("logisticQuant8");
     if (outputShape.offset != 0 || outputShape.scale != 1.f / 256) {
         LOG(ERROR) << "incorrect scale / offset for output";
@@ -239,25 +237,20 @@ bool logisticQuant8(const uint8_t* inputData, const Shape& inputShape,
     static constexpr int kInputIntegerBits = 4;
 
     const double input_real_multiplier =
-            inputShape.scale *
-            static_cast<double>(1 << (31 - kInputIntegerBits));
+            inputShape.scale * static_cast<double>(1 << (31 - kInputIntegerBits));
 
     int32_t input_multiplier = 0;
     int32_t input_left_shift = 0;
-    if (!QuantizeMultiplierGreaterThanOne(input_real_multiplier,
-                                          &input_multiplier,
+    if (!QuantizeMultiplierGreaterThanOne(input_real_multiplier, &input_multiplier,
                                           &input_left_shift)) {
         return false;
     }
-    int32_t input_range_radius =
-            CalculateInputRadius(kInputIntegerBits, input_left_shift);
+    int32_t input_range_radius = CalculateInputRadius(kInputIntegerBits, input_left_shift);
 
     NNTRACE_COMP_SWITCH("optimized_ops::Logistic");
     tflite::optimized_ops::Logistic(
-            inputData, convertShapeToTflshape(inputShape),
-            inputShape.offset, input_range_radius,
-            input_multiplier, input_left_shift,
-            outputData, convertShapeToTflshape(outputShape));
+            inputData, convertShapeToTflshape(inputShape), inputShape.offset, input_range_radius,
+            input_multiplier, input_left_shift, outputData, convertShapeToTflshape(outputShape));
 
     return true;
 }

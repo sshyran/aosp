@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-#include "Operations.h"
 #include "CpuOperationUtils.h"
+#include "Operations.h"
 
 #include <algorithm>
 #include <cmath>
-#include "tensorflow/contrib/lite/kernels/internal/optimized/optimized_ops.h"
+#include "tensorflow/lite/kernels/internal/optimized/optimized_ops.h"
 
 #include "Tracing.h"
 

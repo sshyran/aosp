@@ -17,8 +17,8 @@
 #include "CpuOperationUtils.h"
 #include "Operations.h"
 
-#include "tensorflow/contrib/lite/kernels/internal/optimized/optimized_ops.h"
-#include "tensorflow/contrib/lite/kernels/internal/reference/legacy_reference_ops.h"
+#include "tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h"
+#include "tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h"
 
 #include "Tracing.h"
 
