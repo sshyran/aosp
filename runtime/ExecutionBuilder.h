@@ -38,7 +38,7 @@ class ExecutionPlan;
 class Memory;
 class ModelBuilder;
 class StepExecutor;
-class VersionedIDevice;
+class Device;
 
 // TODO move length out of DataLocation
 struct ModelArgumentInfo {
@@ -129,7 +129,8 @@ class StepExecutor {
     //     model to execute on that device.  (Both are nullptr in the
     //     case of CPU.)
     StepExecutor(const ExecutionBuilder* executionBuilder, const ModelBuilder* model,
-                 VersionedIDevice* driver, std::shared_ptr<VersionedIPreparedModel> preparedModel);
+                 std::shared_ptr<Device> device,
+                 std::shared_ptr<VersionedIPreparedModel> preparedModel);
 
     // Map inputs and outputs from ExecutionBuilder to StepExecutor,
     // in the case where we have a single-"step" execution (i.e., the executor
@@ -170,7 +171,7 @@ class StepExecutor {
     // preparedModel) specified at construction time.
     int startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallback);
 
-    bool isCpu() const { return mDriver == nullptr; }
+    bool isCpu() const;
 
    private:
     int allocatePointerArgumentsToPool(std::vector<ModelArgumentInfo>* args, Memory* memory);
@@ -189,7 +190,7 @@ class StepExecutor {
     // model to be executed on the executor, in both original and
     // compiled forms; and device on which to execute it
     const ModelBuilder* mModel;
-    VersionedIDevice* mDriver;          // nullptr if CPU execution
+    std::shared_ptr<Device> mDevice;
     std::shared_ptr<VersionedIPreparedModel>
             mPreparedModel;  // nullptr if CPU execution or if bypassing ExecutionPlan
 
