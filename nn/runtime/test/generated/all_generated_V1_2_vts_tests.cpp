@@ -22670,6 +22670,21 @@ TEST_F(ValidationTest, heatmap_max_keypoint_nhwc_float16_2) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nhwc_quant8) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_nhwc_quant8,
+                           heatmap_max_keypoint::is_ignored_nhwc_quant8,
+                           heatmap_max_keypoint::get_examples_nhwc_quant8());
+}
+
+TEST_F(ValidationTest, heatmap_max_keypoint_nhwc_quant8) {
+  const Model model = heatmap_max_keypoint::createTestModel_nhwc_quant8();
+  const std::vector<Request> requests = createRequests(heatmap_max_keypoint::get_examples_nhwc_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nchw_2) {
   generated_tests::Execute(device,
                            heatmap_max_keypoint::createTestModel_nchw_2,
@@ -22710,6 +22725,21 @@ TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nchw_float16_2) {
 TEST_F(ValidationTest, heatmap_max_keypoint_nchw_float16_2) {
   const Model model = heatmap_max_keypoint::createTestModel_nchw_float16_2();
   const std::vector<Request> requests = createRequests(heatmap_max_keypoint::get_examples_nchw_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nchw_quant8) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_nchw_quant8,
+                           heatmap_max_keypoint::is_ignored_nchw_quant8,
+                           heatmap_max_keypoint::get_examples_nchw_quant8());
+}
+
+TEST_F(ValidationTest, heatmap_max_keypoint_nchw_quant8) {
+  const Model model = heatmap_max_keypoint::createTestModel_nchw_quant8();
+  const std::vector<Request> requests = createRequests(heatmap_max_keypoint::get_examples_nchw_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -22767,6 +22797,23 @@ TEST_F(ValidationTest, heatmap_max_keypoint_dynamic_output_shape_nhwc_float16_2)
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, heatmap_max_keypoint_dynamic_output_shape_nhwc_quant8) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_dynamic_output_shape_nhwc_quant8,
+                           heatmap_max_keypoint::is_ignored_dynamic_output_shape_nhwc_quant8,
+                           heatmap_max_keypoint::get_examples_dynamic_output_shape_nhwc_quant8(), true);
+}
+
+TEST_F(ValidationTest, heatmap_max_keypoint_dynamic_output_shape_nhwc_quant8) {
+  const Model model = heatmap_max_keypoint::createTestModel_dynamic_output_shape_nhwc_quant8();
+  const std::vector<Request> requests = createRequests(heatmap_max_keypoint::get_examples_dynamic_output_shape_nhwc_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, heatmap_max_keypoint_dynamic_output_shape_nchw_2) {
   generated_tests::Execute(device,
                            heatmap_max_keypoint::createTestModel_dynamic_output_shape_nchw_2,
@@ -22811,6 +22858,87 @@ TEST_F(DynamicOutputShapeTest, heatmap_max_keypoint_dynamic_output_shape_nchw_fl
 TEST_F(ValidationTest, heatmap_max_keypoint_dynamic_output_shape_nchw_float16_2) {
   const Model model = heatmap_max_keypoint::createTestModel_dynamic_output_shape_nchw_float16_2();
   const std::vector<Request> requests = createRequests(heatmap_max_keypoint::get_examples_dynamic_output_shape_nchw_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, heatmap_max_keypoint_dynamic_output_shape_nchw_quant8) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_dynamic_output_shape_nchw_quant8,
+                           heatmap_max_keypoint::is_ignored_dynamic_output_shape_nchw_quant8,
+                           heatmap_max_keypoint::get_examples_dynamic_output_shape_nchw_quant8(), true);
+}
+
+TEST_F(ValidationTest, heatmap_max_keypoint_dynamic_output_shape_nchw_quant8) {
+  const Model model = heatmap_max_keypoint::createTestModel_dynamic_output_shape_nchw_quant8();
+  const std::vector<Request> requests = createRequests(heatmap_max_keypoint::get_examples_dynamic_output_shape_nchw_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nhwc_quant8_2) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_nhwc_quant8_2,
+                           heatmap_max_keypoint::is_ignored_nhwc_quant8_2,
+                           heatmap_max_keypoint::get_examples_nhwc_quant8_2());
+}
+
+TEST_F(ValidationTest, heatmap_max_keypoint_nhwc_quant8_2) {
+  const Model model = heatmap_max_keypoint::createTestModel_nhwc_quant8_2();
+  const std::vector<Request> requests = createRequests(heatmap_max_keypoint::get_examples_nhwc_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, heatmap_max_keypoint_nchw_quant8_2) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_nchw_quant8_2,
+                           heatmap_max_keypoint::is_ignored_nchw_quant8_2,
+                           heatmap_max_keypoint::get_examples_nchw_quant8_2());
+}
+
+TEST_F(ValidationTest, heatmap_max_keypoint_nchw_quant8_2) {
+  const Model model = heatmap_max_keypoint::createTestModel_nchw_quant8_2();
+  const std::vector<Request> requests = createRequests(heatmap_max_keypoint::get_examples_nchw_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, heatmap_max_keypoint_dynamic_output_shape_nhwc_quant8_2) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_dynamic_output_shape_nhwc_quant8_2,
+                           heatmap_max_keypoint::is_ignored_dynamic_output_shape_nhwc_quant8_2,
+                           heatmap_max_keypoint::get_examples_dynamic_output_shape_nhwc_quant8_2(), true);
+}
+
+TEST_F(ValidationTest, heatmap_max_keypoint_dynamic_output_shape_nhwc_quant8_2) {
+  const Model model = heatmap_max_keypoint::createTestModel_dynamic_output_shape_nhwc_quant8_2();
+  const std::vector<Request> requests = createRequests(heatmap_max_keypoint::get_examples_dynamic_output_shape_nhwc_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, heatmap_max_keypoint_dynamic_output_shape_nchw_quant8_2) {
+  generated_tests::Execute(device,
+                           heatmap_max_keypoint::createTestModel_dynamic_output_shape_nchw_quant8_2,
+                           heatmap_max_keypoint::is_ignored_dynamic_output_shape_nchw_quant8_2,
+                           heatmap_max_keypoint::get_examples_dynamic_output_shape_nchw_quant8_2(), true);
+}
+
+TEST_F(ValidationTest, heatmap_max_keypoint_dynamic_output_shape_nchw_quant8_2) {
+  const Model model = heatmap_max_keypoint::createTestModel_dynamic_output_shape_nchw_quant8_2();
+  const std::vector<Request> requests = createRequests(heatmap_max_keypoint::get_examples_dynamic_output_shape_nchw_quant8_2());
   validateModel(model);
   validateRequests(model, requests);
 }

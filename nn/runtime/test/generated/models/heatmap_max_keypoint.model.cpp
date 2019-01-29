@@ -60,16 +60,16 @@ inline bool is_ignored_nhwc_relaxed(int i) {
 
 void CreateModel_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type10(Type::TENSOR_FLOAT16, {6, 1, 2});
-  OperandType type11(Type::TENSOR_FLOAT16, {6, 1});
-  OperandType type8(Type::TENSOR_FLOAT16, {6, 4});
-  OperandType type9(Type::TENSOR_FLOAT16, {6, 4, 4, 1});
+  OperandType type12(Type::TENSOR_FLOAT16, {6, 4});
+  OperandType type13(Type::TENSOR_FLOAT16, {6, 4, 4, 1});
+  OperandType type14(Type::TENSOR_FLOAT16, {6, 1, 2});
+  OperandType type15(Type::TENSOR_FLOAT16, {6, 1});
   // Phase 1, operands
-  auto heatmap = model->addOperand(&type9);
-  auto boxes = model->addOperand(&type8);
+  auto heatmap = model->addOperand(&type13);
+  auto boxes = model->addOperand(&type12);
   auto layout = model->addOperand(&type0);
-  auto score = model->addOperand(&type11);
-  auto keypoint = model->addOperand(&type10);
+  auto score = model->addOperand(&type15);
+  auto keypoint = model->addOperand(&type14);
   // Phase 2, operations
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -88,12 +88,12 @@ inline bool is_ignored_nhwc_float16(int i) {
 
 void CreateModel_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type12(Type::TENSOR_FLOAT32, {6, 1, 4, 4});
+  OperandType type16(Type::TENSOR_FLOAT32, {6, 1, 4, 4});
   OperandType type2(Type::TENSOR_FLOAT32, {6, 4});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 1});
   OperandType type4(Type::TENSOR_FLOAT32, {6, 1, 2});
   // Phase 1, operands
-  auto heatmap = model->addOperand(&type12);
+  auto heatmap = model->addOperand(&type16);
   auto boxes = model->addOperand(&type2);
   auto layout = model->addOperand(&type0);
   auto score = model->addOperand(&type3);
@@ -116,12 +116,12 @@ inline bool is_ignored_nchw(int i) {
 
 void CreateModel_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type12(Type::TENSOR_FLOAT32, {6, 1, 4, 4});
+  OperandType type16(Type::TENSOR_FLOAT32, {6, 1, 4, 4});
   OperandType type2(Type::TENSOR_FLOAT32, {6, 4});
   OperandType type3(Type::TENSOR_FLOAT32, {6, 1});
   OperandType type4(Type::TENSOR_FLOAT32, {6, 1, 2});
   // Phase 1, operands
-  auto heatmap = model->addOperand(&type12);
+  auto heatmap = model->addOperand(&type16);
   auto boxes = model->addOperand(&type2);
   auto layout = model->addOperand(&type0);
   auto score = model->addOperand(&type3);
@@ -146,16 +146,16 @@ inline bool is_ignored_nchw_relaxed(int i) {
 
 void CreateModel_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type10(Type::TENSOR_FLOAT16, {6, 1, 2});
-  OperandType type11(Type::TENSOR_FLOAT16, {6, 1});
-  OperandType type13(Type::TENSOR_FLOAT16, {6, 1, 4, 4});
-  OperandType type8(Type::TENSOR_FLOAT16, {6, 4});
+  OperandType type12(Type::TENSOR_FLOAT16, {6, 4});
+  OperandType type14(Type::TENSOR_FLOAT16, {6, 1, 2});
+  OperandType type15(Type::TENSOR_FLOAT16, {6, 1});
+  OperandType type17(Type::TENSOR_FLOAT16, {6, 1, 4, 4});
   // Phase 1, operands
-  auto heatmap = model->addOperand(&type13);
-  auto boxes = model->addOperand(&type8);
+  auto heatmap = model->addOperand(&type17);
+  auto boxes = model->addOperand(&type12);
   auto layout = model->addOperand(&type0);
-  auto score = model->addOperand(&type11);
-  auto keypoint = model->addOperand(&type10);
+  auto score = model->addOperand(&type15);
+  auto keypoint = model->addOperand(&type14);
   // Phase 2, operations
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -175,15 +175,15 @@ inline bool is_ignored_nchw_float16(int i) {
 void CreateModel_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type1(Type::TENSOR_FLOAT32, {6, 4, 4, 1});
-  OperandType type14(Type::TENSOR_FLOAT32, {0, 0});
-  OperandType type15(Type::TENSOR_FLOAT32, {0, 0, 0});
+  OperandType type18(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type19(Type::TENSOR_FLOAT32, {0, 0, 0});
   OperandType type2(Type::TENSOR_FLOAT32, {6, 4});
   // Phase 1, operands
   auto heatmap = model->addOperand(&type1);
   auto boxes = model->addOperand(&type2);
   auto layout = model->addOperand(&type0);
-  auto score = model->addOperand(&type14);
-  auto keypoint = model->addOperand(&type15);
+  auto score = model->addOperand(&type18);
+  auto keypoint = model->addOperand(&type19);
   // Phase 2, operations
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -203,15 +203,15 @@ inline bool is_ignored_dynamic_output_shape_nhwc(int i) {
 void CreateModel_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type1(Type::TENSOR_FLOAT32, {6, 4, 4, 1});
-  OperandType type14(Type::TENSOR_FLOAT32, {0, 0});
-  OperandType type15(Type::TENSOR_FLOAT32, {0, 0, 0});
+  OperandType type18(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type19(Type::TENSOR_FLOAT32, {0, 0, 0});
   OperandType type2(Type::TENSOR_FLOAT32, {6, 4});
   // Phase 1, operands
   auto heatmap = model->addOperand(&type1);
   auto boxes = model->addOperand(&type2);
   auto layout = model->addOperand(&type0);
-  auto score = model->addOperand(&type14);
-  auto keypoint = model->addOperand(&type15);
+  auto score = model->addOperand(&type18);
+  auto keypoint = model->addOperand(&type19);
   // Phase 2, operations
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -232,16 +232,16 @@ inline bool is_ignored_dynamic_output_shape_nhwc_relaxed(int i) {
 
 void CreateModel_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type16(Type::TENSOR_FLOAT16, {0, 0});
-  OperandType type17(Type::TENSOR_FLOAT16, {0, 0, 0});
-  OperandType type8(Type::TENSOR_FLOAT16, {6, 4});
-  OperandType type9(Type::TENSOR_FLOAT16, {6, 4, 4, 1});
+  OperandType type12(Type::TENSOR_FLOAT16, {6, 4});
+  OperandType type13(Type::TENSOR_FLOAT16, {6, 4, 4, 1});
+  OperandType type20(Type::TENSOR_FLOAT16, {0, 0});
+  OperandType type21(Type::TENSOR_FLOAT16, {0, 0, 0});
   // Phase 1, operands
-  auto heatmap = model->addOperand(&type9);
-  auto boxes = model->addOperand(&type8);
+  auto heatmap = model->addOperand(&type13);
+  auto boxes = model->addOperand(&type12);
   auto layout = model->addOperand(&type0);
-  auto score = model->addOperand(&type16);
-  auto keypoint = model->addOperand(&type17);
+  auto score = model->addOperand(&type20);
+  auto keypoint = model->addOperand(&type21);
   // Phase 2, operations
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -260,16 +260,16 @@ inline bool is_ignored_dynamic_output_shape_nhwc_float16(int i) {
 
 void CreateModel_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type12(Type::TENSOR_FLOAT32, {6, 1, 4, 4});
-  OperandType type14(Type::TENSOR_FLOAT32, {0, 0});
-  OperandType type15(Type::TENSOR_FLOAT32, {0, 0, 0});
+  OperandType type16(Type::TENSOR_FLOAT32, {6, 1, 4, 4});
+  OperandType type18(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type19(Type::TENSOR_FLOAT32, {0, 0, 0});
   OperandType type2(Type::TENSOR_FLOAT32, {6, 4});
   // Phase 1, operands
-  auto heatmap = model->addOperand(&type12);
+  auto heatmap = model->addOperand(&type16);
   auto boxes = model->addOperand(&type2);
   auto layout = model->addOperand(&type0);
-  auto score = model->addOperand(&type14);
-  auto keypoint = model->addOperand(&type15);
+  auto score = model->addOperand(&type18);
+  auto keypoint = model->addOperand(&type19);
   // Phase 2, operations
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -288,16 +288,16 @@ inline bool is_ignored_dynamic_output_shape_nchw(int i) {
 
 void CreateModel_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type12(Type::TENSOR_FLOAT32, {6, 1, 4, 4});
-  OperandType type14(Type::TENSOR_FLOAT32, {0, 0});
-  OperandType type15(Type::TENSOR_FLOAT32, {0, 0, 0});
+  OperandType type16(Type::TENSOR_FLOAT32, {6, 1, 4, 4});
+  OperandType type18(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type19(Type::TENSOR_FLOAT32, {0, 0, 0});
   OperandType type2(Type::TENSOR_FLOAT32, {6, 4});
   // Phase 1, operands
-  auto heatmap = model->addOperand(&type12);
+  auto heatmap = model->addOperand(&type16);
   auto boxes = model->addOperand(&type2);
   auto layout = model->addOperand(&type0);
-  auto score = model->addOperand(&type14);
-  auto keypoint = model->addOperand(&type15);
+  auto score = model->addOperand(&type18);
+  auto keypoint = model->addOperand(&type19);
   // Phase 2, operations
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -318,16 +318,16 @@ inline bool is_ignored_dynamic_output_shape_nchw_relaxed(int i) {
 
 void CreateModel_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type13(Type::TENSOR_FLOAT16, {6, 1, 4, 4});
-  OperandType type16(Type::TENSOR_FLOAT16, {0, 0});
-  OperandType type17(Type::TENSOR_FLOAT16, {0, 0, 0});
-  OperandType type8(Type::TENSOR_FLOAT16, {6, 4});
+  OperandType type12(Type::TENSOR_FLOAT16, {6, 4});
+  OperandType type17(Type::TENSOR_FLOAT16, {6, 1, 4, 4});
+  OperandType type20(Type::TENSOR_FLOAT16, {0, 0});
+  OperandType type21(Type::TENSOR_FLOAT16, {0, 0, 0});
   // Phase 1, operands
-  auto heatmap = model->addOperand(&type13);
-  auto boxes = model->addOperand(&type8);
+  auto heatmap = model->addOperand(&type17);
+  auto boxes = model->addOperand(&type12);
   auto layout = model->addOperand(&type0);
-  auto score = model->addOperand(&type16);
-  auto keypoint = model->addOperand(&type17);
+  auto score = model->addOperand(&type20);
+  auto keypoint = model->addOperand(&type21);
   // Phase 2, operations
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -402,15 +402,15 @@ inline bool is_ignored_nhwc_relaxed_2(int i) {
 
 void CreateModel_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {2, 4});
-  OperandType type19(Type::TENSOR_FLOAT16, {2, 4, 4, 4});
-  OperandType type20(Type::TENSOR_FLOAT16, {2, 4, 2});
+  OperandType type22(Type::TENSOR_FLOAT16, {2, 4});
+  OperandType type23(Type::TENSOR_FLOAT16, {2, 4, 4, 4});
+  OperandType type24(Type::TENSOR_FLOAT16, {2, 4, 2});
   // Phase 1, operands
-  auto heatmap1 = model->addOperand(&type19);
-  auto boxes1 = model->addOperand(&type18);
+  auto heatmap1 = model->addOperand(&type23);
+  auto boxes1 = model->addOperand(&type22);
   auto layout = model->addOperand(&type0);
-  auto score1 = model->addOperand(&type18);
-  auto keypoint1 = model->addOperand(&type20);
+  auto score1 = model->addOperand(&type22);
+  auto keypoint1 = model->addOperand(&type24);
   // Phase 2, operations
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -423,6 +423,34 @@ void CreateModel_nhwc_float16_2(Model *model) {
 }
 
 inline bool is_ignored_nhwc_float16_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nhwc_quant8(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type25(Type::TENSOR_QUANT16_ASYMM, {2, 4}, 0.125f, 0);
+  OperandType type26(Type::TENSOR_QUANT8_ASYMM, {2, 4, 4, 4}, 0.01f, 128);
+  OperandType type27(Type::TENSOR_QUANT16_ASYMM, {2, 4, 2}, 0.125f, 0);
+  OperandType type28(Type::TENSOR_QUANT8_ASYMM, {2, 4}, 0.01f, 0);
+  // Phase 1, operands
+  auto heatmap1 = model->addOperand(&type26);
+  auto boxes1 = model->addOperand(&type25);
+  auto layout = model->addOperand(&type0);
+  auto score1 = model->addOperand(&type28);
+  auto keypoint1 = model->addOperand(&type27);
+  // Phase 2, operations
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap1, boxes1, layout}, {score1, keypoint1});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {heatmap1, boxes1},
+    {score1, keypoint1});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -485,15 +513,15 @@ inline bool is_ignored_nchw_relaxed_2(int i) {
 
 void CreateModel_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {2, 4});
-  OperandType type19(Type::TENSOR_FLOAT16, {2, 4, 4, 4});
-  OperandType type20(Type::TENSOR_FLOAT16, {2, 4, 2});
+  OperandType type22(Type::TENSOR_FLOAT16, {2, 4});
+  OperandType type23(Type::TENSOR_FLOAT16, {2, 4, 4, 4});
+  OperandType type24(Type::TENSOR_FLOAT16, {2, 4, 2});
   // Phase 1, operands
-  auto heatmap1 = model->addOperand(&type19);
-  auto boxes1 = model->addOperand(&type18);
+  auto heatmap1 = model->addOperand(&type23);
+  auto boxes1 = model->addOperand(&type22);
   auto layout = model->addOperand(&type0);
-  auto score1 = model->addOperand(&type18);
-  auto keypoint1 = model->addOperand(&type20);
+  auto score1 = model->addOperand(&type22);
+  auto keypoint1 = model->addOperand(&type24);
   // Phase 2, operations
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -510,18 +538,46 @@ inline bool is_ignored_nchw_float16_2(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_nchw_quant8(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type25(Type::TENSOR_QUANT16_ASYMM, {2, 4}, 0.125f, 0);
+  OperandType type26(Type::TENSOR_QUANT8_ASYMM, {2, 4, 4, 4}, 0.01f, 128);
+  OperandType type27(Type::TENSOR_QUANT16_ASYMM, {2, 4, 2}, 0.125f, 0);
+  OperandType type28(Type::TENSOR_QUANT8_ASYMM, {2, 4}, 0.01f, 0);
+  // Phase 1, operands
+  auto heatmap1 = model->addOperand(&type26);
+  auto boxes1 = model->addOperand(&type25);
+  auto layout = model->addOperand(&type0);
+  auto score1 = model->addOperand(&type28);
+  auto keypoint1 = model->addOperand(&type27);
+  // Phase 2, operations
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap1, boxes1, layout}, {score1, keypoint1});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {heatmap1, boxes1},
+    {score1, keypoint1});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_quant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
 void CreateModel_dynamic_output_shape_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type14(Type::TENSOR_FLOAT32, {0, 0});
-  OperandType type15(Type::TENSOR_FLOAT32, {0, 0, 0});
+  OperandType type18(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type19(Type::TENSOR_FLOAT32, {0, 0, 0});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 4, 4, 4});
   OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
   // Phase 1, operands
   auto heatmap1 = model->addOperand(&type5);
   auto boxes1 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto score1 = model->addOperand(&type14);
-  auto keypoint1 = model->addOperand(&type15);
+  auto score1 = model->addOperand(&type18);
+  auto keypoint1 = model->addOperand(&type19);
   // Phase 2, operations
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -540,16 +596,16 @@ inline bool is_ignored_dynamic_output_shape_nhwc_2(int i) {
 
 void CreateModel_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type14(Type::TENSOR_FLOAT32, {0, 0});
-  OperandType type15(Type::TENSOR_FLOAT32, {0, 0, 0});
+  OperandType type18(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type19(Type::TENSOR_FLOAT32, {0, 0, 0});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 4, 4, 4});
   OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
   // Phase 1, operands
   auto heatmap1 = model->addOperand(&type5);
   auto boxes1 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto score1 = model->addOperand(&type14);
-  auto keypoint1 = model->addOperand(&type15);
+  auto score1 = model->addOperand(&type18);
+  auto keypoint1 = model->addOperand(&type19);
   // Phase 2, operations
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -570,16 +626,16 @@ inline bool is_ignored_dynamic_output_shape_nhwc_relaxed_2(int i) {
 
 void CreateModel_dynamic_output_shape_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type16(Type::TENSOR_FLOAT16, {0, 0});
-  OperandType type17(Type::TENSOR_FLOAT16, {0, 0, 0});
-  OperandType type18(Type::TENSOR_FLOAT16, {2, 4});
-  OperandType type19(Type::TENSOR_FLOAT16, {2, 4, 4, 4});
+  OperandType type20(Type::TENSOR_FLOAT16, {0, 0});
+  OperandType type21(Type::TENSOR_FLOAT16, {0, 0, 0});
+  OperandType type22(Type::TENSOR_FLOAT16, {2, 4});
+  OperandType type23(Type::TENSOR_FLOAT16, {2, 4, 4, 4});
   // Phase 1, operands
-  auto heatmap1 = model->addOperand(&type19);
-  auto boxes1 = model->addOperand(&type18);
+  auto heatmap1 = model->addOperand(&type23);
+  auto boxes1 = model->addOperand(&type22);
   auto layout = model->addOperand(&type0);
-  auto score1 = model->addOperand(&type16);
-  auto keypoint1 = model->addOperand(&type17);
+  auto score1 = model->addOperand(&type20);
+  auto keypoint1 = model->addOperand(&type21);
   // Phase 2, operations
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -596,18 +652,46 @@ inline bool is_ignored_dynamic_output_shape_nhwc_float16_2(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_dynamic_output_shape_nhwc_quant8(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type25(Type::TENSOR_QUANT16_ASYMM, {2, 4}, 0.125f, 0);
+  OperandType type26(Type::TENSOR_QUANT8_ASYMM, {2, 4, 4, 4}, 0.01f, 128);
+  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {0, 0}, 0.01f, 0);
+  OperandType type30(Type::TENSOR_QUANT16_ASYMM, {0, 0, 0}, 0.125f, 0);
+  // Phase 1, operands
+  auto heatmap1 = model->addOperand(&type26);
+  auto boxes1 = model->addOperand(&type25);
+  auto layout = model->addOperand(&type0);
+  auto score1 = model->addOperand(&type29);
+  auto keypoint1 = model->addOperand(&type30);
+  // Phase 2, operations
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap1, boxes1, layout}, {score1, keypoint1});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {heatmap1, boxes1},
+    {score1, keypoint1});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_quant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
 void CreateModel_dynamic_output_shape_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type14(Type::TENSOR_FLOAT32, {0, 0});
-  OperandType type15(Type::TENSOR_FLOAT32, {0, 0, 0});
+  OperandType type18(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type19(Type::TENSOR_FLOAT32, {0, 0, 0});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 4, 4, 4});
   OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
   // Phase 1, operands
   auto heatmap1 = model->addOperand(&type5);
   auto boxes1 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto score1 = model->addOperand(&type14);
-  auto keypoint1 = model->addOperand(&type15);
+  auto score1 = model->addOperand(&type18);
+  auto keypoint1 = model->addOperand(&type19);
   // Phase 2, operations
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -626,16 +710,16 @@ inline bool is_ignored_dynamic_output_shape_nchw_2(int i) {
 
 void CreateModel_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type14(Type::TENSOR_FLOAT32, {0, 0});
-  OperandType type15(Type::TENSOR_FLOAT32, {0, 0, 0});
+  OperandType type18(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type19(Type::TENSOR_FLOAT32, {0, 0, 0});
   OperandType type5(Type::TENSOR_FLOAT32, {2, 4, 4, 4});
   OperandType type6(Type::TENSOR_FLOAT32, {2, 4});
   // Phase 1, operands
   auto heatmap1 = model->addOperand(&type5);
   auto boxes1 = model->addOperand(&type6);
   auto layout = model->addOperand(&type0);
-  auto score1 = model->addOperand(&type14);
-  auto keypoint1 = model->addOperand(&type15);
+  auto score1 = model->addOperand(&type18);
+  auto keypoint1 = model->addOperand(&type19);
   // Phase 2, operations
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -656,16 +740,16 @@ inline bool is_ignored_dynamic_output_shape_nchw_relaxed_2(int i) {
 
 void CreateModel_dynamic_output_shape_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
-  OperandType type16(Type::TENSOR_FLOAT16, {0, 0});
-  OperandType type17(Type::TENSOR_FLOAT16, {0, 0, 0});
-  OperandType type18(Type::TENSOR_FLOAT16, {2, 4});
-  OperandType type19(Type::TENSOR_FLOAT16, {2, 4, 4, 4});
+  OperandType type20(Type::TENSOR_FLOAT16, {0, 0});
+  OperandType type21(Type::TENSOR_FLOAT16, {0, 0, 0});
+  OperandType type22(Type::TENSOR_FLOAT16, {2, 4});
+  OperandType type23(Type::TENSOR_FLOAT16, {2, 4, 4, 4});
   // Phase 1, operands
-  auto heatmap1 = model->addOperand(&type19);
-  auto boxes1 = model->addOperand(&type18);
+  auto heatmap1 = model->addOperand(&type23);
+  auto boxes1 = model->addOperand(&type22);
   auto layout = model->addOperand(&type0);
-  auto score1 = model->addOperand(&type16);
-  auto keypoint1 = model->addOperand(&type17);
+  auto score1 = model->addOperand(&type20);
+  auto keypoint1 = model->addOperand(&type21);
   // Phase 2, operations
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -678,6 +762,146 @@ void CreateModel_dynamic_output_shape_nchw_float16_2(Model *model) {
 }
 
 inline bool is_ignored_dynamic_output_shape_nchw_float16_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_quant8(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type25(Type::TENSOR_QUANT16_ASYMM, {2, 4}, 0.125f, 0);
+  OperandType type26(Type::TENSOR_QUANT8_ASYMM, {2, 4, 4, 4}, 0.01f, 128);
+  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {0, 0}, 0.01f, 0);
+  OperandType type30(Type::TENSOR_QUANT16_ASYMM, {0, 0, 0}, 0.125f, 0);
+  // Phase 1, operands
+  auto heatmap1 = model->addOperand(&type26);
+  auto boxes1 = model->addOperand(&type25);
+  auto layout = model->addOperand(&type0);
+  auto score1 = model->addOperand(&type29);
+  auto keypoint1 = model->addOperand(&type30);
+  // Phase 2, operations
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap1, boxes1, layout}, {score1, keypoint1});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {heatmap1, boxes1},
+    {score1, keypoint1});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_quant8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nhwc_quant8_2(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type31(Type::TENSOR_QUANT16_ASYMM, {5, 4}, 0.125f, 0);
+  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {5, 4, 4, 1}, 0.5f, 128);
+  OperandType type33(Type::TENSOR_QUANT16_ASYMM, {5, 1, 2}, 0.125f, 0);
+  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {5, 1}, 0.1f, 10);
+  // Phase 1, operands
+  auto heatmap2 = model->addOperand(&type32);
+  auto boxes2 = model->addOperand(&type31);
+  auto layout = model->addOperand(&type0);
+  auto score2 = model->addOperand(&type34);
+  auto keypoint2 = model->addOperand(&type33);
+  // Phase 2, operations
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap2, boxes2, layout}, {score2, keypoint2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {heatmap2, boxes2},
+    {score2, keypoint2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nhwc_quant8_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_quant8_2(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type31(Type::TENSOR_QUANT16_ASYMM, {5, 4}, 0.125f, 0);
+  OperandType type33(Type::TENSOR_QUANT16_ASYMM, {5, 1, 2}, 0.125f, 0);
+  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {5, 1}, 0.1f, 10);
+  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {5, 1, 4, 4}, 0.5f, 128);
+  // Phase 1, operands
+  auto heatmap2 = model->addOperand(&type36);
+  auto boxes2 = model->addOperand(&type31);
+  auto layout = model->addOperand(&type0);
+  auto score2 = model->addOperand(&type34);
+  auto keypoint2 = model->addOperand(&type33);
+  // Phase 2, operations
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap2, boxes2, layout}, {score2, keypoint2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {heatmap2, boxes2},
+    {score2, keypoint2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_quant8_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nhwc_quant8_2(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type30(Type::TENSOR_QUANT16_ASYMM, {0, 0, 0}, 0.125f, 0);
+  OperandType type31(Type::TENSOR_QUANT16_ASYMM, {5, 4}, 0.125f, 0);
+  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {5, 4, 4, 1}, 0.5f, 128);
+  OperandType type37(Type::TENSOR_QUANT8_ASYMM, {0, 0}, 0.1f, 10);
+  // Phase 1, operands
+  auto heatmap2 = model->addOperand(&type32);
+  auto boxes2 = model->addOperand(&type31);
+  auto layout = model->addOperand(&type0);
+  auto score2 = model->addOperand(&type37);
+  auto keypoint2 = model->addOperand(&type30);
+  // Phase 2, operations
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap2, boxes2, layout}, {score2, keypoint2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {heatmap2, boxes2},
+    {score2, keypoint2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_quant8_2(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_quant8_2(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type30(Type::TENSOR_QUANT16_ASYMM, {0, 0, 0}, 0.125f, 0);
+  OperandType type31(Type::TENSOR_QUANT16_ASYMM, {5, 4}, 0.125f, 0);
+  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {5, 1, 4, 4}, 0.5f, 128);
+  OperandType type37(Type::TENSOR_QUANT8_ASYMM, {0, 0}, 0.1f, 10);
+  // Phase 1, operands
+  auto heatmap2 = model->addOperand(&type36);
+  auto boxes2 = model->addOperand(&type31);
+  auto layout = model->addOperand(&type0);
+  auto score2 = model->addOperand(&type37);
+  auto keypoint2 = model->addOperand(&type30);
+  // Phase 2, operations
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT, {heatmap2, boxes2, layout}, {score2, keypoint2});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {heatmap2, boxes2},
+    {score2, keypoint2});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
