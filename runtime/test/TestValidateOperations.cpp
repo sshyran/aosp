@@ -3012,4 +3012,38 @@ TEST(OperationValidationTest, UNIDIRECTIONAL_SEQUENCE_RNN_float16) {
     unidirectionlSequenceRNNTest(ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
+void generateProposalsOpTest(int32_t scoreOperandCode, int32_t deltaOperandCode,
+                             int32_t anchorOperandCode, int32_t roiOperandCode,
+                             int32_t scalarOperandCode) {
+    uint32_t scoreDim[] = {1, 2, 2, 2}, deltaDim[] = {1, 2, 2, 8}, anchorDim[] = {2, 4},
+             imageInfoDim[] = {1, 2};
+    uint32_t outScoreDim[] = {4}, outRoiDim[] = {4, 4}, outSplitDim[] = {1};
+    OperationTestBase generateProposalsTest(
+            ANEURALNETWORKS_GENERATE_PROPOSALS,
+            {getOpType(scoreOperandCode, 4, scoreDim), getOpType(deltaOperandCode, 4, deltaDim),
+             getOpType(anchorOperandCode, 2, anchorDim), getOpType(roiOperandCode, 2, imageInfoDim),
+             getOpType(scalarOperandCode), getOpType(scalarOperandCode),
+             getOpType(ANEURALNETWORKS_INT32), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(scalarOperandCode), getOpType(scalarOperandCode)},
+            {getOpType(scoreOperandCode, 1, outScoreDim), getOpType(roiOperandCode, 2, outRoiDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outSplitDim)});
+
+    EXPECT_TRUE(generateProposalsTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(generateProposalsTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(generateProposalsTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(generateProposalsTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, GENERATE_PROPOSALS_float16) {
+    generateProposalsOpTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_FLOAT16,
+                            ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_FLOAT16,
+                            ANEURALNETWORKS_FLOAT16);
+}
+
+TEST(OperationValidationTest, GENERATE_PROPOSALS_float32) {
+    generateProposalsOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32,
+                            ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32,
+                            ANEURALNETWORKS_FLOAT32);
+}
+
 }  // end namespace
