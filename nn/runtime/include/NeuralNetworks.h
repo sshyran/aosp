@@ -4243,7 +4243,8 @@ typedef struct ANeuralNetworksModel ANeuralNetworksModel;
  *        {@link ANeuralNetworksCompilation_setPreference}).</li>
  *    <li>Complete the compilation with {@link ANeuralNetworksCompilation_finish}.</li>
  *    <li>Use the compilation as many times as needed
- *        with {@link ANeuralNetworksExecution_create}.</li>
+ *        with {@link ANeuralNetworksExecution_create} and
+ *        {@link ANeuralNetworksBurst_create}.</li>
  *    <li>Destroy the compilation with {@link ANeuralNetworksCompilation_free}
  *        once all executions using the compilation have completed.</li></ul></p>
  *
@@ -4279,12 +4280,13 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  *    <li>Associate output buffers or memory regions to the model outputs with
  *        {@link ANeuralNetworksExecution_setOutput} or
  *        {@link ANeuralNetworksExecution_setOutputFromMemory}.</li>
- *    <li>Either
- *        <li>Apply the model asynchronously with {@link
- * ANeuralNetworksExecution_startCompute}.</li> <li>Wait for the execution to complete with {@link
- *            ANeuralNetworksEvent_wait}.</li></li>
- *    <li>Or
- *        <li>Apply the model synchronously with {@link ANeuralNetworksExecution_compute}.</li></li>
+ *    <li>Apply the model with one of the following:</li><ul>
+ *        <li>Asynchronously with {@link ANeuralNetworksExecution_startCompute},
+ *            waiting for the execution to complete with
+ *            {@link ANeuralNetworksEvent_wait}.</li>
+ *        <li>Synchronously with {@link ANeuralNetworksExecution_compute}.</li>
+ *        <li>Synchronously as part of an execution burst with
+ *            {@link ANeuralNetworksExecution_burstCompute}.</li></ul>
  *    <li>Destroy the execution with
  *        {@link ANeuralNetworksExecution_free}.</li></ul></p>
  *
@@ -4337,6 +4339,39 @@ typedef struct ANeuralNetworksSymmPerChannelQuantParams {
     /** The array of scaling values for each channel. Each value must be greater than zero. */
     const float* scales;
 } ANeuralNetworksSymmPerChannelQuantParams;
+
+/**
+ * ANeuralNetworksBurst is an opaque type that can be used to reduce the latency
+ * of a rapid sequence of executions. It will likely cause overhead if only used
+ * for a single execution.
+ *
+ * ANeuralNetworksBurst serves as a context object for any number of inferences
+ * using {@link ANeuralNetworksExecution} objects. An ANeuralNetworksBurst
+ * object and the {@link ANeuralNetworksExecution} objects used with it must all
+ * have been created from the same {@link ANeuralNetworksCompilation} object.
+ *
+ * This object is also used as a hint to drivers, providing insight to the
+ * lifetime of a rapid sequence of executions. For example, a driver may choose
+ * to increase the clock frequency of its accelerator for the lifetime of a
+ * burst object.
+ *
+ * <p>To use:<ul>
+ *    <li>Create a new burst object by calling the
+ *        {@link ANeuralNetworksBurst_create} function.</li>
+ *    <li>For each execution:</li><ul>
+ *        <li>Create {@link ANeuralNetworksExecution} and configure its
+ *            properties (see {@link ANeuralNetworksExecution} for details).</li>
+ *        <li>Apply the model synchronously with
+ *            {@link ANeuralNetworksExecution_burstCompute}, reusing the same
+ *            {@link ANeuralNetworksBurst} with the new
+ *            {@link ANeuralNetworksExecution}.</li>
+ *        <li>Use and free the {@link ANeuralNetworksExecution}.</li></ul>
+ *    <li>Destroy the burst with
+ *        {@link ANeuralNetworksBurst_free}.</li></ul></p>
+ *
+ * Available since API level 29.
+ */
+typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
 #endif  //  __ANDROID_API__ >= __ANDROID_API_Q__
 
 /**
@@ -4639,6 +4674,58 @@ int ANeuralNetworksExecution_getOutputOperandRank(ANeuralNetworksExecution* exec
  */
 int ANeuralNetworksExecution_getOutputOperandDimensions(ANeuralNetworksExecution* execution,
                                                         int32_t index, uint32_t* dimensions);
+
+/**
+ * Create a {@link ANeuralNetworksBurst} to apply the given compilation.
+ * This only creates the burst object. Computation is only performed once
+ * {@link ANeuralNetworksExecution_burstCompute} is invoked with a valid
+ * {@link ANeuralNetworksExecution} and {@link ANeuralNetworksBurst}.
+ *
+ * <p>The provided compilation must outlive the burst object.</p>
+ *
+ * Available since API level 29.
+ *
+ * @param compilation The {@link ANeuralNetworksCompilation} to be evaluated.
+ * @param burst The newly created object or NULL if unsuccessful.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful, ANEURALNETWORKS_BAD_DATA
+ *         if the compilation is invalid.
+ */
+int ANeuralNetworksBurst_create(ANeuralNetworksCompilation* compilation,
+                                ANeuralNetworksBurst** burst) __INTRODUCED_IN(29);
+
+/**
+ * Destroys the burst object.
+ *
+ * Available since API level 29.
+ *
+ * @param burst The burst object to be destroyed. Passing NULL is acceptable and
+ *              results in no operation.
+ */
+void ANeuralNetworksBurst_free(ANeuralNetworksBurst* burst) __INTRODUCED_IN(29);
+
+/**
+ * Schedule synchronous evaluation of the execution on a burst object.
+ *
+ * <p>Schedules synchronous evaluation of the execution. Returns once the
+ * execution has completed and the outputs are ready to be consumed.</p>
+ *
+ * <p>There must be at most one {@link ANeuralNetworksExecution} processing at
+ * any given time for any given burst object. Any
+ * {@link ANeuralNetworksExecution} launched before the previous has finished
+ * will result in ANEURALNETWORKS_BAD_STATE.</p>
+ *
+ * Available since API level 29.
+ *
+ * @param burst The burst object to execute on.
+ * @param execution The execution to be scheduled and executed. The execution
+ *                  must be created from the same {@link
+ *                  ANeuralNetworksCompilation} as the burst object.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if the execution completed normally.
+ */
+int ANeuralNetworksExecution_burstCompute(ANeuralNetworksExecution* execution,
+                                          ANeuralNetworksBurst* burst) __INTRODUCED_IN(29);
 
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
