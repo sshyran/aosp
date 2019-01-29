@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, floor_relaxed) {
             floor_relaxed::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, floor_relaxed_dynamic_output_shape) {
+    execute(floor_relaxed::CreateModel_dynamic_output_shape,
+            floor_relaxed::is_ignored_dynamic_output_shape,
+            floor_relaxed::get_examples_dynamic_output_shape());
+}
+
+#endif

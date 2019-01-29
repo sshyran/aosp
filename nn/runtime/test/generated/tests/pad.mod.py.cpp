@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, pad) {
             pad::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, pad_dynamic_output_shape) {
+    execute(pad::CreateModel_dynamic_output_shape,
+            pad::is_ignored_dynamic_output_shape,
+            pad::get_examples_dynamic_output_shape());
+}
+
+#endif

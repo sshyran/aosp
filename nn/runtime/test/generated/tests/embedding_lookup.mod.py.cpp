@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, embedding_lookup) {
             embedding_lookup::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, embedding_lookup_dynamic_output_shape) {
+    execute(embedding_lookup::CreateModel_dynamic_output_shape,
+            embedding_lookup::is_ignored_dynamic_output_shape,
+            embedding_lookup::get_examples_dynamic_output_shape());
+}
+
+#endif

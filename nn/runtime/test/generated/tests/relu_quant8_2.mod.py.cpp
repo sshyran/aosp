@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, relu_quant8_2) {
             relu_quant8_2::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, relu_quant8_2_dynamic_output_shape) {
+    execute(relu_quant8_2::CreateModel_dynamic_output_shape,
+            relu_quant8_2::is_ignored_dynamic_output_shape,
+            relu_quant8_2::get_examples_dynamic_output_shape());
+}
+
+#endif

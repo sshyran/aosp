@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, reshape_relaxed) {
             reshape_relaxed::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, reshape_relaxed_dynamic_output_shape) {
+    execute(reshape_relaxed::CreateModel_dynamic_output_shape,
+            reshape_relaxed::is_ignored_dynamic_output_shape,
+            reshape_relaxed::get_examples_dynamic_output_shape());
+}
+
+#endif

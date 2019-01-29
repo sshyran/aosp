@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, avg_pool_quant8_2) {
             avg_pool_quant8_2::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, avg_pool_quant8_2_dynamic_output_shape) {
+    execute(avg_pool_quant8_2::CreateModel_dynamic_output_shape,
+            avg_pool_quant8_2::is_ignored_dynamic_output_shape,
+            avg_pool_quant8_2::get_examples_dynamic_output_shape());
+}
+
+#endif
