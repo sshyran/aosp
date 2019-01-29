@@ -2,6 +2,7 @@
 #define FRAMEWORKS_ML_NN_QUANTIZEDLSTM_H
 
 #include "HalOperation.h"
+#include "OperationsUtils.h"
 
 #include <vector>
 
@@ -9,7 +10,6 @@ namespace android {
 namespace nn {
 
 struct RunTimeOperandInfo;
-struct Shape;
 
 class QuantizedLSTMCell {
    public:
@@ -17,8 +17,7 @@ class QuantizedLSTMCell {
                       std::vector<RunTimeOperandInfo>& operands);
 
     static bool prepare(const android::hardware::neuralnetworks::V1_2::Operation& operation,
-                        std::vector<RunTimeOperandInfo>& operands, Shape* concatTempShape,
-                        Shape* activationTempShape, Shape* outputStateShape, Shape* cellStateShape,
+                        std::vector<RunTimeOperandInfo>& operands, Shape* cellStateShape,
                         Shape* outputShape);
     bool eval();
 
@@ -29,11 +28,8 @@ class QuantizedLSTMCell {
     static constexpr int kBiasTensor = 3;
     static constexpr int kPrevCellStateTensor = 4;
     // Outputs:
-    static constexpr int kConcatTempTensor = 0;
-    static constexpr int kActivationTempTensor = 1;
-    static constexpr int kOutputStateOutTensor = 2;
-    static constexpr int kCellStateOutTensor = 3;
-    static constexpr int kOutputTensor = 4;
+    static constexpr int kCellStateOutTensor = 0;
+    static constexpr int kOutputTensor = 1;
 
    private:
     const RunTimeOperandInfo* input_;
@@ -42,9 +38,6 @@ class QuantizedLSTMCell {
     const RunTimeOperandInfo* bias_;
     const RunTimeOperandInfo* prevCellState_;
 
-    RunTimeOperandInfo* concatTemp_;
-    RunTimeOperandInfo* activationTemp_;
-    RunTimeOperandInfo* outputStateOut_;
     RunTimeOperandInfo* cellStateOut_;
     RunTimeOperandInfo* output_;
 };
