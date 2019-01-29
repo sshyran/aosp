@@ -396,6 +396,20 @@ public:
 
     Result compute() { return static_cast<Result>(ANeuralNetworksExecution_compute(mExecution)); }
 
+    Result getOutputOperandDimensions(uint32_t index, std::vector<uint32_t>* dimensions) {
+        uint32_t rank = 0;
+        Result result = static_cast<Result>(
+                ANeuralNetworksExecution_getOutputOperandRank(mExecution, index, &rank));
+        dimensions->resize(rank);
+        if ((result != Result::NO_ERROR && result != Result::OUTPUT_INSUFFICIENT_SIZE) ||
+            rank == 0) {
+            return result;
+        }
+        result = static_cast<Result>(ANeuralNetworksExecution_getOutputOperandDimensions(
+                mExecution, index, dimensions->data()));
+        return result;
+    }
+
    private:
     ANeuralNetworksExecution* mExecution = nullptr;
 };
