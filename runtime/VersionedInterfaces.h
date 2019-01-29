@@ -336,12 +336,18 @@ class VersionedIPreparedModel {
      *                - NONE if execution is performed successfully
      *                - DEVICE_UNAVAILABLE if driver is offline or busy
      *                - GENERAL_FAILURE if there is an unspecified error
-     *                - OUTPUT_INSUFFICIENT_SIZE if provided output buffer is
-     *                  not large enough to store the resultant values
+     *                - OUTPUT_INSUFFICIENT_SIZE if at least one output
+     *                  operand buffer is not large enough to store the
+     *                  corresponding output
      *                - INVALID_ARGUMENT if one of the input arguments is
      *                  invalid
+     * @return outputShapes A list of shape information of model output operands.
+     *                      The index into "outputShapes" corresponds with the index
+     *                      of the output operand in the Request outputs vector.
+     *                      outputShapes nust be empty unless the status is either
+     *                      NONE or OUTPUT_INSUFFICIENT_SIZE.
      */
-    ErrorStatus executeSynchronously(const Request& request);
+    std::pair<ErrorStatus, hidl_vec<OutputShape>> executeSynchronously(const Request& request);
 
     /**
      * Returns whether this handle to an IPreparedModel object is valid or not.
