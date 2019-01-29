@@ -26,6 +26,7 @@ namespace nn {
 // TODO(b/119608412): Find a way to not reference every operation here.
 const OperationRegistration* register_ABS();
 const OperationRegistration* register_AXIS_ALIGNED_BBOX_TRANSFORM();
+const OperationRegistration* register_BIDIRECTIONAL_SEQUENCE_RNN();
 const OperationRegistration* register_BOX_WITH_NMS_LIMIT();
 const OperationRegistration* register_CHANNEL_SHUFFLE();
 const OperationRegistration* register_EQUAL();
@@ -63,6 +64,7 @@ const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_RNN();
 OperationResolver::OperationResolver() {
     registerOperation(register_ABS());
     registerOperation(register_AXIS_ALIGNED_BBOX_TRANSFORM());
+    registerOperation(register_BIDIRECTIONAL_SEQUENCE_RNN());
     registerOperation(register_BOX_WITH_NMS_LIMIT());
     registerOperation(register_CHANNEL_SHUFFLE());
     registerOperation(register_EQUAL());
