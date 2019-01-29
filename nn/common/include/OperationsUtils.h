@@ -164,6 +164,8 @@ class IOperationExecutionContext {
     // Updates the output shape, allocating the buffer if necessary.
     virtual bool setOutputShape(uint32_t index, const Shape& shape) = 0;
 
+    virtual bool isNullInput(uint32_t index) const = 0;
+
     template <typename T>
     const T* getInputBuffer(uint32_t index) const {
         return reinterpret_cast<const T*>(getInputBuffer(index));
