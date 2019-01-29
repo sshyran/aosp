@@ -23,6 +23,7 @@ LIBNEURALNETWORKS {
     ANeuralNetworks_getDeviceCount; # introduced=Q
     ANeuralNetworks_getDevice; # introduced=Q
     ANeuralNetworksDevice_getName; # introduced=Q
+    ANeuralNetworksDevice_getType; # introduced=Q
     ANeuralNetworksDevice_getVersion; # introduced=Q
     ANeuralNetworksDevice_getFeatureLevel; # introduced=Q
     ANeuralNetworksMemory_createFromFd;

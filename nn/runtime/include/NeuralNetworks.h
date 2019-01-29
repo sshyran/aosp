@@ -3915,6 +3915,25 @@ typedef enum {
 } PreferenceCode;
 
 /**
+ * Device types.
+ *
+ * The type of NNAPI device.
+ */
+typedef enum {
+    /** The device type cannot be provided. */
+    ANEURALNETWORKS_DEVICE_UNKNOWN = 0,
+    /** The device does not fall into any category below. */
+    ANEURALNETWORKS_DEVICE_OTHER = 1,
+    /** The device runs NNAPI models on single or multi-core CPU. */
+    ANEURALNETWORKS_DEVICE_CPU = 2,
+    /** The device can run NNAPI models and also accelerate graphics APIs such
+     * as OpenGL ES and Vulkan. */
+    ANEURALNETWORKS_DEVICE_GPU = 3,
+    /** Dedicated accelerator for Machine Learning workloads. */
+    ANEURALNETWORKS_DEVICE_ACCELERATOR = 4,
+} DeviceTypeCode;
+
+/**
  * Result codes.
  *
  * <p>Any NNAPI function can return any result code, including result codes not
@@ -4217,19 +4236,19 @@ typedef struct ANeuralNetworksEvent ANeuralNetworksEvent;
 #if __ANDROID_API__ >= __ANDROID_API_Q__
 
 /**
- * ANeuralNetworksDevice is an opaque type that represents an accelerator.
+ * ANeuralNetworksDevice is an opaque type that represents a device.
  *
  * This type is used to query basic properties and supported operations of the corresponding
- * accelerator, and control which accelerator(s) a model is to be run on.
+ * device, and control which device(s) a model is to be run on.
  *
  * Available since API level 29.
  */
 typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
 
 /**
- * Get the number of available accelerators.
+ * Get the number of available devices.
  *
- * @param numDevices Used to return the number of accelerators.
+ * @param numDevices Used to return the number of devices.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
  *
@@ -4238,13 +4257,13 @@ typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
 int ANeuralNetworks_getDeviceCount(uint32_t* numDevices);
 
 /**
- * Get the representation of the specified accelerator.
+ * Get the representation of the specified device.
  *
- * @param devIndex The index of the specified accelerator. Must be less than the
-                   number of available accelerators.
- * @param device The representation of the specified accelerator.
+ * @param devIndex The index of the specified device. Must be less than the
+                   number of available devices.
+ * @param device The representation of the specified device.
  *               The same representation will always be returned for the specified
- *               accelerator.
+ *               device.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
  *
@@ -4253,10 +4272,10 @@ int ANeuralNetworks_getDeviceCount(uint32_t* numDevices);
 int ANeuralNetworks_getDevice(uint32_t devIndex, ANeuralNetworksDevice** device);
 
 /**
- * Get the name of the specified accelerator.
+ * Get the name of the specified device.
  *
- * @param device The representation of the specified accelerator.
- * @param name   The returned name of the specified accelerator. The name will be in UTF-8
+ * @param device The representation of the specified device.
+ * @param name   The returned name of the specified device. The name will be in UTF-8
  *               and will be null-terminated. It will be recognizable as a known device name
  *               rather than a cryptic string. For devices with feature level 29 and above, the
  *               format of the name is {VENDOR}-{DEVICE}, e.g. “google-ipu”. For devices with
@@ -4270,7 +4289,25 @@ int ANeuralNetworks_getDevice(uint32_t devIndex, ANeuralNetworksDevice** device)
 int ANeuralNetworksDevice_getName(const ANeuralNetworksDevice* device, const char** name);
 
 /**
- * Get the version of the driver implementation of the specified accelerator.
+ * Get the type of a given device.
+ *
+ * The device type can be used to help application developers to distribute Machine Learning
+ * workloads and other workloads such as graphical rendering.
+ * E.g., for an app which renders AR scenes based on real time object detection results,
+ * the developer could choose an ACCELERATOR type device for ML workloads, and reserve GPU
+ * for graphical rendering.
+ *
+ * @param device The representation of the specified device.
+ * @param type The returned {@link DeviceTypeCode} of the specified device.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
+ */
+int ANeuralNetworksDevice_getType(const ANeuralNetworksDevice* device, int32_t* type);
+
+/**
+ * Get the version of the driver implementation of the specified device.
  *
  * It’s the responsibility of the driver implementor to insure that this version string
  * uniquely distinguishes this implementation from all previous implementations.
@@ -4286,8 +4323,8 @@ int ANeuralNetworksDevice_getName(const ANeuralNetworksDevice* device, const cha
  *     - A specific version of the driver has a bug or returns results that don’t match
  *       the minimum precision requirement for the application.
  *
- * @param device The representation of the specified accelerator.
- * @param version The returned version string of the driver for the specified accelerator. The
+ * @param device The representation of the specified device.
+ * @param version The returned version string of the driver for the specified device. The
  *                string will be in UTF-8 and will be null-terminated. For devices with feature
  *                level 28 or lower, "UNKOWN" will be returned. The version string will remain
  *                valid for the duration of the application.
@@ -4299,15 +4336,15 @@ int ANeuralNetworksDevice_getName(const ANeuralNetworksDevice* device, const cha
 int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const char** version);
 
 /**
- * Get the supported NNAPI version of the specified accelerator.
+ * Get the supported NNAPI version of the specified device.
  *
- * Each accelerator has a supported feature level, which is the most advanced feature this driver
+ * Each device has a supported feature level, which is the most advanced feature this driver
  * implements. For example, if the driver implements the features introduced in Android P,
  * but does not implement the features introduced after Android P, the value would be 28.
- * Developers could decide whether or not the specified accelerator should be used for a Model that
+ * Developers could decide whether or not the specified device should be used for a Model that
  * has certain feature requirements.
  *
- * @param device The representation of the specified accelerator.
+ * @param device The representation of the specified device.
  * @param featureLevel The API level of the most advanced feature this driver implements.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
@@ -4318,13 +4355,13 @@ int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
                                           int64_t* featureLevel);
 
 /**
- * Get the supported operations for a specified set of accelerators. If multiple devices
+ * Get the supported operations for a specified set of devices. If multiple devices
  * are selected, the supported operation list is a union of supported operations of all
  * selected devices.
  *
  * @param model The model to be queried.
- * @param devices The set of accelerators. Must not contain duplicates.
- * @param numDevices The number of accelerators in the set.
+ * @param devices The set of devices. Must not contain duplicates.
+ * @param numDevices The number of devices in the set.
  * @param supportedOps The boolean array to be filled. True means supported. The size of the
  *                     boolean array must be at least as large as the number of operations
  *                     in the model. The order of elements in the supportedOps array matches
@@ -4340,15 +4377,15 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
 
 /**
  * Create a {@link ANeuralNetworksCompilation} to compile the given model for a specified set
- * of accelerators. If more than one accelerator is specified, the compilation will
- * distribute the workload automatically across the accelerators. The model must be fully
- * supported by the specified set of accelerators. This means that
+ * of devices. If more than one device is specified, the compilation will
+ * distribute the workload automatically across the devices. The model must be fully
+ * supported by the specified set of devices. This means that
  * ANeuralNetworksModel_getSupportedOperationsForDevices() must have returned true for every
  * operation for that model/devices pair.
  *
  * @param model The {@link ANeuralNetworksModel} to be compiled.
- * @param devices The set of accelerators. Must not contain duplicates.
- * @param numDevices The number of accelerators in the set.
+ * @param devices The set of devices. Must not contain duplicates.
+ * @param numDevices The number of devices in the set.
  * @param compilation The newly created object or NULL if unsuccessful.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful, ANEURALNETWORKS_BAD_DATA
