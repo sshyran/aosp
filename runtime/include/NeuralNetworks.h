@@ -4996,6 +4996,57 @@ int ANeuralNetworksExecution_burstCompute(ANeuralNetworksExecution* execution,
  */
 int ANeuralNetworksMemory_createFromAHardwareBuffer(const AHardwareBuffer* ahwb,
                                                     ANeuralNetworksMemory** memory);
+
+/**
+ * Specifies whether duration of the {@link ANeuralNetworksExecution} is to be measured.
+ * By default, duration is not measured.
+ *
+ * The {@link ANeuralNetworksExecution} must have been created with
+ * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1.
+ *
+ * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
+ *
+ * Available since API level 29.
+ *
+ * @param execution The execution to be modified.
+ * @param measure 'true' if duration is to be measured, 'false' if not.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ */
+int ANeuralNetworksExecution_setMeasureTiming(ANeuralNetworksExecution* execution, bool measure);
+
+/**
+ * Different duration measurements.
+ *
+ * Durations are measured in nanoseconds.
+ *
+ * Available since API level 29.
+ */
+typedef enum {
+    // Execution time on hardware (not driver, which runs on host processor).
+    ANEURALNETWORKS_DURATION_ON_HARDWARE = 0,
+    // Execution time in driver (including time on hardware).  Excludes overhead
+    // such as that of the runtime itself and the IPC needed for the runtime to
+    // communicate with the driver.
+    ANEURALNETWORKS_DURATION_IN_DRIVER = 1,
+} DurationCode;
+
+/**
+ * Get the time spent in the specified {@link ANeuralNetworksExecution}, in nanoseconds.
+ * The execution must have completed.
+ *
+ * @param execution The execution to be queried.
+ * @param durationCode The measurement to be queried, specified by {@link DurationCode}.
+ * @param duration The returned duration. If no measurement was requested by
+ *                 {@link ANeuralNetworksExecution_setMeasureTiming}, or for some other
+ *                 reason the duration is not available, UINT64_MAX will be returned.
+ *                 A particular device need not support any given measurement.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ */
+int ANeuralNetworksExecution_getDuration(const ANeuralNetworksExecution* execution,
+                                         int32_t durationCode, uint64_t* duration);
+
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
 #if __ANDROID_API__ >= 27
