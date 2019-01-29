@@ -34,8 +34,10 @@ using ::android::hardware::neuralnetworks::V1_2::implementation::PreparedModelCa
 namespace android {
 namespace nn {
 
+class BurstBuilder;
 class CompilationBuilder;
 class ExecutionPlan;
+class ExecutionBurstController;
 class Memory;
 class ModelBuilder;
 class StepExecutor;
@@ -89,6 +91,7 @@ public:
         return compute(synchronizationCallback);
     }
     int computeSynchronously() { return compute(nullptr); }
+    int burstCompute(BurstBuilder* burst) { return compute(nullptr, burst); }
 
     int getOutputOperandDimensions(uint32_t index, uint32_t* dimensions);
     int getOutputOperandRank(uint32_t index, uint32_t* rank);
@@ -97,6 +100,7 @@ public:
     bool measureTiming() const { return mMeasureTiming; }
     void reportTiming(Timing timing) { mTiming = timing; }
 
+    const CompilationBuilder* getCompilation() const { return mCompilation; }
     const ModelBuilder* getModel() const { return mModel; }
 
     ErrorStatus finish(ErrorStatus error);
@@ -104,8 +108,15 @@ public:
    private:
     // If a callback is provided, then this is asynchronous. If a callback is
     // not provided (i.e., is nullptr), then this is synchronous.
-    int compute(sp<ExecutionCallback>* synchronizationCallback);
+    //
+    // If burst is provided, then the burst path will be used. If a burst is not
+    // provided (i.e., is nullptr), then a synchronous execution will occur.
+    //
+    // Providing both synchronizationCallbak and burstBuilder is an error.
+    int compute(sp<ExecutionCallback>* synchronizationCallback,
+                BurstBuilder* burstBuilder = nullptr);
 
+    const CompilationBuilder* mCompilation;
     const ModelBuilder* mModel;
     const ExecutionPlan* mPlan;
 
@@ -189,7 +200,8 @@ class StepExecutor {
     }
 
     // Executes using the (driver, preparedModel) specified at construction time.
-    int startCompute(sp<ExecutionCallback>* synchronizationCallback);
+    int startCompute(sp<ExecutionCallback>* synchronizationCallback,
+                     ExecutionBurstController* burstController = nullptr);
 
     // Executes using the CPU, regardless of the (driver,
     // preparedModel) specified at construction time.
@@ -199,7 +211,8 @@ class StepExecutor {
 
    private:
     int allocatePointerArgumentsToPool(std::vector<ModelArgumentInfo>* args, Memory* memory);
-    int startComputeOnDevice(sp<ExecutionCallback>* synchronizationCallback);
+    int startComputeOnDevice(sp<ExecutionCallback>* synchronizationCallback,
+                             ExecutionBurstController* burstController = nullptr);
 
     void mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
                           ModelArgumentInfo* executorInputOrOutput);

@@ -31,10 +31,12 @@
 namespace android {
 namespace nn {
 
+class BurstBuilder;
 class CompilationBuilder;
 class Device;
 class ExecutionBuilder;
 class ExecutionPlan;
+class ExecutionBurstController;
 class Memory;
 class StepExecutor;
 
@@ -183,19 +185,25 @@ public:
         static const size_t kBadStepIndex = ~size_t(0);
 
         Controller(const ExecutionPlan* plan, ExecutionBuilder* executionBuilder,
+                   const BurstBuilder* burstBuilder,
                    std::shared_ptr<const SubModelInputsAndOutputsType> subModelInputsAndOutputs,
                    uint32_t totalSizeOfTemporaries);
 
         const ExecutionPlan* mPlan;
         ExecutionBuilder* mExecutionBuilder;
+        const BurstBuilder* mBurstBuilder;
         std::shared_ptr<const SubModelInputsAndOutputsType> mSubModelInputsAndOutputs;  // may be nullptr
         Memory mTemporaries;
         size_t mNextStepIndex;
     };
 
-    std::shared_ptr<Controller> makeController(ExecutionBuilder* executionBuilder) const;
+    std::vector<std::unique_ptr<ExecutionBurstController>> makeBursts() const;
 
-    int next(std::shared_ptr<Controller> controller, std::shared_ptr<StepExecutor>* executor) const;
+    std::shared_ptr<Controller> makeController(ExecutionBuilder* executionBuilder,
+                                               const BurstBuilder* burstBuilder) const;
+
+    int next(std::shared_ptr<Controller> controller, std::shared_ptr<StepExecutor>* executor,
+             ExecutionBurstController** burstController = nullptr) const;
 
     // Create the same executor as the last one created by next().
     int fallback(std::shared_ptr<Controller> controller, std::shared_ptr<StepExecutor>* executor) const;
