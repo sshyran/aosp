@@ -4246,14 +4246,7 @@ typedef enum {
      *      to activation at output gate.
      *
      * Outputs:
-     * * 0: The scratch buffer.
-     *      A 2-D tensor of shape [batch_size, num_units * 3] with CIFG, or
-     *      [batch_size, num_units * 4] without CIFG.
-     * * 1: The output state (out) (\f$h_t\f$).
-     *      A 2-D tensor of shape [batch_size, output_size].
-     * * 2: The cell state (out) (\f$C_t\f$).
-     *      A 2-D tensor of shape [batch_size, num_units].
-     * * 3: The output (\f$o_t\f$).
+     * * 0: The output (\f$o_t\f$).
      *      A 3-D tensor of shape:
      *        If time-major: [max_time, batch_size, output_size]
      *        If batch-major: [batch_size, max_time, output_size]

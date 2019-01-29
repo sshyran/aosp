@@ -87,12 +87,6 @@ cell_layer_norm_weights = Input("cell_layer_norm_weights", "TENSOR_FLOAT32",
 output_layer_norm_weights = Input("output_layer_norm_weights", "TENSOR_FLOAT32",
                                   "{%d}" % n_cell)
 
-scratch_buffer = IgnoredOutput("scratch_buffer", "TENSOR_FLOAT32",
-                               "{%d, %d}" % (n_batch, (n_cell * 4)))
-output_state_out = Output("output_state_out", "TENSOR_FLOAT32",
-                          "{%d, %d}" % (n_batch, n_output))
-cell_state_out = Output("cell_state_out", "TENSOR_FLOAT32",
-                        "{%d, %d}" % (n_batch, n_cell))
 output = Output("output", "TENSOR_FLOAT32", "{%d, %d, %d}" % (max_time, n_batch, n_output))
 
 model = model.Operation(
@@ -104,8 +98,7 @@ model = model.Operation(
     output_gate_bias, projection_weights, projection_bias, output_state_in,
     cell_state_in, activation_param, cell_clip_param, proj_clip_param, time_major_param,
     input_layer_norm_weights, forget_layer_norm_weights,
-    cell_layer_norm_weights, output_layer_norm_weights).To(
-        [scratch_buffer, output_state_out, cell_state_out, output])
+    cell_layer_norm_weights, output_layer_norm_weights).To([output])
 
 # Example 1. Input in operand 0,
 input0 = {
@@ -158,25 +151,13 @@ test_input = [0.7, 0.8, 0.1, 0.2, 0.3, 0.3, 0.2, 0.9, 0.8, 0.1,
               0.8, 0.1, 0.2, 0.4, 0.5, 0.1, 0.5, 0.2, 0.4, 0.2,
               0.2, 0.7, 0.7, 0.1, 0.7, 0.6, 0.9, 0.2, 0.5, 0.7]
 
-golden_cell_state = [
-        -0.742560744285583, 0.579139292240143, 0.114988230168819, 0.649957716464996,
-        -0.686565399169922, 0.548869132995605, 0.173138767480850, 0.587379336357117
-]
-
 golden_output = [
         0.024407668039203, 0.128027379512787, -0.001709178090096, -0.006924282759428, 0.084874063730240, 0.063444979488850,
         0.013764165341854, 0.140751048922539, 0.039583537727594, -0.004039138555527, 0.139963015913963, 0.072681039571762,
         -0.004592306911945, 0.155278354883194, 0.083737745881081, 0.007527053356171, 0.161902531981468, 0.056137066334486,
 ]
 
-golden_output_state = [
-        -0.004592306911945, 0.155278354883194, 0.083737745881081, 0.007527053356171, 0.161902531981468, 0.056137066334486,
-]
-
 output0 = {
-    scratch_buffer: [ 0 for x in range(n_batch * n_cell * 4) ],
-    cell_state_out: golden_cell_state,
-    output_state_out: golden_output_state,
     output: golden_output,
 }
 
