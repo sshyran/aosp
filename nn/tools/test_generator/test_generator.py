@@ -70,7 +70,9 @@ def Quantize(v, ty):
         v = int(v) if np.isscalar(v) else v.astype(int)
     if ty.type == "TENSOR_QUANT8_ASYMM":
         v = np.minimum(np.maximum(v, 0), 255)
-    if ty.type == "TENSOR_QUANT8_SYMM_PER_CHANNEL":
+    elif ty.type == "TENSOR_QUANT16_ASYMM":
+        v = np.minimum(np.maximum(v, 0), 65535)
+    elif ty.type == "TENSOR_QUANT8_SYMM_PER_CHANNEL":
         v = np.minimum(np.maximum(v, -127), 127)
     elif ty.type == "UINT32":
         v = np.maximum(v, 0)
@@ -153,6 +155,7 @@ class Type(NamedVariable):
         "TENSOR_FLOAT32": "float",
         "TENSOR_QUANT8_ASYMM": "uint8_t",
         "BOOL": "bool8",
+        "TENSOR_QUANT16_ASYMM": "uint16_t",
         "TENSOR_QUANT16_SYMM": "int16_t",
         "TENSOR_BOOL8": "bool8",
         "TENSOR_QUANT8_SYMM_PER_CHANNEL": "int8_t",
@@ -227,7 +230,7 @@ class Type(NamedVariable):
         cppTypeString = self.GetCppTypeString()
         if cppTypeString in ["uint8_t", "int8_t", "bool8"]:
             return 1
-        elif cppTypeString in ["int16_t", "_Float16"]:
+        elif cppTypeString in ["int16_t", "uint16_t", "_Float16"]:
             return 2
         else:
             return 4
