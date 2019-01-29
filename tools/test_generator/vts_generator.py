@@ -147,8 +147,13 @@ def generate_vts_operand_values(operands):
             for f in w.value:
                 # The pack format for float16 is not available until Python 3.6.
                 binit += [int(x) for x in np.float16(f).tostring()]
-        elif ty in {"TENSOR_FLOAT32", "FLOAT32", "TENSOR_INT32", "INT32"}:
-            fmt = "f" if (ty == "TENSOR_FLOAT32" or ty == "FLOAT32") else "i"
+        elif ty in {"TENSOR_FLOAT32", "FLOAT32", "TENSOR_INT32", "INT32", "TENSOR_QUANT16_ASYMM"}:
+            if ty in ["TENSOR_FLOAT32", "FLOAT32"]:
+                fmt = "f"
+            elif ty in ["TENSOR_INT32", "INT32"]:
+                fmt = "i"
+            elif ty == "TENSOR_QUANT16_ASYMM":
+                fmt = "H"
             for f in w.value:
                 binit += [int(x) for x in struct.pack(fmt, f)]
         else:

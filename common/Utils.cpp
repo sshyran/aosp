@@ -203,6 +203,7 @@ const uint32_t kSizeOfDataType[]{
         1,  // ANEURALNETWORKS_TENSOR_BOOL8
         2,  // ANEURALNETWORKS_FLOAT16
         1,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
+        2,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
 };
 
 static_assert(COUNT(kSizeOfDataType) == kNumberOfDataTypes, "kSizeOfDataType is incorrect");
@@ -220,6 +221,7 @@ const bool kScalarDataType[]{
         false,  // ANEURALNETWORKS_TENSOR_BOOL8
         true,   // ANEURALNETWORKS_FLOAT16
         false,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
+        false,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
 };
 
 static_assert(COUNT(kScalarDataType) == kNumberOfDataTypes, "kScalarDataType is incorrect");
@@ -353,6 +355,16 @@ int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
     }
     if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
         if (type.zeroPoint < 0 || type.zeroPoint > 255) {
+            LOG(ERROR) << tag << " OperandType invalid zeroPoint " << type.zeroPoint;
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+        if (type.scale <= 0.f) {
+            LOG(ERROR) << tag << " OperandType invalid scale " << type.scale;
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+    }
+    if (type.type == ANEURALNETWORKS_TENSOR_QUANT16_ASYMM) {
+        if (type.zeroPoint < 0 || type.zeroPoint > 65535) {
             LOG(ERROR) << tag << " OperandType invalid zeroPoint " << type.zeroPoint;
             return ANEURALNETWORKS_BAD_DATA;
         }
