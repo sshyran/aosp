@@ -52,7 +52,7 @@ class Memory {
     // will be returned.
     virtual int getPointer(uint8_t** buffer) const {
         *buffer = static_cast<uint8_t*>(static_cast<void*>(mMemory->getPointer()));
-        if (buffer == nullptr) {
+        if (*buffer == nullptr) {
             return ANEURALNETWORKS_BAD_DATA;
         }
         return ANEURALNETWORKS_NO_ERROR;
