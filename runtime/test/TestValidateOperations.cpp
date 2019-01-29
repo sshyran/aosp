@@ -2004,20 +2004,51 @@ TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_quant) {
                              ANEURALNETWORKS_TENSOR_QUANT16_ASYMM);
 }
 
-void groupedConvOpTest(int32_t operandCode) {
-    uint32_t inDim[] = {1, 3, 3, 2}, weightDim[] = {2, 2, 2, 1}, biasDim[] = {2};
+void groupedConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
+    uint32_t inDim[] = {1, 3, 3, 2}, filterDim[] = {2, 2, 2, 1}, biasDim[] = {2};
     uint32_t outDim[] = {1, 2, 2, 2};
-    ANeuralNetworksOperandType bias = (operandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM)
-                                              ? getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, biasDim)
-                                              : getOpType(operandCode, 1, biasDim);
+    ANeuralNetworksOperandType input = getOpType(inputOperandCode, 4, inDim);
+    if (inputOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        input.scale = 0.5f;
+    }
+
+    float filterScales[2] = {0.5f, 1.0f};
+    ANeuralNetworksOperandType filter = getOpType(filterOperandCode, 4, filterDim);
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        filter.scale = 0.5f;
+    }
+
+    ANeuralNetworksSymmPerChannelQuantParams filterChannelQuantParams = {
+            .channelDim = 0,
+            .scaleCount = 2,
+            .scales = filterScales,
+    };
+
+    ANeuralNetworksOperandType bias = getOpType(inputOperandCode, 1, biasDim);
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        bias.type = ANEURALNETWORKS_TENSOR_INT32;
+        bias.scale = 0.25f;
+    }
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        bias.type = ANEURALNETWORKS_TENSOR_INT32;
+        bias.scale = 0.0f;
+    }
+
     ANeuralNetworksOperandType scalar = getOpType(ANEURALNETWORKS_INT32);
     ANeuralNetworksOperandType layout = getOpType(ANEURALNETWORKS_BOOL);
 
-    OperationTestBase explicitGroupedConvTest(
-            ANEURALNETWORKS_GROUPED_CONV_2D,
-            {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
-             scalar, scalar, scalar, scalar, scalar, scalar, scalar, layout},
-            {getOpType(operandCode, 4, outDim)});
+    ANeuralNetworksOperandType output = getOpType(inputOperandCode, 4, outDim);
+    if (inputOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        output.scale = 0.5f;
+    }
+
+    OperationTestBase explicitGroupedConvTest(ANEURALNETWORKS_GROUPED_CONV_2D,
+                                              {input, filter, bias, scalar, scalar, scalar, scalar,
+                                               scalar, scalar, scalar, scalar, layout},
+                                              {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        explicitGroupedConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(explicitGroupedConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(explicitGroupedConvTest.testMutatingInputOperandCounts());
@@ -2026,9 +2057,10 @@ void groupedConvOpTest(int32_t operandCode) {
 
     OperationTestBase implicitGroupedConvTest(
             ANEURALNETWORKS_GROUPED_CONV_2D,
-            {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
-             scalar, scalar, scalar, scalar, layout},
-            {getOpType(operandCode, 4, outDim)});
+            {input, filter, bias, scalar, scalar, scalar, scalar, scalar, layout}, {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        implicitGroupedConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(implicitGroupedConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(implicitGroupedConvTest.testMutatingInputOperandCounts());
@@ -2037,11 +2069,16 @@ void groupedConvOpTest(int32_t operandCode) {
 }
 
 TEST(OperationValidationTest, GROUPED_CONV_2D_float32) {
-    groupedConvOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+    groupedConvOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
 TEST(OperationValidationTest, GROUPED_CONV_2D_quant8) {
-    groupedConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    groupedConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, GROUPED_CONV_2D_quant8_per_channel) {
+    groupedConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                      ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
 }
 
 void transposeConvOpTest(int32_t operandCode) {
