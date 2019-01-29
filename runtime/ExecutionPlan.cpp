@@ -18,9 +18,11 @@
 
 #include "ExecutionPlan.h"
 
+#include "BurstBuilder.h"
 #include "Callbacks.h"
 #include "CompilationBuilder.h"
 #include "ExecutionBuilder.h"
+#include "ExecutionBurstController.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
 #include "Tracing.h"
@@ -504,10 +506,12 @@ int ExecutionPlan::finish(const ModelBuilder* fromModel, int32_t executionPrefer
 
 ExecutionPlan::Controller::Controller(
         const ExecutionPlan* plan, ExecutionBuilder* executionBuilder,
+        const BurstBuilder* burstBuilder,
         std::shared_ptr<const SubModelInputsAndOutputsType> subModelInputsAndOutputs,
         uint32_t totalSizeOfTemporaries)
     : mPlan(plan),
       mExecutionBuilder(executionBuilder),
+      mBurstBuilder(burstBuilder),
       mSubModelInputsAndOutputs(subModelInputsAndOutputs),
       mNextStepIndex(0) {
     if (totalSizeOfTemporaries) {
@@ -518,8 +522,45 @@ ExecutionPlan::Controller::Controller(
     }
 }
 
+// Attempt to create a burst object for each PreparedModel/Partition. If the
+// burst controller object cannot be made, return a nullptr in its place to
+// indicate the regular execution path should be used. This can occur either
+// because PreparedModel was nullptr (cpu was best choice), or because the
+// IPreparedModel was of insufficient version or failed to configure the burst.
+std::vector<std::unique_ptr<ExecutionBurstController>> ExecutionPlan::makeBursts() const {
+    switch (mState) {
+        // burst object for each partition in the compound case
+        case COMPOUND: {
+            std::vector<std::unique_ptr<ExecutionBurstController>> bursts;
+            bursts.reserve(compound()->mSteps.size());
+            for (const auto& step : compound()->mSteps) {
+                if (const auto preparedModel = step->getPreparedSubModel()) {
+                    bursts.push_back(preparedModel->configureExecutionBurst(/*blocking=*/true));
+                } else {
+                    bursts.push_back(nullptr);
+                }
+            }
+            return bursts;
+        }
+        // single burst object for the simple case
+        case SIMPLE: {
+            std::vector<std::unique_ptr<ExecutionBurstController>> burst;
+            auto simpleBody = static_cast<const SimpleBody*>(mBody);
+            if (const auto preparedModel = simpleBody->mPreparedModel) {
+                burst.push_back(preparedModel->configureExecutionBurst(/*blocking=*/true));
+            } else {
+                burst.push_back(nullptr);
+            }
+            return burst;
+        }
+        // no burst objects made
+        default:
+            return {};
+    }
+}
+
 std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
-        ExecutionBuilder* executionBuilder) const {
+        ExecutionBuilder* executionBuilder, const BurstBuilder* burstBuilder) const {
     nnAssert(isValid());
 
     // Create the layout for a Memory object big enough for to hold
@@ -569,7 +610,7 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
         }
     }
 
-    return std::shared_ptr<Controller>(new Controller(this, executionBuilder,
+    return std::shared_ptr<Controller>(new Controller(this, executionBuilder, burstBuilder,
                                                       subModelInputsAndOutputs,
                                                       totalSizeOfTemporaries));
 }
@@ -598,8 +639,12 @@ int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
 }
 
 int ExecutionPlan::next(std::shared_ptr<Controller> controller,
-                        std::shared_ptr<StepExecutor>* executor) const {
+                        std::shared_ptr<StepExecutor>* executor,
+                        ExecutionBurstController** burstController) const {
     *executor = nullptr;
+    if (burstController != nullptr) {
+        *burstController = nullptr;
+    }
 
     VLOG(EXECUTION) << "ExecutionPlan::next("
                     << SHOW_IF_DEBUG(controller << ", " << executor)
@@ -623,6 +668,9 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
                                                        simpleBody->mModel, simpleBody->mDevice,
                                                        simpleBody->mPreparedModel);
             (*executor)->mapInputsAndOutputsTrivially();
+            if (burstController != nullptr && controller->mBurstBuilder != nullptr) {
+                *burstController = controller->mBurstBuilder->getControllerAt(0);
+            }
             controller->mNextStepIndex = 1;
             return ANEURALNETWORKS_NO_ERROR;
         }
@@ -649,6 +697,9 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
     *executor = std::make_shared<StepExecutor>(controller->mExecutionBuilder, step->getSubModel(),
                                                step->getDevice(), step->getPreparedSubModel());
     step->mapInputsAndOutputs(*executor);
+    if (burstController != nullptr && controller->mBurstBuilder != nullptr) {
+        *burstController = controller->mBurstBuilder->getControllerAt(controller->mNextStepIndex);
+    }
     if (controller->mSubModelInputsAndOutputs != nullptr) {
         {
             // Tell executor about temps as submodel outputs.
