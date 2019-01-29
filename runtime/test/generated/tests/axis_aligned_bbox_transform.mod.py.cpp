@@ -45,21 +45,3 @@ TEST_F(GeneratedTests, axis_aligned_bbox_transform_float16_2) {
             axis_aligned_bbox_transform::get_examples_float16_2());
 }
 
-TEST_F(GeneratedTests, axis_aligned_bbox_transform_single_batch) {
-    execute(axis_aligned_bbox_transform::CreateModel_single_batch,
-            axis_aligned_bbox_transform::is_ignored_single_batch,
-            axis_aligned_bbox_transform::get_examples_single_batch());
-}
-
-TEST_F(GeneratedTests, axis_aligned_bbox_transform_single_batch_relaxed) {
-    execute(axis_aligned_bbox_transform::CreateModel_single_batch_relaxed,
-            axis_aligned_bbox_transform::is_ignored_single_batch_relaxed,
-            axis_aligned_bbox_transform::get_examples_single_batch_relaxed());
-}
-
-TEST_F(GeneratedTests, axis_aligned_bbox_transform_single_batch_float16) {
-    execute(axis_aligned_bbox_transform::CreateModel_single_batch_float16,
-            axis_aligned_bbox_transform::is_ignored_single_batch_float16,
-            axis_aligned_bbox_transform::get_examples_single_batch_float16());
-}
-
