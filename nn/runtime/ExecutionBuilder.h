@@ -24,6 +24,7 @@
 #include "NeuralNetworks.h"
 #include "VersionedInterfaces.h"
 
+#include <atomic>
 #include <unordered_map>
 #include <vector>
 
@@ -55,6 +56,7 @@ struct ModelArgumentInfo {
     DataLocation locationAndLength;
     std::vector<uint32_t> dimensions;
     void* buffer;
+    bool isSufficient = true;
 
     int setFromPointer(const Operand& operand, const ANeuralNetworksOperandType* type, void* buffer,
                        uint32_t length);
@@ -84,7 +86,12 @@ public:
     }
     int computeSynchronously() { return compute(nullptr); }
 
+    int getOutputOperandDimensions(uint32_t index, uint32_t* dimensions);
+    int getOutputOperandRank(uint32_t index, uint32_t* rank);
+
     const ModelBuilder* getModel() const { return mModel; }
+
+    ErrorStatus finish(ErrorStatus error);
 
    private:
     // If a callback is provided, then this is asynchronous. If a callback is
@@ -111,6 +118,9 @@ public:
     std::vector<ModelArgumentInfo> mInputs;
     std::vector<ModelArgumentInfo> mOutputs;
     MemoryTracker mMemories;
+
+    // Output shapes can only be queried after the execution is finished.
+    std::atomic_bool mFinished = false;
 };
 
 // class StepExecutor is used to execute a single "step" in a
