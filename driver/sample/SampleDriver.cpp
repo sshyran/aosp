@@ -152,16 +152,18 @@ bool SamplePreparedModel::initialize() {
     return setRunTimePoolInfosFromHidlMemories(&mPoolInfos, mModel.pools);
 }
 
-static Return<void> notify(const sp<V1_0::IExecutionCallback>& callback,
-                           const ErrorStatus& status) {
+static Return<void> notify(const sp<V1_0::IExecutionCallback>& callback, const ErrorStatus& status,
+                           const hidl_vec<OutputShape>&) {
     return callback->notify(status);
 }
 
-static Return<void> notify(const sp<V1_2::IExecutionCallback>& callback,
-                           const ErrorStatus& status) {
-    return callback->notify_1_2(status);
+static Return<void> notify(const sp<V1_2::IExecutionCallback>& callback, const ErrorStatus& status,
+                           const hidl_vec<OutputShape>& outputShapes) {
+    return callback->notify_1_2(status, outputShapes);
 }
 
+// TODO(xusongw): Let callback notify actual output shape once dynamic output shape
+//                is supported in CpuExecutor.
 template <typename T_IExecutionCallback>
 void asyncExecute(const Request& request, const Model& model,
                   const std::vector<RunTimePoolInfo>& poolInfos,
@@ -170,7 +172,7 @@ void asyncExecute(const Request& request, const Model& model,
                  "SampleDriver::asyncExecute");
     std::vector<RunTimePoolInfo> requestPoolInfos;
     if (!setRunTimePoolInfosFromHidlMemories(&requestPoolInfos, request.pools)) {
-        notify(callback, ErrorStatus::GENERAL_FAILURE);
+        notify(callback, ErrorStatus::GENERAL_FAILURE, {});
         return;
     }
 
@@ -181,7 +183,7 @@ void asyncExecute(const Request& request, const Model& model,
     VLOG(DRIVER) << "executor.run returned " << n;
     ErrorStatus executionStatus =
             n == ANEURALNETWORKS_NO_ERROR ? ErrorStatus::NONE : ErrorStatus::GENERAL_FAILURE;
-    Return<void> returned = notify(callback, executionStatus);
+    Return<void> returned = notify(callback, executionStatus, {});
     if (!returned.isOk()) {
         LOG(ERROR) << " hidl callback failed to return properly: " << returned.description();
     }
@@ -198,7 +200,7 @@ Return<ErrorStatus> executeBase(const Request& request, const Model& model,
         return ErrorStatus::INVALID_ARGUMENT;
     }
     if (!validateRequest(request, model)) {
-        notify(callback, ErrorStatus::INVALID_ARGUMENT);
+        notify(callback, ErrorStatus::INVALID_ARGUMENT, {});
         return ErrorStatus::INVALID_ARGUMENT;
     }
 
@@ -222,19 +224,22 @@ Return<ErrorStatus> SamplePreparedModel::execute_1_2(const Request& request,
     return executeBase(request, mModel, mPoolInfos, callback);
 }
 
-Return<ErrorStatus> SamplePreparedModel::executeSynchronously(const Request& request) {
+Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
+                                                       executeSynchronously_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SampleDriver::executeSynchronously");
     VLOG(DRIVER) << "executeSynchronously(" << SHOW_IF_DEBUG(toString(request)) << ")";
     if (!validateRequest(request, mModel)) {
-        return ErrorStatus::INVALID_ARGUMENT;
+        cb(ErrorStatus::INVALID_ARGUMENT, {});
+        return Void();
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
                         "SampleDriver::executeSynchronously");
     std::vector<RunTimePoolInfo> requestPoolInfos;
     if (!setRunTimePoolInfosFromHidlMemories(&requestPoolInfos, request.pools)) {
-        return ErrorStatus::GENERAL_FAILURE;
+        cb(ErrorStatus::GENERAL_FAILURE, {});
+        return Void();
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
@@ -242,7 +247,8 @@ Return<ErrorStatus> SamplePreparedModel::executeSynchronously(const Request& req
     CpuExecutor executor;
     int n = executor.run(mModel, request, mPoolInfos, requestPoolInfos);
     VLOG(DRIVER) << "executor.run returned " << n;
-    return n == ANEURALNETWORKS_NO_ERROR ? ErrorStatus::NONE : ErrorStatus::GENERAL_FAILURE;
+    cb(n == ANEURALNETWORKS_NO_ERROR ? ErrorStatus::NONE : ErrorStatus::GENERAL_FAILURE, {});
+    return Void();
 }
 
 } // namespace sample_driver
