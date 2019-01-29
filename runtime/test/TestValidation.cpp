@@ -689,6 +689,60 @@ TEST_F(ValidationTestExecution, EventWait) {
     EXPECT_EQ(ANeuralNetworksEvent_wait(nullptr), ANEURALNETWORKS_UNEXPECTED_NULL);
 }
 
+TEST_F(ValidationTestExecution, GetOutputOperandRankAndDimensions) {
+    ANeuralNetworksExecution* execution;
+    EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
+
+    float input0 = 1.0f, input1 = 2.0f, output0;
+    int32_t input2 = 0;
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, &input0, sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 1, nullptr, &input1, sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 2, nullptr, &input2, sizeof(int32_t)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution, 0, nullptr, &output0, sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+
+    uint32_t rank, dims[4], expectedRank = 1, expectedDims = 1;
+    // This should fail, since the execution has not yet started to compute.
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandRank(execution, 0, &rank),
+              ANEURALNETWORKS_BAD_STATE);
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandDimensions(execution, 0, dims),
+              ANEURALNETWORKS_BAD_STATE);
+
+    ANeuralNetworksEvent* event;
+    EXPECT_EQ(ANeuralNetworksExecution_startCompute(execution, &event), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksEvent_wait(event), ANEURALNETWORKS_NO_ERROR);
+
+    // This should fail, since unexpected nullptr.
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandRank(nullptr, 0, &rank),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandDimensions(nullptr, 0, dims),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandRank(execution, 0, nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandDimensions(execution, 0, nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+
+    // This should fail, since the operand does not exist.
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandRank(execution, -1, &rank),
+              ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandRank(execution, 999, &rank),
+              ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandDimensions(execution, -1, dims),
+              ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandDimensions(execution, 999, dims),
+              ANEURALNETWORKS_BAD_DATA);
+
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandRank(execution, 0, &rank),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandDimensions(execution, 0, dims),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(rank, expectedRank);
+    EXPECT_EQ(dims[0], expectedDims);
+}
+
 TEST(ValidationTestIntrospection, GetNumDevices) {
     uint32_t numDevices = 0;
     EXPECT_EQ(ANeuralNetworks_getDeviceCount(&numDevices), ANEURALNETWORKS_NO_ERROR);
