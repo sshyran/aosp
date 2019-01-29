@@ -2468,6 +2468,9 @@ ErrorStatus convertResultCodeToErrorStatus(int resultCode) {
         case ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE:
             return ErrorStatus::OUTPUT_INSUFFICIENT_SIZE;
 
+        case ANEURALNETWORKS_UNAVAILABLE_DEVICE:
+            return ErrorStatus::DEVICE_UNAVAILABLE;
+
         default:
             LOG(ERROR) << "Unknown result code " << resultCode
                        << " mapped to ErrorStatus::GENERAL_FAILURE";
@@ -2492,11 +2495,13 @@ int convertErrorStatusToResultCode(ErrorStatus status) {
         case ErrorStatus::OUTPUT_INSUFFICIENT_SIZE:
             return ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE;
 
+        case ErrorStatus::DEVICE_UNAVAILABLE:
+            return ANEURALNETWORKS_UNAVAILABLE_DEVICE;
+
         default:
             LOG(ERROR) << "Unknown ErrorStatus " << toString(status)
                        << " mapped to ANEURALNETWORKS_OP_FAILED";
             return ANEURALNETWORKS_OP_FAILED;
-        case ErrorStatus::DEVICE_UNAVAILABLE:
         case ErrorStatus::GENERAL_FAILURE:
             return ANEURALNETWORKS_OP_FAILED;
     }
