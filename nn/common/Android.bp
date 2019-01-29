@@ -41,6 +41,7 @@ cc_defaults {
         "operations/RoiAlign.cpp",
         "operations/RoiPooling.cpp",
         "operations/Select.cpp",
+        "operations/UnidirectionalSequenceLSTM.cpp",
         "operations/UnidirectionalSequenceRNN.cpp",
     ],
 }
