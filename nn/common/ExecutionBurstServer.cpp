@@ -21,13 +21,15 @@
 #include <android-base/logging.h>
 #include <set>
 #include <string>
+#include "Tracing.h"
 
-namespace android {
-namespace nn {
+namespace android::nn {
 
-BurstMemoryCache::BurstMemoryCache(const sp<IBurstCallback>& callback) : mCallback(callback) {}
+ExecutionBurstServer::BurstMemoryCache::BurstMemoryCache(const sp<IBurstCallback>& callback)
+    : mCallback(callback) {}
 
-hidl_vec<hidl_memory> BurstMemoryCache::getMemories(const std::vector<int32_t>& slots) {
+hidl_vec<hidl_memory> ExecutionBurstServer::BurstMemoryCache::getMemories(
+        const std::vector<int32_t>& slots) {
     std::lock_guard<std::mutex> guard(mMutex);
 
     // find unique unknown slots
@@ -37,16 +39,17 @@ hidl_vec<hidl_memory> BurstMemoryCache::getMemories(const std::vector<int32_t>& 
             setOfUnknownSlots.insert(slot);
         }
     }
-    const std::vector<int32_t> unknownSlots(setOfUnknownSlots.begin(), setOfUnknownSlots.end());
+    const std::vector<int32_t> vecOfUnknownSlots(setOfUnknownSlots.begin(),
+                                                 setOfUnknownSlots.end());
 
     // retrieve unknown slots
-    if (!unknownSlots.empty()) {
-        LOG(ERROR) << "server calling getMemories";
+    if (!vecOfUnknownSlots.empty()) {
         ErrorStatus errorStatus = ErrorStatus::GENERAL_FAILURE;
         std::vector<hidl_memory> returnedMemories;
         Return<void> ret = mCallback->getMemories(
-                unknownSlots, [&errorStatus, &returnedMemories](
-                                      ErrorStatus status, const hidl_vec<hidl_memory>& memories) {
+                vecOfUnknownSlots,
+                [&errorStatus, &returnedMemories](ErrorStatus status,
+                                                  const hidl_vec<hidl_memory>& memories) {
                     errorStatus = status;
                     if (status == ErrorStatus::NONE) {
                         returnedMemories = memories;
@@ -59,8 +62,8 @@ hidl_vec<hidl_memory> BurstMemoryCache::getMemories(const std::vector<int32_t>& 
         }
 
         // add memories to unknown slots
-        for (size_t i = 0; i < unknownSlots.size(); ++i) {
-            mSlotToMemoryCache[unknownSlots[i]] = returnedMemories[i];
+        for (size_t i = 0; i < vecOfUnknownSlots.size(); ++i) {
+            mSlotToMemoryCache[vecOfUnknownSlots[i]] = returnedMemories[i];
         }
     }
 
@@ -73,9 +76,36 @@ hidl_vec<hidl_memory> BurstMemoryCache::getMemories(const std::vector<int32_t>& 
     return memories;
 }
 
-void BurstMemoryCache::freeMemory(int32_t slot) {
+void ExecutionBurstServer::BurstMemoryCache::freeMemory(int32_t slot) {
     std::lock_guard<std::mutex> guard(mMutex);
     mSlotToMemoryCache.erase(slot);
+}
+
+sp<ExecutionBurstServer> ExecutionBurstServer::create(
+        const sp<IBurstCallback>& callback, const MQDescriptorSync<FmqRequestDatum>& requestChannel,
+        const MQDescriptorSync<FmqResultDatum>& resultChannel, IPreparedModel* preparedModel) {
+    // check inputs
+    if (callback == nullptr || preparedModel == nullptr) {
+        LOG(ERROR) << "ExecutionBurstServer::create passed a nullptr";
+        return nullptr;
+    }
+
+    // create FMQ objects
+    std::unique_ptr<FmqRequestChannel> fmqRequestChannel{new (std::nothrow)
+                                                                 FmqRequestChannel(requestChannel)};
+    std::unique_ptr<FmqResultChannel> fmqResultChannel{new (std::nothrow)
+                                                               FmqResultChannel(resultChannel)};
+
+    // check FMQ objects
+    if (!fmqRequestChannel || !fmqResultChannel || !fmqRequestChannel->isValid() ||
+        !fmqResultChannel->isValid()) {
+        LOG(ERROR) << "ExecutionBurstServer::create failed to create FastMessageQueue";
+        return nullptr;
+    }
+
+    // make and return context
+    return new ExecutionBurstServer(callback, std::move(fmqRequestChannel),
+                                    std::move(fmqResultChannel), preparedModel);
 }
 
 ExecutionBurstServer::ExecutionBurstServer(const sp<IBurstCallback>& callback,
@@ -160,13 +190,19 @@ std::vector<FmqRequestDatum> ExecutionBurstServer::getPacketBlocking() {
         return {};
     }
 
+    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION, "ExecutionBurstServer getting packet");
+
     // unpack packet information
     const auto& packetInfo = datum.packetInformation();
     const size_t count = packetInfo.packetSize;
 
     // retrieve remaining elements
     // NOTE: all of the data is already available at this point, so there's no
-    // need to do a blocking wait to wait for more data
+    // need to do a blocking wait to wait for more data. This is known because
+    // in FMQ, all writes are published (made available) atomically. Currently,
+    // the producer always publishes the entire packet in one function call, so
+    // if the first element of the packet is available, the remaining elements
+    // are also available.
     std::vector<FmqRequestDatum> packet(count);
     packet.front() = datum;
     success = mFmqRequestChannel->read(packet.data() + 1, packet.size() - 1);
@@ -386,6 +422,9 @@ void ExecutionBurstServer::task() {
             return;
         }
 
+        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
+                     "ExecutionBurstServer processing packet and returning results");
+
         // continue processing
         Request request;
         MeasureTiming measure;
@@ -417,33 +456,4 @@ void ExecutionBurstServer::task() {
     }
 }
 
-sp<IBurstContext> createBurstContext(const sp<IBurstCallback>& callback,
-                                     const MQDescriptorSync<FmqRequestDatum>& requestChannel,
-                                     const MQDescriptorSync<FmqResultDatum>& resultChannel,
-                                     IPreparedModel* preparedModel) {
-    // check inputs
-    if (callback == nullptr || preparedModel == nullptr) {
-        LOG(ERROR) << "createExecutionBurstServer passed a nullptr";
-        return nullptr;
-    }
-
-    // create FMQ objects
-    std::unique_ptr<FmqRequestChannel> fmqRequestChannel{new (std::nothrow)
-                                                                 FmqRequestChannel(requestChannel)};
-    std::unique_ptr<FmqResultChannel> fmqResultChannel{new (std::nothrow)
-                                                               FmqResultChannel(resultChannel)};
-
-    // check FMQ objects
-    if (!fmqRequestChannel || !fmqResultChannel || !fmqRequestChannel->isValid() ||
-        !fmqResultChannel->isValid()) {
-        LOG(ERROR) << "createExecutionBurstServer failed to create FastMessageQueue";
-        return nullptr;
-    }
-
-    // make and return context
-    return new ExecutionBurstServer(callback, std::move(fmqRequestChannel),
-                                    std::move(fmqResultChannel), preparedModel);
-}
-
-}  // namespace nn
-}  // namespace android
+}  // namespace android::nn

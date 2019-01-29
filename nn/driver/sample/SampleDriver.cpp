@@ -343,7 +343,7 @@ Return<void> SamplePreparedModel::configureExecutionBurst(
                  "SampleDriver::configureExecutionBurst");
 
     const sp<V1_2::IBurstContext> burst =
-            createBurstContext(callback, requestChannel, resultChannel, this);
+            ExecutionBurstServer::create(callback, requestChannel, resultChannel, this);
 
     if (burst == nullptr) {
         cb(ErrorStatus::GENERAL_FAILURE, {});
