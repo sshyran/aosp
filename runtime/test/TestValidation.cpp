@@ -1111,6 +1111,15 @@ TEST_F(ValidationTestBurst, BurstComputeNull) {
               ANEURALNETWORKS_UNEXPECTED_NULL);
 }
 
+TEST_F(ValidationTestBurst, BurstComputeBadCompilation) {
+    ANeuralNetworksCompilation* compilation;
+    ASSERT_EQ(ANeuralNetworksCompilation_create(mModel, &compilation), ANEURALNETWORKS_NO_ERROR);
+    // NOTE: ANeuralNetworksCompilation_finish not called
+
+    ANeuralNetworksBurst* burst;
+    EXPECT_EQ(ANeuralNetworksBurst_create(compilation, &burst), ANEURALNETWORKS_BAD_STATE);
+}
+
 TEST_F(ValidationTestBurst, BurstComputeDifferentCompilations) {
     ANeuralNetworksCompilation* secondCompilation;
     ASSERT_EQ(ANeuralNetworksCompilation_create(mModel, &secondCompilation),
@@ -1160,15 +1169,20 @@ TEST_F(ValidationTestBurst, BurstComputeConcurrent) {
                                                  sizeof(outputB0)),
               ANEURALNETWORKS_NO_ERROR);
 
-    // execute on the same burst concurrently
+    // Execute on the same burst concurrently. At least one result must be
+    // ANEURALNETWORKS_NO_ERROR. One may return ANEURALNETWORKS_BAD_STATE if the
+    // other is already executing on the burst.
     auto first = std::async(std::launch::async, [this] {
-        const int result = ANeuralNetworksExecution_burstCompute(mExecution, mBurst);
-        EXPECT_TRUE(result == ANEURALNETWORKS_BAD_STATE || result == ANEURALNETWORKS_NO_ERROR);
+        return ANeuralNetworksExecution_burstCompute(mExecution, mBurst);
     });
     auto second = std::async(std::launch::async, [this, secondExecution] {
-        const int result = ANeuralNetworksExecution_burstCompute(secondExecution, mBurst);
-        EXPECT_TRUE(result == ANEURALNETWORKS_BAD_STATE || result == ANEURALNETWORKS_NO_ERROR);
+        return ANeuralNetworksExecution_burstCompute(secondExecution, mBurst);
     });
+    const int result1 = first.get();
+    const int result2 = second.get();
+    EXPECT_TRUE(result1 == ANEURALNETWORKS_BAD_STATE || result1 == ANEURALNETWORKS_NO_ERROR);
+    EXPECT_TRUE(result2 == ANEURALNETWORKS_BAD_STATE || result2 == ANEURALNETWORKS_NO_ERROR);
+    EXPECT_TRUE(result1 == ANEURALNETWORKS_NO_ERROR || result2 == ANEURALNETWORKS_NO_ERROR);
 }
 
 TEST(ValidationTestIntrospection, GetNumDevices) {
