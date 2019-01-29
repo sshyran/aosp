@@ -345,7 +345,7 @@ protected:
     float mOutputBuffer;
     const float kOutputBufferExpected = 3;
 
-private:
+   private:
     static WrapperModel makeModel() {
         static const WrapperOperandType tensorType(WrapperType::TENSOR_FLOAT32, { 1 });
 
@@ -374,6 +374,7 @@ template<class DriverClass> void ExecutionTestTemplate<DriverClass>::TestWait() 
         if (kExpectResult == Result::NO_ERROR) {
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
         }
+        std::vector<uint32_t> dimensions;
     }
     {
         SCOPED_TRACE("compute");
