@@ -15,3 +15,9 @@ TEST_F(GeneratedTests, quantized_lstm) {
             quantized_lstm::get_examples());
 }
 
+TEST_F(GeneratedTests, quantized_lstm_relaxed) {
+    execute(quantized_lstm::CreateModel_relaxed,
+            quantized_lstm::is_ignored_relaxed,
+            quantized_lstm::get_examples_relaxed());
+}
+

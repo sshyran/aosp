@@ -2989,28 +2989,89 @@ typedef enum {
      *      and shape [numBatches, inputSize] specifying the input to the LSTM
      *      cell. Tensor is quantized with a fixed quantization range of
      *      [-1, 127/128] (scale = 1/128, zeroPoint = 128).
-     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
-     *      and shape [numBathes, outputSize] specifying the output of the LSTM
-     *      cell from previous time-step. Tensor is quantized with a fixed
-     *      quantization range of [-1, 127/128] (scale = 1/128, zeroPoint =
-     *      128).
-     * * 2: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
-     *      and shape [4 * cellSize, inputSize + outputSize] specifying the
-     *      weights for the fully-connected layer inside the LSTM cell. Weights
-     *      have no additional restrictions on their quantization.
-     * * 3: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} and shape
-     *      [4 * cellSize] specifying the bias for the fully-connected layer
+     * * 1: The input-to-input weights.
+     *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [outputSize, inputSize] specifying input-to-input part of
+     *      weights for fully-connected layer inside the LSTM cell.
+     *      Quantization zero point and scale must be the same across all the
+     *      weights.
+     * * 2: The input-to-forget weights.
+     *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [outputSize, inputSize] specifying input-to-forget part of
+     *      weights for fully-connected layer inside the LSTM cell.
+     *      Quantization zero point and scale must be the same across all the
+     *      weights.
+     * * 3: The input-to-cell weights.
+     *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [outputSize, inputSize] specifying input-to-cell part of
+     *      weights for fully-connected layer inside the LSTM cell.
+     *      Quantization zero point and scale must be the same across all the
+     *      weights.
+     * * 4: The input-to-output weights.
+     *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [outputSize, inputSize] specifying input-to-output part of
+     *      weights for fully-connected layer inside the LSTM cell.
+     *      Quantization zero point and scale must be the same across all the
+     *      weights.
+     * * 5: The recurrent-to-input weights.
+     *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [outputSize, inputSize] specifying recurrent-to-input part
+     *      of weights for fully-connected layer inside the LSTM cell.
+     *      Quantization zero point and scale must be the same across all the
+     *      weights.
+     * * 6: The recurrent-to-forget weights.
+     *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [outputSize, inputSize] specifying recurrent-to-forget
+     *      part of weights for fully-connected layer inside the LSTM cell.
+     *      Quantization zero point and scale must be the same across all the
+     *      weights.
+     * * 7: The recurrent-to-cell weights.
+     *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [outputSize, inputSize] specifying recurrent-to-cell part
+     *      of weights for fully-connected layer inside the LSTM cell.
+     *      Quantization zero point and scale must be the same across all the
+     *      weights.
+     * * 8: The recurrent-to-output weights.
+     *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and shape [outputSize, inputSize] specifying recurrent-to-output
+     *      part of weights for fully-connected layer inside the LSTM cell.
+     *      Quantization zero point and scale must be the same across all the
+     *      weights.
+     * * 9: The input gate bias.
+     *      A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} and shape
+     *      [outputSize] specifying the bias for the fully-connected layer
      *      inside the LSTM cell. Bias is quantized with scale being a product
      *      of input and weights scales and zeroPoint equal to 0.
-     * * 4: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
-     *      and shape [numBatches, cellSize] specifying the cell state from the
-     *      previous time step of the LSTM cell. It is quantized using a
-     *      quantization range of [-2^4, 2^4 * 32767/32768] (scale = 2^4 /
-     *      32768, zeroPoint = 0).
+     * * 10:The forget gate bias.
+     *      A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} and shape
+     *      [outputSize] specifying the bias for the fully-connected layer
+     *      inside the LSTM cell. Bias is quantized with scale being a product
+     *      of input and weights scales and zeroPoint equal to 0.
+     * * 11:The cell bias.
+     *      A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} and shape
+     *      [outputSize] specifying the bias for the fully-connected layer
+     *      inside the LSTM cell. Bias is quantized with scale being a product
+     *      of input and weights scales and zeroPoint equal to 0.
+     * * 12:The output gate bias.
+     *      A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} and shape
+     *      [outputSize] specifying the bias for the fully-connected layer
+     *      inside the LSTM cell. Bias is quantized with scale being a product
+     *      of input and weights scales and zeroPoint equal to 0.
+     * * 13: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
+     *       and shape [numBatches, outputSize] specifying the cell state from the
+     *       previous time step of the LSTM cell. It is quantized using a
+     *       quantization range of [-2^4, 2^4 * 32767/32768] (scale = 2^4 /
+     *       32768, zeroPoint = 0).
+     * * 14: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *       and shape [numBathes, outputSize] specifying the output of the LSTM
+     *       cell from previous time-step. Tensor is quantized with a fixed
+     *       quantization range of [-1, 127/128] (scale = 1/128, zeroPoint =
+     *       128).
+     *
      *
      * Outputs:
      * * 0: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
-     *      and shape [numBatches, cellSize] which contains a cell state from
+     *      and shape [numBatches, outputSize] which contains a cell state from
      *      the current time step. Tensor is quantized using a quantization
      *      range of [-2^4, 2^4 * 32767/32768] (scale = 2^4 / 32768, zeroPoint =
      *      0).
