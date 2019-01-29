@@ -21,6 +21,12 @@ TEST_F(GeneratedTests, pow_relaxed) {
             pow::get_examples_relaxed());
 }
 
+TEST_F(GeneratedTests, pow_float16) {
+    execute(pow::CreateModel_float16,
+            pow::is_ignored_float16,
+            pow::get_examples_float16());
+}
+
 TEST_F(GeneratedTests, pow_2) {
     execute(pow::CreateModel_2,
             pow::is_ignored_2,
@@ -33,6 +39,12 @@ TEST_F(GeneratedTests, pow_relaxed_2) {
             pow::get_examples_relaxed_2());
 }
 
+TEST_F(GeneratedTests, pow_float16_2) {
+    execute(pow::CreateModel_float16_2,
+            pow::is_ignored_float16_2,
+            pow::get_examples_float16_2());
+}
+
 TEST_F(GeneratedTests, pow_3) {
     execute(pow::CreateModel_3,
             pow::is_ignored_3,
@@ -43,5 +55,11 @@ TEST_F(GeneratedTests, pow_relaxed_3) {
     execute(pow::CreateModel_relaxed_3,
             pow::is_ignored_relaxed_3,
             pow::get_examples_relaxed_3());
+}
+
+TEST_F(GeneratedTests, pow_float16_3) {
+    execute(pow::CreateModel_float16_3,
+            pow::is_ignored_float16_3,
+            pow::get_examples_float16_3());
 }
 

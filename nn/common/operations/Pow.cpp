@@ -45,8 +45,8 @@ bool evalGeneric(const T* baseData, const Shape& baseShape, const T* exponentDat
         uint32_t exponentFlatIndex;
         NN_CHECK(exponentShapeIndexed.broadcastedIndexToFlatIndex(curIndex, &exponentFlatIndex));
 
-        outputData[outputFlatIndex] =
-                std::pow(baseData[baseFlatIndex], exponentData[exponentFlatIndex]);
+        outputData[outputFlatIndex] = std::pow(static_cast<float>(baseData[baseFlatIndex]),
+                                               static_cast<float>(exponentData[exponentFlatIndex]));
 
         NN_CHECK(outputShapeIndexed.nextIndexInplace(&curIndex, &lastIndex));
     } while (!lastIndex);
@@ -67,6 +67,11 @@ bool prepare(const Shape& baseShape, const Shape& exponentShape, Shape* output) 
 bool eval(const void* baseData, const Shape& baseShape, const void* exponentData,
           const Shape& exponentShape, void* outputData, const Shape& outputShape) {
     switch (baseShape.type) {
+        case OperandType::TENSOR_FLOAT16: {
+            return evalGeneric(reinterpret_cast<const _Float16*>(baseData), baseShape,
+                               reinterpret_cast<const _Float16*>(exponentData), exponentShape,
+                               reinterpret_cast<_Float16*>(outputData), outputShape);
+        } break;
         case OperandType::TENSOR_FLOAT32: {
             return evalGeneric(reinterpret_cast<const float*>(baseData), baseShape,
                                reinterpret_cast<const float*>(exponentData), exponentShape,
