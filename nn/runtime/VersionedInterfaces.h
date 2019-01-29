@@ -27,6 +27,8 @@
 namespace android {
 namespace nn {
 
+class ExecutionBurstController;
+
 /**
  * Each class (VersionedIDevice, VersionedIPreparedModel) wraps a HIDL interface
  * of any version to abstract away version differences. It allows the remainder
@@ -372,6 +374,16 @@ class VersionedIPreparedModel {
      */
     std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronously(
             const Request& request, MeasureTiming measure);
+
+    /**
+     * Creates a burst controller on a prepared model.
+     *
+     * @param blocking 'true' if the FMQ should block until data is available.
+     * @return ExecutionBurstController Execution burst controller object.
+     *                                  nullptr is returned if the burst cannot
+     *                                  be configured for any reason.
+     */
+    std::unique_ptr<ExecutionBurstController> configureExecutionBurst(bool blocking) const;
 
     /**
      * Returns whether this handle to an IPreparedModel object is valid or not.

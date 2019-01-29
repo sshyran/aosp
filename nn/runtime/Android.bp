@@ -36,6 +36,7 @@ cc_library {
     // openmp: true,
 
     srcs: [
+        "BurstBuilder.cpp",
         "Callbacks.cpp",
         "CompilationBuilder.cpp",
         "ExecutionBuilder.cpp",
@@ -77,6 +78,7 @@ cc_library {
     ],
 
     shared_libs: [
+        "libfmq",
         "libtextclassifier_hash"
     ],
 
