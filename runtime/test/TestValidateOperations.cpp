@@ -139,6 +139,15 @@ class OperationTestBase {
                     operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
                 }
             }
+            // Transposed conv can have either fully quantized or per-channel
+            // quantized filter for the quantized version of the op.
+            if (mOpCode == ANEURALNETWORKS_TRANSPOSE_CONV_2D && i == 1) {
+                if (originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+                    operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
+                } else if (originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+                    operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+                }
+            }
             for (int32_t newOperandCode : kAvailableOperandCodes) {
                 if (newOperandCode == originalOperandCode ||
                     operandTypesToSkip.find(newOperandCode) != operandTypesToSkip.end()) {
@@ -2339,20 +2348,49 @@ TEST(OperationValidationTest, GROUPED_CONV_2D_quant8_per_channel) {
                       ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
 }
 
-void transposeConvOpTest(int32_t operandCode) {
-    uint32_t inDim[] = {1, 2, 2, 2}, weightDim[] = {2, 3, 3, 1}, biasDim[] = {2};
+void transposeConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
+    uint32_t inDim[] = {1, 2, 2, 2}, filterDim[] = {2, 3, 3, 1}, biasDim[] = {2};
     uint32_t outDim[] = {1, 5, 5, 2}, outShapeDim[] = {4};
-    ANeuralNetworksOperandType bias = (operandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM)
-                                              ? getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, biasDim)
-                                              : getOpType(operandCode, 1, biasDim);
+    ANeuralNetworksOperandType input = getOpType(inputOperandCode, 4, inDim);
+    if (inputOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        input.scale = 0.5f;
+    }
+    ANeuralNetworksOperandType filter = getOpType(filterOperandCode, 4, filterDim);
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        filter.scale = 0.5f;
+    }
+
+    float filterScales[2] = {0.5f, 1.0f};
+    ANeuralNetworksSymmPerChannelQuantParams filterChannelQuantParams = {
+            .channelDim = 0,
+            .scaleCount = 2,
+            .scales = filterScales,
+    };
+
+    ANeuralNetworksOperandType bias = getOpType(inputOperandCode, 1, biasDim);
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        bias.type = ANEURALNETWORKS_TENSOR_INT32;
+        bias.scale = 0.25f;
+    }
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        bias.type = ANEURALNETWORKS_TENSOR_INT32;
+        bias.scale = 0.0f;
+    }
+
     ANeuralNetworksOperandType scalar = getOpType(ANEURALNETWORKS_INT32);
     ANeuralNetworksOperandType layout = getOpType(ANEURALNETWORKS_BOOL);
+    ANeuralNetworksOperandType output = getOpType(inputOperandCode, 4, outDim);
+    if (inputOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+        output.scale = 0.5f;
+    }
 
     OperationTestBase explicitTransposeConvTest(
             ANEURALNETWORKS_TRANSPOSE_CONV_2D,
-            {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias, scalar,
-             scalar, scalar, scalar, scalar, scalar, scalar, layout},
-            {getOpType(operandCode, 4, outDim)});
+            {input, filter, bias, scalar, scalar, scalar, scalar, scalar, scalar, scalar, layout},
+            {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        explicitTransposeConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(explicitTransposeConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(explicitTransposeConvTest.testMutatingInputOperandCounts());
@@ -2361,10 +2399,12 @@ void transposeConvOpTest(int32_t operandCode) {
 
     OperationTestBase implicitTransposeConvTest(
             ANEURALNETWORKS_TRANSPOSE_CONV_2D,
-            {getOpType(operandCode, 4, inDim), getOpType(operandCode, 4, weightDim), bias,
-             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim), scalar, scalar, scalar,
-             scalar, layout},
-            {getOpType(operandCode, 4, outDim)});
+            {input, filter, bias, getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outShapeDim), scalar,
+             scalar, scalar, scalar, layout},
+            {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        implicitTransposeConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
+    }
 
     EXPECT_TRUE(implicitTransposeConvTest.testMutatingInputOperandCode());
     EXPECT_TRUE(implicitTransposeConvTest.testMutatingInputOperandCounts());
@@ -2373,11 +2413,16 @@ void transposeConvOpTest(int32_t operandCode) {
 }
 
 TEST(OperationValidationTest, TRANSPOSE_CONV_2D_float32) {
-    transposeConvOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+    transposeConvOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
 TEST(OperationValidationTest, TRANSPOSE_CONV_2D_quant8) {
-    transposeConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    transposeConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, TRANSPOSE_CONV_2D_quant8_per_channel) {
+    transposeConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                        ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
 }
 
 void channelShuffleOpTest(int32_t operandCode) {

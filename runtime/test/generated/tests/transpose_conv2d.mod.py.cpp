@@ -45,6 +45,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_none_quant8_weight_as_input) {
             transpose_conv2d::get_examples_nhwc_none_quant8_weight_as_input());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_none_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_nhwc_none_channelQuant8,
+            transpose_conv2d::is_ignored_nhwc_none_channelQuant8,
+            transpose_conv2d::get_examples_nhwc_none_channelQuant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_none_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nhwc_none_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_nhwc_none_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_nhwc_none_channelQuant8_weight_as_input());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_none_float16) {
     execute(transpose_conv2d::CreateModel_nhwc_none_float16,
             transpose_conv2d::is_ignored_nhwc_none_float16,
@@ -91,6 +103,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu_quant8_weight_as_input) {
     execute(transpose_conv2d::CreateModel_nhwc_relu_quant8_weight_as_input,
             transpose_conv2d::is_ignored_nhwc_relu_quant8_weight_as_input,
             transpose_conv2d::get_examples_nhwc_relu_quant8_weight_as_input());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu_channelQuant8,
+            transpose_conv2d::is_ignored_nhwc_relu_channelQuant8,
+            transpose_conv2d::get_examples_nhwc_relu_channelQuant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_nhwc_relu_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_nhwc_relu_channelQuant8_weight_as_input());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu_float16) {
@@ -141,6 +165,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu1_quant8_weight_as_input) {
             transpose_conv2d::get_examples_nhwc_relu1_quant8_weight_as_input());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu1_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu1_channelQuant8,
+            transpose_conv2d::is_ignored_nhwc_relu1_channelQuant8,
+            transpose_conv2d::get_examples_nhwc_relu1_channelQuant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu1_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu1_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_nhwc_relu1_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_nhwc_relu1_channelQuant8_weight_as_input());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu1_float16) {
     execute(transpose_conv2d::CreateModel_nhwc_relu1_float16,
             transpose_conv2d::is_ignored_nhwc_relu1_float16,
@@ -187,6 +223,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu6_quant8_weight_as_input) {
     execute(transpose_conv2d::CreateModel_nhwc_relu6_quant8_weight_as_input,
             transpose_conv2d::is_ignored_nhwc_relu6_quant8_weight_as_input,
             transpose_conv2d::get_examples_nhwc_relu6_quant8_weight_as_input());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu6_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu6_channelQuant8,
+            transpose_conv2d::is_ignored_nhwc_relu6_channelQuant8,
+            transpose_conv2d::get_examples_nhwc_relu6_channelQuant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu6_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nhwc_relu6_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_nhwc_relu6_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_nhwc_relu6_channelQuant8_weight_as_input());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_relu6_float16) {
@@ -237,6 +285,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_none_quant8_weight_as_input) {
             transpose_conv2d::get_examples_nchw_none_quant8_weight_as_input());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nchw_none_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_nchw_none_channelQuant8,
+            transpose_conv2d::is_ignored_nchw_none_channelQuant8,
+            transpose_conv2d::get_examples_nchw_none_channelQuant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_none_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nchw_none_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_nchw_none_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_nchw_none_channelQuant8_weight_as_input());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nchw_none_float16) {
     execute(transpose_conv2d::CreateModel_nchw_none_float16,
             transpose_conv2d::is_ignored_nchw_none_float16,
@@ -283,6 +343,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_relu_quant8_weight_as_input) {
     execute(transpose_conv2d::CreateModel_nchw_relu_quant8_weight_as_input,
             transpose_conv2d::is_ignored_nchw_relu_quant8_weight_as_input,
             transpose_conv2d::get_examples_nchw_relu_quant8_weight_as_input());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_nchw_relu_channelQuant8,
+            transpose_conv2d::is_ignored_nchw_relu_channelQuant8,
+            transpose_conv2d::get_examples_nchw_relu_channelQuant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nchw_relu_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_nchw_relu_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_nchw_relu_channelQuant8_weight_as_input());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nchw_relu_float16) {
@@ -333,6 +405,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_relu1_quant8_weight_as_input) {
             transpose_conv2d::get_examples_nchw_relu1_quant8_weight_as_input());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu1_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_nchw_relu1_channelQuant8,
+            transpose_conv2d::is_ignored_nchw_relu1_channelQuant8,
+            transpose_conv2d::get_examples_nchw_relu1_channelQuant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu1_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nchw_relu1_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_nchw_relu1_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_nchw_relu1_channelQuant8_weight_as_input());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nchw_relu1_float16) {
     execute(transpose_conv2d::CreateModel_nchw_relu1_float16,
             transpose_conv2d::is_ignored_nchw_relu1_float16,
@@ -379,6 +463,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_relu6_quant8_weight_as_input) {
     execute(transpose_conv2d::CreateModel_nchw_relu6_quant8_weight_as_input,
             transpose_conv2d::is_ignored_nchw_relu6_quant8_weight_as_input,
             transpose_conv2d::get_examples_nchw_relu6_quant8_weight_as_input());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu6_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_nchw_relu6_channelQuant8,
+            transpose_conv2d::is_ignored_nchw_relu6_channelQuant8,
+            transpose_conv2d::get_examples_nchw_relu6_channelQuant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_relu6_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nchw_relu6_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_nchw_relu6_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_nchw_relu6_channelQuant8_weight_as_input());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nchw_relu6_float16) {
@@ -438,6 +534,22 @@ TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_none_
     execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_none_quant8_weight_as_input,
             transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_none_quant8_weight_as_input,
             transpose_conv2d::get_examples_dynamic_output_shape_nhwc_none_quant8_weight_as_input());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_none_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_none_channelQuant8,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_none_channelQuant8,
+            transpose_conv2d::get_examples_dynamic_output_shape_nhwc_none_channelQuant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input());
 }
 
 #endif
@@ -506,6 +618,22 @@ TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu_
 
 #endif
 #if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_relu_channelQuant8,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_relu_channelQuant8,
+            transpose_conv2d::get_examples_dynamic_output_shape_nhwc_relu_channelQuant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input());
+}
+
+#endif
+#if 0
 TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu_float16) {
     execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_relu_float16,
             transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_relu_float16,
@@ -566,6 +694,22 @@ TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu1
     execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_relu1_quant8_weight_as_input,
             transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_relu1_quant8_weight_as_input,
             transpose_conv2d::get_examples_dynamic_output_shape_nhwc_relu1_quant8_weight_as_input());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu1_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_relu1_channelQuant8,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_relu1_channelQuant8,
+            transpose_conv2d::get_examples_dynamic_output_shape_nhwc_relu1_channelQuant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input());
 }
 
 #endif
@@ -634,6 +778,22 @@ TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu6
 
 #endif
 #if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu6_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_relu6_channelQuant8,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_relu6_channelQuant8,
+            transpose_conv2d::get_examples_dynamic_output_shape_nhwc_relu6_channelQuant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input());
+}
+
+#endif
+#if 0
 TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_relu6_float16) {
     execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_relu6_float16,
             transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_relu6_float16,
@@ -694,6 +854,22 @@ TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_none_
     execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_none_quant8_weight_as_input,
             transpose_conv2d::is_ignored_dynamic_output_shape_nchw_none_quant8_weight_as_input,
             transpose_conv2d::get_examples_dynamic_output_shape_nchw_none_quant8_weight_as_input());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_none_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_none_channelQuant8,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nchw_none_channelQuant8,
+            transpose_conv2d::get_examples_dynamic_output_shape_nchw_none_channelQuant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input());
 }
 
 #endif
@@ -762,6 +938,22 @@ TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu_
 
 #endif
 #if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_relu_channelQuant8,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nchw_relu_channelQuant8,
+            transpose_conv2d::get_examples_dynamic_output_shape_nchw_relu_channelQuant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input());
+}
+
+#endif
+#if 0
 TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu_float16) {
     execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_relu_float16,
             transpose_conv2d::is_ignored_dynamic_output_shape_nchw_relu_float16,
@@ -822,6 +1014,22 @@ TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu1
     execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_relu1_quant8_weight_as_input,
             transpose_conv2d::is_ignored_dynamic_output_shape_nchw_relu1_quant8_weight_as_input,
             transpose_conv2d::get_examples_dynamic_output_shape_nchw_relu1_quant8_weight_as_input());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu1_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_relu1_channelQuant8,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nchw_relu1_channelQuant8,
+            transpose_conv2d::get_examples_dynamic_output_shape_nchw_relu1_channelQuant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input());
 }
 
 #endif
@@ -890,6 +1098,22 @@ TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu6
 
 #endif
 #if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu6_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_relu6_channelQuant8,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nchw_relu6_channelQuant8,
+            transpose_conv2d::get_examples_dynamic_output_shape_nchw_relu6_channelQuant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input());
+}
+
+#endif
+#if 0
 TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_relu6_float16) {
     execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_relu6_float16,
             transpose_conv2d::is_ignored_dynamic_output_shape_nchw_relu6_float16,
@@ -941,6 +1165,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nhwc_quant8_weight_as_input) {
             transpose_conv2d::get_examples_nhwc_quant8_weight_as_input());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_nhwc_channelQuant8,
+            transpose_conv2d::is_ignored_nhwc_channelQuant8,
+            transpose_conv2d::get_examples_nhwc_channelQuant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nhwc_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nhwc_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_nhwc_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_nhwc_channelQuant8_weight_as_input());
+}
+
 TEST_F(GeneratedTests, transpose_conv2d_nhwc_float16) {
     execute(transpose_conv2d::CreateModel_nhwc_float16,
             transpose_conv2d::is_ignored_nhwc_float16,
@@ -987,6 +1223,18 @@ TEST_F(GeneratedTests, transpose_conv2d_nchw_quant8_weight_as_input) {
     execute(transpose_conv2d::CreateModel_nchw_quant8_weight_as_input,
             transpose_conv2d::is_ignored_nchw_quant8_weight_as_input,
             transpose_conv2d::get_examples_nchw_quant8_weight_as_input());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_nchw_channelQuant8,
+            transpose_conv2d::is_ignored_nchw_channelQuant8,
+            transpose_conv2d::get_examples_nchw_channelQuant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_nchw_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_nchw_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_nchw_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_nchw_channelQuant8_weight_as_input());
 }
 
 TEST_F(GeneratedTests, transpose_conv2d_nchw_float16) {
@@ -1046,6 +1294,22 @@ TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_quant
     execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_quant8_weight_as_input,
             transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_quant8_weight_as_input,
             transpose_conv2d::get_examples_dynamic_output_shape_nhwc_quant8_weight_as_input());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_channelQuant8,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_channelQuant8,
+            transpose_conv2d::get_examples_dynamic_output_shape_nhwc_channelQuant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nhwc_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nhwc_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nhwc_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_dynamic_output_shape_nhwc_channelQuant8_weight_as_input());
 }
 
 #endif
@@ -1110,6 +1374,22 @@ TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_quant
     execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_quant8_weight_as_input,
             transpose_conv2d::is_ignored_dynamic_output_shape_nchw_quant8_weight_as_input,
             transpose_conv2d::get_examples_dynamic_output_shape_nchw_quant8_weight_as_input());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_channelQuant8) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_channelQuant8,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nchw_channelQuant8,
+            transpose_conv2d::get_examples_dynamic_output_shape_nchw_channelQuant8());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_conv2d_dynamic_output_shape_nchw_channelQuant8_weight_as_input) {
+    execute(transpose_conv2d::CreateModel_dynamic_output_shape_nchw_channelQuant8_weight_as_input,
+            transpose_conv2d::is_ignored_dynamic_output_shape_nchw_channelQuant8_weight_as_input,
+            transpose_conv2d::get_examples_dynamic_output_shape_nchw_channelQuant8_weight_as_input());
 }
 
 #endif
