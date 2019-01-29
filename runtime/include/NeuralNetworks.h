@@ -2220,10 +2220,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Inputs:
-     * * 0: A 2-D Tensor of shape [num_rois, 5 or 4], specifying the locations
-     *      of the bounding box proposals, each line with format
-     *      [<optional batch_id>, x1, y1, x2, y2]. The batch_id is optional if
-     *      there is only one batch.
+     * * 0: A 2-D Tensor of shape [num_rois, 4], specifying the locations of the
+     *      bounding box proposals, each line with format [x1, y1, x2, y2].
      * * 1: A 2-D Tensor of shape [num_rois, num_classes * 4], specifying the
      *      bounding box delta for each region of interest and each class. The
      *      bounding box deltas are organized in the following order
@@ -2231,20 +2229,16 @@ typedef enum {
      *      for the center position of the bounding box with respect to the width
      *      and height, dw and dh is the log-scale relative correction factor
      *      for the width and height.
-     * * 2: A 2-D Tensor of shape [batches, 3], specifying the information of
+     * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
+     *      [batches], specifying the number of output boxes for each batch.
+     * * 3: A 2-D Tensor of shape [batches, 3], specifying the information of
      *      each image in the batch, each line with format
      *      [image_height, image_width, image_scale].
-     * * 3: An 1-D Tensor of shape [4], specifying the weights for the deltas.
-     *      The weights are organized in the order of [wx, wy, ww, wh].
-     * * 4: An {@link ANEURALNETWORKS_BOOL} scalar, apply_scale. If true,
-     *      apply the image scale to the boxes after the transformation.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
      *      [num_rois, num_classes * 4], specifying the coordinates of each
      *      output bounding box for each class, with format [x1, y1, x2, y2].
-     * * 1: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
-     *      [batches], specifying the number of output boxes for each batch.
      *
      * Available since API level 29.
      */
