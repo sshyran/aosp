@@ -21,7 +21,7 @@
 #include "HalOperation.h"
 #include "LSTM.h"
 #include "OperationsUtils.h"
-#include "tensorflow/contrib/lite/kernels/internal/tensor_utils.h"
+#include "tensorflow/lite/kernels/internal/tensor_utils.h"
 
 #include <algorithm>
 #include <cmath>
