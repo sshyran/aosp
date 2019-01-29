@@ -2534,6 +2534,21 @@ TEST_F(ValidationTest, axis_aligned_bbox_transform_float16) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, axis_aligned_bbox_transform_quant8) {
+  generated_tests::Execute(device,
+                           axis_aligned_bbox_transform::createTestModel_quant8,
+                           axis_aligned_bbox_transform::is_ignored_quant8,
+                           axis_aligned_bbox_transform::get_examples_quant8());
+}
+
+TEST_F(ValidationTest, axis_aligned_bbox_transform_quant8) {
+  const Model model = axis_aligned_bbox_transform::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(axis_aligned_bbox_transform::get_examples_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, axis_aligned_bbox_transform_dynamic_output_shape) {
   generated_tests::Execute(device,
@@ -2585,6 +2600,23 @@ TEST_F(ValidationTest, axis_aligned_bbox_transform_dynamic_output_shape_float16)
 
 
 #endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, axis_aligned_bbox_transform_dynamic_output_shape_quant8) {
+  generated_tests::Execute(device,
+                           axis_aligned_bbox_transform::createTestModel_dynamic_output_shape_quant8,
+                           axis_aligned_bbox_transform::is_ignored_dynamic_output_shape_quant8,
+                           axis_aligned_bbox_transform::get_examples_dynamic_output_shape_quant8(), true);
+}
+
+TEST_F(ValidationTest, axis_aligned_bbox_transform_dynamic_output_shape_quant8) {
+  const Model model = axis_aligned_bbox_transform::createTestModel_dynamic_output_shape_quant8();
+  const std::vector<Request> requests = createRequests(axis_aligned_bbox_transform::get_examples_dynamic_output_shape_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
 TEST_F(NeuralnetworksHidlTest, axis_aligned_bbox_transform_2) {
   generated_tests::Execute(device,
                            axis_aligned_bbox_transform::createTestModel_2,
@@ -2625,6 +2657,21 @@ TEST_F(NeuralnetworksHidlTest, axis_aligned_bbox_transform_float16_2) {
 TEST_F(ValidationTest, axis_aligned_bbox_transform_float16_2) {
   const Model model = axis_aligned_bbox_transform::createTestModel_float16_2();
   const std::vector<Request> requests = createRequests(axis_aligned_bbox_transform::get_examples_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, axis_aligned_bbox_transform_quant8_2) {
+  generated_tests::Execute(device,
+                           axis_aligned_bbox_transform::createTestModel_quant8_2,
+                           axis_aligned_bbox_transform::is_ignored_quant8_2,
+                           axis_aligned_bbox_transform::get_examples_quant8_2());
+}
+
+TEST_F(ValidationTest, axis_aligned_bbox_transform_quant8_2) {
+  const Model model = axis_aligned_bbox_transform::createTestModel_quant8_2();
+  const std::vector<Request> requests = createRequests(axis_aligned_bbox_transform::get_examples_quant8_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -2675,6 +2722,23 @@ TEST_F(DynamicOutputShapeTest, axis_aligned_bbox_transform_dynamic_output_shape_
 TEST_F(ValidationTest, axis_aligned_bbox_transform_dynamic_output_shape_float16_2) {
   const Model model = axis_aligned_bbox_transform::createTestModel_dynamic_output_shape_float16_2();
   const std::vector<Request> requests = createRequests(axis_aligned_bbox_transform::get_examples_dynamic_output_shape_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, axis_aligned_bbox_transform_dynamic_output_shape_quant8_2) {
+  generated_tests::Execute(device,
+                           axis_aligned_bbox_transform::createTestModel_dynamic_output_shape_quant8_2,
+                           axis_aligned_bbox_transform::is_ignored_dynamic_output_shape_quant8_2,
+                           axis_aligned_bbox_transform::get_examples_dynamic_output_shape_quant8_2(), true);
+}
+
+TEST_F(ValidationTest, axis_aligned_bbox_transform_dynamic_output_shape_quant8_2) {
+  const Model model = axis_aligned_bbox_transform::createTestModel_dynamic_output_shape_quant8_2();
+  const std::vector<Request> requests = createRequests(axis_aligned_bbox_transform::get_examples_dynamic_output_shape_quant8_2());
   validateModel(model);
   validateRequests(model, requests);
 }
