@@ -1976,12 +1976,13 @@ TEST(OperationValidationTest, ROI_POOLING_quant8) {
 }
 
 void heatmapMaxKeypointOpTest(int32_t operandCode) {
-    uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outDim[] = {6, 3, 1};
+    uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outScoreDim[] = {6, 1},
+             outKeypointDim[] = {6, 1, 2};
     OperationTestBase heatmapMaxKeypointTest(
             ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT,
             {getOpType(operandCode, 4, heatmapDim), getOpType(operandCode, 2, boxDim),
              getOpType(ANEURALNETWORKS_BOOL)},
-            {getOpType(operandCode, 3, outDim)});
+            {getOpType(operandCode, 2, outScoreDim), getOpType(operandCode, 3, outKeypointDim)});
 
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCode());
     EXPECT_TRUE(heatmapMaxKeypointTest.testMutatingInputOperandCounts());
