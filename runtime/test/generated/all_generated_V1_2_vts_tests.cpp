@@ -19707,6 +19707,36 @@ TEST_F(ValidationTest, grouped_conv2d_nhwc_none_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_none_channelQuant8,
+                           grouped_conv2d::is_ignored_nhwc_none_channelQuant8,
+                           grouped_conv2d::get_examples_nhwc_none_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_none_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_none_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_none_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_none_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_none_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_nhwc_none_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_none_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_none_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_none_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_none_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_nhwc_none_float16,
@@ -19822,6 +19852,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_quant8_weight_as_input) 
 TEST_F(ValidationTest, grouped_conv2d_nhwc_relu_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_nhwc_relu_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu_channelQuant8,
+                           grouped_conv2d::is_ignored_nhwc_relu_channelQuant8,
+                           grouped_conv2d::get_examples_nhwc_relu_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_nhwc_relu_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -19947,6 +20007,36 @@ TEST_F(ValidationTest, grouped_conv2d_nhwc_relu1_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu1_channelQuant8,
+                           grouped_conv2d::is_ignored_nhwc_relu1_channelQuant8,
+                           grouped_conv2d::get_examples_nhwc_relu1_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu1_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu1_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu1_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu1_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu1_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_nhwc_relu1_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu1_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu1_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu1_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu1_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_nhwc_relu1_float16,
@@ -20062,6 +20152,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_quant8_weight_as_input)
 TEST_F(ValidationTest, grouped_conv2d_nhwc_relu6_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_nhwc_relu6_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu6_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu6_channelQuant8,
+                           grouped_conv2d::is_ignored_nhwc_relu6_channelQuant8,
+                           grouped_conv2d::get_examples_nhwc_relu6_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu6_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu6_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu6_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nhwc_relu6_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nhwc_relu6_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nhwc_relu6_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_nhwc_relu6_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nhwc_relu6_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nhwc_relu6_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nhwc_relu6_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -20187,6 +20307,36 @@ TEST_F(ValidationTest, grouped_conv2d_nchw_none_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_none_channelQuant8,
+                           grouped_conv2d::is_ignored_nchw_none_channelQuant8,
+                           grouped_conv2d::get_examples_nchw_none_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_none_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_nchw_none_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_none_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_none_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_none_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_nchw_none_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_none_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nchw_none_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_none_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_none_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_nchw_none_float16,
@@ -20302,6 +20452,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_quant8_weight_as_input) 
 TEST_F(ValidationTest, grouped_conv2d_nchw_relu_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_nchw_relu_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu_channelQuant8,
+                           grouped_conv2d::is_ignored_nchw_relu_channelQuant8,
+                           grouped_conv2d::get_examples_nchw_relu_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_nchw_relu_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -20427,6 +20607,36 @@ TEST_F(ValidationTest, grouped_conv2d_nchw_relu1_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu1_channelQuant8,
+                           grouped_conv2d::is_ignored_nchw_relu1_channelQuant8,
+                           grouped_conv2d::get_examples_nchw_relu1_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu1_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu1_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu1_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu1_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu1_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_nchw_relu1_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu1_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu1_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu1_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu1_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_nchw_relu1_float16,
@@ -20542,6 +20752,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_quant8_weight_as_input)
 TEST_F(ValidationTest, grouped_conv2d_nchw_relu6_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_nchw_relu6_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu6_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu6_channelQuant8,
+                           grouped_conv2d::is_ignored_nchw_relu6_channelQuant8,
+                           grouped_conv2d::get_examples_nchw_relu6_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu6_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu6_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu6_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_nchw_relu6_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_nchw_relu6_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_nchw_relu6_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_nchw_relu6_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_nchw_relu6_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_nchw_relu6_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_nchw_relu6_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -20673,6 +20913,40 @@ TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_none_qua
 TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_none_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_none_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nhwc_none_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_none_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_none_channelQuant8,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nhwc_none_channelQuant8,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nhwc_none_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_none_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_none_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nhwc_none_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nhwc_none_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -20816,6 +21090,40 @@ TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_relu_quant8_weig
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_relu_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu_channelQuant8,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nhwc_relu_channelQuant8,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_relu_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_relu_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu_float16,
@@ -20945,6 +21253,40 @@ TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_relu1_qu
 TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_relu1_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu1_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu1_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_relu1_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu1_channelQuant8,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nhwc_relu1_channelQuant8,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu1_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_relu1_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu1_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu1_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu1_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -21088,6 +21430,40 @@ TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_relu6_quant8_wei
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_relu6_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu6_channelQuant8,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nhwc_relu6_channelQuant8,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu6_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_relu6_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu6_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu6_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nhwc_relu6_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nhwc_relu6_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_dynamic_output_shape_nhwc_relu6_float16,
@@ -21217,6 +21593,40 @@ TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_none_qua
 TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_none_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nchw_none_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nchw_none_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_none_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nchw_none_channelQuant8,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nchw_none_channelQuant8,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nchw_none_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_none_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nchw_none_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nchw_none_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nchw_none_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -21360,6 +21770,40 @@ TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_relu_quant8_weig
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_relu_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu_channelQuant8,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nchw_relu_channelQuant8,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_relu_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_relu_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu_float16,
@@ -21489,6 +21933,40 @@ TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_relu1_qu
 TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_relu1_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu1_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu1_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_relu1_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu1_channelQuant8,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nchw_relu1_channelQuant8,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu1_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_relu1_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu1_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu1_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu1_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -21632,6 +22110,40 @@ TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_relu6_quant8_wei
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_relu6_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu6_channelQuant8,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nchw_relu6_channelQuant8,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu6_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_relu6_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu6_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu6_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_dynamic_output_shape_nchw_relu6_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, grouped_conv2d_dynamic_output_shape_nchw_relu6_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_dynamic_output_shape_nchw_relu6_float16,
@@ -21755,6 +22267,36 @@ TEST_F(ValidationTest, grouped_conv2d_large_nhwc_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nhwc_channelQuant8,
+                           grouped_conv2d::is_ignored_large_nhwc_channelQuant8,
+                           grouped_conv2d::get_examples_large_nhwc_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_nhwc_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_large_nhwc_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_nhwc_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nhwc_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_large_nhwc_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_large_nhwc_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_nhwc_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_large_nhwc_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_nhwc_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nhwc_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_large_nhwc_float16,
@@ -21870,6 +22412,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_quant8_weight_as_input)
 TEST_F(ValidationTest, grouped_conv2d_large_nchw_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_large_nchw_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_nchw_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nchw_channelQuant8,
+                           grouped_conv2d::is_ignored_large_nchw_channelQuant8,
+                           grouped_conv2d::get_examples_large_nchw_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_nchw_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_large_nchw_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_nchw_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_large_nchw_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_nchw_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_large_nchw_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_large_nchw_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_nchw_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_large_nchw_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_nchw_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -22001,6 +22573,40 @@ TEST_F(DynamicOutputShapeTest, grouped_conv2d_large_dynamic_output_shape_nhwc_qu
 TEST_F(ValidationTest, grouped_conv2d_large_dynamic_output_shape_nhwc_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_large_dynamic_output_shape_nhwc_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_dynamic_output_shape_nhwc_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_large_dynamic_output_shape_nhwc_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_dynamic_output_shape_nhwc_channelQuant8,
+                           grouped_conv2d::is_ignored_large_dynamic_output_shape_nhwc_channelQuant8,
+                           grouped_conv2d::get_examples_large_dynamic_output_shape_nhwc_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_dynamic_output_shape_nhwc_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_large_dynamic_output_shape_nhwc_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_dynamic_output_shape_nhwc_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_large_dynamic_output_shape_nhwc_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_dynamic_output_shape_nhwc_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_large_dynamic_output_shape_nhwc_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_large_dynamic_output_shape_nhwc_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_dynamic_output_shape_nhwc_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_large_dynamic_output_shape_nhwc_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_dynamic_output_shape_nhwc_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -22144,6 +22750,40 @@ TEST_F(ValidationTest, grouped_conv2d_large_dynamic_output_shape_nchw_quant8_wei
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_large_dynamic_output_shape_nchw_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_dynamic_output_shape_nchw_channelQuant8,
+                           grouped_conv2d::is_ignored_large_dynamic_output_shape_nchw_channelQuant8,
+                           grouped_conv2d::get_examples_large_dynamic_output_shape_nchw_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_dynamic_output_shape_nchw_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_large_dynamic_output_shape_nchw_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_dynamic_output_shape_nchw_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_large_dynamic_output_shape_nchw_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_large_dynamic_output_shape_nchw_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_large_dynamic_output_shape_nchw_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_large_dynamic_output_shape_nchw_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_large_dynamic_output_shape_nchw_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_large_dynamic_output_shape_nchw_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_large_dynamic_output_shape_nchw_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, grouped_conv2d_large_dynamic_output_shape_nchw_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_large_dynamic_output_shape_nchw_float16,
@@ -22267,6 +22907,36 @@ TEST_F(ValidationTest, grouped_conv2d_channel_nhwc_quant8_weight_as_input) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nhwc_channelQuant8,
+                           grouped_conv2d::is_ignored_channel_nhwc_channelQuant8,
+                           grouped_conv2d::get_examples_channel_nhwc_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_nhwc_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_channel_nhwc_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_nhwc_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nhwc_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_nhwc_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_channel_nhwc_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_nhwc_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_channel_nhwc_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_nhwc_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nhwc_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_channel_nhwc_float16,
@@ -22382,6 +23052,36 @@ TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_quant8_weight_as_inpu
 TEST_F(ValidationTest, grouped_conv2d_channel_nchw_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_channel_nchw_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_nchw_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nchw_channelQuant8,
+                           grouped_conv2d::is_ignored_channel_nchw_channelQuant8,
+                           grouped_conv2d::get_examples_channel_nchw_channelQuant8());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_nchw_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_channel_nchw_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_nchw_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, grouped_conv2d_channel_nchw_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_nchw_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_nchw_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_channel_nchw_channelQuant8_weight_as_input());
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_nchw_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_channel_nchw_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_nchw_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -22520,6 +23220,40 @@ TEST_F(ValidationTest, grouped_conv2d_channel_dynamic_output_shape_nhwc_quant8_w
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_channel_dynamic_output_shape_nhwc_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_dynamic_output_shape_nhwc_channelQuant8,
+                           grouped_conv2d::is_ignored_channel_dynamic_output_shape_nhwc_channelQuant8,
+                           grouped_conv2d::get_examples_channel_dynamic_output_shape_nhwc_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_dynamic_output_shape_nhwc_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_channel_dynamic_output_shape_nhwc_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_dynamic_output_shape_nhwc_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_channel_dynamic_output_shape_nhwc_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_dynamic_output_shape_nhwc_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_dynamic_output_shape_nhwc_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_channel_dynamic_output_shape_nhwc_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_dynamic_output_shape_nhwc_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_channel_dynamic_output_shape_nhwc_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_dynamic_output_shape_nhwc_channelQuant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, grouped_conv2d_channel_dynamic_output_shape_nhwc_float16) {
   generated_tests::Execute(device,
                            grouped_conv2d::createTestModel_channel_dynamic_output_shape_nhwc_float16,
@@ -22649,6 +23383,40 @@ TEST_F(DynamicOutputShapeTest, grouped_conv2d_channel_dynamic_output_shape_nchw_
 TEST_F(ValidationTest, grouped_conv2d_channel_dynamic_output_shape_nchw_quant8_weight_as_input) {
   const Model model = grouped_conv2d::createTestModel_channel_dynamic_output_shape_nchw_quant8_weight_as_input();
   const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_dynamic_output_shape_nchw_quant8_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_channel_dynamic_output_shape_nchw_channelQuant8) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_dynamic_output_shape_nchw_channelQuant8,
+                           grouped_conv2d::is_ignored_channel_dynamic_output_shape_nchw_channelQuant8,
+                           grouped_conv2d::get_examples_channel_dynamic_output_shape_nchw_channelQuant8(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_dynamic_output_shape_nchw_channelQuant8) {
+  const Model model = grouped_conv2d::createTestModel_channel_dynamic_output_shape_nchw_channelQuant8();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_dynamic_output_shape_nchw_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, grouped_conv2d_channel_dynamic_output_shape_nchw_channelQuant8_weight_as_input) {
+  generated_tests::Execute(device,
+                           grouped_conv2d::createTestModel_channel_dynamic_output_shape_nchw_channelQuant8_weight_as_input,
+                           grouped_conv2d::is_ignored_channel_dynamic_output_shape_nchw_channelQuant8_weight_as_input,
+                           grouped_conv2d::get_examples_channel_dynamic_output_shape_nchw_channelQuant8_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, grouped_conv2d_channel_dynamic_output_shape_nchw_channelQuant8_weight_as_input) {
+  const Model model = grouped_conv2d::createTestModel_channel_dynamic_output_shape_nchw_channelQuant8_weight_as_input();
+  const std::vector<Request> requests = createRequests(grouped_conv2d::get_examples_channel_dynamic_output_shape_nchw_channelQuant8_weight_as_input());
   validateModel(model);
   validateRequests(model, requests);
 }
