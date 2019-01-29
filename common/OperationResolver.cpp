@@ -28,7 +28,6 @@ const OperationRegistration* register_ABS();
 const OperationRegistration* register_AXIS_ALIGNED_BBOX_TRANSFORM();
 const OperationRegistration* register_BOX_WITH_NMS_LIMIT();
 const OperationRegistration* register_CHANNEL_SHUFFLE();
-const OperationRegistration* register_EMBEDDING_LOOKUP_SPARSE();
 const OperationRegistration* register_EQUAL();
 const OperationRegistration* register_EXP();
 const OperationRegistration* register_GATHER();
@@ -58,7 +57,6 @@ const OperationRegistration* register_ROI_POOLING();
 const OperationRegistration* register_RSQRT();
 const OperationRegistration* register_SELECT();
 const OperationRegistration* register_SIN();
-const OperationRegistration* register_SPARSE_TO_DENSE();
 const OperationRegistration* register_SQRT();
 const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_RNN();
 
@@ -67,7 +65,6 @@ OperationResolver::OperationResolver() {
     registerOperation(register_AXIS_ALIGNED_BBOX_TRANSFORM());
     registerOperation(register_BOX_WITH_NMS_LIMIT());
     registerOperation(register_CHANNEL_SHUFFLE());
-    registerOperation(register_EMBEDDING_LOOKUP_SPARSE());
     registerOperation(register_EQUAL());
     registerOperation(register_EXP());
     registerOperation(register_GATHER());
@@ -97,7 +94,6 @@ OperationResolver::OperationResolver() {
     registerOperation(register_RSQRT());
     registerOperation(register_SELECT());
     registerOperation(register_SIN());
-    registerOperation(register_SPARSE_TO_DENSE());
     registerOperation(register_SQRT());
     registerOperation(register_UNIDIRECTIONAL_SEQUENCE_RNN());
 }
