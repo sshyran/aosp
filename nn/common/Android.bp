@@ -62,11 +62,15 @@ cc_library_static {
     shared_libs: [
         "libhidltransport",
         "libhidlmemory",
+        "libnativewindow",
         "android.hardware.neuralnetworks@1.0",
         "android.hardware.neuralnetworks@1.1",
         "android.hardware.neuralnetworks@1.2",
         "android.hidl.allocator@1.0",
         "android.hidl.memory@1.0",
+    ],
+    whole_static_libs: [
+        "libarect",
     ],
     cflags: [
         "-Werror",
@@ -133,6 +137,7 @@ cc_library_static {
         "libhidlbase",
         "libhidltransport",
         "libhidlmemory",
+        "libnativewindow",
         "libtextclassifier_hash",
         "liblog",
         "libutils",
@@ -151,6 +156,7 @@ cc_library_static {
         "tensorflow_headers",
     ],
     whole_static_libs: [
+        "libarect",
         "libtflite_kernel_utils",
         "philox_random",
     ],
@@ -174,6 +180,7 @@ cc_test {
     name: "NeuralNetworksTest_operations",
     shared_libs: [
         "libhidlmemory",
+        "libnativewindow",
         "libneuralnetworks",
         "android.hardware.neuralnetworks@1.0",
         "android.hardware.neuralnetworks@1.1",
@@ -207,6 +214,7 @@ cc_test {
     name: "NeuralNetworksTest_utils",
     shared_libs: [
         "libhidlmemory",
+        "libnativewindow",
         "libneuralnetworks",
         "android.hardware.neuralnetworks@1.0",
         "android.hardware.neuralnetworks@1.1",
