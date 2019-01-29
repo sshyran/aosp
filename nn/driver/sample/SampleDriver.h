@@ -27,6 +27,8 @@ namespace android {
 namespace nn {
 namespace sample_driver {
 
+using ::android::hardware::MQDescriptorSync;
+
 // Base class used to create sample drivers for the NN HAL.  This class
 // provides some implementation of the more common functions.
 //
@@ -68,6 +70,11 @@ public:
     Return<ErrorStatus> execute_1_2(const Request& request,
                                     const sp<V1_2::IExecutionCallback>& callback) override;
     Return<void> executeSynchronously(const Request& request, executeSynchronously_cb cb) override;
+    Return<void> configureExecutionBurst(
+            const sp<V1_2::IBurstCallback>& callback,
+            const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
+            const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
+            configureExecutionBurst_cb cb) override;
 
    private:
     Model mModel;
