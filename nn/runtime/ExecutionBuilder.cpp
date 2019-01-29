@@ -33,6 +33,12 @@
 namespace android {
 namespace nn {
 
+const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+
+static MeasureTiming measureTiming(const ExecutionBuilder* execution) {
+    return execution->measureTiming() ? MeasureTiming::YES : MeasureTiming::NO;
+}
+
 int ModelArgumentInfo::setFromPointer(const Operand& operand,
                                       const ANeuralNetworksOperandType* type, void* data,
                                       uint32_t length) {
@@ -225,6 +231,33 @@ int ExecutionBuilder::setOutputFromMemory(uint32_t index, const ANeuralNetworksO
                                          length);
 }
 
+int ExecutionBuilder::setMeasureTiming(bool measure) {
+    mMeasureTiming = measure;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) const {
+    // NOTE: At the HAL level, timing is in microseconds. At the NDK level, nanoseconds.
+    const uint64_t kNanoPerMicro = 1000;
+
+    if (!mMeasureTiming) {
+        *duration = UINT64_MAX;
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    switch (durationCode) {
+        case ANEURALNETWORKS_DURATION_ON_HARDWARE:
+            *duration = kNanoPerMicro * mTiming.timeOnDevice;
+            break;
+        case ANEURALNETWORKS_DURATION_IN_DRIVER:
+            *duration = kNanoPerMicro * mTiming.timeInDriver;
+            break;
+        default:
+            CHECK(!"unexpected");
+    }
+    VLOG(EXECUTION) << "getDuration(" << durationCode << "): " << *duration;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 int ExecutionBuilder::getOutputOperandDimensions(uint32_t index, uint32_t* dimensions) {
     if (!mFinished) {
         LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions called before the "
@@ -267,7 +300,8 @@ int ExecutionBuilder::getOutputOperandRank(uint32_t index, uint32_t* rank) {
 
 // Attempt synchronous execution of full model on CPU.
 // Ensure that executionCallback->notify() is called.
-static void cpuFallbackFull(const ExecutionBuilder* executionBuilder,
+// TODO: How should we handle timing in this case?
+static void cpuFallbackFull(ExecutionBuilder* executionBuilder,
                             const sp<ExecutionCallback>& executionCallback) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "cpuFallbackFull");
     VLOG(EXECUTION) << "cpuFallbackFull";
@@ -290,7 +324,8 @@ static void cpuFallbackFull(const ExecutionBuilder* executionBuilder,
 // (2) If unsuccessful, attempt to execute the full model on CPU,
 //     ensure that executionCallback->notify() is called, and return
 //     false.
-static bool cpuFallbackPartial(const ExecutionBuilder* executionBuilder, const ExecutionPlan* plan,
+// TODO: How should we handle timing in this case?
+static bool cpuFallbackPartial(ExecutionBuilder* executionBuilder, const ExecutionPlan* plan,
                                std::shared_ptr<ExecutionPlan::Controller> controller,
                                const sp<ExecutionCallback>& executionCallback) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "cpuFallbackPartial");
@@ -314,7 +349,7 @@ static bool cpuFallbackPartial(const ExecutionBuilder* executionBuilder, const E
     return true;
 }
 
-static void asyncStartComputePartitioned(const ExecutionBuilder* executionBuilder,
+static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
                                          const ExecutionPlan* plan,
                                          std::shared_ptr<ExecutionPlan::Controller> controller,
                                          bool allowFallback,
@@ -412,6 +447,9 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback) {
         asyncStartComputePartitioned(this, mPlan, controller, allowFallback,
                                      localSynchronizationCallback);
         localSynchronizationCallback->wait();
+        if (mMeasureTiming) {
+            mTiming = localSynchronizationCallback->getTiming();
+        }
         return convertErrorStatusToResultCode(localSynchronizationCallback->getStatus());
     } else /* asynchronous */ {
         // TODO: use a thread pool
@@ -486,7 +524,7 @@ static void setRequestArgumentArray(const std::vector<ModelArgumentInfo>& argume
     }
 }
 
-StepExecutor::StepExecutor(const ExecutionBuilder* executionBuilder, const ModelBuilder* model,
+StepExecutor::StepExecutor(ExecutionBuilder* executionBuilder, const ModelBuilder* model,
                            std::shared_ptr<Device> device,
                            std::shared_ptr<VersionedIPreparedModel> preparedModel)
     : mExecutionBuilder(executionBuilder),
@@ -676,8 +714,10 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
     if (DeviceManager::get()->syncExecHal()) {
         VLOG(EXECUTION) << "Before mPreparedModel->executeSynchronously() "
                         << SHOW_IF_DEBUG(toString(request));
-        auto syncExecuteResult = mPreparedModel->executeSynchronously(request);
-        executionCallback->notify(syncExecuteResult.first, syncExecuteResult.second);
+        auto syncExecuteResult =
+                mPreparedModel->executeSynchronously(request, measureTiming(mExecutionBuilder));
+        executionCallback->notify(std::get<0>(syncExecuteResult), std::get<1>(syncExecuteResult),
+                                  std::get<2>(syncExecuteResult));
     } else {
         VLOG(EXECUTION) << "Before mPreparedModel->execute() " << SHOW_IF_DEBUG(toString(request));
         // Execute.
@@ -687,7 +727,8 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
         // maybe the HIDL infrastructure handles this magically? At worst,
         // it seems like this is a small memory leak, if the Callback stays
         // alive forever.
-        Return<ErrorStatus> executeStatus = mPreparedModel->execute(request, executionCallback);
+        Return<ErrorStatus> executeStatus = mPreparedModel->execute(
+                request, measureTiming(mExecutionBuilder), executionCallback);
         if (!executeStatus.isOk() || executeStatus != ErrorStatus::NONE) {
             VLOG(EXECUTION) << "**Execute launch failed**";
             return executeStatus.isOk() ? convertErrorStatusToResultCode(executeStatus)
@@ -706,6 +747,8 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
         return callbackStatus.isOk() ? convertErrorStatusToResultCode(callbackStatus)
                                      : ANEURALNETWORKS_OP_FAILED;
     }
+
+    mExecutionBuilder->reportTiming(executionCallback->getTiming());
 
     // Copy the output data from shared memory to the output buffers.
     // TODO: Move this block of code somewhere else. It should not be in the
@@ -737,7 +780,8 @@ static void computeOnCpu(const Model& model, const Request& request,
     CpuExecutor executor;
     int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
     const auto& outputShapes = executor.getOutputShapes();
-    executionCallback->notify_1_2(convertResultCodeToErrorStatus(err), outputShapes);
+    // TODO: timing?
+    executionCallback->notify_1_2(convertResultCodeToErrorStatus(err), outputShapes, kNoTiming);
 }
 
 int StepExecutor::startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallback) {

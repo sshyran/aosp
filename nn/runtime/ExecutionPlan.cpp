@@ -503,12 +503,13 @@ int ExecutionPlan::finish(const ModelBuilder* fromModel, int32_t executionPrefer
 }
 
 ExecutionPlan::Controller::Controller(
-    const ExecutionPlan* plan,
-    const ExecutionBuilder* executionBuilder,
-    std::shared_ptr<const SubModelInputsAndOutputsType> subModelInputsAndOutputs,
-    uint32_t totalSizeOfTemporaries) :
-        mPlan(plan), mExecutionBuilder(executionBuilder),
-        mSubModelInputsAndOutputs(subModelInputsAndOutputs), mNextStepIndex(0) {
+        const ExecutionPlan* plan, ExecutionBuilder* executionBuilder,
+        std::shared_ptr<const SubModelInputsAndOutputsType> subModelInputsAndOutputs,
+        uint32_t totalSizeOfTemporaries)
+    : mPlan(plan),
+      mExecutionBuilder(executionBuilder),
+      mSubModelInputsAndOutputs(subModelInputsAndOutputs),
+      mNextStepIndex(0) {
     if (totalSizeOfTemporaries) {
         if (mTemporaries.create(totalSizeOfTemporaries) != ANEURALNETWORKS_NO_ERROR) {
             LOG(ERROR) << "ExecutionPlan::Controller failed to allocate temporaries";
@@ -518,7 +519,7 @@ ExecutionPlan::Controller::Controller(
 }
 
 std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
-    const ExecutionBuilder* executionBuilder) const {
+        ExecutionBuilder* executionBuilder) const {
     nnAssert(isValid());
 
     // Create the layout for a Memory object big enough for to hold
