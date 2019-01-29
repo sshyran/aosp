@@ -38,4 +38,4 @@ for exponent, output, exponent_data, output_data in zip(exponents, outputs, expo
         base: base_data,
         exponent: exponent_data,
         output: output_data
-    }, model=model).AddVariations("relaxed")
+    }, model=model).AddVariations("relaxed", "float16")
