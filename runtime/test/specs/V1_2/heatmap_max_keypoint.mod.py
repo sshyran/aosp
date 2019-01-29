@@ -19,8 +19,9 @@ layout = BoolScalar("layout", False) # NHWC
 # TEST 1: HEATMAP_MAX_KEYPOINT_1
 heatmap1 = Input("heatmap", "TENSOR_FLOAT32", "{6, 4, 4, 1}")
 boxes1 = Input("boxes", "TENSOR_FLOAT32", "{6, 4}")
-o1 = Output("out", "TENSOR_FLOAT32", "{6, 3, 1}")
-Model().Operation("HEATMAP_MAX_KEYPOINT", heatmap1, boxes1, layout).To(o1)
+score1 = Output("score", "TENSOR_FLOAT32", "{6, 1}")
+keypoint1 = Output("keypoint", "TENSOR_FLOAT32", "{6, 1, 2}")
+Model().Operation("HEATMAP_MAX_KEYPOINT", heatmap1, boxes1, layout).To(score1, keypoint1)
 
 # Instantiate an example
 Example({
@@ -58,13 +59,21 @@ Example({
         5, 2, 10, 20,
         5, 2, 10, 20
     ],
-    o1: [
-        8.224462, 8.537316, 9.071493,
-        11.73000, 9.625000, 10.00500,
-        8.875000, 9.562500, 7.187500,
-        17.37500, 5.875000, 10.00000,
-        9.569672, 2.000000, 10.689667,
-        8.125000, 8.750000, 9.000000
+    score1: [
+        9.071493,
+        10.00500,
+        7.187500,
+        10.00000,
+        10.689667,
+        9.000000
+    ],
+    keypoint1: [
+        8.224462, 8.537316,
+        11.73000, 9.625000,
+        8.875000, 9.562500,
+        17.37500, 5.875000,
+        9.569672, 2.000000,
+        8.125000, 8.750000
     ]
 }).AddNchw(heatmap1, layout).AddVariations("relaxed", "float16")
 
@@ -72,8 +81,9 @@ Example({
 # TEST 2: HEATMAP_MAX_KEYPOINT_2
 heatmap2 = Input("heatmap", "TENSOR_FLOAT32", "{2, 4, 4, 4}")
 boxes2 = Input("boxes", "TENSOR_FLOAT32", "{2, 4}")
-o2 = Output("out", "TENSOR_FLOAT32", "{2, 3, 4}")
-Model().Operation("HEATMAP_MAX_KEYPOINT", heatmap2, boxes2, layout).To(o2)
+score2 = Output("score", "TENSOR_FLOAT32", "{2, 4}")
+keypoint2 = Output("keypoint", "TENSOR_FLOAT32", "{2, 4, 2}")
+Model().Operation("HEATMAP_MAX_KEYPOINT", heatmap2, boxes2, layout).To(score2, keypoint2)
 
 # Instantiate an example
 Example({
@@ -97,12 +107,18 @@ Example({
         5, 2, 10, 20,
         1, 7, 30, 10
     ],
-    o2: [
-         7.227723,  8.090278,  8.523379,  8.365580,
-         4.250000, 17.750000, 12.589181, 10.122508,
+    score2: [
          1.020210,  0.890556,  1.007110,  0.945129,
-        12.431603,  4.625000,  4.625000, 26.375000,
-         8.934225,  9.239437,  7.375000,  9.625000,
          0.987798,  1.073820,  0.930000,  0.800000
+    ],
+    keypoint2: [
+         7.227723,  4.250000,
+         8.090278, 17.750000,
+         8.523379, 12.589181,
+         8.365580, 10.122508,
+        12.431603,  8.934225,
+         4.625000,  9.239437,
+         4.625000,  7.375000,
+        26.375000,  9.625000
     ]
 }).AddNchw(heatmap2, layout).AddVariations("relaxed", "float16")
