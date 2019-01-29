@@ -111,27 +111,53 @@ uint32_t OperationExecutionContext::getNumOutputs() const {
     return operation->outputs.size();
 }
 
+// TODO(xusongw): Return the correct error code.
 // Updates the RunTimeOperandInfo with the newly calculated shape.
 // Allocate the buffer if we need to.
 bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape) {
     // For user-provided model output operands, the parameters must match the Shape
     // calculated from the preparation step.
     if (info->lifetime == OperandLifeTime::MODEL_OUTPUT) {
-        NN_RET_CHECK(info->type == shape.type) << "Invalid type for model output";
-        NN_RET_CHECK(info->dimensions == shape.dimensions) << "Invalid dimensions for model output";
+        if (info->type != shape.type) {
+            LOG(ERROR) << "Invalid type for model output";
+            return false;
+        }
         if (info->type == OperandType::TENSOR_QUANT8_ASYMM) {
-            NN_RET_CHECK_EQ(info->scale, shape.scale) << "Invalid scale for model output";
-            NN_RET_CHECK_EQ(info->zeroPoint, shape.offset) << "Invalid zeroPoint for model output";
+            if (info->scale != shape.scale) {
+                LOG(ERROR) << "Invalid scale for model output";
+                return false;
+            }
+            if (info->zeroPoint != shape.offset) {
+                LOG(ERROR) << "Invalid zeroPoint for model output";
+                return false;
+            }
         }
     }
+
+    std::vector<uint32_t> combined;
+    if (!combineDimensions(shape.dimensions, info->dimensions, &combined)) {
+        LOG(ERROR) << "Invalid dimensions for model operand";
+        return false;
+    }
+    info->dimensions = combined;
     info->type = shape.type;
-    info->dimensions = shape.dimensions;
     info->scale = shape.scale;
     info->zeroPoint = shape.offset;
-    if (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info->buffer == nullptr) {
-        uint32_t length = sizeOfData(info->type, info->dimensions);
+
+    // Allocate the buffer only if the combined dimension is fully specified
+    uint32_t length = sizeOfData(info->type, info->dimensions);
+    if (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE && length > 0 &&
+        info->buffer == nullptr) {
         info->buffer = new uint8_t[length];
-        NN_RET_CHECK(info->buffer != nullptr);
+        if (info->buffer == nullptr) {
+            return false;
+        }
+        info->length = length;
+    }
+    if (!info->isSufficient()) {
+        LOG(ERROR) << "Insufficient size for model operand: require = " << length
+                   << ", provided = " << info->length;
+        return false;
     }
     return true;
 }
@@ -266,6 +292,7 @@ bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos
     }
     return true;
 }
+
 template <typename T>
 inline bool convertToNhwcImpl(T* to, const T* from, const std::vector<uint32_t>& fromDim) {
     uint32_t spatialSize = fromDim[2] * fromDim[3];
@@ -368,6 +395,7 @@ static bool convertFromNhwc(RunTimeOperandInfo& to, const RunTimeOperandInfo& fr
     } else {
         Shape outShape = from.shape();
         to.buffer = from.buffer;
+        to.length = from.length;
         if (!setInfoAndAllocateIfNeeded(&to, outShape)) {
             return false;
         }
@@ -396,6 +424,7 @@ int CpuExecutor::run(const Model& model, const Request& request,
     for (const auto& operation : model.operations) {
         int n = executeOperation(operation);
         if (n != ANEURALNETWORKS_NO_ERROR) {
+            finish(n);
             return n;
         }
     }
@@ -405,8 +434,7 @@ int CpuExecutor::run(const Model& model, const Request& request,
     for (auto& runtimeInfo : requestPoolInfos) {
         runtimeInfo.update();
     }
-    mModel = nullptr;
-    mRequest = nullptr;
+    finish(ANEURALNETWORKS_NO_ERROR);
     VLOG(CPUEXE) << "Completed run normally";
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -477,11 +505,13 @@ bool CpuExecutor::initializeRunTimeInfo(const std::vector<RunTimePoolInfo>& mode
             if (from.hasNoValue) {
                 to.lifetime = OperandLifeTime::NO_VALUE;
                 nnAssert(to.buffer == nullptr);
+                to.length = 0;
             } else {
                 auto poolIndex = from.location.poolIndex;
                 nnAssert(poolIndex < requestPoolInfos.size());
                 auto& r = requestPoolInfos[poolIndex];
                 to.buffer = r.getBuffer() + from.location.offset;
+                to.length = from.location.length;
             }
         }
     };
@@ -733,6 +763,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (useImplicitPadding) {
                 Shape inputShape = input_tmp.shape();
@@ -865,6 +896,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (useImplicitPadding) {
                 Shape inputShape = input_tmp.shape();
@@ -984,6 +1016,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (inCount <= 8) {
                 Shape inputShape = input_tmp.shape();
@@ -1084,6 +1117,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (inCount <= 8) {
                 Shape inputShape = input_tmp.shape();
@@ -1178,6 +1212,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (inCount <= 8) {
                 Shape inputShape = input_tmp.shape();
@@ -1567,6 +1602,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (!resizeBilinearPrepare(input_tmp.shape(), width, height, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape)) {
@@ -1610,6 +1646,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
             if (!depthToSpacePrepare(input_tmp.shape(), blockSize, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape)) {
                 break;
@@ -1666,6 +1703,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (!spaceToDepthPrepare(input_tmp.shape(), blockSize, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape)) {
@@ -1843,6 +1881,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (!batchToSpacePrepare(input_tmp.shape(),
                                      reinterpret_cast<const int32_t*>(blockSize.buffer),
@@ -1906,6 +1945,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (!spaceToBatchPrepare(
                         input_tmp.shape(), reinterpret_cast<const int32_t*>(blockSize.buffer),
@@ -2345,6 +2385,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (inCount == 9) {
                 Shape inputShape = input_tmp.shape();
@@ -2445,6 +2486,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
+            output_tmp.length = data_layout ? 0 : output.length;
 
             if (inCount == 9) {
                 const RunTimeOperandInfo& outShape = mOperands[ins[3]];
@@ -2612,6 +2654,35 @@ int CpuExecutor::executeOperation(const Operation& operation) {
 
     freeNoLongerUsedOperands(ins);
     return ANEURALNETWORKS_NO_ERROR;
+}
+
+void CpuExecutor::finish(int result) {
+    // Free allocated temporary operands.
+    for (auto& info : mOperands) {
+        if (info.lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info.buffer != nullptr) {
+            delete[] info.buffer;
+            info.buffer = nullptr;
+        }
+    }
+
+    // Only report the output shapes when the result code is NO_ERROR or
+    // OUTPUT_INSUFFICIENT_SIZE.
+    if (result == ANEURALNETWORKS_NO_ERROR || result == ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE) {
+        const auto& outputs = mModel->outputIndexes;
+        mOutputShapes.resize(outputs.size());
+        for (uint32_t i = 0; i < outputs.size(); i++) {
+            const uint32_t operandIndex = outputs[i];
+            RunTimeOperandInfo& from = mOperands[operandIndex];
+            mOutputShapes[i].dimensions = from.dimensions;
+            mOutputShapes[i].isSufficient = from.isSufficient();
+        }
+    } else {
+        mOutputShapes.clear();
+    }
+
+    mModel = nullptr;
+    mRequest = nullptr;
+    mFinished = true;
 }
 
 // b/109953668, disable OpenMP

@@ -60,6 +60,8 @@ struct RunTimeOperandInfo {
     Shape shape() const {
         return Shape{.type = type, .dimensions = dimensions, .scale = scale, .offset = zeroPoint};
     }
+
+    bool isSufficient() const { return length >= sizeOfData(type, dimensions); }
 };
 
 // Used to keep a pointer to each of the memory pools.
@@ -113,6 +115,11 @@ public:
             const std::vector<RunTimePoolInfo>& modelPoolInfos,
             const std::vector<RunTimePoolInfo>& requestPoolInfos);
 
+    const std::vector<OutputShape>& getOutputShapes() const {
+        CHECK(mFinished) << "getOutputShapes() called by an unfinished CpuExecutor.";
+        return mOutputShapes;
+    }
+
 private:
     bool initializeRunTimeInfo(const std::vector<RunTimePoolInfo>& modelPoolInfos,
                                const std::vector<RunTimePoolInfo>& requestPoolInfos);
@@ -121,6 +128,10 @@ private:
     // Decrement the usage count for the operands listed.  Frees the memory
     // allocated for any temporary variable with a count of zero.
     void freeNoLongerUsedOperands(const std::vector<uint32_t>& inputs);
+
+    // Frees the memory allocated for any temporary variable, and sets the
+    // output operand shapes returning to the runtime.
+    void finish(int result);
 
     // The model and the request that we'll execute. Only valid while run()
     // is being executed.
@@ -134,6 +145,12 @@ private:
     //    std::vector<uint32_t> mDimensions;
     // Runtime information about all the operands.
     std::vector<RunTimeOperandInfo> mOperands;
+
+    // The output operand shapes returning to the runtime.
+    std::vector<OutputShape> mOutputShapes;
+
+    // Whether execution is finished and mOutputShapes is ready
+    bool mFinished = false;
 };
 
 // Class for setting reasonable OpenMP threading settings. (OpenMP is used by

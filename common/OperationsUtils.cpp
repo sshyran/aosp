@@ -78,10 +78,41 @@ bool SameShape(const Shape& in1, const Shape& in2) {
 }
 
 bool SetShape(const Shape& in, Shape* out) {
-    if (in.type != out->type || in.dimensions.size() != out->dimensions.size()) {
+    if (in.type != out->type) {
         return false;
     }
     out->dimensions = in.dimensions;
+    return true;
+}
+
+bool combineDimensions(const std::vector<uint32_t>& lhs, const std::vector<uint32_t>& rhs,
+                       std::vector<uint32_t>* combined) {
+    if (rhs.empty()) {
+        *combined = lhs;
+        return true;
+    }
+    if (lhs.empty()) {
+        *combined = rhs;
+        return true;
+    }
+    if (lhs.size() != rhs.size()) {
+        return false;
+    }
+    combined->resize(lhs.size());
+    for (uint32_t i = 0; i < lhs.size(); i++) {
+        if (lhs[i] == 0) {
+            (*combined)[i] = rhs[i];
+            continue;
+        }
+        if (rhs[i] == 0) {
+            (*combined)[i] = lhs[i];
+            continue;
+        }
+        if (lhs[i] != rhs[i]) {
+            return false;
+        }
+        (*combined)[i] = lhs[i];
+    }
     return true;
 }
 
