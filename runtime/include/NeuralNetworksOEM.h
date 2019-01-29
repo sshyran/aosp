@@ -21,6 +21,8 @@
  *
  * IMPORTANT NOTICE:
  *
+ *   OEM operation and operand types are DEPRECATED. Use Extensions instead.
+ *
  *   This file is not intended for use by general developers -- only
  *   by OEM applications.  The semantics of each enum are OEM-specific
  *   and may change at any time.
@@ -37,10 +39,18 @@
 #if __ANDROID_API__ >= __ANDROID_API_O_MR1__
 
 enum {
-    /** OEM specific scalar value. */
+    /**
+     * DEPRECATED. Use Extensions instead.
+     *
+     * OEM specific scalar value.
+     */
     ANEURALNETWORKS_OEM_SCALAR = 10000,
 
-    /** A tensor of OEM specific values. */
+    /**
+     * DEPRECATED. Use Extensions instead.
+     *
+     * A tensor of OEM specific values.
+     */
     ANEURALNETWORKS_TENSOR_OEM_BYTE = 10001,
 };  // extends OperandCode
 
@@ -50,7 +60,11 @@ enum {
  * tensor operand type in the model must be fully specified.
  */
 enum {
-    /** OEM specific operation. */
+    /**
+     * DEPRECATED. Use Extensions instead.
+     *
+     * OEM specific operation.
+     */
     ANEURALNETWORKS_OEM_OPERATION = 10000,
 };  // extends OperationCode
 
