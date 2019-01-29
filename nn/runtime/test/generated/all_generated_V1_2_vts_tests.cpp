@@ -3265,6 +3265,126 @@ TEST_F(ValidationTest, batch_to_space_v1_2_dynamic_output_shape_nchw_quant8_2) {
 
 
 #endif
+// Generated from: bidirectional_sequence_lstm.mod.py.
+namespace bidirectional_sequence_lstm {
+// Generated bidirectional_sequence_lstm test
+#include "examples/bidirectional_sequence_lstm.example.cpp"
+// Generated model constructor
+#include "vts_models/bidirectional_sequence_lstm.model.cpp"
+} // namespace bidirectional_sequence_lstm
+
+TEST_F(NeuralnetworksHidlTest, bidirectional_sequence_lstm_blackbox) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm::createTestModel,
+                           bidirectional_sequence_lstm::is_ignored,
+                           bidirectional_sequence_lstm::get_examples_blackbox());
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_blackbox) {
+  const Model model = bidirectional_sequence_lstm::createTestModel();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm::get_examples_blackbox());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_blackbox_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm::createTestModel_dynamic_output_shape,
+                           bidirectional_sequence_lstm::is_ignored_dynamic_output_shape,
+                           bidirectional_sequence_lstm::get_examples_blackbox_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_blackbox_dynamic_output_shape) {
+  const Model model = bidirectional_sequence_lstm::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm::get_examples_blackbox_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+// Generated from: bidirectional_sequence_lstm_cifg_peephole.mod.py.
+namespace bidirectional_sequence_lstm_cifg_peephole {
+// Generated bidirectional_sequence_lstm_cifg_peephole test
+#include "examples/bidirectional_sequence_lstm_cifg_peephole.example.cpp"
+// Generated model constructor
+#include "vts_models/bidirectional_sequence_lstm_cifg_peephole.model.cpp"
+} // namespace bidirectional_sequence_lstm_cifg_peephole
+
+TEST_F(NeuralnetworksHidlTest, bidirectional_sequence_lstm_cifg_peephole_blackbox) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_cifg_peephole::createTestModel,
+                           bidirectional_sequence_lstm_cifg_peephole::is_ignored,
+                           bidirectional_sequence_lstm_cifg_peephole::get_examples_blackbox());
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_cifg_peephole_blackbox) {
+  const Model model = bidirectional_sequence_lstm_cifg_peephole::createTestModel();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_cifg_peephole::get_examples_blackbox());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_cifg_peephole_blackbox_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_cifg_peephole::createTestModel_dynamic_output_shape,
+                           bidirectional_sequence_lstm_cifg_peephole::is_ignored_dynamic_output_shape,
+                           bidirectional_sequence_lstm_cifg_peephole::get_examples_blackbox_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_cifg_peephole_blackbox_dynamic_output_shape) {
+  const Model model = bidirectional_sequence_lstm_cifg_peephole::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_cifg_peephole::get_examples_blackbox_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+// Generated from: bidirectional_sequence_lstm_float16_batch_major.mod.py.
+namespace bidirectional_sequence_lstm_float16_batch_major {
+// Generated bidirectional_sequence_lstm_float16_batch_major test
+#include "examples/bidirectional_sequence_lstm_float16_batch_major.example.cpp"
+// Generated model constructor
+#include "vts_models/bidirectional_sequence_lstm_float16_batch_major.model.cpp"
+} // namespace bidirectional_sequence_lstm_float16_batch_major
+
+TEST_F(NeuralnetworksHidlTest, bidirectional_sequence_lstm_float16_batch_major_blackbox) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_float16_batch_major::createTestModel,
+                           bidirectional_sequence_lstm_float16_batch_major::is_ignored,
+                           bidirectional_sequence_lstm_float16_batch_major::get_examples_blackbox());
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_float16_batch_major_blackbox) {
+  const Model model = bidirectional_sequence_lstm_float16_batch_major::createTestModel();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_float16_batch_major::get_examples_blackbox());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_float16_batch_major_blackbox_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_float16_batch_major::createTestModel_dynamic_output_shape,
+                           bidirectional_sequence_lstm_float16_batch_major::is_ignored_dynamic_output_shape,
+                           bidirectional_sequence_lstm_float16_batch_major::get_examples_blackbox_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_float16_batch_major_blackbox_dynamic_output_shape) {
+  const Model model = bidirectional_sequence_lstm_float16_batch_major::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_float16_batch_major::get_examples_blackbox_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
 // Generated from: bidirectional_sequence_rnn.mod.py.
 namespace bidirectional_sequence_rnn {
 // Generated bidirectional_sequence_rnn test
