@@ -386,16 +386,12 @@ template<class DriverClass> void ExecutionTestTemplate<DriverClass>::TestWait() 
     }
 }
 
-auto kTestValues = ::testing::Values(std::make_tuple(ErrorStatus::NONE,
-                                                     Result::NO_ERROR),
-                                     std::make_tuple(ErrorStatus::DEVICE_UNAVAILABLE,
-                                                     Result::OP_FAILED),
-                                     std::make_tuple(ErrorStatus::GENERAL_FAILURE,
-                                                     Result::OP_FAILED),
-                                     std::make_tuple(ErrorStatus::OUTPUT_INSUFFICIENT_SIZE,
-                                                     Result::OP_FAILED),
-                                     std::make_tuple(ErrorStatus::INVALID_ARGUMENT,
-                                                     Result::BAD_DATA));
+auto kTestValues = ::testing::Values(
+        std::make_tuple(ErrorStatus::NONE, Result::NO_ERROR),
+        std::make_tuple(ErrorStatus::DEVICE_UNAVAILABLE, Result::OP_FAILED),
+        std::make_tuple(ErrorStatus::GENERAL_FAILURE, Result::OP_FAILED),
+        std::make_tuple(ErrorStatus::OUTPUT_INSUFFICIENT_SIZE, Result::OUTPUT_INSUFFICIENT_SIZE),
+        std::make_tuple(ErrorStatus::INVALID_ARGUMENT, Result::BAD_DATA));
 
 class ExecutionTest12 : public ExecutionTestTemplate<TestDriver12> {};
 TEST_P(ExecutionTest12, Wait) {

@@ -677,7 +677,8 @@ static void computeOnCpu(const Model& model, const Request& request,
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "computeOnCpu");
     CpuExecutor executor;
     int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
-    executionCallback->notify_1_2(convertResultCodeToErrorStatus(err), {});
+    const auto& outputShapes = executor.getOutputShapes();
+    executionCallback->notify_1_2(convertResultCodeToErrorStatus(err), outputShapes);
 }
 
 int StepExecutor::startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallback) {
