@@ -2184,15 +2184,15 @@ TEST(OperationValidationTest, LOCAL_RESPONSE_NORMALIZATION_float32) {
     localResponseNormOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
-void axisAlignedBBoxTransformOpTest(int32_t operandCode) {
-    uint32_t roiDim[] = {5, 4}, deltaDim[] = {5, 8}, bsDim[] = {5}, imageDim[] = {5, 3};
+void axisAlignedBBoxTransformOpTest(int32_t roiOperandCode, int32_t deltaOperandCode) {
+    uint32_t roiDim[] = {5, 4}, deltaDim[] = {5, 8}, bsDim[] = {5}, imageDim[] = {5, 2};
     uint32_t outDim[] = {5, 8};
     OperationTestBase axisAlignedBBoxTransformTest(
             ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM,
-            {getOpType(operandCode, 2, roiDim), getOpType(operandCode, 2, deltaDim),
+            {getOpType(roiOperandCode, 2, roiDim), getOpType(deltaOperandCode, 2, deltaDim),
              getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, bsDim),
-             getOpType(operandCode, 2, imageDim)},
-            {getOpType(operandCode, 2, outDim)});
+             getOpType(roiOperandCode, 2, imageDim)},
+            {getOpType(roiOperandCode, 2, outDim)});
 
     EXPECT_TRUE(axisAlignedBBoxTransformTest.testMutatingInputOperandCode());
     EXPECT_TRUE(axisAlignedBBoxTransformTest.testMutatingInputOperandCounts());
@@ -2201,11 +2201,16 @@ void axisAlignedBBoxTransformOpTest(int32_t operandCode) {
 }
 
 TEST(OperationValidationTest, AXIS_ALIGNED_BBOX_TRANSFORM_float16) {
-    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, AXIS_ALIGNED_BBOX_TRANSFORM_float32) {
-    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, AXIS_ALIGNED_BBOX_TRANSFORM_quant) {
+    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+                                   ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
 void sliceTest(int32_t operandCode) {

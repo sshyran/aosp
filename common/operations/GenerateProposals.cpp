@@ -54,7 +54,7 @@ inline bool bboxTransformFloat32(const float* roiData, const Shape& roiShape,
                                  const float* imageInfoData, const Shape& imageInfoDataShape,
                                  float* outputData, const Shape& outputShape) {
     const uint32_t roiLength = 4;
-    const uint32_t imageLength = 3;
+    const uint32_t imageLength = 2;
 
     uint32_t numClasses = getSizeOfDimension(bboxDeltasShape, 1) / roiLength;
     uint32_t numBatches = getSizeOfDimension(batchSplitShape, 0);
@@ -80,27 +80,21 @@ inline bool bboxTransformFloat32(const float* roiData, const Shape& roiShape,
         const float* imageInfoBase = imageInfoData + batchIndex * imageLength;
         float imageHeight = imageInfoBase[0];
         float imageWidth = imageInfoBase[1];
-        float imageScale = imageInfoBase[2];
         auto roiBefore = toBoxEncodingCenter(
                 {.x1 = roiBase[0], .y1 = roiBase[1], .x2 = roiBase[2], .y2 = roiBase[3]});
-
-        LOG(ERROR) << roiBefore.x << " " << roiBefore.y << " " << roiBefore.w << " " << roiBefore.h;
-
         for (uint32_t i = 0; i < numClasses; i++) {
             auto roiAfter = toBoxEncodingCorner({.w = std::exp(deltas[2]) * roiBefore.w,
                                                  .h = std::exp(deltas[3]) * roiBefore.h,
                                                  .x = roiBefore.x + deltas[0] * roiBefore.w,
                                                  .y = roiBefore.y + deltas[1] * roiBefore.h});
-            LOG(ERROR) << roiAfter.x1 << " " << roiAfter.x2 << " " << roiAfter.y1 << " "
-                       << roiAfter.y2;
             BoxEncodingCorner cliped = {.x1 = std::min(std::max(roiAfter.x1, 0.0f), imageWidth),
                                         .y1 = std::min(std::max(roiAfter.y1, 0.0f), imageHeight),
                                         .x2 = std::min(std::max(roiAfter.x2, 0.0f), imageWidth),
                                         .y2 = std::min(std::max(roiAfter.y2, 0.0f), imageHeight)};
-            outPtr[0] = cliped.x1 * imageScale;
-            outPtr[1] = cliped.y1 * imageScale;
-            outPtr[2] = cliped.x2 * imageScale;
-            outPtr[3] = cliped.y2 * imageScale;
+            outPtr[0] = cliped.x1;
+            outPtr[1] = cliped.y1;
+            outPtr[2] = cliped.x2;
+            outPtr[3] = cliped.y2;
             deltas += roiLength;
             outPtr += roiLength;
         }
@@ -128,6 +122,28 @@ inline bool bboxTransformFloat16(const _Float16* roiData, const Shape& roiShape,
     return true;
 }
 
+inline bool bboxTransformQuant(const uint16_t* roiData, const Shape& roiShape,
+                               const uint8_t* bboxDeltasData, const Shape& bboxDeltasShape,
+                               const int32_t* batchSplitData, const Shape& batchSplitShape,
+                               const uint16_t* imageInfoData, const Shape& imageInfoDataShape,
+                               uint16_t* outputData, const Shape& outputShape) {
+    std::vector<float> roi_float32(getNumberOfElements(roiShape));
+    convertQuantToFloat32(roiData, roiShape.scale, roiShape.offset, &roi_float32);
+    std::vector<float> delta_float32(getNumberOfElements(bboxDeltasShape));
+    convertQuantToFloat32(bboxDeltasData, bboxDeltasShape.scale, bboxDeltasShape.offset,
+                          &delta_float32);
+    std::vector<float> imageInfo_float32(getNumberOfElements(imageInfoDataShape));
+    convertQuantToFloat32(imageInfoData, imageInfoDataShape.scale, imageInfoDataShape.offset,
+                          &imageInfo_float32);
+    std::vector<float> output_float32(getNumberOfElements(outputShape));
+    NN_RET_CHECK(bboxTransformFloat32(roi_float32.data(), roiShape, delta_float32.data(),
+                                      bboxDeltasShape, batchSplitData, batchSplitShape,
+                                      imageInfo_float32.data(), imageInfoDataShape,
+                                      output_float32.data(), outputShape));
+    convertFloat32ToQuant(output_float32, outputShape.scale, outputShape.offset, outputData);
+    return true;
+}
+
 }  // namespace
 
 namespace axis_aligned_bbox_transform {
@@ -146,12 +162,18 @@ constexpr uint32_t kOutputTensor = 0;
 bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
+    std::vector<OperandType> inExpectedTypes;
     auto inputType = context->getInputType(kRoiTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32)
-            << "Unsupported tensor type for operation " << kOperationName;
-    NN_RET_CHECK(validateInputTypes(context,
-                                    {inputType, inputType, OperandType::TENSOR_INT32, inputType}));
+    if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_FLOAT16) {
+        inExpectedTypes = {inputType, inputType, OperandType::TENSOR_INT32, inputType};
+    } else if (inputType == OperandType::TENSOR_QUANT16_ASYMM) {
+        inExpectedTypes = {OperandType::TENSOR_QUANT16_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
+                           OperandType::TENSOR_INT32, OperandType::TENSOR_QUANT16_ASYMM};
+    } else {
+        LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
+        return false;
+    }
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
     return validateHalVersion(context, HalVersion::V1_2);
 }
@@ -177,10 +199,19 @@ bool prepare(IOperationExecutionContext* context) {
     NN_OPS_CHECK(getSizeOfDimension(bboxDeltasShape, 0) == numRois);
     NN_OPS_CHECK(getSizeOfDimension(bboxDeltasShape, 1) == kRoiDim * numClasses);
     NN_OPS_CHECK(getSizeOfDimension(imageInfoShape, 0) == numBatches);
-    NN_OPS_CHECK(getSizeOfDimension(imageInfoShape, 1) == 3);
+    NN_OPS_CHECK(getSizeOfDimension(imageInfoShape, 1) == 2);
+
+    if (roiShape.type == OperandType::TENSOR_QUANT16_ASYMM) {
+        NN_RET_CHECK_EQ(roiShape.scale, 0.125f);
+        NN_RET_CHECK_EQ(roiShape.offset, 0);
+        NN_RET_CHECK_EQ(imageInfoShape.scale, 0.125f);
+        NN_RET_CHECK_EQ(imageInfoShape.offset, 0);
+    }
 
     outputShape.type = roiShape.type;
     outputShape.dimensions = {numRois, numClasses * kRoiDim};
+    outputShape.scale = 0.125f;
+    outputShape.offset = 0;
     NN_RET_CHECK(context->setOutputShape(kOutputTensor, outputShape));
     return true;
 }
@@ -211,6 +242,18 @@ bool execute(IOperationExecutionContext* context) {
                                         context->getInputShape(kImageInfoTensor),
                                         context->getOutputBuffer<float>(kOutputTensor),
                                         context->getOutputShape(kOutputTensor));
+        }
+        case OperandType::TENSOR_QUANT16_ASYMM: {
+            return bboxTransformQuant(context->getInputBuffer<uint16_t>(kRoiTensor),
+                                      context->getInputShape(kRoiTensor),
+                                      context->getInputBuffer<uint8_t>(kDeltaTensor),
+                                      context->getInputShape(kDeltaTensor),
+                                      context->getInputBuffer<int32_t>(kBatchSplitTensor),
+                                      context->getInputShape(kBatchSplitTensor),
+                                      context->getInputBuffer<uint16_t>(kImageInfoTensor),
+                                      context->getInputShape(kImageInfoTensor),
+                                      context->getOutputBuffer<uint16_t>(kOutputTensor),
+                                      context->getOutputShape(kOutputTensor));
         }
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
