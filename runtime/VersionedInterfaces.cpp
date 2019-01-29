@@ -264,6 +264,24 @@ int64_t VersionedIDevice::getFeatureLevel() {
     }
 }
 
+int32_t VersionedIDevice::getType() const {
+    std::pair<ErrorStatus, DeviceType> result;
+    if (mDeviceV1_2 != nullptr) {
+        Return<void> ret =
+                mDeviceV1_2->getType([&result](ErrorStatus error, DeviceType deviceType) {
+                    result = std::make_pair(error, deviceType);
+                });
+        if (!ret.isOk()) {
+            LOG(ERROR) << "getType failure: " << ret.description();
+            return -1;
+        }
+        return static_cast<int32_t>(result.second);
+    } else {
+        LOG(INFO) << "Unkown NNAPI device type.";
+        return ANEURALNETWORKS_DEVICE_UNKNOWN;
+    }
+}
+
 std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionString() {
     std::pair<ErrorStatus, hidl_string> result;
 
