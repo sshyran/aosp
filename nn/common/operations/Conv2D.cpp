@@ -73,13 +73,11 @@ static char static_scratch_buffer[kStaticBufferSize];
         im2colGuard.reset(im2colData);                                          \
     }
 
-bool convFloat32(const float* inputData, const Shape& inputShape,
-                 const float* filterData, const Shape& filterShape,
-                 const float* biasData, const Shape& biasShape,
-                 int32_t padding_left, int32_t padding_right,
-                 int32_t padding_top, int32_t padding_bottom,
-                 int32_t stride_width, int32_t stride_height,
-                 int32_t activation,
+bool convFloat32(const float* inputData, const Shape& inputShape, const float* filterData,
+                 const Shape& filterShape, const float* biasData, const Shape& biasShape,
+                 int32_t padding_left, int32_t padding_right, int32_t padding_top,
+                 int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                 int32_t dilation_width_factor, int32_t dilation_height_factor, int32_t activation,
                  float* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("convFloat32");
 
@@ -89,29 +87,21 @@ bool convFloat32(const float* inputData, const Shape& inputShape,
     CalculateActivationRangeFloat(activation, &output_activation_min,
                                   &output_activation_max);
 
-    int32_t dilationWidthFactor = 1, dilationHeightFactor = 1;
-
     NNTRACE_COMP_SWITCH("optimized_ops::Conv");
-    tflite::optimized_ops::Conv(
-            inputData, convertShapeToDims(inputShape),
-            filterData, convertShapeToDims(filterShape),
-            biasData, convertShapeToDims(biasShape),
-            stride_width, stride_height,
-            dilationWidthFactor, dilationHeightFactor,
-            paddingWidth, paddingHeight,
-            output_activation_min, output_activation_max,
-            outputData, convertShapeToDims(outputShape),
-            im2colData, im2colDim);
+    tflite::optimized_ops::Conv(inputData, convertShapeToDims(inputShape), filterData,
+                                convertShapeToDims(filterShape), biasData,
+                                convertShapeToDims(biasShape), stride_width, stride_height,
+                                dilation_width_factor, dilation_height_factor, paddingWidth,
+                                paddingHeight, output_activation_min, output_activation_max,
+                                outputData, convertShapeToDims(outputShape), im2colData, im2colDim);
     return true;
 }
 
-bool convQuant8(const uint8_t* inputData, const Shape& inputShape,
-                const uint8_t* filterData, const Shape& filterShape,
-                const int32_t* biasData, const Shape& biasShape,
-                int32_t padding_left, int32_t padding_right,
-                int32_t padding_top, int32_t padding_bottom,
-                int32_t stride_width, int32_t stride_height,
-                int32_t activation,
+bool convQuant8(const uint8_t* inputData, const Shape& inputShape, const uint8_t* filterData,
+                const Shape& filterShape, const int32_t* biasData, const Shape& biasShape,
+                int32_t padding_left, int32_t padding_right, int32_t padding_top,
+                int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                int32_t dilation_width_factor, int32_t dilation_height_factor, int32_t activation,
                 uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("convQuant8");
 
@@ -143,14 +133,12 @@ bool convQuant8(const uint8_t* inputData, const Shape& inputShape,
 
     NNTRACE_COMP_SWITCH("optimized_ops::Conv");
     tflite::optimized_ops::Conv(
-            inputData, convertShapeToDims(inputShape), inputOffset,
-            filterData, convertShapeToDims(filterShape), filterOffset,
-            biasData, convertShapeToDims(biasShape),
-            stride_width, stride_height, paddingWidth, paddingHeight,
-            outputOffset, output_multiplier, output_shift,
-            output_activation_min, output_activation_max,
-            outputData, convertShapeToDims(outputShape),
-            im2colData, im2colDim, &gemm_context);
+            inputData, convertShapeToDims(inputShape), inputOffset, filterData,
+            convertShapeToDims(filterShape), filterOffset, biasData, convertShapeToDims(biasShape),
+            stride_width, stride_height, dilation_width_factor, dilation_height_factor,
+            paddingWidth, paddingHeight, outputOffset, output_multiplier, output_shift,
+            output_activation_min, output_activation_max, outputData,
+            convertShapeToDims(outputShape), im2colData, im2colDim, &gemm_context);
     return true;
 }
 
@@ -158,7 +146,8 @@ bool convFloat16(const _Float16* inputData, const Shape& inputShape, const _Floa
                  const Shape& filterShape, const _Float16* biasData, const Shape& biasShape,
                  int32_t padding_left, int32_t padding_right, int32_t padding_top,
                  int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
-                 int32_t activation, _Float16* outputData, const Shape& outputShape) {
+                 int32_t dilation_width_factor, int32_t dilation_height_factor, int32_t activation,
+                 _Float16* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("convFloat16");
 
     std::vector<float> inputData_float32(getNumberOfElements(inputShape));
@@ -172,8 +161,8 @@ bool convFloat16(const _Float16* inputData, const Shape& inputShape, const _Floa
 
     convFloat32(inputData_float32.data(), inputShape, filterData_float32.data(), filterShape,
                 biasData_float32.data(), biasShape, padding_left, padding_right, padding_top,
-                padding_bottom, stride_width, stride_height, activation, outputData_float32.data(),
-                outputShape);
+                padding_bottom, stride_width, stride_height, dilation_width_factor,
+                dilation_height_factor, activation, outputData_float32.data(), outputShape);
     convertFloat32ToFloat16(outputData_float32, outputData);
 
     return true;
@@ -184,7 +173,8 @@ bool convQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
                           const float* filterScales, const int32_t* biasData,
                           const Shape& biasShape, int32_t paddingLeft, int32_t paddingRight,
                           int32_t paddingTop, int32_t paddingBottom, int32_t strideWidth,
-                          int32_t strideHeight, int32_t activation, uint8_t* outputData,
+                          int32_t strideHeight, int32_t dilationWidthFactor,
+                          int32_t dilationHeightFactor, int32_t activation, uint8_t* outputData,
                           const Shape& outputShape) {
     NNTRACE_TRANS("convQuant8PerChannel");
 
@@ -238,8 +228,10 @@ bool convQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
                     for (uint32_t i = 0; i < filterHeight; i++) {
                         for (uint32_t j = 0; j < filterWidth; j++) {
                             for (uint32_t k = 0; k < filterDepth; k++) {
-                                int32_t hInput = hInputOrigin + static_cast<int32_t>(i);
-                                int32_t wInput = wInputOrigin + static_cast<int32_t>(j);
+                                int32_t hInput = hInputOrigin +
+                                                 dilationHeightFactor * static_cast<int32_t>(i);
+                                int32_t wInput = wInputOrigin +
+                                                 dilationWidthFactor * static_cast<int32_t>(j);
                                 uint32_t dInput = k;
                                 if (hInput >= 0 && hInput < static_cast<int32_t>(inputHeight) &&
                                     wInput >= 0 && wInput < static_cast<int32_t>(inputWidth)) {
