@@ -3009,28 +3009,12 @@ typedef enum {
      *      32768, zeroPoint = 0).
      *
      * Outputs:
-     * * 0: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
-     *      and shape [numBatches, inputSize + outputSize]. This tensor is a
-     *      scratch buffer used to store concatenation of the input and the
-     *      output from previous time step to pass it to the fully-connected
-     *      layer. Tensor is quantized with a fixed quantization range of
-     *      [-1, 127/128] (scale = 1/128, zeroPoint = 128).
-     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
-     *      and shape [numBatches, 4 * cellSize]. This tensor is a scratch
-     *      buffer used to store the result of the fully-connected layer.
-     * * 2: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
-     *      and shape [numBathes, outputSize] which contains a copy of the
-     *      output from the current time step. NN API requires this tensor to
-     *      pass the output value through time. Tensor is quantized with a fixed
-     *      quantization range of [-1, 127/128] (scale = 1/128, zeroPoint =
-     *      128).
-     * * 3: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
+     * * 0: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
      *      and shape [numBatches, cellSize] which contains a cell state from
-     *      the current time step. NN API requires this tensor to pass the cell
-     *      state value through time. Tensor is quantized using a quantization
+     *      the current time step. Tensor is quantized using a quantization
      *      range of [-2^4, 2^4 * 32767/32768] (scale = 2^4 / 32768, zeroPoint =
      *      0).
-     * * 4: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *      and shape [numBathes, outputSize] which contains the output value.
      *      Tensor is quantized with a fixed quantization range of [-1, 127/128]
      *      (scale = 1/128, zeroPoint = 128).

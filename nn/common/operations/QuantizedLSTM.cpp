@@ -55,8 +55,8 @@ void quantizedLstmStep(const uint8_t* input_data_uint8, const Dims<4>& input_dim
                        const Dims<4>& bias_dims, const int16_t* prevCellState_data_int16,
                        const Dims<4>& prevCellState_dims, int16_t* output_state_data_int16,
                        const Dims<4>& output_state_dims, uint8_t* output_activ_data_uint8,
-                       const Dims<4>& output_activ_dims, uint8_t* concatTemp_data_uint8,
-                       const Dims<4>& concatTemp_dims, int16_t* activ_temp_data_int16,
+                       const Dims<4>& output_activ_dims, uint8_t* concat_temp_data_uint8,
+                       const Dims<4>& concat_temp_dims, int16_t* activ_temp_data_int16,
                        const Dims<4>& activ_temp_dims, int32_t weights_zero_point,
                        int32_t accum_multiplier, int accum_shift) {
   // Gather dimensions information, and perform consistency checks.
@@ -90,7 +90,7 @@ void quantizedLstmStep(const uint8_t* input_data_uint8, const Dims<4>& input_dim
   Dims<4> const* concat_input_arrays_dims[2] = {&input_dims, &prev_activ_dims};
   tflite::reference_ops::Concatenation<tflite::FusedActivationFunctionType::kNone, uint8_t>(
       0, concat_input_arrays_data, concat_input_arrays_dims, 2,
-      concatTemp_data_uint8, concatTemp_dims);
+      concat_temp_data_uint8, concat_temp_dims);
 
   // Implementation of the fully connected node inside the LSTM cell.
   // The operands are 8-bit integers, the accumulators are internally 32bit
@@ -104,7 +104,7 @@ void quantizedLstmStep(const uint8_t* input_data_uint8, const Dims<4>& input_dim
       int32_t accum = bias_data_int32[out_c];
       // Accumulation loop.
       for (int d = 0; d < fc_accum_depth; ++d) {
-        int16_t input_val = concatTemp_data_uint8[b * fc_accum_depth + d] - 128;
+        int16_t input_val = concat_temp_data_uint8[b * fc_accum_depth + d] - 128;
         int16_t weights_val =
             weights_data_uint8[out_c * fc_accum_depth + d] - weights_zero_point;
         accum += input_val * weights_val;
@@ -207,17 +207,13 @@ QuantizedLSTMCell::QuantizedLSTMCell(const Operation& operation,
     bias_ = GetInput(operation, operands, kBiasTensor);
     prevCellState_ = GetInput(operation, operands, kPrevCellStateTensor);
 
-    concatTemp_ = GetOutput(operation, operands, kConcatTempTensor);
-    activationTemp_ = GetOutput(operation, operands, kActivationTempTensor);
-    outputStateOut_ = GetOutput(operation, operands, kOutputStateOutTensor);
     cellStateOut_ = GetOutput(operation, operands, kCellStateOutTensor);
     output_ = GetOutput(operation, operands, kOutputTensor);
 }
 
 bool QuantizedLSTMCell::prepare(const Operation& operation,
-                                std::vector<RunTimeOperandInfo>& operands, Shape* concatTempShape,
-                                Shape* activationTempShape, Shape* outputStateOutShape,
-                                Shape* cellStateOutShape, Shape* outputShape) {
+                                std::vector<RunTimeOperandInfo>& operands, Shape* cellStateOutShape,
+                                Shape* outputShape) {
     auto input = GetInput(operation, operands, kInputTensor);
     NN_CHECK_EQ(NumDimensions(input), 2);
     NN_CHECK_EQ(input->scale, 1. / 128.0);
@@ -264,15 +260,6 @@ bool QuantizedLSTMCell::prepare(const Operation& operation,
     // We only support StateIntegerBits == 4
     NN_CHECK(stateIntegerBits == 4);
 
-    *concatTempShape = input->shape();
-    concatTempShape->dimensions[1] = totalDepth;
-
-    activationTempShape->type = OperandType::TENSOR_QUANT16_SYMM;
-    activationTempShape->dimensions = {numBatches, 4 * activationDepth};
-    activationTempShape->scale = prevOutput->scale;
-    activationTempShape->offset = prevOutput->zeroPoint;
-
-    *outputStateOutShape = prevOutput->shape();
     *cellStateOutShape = prevCellState->shape();
     *outputShape = prevOutput->shape();
     return true;
@@ -280,6 +267,18 @@ bool QuantizedLSTMCell::prepare(const Operation& operation,
 
 bool QuantizedLSTMCell::eval() {
     NNTRACE_COMP("QuantizedLSTM::eval");
+
+    Shape concatTempShape;
+    concatTempShape.dimensions = {SizeOfDimension(input_, 0),
+                                  SizeOfDimension(input_, 1) + SizeOfDimension(prevOutput_, 1)};
+
+    Shape activationTempShape;
+    activationTempShape.dimensions = {SizeOfDimension(input_, 0),
+                                      4 * getSizeOfDimension(concatTempShape, 1)};
+
+    std::vector<uint8_t> concatTemp(getNumberOfElements(concatTempShape));
+    std::vector<int16_t> activationTemp(getNumberOfElements(activationTempShape));
+
     // From https://arxiv.org/pdf/1712.05877, for a fully-connected layer,
     // accumulator multiplier is equal to:
     // (input scale) * (weights scale) / (fully-connected output scale)
@@ -301,15 +300,10 @@ bool QuantizedLSTMCell::eval() {
             GetBuffer<const int16_t>(prevCellState_), convertShapeToDims(prevCellState_->shape()),
             // Outputs.
             GetBuffer<int16_t>(cellStateOut_), convertShapeToDims(cellStateOut_->shape()),
-            GetBuffer<uint8_t>(output_), convertShapeToDims(output_->shape()),
-            GetBuffer<uint8_t>(concatTemp_), convertShapeToDims(concatTemp_->shape()),
-            GetBuffer<int16_t>(activationTemp_), convertShapeToDims(activationTemp_->shape()),
-            weights_->zeroPoint, accumMultiplier, accumShift);
-    // Copy output_ to outputStateOut_ to use it in the next time step
-    const int flat_output_size = output_->shape().dimensions[0] * output_->shape().dimensions[1];
-    memcpy(outputStateOut_->buffer, output_->buffer, flat_output_size);
-    outputStateOut_->scale = output_->scale;
-    outputStateOut_->zeroPoint = output_->zeroPoint;
+            GetBuffer<uint8_t>(output_), convertShapeToDims(output_->shape()), concatTemp.data(),
+            convertShapeToDims(concatTempShape), activationTemp.data(),
+            convertShapeToDims(activationTempShape), weights_->zeroPoint, accumMultiplier,
+            accumShift);
     return true;
 }
 

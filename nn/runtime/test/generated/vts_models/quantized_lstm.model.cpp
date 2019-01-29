@@ -49,33 +49,6 @@ Model createTestModel() {
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         },
         {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {2, 6},
-            .numberOfConsumers = 0,
-            .scale = 0.0078125f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT16_SYMM,
-            .dimensions = {2, 16},
-            .numberOfConsumers = 0,
-            .scale = 0.0078125f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {2, 4},
-            .numberOfConsumers = 0,
-            .scale = 0.0078125f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
             .type = OperandType::TENSOR_QUANT16_SYMM,
             .dimensions = {2, 4},
             .numberOfConsumers = 0,
@@ -99,12 +72,12 @@ Model createTestModel() {
         {
             .type = OperationType::QUANTIZED_16BIT_LSTM,
             .inputs = {0, 1, 2, 3, 4},
-            .outputs = {5, 6, 7, 8, 9},
+            .outputs = {5, 6},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3, 4};
-    const std::vector<uint32_t> outputIndexes = {5, 6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {5, 6};
     std::vector<uint8_t> operandValues = {};
     const std::vector<hidl_memory> pools = {};
 
@@ -119,7 +92,7 @@ Model createTestModel() {
 }
 
 inline bool is_ignored(int i) {
-  static std::set<int> ignore = {0, 1};
+  static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
