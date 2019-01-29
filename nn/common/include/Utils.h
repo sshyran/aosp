@@ -88,7 +88,8 @@ void initVLogMask();
     } while (0)
 
 // Returns the amount of space needed to store a value of the specified
-// dimensions and type.
+// dimensions and type. For a tensor with at least one
+// unspecified dimension, returns zero.
 uint32_t sizeOfData(OperandType type, const std::vector<uint32_t>& dimensions);
 
 // Returns the amount of space needed to store a value of the dimensions and
