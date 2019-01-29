@@ -175,17 +175,49 @@ inline bool heatmapMaxKeypointFloat32(const float* heatmap, const Shape& heatmap
                                          outputKeypointShape, fpAtol, fpRtol);
 }
 
+inline bool heatmapMaxKeypointQuant(const uint8_t* heatmap, const Shape& heatmapShape,
+                                    const uint16_t* boxes, const Shape& boxesShape, bool layout,
+                                    uint8_t* outputScoreData, const Shape& outputScoreShape,
+                                    uint16_t* outputKeypointData, const Shape& outputKeypointShape,
+                                    float fpAtol, float fpRtol) {
+    std::vector<float> heatmap_float32(getNumberOfElements(heatmapShape));
+    convertQuantToFloat32(heatmap, heatmapShape.scale, heatmapShape.offset, &heatmap_float32);
+    std::vector<float> boxes_float32(getNumberOfElements(boxesShape));
+    convertQuantToFloat32(boxes, boxesShape.scale, boxesShape.offset, &boxes_float32);
+    std::vector<float> outputScore_float32(getNumberOfElements(outputScoreShape));
+    std::vector<float> outputKeypoint_float32(getNumberOfElements(outputKeypointShape));
+    NN_RET_CHECK(heatmapMaxKeypointFloat32(
+            heatmap_float32.data(), heatmapShape, boxes_float32.data(), boxesShape, layout,
+            outputScore_float32.data(), outputScoreShape, outputKeypoint_float32.data(),
+            outputKeypointShape, fpAtol, fpRtol));
+    convertFloat32ToQuant(outputScore_float32, outputScoreShape.scale, outputScoreShape.offset,
+                          outputScoreData);
+    convertFloat32ToQuant(outputKeypoint_float32, outputKeypointShape.scale,
+                          outputKeypointShape.offset, outputKeypointData);
+    return true;
+}
+
 }  // namespace
 
 bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
+    std::vector<OperandType> inExpectedTypes;
+    std::vector<OperandType> outExpectedTypes;
     auto inputType = context->getInputType(kHeatmapTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32)
-            << "Unsupported tensor type for operation " << kOperationName;
-    NN_RET_CHECK(validateInputTypes(context, {inputType, inputType, OperandType::BOOL}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType, inputType}));
+    if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_FLOAT16) {
+        inExpectedTypes = {inputType, inputType, OperandType::BOOL};
+        outExpectedTypes = {inputType, inputType};
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+        inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM,
+                           OperandType::BOOL};
+        outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM};
+    } else {
+        LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
+        return false;
+    }
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     return validateHalVersion(context, HalVersion::V1_2);
 }
 
@@ -205,18 +237,21 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK_EQ(getSizeOfDimension(boxesShape, 0), numBoxes);
     NN_RET_CHECK_EQ(boxInfoLength, 4);
 
+    if (heatmapShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
+        NN_RET_CHECK_EQ(boxesShape.scale, 0.125f);
+        NN_RET_CHECK_EQ(boxesShape.offset, 0);
+    }
+
     Shape outputScore = context->getOutputShape(kOutputScoreTensor);
     outputScore.type = heatmapShape.type;
     outputScore.dimensions = {numBoxes, numKeypoints};
-    outputScore.offset = heatmapShape.offset;
-    outputScore.scale = heatmapShape.scale;
     NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, outputScore));
 
     Shape outputKeypoint = context->getOutputShape(kOutputKeypointTensor);
     outputKeypoint.type = boxesShape.type;
     outputKeypoint.dimensions = {numBoxes, numKeypoints, 2};
-    outputKeypoint.offset = boxesShape.offset;
-    outputKeypoint.scale = boxesShape.scale;
+    outputKeypoint.offset = 0;
+    outputKeypoint.scale = 0.125f;
     NN_RET_CHECK(context->setOutputShape(kOutputKeypointTensor, outputKeypoint));
     return true;
 }
@@ -257,6 +292,17 @@ bool execute(IOperationExecutionContext* context) {
                                              context->getOutputBuffer<float>(kOutputKeypointTensor),
                                              context->getOutputShape(kOutputKeypointTensor), 1e-5f,
                                              1e-5f);
+        }
+        case OperandType::TENSOR_QUANT8_ASYMM: {
+            return heatmapMaxKeypointQuant(
+                    context->getInputBuffer<uint8_t>(kHeatmapTensor),
+                    context->getInputShape(kHeatmapTensor),
+                    context->getInputBuffer<uint16_t>(kBoxesTensor),
+                    context->getInputShape(kBoxesTensor), layout,
+                    context->getOutputBuffer<uint8_t>(kOutputScoreTensor),
+                    context->getOutputShape(kOutputScoreTensor),
+                    context->getOutputBuffer<uint16_t>(kOutputKeypointTensor),
+                    context->getOutputShape(kOutputKeypointTensor), 1e-5f, 1e-5f);
         }
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
