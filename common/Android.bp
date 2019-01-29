@@ -75,6 +75,7 @@ cc_library_static {
         "libarect",
     ],
     cflags: [
+        "-DTF_LITE_DISABLE_X86_NEON",
         "-Werror",
         "-Wall",
         "-Wextra",
@@ -167,6 +168,7 @@ cc_library_static {
     cflags: [
         "-DNN_INCLUDE_CPU_IMPLEMENTATION",
         "-DNAMESPACE_FOR_HASH_FUNCTIONS=farmhash",
+        "-DTF_LITE_DISABLE_X86_NEON",
         "-Werror",
         "-Wall",
         "-Wextra",
@@ -176,6 +178,7 @@ cc_library_static {
         "-Wno-unused-parameter",
         "-Wno-unused-variable",
         "-Wno-invalid-partial-specialization",
+        "-Wno-array-bounds",
     ],
 }
 
