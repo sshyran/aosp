@@ -495,6 +495,37 @@ int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution) {
     return r->computeSynchronously();
 }
 
+int ANeuralNetworksBurst_create(ANeuralNetworksCompilation* compilation,
+                                ANeuralNetworksBurst** burst) {
+    NNTRACE_RT(NNTRACE_PHASE_PREPARATION, "ANeuralNetworksBurst_create");
+    if (!compilation || !burst) {
+        LOG(ERROR) << "ANeuralNetworksBurst_create passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+
+    // TODO in subsequent CL
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+void ANeuralNetworksBurst_free(ANeuralNetworksBurst* burst) {
+    NNTRACE_RT(NNTRACE_PHASE_TERMINATION, "ANeuralNetworksBurst_free");
+    // No validation.  Free of nullptr is valid.
+    (void)burst;
+    // TODO in subsequent CL
+}
+
+int ANeuralNetworksExecution_burstCompute(ANeuralNetworksExecution* execution,
+                                          ANeuralNetworksBurst* burst) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_burstCompute");
+    if (!execution || !burst) {
+        LOG(ERROR) << "ANeuralNetworksExecution_burstCompute passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+
+    // TODO in subsequent CL
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd, size_t offset,
                                        ANeuralNetworksMemory** memory) {
     NNTRACE_RT(NNTRACE_PHASE_PREPARATION, "ANeuralNetworksMemory_createFromFd");
