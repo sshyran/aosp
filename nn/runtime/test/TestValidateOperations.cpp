@@ -3146,6 +3146,166 @@ TEST(OperationValidationTest, UNIDIRECTIONAL_SEQUENCE_RNN_float16) {
     unidirectionlSequenceRNNTest(ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
+void unidirectionalSequenceLSTMTest(int32_t inputOperandCode) {
+    const uint32_t maxTime = 2;
+    const uint32_t batchSize = 3;
+    const uint32_t numUnits = 4;
+    const uint32_t inputSize = 5;
+    const uint32_t outputSize = 6;
+
+    uint32_t inputDims[3] = {maxTime, batchSize, inputSize};
+    uint32_t inputWeightsDims[2] = {numUnits, inputSize};
+    uint32_t recurrentWeightsDims[2] = {numUnits, outputSize};
+    uint32_t diagonalDims[1] = {numUnits};
+    uint32_t projectionDims[2] = {outputSize, numUnits};
+    uint32_t projectionBiasDims[1] = {outputSize};
+    uint32_t outputStateDims[2] = {batchSize, outputSize};
+    uint32_t cellStateDims[2] = {batchSize, numUnits};
+
+    uint32_t outputDims[3] = {maxTime, batchSize, outputSize};
+
+    ANeuralNetworksOperandType input = {.type = inputOperandCode,
+                                        .dimensionCount = 3,
+                                        .dimensions = inputDims,
+                                        .scale = 0.0f,
+                                        .zeroPoint = 0};
+    ANeuralNetworksOperandType inputToInputWeights = {.type = inputOperandCode,
+                                                      .dimensionCount = 2,
+                                                      .dimensions = inputWeightsDims,
+                                                      .scale = 0.0f,
+                                                      .zeroPoint = 0};
+    ANeuralNetworksOperandType inputToForgetWeights = inputToInputWeights;
+    ANeuralNetworksOperandType inputToCellWeights = inputToInputWeights;
+    ANeuralNetworksOperandType inputToOutputWeights = inputToInputWeights;
+    ANeuralNetworksOperandType recurrentToInputWeights = {.type = inputOperandCode,
+                                                          .dimensionCount = 2,
+                                                          .dimensions = recurrentWeightsDims,
+                                                          .scale = 0.0f,
+                                                          .zeroPoint = 0};
+    ANeuralNetworksOperandType recurrentToForgetWeights = recurrentToInputWeights;
+    ANeuralNetworksOperandType recurrentToCellWeights = recurrentToInputWeights;
+    ANeuralNetworksOperandType recurrentToOutputWeights = recurrentToInputWeights;
+    ANeuralNetworksOperandType cellToInputWeights = {.type = inputOperandCode,
+                                                     .dimensionCount = 1,
+                                                     .dimensions = diagonalDims,
+                                                     .scale = 0.0f,
+                                                     .zeroPoint = 0};
+    ANeuralNetworksOperandType cellToForgetWeights = cellToInputWeights;
+    ANeuralNetworksOperandType cellToOutputWeights = cellToInputWeights;
+    ANeuralNetworksOperandType inputGateBias = {.type = inputOperandCode,
+                                                .dimensionCount = 1,
+                                                .dimensions = diagonalDims,
+                                                .scale = 0.0f,
+                                                .zeroPoint = 0};
+    ANeuralNetworksOperandType forgetGateBias = inputGateBias;
+    ANeuralNetworksOperandType cellGateBias = inputGateBias;
+    ANeuralNetworksOperandType outputGateBias = inputGateBias;
+    ANeuralNetworksOperandType projectionWeights = {.type = inputOperandCode,
+                                                    .dimensionCount = 2,
+                                                    .dimensions = projectionDims,
+                                                    .scale = 0.0f,
+                                                    .zeroPoint = 0};
+    ANeuralNetworksOperandType projectionBias = {.type = inputOperandCode,
+                                                 .dimensionCount = 1,
+                                                 .dimensions = projectionBiasDims,
+                                                 .scale = 0.0f,
+                                                 .zeroPoint = 0};
+    ANeuralNetworksOperandType outputStateIn = {.type = inputOperandCode,
+                                                .dimensionCount = 2,
+                                                .dimensions = outputStateDims,
+                                                .scale = 0.0f,
+                                                .zeroPoint = 0};
+    ANeuralNetworksOperandType cellStateIn = {.type = inputOperandCode,
+                                              .dimensionCount = 2,
+                                              .dimensions = cellStateDims,
+                                              .scale = 0.0f,
+                                              .zeroPoint = 0};
+    ANeuralNetworksOperandType intScalar = {
+            .type = ANEURALNETWORKS_INT32,
+            .dimensionCount = 0,
+            .dimensions = nullptr,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+    };
+    ANeuralNetworksOperandType activation = intScalar;
+    ANeuralNetworksOperandType floatScalar = {
+            .type = inputOperandCode == ANEURALNETWORKS_TENSOR_FLOAT32 ? ANEURALNETWORKS_FLOAT32
+                                                                       : ANEURALNETWORKS_FLOAT16,
+            .dimensionCount = 0,
+            .dimensions = nullptr,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+    };
+    ANeuralNetworksOperandType cellClip = floatScalar;
+    ANeuralNetworksOperandType projClip = floatScalar;
+    ANeuralNetworksOperandType boolScalar = {
+            .type = ANEURALNETWORKS_BOOL,
+            .dimensionCount = 0,
+            .dimensions = nullptr,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+    };
+    ANeuralNetworksOperandType timeMajor = boolScalar;
+    ANeuralNetworksOperandType inputLayerNormWeights = {.type = inputOperandCode,
+                                                        .dimensionCount = 1,
+                                                        .dimensions = diagonalDims,
+                                                        .scale = 0.0f,
+                                                        .zeroPoint = 0};
+    ANeuralNetworksOperandType forgetLayerNormWeights = inputLayerNormWeights;
+    ANeuralNetworksOperandType cellLayerNormWeights = inputLayerNormWeights;
+    ANeuralNetworksOperandType outputLayerNormWeights = inputLayerNormWeights;
+
+    ANeuralNetworksOperandType output = {.type = inputOperandCode,
+                                         .dimensionCount = 3,
+                                         .dimensions = outputDims,
+                                         .scale = 0.0f,
+                                         .zeroPoint = 0};
+
+    OperationTestBase ulstmTest(ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM,
+                                {input,
+                                 inputToInputWeights,
+                                 inputToForgetWeights,
+                                 inputToCellWeights,
+                                 inputToOutputWeights,
+                                 recurrentToInputWeights,
+                                 recurrentToForgetWeights,
+                                 recurrentToCellWeights,
+                                 recurrentToOutputWeights,
+                                 cellToInputWeights,
+                                 cellToForgetWeights,
+                                 cellToOutputWeights,
+                                 inputGateBias,
+                                 forgetGateBias,
+                                 cellGateBias,
+                                 outputGateBias,
+                                 projectionWeights,
+                                 projectionBias,
+                                 outputStateIn,
+                                 cellStateIn,
+                                 activation,
+                                 cellClip,
+                                 projClip,
+                                 timeMajor,
+                                 inputLayerNormWeights,
+                                 forgetLayerNormWeights,
+                                 cellLayerNormWeights,
+                                 outputLayerNormWeights},
+                                {output});
+
+    EXPECT_TRUE(ulstmTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(ulstmTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(ulstmTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(ulstmTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, UNIDIRECTIONAL_SEQUENCE_LSTM_float32) {
+    unidirectionalSequenceLSTMTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, UNIDIRECTIONAL_SEQUENCE_LSTM_float16) {
+    unidirectionalSequenceLSTMTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
 void generateProposalsOpTest(int32_t scoreOperandCode, int32_t deltaOperandCode,
                              int32_t anchorOperandCode, int32_t roiOperandCode,
                              int32_t scalarOperandCode) {
