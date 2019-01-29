@@ -205,122 +205,12 @@ const char* kErrorNames[] = {
         "NO_ERROR", "OUT_OF_MEMORY", "INCOMPLETE", "NULL", "BAD_DATA",
 };
 
-const char* kOperationNames[kNumberOfOperationTypes] = {
-        "ADD",
-        "AVERAGE_POOL",
-        "CONCATENATION",
-        "CONV",
-        "DEPTHWISE_CONV",
-        "DEPTH_TO_SPACE",
-        "DEQUANTIZE",
-        "EMBEDDING_LOOKUP",
-        "FLOOR",
-        "FULLY_CONNECTED",
-        "HASHTABLE_LOOKUP",
-        "L2_NORMALIZATION",
-        "L2_POOL",
-        "LOCAL_RESPONSE_NORMALIZATION",
-        "LOGISTIC",
-        "LSH_PROJECTION",
-        "LSTM",
-        "MAX_POOL",
-        "MUL",
-        "RELU",
-        "RELU1",
-        "RELU6",
-        "RESHAPE",
-        "RESIZE_BILINEAR",
-        "RNN",
-        "SOFTMAX",
-        "SPACE_TO_DEPTH",
-        "SVDF",
-        "TANH",
-        "BATCH_TO_SPACE_ND",
-        "DIV",
-        "MEAN",
-        "PAD",
-        "SPACE_TO_BATCH_ND",
-        "SQUEEZE",
-        "STRIDED_SLICE",
-        "SUB",
-        "TRANSPOSE",
-        "ARGMAX",
-        "ARGMIN",
-        "PAD_V2",
-        "AXIS_ALIGNED_BBOX_TRANSFORM",
-        "BIDIRECTIONAL_SEQUENCE_LSTM",
-        "BIDIRECTIONAL_SEQUENCE_RNN",
-        "BOX_WITH_NMS_LIMIT",
-        "CAST",
-        "CHANNEL_SHUFFLE",
-        "DETECTION_OUTPUT",
-        "EMBEDDING_LOOKUP_SPARSE",
-        "EXP",
-        "EXPAND_DIMS",
-        "GATHER",
-        "GENERATE_PROPOSALS",
-        "GREATER",
-        "GREATER_EQUAL",
-        "GROUPED_CONV_2D",
-        "HEATMAP_MAX_KEYPOINT",
-        "LESS",
-        "LESS_EQUAL",
-        "LOG",
-        "LOGICAL_AND",
-        "LOGICAL_NOT",
-        "LOGICAL_OR",
-        "LOG_SOFTMAX",
-        "MAXIMUM",
-        "MINIMUM",
-        "NEG",
-        "POW",
-        "PRELU",
-        "PRIOR_BOX",
-        "QUANTIZE",
-        "QUANTIZED_16BIT_LSTM",
-        "RANDOM_MULTINOMIAL",
-        "REDUCE_PROD",
-        "ROI_ALIGN",
-        "RSQRT",
-        "SELECT",
-        "SIN",
-        "SLICE",
-        "SPARSE_TO_DENSE",
-        "SPLIT",
-        "SQRT",
-        "TILE",
-        "TOPK_V2",
-        "TRANSPOSE_CONV_2D",
-        "UNIDIRECTIONAL_SEQUENCE_LSTM",
-        "UNIDIRECTIONAL_SEQUENCE_RNN",
-        "ROTATED_BBOX_TRANSFORM",
-        "ABS",
-        "ROI_POOLING",
-        "EQUAL",
-        "NOT_EQUAL",
-        "REDUCE_SUM",
-        "REDUCE_MAX",
-        "REDUCE_MIN",
-        "REDUCE_ANY",
-        "REDUCE_ALL",
-        "INSTANCE_NORMALIZATION",
-};
-
-static_assert(COUNT(kOperationNames) == kNumberOfOperationTypes, "kOperationNames is incorrect");
-
-const char* kOperationNamesOEM[kNumberOfOperationTypesOEM] = {
-        "OEM_OPERATION",
-};
-
-static_assert(COUNT(kOperationNamesOEM) == kNumberOfOperationTypesOEM,
-              "kOperationNamesOEM is incorrect");
-
-static const char* getOperationName(uint32_t code) {
-    return tableLookup(kOperationNames, kOperationNamesOEM, code);
+static std::string getOperationName(uint32_t code) {
+    return getOperationName(static_cast<OperationType>(code));
 }
 
-const char* getOperationName(OperationType type) {
-    return getOperationName(static_cast<uint32_t>(type));
+std::string getOperationName(OperationType type) {
+    return toString(type);
 }
 
 const uint32_t kSizeOfDataType[]{
@@ -789,7 +679,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                     NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
                 } else {
                     LOG(ERROR) << "Unsupported filter tensor type for operation "
-                               << kOperationNames[opType];
+                               << getOperationName(opType);
                     return ANEURALNETWORKS_BAD_DATA;
                 }
 
@@ -872,13 +762,13 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                         if (operands[inputIndexes[1]].extraParams.channelQuant().channelDim != 0) {
                             LOG(ERROR)
                                     << "Unsupported filter tensor channel dimension for operation "
-                                    << kOperationNames[opType];
+                                    << getOperationName(opType);
                             return ANEURALNETWORKS_BAD_DATA;
                         }
                     }
                 } else {
                     LOG(ERROR) << "Unsupported filter tensor type for operation "
-                               << kOperationNames[opType];
+                               << getOperationName(opType);
                     return ANEURALNETWORKS_BAD_DATA;
                 }
             } else {
@@ -1712,7 +1602,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 };
             } else {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << kOperationNames[opType];
+                           << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
@@ -2470,7 +2360,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 outExpectedTypes = {inputType};
             } else {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << kOperationNames[opType];
+                           << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
             NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
