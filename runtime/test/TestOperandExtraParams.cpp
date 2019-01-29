@@ -77,6 +77,12 @@ class OperandExtraParamsTest : public ::testing::Test {
                         .dimensions = dims,
                         .scale = 1.0,
                         .zeroPoint = 0};
+            case ANEURALNETWORKS_TENSOR_QUANT16_ASYMM:
+                return {.type = dataType,
+                        .dimensionCount = 4,
+                        .dimensions = dims,
+                        .scale = 1.0,
+                        .zeroPoint = 32768};
             default:
                 ADD_FAILURE();
                 return {};
@@ -118,6 +124,7 @@ const uint32_t kOperandCodeNoExtraParams[]{
         ANEURALNETWORKS_TENSOR_FLOAT32,
         ANEURALNETWORKS_TENSOR_INT32,
         ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+        ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
         ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
         ANEURALNETWORKS_TENSOR_FLOAT16,
         ANEURALNETWORKS_TENSOR_BOOL8,
