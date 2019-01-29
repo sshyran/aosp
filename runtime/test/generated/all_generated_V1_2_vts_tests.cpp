@@ -18950,6 +18950,21 @@ TEST_F(ValidationTest, quantized_lstm) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, quantized_lstm_relaxed) {
+  generated_tests::Execute(device,
+                           quantized_lstm::createTestModel_relaxed,
+                           quantized_lstm::is_ignored_relaxed,
+                           quantized_lstm::get_examples_relaxed());
+}
+
+TEST_F(ValidationTest, quantized_lstm_relaxed) {
+  const Model model = quantized_lstm::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(quantized_lstm::get_examples_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 // Generated from: random_multinomial.mod.py.
 namespace random_multinomial {
 // Generated random_multinomial test

@@ -23,23 +23,57 @@ class QuantizedLSTMCell {
 
     // Inputs:
     static constexpr int kInputTensor = 0;
-    static constexpr int kPrevOutputTensor = 1;
-    static constexpr int kWeightsTensor = 2;
-    static constexpr int kBiasTensor = 3;
-    static constexpr int kPrevCellStateTensor = 4;
+    // Input weight tensors of size: {n_cell, n_input}
+    static constexpr int kInputToInputWeightsTensor = 1;
+    static constexpr int kInputToForgetWeightsTensor = 2;
+    static constexpr int kInputToCellWeightsTensor = 3;
+    static constexpr int kInputToOutputWeightsTensor = 4;
+
+    // Recurrent weight tensors of size {n_cell, n_output}
+    static constexpr int kRecurrentToInputWeightsTensor = 5;
+    static constexpr int kRecurrentToForgetWeightsTensor = 6;
+    static constexpr int kRecurrentToCellWeightsTensor = 7;
+    static constexpr int kRecurrentToOutputWeightsTensor = 8;
+
+    // Gates bias tensors of size {n_cell}
+    static constexpr int kInputGateBiasTensor = 9;
+    static constexpr int kForgetGateBiasTensor = 10;
+    static constexpr int kCellGateBiasTensor = 11;
+    static constexpr int kOutputGateBiasTensor = 12;
+
+    static constexpr int kPrevCellStateTensor = 13;
+    static constexpr int kPrevOutputTensor = 14;
+
     // Outputs:
     static constexpr int kCellStateOutTensor = 0;
     static constexpr int kOutputTensor = 1;
 
    private:
     const RunTimeOperandInfo* input_;
-    const RunTimeOperandInfo* prevOutput_;
-    const RunTimeOperandInfo* weights_;
-    const RunTimeOperandInfo* bias_;
+
+    const RunTimeOperandInfo* inputToInputWeights_;
+    const RunTimeOperandInfo* inputToForgetWeights_;
+    const RunTimeOperandInfo* inputToCellWeights_;
+    const RunTimeOperandInfo* inputToOutputWeights_;
+
+    const RunTimeOperandInfo* recurrentToInputWeights_;
+    const RunTimeOperandInfo* recurrentToForgetWeights_;
+    const RunTimeOperandInfo* recurrentToCellWeights_;
+    const RunTimeOperandInfo* recurrentToOutputWeights_;
+
+    const RunTimeOperandInfo* inputGateBias_;
+    const RunTimeOperandInfo* forgetGateBias_;
+    const RunTimeOperandInfo* cellGateBias_;
+    const RunTimeOperandInfo* outputGateBias_;
+
     const RunTimeOperandInfo* prevCellState_;
+    const RunTimeOperandInfo* prevOutput_;
 
     RunTimeOperandInfo* cellStateOut_;
     RunTimeOperandInfo* output_;
+
+    void concatenateWeights(const std::vector<uint32_t>& weightsDims, uint8_t* weights);
+    void concatenateBiases(uint32_t outputSize, int32_t* bias);
 };
 
 }  // namespace nn
