@@ -20,6 +20,7 @@
 #define ANDROID_ML_NN_RUNTIME_NEURAL_NETWORKS_WRAPPER_H
 
 #include "NeuralNetworks.h"
+#include "NeuralNetworksExtensions.h"
 
 #include <math.h>
 #include <optional>
@@ -192,6 +193,26 @@ public:
         } else {
             return Result::BAD_STATE;
         }
+    }
+
+    int32_t getExtensionOperandType(const char* extensionName, uint16_t typeWithinExtension) {
+        int32_t result;
+        if (ANeuralNetworksModel_getExtensionOperandType(mModel, extensionName, typeWithinExtension,
+                                                         &result) != ANEURALNETWORKS_NO_ERROR) {
+            mValid = false;
+        }
+        return result;
+    }
+
+    ANeuralNetworksOperationType getExtensionOperationType(const char* extensionName,
+                                                           uint16_t typeWithinExtension) {
+        ANeuralNetworksOperationType result;
+        if (ANeuralNetworksModel_getExtensionOperationType(mModel, extensionName,
+                                                           typeWithinExtension,
+                                                           &result) != ANEURALNETWORKS_NO_ERROR) {
+            mValid = false;
+        }
+        return result;
     }
 
     uint32_t addOperand(const OperandType* type) {

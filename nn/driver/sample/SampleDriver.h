@@ -42,6 +42,7 @@ public:
     Return<void> getCapabilities(getCapabilities_cb cb) override;
     Return<void> getVersionString(getVersionString_cb cb) override;
     Return<void> getType(getType_cb cb) override;
+    Return<void> getSupportedExtensions(getSupportedExtensions_cb) override;
     Return<void> getSupportedOperations(const V1_0::Model& model,
                                         getSupportedOperations_cb cb) override;
     Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
