@@ -59,6 +59,7 @@ const OperationRegistration* register_SELECT();
 const OperationRegistration* register_SIN();
 const OperationRegistration* register_SPARSE_TO_DENSE();
 const OperationRegistration* register_SQRT();
+const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_RNN();
 
 OperationResolver::OperationResolver() {
     registerOperation(register_ABS());
@@ -96,6 +97,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_SIN());
     registerOperation(register_SPARSE_TO_DENSE());
     registerOperation(register_SQRT());
+    registerOperation(register_UNIDIRECTIONAL_SEQUENCE_RNN());
 }
 
 const OperationRegistration* OperationResolver::findOperation(OperationType operationType) const {
