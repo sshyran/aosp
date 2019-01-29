@@ -2503,7 +2503,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                outShape);
         } break;
         case OperationType::QUANTIZED_16BIT_LSTM: {
-            if (!allParametersPresent(5, 2)) {
+            if (!allParametersPresent(15, 2)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
