@@ -2569,4 +2569,33 @@ TEST(OperationValidationTest, POW) {
     powTest(ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+void boxWithNmsLimitOpTest(int32_t scoreOperandCode, int32_t roiOperandCode,
+                           int32_t scalarOperandCode) {
+    uint32_t scoreDim[] = {19, 3}, roiDim[] = {19, 12}, splitDim[] = {2};
+    uint32_t outScoreDim[] = {12}, outRoiDim[] = {12, 4}, outClassDim[] = {12}, outSplitDim[] = {2};
+    OperationTestBase boxWithNmsLimitTest(
+            ANEURALNETWORKS_BOX_WITH_NMS_LIMIT,
+            {getOpType(scoreOperandCode, 2, scoreDim), getOpType(roiOperandCode, 2, roiDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, splitDim), getOpType(scalarOperandCode),
+             getOpType(scalarOperandCode), getOpType(ANEURALNETWORKS_INT32)},
+            {getOpType(scoreOperandCode, 1, outScoreDim), getOpType(roiOperandCode, 2, outRoiDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outClassDim),
+             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outSplitDim)});
+
+    EXPECT_TRUE(boxWithNmsLimitTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(boxWithNmsLimitTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(boxWithNmsLimitTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(boxWithNmsLimitTest.testMutatingOutputOperandCounts());
+}
+
+TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_float16) {
+    boxWithNmsLimitOpTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_FLOAT16,
+                          ANEURALNETWORKS_FLOAT16);
+}
+
+TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_float32) {
+    boxWithNmsLimitOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32,
+                          ANEURALNETWORKS_FLOAT32);
+}
+
 }  // end namespace
