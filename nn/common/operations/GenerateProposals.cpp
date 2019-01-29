@@ -20,12 +20,13 @@
 
 #include <cfloat>
 #include <cmath>
+#include <numeric>
 
 #include "Tracing.h"
 
 namespace android {
 namespace nn {
-namespace generate_proposals {
+namespace bbox_ops {
 
 namespace {
 
@@ -646,17 +647,396 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace box_with_nms_limit
 
+namespace generate_proposals {
+
+constexpr char kOperationName[] = "GENERATE_PROPOSALS";
+
+constexpr uint32_t kNumInputs = 11;
+constexpr uint32_t kScoreTensor = 0;
+constexpr uint32_t kDeltaTensor = 1;
+constexpr uint32_t kAnchorTensor = 2;
+constexpr uint32_t kImageInfoTensor = 3;
+constexpr uint32_t kHeightStrideSalar = 4;
+constexpr uint32_t kWidthStrideScalar = 5;
+constexpr uint32_t kPreNmsMaxScalar = 6;
+constexpr uint32_t kPostNmsMaxScalar = 7;
+constexpr uint32_t kIoUThresholdScalar = 8;
+constexpr uint32_t kMinSizeScalar = 9;
+constexpr uint32_t kLayoutScalar = 10;
+
+constexpr uint32_t kNumOutputs = 3;
+constexpr uint32_t kOutputScoreTensor = 0;
+constexpr uint32_t kOutputRoiTensor = 1;
+constexpr uint32_t kOutputBatchSplitTensor = 2;
+
+namespace {
+
+void filterBoxes(const float* roiBase, const float* imageInfoBase, float minSize,
+                 std::vector<uint32_t>* select) {
+    const uint32_t kRoiDim = 4;
+    uint32_t i = 0;
+    for (uint32_t j = 0; j < select->size(); j++) {
+        const float* roiInfo = roiBase + (*select)[j] * kRoiDim;
+        float roiWidth, roiHeight, xRoiCenter, yRoiCenter;
+        roiWidth = roiInfo[2] - roiInfo[0];
+        roiHeight = roiInfo[3] - roiInfo[1];
+        xRoiCenter = roiInfo[0] + roiWidth / 2.0f;
+        yRoiCenter = roiInfo[1] + roiHeight / 2.0f;
+        if (roiWidth > minSize && roiHeight > minSize && xRoiCenter < imageInfoBase[1] &&
+            yRoiCenter < imageInfoBase[0]) {
+            (*select)[i++] = (*select)[j];
+        }
+    }
+    select->resize(i);
+}
+
+bool generateProposalsNhwcFloat32Compute(const float* scoresData, const Shape& scoresShape,
+                                         const float* bboxDeltasData, const Shape& bboxDeltasShape,
+                                         const float* anchorsData, const Shape& anchorsShape,
+                                         const float* imageInfoData, const Shape& imageInfoShape,
+                                         float heightStride, float widthStride, int32_t preNmsTopN,
+                                         int32_t postNmsTopN, float iouThreshold, float minSize,
+                                         std::vector<float>* scoresOutData,
+                                         std::vector<float>* roiOutData, int32_t* batchSplitData,
+                                         const Shape& batchSplitShape) {
+    const uint32_t kRoiDim = 4;
+    uint32_t numBatches = getSizeOfDimension(scoresShape, 0);
+    uint32_t height = getSizeOfDimension(scoresShape, 1);
+    uint32_t width = getSizeOfDimension(scoresShape, 2);
+    uint32_t numAnchors = getSizeOfDimension(scoresShape, 3);
+    uint32_t imageInfoLength = getSizeOfDimension(imageInfoShape, 1);
+
+    uint32_t batchSize = height * width * numAnchors;
+    uint32_t roiBufferSize = batchSize * kRoiDim;
+    std::vector<float> roiBuffer(roiBufferSize);
+    std::vector<float> roiTransformedBuffer(roiBufferSize);
+    scoresOutData->clear();
+    roiOutData->clear();
+
+    // Compute the roi region for each anchor.
+    float* roiBase = roiBuffer.data();
+    for (uint32_t h = 0; h < height; h++) {
+        float hShift = h * heightStride;
+        for (uint32_t w = 0; w < width; w++) {
+            const float* anchorsBase = anchorsData;
+            float wShift = w * widthStride;
+            for (uint32_t a = 0; a < numAnchors; a++, roiBase += kRoiDim, anchorsBase += kRoiDim) {
+                roiBase[0] = anchorsBase[0] + wShift;
+                roiBase[1] = anchorsBase[1] + hShift;
+                roiBase[2] = anchorsBase[2] + wShift;
+                roiBase[3] = anchorsBase[3] + hShift;
+            }
+        }
+    }
+
+    const float* scoresBase = scoresData;
+    const float* bboxDeltasBase = bboxDeltasData;
+    const float* imageInfoBase = imageInfoData;
+    // Need to fake some data to satisfy bboxTransform.
+    Shape tempRoiShape = anchorsShape;
+    tempRoiShape.dimensions = {batchSize, kRoiDim};
+    Shape tempBBoxDeltasShape = bboxDeltasShape;
+    tempBBoxDeltasShape.dimensions = {batchSize, kRoiDim};
+    int32_t tempBatchSplitData = batchSize;
+    Shape tempbatchSplitShape = {.dimensions = {1}};
+    Shape tempImageInfoShape = imageInfoShape;
+    tempImageInfoShape.dimensions = {1, imageInfoLength};
+
+    for (uint32_t b = 0; b < numBatches; b++) {
+        // Apply bboxDeltas to anchor locations.
+        float tempImageInfo[] = {imageInfoBase[0], imageInfoBase[1]};
+        if (!bboxTransformFloat32(roiBuffer.data(), tempRoiShape, bboxDeltasBase,
+                                  tempBBoxDeltasShape, &tempBatchSplitData, tempbatchSplitShape,
+                                  tempImageInfo, tempImageInfoShape, roiTransformedBuffer.data(),
+                                  tempRoiShape)) {
+            LOG(ERROR) << "BBoxTransform step failed in GENERATE_PROPOSALS op.";
+            return false;
+        }
+
+        // Find the top preNmsTopN scores.
+        std::vector<uint32_t> select(batchSize);
+        std::iota(select.begin(), select.end(), 0);
+        if (preNmsTopN > 0 && preNmsTopN < select.size()) {
+            std::sort(select.begin(), select.end(),
+                      [&scoresBase](const uint32_t lhs, const uint32_t rhs) {
+                          return scoresBase[lhs] > scoresBase[rhs];
+                      });
+            select.resize(preNmsTopN);
+        }
+
+        // Filter boxes, disgard regions with height or width < minSize.
+        filterBoxes(roiTransformedBuffer.data(), imageInfoBase, minSize, &select);
+
+        // Apply hard NMS.
+        uint32_t* selectEnd =
+                box_with_nms_limit::hardNmsSingleClass(scoresBase, roiTransformedBuffer.data(),
+                                                       iouThreshold, select.data(), select.size());
+        uint32_t selectSize = postNmsTopN > 0
+                                      ? std::min<uint32_t>(postNmsTopN, selectEnd - select.data())
+                                      : (selectEnd - select.data());
+        select.resize(selectSize);
+
+        // Write output.
+        *batchSplitData++ = selectSize;
+        for (auto i : select) {
+            roiOutData->insert(roiOutData->end(), roiTransformedBuffer.begin() + i * kRoiDim,
+                               roiTransformedBuffer.begin() + (i + 1) * kRoiDim);
+            scoresOutData->push_back(scoresBase[i]);
+        }
+        scoresBase += batchSize;
+        bboxDeltasBase += roiBufferSize;
+        imageInfoBase += imageInfoLength;
+    }
+    return true;
+}
+
+bool generateProposalsFloat32Compute(const float* scoresData, const Shape& scoresShape,
+                                     const float* bboxDeltasData, const Shape& bboxDeltasShape,
+                                     const float* anchorsData, const Shape& anchorsShape,
+                                     const float* imageInfoData, const Shape& imageInfoShape,
+                                     float heightStride, float widthStride, int32_t preNmsTopN,
+                                     int32_t postNmsTopN, float iouThreshold, float minSize,
+                                     bool useNchw, std::vector<float>* scoresOutData,
+                                     std::vector<float>* roiOutData, int32_t* batchSplitData,
+                                     const Shape& batchSplitShape) {
+    InputWithLayout<float> score_nhwc(useNchw), delta_nhwc(useNchw);
+    NN_RET_CHECK(score_nhwc.initialize(scoresData, scoresShape));
+    NN_RET_CHECK(delta_nhwc.initialize(bboxDeltasData, bboxDeltasShape));
+    return generateProposalsNhwcFloat32Compute(
+            score_nhwc.getNhwcBuffer(), score_nhwc.getNhwcShape(), delta_nhwc.getNhwcBuffer(),
+            delta_nhwc.getNhwcShape(), anchorsData, anchorsShape, imageInfoData, imageInfoShape,
+            heightStride, widthStride, preNmsTopN, postNmsTopN, iouThreshold, minSize,
+            scoresOutData, roiOutData, batchSplitData, batchSplitShape);
+}
+
+bool generateProposalsFloat32(const float* scoresData, const Shape& scoresShape,
+                              const float* bboxDeltasData, const Shape& bboxDeltasShape,
+                              const float* anchorsData, const Shape& anchorsShape,
+                              const float* imageInfoData, const Shape& imageInfoShape,
+                              float heightStride, float widthStride, int32_t preNmsTopN,
+                              int32_t postNmsTopN, float iouThreshold, float minSize, bool useNchw,
+                              int32_t* batchSplitData, const Shape& batchSplitShape,
+                              IOperationExecutionContext* context) {
+    std::vector<float> scoresOut_float32, roiOut_float32;
+    NN_RET_CHECK(generateProposalsFloat32Compute(
+            scoresData, scoresShape, bboxDeltasData, bboxDeltasShape, anchorsData, anchorsShape,
+            imageInfoData, imageInfoShape, heightStride, widthStride, preNmsTopN, postNmsTopN,
+            iouThreshold, minSize, useNchw, &scoresOut_float32, &roiOut_float32, batchSplitData,
+            batchSplitShape));
+
+    // Set output dimensions.
+    uint32_t numOutRois = scoresOut_float32.size();
+    Shape scoresOutShape = context->getOutputShape(kOutputScoreTensor);
+    scoresOutShape.dimensions = {numOutRois};
+    NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, scoresOutShape));
+    Shape roiOutShape = context->getOutputShape(kOutputRoiTensor);
+    roiOutShape.dimensions = {numOutRois, 4};
+    NN_RET_CHECK(context->setOutputShape(kOutputRoiTensor, roiOutShape));
+
+    // Write outputs.
+    float* scoresOutData = context->getOutputBuffer<float>(kOutputScoreTensor);
+    for (uint32_t i = 0; i < scoresOut_float32.size(); i++) {
+        scoresOutData[i] = scoresOut_float32[i];
+    }
+    float* roiOutData = context->getOutputBuffer<float>(kOutputRoiTensor);
+    for (uint32_t i = 0; i < roiOut_float32.size(); i++) {
+        roiOutData[i] = roiOut_float32[i];
+    }
+    return true;
+}
+
+bool generateProposalsFloat16(const _Float16* scoresData, const Shape& scoresShape,
+                              const _Float16* bboxDeltasData, const Shape& bboxDeltasShape,
+                              const _Float16* anchorsData, const Shape& anchorsShape,
+                              const _Float16* imageInfoData, const Shape& imageInfoShape,
+                              float heightStride, float widthStride, int32_t preNmsTopN,
+                              int32_t postNmsTopN, float iouThreshold, float minSize, bool useNchw,
+                              int32_t* batchSplitData, const Shape& batchSplitShape,
+                              IOperationExecutionContext* context) {
+    std::vector<float> score_float32(getNumberOfElements(scoresShape));
+    convertFloat16ToFloat32(scoresData, &score_float32);
+    std::vector<float> delta_float32(getNumberOfElements(bboxDeltasShape));
+    convertFloat16ToFloat32(bboxDeltasData, &delta_float32);
+    std::vector<float> anchors_float32(getNumberOfElements(anchorsShape));
+    convertFloat16ToFloat32(anchorsData, &anchors_float32);
+    std::vector<float> imageInfo_float32(getNumberOfElements(imageInfoShape));
+    convertFloat16ToFloat32(imageInfoData, &imageInfo_float32);
+    std::vector<float> scoresOut_float32, roiOut_float32;
+    NN_RET_CHECK(generateProposalsFloat32Compute(
+            score_float32.data(), scoresShape, delta_float32.data(), bboxDeltasShape,
+            anchors_float32.data(), anchorsShape, imageInfo_float32.data(), imageInfoShape,
+            heightStride, widthStride, preNmsTopN, postNmsTopN, iouThreshold, minSize, useNchw,
+            &scoresOut_float32, &roiOut_float32, batchSplitData, batchSplitShape));
+
+    // Set output dimensions.
+    uint32_t numOutRois = scoresOut_float32.size();
+    Shape scoresOutShape = context->getOutputShape(kOutputScoreTensor);
+    scoresOutShape.dimensions = {numOutRois};
+    NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, scoresOutShape));
+    Shape roiOutShape = context->getOutputShape(kOutputRoiTensor);
+    roiOutShape.dimensions = {numOutRois, 4};
+    NN_RET_CHECK(context->setOutputShape(kOutputRoiTensor, roiOutShape));
+
+    // Write outputs.
+    _Float16* scoresOutData = context->getOutputBuffer<_Float16>(kOutputScoreTensor);
+    convertFloat32ToFloat16(scoresOut_float32, scoresOutData);
+    _Float16* roiOutData = context->getOutputBuffer<_Float16>(kOutputRoiTensor);
+    convertFloat32ToFloat16(roiOut_float32, roiOutData);
+    return true;
+}
+
+}  // namespace
+
+bool validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
+    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
+    std::vector<OperandType> inExpectedTypes;
+    std::vector<OperandType> outExpectedTypes;
+    auto inputType = context->getInputType(kScoreTensor);
+    if (inputType == OperandType::TENSOR_FLOAT16) {
+        inExpectedTypes = {OperandType::TENSOR_FLOAT16,
+                           OperandType::TENSOR_FLOAT16,
+                           OperandType::TENSOR_FLOAT16,
+                           OperandType::TENSOR_FLOAT16,
+                           OperandType::FLOAT16,
+                           OperandType::FLOAT16,
+                           OperandType::INT32,
+                           OperandType::INT32,
+                           OperandType::FLOAT16,
+                           OperandType::FLOAT16,
+                           OperandType::BOOL};
+        outExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
+                            OperandType::TENSOR_INT32};
+    } else if (inputType == OperandType::TENSOR_FLOAT32) {
+        inExpectedTypes = {OperandType::TENSOR_FLOAT32,
+                           OperandType::TENSOR_FLOAT32,
+                           OperandType::TENSOR_FLOAT32,
+                           OperandType::TENSOR_FLOAT32,
+                           OperandType::FLOAT32,
+                           OperandType::FLOAT32,
+                           OperandType::INT32,
+                           OperandType::INT32,
+                           OperandType::FLOAT32,
+                           OperandType::FLOAT32,
+                           OperandType::BOOL};
+        outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                            OperandType::TENSOR_INT32};
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
+    }
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
+    return validateHalVersion(context, HalVersion::V1_2);
+}
+
+bool prepare(IOperationExecutionContext* context) {
+    bool useNchw = context->getInputValue<bool>(kLayoutScalar);
+    Shape scoreShape = context->getInputShape(kScoreTensor);
+    Shape bboxDeltasShape = context->getInputShape(kDeltaTensor);
+    Shape anchorsShape = context->getInputShape(kAnchorTensor);
+    Shape imageInfoDataShape = context->getInputShape(kImageInfoTensor);
+    Shape outputScoreShape = context->getOutputShape(kOutputScoreTensor);
+    Shape outputRoiShape = context->getOutputShape(kOutputRoiTensor);
+    Shape outputBatchSplitShape = context->getOutputShape(kOutputBatchSplitTensor);
+
+    NN_RET_CHECK_EQ(getNumberOfDimensions(scoreShape), 4);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bboxDeltasShape), 4);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(anchorsShape), 2);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(imageInfoDataShape), 2);
+
+    const uint32_t kRoiDim = 4;
+    uint32_t numBatches = getSizeOfDimension(scoreShape, 0);
+    uint32_t height = getSizeOfDimension(scoreShape, useNchw ? 2 : 1);
+    uint32_t width = getSizeOfDimension(scoreShape, useNchw ? 3 : 2);
+    uint32_t numAnchors = getSizeOfDimension(scoreShape, useNchw ? 1 : 3);
+
+    NN_RET_CHECK_EQ(getSizeOfDimension(bboxDeltasShape, 0), numBatches);
+    NN_RET_CHECK_EQ(getSizeOfDimension(bboxDeltasShape, useNchw ? 2 : 1), height);
+    NN_RET_CHECK_EQ(getSizeOfDimension(bboxDeltasShape, useNchw ? 3 : 2), width);
+    NN_RET_CHECK_EQ(getSizeOfDimension(bboxDeltasShape, useNchw ? 1 : 3), numAnchors * kRoiDim);
+    NN_RET_CHECK_EQ(getSizeOfDimension(imageInfoDataShape, 0), numBatches);
+    NN_RET_CHECK_EQ(getSizeOfDimension(imageInfoDataShape, 1), 2);
+    NN_RET_CHECK_EQ(getSizeOfDimension(anchorsShape, 0), numAnchors);
+    NN_RET_CHECK_EQ(getSizeOfDimension(anchorsShape, 1), kRoiDim);
+
+    outputScoreShape.type = scoreShape.type;
+    outputScoreShape.dimensions = {0};
+    outputScoreShape.scale = scoreShape.scale;
+    outputScoreShape.offset = scoreShape.offset;
+    NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, outputScoreShape));
+
+    outputRoiShape.dimensions = {0, 4};
+    NN_RET_CHECK(context->setOutputShape(kOutputRoiTensor, outputRoiShape));
+
+    outputBatchSplitShape.dimensions = {numBatches};
+    NN_RET_CHECK(context->setOutputShape(kOutputBatchSplitTensor, outputBatchSplitShape));
+    return true;
+}
+
+bool execute(IOperationExecutionContext* context) {
+    NNTRACE_TRANS("generateProposals");
+    switch (context->getInputType(kScoreTensor)) {
+        case OperandType::TENSOR_FLOAT16: {
+            return generateProposalsFloat16(
+                    context->getInputBuffer<_Float16>(kScoreTensor),
+                    context->getInputShape(kScoreTensor),
+                    context->getInputBuffer<_Float16>(kDeltaTensor),
+                    context->getInputShape(kDeltaTensor),
+                    context->getInputBuffer<_Float16>(kAnchorTensor),
+                    context->getInputShape(kAnchorTensor),
+                    context->getInputBuffer<_Float16>(kImageInfoTensor),
+                    context->getInputShape(kImageInfoTensor),
+                    context->getInputValue<_Float16>(kHeightStrideSalar),
+                    context->getInputValue<_Float16>(kWidthStrideScalar),
+                    context->getInputValue<int32_t>(kPreNmsMaxScalar),
+                    context->getInputValue<int32_t>(kPostNmsMaxScalar),
+                    context->getInputValue<_Float16>(kIoUThresholdScalar),
+                    context->getInputValue<_Float16>(kMinSizeScalar),
+                    context->getInputValue<bool>(kLayoutScalar),
+                    context->getOutputBuffer<int32_t>(kOutputBatchSplitTensor),
+                    context->getOutputShape(kOutputBatchSplitTensor), context);
+        }
+        case OperandType::TENSOR_FLOAT32: {
+            return generateProposalsFloat32(
+                    context->getInputBuffer<float>(kScoreTensor),
+                    context->getInputShape(kScoreTensor),
+                    context->getInputBuffer<float>(kDeltaTensor),
+                    context->getInputShape(kDeltaTensor),
+                    context->getInputBuffer<float>(kAnchorTensor),
+                    context->getInputShape(kAnchorTensor),
+                    context->getInputBuffer<float>(kImageInfoTensor),
+                    context->getInputShape(kImageInfoTensor),
+                    context->getInputValue<float>(kHeightStrideSalar),
+                    context->getInputValue<float>(kWidthStrideScalar),
+                    context->getInputValue<int32_t>(kPreNmsMaxScalar),
+                    context->getInputValue<int32_t>(kPostNmsMaxScalar),
+                    context->getInputValue<float>(kIoUThresholdScalar),
+                    context->getInputValue<float>(kMinSizeScalar),
+                    context->getInputValue<bool>(kLayoutScalar),
+                    context->getOutputBuffer<int32_t>(kOutputBatchSplitTensor),
+                    context->getOutputShape(kOutputBatchSplitTensor), context);
+        }
+        default:
+            NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
+    }
+}
+
 }  // namespace generate_proposals
 
-NN_REGISTER_OPERATION(AXIS_ALIGNED_BBOX_TRANSFORM,
-                      generate_proposals::axis_aligned_bbox_transform::kOperationName,
-                      generate_proposals::axis_aligned_bbox_transform::validate,
-                      generate_proposals::axis_aligned_bbox_transform::prepare,
-                      generate_proposals::axis_aligned_bbox_transform::execute);
+}  // namespace bbox_ops
 
-NN_REGISTER_OPERATION(BOX_WITH_NMS_LIMIT, generate_proposals::box_with_nms_limit::kOperationName,
-                      generate_proposals::box_with_nms_limit::validate,
-                      generate_proposals::box_with_nms_limit::prepare,
-                      generate_proposals::box_with_nms_limit::execute);
+NN_REGISTER_OPERATION(AXIS_ALIGNED_BBOX_TRANSFORM,
+                      bbox_ops::axis_aligned_bbox_transform::kOperationName,
+                      bbox_ops::axis_aligned_bbox_transform::validate,
+                      bbox_ops::axis_aligned_bbox_transform::prepare,
+                      bbox_ops::axis_aligned_bbox_transform::execute);
+
+NN_REGISTER_OPERATION(BOX_WITH_NMS_LIMIT, bbox_ops::box_with_nms_limit::kOperationName,
+                      bbox_ops::box_with_nms_limit::validate, bbox_ops::box_with_nms_limit::prepare,
+                      bbox_ops::box_with_nms_limit::execute);
+
+NN_REGISTER_OPERATION(GENERATE_PROPOSALS, bbox_ops::generate_proposals::kOperationName,
+                      bbox_ops::generate_proposals::validate, bbox_ops::generate_proposals::prepare,
+                      bbox_ops::generate_proposals::execute);
 }  // namespace nn
 }  // namespace android
