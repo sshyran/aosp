@@ -138,7 +138,7 @@ def DumpCtsModel(model, model_fd):
         if t.scale == 0.0 and t.zeroPoint == 0 and t.extraParams is None:
             typeDef = "OperandType %s(Type::%s, %s);"%(t, t.type, t.GetDimensionsString())
         else:
-            if t.extraParams is None:
+            if t.extraParams is None or t.extraParams.hide:
                 typeDef = "OperandType %s(Type::%s, %s, %s, %d);"%(
                     t, t.type, t.GetDimensionsString(), tg.PrettyPrintAsFloat(t.scale), t.zeroPoint)
             else:
