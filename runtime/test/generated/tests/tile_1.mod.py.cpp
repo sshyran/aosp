@@ -33,3 +33,35 @@ TEST_F(GeneratedTests, tile_1_quant8) {
             tile_1::get_examples_quant8());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, tile_1_dynamic_output_shape) {
+    execute(tile_1::CreateModel_dynamic_output_shape,
+            tile_1::is_ignored_dynamic_output_shape,
+            tile_1::get_examples_dynamic_output_shape());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, tile_1_dynamic_output_shape_relaxed) {
+    execute(tile_1::CreateModel_dynamic_output_shape_relaxed,
+            tile_1::is_ignored_dynamic_output_shape_relaxed,
+            tile_1::get_examples_dynamic_output_shape_relaxed());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, tile_1_dynamic_output_shape_float16) {
+    execute(tile_1::CreateModel_dynamic_output_shape_float16,
+            tile_1::is_ignored_dynamic_output_shape_float16,
+            tile_1::get_examples_dynamic_output_shape_float16());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, tile_1_dynamic_output_shape_quant8) {
+    execute(tile_1::CreateModel_dynamic_output_shape_quant8,
+            tile_1::is_ignored_dynamic_output_shape_quant8,
+            tile_1::get_examples_dynamic_output_shape_quant8());
+}
+
+#endif

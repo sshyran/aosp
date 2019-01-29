@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, squeeze_relaxed) {
             squeeze_relaxed::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, squeeze_relaxed_dynamic_output_shape) {
+    execute(squeeze_relaxed::CreateModel_dynamic_output_shape,
+            squeeze_relaxed::is_ignored_dynamic_output_shape,
+            squeeze_relaxed::get_examples_dynamic_output_shape());
+}
+
+#endif

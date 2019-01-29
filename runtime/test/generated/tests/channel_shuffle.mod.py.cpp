@@ -489,3 +489,643 @@ TEST_F(GeneratedTests, channel_shuffle_float16_dim1_axis0_neg) {
             channel_shuffle::get_examples_float16_dim1_axis0_neg());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim4_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim4_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim4_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_dim4_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim4_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim4_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim4_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_dim4_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim4_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim4_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim4_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_dim4_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim4_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim4_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim4_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_dim4_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim4_axis2) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim4_axis2,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim4_axis2,
+            channel_shuffle::get_examples_dynamic_output_shape_dim4_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim4_axis2_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim4_axis2_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim4_axis2_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_dim4_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim4_axis3) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim4_axis3,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim4_axis3,
+            channel_shuffle::get_examples_dynamic_output_shape_dim4_axis3());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim4_axis3_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim4_axis3_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim4_axis3_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_dim4_axis3_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim3_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim3_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim3_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_dim3_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim3_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim3_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim3_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_dim3_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim3_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim3_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim3_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_dim3_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim3_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim3_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim3_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_dim3_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim3_axis2) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim3_axis2,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim3_axis2,
+            channel_shuffle::get_examples_dynamic_output_shape_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim3_axis2_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim3_axis2_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim3_axis2_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_dim3_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim2_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim2_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim2_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_dim2_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim2_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim2_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim2_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_dim2_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim2_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim2_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim2_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_dim2_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim2_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim2_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim2_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_dim2_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim1_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim1_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim1_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_dim1_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_dim1_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_dim1_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_dim1_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim4_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim4_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim4_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim4_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim4_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim4_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim4_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim4_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim4_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim4_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim4_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim4_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim4_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim4_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim4_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim4_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim4_axis2) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim4_axis2,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim4_axis2,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim4_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim4_axis2_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim4_axis2_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim4_axis2_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim4_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim4_axis3) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim4_axis3,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim4_axis3,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim4_axis3());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim4_axis3_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim4_axis3_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim4_axis3_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim3_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim3_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim3_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim3_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim3_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim3_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim3_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim3_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim3_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim3_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim3_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim3_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim3_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim3_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim3_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim3_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim3_axis2) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim3_axis2,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim3_axis2,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim3_axis2_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim3_axis2_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim3_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim2_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim2_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim2_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim2_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim2_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim2_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim2_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim2_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim2_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim2_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim2_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim2_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim2_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim2_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim2_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim1_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim1_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim1_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_relaxed_dim1_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_relaxed_dim1_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_relaxed_dim1_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim4_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim4_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim4_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim4_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim4_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim4_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim4_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim4_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim4_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim4_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim4_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim4_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim4_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim4_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim4_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim4_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim4_axis2) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim4_axis2,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim4_axis2,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim4_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim4_axis2_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim4_axis2_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim4_axis2_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim4_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim4_axis3) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim4_axis3,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim4_axis3,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim4_axis3());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim4_axis3_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim4_axis3_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim4_axis3_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim4_axis3_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim3_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim3_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim3_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim3_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim3_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim3_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim3_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim3_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim3_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim3_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim3_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim3_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim3_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim3_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim3_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim3_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim3_axis2) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim3_axis2,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim3_axis2,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim3_axis2_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim3_axis2_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim3_axis2_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim3_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim2_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim2_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim2_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim2_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim2_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim2_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim2_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim2_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim2_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim2_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim2_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim2_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim2_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim2_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim2_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim2_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim1_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim1_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim1_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_quant8_dim1_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_quant8_dim1_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_quant8_dim1_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_quant8_dim1_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim4_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim4_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim4_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim4_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim4_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim4_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim4_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim4_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim4_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim4_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim4_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim4_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim4_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim4_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim4_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim4_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim4_axis2) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim4_axis2,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim4_axis2,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim4_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim4_axis2_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim4_axis2_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim4_axis2_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim4_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim4_axis3) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim4_axis3,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim4_axis3,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim4_axis3());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim4_axis3_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim4_axis3_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim4_axis3_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim4_axis3_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim3_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim3_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim3_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim3_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim3_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim3_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim3_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim3_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim3_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim3_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim3_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim3_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim3_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim3_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim3_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim3_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim3_axis2) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim3_axis2,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim3_axis2,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim3_axis2());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim3_axis2_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim3_axis2_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim3_axis2_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim3_axis2_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim2_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim2_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim2_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim2_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim2_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim2_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim2_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim2_axis0_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim2_axis1) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim2_axis1,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim2_axis1,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim2_axis1());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim2_axis1_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim2_axis1_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim2_axis1_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim2_axis1_neg());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim1_axis0) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim1_axis0,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim1_axis0,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim1_axis0());
+}
+
+#endif
+#if 0
+TEST_F(DynamicOutputShapeTests, channel_shuffle_dynamic_output_shape_float16_dim1_axis0_neg) {
+    execute(channel_shuffle::CreateModel_dynamic_output_shape_float16_dim1_axis0_neg,
+            channel_shuffle::is_ignored_dynamic_output_shape_float16_dim1_axis0_neg,
+            channel_shuffle::get_examples_dynamic_output_shape_float16_dim1_axis0_neg());
+}
+
+#endif

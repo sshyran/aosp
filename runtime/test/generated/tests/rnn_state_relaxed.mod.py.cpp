@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, rnn_state_relaxed) {
             rnn_state_relaxed::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, rnn_state_relaxed_dynamic_output_shape) {
+    execute(rnn_state_relaxed::CreateModel_dynamic_output_shape,
+            rnn_state_relaxed::is_ignored_dynamic_output_shape,
+            rnn_state_relaxed::get_examples_dynamic_output_shape());
+}
+
+#endif
