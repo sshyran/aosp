@@ -28,9 +28,14 @@ namespace android {
 namespace nn {
 
 struct LSTMParams {
-    TfLiteFusedActivation activation_;
-    float cell_clip_;
-    float proj_clip_;
+    TfLiteFusedActivation activation;
+    float cell_clip;
+    float proj_clip;
+    bool use_cifg;
+    bool use_peephole;
+    bool use_layer_norm;
+    bool use_projection_weight;
+    bool use_projection_bias;
 };
 
 struct RunTimeOperandInfo;
@@ -97,43 +102,50 @@ class LSTMCell {
 
     static constexpr float kLayerNormEpsilon = 1e-8;
 
-   private:
-    bool CheckInputTensorDimensions(const Operation& operation,
-                                    std::vector<RunTimeOperandInfo>& operands, uint32_t n_input,
-                                    uint32_t n_output, uint32_t n_cell);
-    // clang-format off
-    bool EvalFloat32(
-            const float* input_buffer,
-            const float* input_to_input_weights_buffer,
-            const float* input_to_forget_weights_buffer,
-            const float* input_to_cell_weights_buffer,
-            const float* input_to_output_weights_buffer,
+    static bool LSTMStep(
+            const LSTMParams& params, const float* input_buffer, const Shape& input_shape,
+            const float* input_to_input_weights_buffer, const float* input_to_forget_weights_buffer,
+            const float* input_to_cell_weights_buffer, const float* input_to_output_weights_buffer,
+            const Shape& input_to_output_weights_shape,
             const float* recurrent_to_input_weights_buffer,
             const float* recurrent_to_forget_weights_buffer,
             const float* recurrent_to_cell_weights_buffer,
             const float* recurrent_to_output_weights_buffer,
-            const float* cell_to_input_weights_buffer,
-            const float* cell_to_forget_weights_buffer,
-            const float* cell_to_output_weights_buffer,
-            const float* input_gate_bias_buffer,
-            const float* forget_gate_bias_buffer,
-            const float* cell_bias_buffer,
-            const float* output_gate_bias_buffer,
-            const float* projection_weights_buffer,
-            const float* projection_bias_buffer,
-            const float* output_state_in_buffer,
-            const float* cell_state_in_buffer,
-            const float* input_layer_norm_weights_buffer,
+            const Shape& recurrent_to_output_weights_shape,
+            const float* cell_to_input_weights_buffer, const float* cell_to_forget_weights_buffer,
+            const float* cell_to_output_weights_buffer, const float* input_gate_bias_buffer,
+            const float* forget_gate_bias_buffer, const float* cell_bias_buffer,
+            const float* output_gate_bias_buffer, const float* projection_weights_buffer,
+            const float* projection_bias_buffer, const float* output_state_in_buffer,
+            const float* cell_state_in_buffer, const float* input_layer_norm_weights_buffer,
             const float* forget_layer_norm_weights_buffer,
             const float* cell_layer_norm_weights_buffer,
-            const float* output_layer_norm_weights_buffer,
-            float* output_state_out_buffer,
-            float* cell_state_out_buffer,
-            float* output_buffer,
-            float* scratch_buffer_buffer);
-    // clang-format on
-    LSTMParams params_;
+            const float* output_layer_norm_weights_buffer, float* output_state_out_buffer,
+            float* cell_state_out_buffer, float* output_buffer, float* scratch_buffer_buffer);
 
+    static bool CheckInputTensorDimensions(
+            const RunTimeOperandInfo* input_, const RunTimeOperandInfo* input_to_input_weights,
+            const RunTimeOperandInfo* input_to_forget_weights,
+            const RunTimeOperandInfo* input_to_cell_weights,
+            const RunTimeOperandInfo* input_to_output_weights,
+            const RunTimeOperandInfo* recurrent_to_input_weights,
+            const RunTimeOperandInfo* recurrent_to_forget_weights,
+            const RunTimeOperandInfo* recurrent_to_cell_weights,
+            const RunTimeOperandInfo* recurrent_to_output_weights,
+            const RunTimeOperandInfo* cell_to_input_weights,
+            const RunTimeOperandInfo* cell_to_forget_weights,
+            const RunTimeOperandInfo* cell_to_output_weights,
+            const RunTimeOperandInfo* input_gate_bias, const RunTimeOperandInfo* forget_gate_bias,
+            const RunTimeOperandInfo* cell_bias, const RunTimeOperandInfo* output_gate_bias,
+            const RunTimeOperandInfo* projection_weights, const RunTimeOperandInfo* projection_bias,
+            const RunTimeOperandInfo* input_layer_norm_weights,
+            const RunTimeOperandInfo* forget_layer_norm_weights,
+            const RunTimeOperandInfo* cell_layer_norm_weights,
+            const RunTimeOperandInfo* output_layer_norm_weights, uint32_t n_input,
+            uint32_t n_output, uint32_t n_cell, LSTMParams* params);
+
+   private:
+    LSTMParams params_;
     const RunTimeOperandInfo* input_;
 
     const RunTimeOperandInfo* input_to_input_weights_;
