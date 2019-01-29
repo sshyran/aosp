@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, div_broadcast_float16) {
             div_broadcast_float16::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, div_broadcast_float16_dynamic_output_shape) {
+    execute(div_broadcast_float16::CreateModel_dynamic_output_shape,
+            div_broadcast_float16::is_ignored_dynamic_output_shape,
+            div_broadcast_float16::get_examples_dynamic_output_shape());
+}
+
+#endif

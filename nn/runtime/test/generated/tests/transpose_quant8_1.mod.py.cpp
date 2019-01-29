@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, transpose_quant8_1) {
             transpose_quant8_1::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, transpose_quant8_1_dynamic_output_shape) {
+    execute(transpose_quant8_1::CreateModel_dynamic_output_shape,
+            transpose_quant8_1::is_ignored_dynamic_output_shape,
+            transpose_quant8_1::get_examples_dynamic_output_shape());
+}
+
+#endif

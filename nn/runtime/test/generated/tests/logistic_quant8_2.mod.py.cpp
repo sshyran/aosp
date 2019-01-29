@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, logistic_quant8_2) {
             logistic_quant8_2::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, logistic_quant8_2_dynamic_output_shape) {
+    execute(logistic_quant8_2::CreateModel_dynamic_output_shape,
+            logistic_quant8_2::is_ignored_dynamic_output_shape,
+            logistic_quant8_2::get_examples_dynamic_output_shape());
+}
+
+#endif

@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, logical_not) {
             logical_not::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, logical_not_dynamic_output_shape) {
+    execute(logical_not::CreateModel_dynamic_output_shape,
+            logical_not::is_ignored_dynamic_output_shape,
+            logical_not::get_examples_dynamic_output_shape());
+}
+
+#endif

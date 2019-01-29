@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, strided_slice_float_4) {
             strided_slice_float_4::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, strided_slice_float_4_dynamic_output_shape) {
+    execute(strided_slice_float_4::CreateModel_dynamic_output_shape,
+            strided_slice_float_4::is_ignored_dynamic_output_shape,
+            strided_slice_float_4::get_examples_dynamic_output_shape());
+}
+
+#endif
