@@ -47,10 +47,13 @@ class RNN {
   static constexpr int kHiddenStateOutTensor = 0;
   static constexpr int kOutputTensor = 1;
 
+  template <typename T>
+  static bool RNNStep(const T* inputData, const Shape& inputShape, const T* hiddenStateInputData,
+                      const T* biasData, const T* weightsData, const Shape& weightsShape,
+                      const T* recurrentWeightsData, const Shape& recurrentWeightsShape,
+                      int32_t activation, T* outputData);
+
  private:
-  bool EvalFloat32(const float* inputData, const float* hiddenStateInputData, const float* biasData,
-                   const float* weightsData, const float* recurrentWeightsData, float* outputData,
-                   float* hiddenStateOutputData);
 
   ActivationFn activation_;
 
