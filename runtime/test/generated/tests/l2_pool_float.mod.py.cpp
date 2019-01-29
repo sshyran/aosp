@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, l2_pool_float) {
             l2_pool_float::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, l2_pool_float_dynamic_output_shape) {
+    execute(l2_pool_float::CreateModel_dynamic_output_shape,
+            l2_pool_float::is_ignored_dynamic_output_shape,
+            l2_pool_float::get_examples_dynamic_output_shape());
+}
+
+#endif

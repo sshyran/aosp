@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, hashtable_lookup_quant8) {
             hashtable_lookup_quant8::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, hashtable_lookup_quant8_dynamic_output_shape) {
+    execute(hashtable_lookup_quant8::CreateModel_dynamic_output_shape,
+            hashtable_lookup_quant8::is_ignored_dynamic_output_shape,
+            hashtable_lookup_quant8::get_examples_dynamic_output_shape());
+}
+
+#endif

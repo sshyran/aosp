@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, lstm2) {
             lstm2::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, lstm2_dynamic_output_shape) {
+    execute(lstm2::CreateModel_dynamic_output_shape,
+            lstm2::is_ignored_dynamic_output_shape,
+            lstm2::get_examples_dynamic_output_shape());
+}
+
+#endif

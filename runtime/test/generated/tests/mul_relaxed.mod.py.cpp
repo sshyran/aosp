@@ -15,3 +15,11 @@ TEST_F(GeneratedTests, mul_relaxed) {
             mul_relaxed::get_examples());
 }
 
+#if 0
+TEST_F(DynamicOutputShapeTests, mul_relaxed_dynamic_output_shape) {
+    execute(mul_relaxed::CreateModel_dynamic_output_shape,
+            mul_relaxed::is_ignored_dynamic_output_shape,
+            mul_relaxed::get_examples_dynamic_output_shape());
+}
+
+#endif

@@ -593,7 +593,7 @@ class Model:
             self.TopologicalSortHelper(op, deps, visited)
 
     def SetOutputUnspecified(self):
-        for op in self.GetInputs():
+        for op in self.operands:
             op.dimensions = op.type.dimensions
         if self.hasDynamicOutputShape:
             for op in self.GetOutputs():
