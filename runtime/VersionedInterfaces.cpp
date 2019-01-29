@@ -93,7 +93,8 @@ std::shared_ptr<VersionedIPreparedModel> VersionedIPreparedModel::create(
     // create death handler object
     sp<IPreparedModelDeathHandler> deathHandler = new (std::nothrow) IPreparedModelDeathHandler();
     if (!deathHandler) {
-        LOG(ERROR) << "VersionedIDevice::create -- Failed to create IPreparedModelDeathHandler.";
+        LOG(ERROR) << "VersionedIPreparedModel::create -- Failed to create "
+                      "IPreparedModelDeathHandler.";
         return nullptr;
     }
 
@@ -103,8 +104,8 @@ std::shared_ptr<VersionedIPreparedModel> VersionedIPreparedModel::create(
     // providing the response.
     const Return<bool> ret = preparedModel->linkToDeath(deathHandler, 0);
     if (!ret.isOk() || ret != true) {
-        LOG(ERROR) << "VersionedIDevice::create -- Failed to register a death recipient for the "
-                      "IPreparedModel object.";
+        LOG(ERROR) << "VersionedIPreparedModel::create -- Failed to register a death recipient for "
+                      "the IPreparedModel object.";
         return nullptr;
     }
 
@@ -185,7 +186,7 @@ VersionedIPreparedModel::executeSynchronously(const Request& request, MeasureTim
 std::unique_ptr<ExecutionBurstController> VersionedIPreparedModel::configureExecutionBurst(
         bool blocking) const {
     if (mPreparedModelV1_2 != nullptr) {
-        return createExecutionBurstController(mPreparedModelV1_2, blocking);
+        return ExecutionBurstController::create(mPreparedModelV1_2, blocking);
     } else {
         return nullptr;
     }
