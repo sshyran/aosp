@@ -158,6 +158,19 @@ class OperationTestBase {
                     continue;
                 }
 
+                // Switch input 8 from bool to int for 11-input DEPTHWISE_CONV_2D
+                // switch between valid "implicit padding with layout param"
+                // and valid "explicit padding without layout param"
+                if (mOpCode == ANEURALNETWORKS_DEPTHWISE_CONV_2D && i == 8 &&
+                    mValidInputs.size() == 11) {
+                    if ((newOperandCode == ANEURALNETWORKS_INT32 &&
+                         originalOperandCode == ANEURALNETWORKS_BOOL) ||
+                        (newOperandCode == ANEURALNETWORKS_BOOL &&
+                         originalOperandCode == ANEURALNETWORKS_INT32)) {
+                        continue;
+                    }
+                }
+
                 newType.operandType.type = newOperandCode;
                 std::vector<OperandTypeWithExtraParams> inputs = mValidInputs;
                 inputs[i] = newType;
@@ -1142,6 +1155,31 @@ void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
     EXPECT_TRUE(implicitNchwDepthwiseConvTest.testMutatingInputOperandCounts());
     EXPECT_TRUE(implicitNchwDepthwiseConvTest.testMutatingOutputOperandCode());
     EXPECT_TRUE(implicitNchwDepthwiseConvTest.testMutatingOutputOperandCounts());
+
+    ANeuralNetworksOperandType dilationHeightFactor = scalar;
+    ANeuralNetworksOperandType dilationWidthFactor = scalar;
+
+    OperationTestBase explicitDilationDepthwiseConvTest(
+            ANEURALNETWORKS_DEPTHWISE_CONV_2D,
+            {input, filter, bias, padLeft, padRight, padTop, padBottom, strideWidth, strideHeight,
+             multiplier, activation, layout, dilationWidthFactor, dilationHeightFactor},
+            {output});
+
+    EXPECT_TRUE(explicitDilationDepthwiseConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(explicitDilationDepthwiseConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(explicitDilationDepthwiseConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(explicitDilationDepthwiseConvTest.testMutatingOutputOperandCounts());
+
+    OperationTestBase implicitDilationDepthwiseConvTest(
+            ANEURALNETWORKS_DEPTHWISE_CONV_2D,
+            {input, filter, bias, padImplicit, strideWidth, strideHeight, multiplier, activation,
+             layout, dilationWidthFactor, dilationHeightFactor},
+            {output});
+
+    EXPECT_TRUE(implicitDilationDepthwiseConvTest.testMutatingInputOperandCode());
+    EXPECT_TRUE(implicitDilationDepthwiseConvTest.testMutatingInputOperandCounts());
+    EXPECT_TRUE(implicitDilationDepthwiseConvTest.testMutatingOutputOperandCode());
+    EXPECT_TRUE(implicitDilationDepthwiseConvTest.testMutatingOutputOperandCounts());
 }
 
 TEST(OperationValidationTest, DEPTHWISE_CONV_2D_float32) {

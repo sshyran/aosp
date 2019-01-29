@@ -543,6 +543,16 @@ typedef enum {
      * * 11: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *       Set to true to specify NCHW data layout for input0 and output0.
      *       Available since API level 29.
+     * * 12: An optional {@link ANEURALNETWORKS_INT32} scalar, specifying the dilation
+     *      factor for width. Defaults to 1. If set to k > 1, there will be k-1 skipped
+     *      cells between each filter element on width dimension. If this input is set,
+     *      input 13 (dilation factor for height) must be specified as well.
+     *      Available since API level 29.
+     * * 13: An optional {@link ANEURALNETWORKS_INT32} scalar, specifying the dilation
+     *      factor for height. Defaults to 1. If set to k > 1, there will be k-1 skipped
+     *      cells between each filter element on height dimension. If this input is set,
+     *      input 12 (dilation factor for width) must be specified as well.
+     *      Available since API level 29.
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
@@ -573,6 +583,16 @@ typedef enum {
      *      invoke on the result.
      * * 8: An optional {@link ANEURALNETWORKS_BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+     *      Available since API level 29.
+     * * 9: An optional {@link ANEURALNETWORKS_INT32} scalar, specifying the dilation
+     *      factor for width. Defaults to 1. If set to k > 1, there will be k-1 skipped
+     *      cells between each filter element on width dimension. If this input is set,
+     *      input 10 (dilation factor for height) must be specified as well.
+     *      Available since API level 29.
+     * * 10: An optional {@link ANEURALNETWORKS_INT32} scalar, specifying the dilation
+     *      factor for height. Defaults to 1. If set to k > 1, there will be k-1 skipped
+     *      cells between each filter element on height dimension. If this input is set,
+     *      input 9 (dilation factor for width) must be specified as well.
      *      Available since API level 29.
      *
      * Outputs:
