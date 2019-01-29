@@ -42,6 +42,7 @@ LIBNEURALNETWORKS {
     ANeuralNetworksCompilation_create;
     ANeuralNetworksCompilation_createForDevices; # introduced=Q
     ANeuralNetworksCompilation_free;
+    ANeuralNetworksCompilation_setCaching; # introduced=Q
     ANeuralNetworksCompilation_setPreference;
     ANeuralNetworksCompilation_finish;
     ANeuralNetworksBurst_create; # introduced=Q

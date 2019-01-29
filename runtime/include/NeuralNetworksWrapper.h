@@ -23,6 +23,7 @@
 
 #include <math.h>
 #include <optional>
+#include <string>
 #include <vector>
 
 namespace android {
@@ -323,6 +324,11 @@ public:
     Result setPreference(ExecutePreference preference) {
         return static_cast<Result>(ANeuralNetworksCompilation_setPreference(
                     mCompilation, static_cast<int32_t>(preference)));
+    }
+
+    Result setCaching(const std::string& cacheDir, const std::vector<uint8_t>& token) {
+        return static_cast<Result>(ANeuralNetworksCompilation_setCaching(
+                mCompilation, cacheDir.c_str(), token.data()));
     }
 
     Result finish() { return static_cast<Result>(ANeuralNetworksCompilation_finish(mCompilation)); }
