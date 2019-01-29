@@ -57,6 +57,7 @@ cc_library {
                 "libhidltransport",
                 "libhidlmemory",
                 "liblog",
+                "libnativewindow",
                 "libutils",
                 "android.hardware.neuralnetworks@1.0",
                 "android.hardware.neuralnetworks@1.1",
