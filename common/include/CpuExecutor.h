@@ -61,7 +61,13 @@ struct RunTimeOperandInfo {
         return Shape{.type = type, .dimensions = dimensions, .scale = scale, .offset = zeroPoint};
     }
 
-    bool isSufficient() const { return length >= sizeOfData(type, dimensions); }
+    bool isSufficient() const {
+        if (isExtensionOperandType(type)) {
+            // We don't know sizes of extension types.
+            return true;
+        }
+        return length >= sizeOfData(type, dimensions);
+    }
 };
 
 // Used to keep a pointer to each of the memory pools.

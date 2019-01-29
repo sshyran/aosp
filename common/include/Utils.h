@@ -87,6 +87,12 @@ void initVLogMask();
         }                                             \
     } while (0)
 
+// Returns true if an operand type is an extension type.
+bool isExtensionOperandType(OperandType type);
+
+// Returns true if an operation type is an extension type.
+bool isExtensionOperationType(OperationType type);
+
 // Returns the amount of space needed to store a value of the specified
 // dimensions and type. For a tensor with at least one
 // unspecified dimension, returns zero.
@@ -157,9 +163,11 @@ bool validateOperandSymmPerChannelQuantParams(
         const Operand& halOperand, const ANeuralNetworksSymmPerChannelQuantParams& channelQuant,
         const char* tag);
 
+// Validates the type. If allowPartial is true, the dimensions may be underspecified.
 int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag, bool allowPartial);
 int validateOperandList(uint32_t count, const uint32_t* list, uint32_t operandCount,
                         const char* tag);
+
 // Returns ANEURALNETWORKS_NO_ERROR if the corresponding operation is defined and can handle the
 // provided operand types in the given HAL version, otherwise returns ANEURALNETWORKS_BAD_DATA.
 int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
