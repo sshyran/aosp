@@ -167,8 +167,24 @@ class VersionedIDevice {
      * @return featureLevel The API level of the most advanced feature this driver implements.
      *                      For example, if the driver implements the features introduced in
      *                      Android P, the value would be 28.
+     *                      Return -1 if the driver is offline or busy, or the query resulted in
+     *                      an unspecified error.
      */
     int64_t getFeatureLevel();
+
+    /**
+     * Returns the device type of a driver.
+     *
+     * @return deviceType The type of a given device, which can help application developers
+     *                    developers to distribute Machine Learning workloads and other workloads
+     *                    such as graphical rendering. E.g., for an app which renders AR scenes
+     *                    based on real time object detection results, the developer could choose
+     *                    an ACCELERATOR type device for ML workloads, and reserve GPU for
+     *                    graphical rendering.
+     *                    Return -1 if the driver is offline or busy, or the query resulted in
+     *                    an unspecified error.
+     */
+    int32_t getType() const;
 
     /**
      * Get the version string of the driver implementation.
