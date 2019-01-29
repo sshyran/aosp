@@ -20,6 +20,7 @@
 #include <android/sharedmem.h>
 #include <gtest/gtest.h>
 #include <sys/mman.h>
+#include <future>
 #include <string>
 
 #ifndef NNTEST_ONLY_PUBLIC_API
@@ -150,6 +151,20 @@ class ValidationTestExecution : public ValidationTestCompilation {
         ValidationTestCompilation::TearDown();
     }
     ANeuralNetworksExecution* mExecution = nullptr;
+};
+
+class ValidationTestBurst : public ValidationTestExecution {
+   protected:
+    virtual void SetUp() {
+        ValidationTestExecution::SetUp();
+
+        ASSERT_EQ(ANeuralNetworksBurst_create(mCompilation, &mBurst), ANEURALNETWORKS_NO_ERROR);
+    }
+    virtual void TearDown() {
+        ANeuralNetworksBurst_free(mBurst);
+        ValidationTestExecution::TearDown();
+    }
+    ANeuralNetworksBurst* mBurst = nullptr;
 };
 
 TEST_F(ValidationTest, CreateModel) {
@@ -909,18 +924,18 @@ TEST_F(ValidationTestExecution, GetOutputOperandRankAndDimensions) {
     ANeuralNetworksExecution* execution;
     EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
 
-    float input0 = 1.0f, input1 = 2.0f, output0;
+    float input0[] = {1.0f, 1.0f}, input1[] = {2.0f, 2.0f}, output0[2];
     int32_t input2 = 0;
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, &input0, sizeof(float)),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, &input0, sizeof(input0)),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 1, nullptr, &input1, sizeof(float)),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 1, nullptr, &input1, sizeof(input1)),
               ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 2, nullptr, &input2, sizeof(int32_t)),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution, 0, nullptr, &output0, sizeof(float)),
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution, 0, nullptr, &output0, sizeof(output0)),
               ANEURALNETWORKS_NO_ERROR);
 
-    uint32_t rank, dims[4], expectedRank = 1, expectedDims = 1;
+    uint32_t rank, dims[4], expectedRank = 1, expectedDims = 2;
     // This should fail, since the execution has not yet started to compute.
     EXPECT_EQ(ANeuralNetworksExecution_getOutputOperandRank(execution, 0, &rank),
               ANEURALNETWORKS_BAD_STATE);
@@ -957,6 +972,73 @@ TEST_F(ValidationTestExecution, GetOutputOperandRankAndDimensions) {
               ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(rank, expectedRank);
     EXPECT_EQ(dims[0], expectedDims);
+}
+
+TEST_F(ValidationTestBurst, BurstComputeNull) {
+    EXPECT_EQ(ANeuralNetworksExecution_burstCompute(mExecution, nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksExecution_burstCompute(nullptr, mBurst),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+}
+
+TEST_F(ValidationTestBurst, BurstComputeDifferentCompilations) {
+    ANeuralNetworksCompilation* secondCompilation;
+    ASSERT_EQ(ANeuralNetworksCompilation_create(mModel, &secondCompilation),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksCompilation_finish(secondCompilation), ANEURALNETWORKS_NO_ERROR);
+
+    ANeuralNetworksBurst* burst;
+    EXPECT_EQ(ANeuralNetworksBurst_create(secondCompilation, &burst), ANEURALNETWORKS_NO_ERROR);
+
+    EXPECT_EQ(ANeuralNetworksExecution_burstCompute(mExecution, burst), ANEURALNETWORKS_BAD_DATA);
+
+    ANeuralNetworksBurst_free(burst);
+    ANeuralNetworksCompilation_free(secondCompilation);
+}
+
+TEST_F(ValidationTestBurst, BurstComputeConcurrent) {
+    ANeuralNetworksExecution* secondExecution;
+    EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &secondExecution),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // set inputs of first execution
+    float inputA0[] = {1.0f, 1.0f}, inputA1[] = {2.0f, 2.0f}, outputA0[2];
+    int32_t inputA2 = 0;
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, nullptr, &inputA0, sizeof(inputA0)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 1, nullptr, &inputA1, sizeof(inputA1)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 2, nullptr, &inputA2, sizeof(int32_t)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(
+            ANeuralNetworksExecution_setOutput(mExecution, 0, nullptr, &outputA0, sizeof(outputA0)),
+            ANEURALNETWORKS_NO_ERROR);
+
+    // set inputs of second execution
+    float inputB0[] = {1.0f, 1.0f}, inputB1[] = {2.0f, 2.0f}, outputB0[2];
+    int32_t inputB2 = 0;
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(secondExecution, 0, nullptr, &inputB0,
+                                                sizeof(inputB0)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(secondExecution, 1, nullptr, &inputB1,
+                                                sizeof(inputB1)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(secondExecution, 2, nullptr, &inputB2,
+                                                sizeof(int32_t)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(secondExecution, 0, nullptr, &outputB0,
+                                                 sizeof(outputB0)),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // execute on the same burst concurrently
+    auto first = std::async(std::launch::async, [this] {
+        const int result = ANeuralNetworksExecution_burstCompute(mExecution, mBurst);
+        EXPECT_TRUE(result == ANEURALNETWORKS_BAD_STATE || result == ANEURALNETWORKS_NO_ERROR);
+    });
+    auto second = std::async(std::launch::async, [this, secondExecution] {
+        const int result = ANeuralNetworksExecution_burstCompute(secondExecution, mBurst);
+        EXPECT_TRUE(result == ANEURALNETWORKS_BAD_STATE || result == ANEURALNETWORKS_NO_ERROR);
+    });
 }
 
 TEST(ValidationTestIntrospection, GetNumDevices) {
@@ -1218,7 +1300,7 @@ TEST_F(ValidationTestCompilationForDevices, ExecutionTiming) {
     // - Validate that we cannot setMeasureTiming if the execution has started
     // - Validate that we cannot getDuration until the execution has finished
 
-    float in0 = 0.0f, in1 = 1.0f, out0 = 0.0f;
+    float in0[] = {0.0f, 0.0f}, in1[] = {1.0f, 1.0f}, out0[2];
     int in2 = 0;
     ASSERT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, &in0, sizeof(in0)),
               ANEURALNETWORKS_NO_ERROR);
