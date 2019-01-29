@@ -1271,7 +1271,7 @@ typedef enum {
      *      Until API level 29 this scalar must be of type {@link
      *      ANEURALNETWORKS_FLOAT32}. Since API level 29, if all the input
      *      tensors have type {@link ANEURALNETWORKS_TENSOR_FLOAT32}, this
-     *      scalar must be of the type {@link ANEURALNETOWORKS_FLOAT32},
+     *      scalar must be of the type {@link ANEURALNETWORKS_FLOAT32},
      *      otherwise if all the input tensors have the type {@link
      *      ANEURALNETWORKS_TENSOR_FLOAT16}, this scalar must be of type {@link
      *      ANEURALNETWORKS_FLOAT16}.
@@ -1281,7 +1281,7 @@ typedef enum {
      *      Until API level 29 this scalar must be of type {@link
      *      ANEURALNETWORKS_FLOAT32}. Since API level 29, if all the input
      *      tensors have type {@link ANEURALNETWORKS_TENSOR_FLOAT32}, this
-     *      scalar must be of the type {@link ANEURALNETOWORKS_FLOAT32},
+     *      scalar must be of the type {@link ANEURALNETWORKS_FLOAT32},
      *      otherwise if all the input tensors have the type {@link
      *      ANEURALNETWORKS_TENSOR_FLOAT16}, this scalar must be of type {@link
      *      ANEURALNETWORKS_FLOAT16}.
@@ -2448,16 +2448,16 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Inputs:
-     * * 0: A 1-D tensor of type {@link ANEURAL_NETWORKS_TENSOR_INT32},
+     * * 0: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32},
      *      containing lookupIds.
-     * * 1: A 2-D tensor of type {@link ANEURAL_NETWORKS_TENSOR_INT32},
+     * * 1: A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32},
      *      containing indices of the lookupIds in sparse lookup tensor.
-     * * 2: A 1-D tensor of type {@link ANEURAL_NETWORKS_TENSOR_INT32},
+     * * 2: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32},
      *      containing shape of dense tensor corresponding to the input sparse
      *      tensor.
      * * 3: A 1-D tensor of the same type as input5 containing weights for
      *      aggregation.
-     * * 4: An {@link ANEURAL_NETWORKS_INT32} scalar, representing aggregation
+     * * 4: An {@link ANEURALNETWORKS_INT32} scalar, representing aggregation
      *      mode for an operation.
      *      * 0 corresponds to SUM
      *      * 1 corresponds to MEAN
