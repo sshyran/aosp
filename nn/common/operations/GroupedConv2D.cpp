@@ -21,7 +21,7 @@
 #include <cmath>
 
 #include "Tracing.h"
-#include "tensorflow/contrib/lite/kernels/internal/common.h"
+#include "tensorflow/lite/kernels/internal/common.h"
 
 namespace android {
 namespace nn {

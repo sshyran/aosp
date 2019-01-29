@@ -23,7 +23,7 @@
 #include <cmath>
 #include <limits>
 
-#include "tensorflow/contrib/lite/kernels/internal/types.h"
+#include "tensorflow/lite/kernels/internal/types.h"
 
 namespace android {
 namespace nn {
@@ -31,31 +31,31 @@ namespace nn {
 // The implementations in tflite/kernels/internal/ take a Dims<4> object
 // even if the original tensors were not 4D.
 inline tflite::Dims<4> convertShapeToDims(const Shape& shape) {
-  nnAssert(shape.dimensions.size() <= 4);
-  tflite::Dims<4> dims;
+    nnAssert(shape.dimensions.size() <= 4);
+    tflite::Dims<4> dims;
 
-  // The dimensions are reversed in Dims<4>.
-  for (int i = 0; i < 4; ++i) {
-    int src = static_cast<int>(shape.dimensions.size()) - i - 1;
-    if (src >= 0) {
-      dims.sizes[i] = static_cast<int>(getSizeOfDimension(shape, src));
-    } else {
-      dims.sizes[i] = 1;
+    // The dimensions are reversed in Dims<4>.
+    for (int i = 0; i < 4; ++i) {
+        int src = static_cast<int>(shape.dimensions.size()) - i - 1;
+        if (src >= 0) {
+            dims.sizes[i] = static_cast<int>(getSizeOfDimension(shape, src));
+        } else {
+            dims.sizes[i] = 1;
+        }
     }
-  }
 
-  dims.strides[0] = 1;
-  for (int i = 1; i<4; i++) {
-    dims.strides[i] = dims.strides[i-1] * dims.sizes[i-1];
-  }
-  return dims;
+    dims.strides[0] = 1;
+    for (int i = 1; i < 4; i++) {
+        dims.strides[i] = dims.strides[i - 1] * dims.sizes[i - 1];
+    }
+    return dims;
 }
 
 inline tflite::RuntimeShape convertShapeToTflshape(const Shape& shape) {
-  nnAssert(shape.dimensions.size() <= 4);
+    nnAssert(shape.dimensions.size() <= 4);
 
-  std::vector<int32_t> tflShapeDim(shape.dimensions.begin(), shape.dimensions.end());
-  return tflite::RuntimeShape(tflShapeDim.size(), tflShapeDim.data());
+    std::vector<int32_t> tflShapeDim(shape.dimensions.begin(), shape.dimensions.end());
+    return tflite::RuntimeShape(tflShapeDim.size(), tflShapeDim.data());
 }
 
 inline void convertFloat16ToFloat32(const _Float16* input, std::vector<float>* output) {
@@ -192,7 +192,7 @@ class OutputWithLayout {
     bool mUseNchw;
 };
 
-} // nn
-} // android
+}  // namespace nn
+}  // namespace android
 
-#endif // ANDROID_ML_NN_COMMON_CPU_OPERATION_UTILS_H
+#endif  // ANDROID_ML_NN_COMMON_CPU_OPERATION_UTILS_H
