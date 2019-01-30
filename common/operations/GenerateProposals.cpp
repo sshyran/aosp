@@ -1337,12 +1337,23 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK_EQ(getSizeOfDimension(anchorsShape, 0), numAnchors);
     NN_RET_CHECK_EQ(getSizeOfDimension(anchorsShape, 1), kRoiDim);
 
-    NN_RET_CHECK_GT(context->getInputValue<float>(kScaleYScalar), 0);
-    NN_RET_CHECK_GT(context->getInputValue<float>(kScaleXScalar), 0);
-    NN_RET_CHECK_GT(context->getInputValue<float>(kScaleHScalar), 0);
-    NN_RET_CHECK_GT(context->getInputValue<float>(kScaleWScalar), 0);
-    NN_RET_CHECK_GE(context->getInputValue<float>(kScoreThresholdScalar), 0);
-    NN_RET_CHECK_GE(context->getInputValue<float>(kIoUThresholdScalar), 0);
+    if (scoreShape.type == OperandType::TENSOR_FLOAT32) {
+        NN_RET_CHECK_GT(context->getInputValue<float>(kScaleYScalar), 0);
+        NN_RET_CHECK_GT(context->getInputValue<float>(kScaleXScalar), 0);
+        NN_RET_CHECK_GT(context->getInputValue<float>(kScaleHScalar), 0);
+        NN_RET_CHECK_GT(context->getInputValue<float>(kScaleWScalar), 0);
+        NN_RET_CHECK_GE(context->getInputValue<float>(kScoreThresholdScalar), 0);
+        NN_RET_CHECK_GE(context->getInputValue<float>(kIoUThresholdScalar), 0);
+    } else if (scoreShape.type == OperandType::TENSOR_FLOAT16) {
+        NN_RET_CHECK(context->getInputValue<_Float16>(kScaleYScalar) > 0);
+        NN_RET_CHECK(context->getInputValue<_Float16>(kScaleXScalar) > 0);
+        NN_RET_CHECK(context->getInputValue<_Float16>(kScaleHScalar) > 0);
+        NN_RET_CHECK(context->getInputValue<_Float16>(kScaleWScalar) > 0);
+        NN_RET_CHECK(context->getInputValue<_Float16>(kScoreThresholdScalar) >= 0);
+        NN_RET_CHECK(context->getInputValue<_Float16>(kIoUThresholdScalar) >= 0);
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
+    }
     NN_RET_CHECK_GT(numClasses, 1);
     NN_RET_CHECK_GE(lengthBoxEncoding, 4);
     NN_RET_CHECK_GT(maxNumDetections, 0);
