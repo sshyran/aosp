@@ -38,6 +38,9 @@ cc_defaults {
         "android.hidl.allocator@1.0",
         "android.hidl.memory@1.0",
     ],
+    static_libs: [
+        "libcrypto",
+    ],
     header_libs: [
         "libneuralnetworks_generated_test_harness_headers",
     ],
@@ -93,6 +96,7 @@ cc_defaults {
         "Bridge.cpp",
         // Tests that rely on non-public functionality (i.e., symbols
         // not exported from libneuralnetworks.so).
+        "TestCompilationCaching.cpp",
         "TestCompliance.cpp",
         "TestExecution.cpp",
         "TestMemoryInternal.cpp",
