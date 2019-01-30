@@ -83,6 +83,10 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
             return mPreparedModelV1_2->execute_1_2(request, measure, callback);
+        } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+            OutputShape shape = {.dimensions = {1}, .isSufficient = false};
+            callback->notify_1_2(mErrorStatus, {shape}, kBadTiming);
+            return ErrorStatus::NONE;
         } else {
             callback->notify_1_2(mErrorStatus, {}, kBadTiming);
             return ErrorStatus::NONE;
@@ -97,6 +101,10 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
                     request, measure,
                     [&cb](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
                           const Timing& timing) { cb(error, outputShapes, timing); });
+        } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+            OutputShape shape = {.dimensions = {1}, .isSufficient = false};
+            cb(mErrorStatus, {shape}, kBadTiming);
+            return Void();
         } else {
             cb(mErrorStatus, {}, kBadTiming);
             return Void();
@@ -370,6 +378,7 @@ protected:
     float mInputBuffer;
     float mOutputBuffer;
     const float kOutputBufferExpected = 3;
+    const std::vector<uint32_t> kOutputDimensionsExpected = {1};
 
    private:
     static WrapperModel makeModel() {
@@ -401,6 +410,17 @@ template<class DriverClass> void ExecutionTestTemplate<DriverClass>::TestWait() 
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
         }
         std::vector<uint32_t> dimensions;
+        if (kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+            // Only one output operand, hardcoded as index 0.
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions),
+                      Result::OUTPUT_INSUFFICIENT_SIZE);
+        } else {
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::NO_ERROR);
+        }
+        if (kExpectResult == Result::NO_ERROR ||
+            kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+            ASSERT_EQ(dimensions, kOutputDimensionsExpected);
+        }
     }
     {
         SCOPED_TRACE("compute");
@@ -409,6 +429,18 @@ template<class DriverClass> void ExecutionTestTemplate<DriverClass>::TestWait() 
         ASSERT_EQ(execution.compute(), kExpectResult);
         if (kExpectResult == Result::NO_ERROR) {
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
+        }
+        std::vector<uint32_t> dimensions;
+        if (kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+            // Only one output operand, hardcoded as index 0.
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions),
+                      Result::OUTPUT_INSUFFICIENT_SIZE);
+        } else {
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::NO_ERROR);
+        }
+        if (kExpectResult == Result::NO_ERROR ||
+            kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+            ASSERT_EQ(dimensions, kOutputDimensionsExpected);
         }
     }
 }
@@ -428,12 +460,14 @@ INSTANTIATE_TEST_CASE_P(Flavor, ExecutionTest12, kTestValues);
 
 class ExecutionTest11 : public ExecutionTestTemplate<TestDriver11> {};
 TEST_P(ExecutionTest11, Wait) {
+    if (kForceErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) return;
     TestWait();
 }
 INSTANTIATE_TEST_CASE_P(Flavor, ExecutionTest11, kTestValues);
 
 class ExecutionTest10 : public ExecutionTestTemplate<TestDriver10> {};
 TEST_P(ExecutionTest10, Wait) {
+    if (kForceErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) return;
     TestWait();
 }
 INSTANTIATE_TEST_CASE_P(Flavor, ExecutionTest10, kTestValues);

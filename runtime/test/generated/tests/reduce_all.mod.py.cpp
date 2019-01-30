@@ -15,39 +15,33 @@ TEST_F(GeneratedTests, reduce_all) {
             reduce_all::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_all_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, reduce_all_dynamic_output_shape) {
     execute(reduce_all::CreateModel_dynamic_output_shape,
             reduce_all::is_ignored_dynamic_output_shape,
             reduce_all::get_examples_dynamic_output_shape());
 }
 
-#endif
 TEST_F(GeneratedTests, reduce_all_2) {
     execute(reduce_all::CreateModel_2,
             reduce_all::is_ignored_2,
             reduce_all::get_examples_2());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_all_dynamic_output_shape_2) {
+TEST_F(DynamicOutputShapeTest, reduce_all_dynamic_output_shape_2) {
     execute(reduce_all::CreateModel_dynamic_output_shape_2,
             reduce_all::is_ignored_dynamic_output_shape_2,
             reduce_all::get_examples_dynamic_output_shape_2());
 }
 
-#endif
 TEST_F(GeneratedTests, reduce_all_3) {
     execute(reduce_all::CreateModel_3,
             reduce_all::is_ignored_3,
             reduce_all::get_examples_3());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_all_dynamic_output_shape_3) {
+TEST_F(DynamicOutputShapeTest, reduce_all_dynamic_output_shape_3) {
     execute(reduce_all::CreateModel_dynamic_output_shape_3,
             reduce_all::is_ignored_dynamic_output_shape_3,
             reduce_all::get_examples_dynamic_output_shape_3());
 }
 
-#endif

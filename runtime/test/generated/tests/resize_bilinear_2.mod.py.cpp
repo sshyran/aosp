@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, resize_bilinear_2) {
             resize_bilinear_2::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, resize_bilinear_2_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, resize_bilinear_2_dynamic_output_shape) {
     execute(resize_bilinear_2::CreateModel_dynamic_output_shape,
             resize_bilinear_2::is_ignored_dynamic_output_shape,
             resize_bilinear_2::get_examples_dynamic_output_shape());
 }
 
-#endif

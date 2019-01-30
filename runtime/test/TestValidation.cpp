@@ -200,10 +200,10 @@ TEST_F(ValidationTestModel, AddOperand) {
     EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &quant8TypeInvalidZeroPoint),
               ANEURALNETWORKS_BAD_DATA);
 
-    uint32_t dim = 2;
+    const uint32_t dim = 2;
     ANeuralNetworksOperandType invalidScalarType{
             .type = ANEURALNETWORKS_INT32,
-            // scalar types can only 0 dimensions.
+            // a scalar type must have 0 dimensions.
             .dimensionCount = 1,
             .dimensions = &dim,
     };

@@ -57,70 +57,54 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_quant8) {
             space_to_batch_v1_2::get_examples_nchw_quant8());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_relaxed) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_relaxed) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_relaxed,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_relaxed,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_float16) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_float16) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_float16,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_float16,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_quant8) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_quant8) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_quant8,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_quant8,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_quant8());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_relaxed) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_relaxed) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_relaxed,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_relaxed,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_float16) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_float16) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_float16,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_float16,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_quant8) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_quant8) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_quant8,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_quant8,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_quant8());
 }
 
-#endif
 TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_2) {
     execute(space_to_batch_v1_2::CreateModel_nhwc_2,
             space_to_batch_v1_2::is_ignored_nhwc_2,
@@ -169,70 +153,54 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_quant8_2) {
             space_to_batch_v1_2::get_examples_nchw_quant8_2());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_2) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_2) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_2,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_2,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_relaxed_2) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_relaxed_2) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_relaxed_2,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_relaxed_2,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_relaxed_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_float16_2) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_float16_2) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_float16_2,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_float16_2,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_float16_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_quant8_2) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_quant8_2) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_quant8_2,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_quant8_2,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_quant8_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_2) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_2) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_2,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_2,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_relaxed_2) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_relaxed_2) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_relaxed_2,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_relaxed_2,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_relaxed_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_float16_2) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_float16_2) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_float16_2,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_float16_2,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_float16_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_quant8_2) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_quant8_2) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_quant8_2,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_quant8_2,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_quant8_2());
 }
 
-#endif
 TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_3) {
     execute(space_to_batch_v1_2::CreateModel_nhwc_3,
             space_to_batch_v1_2::is_ignored_nhwc_3,
@@ -281,70 +249,54 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_quant8_3) {
             space_to_batch_v1_2::get_examples_nchw_quant8_3());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_3) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_3) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_3,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_3,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_relaxed_3) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_relaxed_3) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_relaxed_3,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_relaxed_3,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_relaxed_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_float16_3) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_float16_3) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_float16_3,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_float16_3,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_float16_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_quant8_3) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_quant8_3) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_quant8_3,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_quant8_3,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_quant8_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_3) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_3) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_3,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_3,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_relaxed_3) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_relaxed_3) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_relaxed_3,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_relaxed_3,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_relaxed_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_float16_3) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_float16_3) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_float16_3,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_float16_3,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_float16_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_quant8_3) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_quant8_3) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_quant8_3,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_quant8_3,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_quant8_3());
 }
 
-#endif
 TEST_F(GeneratedTests, space_to_batch_v1_2_nhwc_4) {
     execute(space_to_batch_v1_2::CreateModel_nhwc_4,
             space_to_batch_v1_2::is_ignored_nhwc_4,
@@ -393,67 +345,51 @@ TEST_F(GeneratedTests, space_to_batch_v1_2_nchw_quant8_4) {
             space_to_batch_v1_2::get_examples_nchw_quant8_4());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_4) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_4) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_4,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_4,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_relaxed_4) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_relaxed_4) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_relaxed_4,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_relaxed_4,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_relaxed_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_float16_4) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_float16_4) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_float16_4,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_float16_4,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_float16_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nhwc_quant8_4) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nhwc_quant8_4) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nhwc_quant8_4,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nhwc_quant8_4,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nhwc_quant8_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_4) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_4) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_4,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_4,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_relaxed_4) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_relaxed_4) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_relaxed_4,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_relaxed_4,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_relaxed_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_float16_4) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_float16_4) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_float16_4,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_float16_4,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_float16_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, space_to_batch_v1_2_dynamic_output_shape_nchw_quant8_4) {
+TEST_F(DynamicOutputShapeTest, space_to_batch_v1_2_dynamic_output_shape_nchw_quant8_4) {
     execute(space_to_batch_v1_2::CreateModel_dynamic_output_shape_nchw_quant8_4,
             space_to_batch_v1_2::is_ignored_dynamic_output_shape_nchw_quant8_4,
             space_to_batch_v1_2::get_examples_dynamic_output_shape_nchw_quant8_4());
 }
 
-#endif

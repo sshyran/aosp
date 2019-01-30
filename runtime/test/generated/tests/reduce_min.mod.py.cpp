@@ -33,38 +33,30 @@ TEST_F(GeneratedTests, reduce_min_quant8) {
             reduce_min::get_examples_quant8());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape) {
     execute(reduce_min::CreateModel_dynamic_output_shape,
             reduce_min::is_ignored_dynamic_output_shape,
             reduce_min::get_examples_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_relaxed) {
     execute(reduce_min::CreateModel_dynamic_output_shape_relaxed,
             reduce_min::is_ignored_dynamic_output_shape_relaxed,
             reduce_min::get_examples_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_float16) {
     execute(reduce_min::CreateModel_dynamic_output_shape_float16,
             reduce_min::is_ignored_dynamic_output_shape_float16,
             reduce_min::get_examples_dynamic_output_shape_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_quant8) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_quant8) {
     execute(reduce_min::CreateModel_dynamic_output_shape_quant8,
             reduce_min::is_ignored_dynamic_output_shape_quant8,
             reduce_min::get_examples_dynamic_output_shape_quant8());
 }
 
-#endif
 TEST_F(GeneratedTests, reduce_min_2) {
     execute(reduce_min::CreateModel_2,
             reduce_min::is_ignored_2,
@@ -89,38 +81,30 @@ TEST_F(GeneratedTests, reduce_min_quant8_2) {
             reduce_min::get_examples_quant8_2());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_2) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_2) {
     execute(reduce_min::CreateModel_dynamic_output_shape_2,
             reduce_min::is_ignored_dynamic_output_shape_2,
             reduce_min::get_examples_dynamic_output_shape_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_relaxed_2) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_relaxed_2) {
     execute(reduce_min::CreateModel_dynamic_output_shape_relaxed_2,
             reduce_min::is_ignored_dynamic_output_shape_relaxed_2,
             reduce_min::get_examples_dynamic_output_shape_relaxed_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_float16_2) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_float16_2) {
     execute(reduce_min::CreateModel_dynamic_output_shape_float16_2,
             reduce_min::is_ignored_dynamic_output_shape_float16_2,
             reduce_min::get_examples_dynamic_output_shape_float16_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_quant8_2) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_quant8_2) {
     execute(reduce_min::CreateModel_dynamic_output_shape_quant8_2,
             reduce_min::is_ignored_dynamic_output_shape_quant8_2,
             reduce_min::get_examples_dynamic_output_shape_quant8_2());
 }
 
-#endif
 TEST_F(GeneratedTests, reduce_min_3) {
     execute(reduce_min::CreateModel_3,
             reduce_min::is_ignored_3,
@@ -145,38 +129,30 @@ TEST_F(GeneratedTests, reduce_min_quant8_3) {
             reduce_min::get_examples_quant8_3());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_3) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_3) {
     execute(reduce_min::CreateModel_dynamic_output_shape_3,
             reduce_min::is_ignored_dynamic_output_shape_3,
             reduce_min::get_examples_dynamic_output_shape_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_relaxed_3) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_relaxed_3) {
     execute(reduce_min::CreateModel_dynamic_output_shape_relaxed_3,
             reduce_min::is_ignored_dynamic_output_shape_relaxed_3,
             reduce_min::get_examples_dynamic_output_shape_relaxed_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_float16_3) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_float16_3) {
     execute(reduce_min::CreateModel_dynamic_output_shape_float16_3,
             reduce_min::is_ignored_dynamic_output_shape_float16_3,
             reduce_min::get_examples_dynamic_output_shape_float16_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_quant8_3) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_quant8_3) {
     execute(reduce_min::CreateModel_dynamic_output_shape_quant8_3,
             reduce_min::is_ignored_dynamic_output_shape_quant8_3,
             reduce_min::get_examples_dynamic_output_shape_quant8_3());
 }
 
-#endif
 TEST_F(GeneratedTests, reduce_min_4) {
     execute(reduce_min::CreateModel_4,
             reduce_min::is_ignored_4,
@@ -201,35 +177,27 @@ TEST_F(GeneratedTests, reduce_min_quant8_4) {
             reduce_min::get_examples_quant8_4());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_4) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_4) {
     execute(reduce_min::CreateModel_dynamic_output_shape_4,
             reduce_min::is_ignored_dynamic_output_shape_4,
             reduce_min::get_examples_dynamic_output_shape_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_relaxed_4) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_relaxed_4) {
     execute(reduce_min::CreateModel_dynamic_output_shape_relaxed_4,
             reduce_min::is_ignored_dynamic_output_shape_relaxed_4,
             reduce_min::get_examples_dynamic_output_shape_relaxed_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_float16_4) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_float16_4) {
     execute(reduce_min::CreateModel_dynamic_output_shape_float16_4,
             reduce_min::is_ignored_dynamic_output_shape_float16_4,
             reduce_min::get_examples_dynamic_output_shape_float16_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, reduce_min_dynamic_output_shape_quant8_4) {
+TEST_F(DynamicOutputShapeTest, reduce_min_dynamic_output_shape_quant8_4) {
     execute(reduce_min::CreateModel_dynamic_output_shape_quant8_4,
             reduce_min::is_ignored_dynamic_output_shape_quant8_4,
             reduce_min::get_examples_dynamic_output_shape_quant8_4());
 }
 
-#endif
