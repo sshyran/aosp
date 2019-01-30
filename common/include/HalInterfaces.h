@@ -34,6 +34,8 @@
 #include <hidlmemory/mapping.h>
 
 using ::android::sp;
+using ::android::hardware::hidl_array;
+using ::android::hardware::hidl_handle;
 using ::android::hardware::hidl_memory;
 using ::android::hardware::hidl_string;
 using ::android::hardware::hidl_vec;
@@ -49,6 +51,7 @@ using ::android::hardware::neuralnetworks::V1_0::Request;
 using ::android::hardware::neuralnetworks::V1_0::RequestArgument;
 using ::android::hardware::neuralnetworks::V1_1::Capabilities;
 using ::android::hardware::neuralnetworks::V1_1::ExecutionPreference;
+using ::android::hardware::neuralnetworks::V1_2::Constant;
 using ::android::hardware::neuralnetworks::V1_2::DeviceType;
 using ::android::hardware::neuralnetworks::V1_2::FmqRequestDatum;
 using ::android::hardware::neuralnetworks::V1_2::FmqResultDatum;

@@ -37,6 +37,7 @@ using CompilationBuilder = nn::CompilationBuilder;
 using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
 using HidlModel = hardware::neuralnetworks::V1_2::Model;
+using HidlToken = hardware::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 using PreparedModelCallback = hardware::neuralnetworks::V1_2::implementation::PreparedModelCallback;
 using Result = nn::test_wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
@@ -114,6 +115,11 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
             cb(mErrorStatus, nullptr);
             return Void();
         }
+    }
+
+    Return<ErrorStatus> saveToCache(const hidl_handle&, const hidl_handle&,
+                                    const HidlToken&) override {
+        return ErrorStatus::GENERAL_FAILURE;
     }
 
    private:

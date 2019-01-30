@@ -397,8 +397,7 @@ static bool convertToNhwc(RunTimeOperandInfo& to, const RunTimeOperandInfo& from
 }
 
 static bool convertFromNhwc(RunTimeOperandInfo& to, const RunTimeOperandInfo& from,
-                            bool data_layout) {
-    int result;
+                            bool data_layout, int* result) {
     if (from.dimensions.size() != 4) {
         LOG(ERROR) << "Error converting a non-4-D tensor from NHWC layout";
         return false;
@@ -409,7 +408,7 @@ static bool convertFromNhwc(RunTimeOperandInfo& to, const RunTimeOperandInfo& fr
         auto& fromDim = from.dimensions;
         outShape.dimensions = {fromDim[0], fromDim[3], fromDim[1], fromDim[2]};
         // allocate buffer
-        if (!setInfoAndAllocateIfNeeded(&to, outShape, &result)) {
+        if (!setInfoAndAllocateIfNeeded(&to, outShape, result)) {
             return false;
         }
         // convert value
@@ -432,7 +431,7 @@ static bool convertFromNhwc(RunTimeOperandInfo& to, const RunTimeOperandInfo& fr
         Shape outShape = from.shape();
         to.buffer = from.buffer;
         to.length = from.length;
-        if (!setInfoAndAllocateIfNeeded(&to, outShape, &result)) {
+        if (!setInfoAndAllocateIfNeeded(&to, outShape, result)) {
             return false;
         }
     }
@@ -821,6 +820,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                       stride_height, depth_multiplier, dilation_width_factor,
                                       dilation_height_factor, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 success = false;
                 break;
             }
@@ -865,7 +865,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -952,6 +952,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                              stride_height, dilation_width_factor, dilation_height_factor,
                              &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 success = false;
                 break;
             }
@@ -995,7 +996,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -1068,6 +1069,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                        padding_bottom, stride_width, stride_height, filter_width,
                                        filter_height, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 success = false;
                 break;
             }
@@ -1094,7 +1096,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -1167,6 +1169,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                        padding_bottom, stride_width, stride_height, filter_width,
                                        filter_height, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 success = false;
                 break;
             }
@@ -1187,7 +1190,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -1260,6 +1263,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                        padding_bottom, stride_width, stride_height, filter_width,
                                        filter_height, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 success = false;
                 break;
             }
@@ -1286,7 +1290,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -1636,6 +1640,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
 
             if (!resizeBilinearPrepare(input_tmp.shape(), width, height, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 break;
             }
             if (input_tmp.type == OperandType::TENSOR_FLOAT32) {
@@ -1651,7 +1656,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -1679,6 +1684,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             output_tmp.length = data_layout ? 0 : output.length;
             if (!depthToSpacePrepare(input_tmp.shape(), blockSize, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 break;
             }
             switch (input_tmp.type) {
@@ -1708,7 +1714,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -1737,6 +1743,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
 
             if (!spaceToDepthPrepare(input_tmp.shape(), blockSize, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 break;
             }
             switch (input_tmp.type) {
@@ -1766,7 +1773,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -1912,6 +1919,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                      reinterpret_cast<const int32_t*>(blockSize.buffer),
                                      blockSize.shape(), &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 break;
             }
             switch (input_tmp.type) {
@@ -1944,7 +1952,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -1977,6 +1985,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                         blockSize.shape(), reinterpret_cast<const int32_t*>(paddings.buffer),
                         paddings.shape(), &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 break;
             }
             switch (input_tmp.type) {
@@ -2012,7 +2021,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -2422,6 +2431,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                     padding_right, padding_top, padding_bottom, stride_width,
                                     stride_height, numGroups, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 success = false;
                 break;
             }
@@ -2466,7 +2476,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
@@ -2537,6 +2547,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                       padding_right, padding_top, padding_bottom, stride_width,
                                       stride_height, &outShape) ||
                 !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
+                if (!data_layout) output.dimensions = output_tmp.dimensions;
                 success = false;
                 break;
             }
@@ -2579,7 +2590,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (data_layout) {
                 output_tmp_guard.reset(output_tmp.buffer);
             }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout)) {
+            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
                 success = false;
                 break;
             }
