@@ -5094,6 +5094,11 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
  * ANeuralNetworksModel_getSupportedOperationsForDevices() must have returned true for every
  * operation for that model/devices pair.
  *
+ * The user must handle all compilation and execution failures from the
+ * specified set of devices. This is in contrast to a use of {@link
+ * ANeuralNetworksCompilation_create}, where the runtime will attempt to recover
+ * from such failures.
+ *
  * @param model The {@link ANeuralNetworksModel} to be compiled.
  * @param devices The set of devices. Must not contain duplicates.
  * @param numDevices The number of devices in the set.
