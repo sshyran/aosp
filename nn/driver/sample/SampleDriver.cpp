@@ -98,6 +98,13 @@ Return<void> SampleDriver::getSupportedOperations_1_1(const V1_1::Model& model,
     return getSupportedOperations_1_2(convertToV1_2(model), cb);
 }
 
+Return<void> SampleDriver::isCachingSupported(isCachingSupported_cb cb) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
+                 "SampleDriver::isCachingSupported");
+    cb(ErrorStatus::NONE, false);
+    return Void();
+}
+
 static void notify(const sp<V1_0::IPreparedModelCallback>& callback, const ErrorStatus& status,
                    const sp<SamplePreparedModel>& preparedModel) {
     callback->notify(status, preparedModel);
@@ -152,6 +159,15 @@ Return<ErrorStatus> SampleDriver::prepareModel_1_2(
         const sp<V1_2::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_2");
     return prepareModelBase(model, preference, callback);
+}
+
+Return<ErrorStatus> SampleDriver::prepareModelFromCache(
+        const hidl_handle&, const hidl_handle&, const HidlToken&,
+        const sp<V1_2::IPreparedModelCallback>& callback) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
+                 "SampleDriver::prepareModelFromCache");
+    callback->notify_1_2(ErrorStatus::GENERAL_FAILURE, nullptr);
+    return ErrorStatus::GENERAL_FAILURE;
 }
 
 Return<DeviceStatus> SampleDriver::getStatus() {
@@ -326,6 +342,12 @@ Return<void> SamplePreparedModel::configureExecutionBurst(
     }
 
     return Void();
+}
+
+Return<ErrorStatus> SamplePreparedModel::saveToCache(const hidl_handle&, const hidl_handle&,
+                                                     const HidlToken&) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION, "SamplePreparedModel::saveToCache");
+    return ErrorStatus::GENERAL_FAILURE;
 }
 
 } // namespace sample_driver

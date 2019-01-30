@@ -126,6 +126,8 @@ using ExecutePreference = ::android::nn::test_wrapper::ExecutePreference;
 using ExecutionPlan = ::android::nn::ExecutionPlan;
 using ExecutionStep = ::android::nn::ExecutionStep;
 using HidlModel = ::android::hardware::neuralnetworks::V1_2::Model;
+using HidlToken =
+        ::android::hardware::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 using ModelBuilder = ::android::nn::ModelBuilder;
 using Result = ::android::nn::test_wrapper::Result;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
@@ -232,6 +234,10 @@ private:
              configureExecutionBurst_cb cb) override {
          cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
          return Void();
+     }
+     Return<ErrorStatus> saveToCache(const hidl_handle&, const hidl_handle&,
+                                     const HidlToken&) override {
+         return ErrorStatus::DEVICE_UNAVAILABLE;
      }
     };
 public:
