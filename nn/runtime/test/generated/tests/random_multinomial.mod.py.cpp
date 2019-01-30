@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, random_multinomial) {
             random_multinomial::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, random_multinomial_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, random_multinomial_dynamic_output_shape) {
     execute(random_multinomial::CreateModel_dynamic_output_shape,
             random_multinomial::is_ignored_dynamic_output_shape,
             random_multinomial::get_examples_dynamic_output_shape());
 }
 
-#endif

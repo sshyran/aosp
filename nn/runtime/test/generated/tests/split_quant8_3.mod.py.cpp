@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, split_quant8_3) {
             split_quant8_3::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, split_quant8_3_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, split_quant8_3_dynamic_output_shape) {
     execute(split_quant8_3::CreateModel_dynamic_output_shape,
             split_quant8_3::is_ignored_dynamic_output_shape,
             split_quant8_3::get_examples_dynamic_output_shape());
 }
 
-#endif

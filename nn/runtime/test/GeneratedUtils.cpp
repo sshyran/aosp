@@ -147,6 +147,13 @@ void executeWithCompilation(Model* model, Compilation* compilation,
         ASSERT_EQ(Result::NO_ERROR, r);
         {
             NNTRACE_APP(NNTRACE_PHASE_RESULTS, "executeWithCompilation example");
+
+            // Get output dimensions
+            for_each<uint32_t>(
+                    test.operandDimensions, [&execution](int idx, std::vector<uint32_t>& t) {
+                        ASSERT_EQ(Result::NO_ERROR, execution.getOutputOperandDimensions(idx, &t));
+                    });
+
             // Dump all outputs for the slicing tool
             if (dumpToFile) {
                 s << "output" << exampleNo << " = {\n";

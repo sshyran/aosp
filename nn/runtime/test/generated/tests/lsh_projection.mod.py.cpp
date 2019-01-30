@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, lsh_projection) {
             lsh_projection::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, lsh_projection_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, lsh_projection_dynamic_output_shape) {
     execute(lsh_projection::CreateModel_dynamic_output_shape,
             lsh_projection::is_ignored_dynamic_output_shape,
             lsh_projection::get_examples_dynamic_output_shape());
 }
 
-#endif

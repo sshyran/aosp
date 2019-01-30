@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, transpose_relaxed) {
             transpose_relaxed::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, transpose_relaxed_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, transpose_relaxed_dynamic_output_shape) {
     execute(transpose_relaxed::CreateModel_dynamic_output_shape,
             transpose_relaxed::is_ignored_dynamic_output_shape,
             transpose_relaxed::get_examples_dynamic_output_shape());
 }
 
-#endif

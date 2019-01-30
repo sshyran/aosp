@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, floor) {
             floor::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, floor_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, floor_dynamic_output_shape) {
     execute(floor::CreateModel_dynamic_output_shape,
             floor::is_ignored_dynamic_output_shape,
             floor::get_examples_dynamic_output_shape());
 }
 
-#endif

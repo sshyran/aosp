@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, reshape_float16) {
             reshape_float16::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, reshape_float16_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, reshape_float16_dynamic_output_shape) {
     execute(reshape_float16::CreateModel_dynamic_output_shape,
             reshape_float16::is_ignored_dynamic_output_shape,
             reshape_float16::get_examples_dynamic_output_shape());
 }
 
-#endif
