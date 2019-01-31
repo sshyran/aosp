@@ -57,7 +57,8 @@ public:
     bool hasOEMOperation() const { return mHasOEMOperation; }
 
     int createCompilation(CompilationBuilder** compilation,
-                          const std::vector<std::shared_ptr<Device>>& devices);
+                          const std::vector<std::shared_ptr<Device>>& devices,
+                          bool forceNoFallback = false);
 
     void setHidlModel(Model* model) const;
 

@@ -20,6 +20,7 @@
 
 #include "CompilationBuilder.h"
 #include "GraphDump.h"
+#include "Manager.h"
 #include "Utils.h"
 #include "ValidateHal.h"
 
@@ -352,13 +353,17 @@ int ModelBuilder::relaxComputationFloat32toFloat16(bool allow) {
 }
 
 int ModelBuilder::createCompilation(CompilationBuilder** compilation,
-                                    const std::vector<std::shared_ptr<Device>>& devices) {
+                                    const std::vector<std::shared_ptr<Device>>& devices,
+                                    bool forceNoFallback) {
     if (!mCompletedModel || mInvalidModel) {
         LOG(ERROR) << "ANeuralNetworksCompilation_create passed an unfinished or invalid model";
         *compilation = nullptr;
         return ANEURALNETWORKS_BAD_STATE;
     }
     *compilation = new (std::nothrow) CompilationBuilder(this, devices);
+    if (forceNoFallback) {
+        (*compilation)->setPartitioning(DeviceManager::kPartitioningWithoutFallback);
+    }
     return (*compilation ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_OUT_OF_MEMORY);
 }
 
