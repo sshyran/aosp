@@ -65,7 +65,8 @@ class ModelBuilder {
     bool hasExtensionOperation() const { return mHasExtensionOperation; }
 
     int createCompilation(CompilationBuilder** compilation,
-                          const std::vector<std::shared_ptr<Device>>& devices);
+                          const std::vector<std::shared_ptr<Device>>& devices,
+                          bool forceNoFallback = false);
 
     void setHidlModel(Model* model) const;
 
