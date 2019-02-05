@@ -102,22 +102,27 @@ class DeviceManager {
     // Returns the singleton Cpu device.
     static std::shared_ptr<Device> getCpuDevice();
 
-    // These functions are solely intended for use by unit tests of
-    // the introspection and control API.
-    //
+    // The functions below are solely intended for use by unit tests.
+
     // Register a test device.
     void forTest_registerDevice(const char* name, const sp<V1_0::IDevice>& device) {
         registerDevice(name, device);
     }
+
     // Re-initialize the list of available devices.
     void forTest_reInitializeDeviceList() {
         mDevices.clear();
         mDevicesCpuOnly.clear();
         findAvailableDevices();
     }
+
     // Make a test device
     static std::shared_ptr<Device> forTest_makeDriverDevice(const std::string& name,
                                                             const sp<V1_0::IDevice>& device);
+
+    bool forTest_isCpuDevice(const ANeuralNetworksDevice* device) const {
+        return reinterpret_cast<const Device*>(device) == getCpuDevice().get();
+    }
 
    private:
     // Builds the list of available drivers and queries their capabilities.
