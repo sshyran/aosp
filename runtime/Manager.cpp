@@ -349,8 +349,9 @@ void CpuDevice::getSupportedOperations(const Model& hidlModel,
     hidl_vec<bool> result(count);
     for (size_t i = 0; i < count; i++) {
         // TODO(b/119870033): Decide whether and how post-P operations would be supported on CPU.
-        // CPU fallback should support all the operations except for OEM_OPERATION
-        result[i] = hidlModel.operations[i].type != OperationType::OEM_OPERATION;
+        OperationType operationType = hidlModel.operations[i].type;
+        result[i] = !isExtensionOperationType(operationType) &&
+                    operationType != OperationType::OEM_OPERATION;
     }
     *supportedOperations = std::move(result);
 }
