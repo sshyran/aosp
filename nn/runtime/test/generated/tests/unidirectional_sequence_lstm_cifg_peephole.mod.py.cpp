@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, unidirectional_sequence_lstm_cifg_peephole) {
             unidirectional_sequence_lstm_cifg_peephole::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, unidirectional_sequence_lstm_cifg_peephole_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_cifg_peephole_dynamic_output_shape) {
     execute(unidirectional_sequence_lstm_cifg_peephole::CreateModel_dynamic_output_shape,
             unidirectional_sequence_lstm_cifg_peephole::is_ignored_dynamic_output_shape,
             unidirectional_sequence_lstm_cifg_peephole::get_examples_dynamic_output_shape());
 }
 
-#endif

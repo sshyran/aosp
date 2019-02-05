@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, bidirectional_sequence_lstm_float16_batch_major_blackbox)
             bidirectional_sequence_lstm_float16_batch_major::get_examples_blackbox());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, bidirectional_sequence_lstm_float16_batch_major_blackbox_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_float16_batch_major_blackbox_dynamic_output_shape) {
     execute(bidirectional_sequence_lstm_float16_batch_major::CreateModel_dynamic_output_shape,
             bidirectional_sequence_lstm_float16_batch_major::is_ignored_dynamic_output_shape,
             bidirectional_sequence_lstm_float16_batch_major::get_examples_blackbox_dynamic_output_shape());
 }
 
-#endif
