@@ -281,8 +281,19 @@ uint32_t sizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) {
 }
 
 bool hasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimCount) {
-    return (tableLookup(kScalarDataType, kScalarDataTypeOEM, type) == false) &&
-           (dimCount == 0 || std::find(dim, dim + dimCount, 0) != (dim + dimCount));
+    if (isExtensionOperandType(type)) {
+        // We don't know if the extension type is a scalar or tensor type without
+        // asking an extension-enabled driver.
+        if (dimCount == 0) {
+            // Assume it's a scalar type.
+            return false;
+        } else {
+            // It must be a tensor type.
+            return std::find(dim, dim + dimCount, 0) != (dim + dimCount);
+        }
+    }
+    bool isTensorType = !tableLookup(kScalarDataType, kScalarDataTypeOEM, type);
+    return isTensorType && (dimCount == 0 || std::find(dim, dim + dimCount, 0) != (dim + dimCount));
 }
 
 bool hasUnspecifiedDimensions(const ANeuralNetworksOperandType* type) {
