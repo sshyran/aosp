@@ -499,6 +499,9 @@ static_assert(static_cast<int32_t>(OperationType::UNIDIRECTIONAL_SEQUENCE_RNN) =
                       ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN,
               "OperationType::UNIDIRECTIONAL_SEQUENCE_RNN != "
               "ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN");
+static_assert(static_cast<int32_t>(OperationType::RESIZE_NEAREST_NEIGHBOR) ==
+                      ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR,
+              "OperationType::RESIZE_NEAREST_NEIGHBOR != ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR");
 
 static_assert(static_cast<int32_t>(DeviceType::OTHER) == ANEURALNETWORKS_DEVICE_OTHER,
               "DeviceType::OTHER != ANEURALNETWORKS_DEVICE_OTHER");

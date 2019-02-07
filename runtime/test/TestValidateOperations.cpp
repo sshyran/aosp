@@ -2944,4 +2944,26 @@ TEST(OperationValidationTest, GENERATE_PROPOSALS_quant) {
                             ANEURALNETWORKS_TENSOR_QUANT16_ASYMM, ANEURALNETWORKS_FLOAT32);
 }
 
+void resizeNearestNeighborOpTest(int32_t operandCode) {
+    uint32_t inputDim[] = {1, 2, 2, 1}, outputDim[] = {1, 1, 1, 1};
+    OperationTestBase resizeNearestNeighborTest(
+            ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR,
+            {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(ANEURALNETWORKS_INT32), getOpType(ANEURALNETWORKS_BOOL)},
+            {getOpType(operandCode, 4, outputDim)});
+    resizeNearestNeighborTest.testOpsValidations();
+}
+
+TEST(OperationValidationTest, RESIZE_NEAREST_NEIGHBOR_float32) {
+    resizeNearestNeighborOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, RESIZE_NEAREST_NEIGHBOR_float16) {
+    resizeNearestNeighborOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, RESIZE_NEAREST_NEIGHBOR_quant8) {
+    resizeNearestNeighborOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
 }  // end namespace
