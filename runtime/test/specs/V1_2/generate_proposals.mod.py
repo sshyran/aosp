@@ -24,7 +24,7 @@ i3 = Input("anchors", "TENSOR_FLOAT32", "{2, 4}") # anchors
 i4 = Input("imageInfo", "TENSOR_FLOAT32", "{1, 2}") # image info
 o1 = Output("scoresOut", "TENSOR_FLOAT32", "{4}") # scores out
 o2 = Output("roiOut", "TENSOR_FLOAT32", "{4, 4}") # roi out
-o3 = Output("batchSplit", "TENSOR_INT32", "{1}") # batch split out
+o3 = Output("batchSplit", "TENSOR_INT32", "{4}") # batch split out
 model = model.Operation("GENERATE_PROPOSALS",
     i1, i2, i3, i4, 4.0, 4.0, -1, -1, 0.30, 1.0, layout).To(o1, o2, o3)
 
@@ -60,7 +60,7 @@ output0 = {
         3.1903253,  1.2951627 , 6.8096747,  3.1048374,
         1.9812691,  3.1571944 , 3.6187308,  8.042806
     ],
-    o3: [4]
+    o3: [0, 0, 0, 0]
 }
 
 Example((input0, output0)).AddNchw(i1, i2, layout).AddVariations("relaxed", quant8, "float16")
@@ -73,7 +73,7 @@ i3 = Input("anchors", "TENSOR_FLOAT32", "{4, 4}") # anchors
 i4 = Input("imageInfo", "TENSOR_FLOAT32", "{2, 2}") # image info
 o1 = Output("scoresOut", "TENSOR_FLOAT32", "{30}") # scores out
 o2 = Output("roiOut", "TENSOR_FLOAT32", "{30, 4}") # roi out
-o3 = Output("batchSplit", "TENSOR_INT32", "{2}") # batch split out
+o3 = Output("batchSplit", "TENSOR_INT32", "{30}") # batch split out
 model = model.Operation("GENERATE_PROPOSALS",
     i1, i2, i3, i4, 10.0, 10.0, 32, 16, 0.20, 1.0, layout).To(o1, o2, o3)
 
@@ -202,7 +202,10 @@ output0 = {
         11.947443 , 29.318363 , 18.452557 , 32.       ,
         17.318363 ,  0.       , 20.281635 , 16.17695
     ],
-    o3: [16, 14]
+    o3: [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+    ]
 }
 
 Example((input0, output0)).AddNchw(i1, i2, layout).AddVariations("relaxed", quant8, "float16")

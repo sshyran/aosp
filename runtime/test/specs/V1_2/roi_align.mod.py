@@ -20,7 +20,7 @@ layout = BoolScalar("layout", False) # NHWC
 i1 = Input("in", "TENSOR_FLOAT32", "{1, 4, 4, 1}")
 roi1 = Input("roi", "TENSOR_FLOAT32", "{4, 4}")
 o1 = Output("out", "TENSOR_FLOAT32", "{4, 2, 2, 1}")
-Model().Operation("ROI_ALIGN", i1, roi1, [4], 2, 2, 2.0, 2.0, 4, 4, layout).To(o1)
+Model().Operation("ROI_ALIGN", i1, roi1, [0, 0, 0, 0], 2, 2, 2.0, 2.0, 4, 4, layout).To(o1)
 
 quant8 = DataTypeConverter().Identify({
     i1: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
@@ -55,7 +55,7 @@ Example({
 i2 = Input("in", "TENSOR_FLOAT32", "{4, 4, 8, 2}")
 roi2 = Input("roi", "TENSOR_FLOAT32", "{4, 4}")
 o2 = Output("out", "TENSOR_FLOAT32", "{4, 2, 3, 2}")
-Model().Operation("ROI_ALIGN", i2, roi2, [2, 0, 0, 2], 2, 3, 4.0, 4.0, 4, 4, layout).To(o2)
+Model().Operation("ROI_ALIGN", i2, roi2, [0, 0, 3, 3], 2, 3, 4.0, 4.0, 4, 4, layout).To(o2)
 
 quant8 = DataTypeConverter().Identify({
     i2: ("TENSOR_QUANT8_ASYMM", 0.04, 0),
@@ -122,7 +122,7 @@ Example({
 i3 = Input("in", "TENSOR_FLOAT32", "{2, 4, 8, 2}")
 roi3 = Input("roi", "TENSOR_FLOAT32", "{4, 4}")
 o3 = Output("out", "TENSOR_FLOAT32", "{4, 2, 3, 2}")
-Model().Operation("ROI_ALIGN", i3, roi3, [2, 2], 2, 3, 4.0, 4.0, 0, 0, layout).To(o3)
+Model().Operation("ROI_ALIGN", i3, roi3, [0, 0, 1, 1], 2, 3, 4.0, 4.0, 0, 0, layout).To(o3)
 
 quant8 = DataTypeConverter().Identify({
     i3: ("TENSOR_QUANT8_ASYMM", 0.04, 0),
@@ -175,7 +175,7 @@ Example({
 i4 = Input("in", "TENSOR_FLOAT32", "{4, 4, 4, 1}")
 roi4 = Input("roi", "TENSOR_FLOAT32", "{5, 4}")
 o4 = Output("out", "TENSOR_FLOAT32", "{5, 2, 2, 1}")
-Model().Operation("ROI_ALIGN", i4, roi4, [0, 0, 5, 0],  2, 2, 2.0, 1.0, 0, 4, layout).To(o4)
+Model().Operation("ROI_ALIGN", i4, roi4, [2, 2, 2, 2, 2],  2, 2, 2.0, 1.0, 0, 4, layout).To(o4)
 
 quant8 = DataTypeConverter().Identify({
     i4: ("TENSOR_QUANT8_ASYMM", 0.25, 128),

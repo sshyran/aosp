@@ -70,13 +70,9 @@ inline bool roiAlignNhwc(const T_Input* inputData, const Shape& inputShape, cons
 
     T_Input* outPtr = outputData;
     const T_Roi* roiDataEnd = roiData + numRois * roiInfoLength;
-    uint32_t batchId = 0, roiIndex = 0;
+    uint32_t roiIndex = 0;
     for (const T_Roi* roiInfo = roiData; roiInfo < roiDataEnd; roiInfo += kRoiDim, roiIndex++) {
-        while (roiIndex >= batchSplitData[batchId]) {
-            batchId++;
-            roiIndex = 0;
-        }
-
+        uint32_t batchId = static_cast<uint32_t>(batchSplitData[roiIndex]);
         // Check for malformed data
         // 1. invalid batch id
         // 2. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
@@ -199,13 +195,9 @@ inline bool roiAlignNhwc<uint8_t, uint16_t>(const uint8_t* inputData, const Shap
 
     uint8_t* outPtr = outputData;
     const uint16_t* roiDataEnd = roiData + numRois * roiInfoLength;
-    uint32_t batchId = 0, roiIndex = 0;
+    uint32_t roiIndex = 0;
     for (const uint16_t* roiInfo = roiData; roiInfo < roiDataEnd; roiInfo += kRoiDim, roiIndex++) {
-        while (roiIndex >= batchSplitData[batchId]) {
-            batchId++;
-            roiIndex = 0;
-        }
-
+        uint32_t batchId = static_cast<uint32_t>(batchSplitData[roiIndex]);
         float wRoiStart = static_cast<float>(roiInfo[0]) * widthScale * 0.125f;
         float hRoiStart = static_cast<float>(roiInfo[1]) * heightScale * 0.125f;
         float wRoiEnd = static_cast<float>(roiInfo[2]) * widthScale * 0.125f;
@@ -384,7 +376,7 @@ bool prepare(IOperationExecutionContext* context) {
     uint32_t inDepth = getSizeOfDimension(input, useNchw ? 1 : 3);
     uint32_t numRois = getSizeOfDimension(roiShape, 0);
     NN_RET_CHECK_EQ(getSizeOfDimension(roiShape, 1), 4);
-    NN_RET_CHECK_EQ(getSizeOfDimension(batchSplitShape, 0), numBatches);
+    NN_RET_CHECK_EQ(getSizeOfDimension(batchSplitShape, 0), numRois);
 
     int32_t outputHeight = context->getInputValue<int32_t>(kOutputHeightScalar);
     int32_t outputWidth = context->getInputValue<int32_t>(kOutputWidthScalar);
