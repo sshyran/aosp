@@ -2250,6 +2250,7 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
      *
      * Inputs:
      * * 0: A 2-D Tensor of shape [num_rois, 4], specifying the locations of the
@@ -2266,7 +2267,8 @@ typedef enum {
      *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, this tensor should be
      *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
-     *      [batches], specifying the number of output boxes for each batch.
+     *      [num_rois], specifying the batch index of each box. Boxes with
+     *      the same batch index are grouped together.
      * * 3: A 2-D Tensor of shape [batches, 2], specifying the information of
      *      each image in the batch, each line with format
      *      [image_height, image_width].
@@ -2916,6 +2918,9 @@ typedef enum {
      *      {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}, with scale of 0.125.
      * * 3: A 2-D Tensor of shape [batches, 2], specifying the size of
      *      each image in the batch, with format [image_height, image_width].
+     *      For input0 of type {@link OperandType::TENSOR_QUANT8_ASYMM}, this
+     *      tensor should be of {@link OperandType::TENSOR_QUANT16_SYMM}, with
+     *      scale of 0.125.
      * * 4: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the ratio
      *      from the height of original image to the height of feature map.
      * * 5: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the ratio
@@ -2942,7 +2947,7 @@ typedef enum {
      *      each batch is not guaranteed. For type of
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the scale and zero
      *      point must be the same as input0.
-     * * 1: A tensor of the same {@link OperandCode} as input1, of shape
+     * * 1: A tensor of the same {@link OperandCode} as input3, of shape
      *      [num_output_rois, 4], specifying the coordinates of each output
      *      bounding box for each class, with format [x1, y1, x2, y2].
      *      The sequential order of the boxes corresponds with output0.
@@ -3944,7 +3949,8 @@ typedef enum {
      *      this tensor should be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM},
      *      with zeroPoint of 0 and scale of 0.125.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
-     *      [batches], specifying the number of output boxes for each batch.
+     *      [num_rois], specifying the batch index of each box. Boxes with
+     *      the same batch index are grouped together.
      * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
      *      height of the output tensor.
      * * 4: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
@@ -4000,7 +4006,8 @@ typedef enum {
      *      this tensor should be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM},
      *      with zeroPoint of 0 and scale of 0.125.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
-     *      [batches], specifying the number of output boxes for each batch.
+     *      [num_rois], specifying the batch index of each box. Boxes with
+     *      the same batch index are grouped together.
      * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
      *      height of the output tensor.
      * * 4: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
