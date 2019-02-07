@@ -54,6 +54,7 @@ const OperationRegistration* register_REDUCE_MAX();
 const OperationRegistration* register_REDUCE_MIN();
 const OperationRegistration* register_REDUCE_PROD();
 const OperationRegistration* register_REDUCE_SUM();
+const OperationRegistration* register_RESIZE_NEAREST_NEIGHBOR();
 const OperationRegistration* register_ROI_ALIGN();
 const OperationRegistration* register_ROI_POOLING();
 const OperationRegistration* register_RSQRT();
@@ -94,6 +95,7 @@ OperationResolver::OperationResolver() {
     registerOperation(register_REDUCE_MIN());
     registerOperation(register_REDUCE_PROD());
     registerOperation(register_REDUCE_SUM());
+    registerOperation(register_RESIZE_NEAREST_NEIGHBOR());
     registerOperation(register_ROI_ALIGN());
     registerOperation(register_ROI_POOLING());
     registerOperation(register_RSQRT());

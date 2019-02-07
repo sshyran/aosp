@@ -38,6 +38,7 @@ cc_defaults {
         "operations/Neg.cpp",
         "operations/PRelu.cpp",
         "operations/Reduce.cpp",
+        "operations/ResizeNearestNeighbor.cpp",
         "operations/RoiAlign.cpp",
         "operations/RoiPooling.cpp",
         "operations/Select.cpp",
