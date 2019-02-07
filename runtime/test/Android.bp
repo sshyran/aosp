@@ -119,6 +119,9 @@ cc_defaults {
     header_libs: [
         "libneuralnetworks_private_headers",
     ],
+    test_suites: [
+        "general-tests",
+    ],
 }
 
 cc_test {
