@@ -29,11 +29,11 @@ static std::vector<MixedTypedExample> examples_nhwc = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.95f, 0.9f, 0.85f, 0.8f}}, {1, {4.3785973f, 2.7571943f, 6.8214025f, 7.642805f, 1.3512788f, 0.18965816f, 4.648721f, 4.610342f, 3.1903253f, 1.2951627f, 6.8096747f, 3.1048374f, 1.9812691f, 3.1571944f, 3.6187308f, 8.042806f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -82,11 +82,11 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.95f, 0.9f, 0.85f, 0.8f}}, {1, {4.3785973f, 2.7571943f, 6.8214025f, 7.642805f, 1.3512788f, 0.18965816f, 4.648721f, 4.610342f, 3.1903253f, 1.2951627f, 6.8096747f, 3.1048374f, 1.9812691f, 3.1571944f, 3.6187308f, 8.042806f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -135,11 +135,11 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {{0, {195, 190, 185, 180}}},
   // int -> QUANT16_SYMM map
@@ -188,11 +188,11 @@ static std::vector<MixedTypedExample> examples_nhwc_float16 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -241,11 +241,11 @@ static std::vector<MixedTypedExample> examples_nchw = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.95f, 0.9f, 0.85f, 0.8f}}, {1, {4.3785973f, 2.7571943f, 6.8214025f, 7.642805f, 1.3512788f, 0.18965816f, 4.648721f, 4.610342f, 3.1903253f, 1.2951627f, 6.8096747f, 3.1048374f, 1.9812691f, 3.1571944f, 3.6187308f, 8.042806f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -294,11 +294,11 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.95f, 0.9f, 0.85f, 0.8f}}, {1, {4.3785973f, 2.7571943f, 6.8214025f, 7.642805f, 1.3512788f, 0.18965816f, 4.648721f, 4.610342f, 3.1903253f, 1.2951627f, 6.8096747f, 3.1048374f, 1.9812691f, 3.1571944f, 3.6187308f, 8.042806f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -347,11 +347,11 @@ static std::vector<MixedTypedExample> examples_nchw_quant8 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {{0, {195, 190, 185, 180}}},
   // int -> QUANT16_SYMM map
@@ -400,11 +400,11 @@ static std::vector<MixedTypedExample> examples_nchw_float16 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -453,11 +453,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.95f, 0.9f, 0.85f, 0.8f}}, {1, {4.3785973f, 2.7571943f, 6.8214025f, 7.642805f, 1.3512788f, 0.18965816f, 4.648721f, 4.610342f, 3.1903253f, 1.2951627f, 6.8096747f, 3.1048374f, 1.9812691f, 3.1571944f, 3.6187308f, 8.042806f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -506,11 +506,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.95f, 0.9f, 0.85f, 0.8f}}, {1, {4.3785973f, 2.7571943f, 6.8214025f, 7.642805f, 1.3512788f, 0.18965816f, 4.648721f, 4.610342f, 3.1903253f, 1.2951627f, 6.8096747f, 3.1048374f, 1.9812691f, 3.1571944f, 3.6187308f, 8.042806f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -559,11 +559,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8 
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {{0, {195, 190, 185, 180}}},
   // int -> QUANT16_SYMM map
@@ -612,11 +612,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -665,11 +665,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.95f, 0.9f, 0.85f, 0.8f}}, {1, {4.3785973f, 2.7571943f, 6.8214025f, 7.642805f, 1.3512788f, 0.18965816f, 4.648721f, 4.610342f, 3.1903253f, 1.2951627f, 6.8096747f, 3.1048374f, 1.9812691f, 3.1571944f, 3.6187308f, 8.042806f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -718,11 +718,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.95f, 0.9f, 0.85f, 0.8f}}, {1, {4.3785973f, 2.7571943f, 6.8214025f, 7.642805f, 1.3512788f, 0.18965816f, 4.648721f, 4.610342f, 3.1903253f, 1.2951627f, 6.8096747f, 3.1048374f, 1.9812691f, 3.1571944f, 3.6187308f, 8.042806f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -771,11 +771,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8 
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {{0, {195, 190, 185, 180}}},
   // int -> QUANT16_SYMM map
@@ -824,11 +824,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {1}}},
+  .operandDimensions = {{0, {4}}, {1, {4, 4}}, {2, {4}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {4}}},
+  .int32Operands = {{2, {0, 0, 0, 0}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -877,11 +877,11 @@ static std::vector<MixedTypedExample> examples_nhwc_2 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.945f, 0.93f, 0.915f, 0.9f, 0.87f, 0.84f, 0.81f, 0.795f, 0.78f, 0.765f, 0.75f, 0.735f, 0.72f, 0.705f, 0.69f, 0.675f, 0.945f, 0.915f, 0.9f, 0.885f, 0.87f, 0.84f, 0.81f, 0.78f, 0.735f, 0.72f, 0.63f, 0.6f, 0.585f, 0.54f}}, {1, {16.845154f, 2.5170734f, 33.154846f, 7.4829264f, 32.96344f, 40.747444f, 43.836563f, 47.252556f, 0.0f, 9.143808f, 16.243607f, 14.056192f, 0.0f, 25.789658f, 25.710022f, 30.210342f, 37.947445f, 20.791668f, 44.452557f, 32.80833f, 30.277609f, 32.21635f, 32.92239f, 38.18365f, 25.885489f, 29.086582f, 31.314512f, 30.913418f, 2.8654022f, 5.789658f, 26.734598f, 10.210342f, 0.5408764f, 3.5824041f, 15.459124f, 5.217595f, 10.753355f, 35.982403f, 15.246645f, 37.617596f, 1.4593601f, 23.050154f, 4.1406403f, 36.149845f, 0.0f, 15.6f, 11.068764f, 21.6f, 38.54088f, 35.28549f, 53.45912f, 40.71451f, 26.134256f, 48.358635f, 27.465742f, 64.0f, 29.96254f, 3.1999998f, 33.23746f, 19.2f, 11.653517f, 43.980293f, 48.34648f, 46.41971f, 0.0f, 26.967152f, 26.748941f, 31.032848f, 28.590324f, 9.050154f, 32.0f, 22.149847f, 17.828777f, 19.00683f, 32.0f, 20.99317f, 3.5724945f, 7.273454f, 11.627505f, 19.126545f, 4.989658f, 26.8f, 9.410341f, 32.0f, 15.157195f, 18.00537f, 20.042807f, 25.194632f, 30.889404f, 9.652013f, 32.0f, 12.347987f, 3.399414f, 3.8000002f, 32.0f, 9.8f, 24.980408f, 10.086582f, 28.61959f, 11.913418f, 13.950423f, 3.884349f, 22.049576f, 6.115651f, 24.259361f, 6.8f, 26.94064f, 22.8f, 3.6538367f, 19.475813f, 13.546164f, 28.524187f, 11.947443f, 29.318363f, 18.452557f, 32.0f, 17.318363f, 0.0f, 20.281635f, 16.17695f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -930,11 +930,11 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.945f, 0.93f, 0.915f, 0.9f, 0.87f, 0.84f, 0.81f, 0.795f, 0.78f, 0.765f, 0.75f, 0.735f, 0.72f, 0.705f, 0.69f, 0.675f, 0.945f, 0.915f, 0.9f, 0.885f, 0.87f, 0.84f, 0.81f, 0.78f, 0.735f, 0.72f, 0.63f, 0.6f, 0.585f, 0.54f}}, {1, {16.845154f, 2.5170734f, 33.154846f, 7.4829264f, 32.96344f, 40.747444f, 43.836563f, 47.252556f, 0.0f, 9.143808f, 16.243607f, 14.056192f, 0.0f, 25.789658f, 25.710022f, 30.210342f, 37.947445f, 20.791668f, 44.452557f, 32.80833f, 30.277609f, 32.21635f, 32.92239f, 38.18365f, 25.885489f, 29.086582f, 31.314512f, 30.913418f, 2.8654022f, 5.789658f, 26.734598f, 10.210342f, 0.5408764f, 3.5824041f, 15.459124f, 5.217595f, 10.753355f, 35.982403f, 15.246645f, 37.617596f, 1.4593601f, 23.050154f, 4.1406403f, 36.149845f, 0.0f, 15.6f, 11.068764f, 21.6f, 38.54088f, 35.28549f, 53.45912f, 40.71451f, 26.134256f, 48.358635f, 27.465742f, 64.0f, 29.96254f, 3.1999998f, 33.23746f, 19.2f, 11.653517f, 43.980293f, 48.34648f, 46.41971f, 0.0f, 26.967152f, 26.748941f, 31.032848f, 28.590324f, 9.050154f, 32.0f, 22.149847f, 17.828777f, 19.00683f, 32.0f, 20.99317f, 3.5724945f, 7.273454f, 11.627505f, 19.126545f, 4.989658f, 26.8f, 9.410341f, 32.0f, 15.157195f, 18.00537f, 20.042807f, 25.194632f, 30.889404f, 9.652013f, 32.0f, 12.347987f, 3.399414f, 3.8000002f, 32.0f, 9.8f, 24.980408f, 10.086582f, 28.61959f, 11.913418f, 13.950423f, 3.884349f, 22.049576f, 6.115651f, 24.259361f, 6.8f, 26.94064f, 22.8f, 3.6538367f, 19.475813f, 13.546164f, 28.524187f, 11.947443f, 29.318363f, 18.452557f, 32.0f, 17.318363f, 0.0f, 20.281635f, 16.17695f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -983,11 +983,11 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {{0, {189, 186, 183, 180, 174, 168, 162, 159, 156, 153, 150, 147, 144, 141, 138, 135, 189, 183, 180, 177, 174, 168, 162, 156, 147, 144, 126, 120, 117, 108}}},
   // int -> QUANT16_SYMM map
@@ -1036,11 +1036,11 @@ static std::vector<MixedTypedExample> examples_nhwc_float16_2 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -1089,11 +1089,11 @@ static std::vector<MixedTypedExample> examples_nchw_2 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.945f, 0.93f, 0.915f, 0.9f, 0.87f, 0.84f, 0.81f, 0.795f, 0.78f, 0.765f, 0.75f, 0.735f, 0.72f, 0.705f, 0.69f, 0.675f, 0.945f, 0.915f, 0.9f, 0.885f, 0.87f, 0.84f, 0.81f, 0.78f, 0.735f, 0.72f, 0.63f, 0.6f, 0.585f, 0.54f}}, {1, {16.845154f, 2.5170734f, 33.154846f, 7.4829264f, 32.96344f, 40.747444f, 43.836563f, 47.252556f, 0.0f, 9.143808f, 16.243607f, 14.056192f, 0.0f, 25.789658f, 25.710022f, 30.210342f, 37.947445f, 20.791668f, 44.452557f, 32.80833f, 30.277609f, 32.21635f, 32.92239f, 38.18365f, 25.885489f, 29.086582f, 31.314512f, 30.913418f, 2.8654022f, 5.789658f, 26.734598f, 10.210342f, 0.5408764f, 3.5824041f, 15.459124f, 5.217595f, 10.753355f, 35.982403f, 15.246645f, 37.617596f, 1.4593601f, 23.050154f, 4.1406403f, 36.149845f, 0.0f, 15.6f, 11.068764f, 21.6f, 38.54088f, 35.28549f, 53.45912f, 40.71451f, 26.134256f, 48.358635f, 27.465742f, 64.0f, 29.96254f, 3.1999998f, 33.23746f, 19.2f, 11.653517f, 43.980293f, 48.34648f, 46.41971f, 0.0f, 26.967152f, 26.748941f, 31.032848f, 28.590324f, 9.050154f, 32.0f, 22.149847f, 17.828777f, 19.00683f, 32.0f, 20.99317f, 3.5724945f, 7.273454f, 11.627505f, 19.126545f, 4.989658f, 26.8f, 9.410341f, 32.0f, 15.157195f, 18.00537f, 20.042807f, 25.194632f, 30.889404f, 9.652013f, 32.0f, 12.347987f, 3.399414f, 3.8000002f, 32.0f, 9.8f, 24.980408f, 10.086582f, 28.61959f, 11.913418f, 13.950423f, 3.884349f, 22.049576f, 6.115651f, 24.259361f, 6.8f, 26.94064f, 22.8f, 3.6538367f, 19.475813f, 13.546164f, 28.524187f, 11.947443f, 29.318363f, 18.452557f, 32.0f, 17.318363f, 0.0f, 20.281635f, 16.17695f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -1142,11 +1142,11 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.945f, 0.93f, 0.915f, 0.9f, 0.87f, 0.84f, 0.81f, 0.795f, 0.78f, 0.765f, 0.75f, 0.735f, 0.72f, 0.705f, 0.69f, 0.675f, 0.945f, 0.915f, 0.9f, 0.885f, 0.87f, 0.84f, 0.81f, 0.78f, 0.735f, 0.72f, 0.63f, 0.6f, 0.585f, 0.54f}}, {1, {16.845154f, 2.5170734f, 33.154846f, 7.4829264f, 32.96344f, 40.747444f, 43.836563f, 47.252556f, 0.0f, 9.143808f, 16.243607f, 14.056192f, 0.0f, 25.789658f, 25.710022f, 30.210342f, 37.947445f, 20.791668f, 44.452557f, 32.80833f, 30.277609f, 32.21635f, 32.92239f, 38.18365f, 25.885489f, 29.086582f, 31.314512f, 30.913418f, 2.8654022f, 5.789658f, 26.734598f, 10.210342f, 0.5408764f, 3.5824041f, 15.459124f, 5.217595f, 10.753355f, 35.982403f, 15.246645f, 37.617596f, 1.4593601f, 23.050154f, 4.1406403f, 36.149845f, 0.0f, 15.6f, 11.068764f, 21.6f, 38.54088f, 35.28549f, 53.45912f, 40.71451f, 26.134256f, 48.358635f, 27.465742f, 64.0f, 29.96254f, 3.1999998f, 33.23746f, 19.2f, 11.653517f, 43.980293f, 48.34648f, 46.41971f, 0.0f, 26.967152f, 26.748941f, 31.032848f, 28.590324f, 9.050154f, 32.0f, 22.149847f, 17.828777f, 19.00683f, 32.0f, 20.99317f, 3.5724945f, 7.273454f, 11.627505f, 19.126545f, 4.989658f, 26.8f, 9.410341f, 32.0f, 15.157195f, 18.00537f, 20.042807f, 25.194632f, 30.889404f, 9.652013f, 32.0f, 12.347987f, 3.399414f, 3.8000002f, 32.0f, 9.8f, 24.980408f, 10.086582f, 28.61959f, 11.913418f, 13.950423f, 3.884349f, 22.049576f, 6.115651f, 24.259361f, 6.8f, 26.94064f, 22.8f, 3.6538367f, 19.475813f, 13.546164f, 28.524187f, 11.947443f, 29.318363f, 18.452557f, 32.0f, 17.318363f, 0.0f, 20.281635f, 16.17695f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -1195,11 +1195,11 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {{0, {189, 186, 183, 180, 174, 168, 162, 159, 156, 153, 150, 147, 144, 141, 138, 135, 189, 183, 180, 177, 174, 168, 162, 156, 147, 144, 126, 120, 117, 108}}},
   // int -> QUANT16_SYMM map
@@ -1248,11 +1248,11 @@ static std::vector<MixedTypedExample> examples_nchw_float16_2 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -1301,11 +1301,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_2 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.945f, 0.93f, 0.915f, 0.9f, 0.87f, 0.84f, 0.81f, 0.795f, 0.78f, 0.765f, 0.75f, 0.735f, 0.72f, 0.705f, 0.69f, 0.675f, 0.945f, 0.915f, 0.9f, 0.885f, 0.87f, 0.84f, 0.81f, 0.78f, 0.735f, 0.72f, 0.63f, 0.6f, 0.585f, 0.54f}}, {1, {16.845154f, 2.5170734f, 33.154846f, 7.4829264f, 32.96344f, 40.747444f, 43.836563f, 47.252556f, 0.0f, 9.143808f, 16.243607f, 14.056192f, 0.0f, 25.789658f, 25.710022f, 30.210342f, 37.947445f, 20.791668f, 44.452557f, 32.80833f, 30.277609f, 32.21635f, 32.92239f, 38.18365f, 25.885489f, 29.086582f, 31.314512f, 30.913418f, 2.8654022f, 5.789658f, 26.734598f, 10.210342f, 0.5408764f, 3.5824041f, 15.459124f, 5.217595f, 10.753355f, 35.982403f, 15.246645f, 37.617596f, 1.4593601f, 23.050154f, 4.1406403f, 36.149845f, 0.0f, 15.6f, 11.068764f, 21.6f, 38.54088f, 35.28549f, 53.45912f, 40.71451f, 26.134256f, 48.358635f, 27.465742f, 64.0f, 29.96254f, 3.1999998f, 33.23746f, 19.2f, 11.653517f, 43.980293f, 48.34648f, 46.41971f, 0.0f, 26.967152f, 26.748941f, 31.032848f, 28.590324f, 9.050154f, 32.0f, 22.149847f, 17.828777f, 19.00683f, 32.0f, 20.99317f, 3.5724945f, 7.273454f, 11.627505f, 19.126545f, 4.989658f, 26.8f, 9.410341f, 32.0f, 15.157195f, 18.00537f, 20.042807f, 25.194632f, 30.889404f, 9.652013f, 32.0f, 12.347987f, 3.399414f, 3.8000002f, 32.0f, 9.8f, 24.980408f, 10.086582f, 28.61959f, 11.913418f, 13.950423f, 3.884349f, 22.049576f, 6.115651f, 24.259361f, 6.8f, 26.94064f, 22.8f, 3.6538367f, 19.475813f, 13.546164f, 28.524187f, 11.947443f, 29.318363f, 18.452557f, 32.0f, 17.318363f, 0.0f, 20.281635f, 16.17695f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -1354,11 +1354,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.945f, 0.93f, 0.915f, 0.9f, 0.87f, 0.84f, 0.81f, 0.795f, 0.78f, 0.765f, 0.75f, 0.735f, 0.72f, 0.705f, 0.69f, 0.675f, 0.945f, 0.915f, 0.9f, 0.885f, 0.87f, 0.84f, 0.81f, 0.78f, 0.735f, 0.72f, 0.63f, 0.6f, 0.585f, 0.54f}}, {1, {16.845154f, 2.5170734f, 33.154846f, 7.4829264f, 32.96344f, 40.747444f, 43.836563f, 47.252556f, 0.0f, 9.143808f, 16.243607f, 14.056192f, 0.0f, 25.789658f, 25.710022f, 30.210342f, 37.947445f, 20.791668f, 44.452557f, 32.80833f, 30.277609f, 32.21635f, 32.92239f, 38.18365f, 25.885489f, 29.086582f, 31.314512f, 30.913418f, 2.8654022f, 5.789658f, 26.734598f, 10.210342f, 0.5408764f, 3.5824041f, 15.459124f, 5.217595f, 10.753355f, 35.982403f, 15.246645f, 37.617596f, 1.4593601f, 23.050154f, 4.1406403f, 36.149845f, 0.0f, 15.6f, 11.068764f, 21.6f, 38.54088f, 35.28549f, 53.45912f, 40.71451f, 26.134256f, 48.358635f, 27.465742f, 64.0f, 29.96254f, 3.1999998f, 33.23746f, 19.2f, 11.653517f, 43.980293f, 48.34648f, 46.41971f, 0.0f, 26.967152f, 26.748941f, 31.032848f, 28.590324f, 9.050154f, 32.0f, 22.149847f, 17.828777f, 19.00683f, 32.0f, 20.99317f, 3.5724945f, 7.273454f, 11.627505f, 19.126545f, 4.989658f, 26.8f, 9.410341f, 32.0f, 15.157195f, 18.00537f, 20.042807f, 25.194632f, 30.889404f, 9.652013f, 32.0f, 12.347987f, 3.399414f, 3.8000002f, 32.0f, 9.8f, 24.980408f, 10.086582f, 28.61959f, 11.913418f, 13.950423f, 3.884349f, 22.049576f, 6.115651f, 24.259361f, 6.8f, 26.94064f, 22.8f, 3.6538367f, 19.475813f, 13.546164f, 28.524187f, 11.947443f, 29.318363f, 18.452557f, 32.0f, 17.318363f, 0.0f, 20.281635f, 16.17695f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -1407,11 +1407,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {{0, {189, 186, 183, 180, 174, 168, 162, 159, 156, 153, 150, 147, 144, 141, 138, 135, 189, 183, 180, 177, 174, 168, 162, 156, 147, 144, 126, 120, 117, 108}}},
   // int -> QUANT16_SYMM map
@@ -1460,11 +1460,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -1513,11 +1513,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_2 = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.945f, 0.93f, 0.915f, 0.9f, 0.87f, 0.84f, 0.81f, 0.795f, 0.78f, 0.765f, 0.75f, 0.735f, 0.72f, 0.705f, 0.69f, 0.675f, 0.945f, 0.915f, 0.9f, 0.885f, 0.87f, 0.84f, 0.81f, 0.78f, 0.735f, 0.72f, 0.63f, 0.6f, 0.585f, 0.54f}}, {1, {16.845154f, 2.5170734f, 33.154846f, 7.4829264f, 32.96344f, 40.747444f, 43.836563f, 47.252556f, 0.0f, 9.143808f, 16.243607f, 14.056192f, 0.0f, 25.789658f, 25.710022f, 30.210342f, 37.947445f, 20.791668f, 44.452557f, 32.80833f, 30.277609f, 32.21635f, 32.92239f, 38.18365f, 25.885489f, 29.086582f, 31.314512f, 30.913418f, 2.8654022f, 5.789658f, 26.734598f, 10.210342f, 0.5408764f, 3.5824041f, 15.459124f, 5.217595f, 10.753355f, 35.982403f, 15.246645f, 37.617596f, 1.4593601f, 23.050154f, 4.1406403f, 36.149845f, 0.0f, 15.6f, 11.068764f, 21.6f, 38.54088f, 35.28549f, 53.45912f, 40.71451f, 26.134256f, 48.358635f, 27.465742f, 64.0f, 29.96254f, 3.1999998f, 33.23746f, 19.2f, 11.653517f, 43.980293f, 48.34648f, 46.41971f, 0.0f, 26.967152f, 26.748941f, 31.032848f, 28.590324f, 9.050154f, 32.0f, 22.149847f, 17.828777f, 19.00683f, 32.0f, 20.99317f, 3.5724945f, 7.273454f, 11.627505f, 19.126545f, 4.989658f, 26.8f, 9.410341f, 32.0f, 15.157195f, 18.00537f, 20.042807f, 25.194632f, 30.889404f, 9.652013f, 32.0f, 12.347987f, 3.399414f, 3.8000002f, 32.0f, 9.8f, 24.980408f, 10.086582f, 28.61959f, 11.913418f, 13.950423f, 3.884349f, 22.049576f, 6.115651f, 24.259361f, 6.8f, 26.94064f, 22.8f, 3.6538367f, 19.475813f, 13.546164f, 28.524187f, 11.947443f, 29.318363f, 18.452557f, 32.0f, 17.318363f, 0.0f, 20.281635f, 16.17695f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -1566,11 +1566,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {{0, {0.945f, 0.93f, 0.915f, 0.9f, 0.87f, 0.84f, 0.81f, 0.795f, 0.78f, 0.765f, 0.75f, 0.735f, 0.72f, 0.705f, 0.69f, 0.675f, 0.945f, 0.915f, 0.9f, 0.885f, 0.87f, 0.84f, 0.81f, 0.78f, 0.735f, 0.72f, 0.63f, 0.6f, 0.585f, 0.54f}}, {1, {16.845154f, 2.5170734f, 33.154846f, 7.4829264f, 32.96344f, 40.747444f, 43.836563f, 47.252556f, 0.0f, 9.143808f, 16.243607f, 14.056192f, 0.0f, 25.789658f, 25.710022f, 30.210342f, 37.947445f, 20.791668f, 44.452557f, 32.80833f, 30.277609f, 32.21635f, 32.92239f, 38.18365f, 25.885489f, 29.086582f, 31.314512f, 30.913418f, 2.8654022f, 5.789658f, 26.734598f, 10.210342f, 0.5408764f, 3.5824041f, 15.459124f, 5.217595f, 10.753355f, 35.982403f, 15.246645f, 37.617596f, 1.4593601f, 23.050154f, 4.1406403f, 36.149845f, 0.0f, 15.6f, 11.068764f, 21.6f, 38.54088f, 35.28549f, 53.45912f, 40.71451f, 26.134256f, 48.358635f, 27.465742f, 64.0f, 29.96254f, 3.1999998f, 33.23746f, 19.2f, 11.653517f, 43.980293f, 48.34648f, 46.41971f, 0.0f, 26.967152f, 26.748941f, 31.032848f, 28.590324f, 9.050154f, 32.0f, 22.149847f, 17.828777f, 19.00683f, 32.0f, 20.99317f, 3.5724945f, 7.273454f, 11.627505f, 19.126545f, 4.989658f, 26.8f, 9.410341f, 32.0f, 15.157195f, 18.00537f, 20.042807f, 25.194632f, 30.889404f, 9.652013f, 32.0f, 12.347987f, 3.399414f, 3.8000002f, 32.0f, 9.8f, 24.980408f, 10.086582f, 28.61959f, 11.913418f, 13.950423f, 3.884349f, 22.049576f, 6.115651f, 24.259361f, 6.8f, 26.94064f, 22.8f, 3.6538367f, 19.475813f, 13.546164f, 28.524187f, 11.947443f, 29.318363f, 18.452557f, 32.0f, 17.318363f, 0.0f, 20.281635f, 16.17695f}}},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
@@ -1619,11 +1619,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {{0, {189, 186, 183, 180, 174, 168, 162, 159, 156, 153, 150, 147, 144, 141, 138, 135, 189, 183, 180, 177, 174, 168, 162, 156, 147, 144, 126, 120, 117, 108}}},
   // int -> QUANT16_SYMM map
@@ -1672,11 +1672,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {2}}},
+  .operandDimensions = {{0, {30}}, {1, {30, 4}}, {2, {30}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
-  .int32Operands = {{2, {16, 14}}},
+  .int32Operands = {{2, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}},
   // int -> QUANT8_ASYMM map
   .quant8AsymmOperands = {},
   // int -> QUANT16_SYMM map
