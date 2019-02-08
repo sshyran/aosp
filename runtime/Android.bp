@@ -52,7 +52,6 @@ cc_library {
         android: {
             version_script: "libneuralnetworks.map.txt",
             shared_libs: [
-                "libartbase",
                 "libbase",
                 "libcutils",
                 "libhidlbase",
