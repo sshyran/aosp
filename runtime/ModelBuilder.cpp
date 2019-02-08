@@ -24,16 +24,24 @@
 #include "Utils.h"
 #include "ValidateHal.h"
 
-#include <base/stringpiece.h>
 #include <procpartition/procpartition.h>
 #include <map>
+#include <string_view>
 #include <utility>
 
 namespace android {
 namespace nn {
 
 using ::android::procpartition::Partition;
-using ::art::StringPiece;
+
+// Replacement function for std::string_view::starts_with()
+// which shall be available in C++20.
+#if __cplusplus >= 202000L
+#error "When upgrading to C++20, remove this error and file a bug to remove this workaround."
+#endif
+inline bool StartsWith(std::string_view sv, std::string_view prefix) {
+    return sv.substr(0u, prefix.size()) == prefix;
+}
 
 // The maximum number of operands and operations that a model may have.
 const uint32_t MAX_NUMBER_OF_OPERANDS = 0xFFFFFFFE;
@@ -48,7 +56,7 @@ ModelBuilder::ModelBuilder() {
 
     // Only bundled vendor applications (or tests) are allowed to use extensions.
     if (partition == Partition::VENDOR || partition == Partition::ODM ||
-        StringPiece(path).starts_with("/data/nativetest")) {
+        StartsWith(std::string_view(path), "/data/nativetest")) {
         mExtensionsAllowed = true;
     }
 }
