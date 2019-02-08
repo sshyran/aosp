@@ -54,6 +54,7 @@ const OperationRegistration* register_REDUCE_MAX();
 const OperationRegistration* register_REDUCE_MIN();
 const OperationRegistration* register_REDUCE_PROD();
 const OperationRegistration* register_REDUCE_SUM();
+const OperationRegistration* register_RESIZE_BILINEAR();
 const OperationRegistration* register_RESIZE_NEAREST_NEIGHBOR();
 const OperationRegistration* register_ROI_ALIGN();
 const OperationRegistration* register_ROI_POOLING();
@@ -95,6 +96,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_REDUCE_MIN());
     registerOperation(register_REDUCE_PROD());
     registerOperation(register_REDUCE_SUM());
+    registerOperation(register_RESIZE_BILINEAR());
     registerOperation(register_RESIZE_NEAREST_NEIGHBOR());
     registerOperation(register_ROI_ALIGN());
     registerOperation(register_ROI_POOLING());

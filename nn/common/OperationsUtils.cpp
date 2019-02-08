@@ -549,20 +549,6 @@ bool reshapePrepare(const Shape& input,
     return true;
 }
 
-bool resizeBilinearPrepare(const Shape& input,
-                           int32_t width,
-                           int32_t height,
-                           Shape* output) {
-    NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
-    uint32_t batches  = getSizeOfDimension(input, 0);
-    uint32_t channels = getSizeOfDimension(input, 3);
-
-    output->type = input.type;
-    output->dimensions = {batches, (uint32_t)height, (uint32_t)width, channels};
-
-    return true;
-}
-
 bool depthToSpacePrepare(const Shape& input,
                          int32_t blockSize,
                          Shape* output) {
