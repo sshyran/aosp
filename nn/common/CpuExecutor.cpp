@@ -146,6 +146,11 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
                 return false;
             }
         }
+        if (info->extraParams != shape.extraParams) {
+            LOG(ERROR) << "Invalid extraParams for model output";
+            *result = ANEURALNETWORKS_OP_FAILED;
+            return false;
+        }
     }
 
     std::vector<uint32_t> combined;
@@ -158,6 +163,7 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
     info->type = shape.type;
     info->scale = shape.scale;
     info->zeroPoint = shape.offset;
+    info->extraParams = shape.extraParams;
 
     // Allocate the buffer only if the combined dimension is fully specified
     if (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info->buffer == nullptr) {
