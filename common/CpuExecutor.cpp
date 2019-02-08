@@ -1622,52 +1622,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       setInfoAndAllocateIfNeeded(&output, outShape, &result) &&
                       copyData(input.buffer, input.shape(), output.buffer, outShape);
         } break;
-        case OperationType::RESIZE_BILINEAR: {
-            const size_t inCount = ins.size();
-            if ((inCount != 4 && inCount != 3) || !allParametersPresent(inCount, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            int32_t width = getScalarData<int32_t>(mOperands[ins[1]]);
-            int32_t height = getScalarData<int32_t>(mOperands[ins[2]]);
-            bool data_layout = inCount == 4 ? getScalarData<bool>(mOperands[ins[3]]) : 0;
-
-            RunTimeOperandInfo& output = mOperands[outs[0]];
-            Shape outShape = output.shape();
-
-            RunTimeOperandInfo input_tmp, output_tmp;
-            std::unique_ptr<uint8_t[]> input_tmp_guard, output_tmp_guard;
-            if (!convertToNhwc(input_tmp, input, input_tmp_guard, data_layout)) {
-                success = false;
-                break;
-            }
-            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
-            output_tmp.buffer = data_layout ? nullptr : output.buffer;
-            output_tmp.length = data_layout ? 0 : output.length;
-
-            if (!resizeBilinearPrepare(input_tmp.shape(), width, height, &outShape) ||
-                !setInfoAndAllocateIfNeeded(&output_tmp, outShape, &result)) {
-                if (!data_layout) output.dimensions = output_tmp.dimensions;
-                break;
-            }
-            if (input_tmp.type == OperandType::TENSOR_FLOAT32) {
-                success = resizeBilinearFloat32(
-                        reinterpret_cast<const float*>(input_tmp.buffer), input_tmp.shape(),
-                        reinterpret_cast<float*>(output_tmp.buffer), outShape);
-            } else if (input_tmp.type == OperandType::TENSOR_FLOAT16) {
-                success = resizeBilinearFloat16(
-                        reinterpret_cast<const _Float16*>(input_tmp.buffer), input_tmp.shape(),
-                        reinterpret_cast<_Float16*>(output_tmp.buffer), outShape);
-            }
-
-            if (data_layout) {
-                output_tmp_guard.reset(output_tmp.buffer);
-            }
-            if (!success || !convertFromNhwc(output, output_tmp, data_layout, &result)) {
-                success = false;
-                break;
-            }
-        } break;
         case OperationType::DEPTH_TO_SPACE: {
             const size_t inCount = ins.size();
             if ((inCount != 3 && inCount != 2) || !allParametersPresent(inCount, 1)) {
