@@ -18,12 +18,12 @@
 model = Model()
 i1 = Input("scores", "TENSOR_FLOAT32", "{19, 3}") # scores
 i2 = Input("roi", "TENSOR_FLOAT32", "{19, 12}") # roi
-i3 = Input("batchSplit", "TENSOR_INT32", "{2}") # batchSplit
+i3 = Input("batchSplit", "TENSOR_INT32", "{19}") # batchSplit
 
 o1 = Output("scoresOut", "TENSOR_FLOAT32", "{12}") # scores out
 o2 = Output("roiOut", "TENSOR_FLOAT32", "{12, 4}") # roi out
 o3 = Output("classesOut", "TENSOR_INT32", "{12}") # classes out
-o4 = Output("batchSplitOut", "TENSOR_INT32", "{2}") # batch split out
+o4 = Output("batchSplitOut", "TENSOR_INT32", "{12}") # batch split out
 model = model.Operation("BOX_WITH_NMS_LIMIT",
     i1, i2, i3, 0.3, 0.4, -1).To(o1, o2, o3, o4)
 
@@ -77,7 +77,7 @@ input0 = {
         8, 8, 17, 17, 8, 8, 18, 18, 8, 8, 18, 18,
         7, 7, 16, 16, 7, 7, 17, 17, 7, 7, 17, 17
     ],
-    i3: [9, 10]  # batch split
+    i3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  # batch split
 }
 
 output0 = {
@@ -97,7 +97,7 @@ output0 = {
         9, 9, 19, 19
     ],
     o3: [1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 2],
-    o4: [5, 7],
+    o4: [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
 }
 
 Example((input0, output0)).AddVariations("relaxed", "float16", quant8)
@@ -107,12 +107,12 @@ Example((input0, output0)).AddVariations("relaxed", "float16", quant8)
 model = Model()
 i1 = Input("scores", "TENSOR_FLOAT32", "{19, 3}") # scores
 i2 = Input("roi", "TENSOR_FLOAT32", "{19, 12}") # roi
-i3 = Input("batchSplit", "TENSOR_INT32", "{2}") # batchSplit
+i3 = Input("batchSplit", "TENSOR_INT32", "{19}") # batchSplit
 
 o1 = Output("scoresOut", "TENSOR_FLOAT32", "{10}") # scores out
 o2 = Output("roiOut", "TENSOR_FLOAT32", "{10, 4}") # roi out
 o3 = Output("classesOut", "TENSOR_INT32", "{10}") # classes out
-o4 = Output("batchSplitOut", "TENSOR_INT32", "{2}") # batch split out
+o4 = Output("batchSplitOut", "TENSOR_INT32", "{10}") # batch split out
 model = model.Operation("BOX_WITH_NMS_LIMIT",
     i1, i2, i3, 0.3, 0.4, 5).To(o1, o2, o3, o4)
 
@@ -166,7 +166,7 @@ input0 = {
         8, 8, 17, 17, 8, 8, 18, 18, 8, 8, 18, 18,
         7, 7, 16, 16, 7, 7, 17, 17, 7, 7, 17, 17
     ],
-    i3: [9, 10]  # batch split
+    i3: [1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]  # batch split
 }
 
 output0 = {
@@ -184,7 +184,7 @@ output0 = {
         0, 0,  2,  2
     ],
     o3: [1, 1, 1, 2, 2, 1, 1, 1, 2, 2],
-    o4: [5, 5],
+    o4: [1, 1, 1, 1, 1, 3, 3, 3, 3, 3],
 }
 
 Example((input0, output0)).AddVariations("relaxed", "float16", quant8)
