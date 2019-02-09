@@ -17,7 +17,7 @@
 # TEST 1: AXIS_ALIGNED_BBOX_TRANSFORM
 r1 = Input("roi", "TENSOR_FLOAT32", "{5, 4}")
 d1 = Input("bboxDeltas", "TENSOR_FLOAT32", "{5, 8}")
-b1 = Input("batchSplit", "TENSOR_INT32", "{4}")
+b1 = Input("batchSplit", "TENSOR_INT32", "{5}")
 i1 = Input("imageInfo", "TENSOR_FLOAT32", "{4, 2}")
 o1 = Output("out", "TENSOR_FLOAT32", "{5, 8}")
 model1 = Model().Operation("AXIS_ALIGNED_BBOX_TRANSFORM", r1, d1, b1, i1).To(o1)
@@ -45,7 +45,7 @@ inputs = {
          1, -0.5, 0.3, 0.5,
          0.3, -0.2, 1.1, -0.8,
          0.1, 0.05, -0.5, -0.5],
-    b1: [1, 1, 2, 1],
+    b1: [0, 1, 2, 2, 3],
     i1: [512, 512,
          128, 256,
          256, 256,
@@ -69,7 +69,7 @@ Example((inputs, {
 # TEST 2: AXIS_ALIGNED_BBOX_TRANSFORM_ZERO_BATCH
 r2 = Input("roi", "TENSOR_FLOAT32", "{5, 4}")
 d2 = Input("bboxDeltas", "TENSOR_FLOAT32", "{5, 8}")
-b2 = Input("batchSplit", "TENSOR_INT32", "{7}")
+b2 = Input("batchSplit", "TENSOR_INT32", "{5}")
 i2 = Input("imageInfo", "TENSOR_FLOAT32", "{7, 2}")
 o2 = Output("out", "TENSOR_FLOAT32", "{5, 8}")
 model2 = Model().Operation("AXIS_ALIGNED_BBOX_TRANSFORM", r2, d2, b2, i2).To(o2)
@@ -97,7 +97,7 @@ inputs = {
          1, -0.5, 0.3, 0.5,
          0.3, -0.2, 1.1, -0.8,
          0.1, 0.05, -0.5, -0.5],
-    b2: [1, 0, 1, 0, 0, 2, 1],
+    b2: [0, 2, 5, 5, 6],
     i2: [512, 512,
          32, 32,
          128, 256,
