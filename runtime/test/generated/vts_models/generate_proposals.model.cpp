@@ -122,7 +122,7 @@ Model createTestModel_nhwc() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {1},
+            .dimensions = {4},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -283,7 +283,7 @@ Model createTestModel_nhwc_relaxed() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {1},
+            .dimensions = {4},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -445,7 +445,7 @@ Model createTestModel_nhwc_quant8() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {1},
+            .dimensions = {4},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -606,7 +606,7 @@ Model createTestModel_nhwc_float16() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {1},
+            .dimensions = {4},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -767,7 +767,7 @@ Model createTestModel_nchw() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {1},
+            .dimensions = {4},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -928,7 +928,7 @@ Model createTestModel_nchw_relaxed() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {1},
+            .dimensions = {4},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1090,7 +1090,7 @@ Model createTestModel_nchw_quant8() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {1},
+            .dimensions = {4},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1251,7 +1251,7 @@ Model createTestModel_nchw_float16() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {1},
+            .dimensions = {4},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2702,7 +2702,7 @@ Model createTestModel_nhwc_2() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {2},
+            .dimensions = {30},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2863,7 +2863,7 @@ Model createTestModel_nhwc_relaxed_2() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {2},
+            .dimensions = {30},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3025,7 +3025,7 @@ Model createTestModel_nhwc_quant8_2() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {2},
+            .dimensions = {30},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3186,7 +3186,7 @@ Model createTestModel_nhwc_float16_2() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {2},
+            .dimensions = {30},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3347,7 +3347,7 @@ Model createTestModel_nchw_2() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {2},
+            .dimensions = {30},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3508,7 +3508,7 @@ Model createTestModel_nchw_relaxed_2() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {2},
+            .dimensions = {30},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3670,7 +3670,7 @@ Model createTestModel_nchw_quant8_2() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {2},
+            .dimensions = {30},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3831,7 +3831,7 @@ Model createTestModel_nchw_float16_2() {
         },
         {
             .type = OperandType::TENSOR_INT32,
-            .dimensions = {2},
+            .dimensions = {30},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,

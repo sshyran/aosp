@@ -66,13 +66,9 @@ inline bool roiPoolingNhwc(const T_Input* inputData, const Shape& inputShape, co
 
     T_Input* outPtr = outputData;
     const T_Roi* roiDataEnd = roiData + numRois * roiInfoLength;
-    uint32_t batchId = 0, roiIndex = 0;
+    uint32_t roiIndex = 0;
     for (const T_Roi* roiInfo = roiData; roiInfo < roiDataEnd; roiInfo += kRoiDim, roiIndex++) {
-        while (roiIndex >= batchSplitData[batchId]) {
-            batchId++;
-            roiIndex = 0;
-        }
-
+        uint32_t batchId = batchSplitData[roiIndex];
         // Check for malformed data
         // 1. invalid batch id
         // 2. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
@@ -217,7 +213,7 @@ bool prepare(IOperationExecutionContext* context) {
     uint32_t inDepth = getSizeOfDimension(input, useNchw ? 1 : 3);
     uint32_t numRois = getSizeOfDimension(roiShape, 0);
     NN_RET_CHECK_EQ(getSizeOfDimension(roiShape, 1), 4);
-    NN_RET_CHECK_EQ(getSizeOfDimension(batchSplitShape, 0), numBatches);
+    NN_RET_CHECK_EQ(getSizeOfDimension(batchSplitShape, 0), numRois);
 
     auto outputHeight = context->getInputValue<int32_t>(kOutputHeightScalar);
     auto outputWidth = context->getInputValue<int32_t>(kOutputWidthScalar);
