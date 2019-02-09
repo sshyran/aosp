@@ -175,9 +175,12 @@ void compare_(
 }
 #undef VALUE_TYPE
 #undef VECTOR_TYPE
-inline void compare(const MixedTyped& golden, const MixedTyped& test, float fpRange = 1e-5f) {
+inline void compare(const MixedTyped& golden, const MixedTyped& test,
+                    float fpAtol = 1e-5f, float fpRtol = 1e-5f) {
     size_t totalNumberOfErrors = 0;
-    compare_<0>(golden, test, [&totalNumberOfErrors, fpRange](float g, float t) {
+    compare_<0>(golden, test, [&totalNumberOfErrors, fpAtol, fpRtol](float g, float t) {
+        // Compute the range based on both absolute tolerance and relative tolerance
+        float fpRange = fpAtol + fpRtol * std::abs(g);
         if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
             EXPECT_NEAR(g, t, fpRange);
         }

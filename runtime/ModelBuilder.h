@@ -51,6 +51,8 @@ public:
     int finish();
     bool isFinished() const { return mCompletedModel; }
 
+    bool hasOEMOperation() const { return mHasOEMOperation; }
+
     int createCompilation(CompilationBuilder** compilation);
 
     void setHidlModel(Model* model) const;
@@ -107,6 +109,8 @@ public:
 
     // The operations of the graph.
     std::vector<Operation> mOperations;
+    // Is at least one of those operations an OEM_OPERATION?
+    bool mHasOEMOperation = false;
     // The description of the operands of the graph.
     std::vector<Operand> mOperands;
     // Specifies where to find the list of indexes identifying
@@ -132,11 +136,11 @@ public:
 
     // Once the model has been finished, we should not allow further
     // modifications to the model.
-    mutable bool mCompletedModel = false;
+    bool mCompletedModel = false;
 
     // Any invalid manipulation of the model will mark the model invalid.
     // No further modifications are allowed to the model.
-    mutable bool mInvalidModel = false;
+    bool mInvalidModel = false;
 
     // 'true' indicates TENSOR_FLOAT32 may be calculated with range and/or
     // precision as low as that of the IEEE 754 16-bit floating-point format.

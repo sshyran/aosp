@@ -234,7 +234,11 @@ private:
         }
     };
 public:
-    enum OEM { OEMNo, OEMYes };
+    enum OEM {
+        OEMNo,          // rejected by getSupportedOperations and prepareModel
+        OEMIndecisive,  // accepted by getSupportedOperations but not prepareModel
+        OEMYes,         // accepted by getSupportedOperations and prepareModel
+    };
 
     PartitioningDriver(const char *name, Capabilities capabilities,
                        uint32_t operationMask, OEM oem = OEMNo) :
@@ -242,10 +246,19 @@ public:
             mOperationMask(operationMask), mOEM(oem) {}
     ~PartitioningDriver() override {}
 
-    Return<ErrorStatus> prepareModel_1_1(const Model&, ExecutionPreference,
+    Return<ErrorStatus> prepareModel_1_1(const Model& model, ExecutionPreference,
                                          const sp<IPreparedModelCallback>& cb) override {
-        cb->notify(ErrorStatus::NONE, new PartitioningPreparedModel);
-        return ErrorStatus::NONE;
+        ErrorStatus status = ErrorStatus::NONE;
+        if (mOEM != OEMYes) {
+            for (auto operation : model.operations) {
+                if (operation.type == OperationType::OEM_OPERATION) {
+                    status = ErrorStatus::INVALID_ARGUMENT;
+                    break;
+                }
+            }
+        }
+        cb->notify(status, new PartitioningPreparedModel);
+        return status;
     }
 
     Return<DeviceStatus> getStatus() override {
@@ -268,7 +281,7 @@ public:
         std::vector<bool> supported(count);
         for (size_t i = 0; i < count; i++) {
             if (model.operations[i].type == OperationType::OEM_OPERATION) {
-                supported[i] = (mOEM == OEMYes);
+                supported[i] = (mOEM != OEMNo);
                 continue;
             }
             supported[i] = false;
@@ -1129,6 +1142,16 @@ TEST_F(PartitioningTest, OemOperations) {
         });
     PartitioningCompilation compilationNoOEM(&model);
     ASSERT_EQ(compilationNoOEM.finish(devicesNoOEM), Result::BAD_DATA);
+
+    // Verify that we get an error if a driver can SUPPORT but not PREPARE an OEM operation.
+    const auto devicesIndecisiveOEM = makeDevices(
+        {
+            {"indecisiveOEM", { .float32Performance = { .execTime = 0.5, .powerUsage = 0.5 },
+                                .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } },
+                                ~0U, PartitioningDriver::OEMIndecisive}
+        });
+    PartitioningCompilation compilationIndecisiveOEM(&model);
+    ASSERT_NE(compilationIndecisiveOEM.finish(devicesIndecisiveOEM), Result::NO_ERROR);
 
     // Verify that we get an error if there are no drivers (only CPU fallback).
     PartitioningCompilation compilationNoDrivers(&model);

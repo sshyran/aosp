@@ -780,11 +780,9 @@ int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& d
     // If we only have the CPU, or if the graph has no operations, no need to try to partition.
     if (nonCpuDeviceCount == 0 || operationCount == 0) {
         // Make sure no op is an OEM operation.
-        for (auto& op: mOperations) {
-            if (op.type == OperationType::OEM_OPERATION) {
-                LOG(ERROR) << "No driver can do the OEM op";
-                return ANEURALNETWORKS_BAD_DATA;
-            }
+        if (mHasOEMOperation) {
+            LOG(ERROR) << "No driver can do the OEM op";
+            return ANEURALNETWORKS_BAD_DATA;
         }
         plan->becomeSingleStep(nullptr /* CPU */, this);
         return plan->finish(this, preference);
