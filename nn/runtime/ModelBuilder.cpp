@@ -228,6 +228,7 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
     for (uint32_t i : mOperations.back().inputs) {
         mOperands[i].numberOfConsumers++;
     }
+    mHasOEMOperation |= (mOperations.back().type == OperationType::OEM_OPERATION);
 
     return ANEURALNETWORKS_NO_ERROR;
 }
