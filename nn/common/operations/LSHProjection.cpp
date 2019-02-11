@@ -17,9 +17,10 @@
 #include "LSHProjection.h"
 
 #include "CpuExecutor.h"
-#include "utils/hash/farmhash.h"
-
 #include "Tracing.h"
+#include "Utils.h"
+
+#include "utils/hash/farmhash.h"
 
 namespace android {
 namespace nn {
@@ -85,7 +86,8 @@ bool LSHProjection::Prepare(const Operation& operation, std::vector<RunTimeOpera
 template <typename T>
 int runningSignBit(const RunTimeOperandInfo* input, const RunTimeOperandInfo* weight, float seed) {
     double score = 0.0;
-    int input_item_bytes = sizeOfData(input->type, input->dimensions) / SizeOfDimension(input, 0);
+    int input_item_bytes = nonExtensionOperandSizeOfData(input->type, input->dimensions) /
+                           SizeOfDimension(input, 0);
     char* input_ptr = (char*)(input->buffer);
 
     const size_t seed_size = sizeof(seed);

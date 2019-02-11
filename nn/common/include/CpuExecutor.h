@@ -74,7 +74,7 @@ struct RunTimeOperandInfo {
             // We don't know sizes of extension types.
             return true;
         }
-        return length >= sizeOfData(type, dimensions);
+        return length >= nonExtensionOperandSizeOfData(type, dimensions);
     }
 };
 

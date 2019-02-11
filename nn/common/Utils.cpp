@@ -262,7 +262,12 @@ const bool kScalarDataTypeOEM[]{
 static_assert(COUNT(kScalarDataTypeOEM) == kNumberOfDataTypesOEM,
               "kScalarDataTypeOEM is incorrect");
 
-uint32_t sizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) {
+bool nonExtensionOperandTypeIsScalar(int type) {
+    CHECK(!isExtensionOperandType(type)) << "Extension operand types are not supported";
+    return tableLookup(kScalarDataType, kScalarDataTypeOEM, type);
+}
+
+uint32_t nonExtensionOperandSizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) {
     CHECK(!isExtensionOperandType(type)) << "Size of extension operand data is unknown";
     int n = static_cast<int>(type);
 
@@ -282,29 +287,21 @@ uint32_t sizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) {
     return size;
 }
 
-bool hasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimCount) {
-    if (isExtensionOperandType(type)) {
-        // We don't know if the extension type is a scalar or tensor type without
-        // asking an extension-enabled driver.
-        if (dimCount == 0) {
-            // Assume it's a scalar type.
-            return false;
-        } else {
-            // It must be a tensor type.
-            return std::find(dim, dim + dimCount, 0) != (dim + dimCount);
-        }
+bool tensorHasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimCount) {
+    if (!isExtensionOperandType(type)) {
+        CHECK(!nonExtensionOperandTypeIsScalar(type))
+                << "A scalar type can never have unspecified dimensions";
     }
-    bool isTensorType = !tableLookup(kScalarDataType, kScalarDataTypeOEM, type);
-    return isTensorType && (dimCount == 0 || std::find(dim, dim + dimCount, 0) != (dim + dimCount));
+    return dimCount == 0 || std::find(dim, dim + dimCount, 0) != (dim + dimCount);
 }
 
-bool hasUnspecifiedDimensions(const ANeuralNetworksOperandType* type) {
-    return hasUnspecifiedDimensions(type->type, type->dimensions, type->dimensionCount);
+bool tensorHasUnspecifiedDimensions(const ANeuralNetworksOperandType* type) {
+    return tensorHasUnspecifiedDimensions(type->type, type->dimensions, type->dimensionCount);
 }
 
-bool hasUnspecifiedDimensions(const Operand& operand) {
-    return hasUnspecifiedDimensions(static_cast<int>(operand.type), operand.dimensions.data(),
-                                    operand.dimensions.size());
+bool tensorHasUnspecifiedDimensions(const Operand& operand) {
+    return tensorHasUnspecifiedDimensions(static_cast<int>(operand.type), operand.dimensions.data(),
+                                          operand.dimensions.size());
 }
 
 hidl_memory allocateSharedMemory(int64_t size) {
@@ -426,18 +423,22 @@ static bool validateTensorDimensions(const ANeuralNetworksOperandType& type, con
     return true;
 }
 
-static bool validateOperandTypeHelper(const ANeuralNetworksOperandType& type, const char* tag,
-                                      bool allowPartial) {
+static bool validateOperandTypeHelper(
+        const ANeuralNetworksOperandType& type,
+        const Extension::OperandTypeInformation* const extensionOperandTypeInfo, const char* tag,
+        bool allowPartial) {
     NN_RET_CHECK_EQ(type.dimensionCount == 0, type.dimensions == nullptr);
     if (isExtensionOperandType(type.type)) {
-        if (type.dimensionCount == 0) {
-            NN_RET_CHECK(validateScalarDimensions(type, tag));
-        } else {
+        NN_RET_CHECK(extensionOperandTypeInfo != nullptr);
+        if (extensionOperandTypeInfo->isTensor) {
             NN_RET_CHECK(validateTensorDimensions(type, tag, allowPartial));
+        } else {
+            NN_RET_CHECK(validateScalarDimensions(type, tag));
         }
         return validateNoQuantParams(type, tag);
     }
 
+    NN_RET_CHECK(extensionOperandTypeInfo == nullptr);
     NN_RET_CHECK(validCode(kNumberOfDataTypes, kNumberOfDataTypesOEM, type.type))
             << tag << " invalid OperandType: " << type.type;
 
@@ -470,10 +471,12 @@ static bool validateOperandTypeHelper(const ANeuralNetworksOperandType& type, co
     return true;
 }
 
-int validateOperandType(const ANeuralNetworksOperandType& type, const char* tag,
-                        bool allowPartial) {
-    return validateOperandTypeHelper(type, tag, allowPartial) ? ANEURALNETWORKS_NO_ERROR
-                                                              : ANEURALNETWORKS_BAD_DATA;
+int validateOperandType(const ANeuralNetworksOperandType& type,
+                        const Extension::OperandTypeInformation* const extensionOperandTypeInfo,
+                        const char* tag, bool allowPartial) {
+    return validateOperandTypeHelper(type, extensionOperandTypeInfo, tag, allowPartial)
+                   ? ANEURALNETWORKS_NO_ERROR
+                   : ANEURALNETWORKS_BAD_DATA;
 }
 
 int validateOperandList(uint32_t count, const uint32_t* list, uint32_t operandCount,

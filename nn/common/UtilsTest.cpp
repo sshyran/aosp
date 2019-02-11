@@ -54,6 +54,41 @@ TEST(CalculateBroadcastedShapeTest, FailsOnIncompatible) {
     EXPECT_FALSE(calculateBroadcastedShape(shape2, shape1, &actualOutputShape));
 }
 
+static int32_t getExtensionType(uint16_t extensionPrefix, uint16_t typeWithinExtension) {
+    constexpr uint8_t kLowBitsType =
+            static_cast<uint8_t>(Model::ExtensionTypeEncoding::LOW_BITS_TYPE);
+    int32_t type = (extensionPrefix << kLowBitsType) | typeWithinExtension;
+    EXPECT_TRUE(isExtensionOperandType(static_cast<OperandType>(type)));
+    return type;
+}
+
+TEST(TensorHasUnspecifiedDimensionsTest, ExtensionTensorWithUnspecifiedRank) {
+    // Regression test for b/124285861.
+    EXPECT_TRUE(tensorHasUnspecifiedDimensions(getExtensionType(1, 0), /*dim=*/nullptr,
+                                               /*dimCount=*/0));
+}
+
+TEST(ValidateOperandTypeTest, ExtensionTensorWithUnspecifiedRank) {
+    // Regression test for b/124104123.
+    constexpr uint16_t kExtensionPrefix = 1;
+    constexpr uint16_t kTypeWithinExtension = 0;
+    int32_t extensionType = getExtensionType(kExtensionPrefix, kTypeWithinExtension);
+    ANeuralNetworksOperandType type = {
+            .type = extensionType,
+            .dimensionCount = 0,
+            .dimensions = nullptr,
+    };
+    Extension::OperandTypeInformation info = {
+            .type = kTypeWithinExtension,
+            .isTensor = true,
+            .byteSize = 4,
+    };
+    EXPECT_EQ(validateOperandType(type, &info, /*tag=*/"test", /*allowPartial=*/true),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(validateOperandType(type, &info, /*tag=*/"test", /*allowPartial=*/false),
+              ANEURALNETWORKS_BAD_DATA);
+}
+
 }  // namespace wrapper
 }  // namespace nn
 }  // namespace android

@@ -25,12 +25,13 @@
 
 #ifndef NNTEST_ONLY_PUBLIC_API
 #include "NeuralNetworksExtensions.h"
-const char* kTestExtensionName = "vendor.test.validation_test_extension";
+#include "TypeManager.h"
 #endif
 
 // This file tests all the validations done by the Neural Networks API.
 
 namespace {
+
 class ValidationTest : public ::testing::Test {
    protected:
     virtual void SetUp() {}
@@ -54,15 +55,10 @@ class ValidationTestModel : public ValidationTest {
         return mNumOperands++;
     }
 
-#ifndef NNTEST_ONLY_PUBLIC_API
-    int32_t getExtensionOperandType(uint16_t typeWithinExtension) {
-        int32_t result;
-        EXPECT_EQ(ANeuralNetworksModel_getExtensionOperandType(mModel, kTestExtensionName,
-                                                               typeWithinExtension, &result),
-                  ANEURALNETWORKS_NO_ERROR);
-        return result;
+    uint32_t addOperand(const ANeuralNetworksOperandType& operandType) {
+        EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &operandType), ANEURALNETWORKS_NO_ERROR);
+        return mNumOperands++;
     }
-#endif
 
     uint32_t addTensorOperand(int32_t type = ANEURALNETWORKS_TENSOR_FLOAT32) {
         uint32_t dimensions[] = {2};
@@ -71,8 +67,7 @@ class ValidationTestModel : public ValidationTest {
                 .dimensionCount = sizeof(dimensions) / sizeof(dimensions[0]),
                 .dimensions = dimensions,
         };
-        EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &operandType), ANEURALNETWORKS_NO_ERROR);
-        return mNumOperands++;
+        return addOperand(operandType);
     }
 
     void createModel() {
@@ -109,6 +104,42 @@ class ValidationTestModel : public ValidationTest {
             .dimensions = &kDummyDimensionValue,
     };
 };
+
+#ifndef NNTEST_ONLY_PUBLIC_API
+constexpr const char* kTestExtensionName = "com.android.test_extension";
+constexpr int32_t kTestExtensionTensorType = ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL;
+
+class ValidationTestModelExtensions : public ValidationTestModel {
+   protected:
+    virtual void SetUp() {
+        ValidationTestModel::SetUp();
+        EXPECT_TRUE(::android::nn::TypeManager::get()->forTest_registerExtension({
+                .name = kTestExtensionName,
+                .operandTypes =
+                        {
+                                {
+                                        .type = kTestExtensionTensorType,
+                                        .isTensor = true,
+                                        .byteSize = 1,
+                                },
+                        },
+        }));
+    }
+
+    virtual void TearDown() {
+        ::android::nn::TypeManager::get()->forTest_reset();
+        ValidationTestModel::TearDown();
+    }
+
+    int32_t getExtensionOperandType(uint16_t typeWithinExtension) {
+        int32_t result;
+        EXPECT_EQ(ANeuralNetworksModel_getExtensionOperandType(mModel, kTestExtensionName,
+                                                               typeWithinExtension, &result),
+                  ANEURALNETWORKS_NO_ERROR);
+        return result;
+    }
+};
+#endif
 
 class ValidationTestIdentify : public ValidationTestModel {
     virtual void SetUp() {
@@ -259,9 +290,14 @@ TEST_F(ValidationTestModel, SetOperandSymmPerChannelQuantParams) {
 }
 
 #ifndef NNTEST_ONLY_PUBLIC_API
-TEST_F(ValidationTestModel, SetOperandSymmPerChannelQuantParams_ExtensionOperand) {
-    const int32_t operandIndex = addTensorOperand(
-            getExtensionOperandType(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL));
+TEST_F(ValidationTestModelExtensions, AddOperand_UnknownPrefix) {
+    ANeuralNetworksOperandType type = {.type = -1};
+    ASSERT_EQ(ANeuralNetworksModel_addOperand(mModel, &type), ANEURALNETWORKS_BAD_DATA);
+}
+
+TEST_F(ValidationTestModelExtensions, SetOperandSymmPerChannelQuantParams_ExtensionOperand) {
+    const int32_t operandIndex =
+            addTensorOperand(getExtensionOperandType(kTestExtensionTensorType));
 
     float scales[2] = {1.0, 2.0};
     ANeuralNetworksSymmPerChannelQuantParams channelQuant = {
@@ -275,8 +311,9 @@ TEST_F(ValidationTestModel, SetOperandSymmPerChannelQuantParams_ExtensionOperand
               ANEURALNETWORKS_BAD_DATA);
 }
 
-TEST_F(ValidationTestModel, SetOperandExtensionData) {
-    const int32_t operandIndex = addTensorOperand(getExtensionOperandType(0));
+TEST_F(ValidationTestModelExtensions, SetOperandExtensionData) {
+    const int32_t operandIndex =
+            addTensorOperand(getExtensionOperandType(kTestExtensionTensorType));
     const int32_t data = 42;
     const size_t dataLength = sizeof(data);
     EXPECT_EQ(
@@ -294,17 +331,43 @@ TEST_F(ValidationTestModel, SetOperandExtensionData) {
               ANEURALNETWORKS_NO_ERROR);
 }
 
-TEST_F(ValidationTestModel, SetOperandExtensionData_Empty) {
-    const int32_t operandIndex = addTensorOperand(getExtensionOperandType(0));
+TEST_F(ValidationTestModelExtensions, SetOperandExtensionData_Empty) {
+    const int32_t operandIndex =
+            addTensorOperand(getExtensionOperandType(kTestExtensionTensorType));
     EXPECT_EQ(ANeuralNetworksModel_setOperandExtensionData(mModel, operandIndex, nullptr, 0),
               ANEURALNETWORKS_NO_ERROR);
 }
 
-TEST_F(ValidationTestModel, SetOperandExtensionData_NonExtensionOperand) {
+TEST_F(ValidationTestModelExtensions, SetOperandExtensionData_NonExtensionOperand) {
     const int32_t operandIndex = addTensorOperand();
     const int32_t data = 42;
     const size_t dataLength = sizeof(data);
     EXPECT_EQ(ANeuralNetworksModel_setOperandExtensionData(mModel, operandIndex, &data, dataLength),
+              ANEURALNETWORKS_BAD_DATA);
+}
+
+TEST_F(ValidationTestModelExtensions, SetOperandValue_UnspecifiedDimension) {
+    const uint32_t dimensions[2] = {3, 0};
+    ANeuralNetworksOperandType type = {
+            .type = getExtensionOperandType(kTestExtensionTensorType),
+            .dimensionCount = 2,
+            .dimensions = dimensions,
+    };
+    const int32_t operandIndex = addOperand(type);
+    char buffer[20];
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValue(mModel, operandIndex, buffer, sizeof(buffer)),
+              ANEURALNETWORKS_BAD_DATA);
+}
+
+TEST_F(ValidationTestModelExtensions, SetOperandValue_UnspecifiedRank) {
+    ANeuralNetworksOperandType type = {
+            .type = getExtensionOperandType(kTestExtensionTensorType),
+            .dimensionCount = 0,
+            .dimensions = nullptr,
+    };
+    const int32_t operandIndex = addOperand(type);
+    char buffer[20];
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValue(mModel, operandIndex, buffer, sizeof(buffer)),
               ANEURALNETWORKS_BAD_DATA);
 }
 #endif
