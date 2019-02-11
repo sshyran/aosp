@@ -18,6 +18,8 @@
 
 #include "ExpandDims.h"
 
+#include "Utils.h"
+
 namespace android {
 namespace nn {
 namespace expand_dims {
@@ -37,7 +39,8 @@ bool prepare(const Shape& input, int32_t axis, Shape* output) {
 
 bool eval(const uint8_t* inputData, const Shape& inputShape, int32_t axis, uint8_t* outputData,
           const Shape& outputShape) {
-    memcpy(outputData, inputData, sizeOfData(inputShape.type, inputShape.dimensions));
+    memcpy(outputData, inputData,
+           nonExtensionOperandSizeOfData(inputShape.type, inputShape.dimensions));
     return true;
 }
 
