@@ -337,7 +337,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             operand.lifetime == OperandLifeTime::CONSTANT_COPY) {
             if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM &&
                 operand.type != OperandType::TENSOR_OEM_BYTE) {
-                uint32_t expectedLength = sizeOfData(operand.type, operand.dimensions);
+                uint32_t expectedLength = nonExtensionOperandSizeOfData(operand);
                 if (location.length != expectedLength) {
                     LOG(ERROR) << "Operand " << index << ": For operand " << toString(operand)
                                << " expected a size of " << expectedLength << " but got "
