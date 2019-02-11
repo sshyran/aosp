@@ -21,6 +21,7 @@
 #include "CompilationBuilder.h"
 #include "GraphDump.h"
 #include "Manager.h"
+#include "TypeManager.h"
 #include "Utils.h"
 #include "ValidateHal.h"
 
@@ -46,9 +47,6 @@ inline bool StartsWith(std::string_view sv, std::string_view prefix) {
 // The maximum number of operands and operations that a model may have.
 const uint32_t MAX_NUMBER_OF_OPERANDS = 0xFFFFFFFE;
 const uint32_t MAX_NUMBER_OF_OPERATIONS = 0xFFFFFFFE;
-const uint32_t MAX_NUMBER_OF_EXTENSIONS_IN_USE =
-        // -2 because prefix 0x0000 corresponds to no extension.
-        (1 << static_cast<uint8_t>(Model::ExtensionTypeEncoding::HIGH_BITS_PREFIX)) - 2;
 
 ModelBuilder::ModelBuilder() {
     std::string path = ::android::procpartition::getExe(getpid());
@@ -75,21 +73,9 @@ bool ModelBuilder::badState(const char* name) {
 
 int ModelBuilder::getExtensionType(const char* extensionName, uint16_t typeWithinExtension,
                                    int32_t* type) {
-    uint16_t prefix;
-    auto it = mExtensionNameToPrefix.find(extensionName);
-    if (it != mExtensionNameToPrefix.end()) {
-        prefix = it->second;
-    } else {
-        if (mExtensionNameToPrefix.size() == MAX_NUMBER_OF_EXTENSIONS_IN_USE) {
-            LOG(ERROR) << "Too many extension types in use";
-            return ANEURALNETWORKS_BAD_DATA;
-        }
-        prefix = mExtensionNameToPrefix.size() + 1;
-        mExtensionNameToPrefix[extensionName] = prefix;
-    }
-    *type = (prefix << static_cast<uint8_t>(Model::ExtensionTypeEncoding::LOW_BITS_TYPE)) |
-            typeWithinExtension;
-    return ANEURALNETWORKS_NO_ERROR;
+    return TypeManager::get()->getExtensionType(extensionName, typeWithinExtension, type)
+                   ? ANEURALNETWORKS_NO_ERROR
+                   : ANEURALNETWORKS_BAD_DATA;
 }
 
 int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
@@ -106,7 +92,13 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
         LOG(WARNING) << "OEM data type is deprecated. Use Extensions instead.";
     }
 
-    NN_RETURN_IF_ERROR(validateOperandType(type, "ANeuralNetworksModel_addOperand", true));
+    const Extension::OperandTypeInformation* info = nullptr;
+    if (isExtensionOperandType(operandType) &&
+        !TypeManager::get()->getExtensionOperandTypeInfo(operandType, &info)) {
+        LOG(ERROR) << "Extension operand type " << toString(operandType) << " is not registered";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    NN_RETURN_IF_ERROR(validateOperandType(type, info, "ANeuralNetworksModel_addOperand", true));
     size_t idx = mOperands.size();
     if (idx >= MAX_NUMBER_OF_OPERANDS) {
         LOG(ERROR) << "ANeuralNetworksModel_addOperand exceed max operands";
@@ -149,7 +141,8 @@ int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t len
         // The location is unused and is set to zeros.
         operand.location = {.poolIndex = 0, .offset = 0, .length = 0};
     } else {
-        if (hasUnspecifiedDimensions(operand)) {
+        if (TypeManager::get()->isTensorType(operand.type) &&
+            tensorHasUnspecifiedDimensions(operand)) {
             LOG(ERROR) << "ANeuralNetworksModel_setOperandValue setting operand " << index
                        << " which has operand type that is not fully specified";
             return ANEURALNETWORKS_BAD_DATA;
@@ -160,8 +153,8 @@ int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t len
             return ANEURALNETWORKS_BAD_DATA;
         }
         uint32_t valueLength = static_cast<uint32_t>(length);
-        if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM) {
-            uint32_t neededLength = sizeOfData(operand.type, operand.dimensions);
+        if (operand.type != OperandType::OEM) {
+            uint32_t neededLength = TypeManager::get()->getSizeOfData(operand);
             if (neededLength != valueLength) {
                 LOG(ERROR) << "ANeuralNetworksModel_setOperandValue setting " << valueLength
                            << " bytes when needing " << neededLength;
@@ -320,7 +313,7 @@ int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory
         return ANEURALNETWORKS_BAD_DATA;
     }
     Operand& operand = mOperands[index];
-    if (hasUnspecifiedDimensions(operand)) {
+    if (TypeManager::get()->isTensorType(operand.type) && tensorHasUnspecifiedDimensions(operand)) {
         LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory setting operand " << index
                    << " which has operand type that is not fully specified";
         return ANEURALNETWORKS_BAD_DATA;
@@ -331,13 +324,11 @@ int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory
                    << " that is not in AHARDWAREBUFFER_FORMAT_BLOB format";
         return ANEURALNETWORKS_UNMAPPABLE;
     }
-    if (!isExtensionOperandType(operand.type)) {
-        uint32_t neededLength = sizeOfData(operand.type, operand.dimensions);
-        if (neededLength != length) {
-            LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory setting " << length
-                       << " bytes when needing " << neededLength;
-            return ANEURALNETWORKS_BAD_DATA;
-        }
+    uint32_t neededLength = TypeManager::get()->getSizeOfData(operand);
+    if (neededLength != length) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory setting " << length
+                   << " bytes when needing " << neededLength;
+        return ANEURALNETWORKS_BAD_DATA;
     }
     if (!memory->validateSize(offset, length)) {
         return ANEURALNETWORKS_BAD_DATA;
@@ -458,15 +449,6 @@ int ModelBuilder::relaxComputationFloat32toFloat16(bool allow) {
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-void ModelBuilder::setExtensionNameToPrefixMap(
-        const std::map<std::string, uint16_t>& extensionNameToPrefix) {
-    mExtensionNameToPrefix = extensionNameToPrefix;
-}
-
-const std::map<std::string, uint16_t>& ModelBuilder::getExtensionNameToPrefixMap() const {
-    return mExtensionNameToPrefix;
-}
-
 int ModelBuilder::createCompilation(CompilationBuilder** compilation,
                                     const std::vector<std::shared_ptr<Device>>& devices,
                                     bool forceNoFallback) {
@@ -579,21 +561,44 @@ void ModelBuilder::setHidlModel(Model* model) const {
     model->outputIndexes = mOutputIndexes;
     model->operandValues = mSmallOperandValues;
     model->relaxComputationFloat32toFloat16 = mRelaxComputationFloat32toFloat16;
+    model->extensionNameToPrefix = getExtensionNameToPrefixMap();
 
     uint32_t count = mMemories.size();
     model->pools.resize(count);
     for (uint32_t i = 0; i < count; i++) {
         model->pools[i] = mMemories[i]->getHidlMemory();
     }
+}
 
-    std::vector<Model::ExtensionNameAndPrefix> extensionNameToPrefixVec;
-    for (auto& nameAndPrefix : mExtensionNameToPrefix) {
-        extensionNameToPrefixVec.push_back({
-                .name = nameAndPrefix.first,
-                .prefix = nameAndPrefix.second,
+std::vector<Model::ExtensionNameAndPrefix> ModelBuilder::getExtensionNameToPrefixMap() const {
+    std::vector<Model::ExtensionNameAndPrefix> extensionNameToPrefix;
+    std::set<uint16_t> prefixSet;
+
+    auto addExtensionWithPrefix = [&extensionNameToPrefix, &prefixSet](uint16_t prefix) {
+        if (!prefixSet.insert(prefix).second) {
+            return;
+        }
+        const Extension* extension;
+        CHECK(TypeManager::get()->getExtensionInfo(prefix, &extension));
+        extensionNameToPrefix.push_back({
+                .name = extension->name,
+                .prefix = prefix,
         });
+    };
+
+    constexpr uint8_t kLowBitsType =
+            static_cast<uint8_t>(Model::ExtensionTypeEncoding::LOW_BITS_TYPE);
+    for (const auto& operand : mOperands) {
+        if (isExtensionOperandType(operand.type)) {
+            addExtensionWithPrefix(static_cast<uint32_t>(operand.type) >> kLowBitsType);
+        }
     }
-    model->extensionNameToPrefix = extensionNameToPrefixVec;
+    for (const auto& operation : mOperations) {
+        if (isExtensionOperationType(operation.type)) {
+            addExtensionWithPrefix(static_cast<uint32_t>(operation.type) >> kLowBitsType);
+        }
+    }
+    return extensionNameToPrefix;
 }
 
 }  // namespace nn
