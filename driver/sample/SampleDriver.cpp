@@ -72,6 +72,13 @@ Return<void> SampleDriver::getType(getType_cb cb) {
     return Void();
 }
 
+Return<void> SampleDriver::getSupportedExtensions(getSupportedExtensions_cb cb) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
+                 "SampleDriver::getSupportedExtensions");
+    cb(ErrorStatus::NONE, {/* No extensions. */});
+    return Void();
+}
+
 Return<void> SampleDriver::getSupportedOperations(const V1_0::Model& model,
                                                   getSupportedOperations_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
