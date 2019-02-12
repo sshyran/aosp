@@ -2526,7 +2526,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
         }
         default: {
             const OperationRegistration* operationRegistration =
-                    OperationResolver::get()->findOperation(static_cast<OperationType>(opType));
+                    BuiltinOperationResolver::get()->findOperation(
+                            static_cast<OperationType>(opType));
             if (operationRegistration == nullptr) {
                 if (0 <= opType && opType < kNumberOfOperationTypes) {
                     LOG(ERROR) << getOperationName(opType) << " not registered";
