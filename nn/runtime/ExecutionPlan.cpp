@@ -51,49 +51,34 @@ int compile(std::shared_ptr<Device> device, const ModelBuilder* model, int32_t e
 
 typedef std::function<void(uint32_t)> OperationReadyCallback;
 
-bool createSymmPerChannelQuantParams(ANeuralNetworksSymmPerChannelQuantParams* outChannelQuant,
-                                     const Operand::ExtraParams& extraParams) {
-    if (extraParams.getDiscriminator() !=
-        V1_2::Operand::ExtraParams::hidl_discriminator::channelQuant) {
-        LOG(ERROR) << "Unexpected extraParams discriminator, expected channelQuant"
-                   << " received " << static_cast<int>(extraParams.getDiscriminator());
-        return false;
-    }
-    auto& fromChannelQuant = extraParams.channelQuant();
-    *outChannelQuant = {
-            .channelDim = fromChannelQuant.channelDim,
-            .scaleCount = static_cast<uint32_t>(fromChannelQuant.scales.size()),
-            .scales = fromChannelQuant.scales.data(),
-    };
-    return true;
-}
-
 int copyOperandExtraParams(ModelBuilder& model, uint32_t toOperandIndex,
                            const Operand& fromOperand) {
-    switch (fromOperand.type) {
-        case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL: {
-            ANeuralNetworksSymmPerChannelQuantParams toChannelQuant;
-            if (!createSymmPerChannelQuantParams(&toChannelQuant, fromOperand.extraParams)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            int n = model.setOperandSymmPerChannelQuantParams(toOperandIndex, toChannelQuant);
-            if (n != ANEURALNETWORKS_NO_ERROR) {
-                LOG(ERROR) << "Failed setOperandSymmPerChannelQuantParams";
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-        } break;
-
-        default: {
-            if (fromOperand.extraParams.getDiscriminator() !=
-                V1_2::Operand::ExtraParams::hidl_discriminator::none) {
-                LOG(ERROR) << "Unexpected extraParams discriminator, expected none"
-                           << " received "
-                           << static_cast<int>(fromOperand.extraParams.getDiscriminator());
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-        }
+    if (fromOperand.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL &&
+        fromOperand.extraParams.getDiscriminator() ==
+                Operand::ExtraParams::hidl_discriminator::channelQuant) {
+        auto& fromChannelQuant = fromOperand.extraParams.channelQuant();
+        ANeuralNetworksSymmPerChannelQuantParams toChannelQuant = {
+                .channelDim = fromChannelQuant.channelDim,
+                .scaleCount = static_cast<uint32_t>(fromChannelQuant.scales.size()),
+                .scales = fromChannelQuant.scales.data(),
+        };
+        return model.setOperandSymmPerChannelQuantParams(toOperandIndex, toChannelQuant);
+    } else if (isExtensionOperandType(fromOperand.type) &&
+               fromOperand.extraParams.getDiscriminator() ==
+                       Operand::ExtraParams::hidl_discriminator::extension) {
+        hidl_vec<uint8_t> extensionData = fromOperand.extraParams.extension();
+        return model.setOperandExtensionData(toOperandIndex, extensionData.data(),
+                                             extensionData.size());
+    } else if (fromOperand.extraParams.getDiscriminator() !=
+                       Operand::ExtraParams::hidl_discriminator::none ||
+               fromOperand.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        LOG(ERROR) << "Type " << toString(fromOperand.type)
+                   << " has an unexpected extraParams discriminator: "
+                   << static_cast<int>(fromOperand.extraParams.getDiscriminator());
+        return ANEURALNETWORKS_BAD_DATA;
+    } else {
+        return ANEURALNETWORKS_NO_ERROR;
     }
-    return ANEURALNETWORKS_NO_ERROR;
 }
 
 // This class tracks whether we know the value of an operand as operations
@@ -386,6 +371,7 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
     }
 
     mSubModel.relaxComputationFloat32toFloat16(fromModel->isComputationFloat32RelaxedToFloat16());
+    mSubModel.setExtensionNameToPrefixMap(fromModel->getExtensionNameToPrefixMap());
 
     // Input order: mModelInputs, mTempsAsSubModelInputs, mOutputsAsSubModelInputs
     // Output order: mModelOutputs, mTempsAsSubModelOutputs
@@ -596,7 +582,8 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
                     subModelInputsAndOutputs =
                             std::make_shared<Controller::SubModelInputsAndOutputsType>();
                 }
-                const uint32_t size = sizeOfData(fromModelOperand);
+                const uint32_t size = step->getDevice()->getSizeOfData(
+                        fromModelOperand, fromModel->getExtensionNameToPrefixMap());
                 totalSizeOfTemporaries += alignBytesNeeded(totalSizeOfTemporaries, size);
                 subModelInputsAndOutputs->insert(std::make_pair(fromModelOperandIndex, totalSizeOfTemporaries));
                 totalSizeOfTemporaries += size;
@@ -849,10 +836,8 @@ int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& d
     // Figure out where each operation will best execute.
     // The value of the vector is the index in the devices vector.
     std::vector<int> bestDeviceForOperation(operationCount);
-    int status = findBestDeviceForEachOperation(preference, devices, &bestDeviceForOperation);
-    if (status != ANEURALNETWORKS_NO_ERROR) {
-        return status;
-    }
+    NN_RETURN_IF_ERROR(
+            findBestDeviceForEachOperation(preference, devices, &bestDeviceForOperation));
 
     // If one device will run all the operations, we don't need to split the work.
     if (std::adjacent_find(bestDeviceForOperation.begin(), bestDeviceForOperation.end(),
@@ -958,7 +943,7 @@ PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> d
         case OperandType::TENSOR_OEM_BYTE:
             return device->getQuantized8Performance();
         default:
-            nnAssert(false);
+            CHECK(isExtensionOperandType(operandType)) << "Unhandled base operand type";
             return device->getQuantized8Performance();
     }
 }
