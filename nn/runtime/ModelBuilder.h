@@ -34,7 +34,9 @@ class ExecutionPlan;
 class Memory;
 
 class ModelBuilder {
-public:
+   public:
+    // Returns an operand/operation type corresponding to a given extension operand/operation type.
+    int getExtensionType(const char* extensionName, uint16_t typeWithinExtension, int32_t* type);
     // Adds an operand to the model.
     int addOperand(const ANeuralNetworksOperandType& type);
     int setOperandValue(uint32_t index, const void* buffer, size_t length);
@@ -42,6 +44,7 @@ public:
                                   size_t length);
     int setOperandSymmPerChannelQuantParams(
             uint32_t index, const ANeuralNetworksSymmPerChannelQuantParams& extraParams);
+    int setOperandExtensionData(uint32_t index, const void* data, size_t length);
 
     int addOperation(ANeuralNetworksOperationType type, uint32_t inputCount, const uint32_t* inputs,
                      uint32_t outputCount, const uint32_t* outputs);
@@ -50,11 +53,15 @@ public:
     int relaxComputationFloat32toFloat16(bool allow);
     bool isComputationFloat32RelaxedToFloat16() const { return mRelaxComputationFloat32toFloat16; }
 
+    void setExtensionNameToPrefixMap(const std::map<std::string, uint16_t>&);
+    const std::map<std::string, uint16_t>& getExtensionNameToPrefixMap() const;
+
     int finish();
     bool isFinished() const { return mCompletedModel; }
     bool isValid() const { return !mInvalidModel; }
 
     bool hasOEMOperation() const { return mHasOEMOperation; }
+    bool hasExtensionOperation() const { return mHasExtensionOperation; }
 
     int createCompilation(CompilationBuilder** compilation,
                           const std::vector<std::shared_ptr<Device>>& devices,
@@ -121,6 +128,8 @@ public:
     std::vector<uint32_t> mSortedOperationIndexMap;
     // Is at least one of those operations an OEM_OPERATION?
     bool mHasOEMOperation = false;
+    // Is at least one of those operations an extension operation?
+    bool mHasExtensionOperation = false;
     // The description of the operands of the graph.
     std::vector<Operand> mOperands;
     // Specifies where to find the list of indexes identifying
@@ -157,6 +166,12 @@ public:
     // 'false' indicates TENSOR_FLOAT32 must be calculated using at least the
     // range and precision of the IEEE 754 32-bit floating-point format.
     bool mRelaxComputationFloat32toFloat16 = false;
+
+    // Maps extension names to numeric "prefixes" of operand and operation
+    // type values. Devices rely on these prefixes to interpret extension types.
+    // TODO(b/123523457): Have a global name-to-prefix mapping instead of
+    // storing it here.
+    std::map<std::string, uint16_t> mExtensionNameToPrefix;
 };
 
 }  // namespace nn
