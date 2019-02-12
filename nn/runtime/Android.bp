@@ -77,6 +77,10 @@ cc_library {
         "libneuralnetworks_common",
     ],
 
+    whole_static_libs: [
+        "libprocpartition",
+    ],
+
     shared_libs: [
         "libfmq",
         "libtextclassifier_hash"
