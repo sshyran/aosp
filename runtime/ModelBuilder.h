@@ -35,6 +35,7 @@ class Memory;
 
 class ModelBuilder {
    public:
+    ModelBuilder();
     // Returns an operand/operation type corresponding to a given extension operand/operation type.
     int getExtensionType(const char* extensionName, uint16_t typeWithinExtension, int32_t* type);
     // Adds an operand to the model.
@@ -80,9 +81,7 @@ class ModelBuilder {
     uint32_t inputCount() const { return static_cast<uint32_t>(mInputIndexes.size()); }
     uint32_t outputCount() const { return static_cast<uint32_t>(mOutputIndexes.size()); }
     uint32_t getInputOperandIndex(uint32_t i) const { return mInputIndexes[i]; }
-    const Operand& getInputOperand(uint32_t i) const {
-        return mOperands[getInputOperandIndex(i)];
-    }
+    const Operand& getInputOperand(uint32_t i) const { return mOperands[getInputOperandIndex(i)]; }
     uint32_t getOutputOperandIndex(uint32_t i) const { return mOutputIndexes[i]; }
     const Operand& getOutputOperand(uint32_t i) const {
         return mOperands[getOutputOperandIndex(i)];
@@ -98,8 +97,8 @@ class ModelBuilder {
         return mSmallOperandValues.data() + offset;
     }
 
-    int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
-                         uint32_t preference, ExecutionPlan* plan) const;
+    int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices, uint32_t preference,
+                         ExecutionPlan* plan) const;
 
    private:
     // TODO: move partitionTheWork, findBestDeviceForEachOperation,
@@ -160,6 +159,9 @@ class ModelBuilder {
     // Any invalid manipulation of the model will mark the model invalid.
     // No further modifications are allowed to the model.
     bool mInvalidModel = false;
+
+    // True if Extensions can be used in the model.
+    bool mExtensionsAllowed = false;
 
     // 'true' indicates TENSOR_FLOAT32 may be calculated with range and/or
     // precision as low as that of the IEEE 754 16-bit floating-point format.
