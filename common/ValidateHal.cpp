@@ -68,12 +68,13 @@ static bool validateOperandExtraParams(const V1_2::Operand& operand, uint32_t in
         case OperandType::TENSOR_QUANT8_ASYMM:
         case OperandType::TENSOR_QUANT16_ASYMM:
         case OperandType::TENSOR_QUANT16_SYMM:
-        case OperandType::TENSOR_BOOL8:
+        case OperandType::TENSOR_BOOL8: {
             NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
                          V1_2::Operand::ExtraParams::hidl_discriminator::none)
                     << "Operand " << index << ": Operand of type "
-                    << getOperandTypeName(operand.type) << " with a Channel Quantization params";
-            break;
+                    << getOperandTypeName(operand.type)
+                    << " has incorrect extraParams: " << toString(operand.extraParams);
+        } break;
         case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL: {
             NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
                          V1_2::Operand::ExtraParams::hidl_discriminator::channelQuant)
@@ -103,9 +104,18 @@ static bool validateOperandExtraParams(const V1_2::Operand& operand, uint32_t in
                         << i << "]=" << channelQuant.scales[i];
             }
         } break;
-        default:
-            // No validation for the OEM types.
-            break;
+        default: {
+            if (isExtensionOperandType(operand.type)) {
+                NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
+                                     V1_2::Operand::ExtraParams::hidl_discriminator::extension ||
+                             operand.extraParams.getDiscriminator() ==
+                                     V1_2::Operand::ExtraParams::hidl_discriminator::none)
+                        << "Operand " << index << ": Extension operand of type "
+                        << getOperandTypeName(operand.type)
+                        << " has incorrect extraParams: " << toString(operand.extraParams);
+            }
+            // No validation for OEM types.
+        } break;
     }
     return true;
 }
@@ -158,10 +168,13 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                 }
                 break;
             }
-            default:
-                LOG(ERROR) << "Operand " << index << ": Invalid operand type "
-                           << toString(operand.type);
-                return false;
+            default: {
+                if (!isExtensionOperandType(operand.type)) {
+                    LOG(ERROR) << "Operand " << index << ": Invalid operand type "
+                               << toString(operand.type);
+                    return false;
+                }
+            } break;
         }
 
         // TODO Validate the numberOfConsumers.
@@ -205,9 +218,14 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                 }
                 break;
             default:
-                // No validation for the OEM types.
-                // TODO We should have had a separate type for TENSOR_INT32 that a scale
-                // and those who don't.  Document now and fix in the next release.
+                if (isExtensionOperandType(operand.type) && operand.scale != 0.f) {
+                    LOG(ERROR) << "Operand " << index << ": Operand of type "
+                               << getOperandTypeName(operand.type) << " with a non-zero scale ("
+                               << operand.scale << ")";
+                    return false;
+                }
+                // No validation for OEM types.
+                // TODO(b/119869082) We should have a separate type for TENSOR_INT32 with a scale.
                 break;
         }
 
@@ -225,7 +243,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
                 if (operand.zeroPoint != 0) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
-                               << getOperandTypeName(operand.type) << " with an non-zero zeroPoint "
+                               << getOperandTypeName(operand.type) << " with a non-zero zeroPoint "
                                << operand.zeroPoint;
                     return false;
                 }
@@ -249,17 +267,23 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::TENSOR_QUANT16_SYMM:
                 if (operand.zeroPoint != 0) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
-                               << getOperandTypeName(operand.type) << " with an invalid zeroPoint "
-                               << operand.zeroPoint << ", must be zero.";
+                               << getOperandTypeName(operand.type) << " with a non-zero zeroPoint "
+                               << operand.zeroPoint;
                     return false;
                 }
                 break;
             default:
-                // No validation for the OEM types.
+                if (isExtensionOperandType(operand.type) && operand.zeroPoint != 0) {
+                    LOG(ERROR) << "Operand " << index << ": Operand of type "
+                               << getOperandTypeName(operand.type) << " with a non-zero zeroPoint "
+                               << operand.zeroPoint;
+                    return false;
+                }
+                // No validation for OEM types.
                 break;
         }
 
-        validateOperandExtraParams(operand, index);
+        NN_RET_CHECK(validateOperandExtraParams(operand, index));
 
         // Validate the lifetime and the location.
         const DataLocation& location = operand.location;
@@ -307,7 +331,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
         // expect the length to be 0. Don't validate for OEM types.
         if (operand.lifetime == OperandLifeTime::CONSTANT_REFERENCE ||
             operand.lifetime == OperandLifeTime::CONSTANT_COPY) {
-            if (operand.type != OperandType::OEM &&
+            if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM &&
                 operand.type != OperandType::TENSOR_OEM_BYTE) {
                 uint32_t expectedLength = sizeOfData(operand.type, operand.dimensions);
                 if (location.length != expectedLength) {
@@ -609,7 +633,7 @@ bool validOperandType(V1_2::OperandType operandType) {
         case V1_2::OperandType::TENSOR_OEM_BYTE:
             return true;
         default:
-            return false;
+            return isExtensionOperandType(operandType);
     }
 }
 
