@@ -42,13 +42,18 @@ class Device {
     virtual const char* getVersionString() const = 0;
     virtual int64_t getFeatureLevel() = 0;
     virtual int32_t getType() const = 0;
-    virtual void getSupportedOperations(const Model& hidlModel, hidl_vec<bool>* supported) = 0;
+    virtual hidl_vec<Extension> getSupportedExtensions() const = 0;
+    virtual void getSupportedOperations(const Model& hidlModel,
+                                        hidl_vec<bool>* supportedOperations) = 0;
     virtual PerformanceInfo getFloat32Performance() const = 0;
     virtual PerformanceInfo getQuantized8Performance() const = 0;
     virtual PerformanceInfo getRelaxedFloat32toFloat16Performance() const = 0;
 
     virtual int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                              std::shared_ptr<VersionedIPreparedModel>* preparedModel) = 0;
+
+    uint32_t getSizeOfData(const Operand& operand,
+                           const std::map<std::string, uint16_t>& extensionNameToPrefix) const;
 };
 
 // Manages the NN HAL devices.  Only one instance of this class will exist.
