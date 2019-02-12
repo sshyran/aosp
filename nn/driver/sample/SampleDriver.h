@@ -36,8 +36,10 @@ using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 // Since these drivers simulate hardware, they must run the computations
 // on the CPU.  An actual driver would not do that.
 class SampleDriver : public IDevice {
-public:
-    SampleDriver(const char* name) : mName(name) {}
+   public:
+    SampleDriver(const char* name,
+                 const IOperationResolver* operationResolver = BuiltinOperationResolver::get())
+        : mName(name), mOperationResolver(operationResolver) {}
     ~SampleDriver() override {}
     Return<void> getCapabilities(getCapabilities_cb cb) override;
     Return<void> getVersionString(getVersionString_cb cb) override;
@@ -62,13 +64,18 @@ public:
     // Starts and runs the driver service.  Typically called from main().
     // This will return only once the service shuts down.
     int run();
-protected:
+
+    CpuExecutor getExecutor() const { return CpuExecutor(mOperationResolver); }
+
+   protected:
     std::string mName;
+    const IOperationResolver* mOperationResolver;
 };
 
 class SamplePreparedModel : public IPreparedModel {
-public:
-    SamplePreparedModel(const Model& model) : mModel(model) {}
+   public:
+    SamplePreparedModel(const Model& model, const SampleDriver* driver)
+        : mModel(model), mDriver(driver) {}
     ~SamplePreparedModel() override {}
     bool initialize();
     Return<ErrorStatus> execute(const Request& request,
@@ -87,11 +94,12 @@ public:
 
    private:
     Model mModel;
+    const SampleDriver* mDriver;
     std::vector<RunTimePoolInfo> mPoolInfos;
 };
 
-} // namespace sample_driver
-} // namespace nn
-} // namespace android
+}  // namespace sample_driver
+}  // namespace nn
+}  // namespace android
 
-#endif // ANDROID_ML_NN_SAMPLE_DRIVER_SAMPLE_DRIVER_H
+#endif  // ANDROID_ML_NN_SAMPLE_DRIVER_SAMPLE_DRIVER_H

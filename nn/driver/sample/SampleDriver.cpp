@@ -123,7 +123,8 @@ static void notify(const sp<V1_2::IPreparedModelCallback>& callback, const Error
 }
 
 template <typename T_Model, typename T_IPreparedModelCallback>
-Return<ErrorStatus> prepareModelBase(const T_Model& model, ExecutionPreference preference,
+Return<ErrorStatus> prepareModelBase(const T_Model& model, const SampleDriver* driver,
+                                     ExecutionPreference preference,
                                      const sp<T_IPreparedModelCallback>& callback) {
     if (callback.get() == nullptr) {
         LOG(ERROR) << "invalid callback passed to prepareModelBase";
@@ -139,7 +140,7 @@ Return<ErrorStatus> prepareModelBase(const T_Model& model, ExecutionPreference p
     }
 
     // TODO: make asynchronous later
-    sp<SamplePreparedModel> preparedModel = new SamplePreparedModel(convertToV1_2(model));
+    sp<SamplePreparedModel> preparedModel = new SamplePreparedModel(convertToV1_2(model), driver);
     if (!preparedModel->initialize()) {
         notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
         return ErrorStatus::INVALID_ARGUMENT;
@@ -151,21 +152,21 @@ Return<ErrorStatus> prepareModelBase(const T_Model& model, ExecutionPreference p
 Return<ErrorStatus> SampleDriver::prepareModel(const V1_0::Model& model,
                                                const sp<V1_0::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel");
-    return prepareModelBase(model, ExecutionPreference::FAST_SINGLE_ANSWER, callback);
+    return prepareModelBase(model, this, ExecutionPreference::FAST_SINGLE_ANSWER, callback);
 }
 
 Return<ErrorStatus> SampleDriver::prepareModel_1_1(
         const V1_1::Model& model, ExecutionPreference preference,
         const sp<V1_0::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_1");
-    return prepareModelBase(model, preference, callback);
+    return prepareModelBase(model, this, preference, callback);
 }
 
 Return<ErrorStatus> SampleDriver::prepareModel_1_2(
         const V1_2::Model& model, ExecutionPreference preference,
         const sp<V1_2::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_2");
-    return prepareModelBase(model, preference, callback);
+    return prepareModelBase(model, this, preference, callback);
 }
 
 Return<ErrorStatus> SampleDriver::prepareModelFromCache(
@@ -213,7 +214,8 @@ static Return<void> notify(const sp<V1_2::IExecutionCallback>& callback, const E
 //                is supported in CpuExecutor.
 template <typename T_IExecutionCallback>
 void asyncExecute(const Request& request, MeasureTiming measure, time_point driverStart,
-                  const Model& model, const std::vector<RunTimePoolInfo>& poolInfos,
+                  const Model& model, const SampleDriver& driver,
+                  const std::vector<RunTimePoolInfo>& poolInfos,
                   const sp<T_IExecutionCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
                  "SampleDriver::asyncExecute");
@@ -225,7 +227,7 @@ void asyncExecute(const Request& request, MeasureTiming measure, time_point driv
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                         "SampleDriver::asyncExecute");
-    CpuExecutor executor;
+    CpuExecutor executor = driver.getExecutor();
     time_point driverEnd, deviceStart, deviceEnd;
     if (measure == MeasureTiming::YES) deviceStart = now();
     int n = executor.run(model, request, poolInfos, requestPoolInfos);
@@ -250,6 +252,7 @@ void asyncExecute(const Request& request, MeasureTiming measure, time_point driv
 
 template <typename T_IExecutionCallback>
 Return<ErrorStatus> executeBase(const Request& request, MeasureTiming measure, const Model& model,
+                                const SampleDriver& driver,
                                 const std::vector<RunTimePoolInfo>& poolInfos,
                                 const sp<T_IExecutionCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION, "SampleDriver::executeBase");
@@ -269,8 +272,8 @@ Return<ErrorStatus> executeBase(const Request& request, MeasureTiming measure, c
 
     // This thread is intentionally detached because the sample driver service
     // is expected to live forever.
-    std::thread([&model, &poolInfos, request, measure, driverStart, callback] {
-        asyncExecute(request, measure, driverStart, model, poolInfos, callback);
+    std::thread([&model, &driver, &poolInfos, request, measure, driverStart, callback] {
+        asyncExecute(request, measure, driverStart, model, driver, poolInfos, callback);
     })
             .detach();
 
@@ -279,12 +282,12 @@ Return<ErrorStatus> executeBase(const Request& request, MeasureTiming measure, c
 
 Return<ErrorStatus> SamplePreparedModel::execute(const Request& request,
                                                  const sp<V1_0::IExecutionCallback>& callback) {
-    return executeBase(request, MeasureTiming::NO, mModel, mPoolInfos, callback);
+    return executeBase(request, MeasureTiming::NO, mModel, *mDriver, mPoolInfos, callback);
 }
 
 Return<ErrorStatus> SamplePreparedModel::execute_1_2(const Request& request, MeasureTiming measure,
                                                      const sp<V1_2::IExecutionCallback>& callback) {
-    return executeBase(request, measure, mModel, mPoolInfos, callback);
+    return executeBase(request, measure, mModel, *mDriver, mPoolInfos, callback);
 }
 
 Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
@@ -312,7 +315,7 @@ Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                         "SampleDriver::executeSynchronously");
-    CpuExecutor executor;
+    CpuExecutor executor = mDriver->getExecutor();
     if (measure == MeasureTiming::YES) deviceStart = now();
     int n = executor.run(mModel, request, mPoolInfos, requestPoolInfos);
     if (measure == MeasureTiming::YES) deviceEnd = now();
