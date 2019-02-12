@@ -64,7 +64,8 @@ struct ModelArgumentInfo {
                        uint32_t length);
     int setFromMemory(const Operand& operand, const ANeuralNetworksOperandType* type,
                       uint32_t poolIndex, uint32_t offset, uint32_t length);
-    int setFromTemporaryMemory(const Operand& operand, uint32_t poolIndex, uint32_t offset);
+    int setFromTemporaryMemory(const Operand& operand, uint32_t poolIndex, uint32_t offset,
+                               uint32_t length);
     int updateDimensionInfo(const Operand& operand, const ANeuralNetworksOperandType* newType);
 };
 
