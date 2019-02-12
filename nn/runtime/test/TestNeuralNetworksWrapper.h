@@ -21,12 +21,10 @@
 #define ANDROID_ML_NN_RUNTIME_NEURAL_NETWORKS_WRAPPER_H
 
 #include "NeuralNetworks.h"
-#include "NeuralNetworksExtensions.h"
 
 #include <math.h>
 #include <optional>
 #include <string>
-#include <variant>
 #include <vector>
 
 namespace android {
@@ -82,31 +80,14 @@ struct SymmPerChannelQuantParams {
     }
 };
 
-struct ExtensionOperandParams {
-    std::vector<uint8_t> data;
-
-    ExtensionOperandParams(std::vector<uint8_t> data) : data(std::move(data)) {}
-
-    template <typename T>
-    ExtensionOperandParams(const T& data)
-        : ExtensionOperandParams(
-                  std::vector(reinterpret_cast<const uint8_t*>(&data),
-                              reinterpret_cast<const uint8_t*>(&data) + sizeof(data))) {
-        static_assert(std::is_trivially_copyable<T>::value, "data must be trivially copyable");
-    }
-};
-
 struct OperandType {
-    using ExtraParams =
-            std::variant<std::monostate, SymmPerChannelQuantParams, ExtensionOperandParams>;
-
     ANeuralNetworksOperandType operandType;
     std::vector<uint32_t> dimensions;
-    ExtraParams extraParams;
 
-    OperandType(Type type, std::vector<uint32_t> d, float scale = 0.0f, int32_t zeroPoint = 0,
-                ExtraParams&& extraParams = std::monostate())
-        : dimensions(std::move(d)), extraParams(std::move(extraParams)) {
+    std::optional<SymmPerChannelQuantParams> channelQuant;
+
+    OperandType(Type type, std::vector<uint32_t> d, float scale = 0.0f, int32_t zeroPoint = 0)
+        : dimensions(std::move(d)), channelQuant(std::nullopt) {
         operandType = {
                 .type = static_cast<int32_t>(type),
                 .dimensionCount = static_cast<uint32_t>(dimensions.size()),
@@ -116,12 +97,17 @@ struct OperandType {
         };
     }
 
-    OperandType(Type type, std::vector<uint32_t> dimensions, float scale, int32_t zeroPoint,
+    OperandType(Type type, std::vector<uint32_t> data, float scale, int32_t zeroPoint,
                 SymmPerChannelQuantParams&& channelQuant)
-        : OperandType(type, dimensions, scale, zeroPoint, ExtraParams(std::move(channelQuant))) {}
-
-    OperandType(Type type, std::vector<uint32_t> dimensions, ExtraParams&& extraParams)
-        : OperandType(type, dimensions, 0.0f, 0, std::move(extraParams)) {}
+        : dimensions(std::move(data)), channelQuant(std::move(channelQuant)) {
+        operandType = {
+                .type = static_cast<int32_t>(type),
+                .dimensionCount = static_cast<uint32_t>(dimensions.size()),
+                .dimensions = dimensions.size() > 0 ? dimensions.data() : nullptr,
+                .scale = scale,
+                .zeroPoint = zeroPoint,
+        };
+    }
 };
 
 class Memory {
@@ -209,41 +195,14 @@ class Model {
         }
     }
 
-    int32_t getExtensionOperandType(const char* extensionName, uint16_t typeWithinExtension) {
-        int32_t result;
-        if (ANeuralNetworksModel_getExtensionOperandType(mModel, extensionName, typeWithinExtension,
-                                                         &result) != ANEURALNETWORKS_NO_ERROR) {
-            mValid = false;
-        }
-        return result;
-    }
-
-    ANeuralNetworksOperationType getExtensionOperationType(const char* extensionName,
-                                                           uint16_t typeWithinExtension) {
-        ANeuralNetworksOperationType result;
-        if (ANeuralNetworksModel_getExtensionOperationType(mModel, extensionName,
-                                                           typeWithinExtension,
-                                                           &result) != ANEURALNETWORKS_NO_ERROR) {
-            mValid = false;
-        }
-        return result;
-    }
-
     uint32_t addOperand(const OperandType* type) {
         if (ANeuralNetworksModel_addOperand(mModel, &(type->operandType)) !=
             ANEURALNETWORKS_NO_ERROR) {
             mValid = false;
         }
-        if (std::holds_alternative<SymmPerChannelQuantParams>(type->extraParams)) {
-            const auto& channelQuant = std::get<SymmPerChannelQuantParams>(type->extraParams);
+        if (type->channelQuant) {
             if (ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(
-                        mModel, mNextOperandId, &channelQuant.params) != ANEURALNETWORKS_NO_ERROR) {
-                mValid = false;
-            }
-        } else if (std::holds_alternative<ExtensionOperandParams>(type->extraParams)) {
-            const auto& extension = std::get<ExtensionOperandParams>(type->extraParams);
-            if (ANeuralNetworksModel_setOperandExtensionData(
-                        mModel, mNextOperandId, extension.data.data(), extension.data.size()) !=
+                        mModel, mNextOperandId, &type->channelQuant.value().params) !=
                 ANEURALNETWORKS_NO_ERROR) {
                 mValid = false;
             }
