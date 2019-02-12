@@ -95,9 +95,7 @@ bool combineDimensions(const std::vector<uint32_t>& lhs, const std::vector<uint3
         *combined = rhs;
         return true;
     }
-    if (lhs.size() != rhs.size()) {
-        return false;
-    }
+    NN_RET_CHECK_EQ(lhs.size(), rhs.size()) << "incompatible ranks";
     combined->resize(lhs.size());
     for (uint32_t i = 0; i < lhs.size(); i++) {
         if (lhs[i] == 0) {
@@ -108,9 +106,7 @@ bool combineDimensions(const std::vector<uint32_t>& lhs, const std::vector<uint3
             (*combined)[i] = lhs[i];
             continue;
         }
-        if (lhs[i] != rhs[i]) {
-            return false;
-        }
+        NN_RET_CHECK_EQ(lhs[i], rhs[i]) << "incompatible dimension: " << i;
         (*combined)[i] = lhs[i];
     }
     return true;

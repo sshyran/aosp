@@ -108,12 +108,13 @@ enum PaddingScheme {
     kPaddingValid = 2,
 };
 
-// The type and dimensions of an operand.
+// Stores operand type information. "Shape" is a historical name.
 struct Shape {
     OperandType type;
     std::vector<uint32_t> dimensions;
     float scale;
     int32_t offset;
+    Operand::ExtraParams extraParams;
 };
 
 // Provides information available during graph creation to validate an operation.
