@@ -81,102 +81,78 @@ TEST_F(GeneratedTests, l2_normalization_v1_2_relaxed_dim3_axis2_float16) {
             l2_normalization_v1_2::get_examples_relaxed_dim3_axis2_float16());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_dim1_axis0,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim1_axis0,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_float16) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_dim1_axis0_float16,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim1_axis0_float16,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_dim2_axis1,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim2_axis1,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1_float16) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_dim2_axis1_float16,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim2_axis1_float16,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_dim3_axis2,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim3_axis2,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_dim3_axis2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2_float16) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_dim3_axis2_float16,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim3_axis2_float16,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_dim3_axis2_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_relaxed_dim1_axis0,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim1_axis0,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0_float16) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_relaxed_dim1_axis0_float16,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_float16,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_relaxed_dim2_axis1,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim2_axis1,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1_float16) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_relaxed_dim2_axis1_float16,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_float16,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_axis2) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_axis2) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_relaxed_dim3_axis2,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim3_axis2,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim3_axis2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_axis2_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_axis2_float16) {
     execute(l2_normalization_v1_2::CreateModel_dynamic_output_shape_relaxed_dim3_axis2_float16,
             l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_float16,
             l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim3_axis2_float16());
 }
 
-#endif
 TEST_F(GeneratedTests, l2_normalization_v1_2_axis_dim4_axis0) {
     execute(l2_normalization_v1_2::CreateModel_axis_dim4_axis0,
             l2_normalization_v1_2::is_ignored_axis_dim4_axis0,
@@ -657,643 +633,483 @@ TEST_F(GeneratedTests, l2_normalization_v1_2_axis_relaxed_dim1_axis0_neg_float16
             l2_normalization_v1_2::get_examples_axis_relaxed_dim1_axis0_neg_float16());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis0,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis0_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis0_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis1,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis1_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis1_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis2,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis2_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis2_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis3,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis3_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis3_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis0,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis0_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis0_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis1,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis1_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis1_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis2,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis2_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis2_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis0,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis0_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis0_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis1,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis1_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis1_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim1_axis0,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim1_axis0_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim1_axis0_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_neg) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_neg());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16) {
     execute(l2_normalization_v1_2::CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16,
             l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16,
             l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16());
 }
 
-#endif

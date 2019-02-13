@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, mul_relu) {
             mul_relu::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, mul_relu_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, mul_relu_dynamic_output_shape) {
     execute(mul_relu::CreateModel_dynamic_output_shape,
             mul_relu::is_ignored_dynamic_output_shape,
             mul_relu::get_examples_dynamic_output_shape());
 }
 
-#endif

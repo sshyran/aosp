@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, conv_quant8_large_weights_as_inputs) {
             conv_quant8_large_weights_as_inputs::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, conv_quant8_large_weights_as_inputs_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, conv_quant8_large_weights_as_inputs_dynamic_output_shape) {
     execute(conv_quant8_large_weights_as_inputs::CreateModel_dynamic_output_shape,
             conv_quant8_large_weights_as_inputs::is_ignored_dynamic_output_shape,
             conv_quant8_large_weights_as_inputs::get_examples_dynamic_output_shape());
 }
 
-#endif

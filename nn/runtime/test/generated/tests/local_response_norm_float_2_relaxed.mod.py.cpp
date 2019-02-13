@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, local_response_norm_float_2_relaxed) {
             local_response_norm_float_2_relaxed::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, local_response_norm_float_2_relaxed_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, local_response_norm_float_2_relaxed_dynamic_output_shape) {
     execute(local_response_norm_float_2_relaxed::CreateModel_dynamic_output_shape,
             local_response_norm_float_2_relaxed::is_ignored_dynamic_output_shape,
             local_response_norm_float_2_relaxed::get_examples_dynamic_output_shape());
 }
 
-#endif

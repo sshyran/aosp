@@ -4872,9 +4872,6 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *
  * This structure is used to describe both scalars and tensors.
  *
- * A tensor operand type must have a specified rank (number of
- * dimensions) but may have any of its dimensions unspecified.
- *
  * A tensor operand type with all dimensions specified is "fully
  * specified".  Whenever possible (i.e., whenever the dimensions are
  * known at model construction time), a tensor operand type should be
@@ -4891,25 +4888,29 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *         {@link ANeuralNetworksModel_setOperandValue} (with a
  *         non-nullptr buffer) or
  *         {@link ANeuralNetworksModel_setOperandValueFromMemory}.</li>
- *     <li>The operand is a model input or model output (see
+ *     <li>The operand is a model input (see
  *         {@link ANeuralNetworksModel_identifyInputsAndOutputs}).  A
  *         fully specified tensor operand type must either be provided
  *         to {@link ANeuralNetworksModel_addOperand}; or it must be
  *         provided to the corresponding
- *         {@link ANeuralNetworksExecution_setInput},
- *         {@link ANeuralNetworksExecution_setInputFromMemory},
- *         {@link ANeuralNetworksExecution_setOutput}, or
- *         {@link ANeuralNetworksModel_setOperandValueFromMemory}.
- *         EXCEPTION: If the input or output is optional and omitted
+ *         {@link ANeuralNetworksExecution_setInput}, or
+ *         {@link ANeuralNetworksExecution_setInputFromMemory}.
+ *         EXCEPTION: If the input is optional and omitted
  *         (by passing nullptr for buffer to
- *         {@link ANeuralNetworksExecution_setInput} or
- *         {@link ANeuralNetworksExecution_setOutput}) then it need
+ *         {@link ANeuralNetworksExecution_setInput}) then it need
  *         not have a fully specified tensor operand type.</li></ul>
  *
- * A tensor operand type with some number of unspecified dimensions is
- * represented by setting each unspecified dimension to 0.
+ * A tensor operand type of specified rank but some number of
+ * unspecified dimensions is represented by setting dimensionCount to
+ * the rank and each unspecified dimension to 0.
  *
  * Available since API level 27.
+ *
+ * A tensor operand type of unspecified rank is represented by setting
+ * dimensionCount to 0 and dimensions to NULL (just as if it were a
+ * scalar operand type).
+ *
+ * Available since API level 29.
  */
 typedef struct ANeuralNetworksOperandType {
     /**
@@ -5933,6 +5934,12 @@ int ANeuralNetworksExecution_setInputFromMemory(ANeuralNetworksExecution* execut
  *             passed. Neither the {@link ANeuralNetworksOperandType}
  *             nor the dimensions it points to need to outlive the call
  *             to {@link ANeuralNetworksExecution_setOutput}.
+ *             Since API level 29, the output operand can have unspecified
+ *             dimensions or rank to be deduced dynamically during the execution.
+ *             However, the user must provide a large enough buffer. The user
+ *             can retrieve the output dimensional information after the execution
+ *             by {@link ANeuralNetworksExecution_getOutputOperandRank} and
+ *             {@link ANeuralNetworksExecution_getOutputOperandDimensions}.
  * @param buffer The buffer where the data is to be written.
  * @param length The length in bytes of the buffer.
  *
@@ -5973,6 +5980,12 @@ int ANeuralNetworksExecution_setOutput(ANeuralNetworksExecution* execution, int3
  *             passed. Neither the {@link ANeuralNetworksOperandType}
  *             nor the dimensions it points to need to outlive the call
  *             to {@link ANeuralNetworksExecution_setOutputFromMemory}.
+ *             Since API level 29, the output operand can have unspecified
+ *             dimensions or rank to be deduced dynamically during the execution.
+ *             However, the user must provide a large enough memory. The user
+ *             can retrieve the output dimensional information after the execution
+ *             by {@link ANeuralNetworksExecution_getOutputOperandRank} and
+ *             {@link ANeuralNetworksExecution_getOutputOperandDimensions}.
  * @param memory The memory where the data is to be stored.
  * @param offset This specifies the location of the data within the memory.
  *               The offset is in bytes from the start of memory.
