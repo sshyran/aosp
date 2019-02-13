@@ -43,7 +43,9 @@ int CompilationBuilder::finish() {
     // TODO validate the rest
 
     mFinished = true;
-
+    if (mIsCacheInfoProvided) {
+        mPlan.setCaching(&mCacheDir, mToken);
+    }
     if (mPartitioning) {
         int n = mModel->partitionTheWork(mDevices, mPreference, &mPlan);
         switch (n) {
