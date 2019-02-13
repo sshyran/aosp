@@ -170,6 +170,87 @@ class VersionedIDevice {
                              const sp<IPreparedModelCallback>& callback);
 
     /**
+     * Creates a prepared model from cache files for execution.
+     *
+     * prepareModelFromCache is used to retrieve a prepared model directly from
+     * cache files to avoid slow model compilation time. There are exactly two
+     * cache file descriptors provided to the driver: modelCache and dataCache.
+     *
+     * The dataCache is for caching constant data, possibly including preprocessed
+     * and transformed tensor buffers. Any modification to the dataCache should
+     * have no worse effect than generating bad output values at execution time.
+     *
+     * The modelCache is for caching security-sensitive data such as compiled
+     * executable machine code in the device's native binary format. A modification
+     * to the modelCache may affect the driver's execution behavior, and a malicious
+     * client could make use of this to execute beyond the granted permission. Thus,
+     * the driver must always check whether the modelCache is corrupted before preparing
+     * the model from cache.
+     *
+     * The two file descriptors may be closed by the client once the asynchronous
+     * preparation has finished. The driver has to copy all the data it needs.
+     *
+     * The model is prepared asynchronously with respect to the caller. The
+     * prepareModelFromCache function must verify the inputs to the
+     * prepareModelFromCache function are correct, and that the security-sensitive
+     * cache has not been modified since it was last written by the driver.
+     * If there is an error, or if compilation caching is not supported, or if the
+     * security-sensitive cache has been modified, prepareModelFromCache must
+     * immediately invoke the callback with the appropriate ErrorStatus value and
+     * nullptr for the IPreparedModel, then return with the same ErrorStatus. If
+     * the inputs to the prepareModelFromCache function are valid, the security-sensitive
+     * cache is not modified, and there is no error, prepareModelFromCache must launch an
+     * asynchronous task to prepare the model in the background, and immediately return
+     * from prepareModelFromCache with ErrorStatus::NONE. If the asynchronous task
+     * fails to launch, prepareModelFromCache must immediately invoke the callback
+     * with ErrorStatus::GENERAL_FAILURE and nullptr for the IPreparedModel, then
+     * return with ErrorStatus::GENERAL_FAILURE.
+     *
+     * When the asynchronous task has finished preparing the model, it must
+     * immediately invoke the callback function provided as an input to
+     * prepareModelFromCache. If the model was prepared successfully, the
+     * callback object must be invoked with an error status of ErrorStatus::NONE
+     * and the produced IPreparedModel object. If an error occurred preparing
+     * the model, the callback object must be invoked with the appropriate
+     * ErrorStatus value and nullptr for the IPreparedModel.
+     *
+     * The only information that may be unknown to the model at this stage is
+     * the shape of the tensors, which may only be known at execution time. As
+     * such, some driver services may return partially prepared models, where
+     * the prepared model may only be finished when it is paired with a set of
+     * inputs to the model. Note that the same prepared model object may be
+     * used with different shapes of inputs on different (possibly concurrent)
+     * executions.
+     *
+     * @param modelCache A handle holding exactly one cache file descriptor for the
+     *     security-sensitive cache.
+     * @param dataCache A handle holding exactly one cache file descriptor for the
+     *     constants' cache.
+     * @param token A caching token of length Constant::BYTE_SIZE_OF_CACHE_TOKEN
+     *     identifying the prepared model. It is the same token provided when saving
+     *     the cache files with IPreparedModel::saveToCache. Tokens should be chosen
+     *     to have a low rate of collision for a particular application. The driver
+     *     cannot detect a collision; a collision will result in a failed execution
+     *     or in a successful execution that produces incorrect output values.
+     * @param callback A callback object used to return the error status of
+     *     preparing the model for execution and the prepared model if
+     *     successful, nullptr otherwise. The callback object's notify function
+     *     must be called exactly once, even if the model could not be prepared.
+     * @return status Error status of launching a task which prepares the model
+     *     in the background; must be:
+     *     - NONE if preparation task is successfully launched
+     *     - DEVICE_UNAVAILABLE if driver is offline or busy
+     *     - GENERAL_FAILURE if caching is not supported or if there is an
+     *       unspecified error
+     *     - INVALID_ARGUMENT if one of the input arguments is invalid
+     */
+    ErrorStatus prepareModelFromCache(
+            const hidl_handle& modelCache, const hidl_handle& dataCache,
+            const hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
+                    token,
+            const sp<IPreparedModelCallback>& callback);
+
+    /**
      * Returns the current status of a driver.
      *
      * @return status Status of the driver, one of:
@@ -234,6 +315,25 @@ class VersionedIDevice {
      *     Must have nonzero length if the query is successful, and must be an empty string if not.
      */
     std::pair<ErrorStatus, hidl_string> getVersionString();
+
+    /**
+     * Gets whether the driver supports compilation caching.
+     *
+     * isCachingSupported indicates whether the driver supports compilation caching.
+     * Even if so, the driver may still choose not to cache certain compiled models.
+     *
+     * If the device reports the caching is not supported, the user may avoid calling
+     * IDevice::prepareModelFromCache and IPreparedModel::saveToCache.
+     *
+     * @return status Error status of the call, must be:
+     *     - NONE if successful
+     *     - DEVICE_UNAVAILABLE if driver is offline or busy
+     *     - GENERAL_FAILURE if there is an unspecified error
+     * @return supported A boolean indicating whether the driver supports compilation
+     *                   caching. Even on returning true, the driver may still choose
+     *                   not to cache certain compiled models.
+     */
+    std::pair<ErrorStatus, bool> isCachingSupported();
 
     /**
      * Returns whether this handle to an IDevice object is valid or not.
@@ -407,6 +507,65 @@ class VersionedIPreparedModel {
      *                                  be configured for any reason.
      */
     std::unique_ptr<ExecutionBurstController> configureExecutionBurst(bool blocking) const;
+
+    /*
+     * Saves the prepared model to cache files.
+     *
+     * saveToCache is used to save a prepared model to cache files for faster
+     * model compilation time when the same model preparation is requested in
+     * the future. There are exactly two cache file descriptors provided to the
+     * driver: modelCache and dataCache.
+     *
+     * The dataCache is for caching constant data, possibly including preprocessed
+     * and transformed tensor buffers. Any modification to the dataCache should
+     * have no worse effect than generating bad output values at execution time.
+     *
+     * The modelCache is for caching security-sensitive data such as compiled
+     * executable machine code in the device's native binary format. A modification
+     * to the modelCache may affect the driver's execution behavior, and a malicious
+     * client could make use of this to execute beyond the granted permission. Thus,
+     * the driver must always check whether the modelCache is corrupted before preparing
+     * the model from cache.
+     *
+     * The two file descriptors must point to two zero-length files with offset
+     * positioned at the beginning of the file. The file descriptors may be closed
+     * by the client once the method has returned.
+     *
+     * If the driver decides not to save the prepared model without looking at the
+     * input arguments to the saveToCache function, saveToCache must return with
+     * ErrorStatus::GENERAL_FAILURE. Otherwise, the saveToCache function must verify
+     * the input arguments to the saveToCache function are valid, and return with
+     * ErrorStatus::INVALID_ARGUMENT if not. If the inputs are valid but the driver
+     * could not save the prepared model, saveToCache must return with the appropriate
+     * ErrorStatus. Otherwise, it must write the cache files and return
+     * ErrorStatus::NONE. Unless saveToCache returns ErrorStatus::NONE, the contents
+     * of the cache files are undefined.
+     *
+     * @param modelCache A handle holding exactly one cache file descriptor for the
+     *                   security-sensitive cache.
+     * @param dataCache A handle holding exactly one cache file descriptor for the
+     *                  constants' cache.
+     * @param token A caching token of length Constant::BYTE_SIZE_OF_CACHE_TOKEN
+     *              identifying the prepared model. The same token will be provided
+     *              when retrieving the prepared model from cache files with
+     *              IDevice::prepareModelFromCache. Tokens should be chosen to have
+     *              a low rate of collision for a particular application. The driver
+     *              cannot detect a collision; a collision will result in a failed
+     *              execution or in a successful execution that produces incorrect
+     *              output values.
+     * @return status Error status of saveToCache, must be:
+     *                - NONE if saveToCache is performed successfully
+     *                - DEVICE_UNAVAILABLE if driver is offline or busy
+     *                - GENERAL_FAILURE if the driver could not save the
+     *                  prepared model or if there is an unspecified error
+     *                - INVALID_ARGUMENT if one of the input arguments is invalid,
+     *                  unless the driver decides not to save the prepared model
+     *                  without looking at the input arguments
+     */
+    ErrorStatus saveToCache(
+            const hidl_handle& modelCache, const hidl_handle& dataCache,
+            const hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
+                    token);
 
     /**
      * Returns whether this handle to an IPreparedModel object is valid or not.

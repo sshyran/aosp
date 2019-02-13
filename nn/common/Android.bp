@@ -108,6 +108,7 @@ cc_library_static {
         "GraphDump.cpp",
         "IndexedShapeWrapper.cpp",
         "OperationsUtils.cpp",
+        "TokenHasher.cpp",
         "Utils.cpp",
         "ValidateHal.cpp",
         "operations/Activation.cpp",
@@ -157,6 +158,9 @@ cc_library_static {
         "android.hardware.neuralnetworks@1.2",
         "android.hidl.allocator@1.0",
         "android.hidl.memory@1.0",
+    ],
+    static_libs: [
+        "libcrypto_static",
     ],
     header_libs: [
         "libneuralnetworks_headers",
