@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, depthwise_conv2d_quant8_weights_as_inputs) {
             depthwise_conv2d_quant8_weights_as_inputs::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, depthwise_conv2d_quant8_weights_as_inputs_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_quant8_weights_as_inputs_dynamic_output_shape) {
     execute(depthwise_conv2d_quant8_weights_as_inputs::CreateModel_dynamic_output_shape,
             depthwise_conv2d_quant8_weights_as_inputs::is_ignored_dynamic_output_shape,
             depthwise_conv2d_quant8_weights_as_inputs::get_examples_dynamic_output_shape());
 }
 
-#endif

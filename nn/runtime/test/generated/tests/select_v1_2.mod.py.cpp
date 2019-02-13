@@ -39,46 +39,36 @@ TEST_F(GeneratedTests, select_v1_2_one_dim_quant8) {
             select_v1_2::get_examples_one_dim_quant8());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_one_dim_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_one_dim_dynamic_output_shape) {
     execute(select_v1_2::CreateModel_dynamic_output_shape,
             select_v1_2::is_ignored_dynamic_output_shape,
             select_v1_2::get_examples_one_dim_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_one_dim_dynamic_output_shape_int32) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_one_dim_dynamic_output_shape_int32) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_int32,
             select_v1_2::is_ignored_dynamic_output_shape_int32,
             select_v1_2::get_examples_one_dim_dynamic_output_shape_int32());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_one_dim_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_one_dim_dynamic_output_shape_float16) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_float16,
             select_v1_2::is_ignored_dynamic_output_shape_float16,
             select_v1_2::get_examples_one_dim_dynamic_output_shape_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_one_dim_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_one_dim_dynamic_output_shape_relaxed) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_relaxed,
             select_v1_2::is_ignored_dynamic_output_shape_relaxed,
             select_v1_2::get_examples_one_dim_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_one_dim_dynamic_output_shape_quant8) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_one_dim_dynamic_output_shape_quant8) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_quant8,
             select_v1_2::is_ignored_dynamic_output_shape_quant8,
             select_v1_2::get_examples_one_dim_dynamic_output_shape_quant8());
 }
 
-#endif
 TEST_F(GeneratedTests, select_v1_2_two_dim) {
     execute(select_v1_2::CreateModel_2,
             select_v1_2::is_ignored_2,
@@ -109,46 +99,36 @@ TEST_F(GeneratedTests, select_v1_2_two_dim_quant8) {
             select_v1_2::get_examples_two_dim_quant8());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_two_dim_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_two_dim_dynamic_output_shape) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_2,
             select_v1_2::is_ignored_dynamic_output_shape_2,
             select_v1_2::get_examples_two_dim_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_two_dim_dynamic_output_shape_int32) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_two_dim_dynamic_output_shape_int32) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_int32_2,
             select_v1_2::is_ignored_dynamic_output_shape_int32_2,
             select_v1_2::get_examples_two_dim_dynamic_output_shape_int32());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_two_dim_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_two_dim_dynamic_output_shape_float16) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_float16_2,
             select_v1_2::is_ignored_dynamic_output_shape_float16_2,
             select_v1_2::get_examples_two_dim_dynamic_output_shape_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_two_dim_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_two_dim_dynamic_output_shape_relaxed) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_relaxed_2,
             select_v1_2::is_ignored_dynamic_output_shape_relaxed_2,
             select_v1_2::get_examples_two_dim_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_two_dim_dynamic_output_shape_quant8) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_two_dim_dynamic_output_shape_quant8) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_quant8_2,
             select_v1_2::is_ignored_dynamic_output_shape_quant8_2,
             select_v1_2::get_examples_two_dim_dynamic_output_shape_quant8());
 }
 
-#endif
 TEST_F(GeneratedTests, select_v1_2_five_dim) {
     execute(select_v1_2::CreateModel_3,
             select_v1_2::is_ignored_3,
@@ -179,43 +159,33 @@ TEST_F(GeneratedTests, select_v1_2_five_dim_quant8) {
             select_v1_2::get_examples_five_dim_quant8());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_five_dim_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_five_dim_dynamic_output_shape) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_3,
             select_v1_2::is_ignored_dynamic_output_shape_3,
             select_v1_2::get_examples_five_dim_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_five_dim_dynamic_output_shape_int32) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_five_dim_dynamic_output_shape_int32) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_int32_3,
             select_v1_2::is_ignored_dynamic_output_shape_int32_3,
             select_v1_2::get_examples_five_dim_dynamic_output_shape_int32());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_five_dim_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_five_dim_dynamic_output_shape_float16) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_float16_3,
             select_v1_2::is_ignored_dynamic_output_shape_float16_3,
             select_v1_2::get_examples_five_dim_dynamic_output_shape_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_five_dim_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_five_dim_dynamic_output_shape_relaxed) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_relaxed_3,
             select_v1_2::is_ignored_dynamic_output_shape_relaxed_3,
             select_v1_2::get_examples_five_dim_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, select_v1_2_five_dim_dynamic_output_shape_quant8) {
+TEST_F(DynamicOutputShapeTest, select_v1_2_five_dim_dynamic_output_shape_quant8) {
     execute(select_v1_2::CreateModel_dynamic_output_shape_quant8_3,
             select_v1_2::is_ignored_dynamic_output_shape_quant8_3,
             select_v1_2::get_examples_five_dim_dynamic_output_shape_quant8());
 }
 
-#endif

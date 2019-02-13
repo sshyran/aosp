@@ -27,27 +27,21 @@ TEST_F(GeneratedTests, sin_float16) {
             sin::get_examples_float16());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, sin_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, sin_dynamic_output_shape) {
     execute(sin::CreateModel_dynamic_output_shape,
             sin::is_ignored_dynamic_output_shape,
             sin::get_examples_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, sin_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, sin_dynamic_output_shape_relaxed) {
     execute(sin::CreateModel_dynamic_output_shape_relaxed,
             sin::is_ignored_dynamic_output_shape_relaxed,
             sin::get_examples_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, sin_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, sin_dynamic_output_shape_float16) {
     execute(sin::CreateModel_dynamic_output_shape_float16,
             sin::is_ignored_dynamic_output_shape_float16,
             sin::get_examples_dynamic_output_shape_float16());
 }
 
-#endif

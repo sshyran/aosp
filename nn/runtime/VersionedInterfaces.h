@@ -383,7 +383,13 @@ class VersionedIPreparedModel {
      *                      The index into "outputShapes" corresponds with the index
      *                      of the output operand in the Request outputs vector.
      *                      outputShapes nust be empty unless the status is either
-     *                      NONE or OUTPUT_INSUFFICIENT_SIZE.
+     *                      NONE or OUTPUT_INSUFFICIENT_SIZE. outputShaps may be
+     *                      empty if the status is NONE and all model output operands
+     *                      are fully-specified at execution time. outputShapes must
+     *                      have the same number of elements as the number of model
+     *                      output operands if the status is OUTPUT_INSUFFICIENT_SIZE,
+     *                      or if the status is NONE and the model has at least one
+     *                      output operand that is not fully-specified.
      * @return Timing Duration of execution. Unless measure is YES and status is
      *                NONE, all times must be reported as UINT64_MAX. A driver may
      *                choose to report any time as UINT64_MAX, indicating that

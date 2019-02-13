@@ -15,25 +15,21 @@ TEST_F(GeneratedTests, conv_3_h3_w2_VALID) {
             conv_3_h3_w2_VALID::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, conv_3_h3_w2_VALID_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, conv_3_h3_w2_VALID_dynamic_output_shape) {
     execute(conv_3_h3_w2_VALID::CreateModel_dynamic_output_shape,
             conv_3_h3_w2_VALID::is_ignored_dynamic_output_shape,
             conv_3_h3_w2_VALID::get_examples_dynamic_output_shape());
 }
 
-#endif
 TEST_F(GeneratedTests, conv_3_h3_w2_VALID_2) {
     execute(conv_3_h3_w2_VALID::CreateModel_2,
             conv_3_h3_w2_VALID::is_ignored_2,
             conv_3_h3_w2_VALID::get_examples_2());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, conv_3_h3_w2_VALID_dynamic_output_shape_2) {
+TEST_F(DynamicOutputShapeTest, conv_3_h3_w2_VALID_dynamic_output_shape_2) {
     execute(conv_3_h3_w2_VALID::CreateModel_dynamic_output_shape_2,
             conv_3_h3_w2_VALID::is_ignored_dynamic_output_shape_2,
             conv_3_h3_w2_VALID::get_examples_dynamic_output_shape_2());
 }
 
-#endif
