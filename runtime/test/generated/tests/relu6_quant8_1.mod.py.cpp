@@ -15,25 +15,21 @@ TEST_F(GeneratedTests, relu6_quant8_1) {
             relu6_quant8_1::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, relu6_quant8_1_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, relu6_quant8_1_dynamic_output_shape) {
     execute(relu6_quant8_1::CreateModel_dynamic_output_shape,
             relu6_quant8_1::is_ignored_dynamic_output_shape,
             relu6_quant8_1::get_examples_dynamic_output_shape());
 }
 
-#endif
 TEST_F(GeneratedTests, relu6_quant8_1_2) {
     execute(relu6_quant8_1::CreateModel_2,
             relu6_quant8_1::is_ignored_2,
             relu6_quant8_1::get_examples_2());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, relu6_quant8_1_dynamic_output_shape_2) {
+TEST_F(DynamicOutputShapeTest, relu6_quant8_1_dynamic_output_shape_2) {
     execute(relu6_quant8_1::CreateModel_dynamic_output_shape_2,
             relu6_quant8_1::is_ignored_dynamic_output_shape_2,
             relu6_quant8_1::get_examples_dynamic_output_shape_2());
 }
 
-#endif

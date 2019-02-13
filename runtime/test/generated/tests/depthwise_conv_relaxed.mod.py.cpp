@@ -15,25 +15,21 @@ TEST_F(GeneratedTests, depthwise_conv_relaxed) {
             depthwise_conv_relaxed::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, depthwise_conv_relaxed_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv_relaxed_dynamic_output_shape) {
     execute(depthwise_conv_relaxed::CreateModel_dynamic_output_shape,
             depthwise_conv_relaxed::is_ignored_dynamic_output_shape,
             depthwise_conv_relaxed::get_examples_dynamic_output_shape());
 }
 
-#endif
 TEST_F(GeneratedTests, depthwise_conv_relaxed_2) {
     execute(depthwise_conv_relaxed::CreateModel_2,
             depthwise_conv_relaxed::is_ignored_2,
             depthwise_conv_relaxed::get_examples_2());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, depthwise_conv_relaxed_dynamic_output_shape_2) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv_relaxed_dynamic_output_shape_2) {
     execute(depthwise_conv_relaxed::CreateModel_dynamic_output_shape_2,
             depthwise_conv_relaxed::is_ignored_dynamic_output_shape_2,
             depthwise_conv_relaxed::get_examples_dynamic_output_shape_2());
 }
 
-#endif

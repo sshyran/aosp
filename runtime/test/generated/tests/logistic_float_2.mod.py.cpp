@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, logistic_float_2) {
             logistic_float_2::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, logistic_float_2_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, logistic_float_2_dynamic_output_shape) {
     execute(logistic_float_2::CreateModel_dynamic_output_shape,
             logistic_float_2::is_ignored_dynamic_output_shape,
             logistic_float_2::get_examples_dynamic_output_shape());
 }
 
-#endif

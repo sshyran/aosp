@@ -264,11 +264,8 @@ TEST_F({test_case_name}, {test_name}) {{
     execute({namespace}::{create_model_name},
             {namespace}::{is_ignored_name},
             {namespace}::get_{examples_name}(){log_file});\n}}\n"""
-    # TODO(xusongw): Enable CTS dynamic output shape tests once it is supported
-    if example.model.hasDynamicOutputShape:
-        print("#if 0", file=test_fd)
     print(testTemplate.format(
-        test_case_name="DynamicOutputShapeTests" if example.model.hasDynamicOutputShape \
+        test_case_name="DynamicOutputShapeTest" if example.model.hasDynamicOutputShape \
                        else "GeneratedTests",
         test_name=str(example.testName),
         namespace=tg.FileNames.specName,
@@ -276,8 +273,6 @@ TEST_F({test_case_name}, {test_name}) {{
         is_ignored_name=str(example.model.isIgnoredFunctionName),
         examples_name=str(example.examplesName),
         log_file=tg.FileNames.logFile), file=test_fd)
-    if example.model.hasDynamicOutputShape:
-        print("#endif", file=test_fd)
 
 if __name__ == '__main__':
     ParseCmdLine()
