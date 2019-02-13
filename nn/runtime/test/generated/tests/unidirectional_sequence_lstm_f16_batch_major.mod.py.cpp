@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, unidirectional_sequence_lstm_f16_batch_major) {
             unidirectional_sequence_lstm_f16_batch_major::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, unidirectional_sequence_lstm_f16_batch_major_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_f16_batch_major_dynamic_output_shape) {
     execute(unidirectional_sequence_lstm_f16_batch_major::CreateModel_dynamic_output_shape,
             unidirectional_sequence_lstm_f16_batch_major::is_ignored_dynamic_output_shape,
             unidirectional_sequence_lstm_f16_batch_major::get_examples_dynamic_output_shape());
 }
 
-#endif

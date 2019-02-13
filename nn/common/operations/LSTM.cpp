@@ -526,20 +526,29 @@ bool LSTMCell::LSTMEvalFloat16(
     }
 
     std::vector<float> aux_input_float32(maxTime * batchInputSize);
-    convertFloat16ToFloat32(aux_input_buffer, &aux_input_float32);
+    if (aux_input_buffer != nullptr) {
+        convertFloat16ToFloat32(aux_input_buffer, &aux_input_float32);
+    }
     std::vector<float> aux_input_to_input_weights_float32(numCells * inputSize);
     if (aux_input_to_input_weights_buffer != nullptr) {
         convertFloat16ToFloat32(aux_input_to_input_weights_buffer,
                                 &aux_input_to_input_weights_float32);
     }
     std::vector<float> aux_input_to_forget_weights_float32(numCells * inputSize);
-    convertFloat16ToFloat32(aux_input_to_forget_weights_buffer,
-                            &aux_input_to_forget_weights_float32);
+    if (aux_input_to_forget_weights_buffer != nullptr) {
+        convertFloat16ToFloat32(aux_input_to_forget_weights_buffer,
+                                &aux_input_to_forget_weights_float32);
+    }
     std::vector<float> aux_input_to_cell_weights_float32(numCells * inputSize);
-    convertFloat16ToFloat32(aux_input_to_cell_weights_buffer, &aux_input_to_cell_weights_float32);
+    if (aux_input_to_cell_weights_buffer != nullptr) {
+        convertFloat16ToFloat32(aux_input_to_cell_weights_buffer,
+                                &aux_input_to_cell_weights_float32);
+    }
     std::vector<float> aux_input_to_output_weights_float32(numCells * inputSize);
-    convertFloat16ToFloat32(aux_input_to_output_weights_buffer,
-                            &aux_input_to_output_weights_float32);
+    if (aux_input_to_output_weights_buffer != nullptr) {
+        convertFloat16ToFloat32(aux_input_to_output_weights_buffer,
+                                &aux_input_to_output_weights_float32);
+    }
 
     std::vector<float> input_gate_bias_float32(numCells);
     if (input_gate_bias_buffer != nullptr) {
