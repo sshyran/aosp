@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, dequantize_relaxed) {
             dequantize_relaxed::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, dequantize_relaxed_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, dequantize_relaxed_dynamic_output_shape) {
     execute(dequantize_relaxed::CreateModel_dynamic_output_shape,
             dequantize_relaxed::is_ignored_dynamic_output_shape,
             dequantize_relaxed::get_examples_dynamic_output_shape());
 }
 
-#endif

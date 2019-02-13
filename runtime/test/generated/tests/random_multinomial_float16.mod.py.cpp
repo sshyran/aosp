@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, random_multinomial_float16) {
             random_multinomial_float16::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, random_multinomial_float16_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, random_multinomial_float16_dynamic_output_shape) {
     execute(random_multinomial_float16::CreateModel_dynamic_output_shape,
             random_multinomial_float16::is_ignored_dynamic_output_shape,
             random_multinomial_float16::get_examples_dynamic_output_shape());
 }
 
-#endif

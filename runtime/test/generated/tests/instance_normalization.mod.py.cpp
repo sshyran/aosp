@@ -45,54 +45,42 @@ TEST_F(GeneratedTests, instance_normalization_nchw_float16) {
             instance_normalization::get_examples_nchw_float16());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nhwc) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nhwc) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nhwc,
             instance_normalization::is_ignored_dynamic_output_shape_nhwc,
             instance_normalization::get_examples_dynamic_output_shape_nhwc());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nhwc_relaxed) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nhwc_relaxed) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nhwc_relaxed,
             instance_normalization::is_ignored_dynamic_output_shape_nhwc_relaxed,
             instance_normalization::get_examples_dynamic_output_shape_nhwc_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nhwc_float16) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nhwc_float16) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nhwc_float16,
             instance_normalization::is_ignored_dynamic_output_shape_nhwc_float16,
             instance_normalization::get_examples_dynamic_output_shape_nhwc_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nchw) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nchw) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nchw,
             instance_normalization::is_ignored_dynamic_output_shape_nchw,
             instance_normalization::get_examples_dynamic_output_shape_nchw());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nchw_relaxed) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nchw_relaxed) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nchw_relaxed,
             instance_normalization::is_ignored_dynamic_output_shape_nchw_relaxed,
             instance_normalization::get_examples_dynamic_output_shape_nchw_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nchw_float16) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nchw_float16) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nchw_float16,
             instance_normalization::is_ignored_dynamic_output_shape_nchw_float16,
             instance_normalization::get_examples_dynamic_output_shape_nchw_float16());
 }
 
-#endif
 TEST_F(GeneratedTests, instance_normalization_nhwc_2) {
     execute(instance_normalization::CreateModel_nhwc_2,
             instance_normalization::is_ignored_nhwc_2,
@@ -129,51 +117,39 @@ TEST_F(GeneratedTests, instance_normalization_nchw_float16_2) {
             instance_normalization::get_examples_nchw_float16_2());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nhwc_2) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nhwc_2) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nhwc_2,
             instance_normalization::is_ignored_dynamic_output_shape_nhwc_2,
             instance_normalization::get_examples_dynamic_output_shape_nhwc_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nhwc_relaxed_2) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nhwc_relaxed_2) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nhwc_relaxed_2,
             instance_normalization::is_ignored_dynamic_output_shape_nhwc_relaxed_2,
             instance_normalization::get_examples_dynamic_output_shape_nhwc_relaxed_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nhwc_float16_2) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nhwc_float16_2) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nhwc_float16_2,
             instance_normalization::is_ignored_dynamic_output_shape_nhwc_float16_2,
             instance_normalization::get_examples_dynamic_output_shape_nhwc_float16_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nchw_2) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nchw_2) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nchw_2,
             instance_normalization::is_ignored_dynamic_output_shape_nchw_2,
             instance_normalization::get_examples_dynamic_output_shape_nchw_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nchw_relaxed_2) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nchw_relaxed_2) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nchw_relaxed_2,
             instance_normalization::is_ignored_dynamic_output_shape_nchw_relaxed_2,
             instance_normalization::get_examples_dynamic_output_shape_nchw_relaxed_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, instance_normalization_dynamic_output_shape_nchw_float16_2) {
+TEST_F(DynamicOutputShapeTest, instance_normalization_dynamic_output_shape_nchw_float16_2) {
     execute(instance_normalization::CreateModel_dynamic_output_shape_nchw_float16_2,
             instance_normalization::is_ignored_dynamic_output_shape_nchw_float16_2,
             instance_normalization::get_examples_dynamic_output_shape_nchw_float16_2());
 }
 
-#endif
