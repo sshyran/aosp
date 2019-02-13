@@ -39,43 +39,33 @@ TEST_F(GeneratedTests, tile_2_int32) {
             tile_2::get_examples_int32());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, tile_2_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, tile_2_dynamic_output_shape) {
     execute(tile_2::CreateModel_dynamic_output_shape,
             tile_2::is_ignored_dynamic_output_shape,
             tile_2::get_examples_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, tile_2_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, tile_2_dynamic_output_shape_relaxed) {
     execute(tile_2::CreateModel_dynamic_output_shape_relaxed,
             tile_2::is_ignored_dynamic_output_shape_relaxed,
             tile_2::get_examples_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, tile_2_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, tile_2_dynamic_output_shape_float16) {
     execute(tile_2::CreateModel_dynamic_output_shape_float16,
             tile_2::is_ignored_dynamic_output_shape_float16,
             tile_2::get_examples_dynamic_output_shape_float16());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, tile_2_dynamic_output_shape_quant8) {
+TEST_F(DynamicOutputShapeTest, tile_2_dynamic_output_shape_quant8) {
     execute(tile_2::CreateModel_dynamic_output_shape_quant8,
             tile_2::is_ignored_dynamic_output_shape_quant8,
             tile_2::get_examples_dynamic_output_shape_quant8());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, tile_2_dynamic_output_shape_int32) {
+TEST_F(DynamicOutputShapeTest, tile_2_dynamic_output_shape_int32) {
     execute(tile_2::CreateModel_dynamic_output_shape_int32,
             tile_2::is_ignored_dynamic_output_shape_int32,
             tile_2::get_examples_dynamic_output_shape_int32());
 }
 
-#endif

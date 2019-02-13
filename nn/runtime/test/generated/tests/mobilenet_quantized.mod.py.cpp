@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, mobilenet_quantized) {
             mobilenet_quantized::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, mobilenet_quantized_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, mobilenet_quantized_dynamic_output_shape) {
     execute(mobilenet_quantized::CreateModel_dynamic_output_shape,
             mobilenet_quantized::is_ignored_dynamic_output_shape,
             mobilenet_quantized::get_examples_dynamic_output_shape());
 }
 
-#endif

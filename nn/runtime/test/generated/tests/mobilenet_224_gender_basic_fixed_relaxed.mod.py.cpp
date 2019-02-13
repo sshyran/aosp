@@ -15,11 +15,9 @@ TEST_F(GeneratedTests, mobilenet_224_gender_basic_fixed_relaxed) {
             mobilenet_224_gender_basic_fixed_relaxed::get_examples());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, mobilenet_224_gender_basic_fixed_relaxed_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, mobilenet_224_gender_basic_fixed_relaxed_dynamic_output_shape) {
     execute(mobilenet_224_gender_basic_fixed_relaxed::CreateModel_dynamic_output_shape,
             mobilenet_224_gender_basic_fixed_relaxed::is_ignored_dynamic_output_shape,
             mobilenet_224_gender_basic_fixed_relaxed::get_examples_dynamic_output_shape());
 }
 
-#endif

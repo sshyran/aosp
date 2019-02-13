@@ -21,19 +21,15 @@ TEST_F(GeneratedTests, split_int32_2_relaxed) {
             split_int32_2::get_examples_relaxed());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, split_int32_2_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, split_int32_2_dynamic_output_shape) {
     execute(split_int32_2::CreateModel_dynamic_output_shape,
             split_int32_2::is_ignored_dynamic_output_shape,
             split_int32_2::get_examples_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, split_int32_2_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, split_int32_2_dynamic_output_shape_relaxed) {
     execute(split_int32_2::CreateModel_dynamic_output_shape_relaxed,
             split_int32_2::is_ignored_dynamic_output_shape_relaxed,
             split_int32_2::get_examples_dynamic_output_shape_relaxed());
 }
 
-#endif

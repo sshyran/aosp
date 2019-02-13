@@ -68,6 +68,9 @@ public:
     const RemapVectorType& getOutputsAsSubModelInputs() const {
         return mOutputsAsSubModelInputs;
     }
+    const std::vector<uint32_t>& getOutputIndexSubModelToFromModel() const {
+        return mOutputIndexSubModelToFromModel;
+    }
     const std::vector<uint32_t>& getOutputsAsSubModelInputsIndexToFromModel() const {
         return mOutputsAsSubModelInputsIndexToFromModel;
     }
