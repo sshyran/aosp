@@ -99,8 +99,8 @@ class ExecutionBurstServer : public IBurstContext {
  *                 unrecognized slots.
  * @param requestChannel Input FMQ channel through which the client passes the
  *                       request to the service.
- * @param requestChannel Output FMQ channel from which the client can retrieve
- *                       the result of the execution.
+ * @param resultChannel Output FMQ channel from which the client can retrieve
+ *                      the result of the execution.
  * @param preparedModel PreparedModel that the burst object was created from.
  *                      This will be used to synchronously perform the
  *                      execution.
