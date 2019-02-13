@@ -110,6 +110,11 @@ std::string getOperationName(OperationType opCode);
 // Returns the name of the operand type in ASCII.
 std::string getOperandTypeName(OperandType type);
 
+// Whether a operand has a tensor type that is not fully specified.
+bool hasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimCount);
+bool hasUnspecifiedDimensions(const Operand& operand);
+bool hasUnspecifiedDimensions(const ANeuralNetworksOperandType* type);
+
 // Memory is unmapped.
 // Memory is reference counted by hidl_memory instances, and is deallocated
 // once there are no more references.

@@ -27,30 +27,24 @@ TEST_F(GeneratedTests, topk_v2_float16) {
             topk_v2::get_examples_float16());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape) {
     execute(topk_v2::CreateModel_dynamic_output_shape,
             topk_v2::is_ignored_dynamic_output_shape,
             topk_v2::get_examples_dynamic_output_shape());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_relaxed) {
     execute(topk_v2::CreateModel_dynamic_output_shape_relaxed,
             topk_v2::is_ignored_dynamic_output_shape_relaxed,
             topk_v2::get_examples_dynamic_output_shape_relaxed());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_float16) {
     execute(topk_v2::CreateModel_dynamic_output_shape_float16,
             topk_v2::is_ignored_dynamic_output_shape_float16,
             topk_v2::get_examples_dynamic_output_shape_float16());
 }
 
-#endif
 TEST_F(GeneratedTests, topk_v2_2) {
     execute(topk_v2::CreateModel_2,
             topk_v2::is_ignored_2,
@@ -69,30 +63,24 @@ TEST_F(GeneratedTests, topk_v2_float16_2) {
             topk_v2::get_examples_float16_2());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_2) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_2) {
     execute(topk_v2::CreateModel_dynamic_output_shape_2,
             topk_v2::is_ignored_dynamic_output_shape_2,
             topk_v2::get_examples_dynamic_output_shape_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_relaxed_2) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_relaxed_2) {
     execute(topk_v2::CreateModel_dynamic_output_shape_relaxed_2,
             topk_v2::is_ignored_dynamic_output_shape_relaxed_2,
             topk_v2::get_examples_dynamic_output_shape_relaxed_2());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_float16_2) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_float16_2) {
     execute(topk_v2::CreateModel_dynamic_output_shape_float16_2,
             topk_v2::is_ignored_dynamic_output_shape_float16_2,
             topk_v2::get_examples_dynamic_output_shape_float16_2());
 }
 
-#endif
 TEST_F(GeneratedTests, topk_v2_3) {
     execute(topk_v2::CreateModel_3,
             topk_v2::is_ignored_3,
@@ -111,30 +99,24 @@ TEST_F(GeneratedTests, topk_v2_float16_3) {
             topk_v2::get_examples_float16_3());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_3) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_3) {
     execute(topk_v2::CreateModel_dynamic_output_shape_3,
             topk_v2::is_ignored_dynamic_output_shape_3,
             topk_v2::get_examples_dynamic_output_shape_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_relaxed_3) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_relaxed_3) {
     execute(topk_v2::CreateModel_dynamic_output_shape_relaxed_3,
             topk_v2::is_ignored_dynamic_output_shape_relaxed_3,
             topk_v2::get_examples_dynamic_output_shape_relaxed_3());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_float16_3) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_float16_3) {
     execute(topk_v2::CreateModel_dynamic_output_shape_float16_3,
             topk_v2::is_ignored_dynamic_output_shape_float16_3,
             topk_v2::get_examples_dynamic_output_shape_float16_3());
 }
 
-#endif
 TEST_F(GeneratedTests, topk_v2_4) {
     execute(topk_v2::CreateModel_4,
             topk_v2::is_ignored_4,
@@ -153,30 +135,24 @@ TEST_F(GeneratedTests, topk_v2_float16_4) {
             topk_v2::get_examples_float16_4());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_4) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_4) {
     execute(topk_v2::CreateModel_dynamic_output_shape_4,
             topk_v2::is_ignored_dynamic_output_shape_4,
             topk_v2::get_examples_dynamic_output_shape_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_relaxed_4) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_relaxed_4) {
     execute(topk_v2::CreateModel_dynamic_output_shape_relaxed_4,
             topk_v2::is_ignored_dynamic_output_shape_relaxed_4,
             topk_v2::get_examples_dynamic_output_shape_relaxed_4());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_float16_4) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_float16_4) {
     execute(topk_v2::CreateModel_dynamic_output_shape_float16_4,
             topk_v2::is_ignored_dynamic_output_shape_float16_4,
             topk_v2::get_examples_dynamic_output_shape_float16_4());
 }
 
-#endif
 TEST_F(GeneratedTests, topk_v2_5) {
     execute(topk_v2::CreateModel_5,
             topk_v2::is_ignored_5,
@@ -195,30 +171,24 @@ TEST_F(GeneratedTests, topk_v2_float16_5) {
             topk_v2::get_examples_float16_5());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_5) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_5) {
     execute(topk_v2::CreateModel_dynamic_output_shape_5,
             topk_v2::is_ignored_dynamic_output_shape_5,
             topk_v2::get_examples_dynamic_output_shape_5());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_relaxed_5) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_relaxed_5) {
     execute(topk_v2::CreateModel_dynamic_output_shape_relaxed_5,
             topk_v2::is_ignored_dynamic_output_shape_relaxed_5,
             topk_v2::get_examples_dynamic_output_shape_relaxed_5());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_float16_5) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_float16_5) {
     execute(topk_v2::CreateModel_dynamic_output_shape_float16_5,
             topk_v2::is_ignored_dynamic_output_shape_float16_5,
             topk_v2::get_examples_dynamic_output_shape_float16_5());
 }
 
-#endif
 TEST_F(GeneratedTests, topk_v2_6) {
     execute(topk_v2::CreateModel_6,
             topk_v2::is_ignored_6,
@@ -237,27 +207,21 @@ TEST_F(GeneratedTests, topk_v2_float16_6) {
             topk_v2::get_examples_float16_6());
 }
 
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_6) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_6) {
     execute(topk_v2::CreateModel_dynamic_output_shape_6,
             topk_v2::is_ignored_dynamic_output_shape_6,
             topk_v2::get_examples_dynamic_output_shape_6());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_relaxed_6) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_relaxed_6) {
     execute(topk_v2::CreateModel_dynamic_output_shape_relaxed_6,
             topk_v2::is_ignored_dynamic_output_shape_relaxed_6,
             topk_v2::get_examples_dynamic_output_shape_relaxed_6());
 }
 
-#endif
-#if 0
-TEST_F(DynamicOutputShapeTests, topk_v2_dynamic_output_shape_float16_6) {
+TEST_F(DynamicOutputShapeTest, topk_v2_dynamic_output_shape_float16_6) {
     execute(topk_v2::CreateModel_dynamic_output_shape_float16_6,
             topk_v2::is_ignored_dynamic_output_shape_float16_6,
             topk_v2::get_examples_dynamic_output_shape_float16_6());
 }
 
-#endif

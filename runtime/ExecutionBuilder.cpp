@@ -40,6 +40,35 @@ static MeasureTiming measureTiming(const ExecutionBuilder* execution) {
     return execution->measureTiming() ? MeasureTiming::YES : MeasureTiming::NO;
 }
 
+static bool checkDimensionInfo(const Operand& operand, const ANeuralNetworksOperandType* newType,
+                               const char* tag, bool allowUnspecified) {
+    if (newType != nullptr) {
+        if (validateOperandType(*newType, tag, allowUnspecified) != ANEURALNETWORKS_NO_ERROR) {
+            LOG(ERROR) << tag << ": Invalid newType";
+            return false;
+        }
+        if (operand.dimensions.size() == 0) {
+            return true;
+        }
+        if (operand.dimensions.size() != newType->dimensionCount) {
+            LOG(ERROR) << tag << ": Setting with incompatible dimension count";
+            return false;
+        }
+        for (uint32_t i = 0; i < newType->dimensionCount; i++) {
+            if (operand.dimensions[i] != newType->dimensions[i] && operand.dimensions[i] != 0) {
+                LOG(ERROR) << tag << ": Overriding a fully specified dimension is disallowed";
+                return false;
+            }
+        }
+    } else {
+        if (!allowUnspecified && hasUnspecifiedDimensions(operand)) {
+            LOG(ERROR) << tag << ": Setting with operand type that is not fully specified";
+            return false;
+        }
+    }
+    return true;
+}
+
 int ModelArgumentInfo::setFromPointer(const Operand& operand,
                                       const ANeuralNetworksOperandType* type, void* data,
                                       uint32_t length) {
@@ -55,7 +84,7 @@ int ModelArgumentInfo::setFromPointer(const Operand& operand,
         NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
         if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM) {
             uint32_t neededLength = sizeOfData(operand.type, dimensions);
-            if (neededLength != length) {
+            if (neededLength != length && neededLength != 0) {
                 LOG(ERROR) << "Setting argument with invalid length: " << length
                            << ", expected length: " << neededLength;
                 return ANEURALNETWORKS_BAD_DATA;
@@ -73,7 +102,7 @@ int ModelArgumentInfo::setFromMemory(const Operand& operand, const ANeuralNetwor
     NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
     if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM) {
         uint32_t neededLength = sizeOfData(operand.type, dimensions);
-        if (neededLength != length) {
+        if (neededLength != length && neededLength != 0) {
             LOG(ERROR) << "Setting argument with invalid length: " << length
                        << ", expected length: " << neededLength;
             return ANEURALNETWORKS_BAD_DATA;
@@ -110,32 +139,12 @@ int ModelArgumentInfo::setFromTemporaryMemory(const Operand& operand, uint32_t p
 
 int ModelArgumentInfo::updateDimensionInfo(const Operand& operand,
                                            const ANeuralNetworksOperandType* newType) {
-    nnAssert(dimensions.empty());
     if (newType == nullptr) {
-        for (auto i : operand.dimensions) {
-            if (i == 0) {
-                LOG(ERROR) << "Setting input/output with unspecified dimensions";
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-        }
         dimensions = operand.dimensions;
     } else {
-        uint32_t count = newType->dimensionCount;
-        if (static_cast<OperandType>(newType->type) != operand.type ||
-            count != operand.dimensions.size()) {
-            LOG(ERROR) << "Setting input/output with incompatible types";
-            return ANEURALNETWORKS_BAD_DATA;
-        }
-
+        const uint32_t count = newType->dimensionCount;
         dimensions = hidl_vec<uint32_t>(count);
-        for (uint32_t i = 0; i < count; i++) {
-            if (operand.dimensions[i] != 0 && operand.dimensions[i] != newType->dimensions[i]) {
-                LOG(ERROR) << "Overriding a fully specified dimension is disallowed";
-                return ANEURALNETWORKS_BAD_DATA;
-            } else {
-                dimensions[i] = newType->dimensions[i];
-            }
-        }
+        std::copy(&newType->dimensions[0], &newType->dimensions[count], dimensions.begin());
     }
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -157,11 +166,9 @@ int ExecutionBuilder::setInput(uint32_t index, const ANeuralNetworksOperandType*
         LOG(ERROR) << "ANeuralNetworksExecution_setInput bad index " << index << " " << count;
         return ANEURALNETWORKS_BAD_DATA;
     }
-    if (type != nullptr) {
-        int n = validateOperandType(*type, "ANeuralNetworksExecution_setInput", false);
-        if (n != ANEURALNETWORKS_NO_ERROR) {
-            return n;
-        }
+    if (!checkDimensionInfo(mModel->getInputOperand(index), type,
+                            "ANeuralNetworksExecution_setInput", buffer == nullptr)) {
+        return ANEURALNETWORKS_BAD_DATA;
     }
     if (length > 0xFFFFFFFF) {
         LOG(ERROR) << "ANeuralNetworksExecution_setInput input exceeds max length " << length;
@@ -180,6 +187,10 @@ int ExecutionBuilder::setInputFromMemory(uint32_t index, const ANeuralNetworksOp
     if (index >= count) {
         LOG(ERROR) << "ANeuralNetworksExecution_setInputFromMemory bad index " << index << " "
                    << count;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (!checkDimensionInfo(mModel->getInputOperand(index), type,
+                            "ANeuralNetworksExecution_setInputFromMemory", false)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
     // Both offset & length must be zero for Non-BLOB format AHardwareBuffer.
@@ -203,11 +214,9 @@ int ExecutionBuilder::setOutput(uint32_t index, const ANeuralNetworksOperandType
         LOG(ERROR) << "ANeuralNetworksExecution_setOutput bad index " << index << " " << count;
         return ANEURALNETWORKS_BAD_DATA;
     }
-    if (type != nullptr) {
-        int n = validateOperandType(*type, "ANeuralNetworksExecution_setOutput", false);
-        if (n != ANEURALNETWORKS_NO_ERROR) {
-            return n;
-        }
+    if (!checkDimensionInfo(mModel->getOutputOperand(index), type,
+                            "ANeuralNetworksExecution_setOutput", true)) {
+        return ANEURALNETWORKS_BAD_DATA;
     }
     if (length > 0xFFFFFFFF) {
         LOG(ERROR) << "ANeuralNetworksExecution_setOutput input exceeds max length " << length;
@@ -225,6 +234,10 @@ int ExecutionBuilder::setOutputFromMemory(uint32_t index, const ANeuralNetworksO
     if (index >= count) {
         LOG(ERROR) << "ANeuralNetworksExecution_setOutputFromMemory bad index " << index << " "
                    << count;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (!checkDimensionInfo(mModel->getOutputOperand(index), type,
+                            "ANeuralNetworksExecution_setOutputFromMemory", true)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
     // Both offset & length must be zero for Non-BLOB format AHardwareBuffer.
@@ -321,11 +334,12 @@ static void cpuFallbackFull(ExecutionBuilder* executionBuilder,
     sp<ExecutionCallback> fallbackCallback;
     int n = executor.startCompute(&fallbackCallback);
     if (n != ANEURALNETWORKS_NO_ERROR) {
-        executionCallback->notify(convertResultCodeToErrorStatus(n));
+        executionCallback->notify(convertResultCodeToErrorStatus(n), {}, kNoTiming);
         return;
     }
     fallbackCallback->wait();
-    executionCallback->notify(fallbackCallback->getStatus());
+    executionCallback->notify(fallbackCallback->getStatus(), fallbackCallback->getOutputShapes(),
+                              fallbackCallback->getTiming());
 }
 
 // Attempt synchronous execution on CPU.
@@ -337,7 +351,8 @@ static void cpuFallbackFull(ExecutionBuilder* executionBuilder,
 // TODO: How should we handle timing in this case?
 static bool cpuFallbackPartial(ExecutionBuilder* executionBuilder, const ExecutionPlan* plan,
                                std::shared_ptr<ExecutionPlan::Controller> controller,
-                               const sp<ExecutionCallback>& executionCallback) {
+                               const sp<ExecutionCallback>& executionCallback,
+                               std::vector<OutputShape>* outputShapes) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "cpuFallbackPartial");
     VLOG(EXECUTION) << "cpuFallbackPartial";
     std::shared_ptr<StepExecutor> executor;
@@ -352,8 +367,18 @@ static bool cpuFallbackPartial(ExecutionBuilder* executionBuilder, const Executi
         return false;
     }
     fallbackCallback->wait();
-    if (fallbackCallback->getStatus() != ErrorStatus::NONE) {
-        cpuFallbackFull(executionBuilder, executionCallback);
+    ErrorStatus status = fallbackCallback->getStatus();
+    const auto& stepOutputShapes = fallbackCallback->getOutputShapes();
+    if (!executor->updateOutputShapes(stepOutputShapes, outputShapes)) {
+        status = ErrorStatus::GENERAL_FAILURE;
+    }
+    if (status != ErrorStatus::NONE) {
+        // OUTPUT_INSUFFICIENT_SIZE is not recoverable
+        if (status == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+            executionCallback->notify(status, *outputShapes, kNoTiming);
+        } else {
+            cpuFallbackFull(executionBuilder, executionCallback);
+        }
         return false;
     }
     return true;
@@ -365,6 +390,8 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
                                          bool allowFallback,
                                          const sp<ExecutionCallback>& executionCallback) {
     VLOG(EXECUTION) << "ExecutionBuilder::compute (from plan, iteratively)";
+    std::vector<OutputShape> outputShapes;
+    executionBuilder->initializeOutputShapes(&outputShapes);
     while (true) {
         std::shared_ptr<StepExecutor> executor;
         VLOG(EXECUTION) << "looking for next StepExecutor";
@@ -374,12 +401,12 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
             if (allowFallback) {
                 cpuFallbackFull(executionBuilder, executionCallback);
             } else {
-                executionCallback->notify(convertResultCodeToErrorStatus(n));
+                executionCallback->notify(convertResultCodeToErrorStatus(n), {}, kNoTiming);
             }
             return;
         }
         if (executor == nullptr) {
-            executionCallback->notify(ErrorStatus::NONE);
+            executionCallback->notify(ErrorStatus::NONE, outputShapes, kNoTiming);
             return;
         }
 
@@ -387,7 +414,8 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
         n = executor->startCompute(&stepCallback, burstController);
         if (n != ANEURALNETWORKS_NO_ERROR) {
             if (allowFallback) {
-                if (cpuFallbackPartial(executionBuilder, plan, controller, executionCallback)) {
+                if (cpuFallbackPartial(executionBuilder, plan, controller, executionCallback,
+                                       &outputShapes)) {
                     // Successfully executed one step on CPU.
                     continue;
                 } else {
@@ -396,15 +424,21 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
                     return;
                 }
             } else {
-                executionCallback->notify(convertResultCodeToErrorStatus(n));
+                executionCallback->notify(convertResultCodeToErrorStatus(n), {}, kNoTiming);
                 return;
             }
         }
         stepCallback->wait();
         ErrorStatus status = stepCallback->getStatus();
+        const auto& stepOutputShapes = stepCallback->getOutputShapes();
+        if (!executor->updateOutputShapes(stepOutputShapes, &outputShapes)) {
+            status = ErrorStatus::GENERAL_FAILURE;
+        }
         if (status != ErrorStatus::NONE) {
-            if (allowFallback) {
-                if (cpuFallbackPartial(executionBuilder, plan, controller, executionCallback)) {
+            // OUTPUT_INSUFFICIENT_SIZE is not recoverable
+            if (allowFallback && status != ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+                if (cpuFallbackPartial(executionBuilder, plan, controller, executionCallback,
+                                       &outputShapes)) {
                     // Successfully executed one step on CPU.
                     continue;
                 } else {
@@ -412,8 +446,11 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
                     // CPU, or tried and failed to do so.
                     return;
                 }
+            } else if (status == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+                executionCallback->notify(status, outputShapes, kNoTiming);
+                return;
             } else {
-                executionCallback->notify(status);
+                executionCallback->notify(status, {}, kNoTiming);
                 return;
             }
         }
@@ -447,7 +484,9 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
         }
     }
 
-    auto wrappedFinish = [this](ErrorStatus error) { return finish(error); };
+    auto wrappedFinish = [this](ErrorStatus error, const std::vector<OutputShape>& outputShapes) {
+        return finish(error, outputShapes);
+    };
 
     // TODO: For asynchronous execution, entire plan-based-path should run in an
     // asynchronous thread -- take the asynchronous thread logic out of
@@ -490,10 +529,72 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
     }
 }
 
-ErrorStatus ExecutionBuilder::finish(ErrorStatus) {
+void ExecutionBuilder::initializeOutputShapes(std::vector<OutputShape>* outputShapes) const {
+    outputShapes->resize(mOutputs.size());
+    for (uint32_t i = 0; i < mOutputs.size(); i++) {
+        (*outputShapes)[i].dimensions = mOutputs[i].dimensions;
+        (*outputShapes)[i].isSufficient = true;
+    }
+}
+
+// Check if the dimensions "to" is updatable by dimensions "from", where "from" must
+// have a higher specification level.
+static bool isUpdatable(const std::vector<uint32_t>& to, const std::vector<uint32_t>& from) {
+    if (to.size() == 0) return true;
+    NN_RET_CHECK_EQ(to.size(), from.size());
+    for (uint32_t i = 0; i < to.size(); i++) {
+        NN_RET_CHECK(to[i] == from[i] || to[i] == 0);
+    }
+    return true;
+}
+
+bool ExecutionBuilder::updateOutputShapes(const std::vector<OutputShape>& outputShapes) {
+    if (outputShapes.size() == 0) {
+        return true;
+    }
+    NN_RET_CHECK_EQ(outputShapes.size(), mOutputs.size());
+    for (uint32_t i = 0; i < outputShapes.size(); i++) {
+        // Check if only unspecified dimensions or rank are overwritten.
+        NN_RET_CHECK(isUpdatable(mOutputs[i].dimensions, outputShapes[i].dimensions));
+    }
+    for (uint32_t i = 0; i < outputShapes.size(); i++) {
+        mOutputs[i].dimensions = outputShapes[i].dimensions;
+        mOutputs[i].isSufficient = outputShapes[i].isSufficient;
+    }
+    return true;
+}
+
+ErrorStatus ExecutionBuilder::finish(ErrorStatus, const std::vector<OutputShape>& outputShapes) {
     CHECK(!mFinished) << "ExecutionBuilder::finish is calling twice";
     mFinished = true;
+    if (!updateOutputShapes(outputShapes)) {
+        return ErrorStatus::GENERAL_FAILURE;
+    }
     return ErrorStatus::NONE;
+}
+
+bool StepExecutor::updateOutputShapes(const std::vector<OutputShape>& from,
+                                      std::vector<OutputShape>* to) {
+    if (from.size() == 0) {
+        return true;
+    }
+    if (mExecutionStep != nullptr) {
+        const auto& indexMapping = mExecutionStep->getOutputIndexSubModelToFromModel();
+        NN_RET_CHECK_LE(indexMapping.size(), from.size());
+        for (uint32_t i = 0, e = indexMapping.size(); i < e; i++) {
+            uint32_t toIndex = indexMapping[i];
+            NN_RET_CHECK_GT(to->size(), toIndex);
+            NN_RET_CHECK(isUpdatable(to->at(toIndex).dimensions, from[i].dimensions));
+            (*to)[toIndex] = from[i];
+        }
+    } else {
+        NN_RET_CHECK_EQ(from.size(), to->size());
+        for (uint32_t i = 0, e = from.size(); i < e; i++) {
+            NN_RET_CHECK(isUpdatable(to->at(i).dimensions, from[i].dimensions));
+            (*to)[i] = from[i];
+        }
+    }
+    return true;
 }
 
 // Figures out how to place each of the input or outputs in a buffer. This just does the layout,
@@ -564,6 +665,7 @@ void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutpu
         default:
             nnAssert(!"unexpected ModelArgumentInfo::state");
             break;
+        case ModelArgumentInfo::HAS_NO_VALUE:
         case ModelArgumentInfo::POINTER:
         case ModelArgumentInfo::UNSPECIFIED:
             break;
@@ -776,6 +878,10 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
     Return<ErrorStatus> callbackStatus = executionCallback->getStatus();
     if (!callbackStatus.isOk() || callbackStatus != ErrorStatus::NONE) {
         VLOG(EXECUTION) << "**Execution failed**";
+        if (callbackStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+            *synchronizationCallback = executionCallback;
+            return ANEURALNETWORKS_NO_ERROR;
+        }
         return callbackStatus.isOk() ? convertErrorStatusToResultCode(callbackStatus)
                                      : ANEURALNETWORKS_OP_FAILED;
     }
