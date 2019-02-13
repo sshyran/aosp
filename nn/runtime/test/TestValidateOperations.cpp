@@ -2895,11 +2895,7 @@ void unidirectionalSequenceLSTMTest(int32_t inputOperandCode) {
                                  cellLayerNormWeights,
                                  outputLayerNormWeights},
                                 {output});
-
-    EXPECT_TRUE(ulstmTest.testMutatingInputOperandCode());
-    EXPECT_TRUE(ulstmTest.testMutatingInputOperandCounts());
-    EXPECT_TRUE(ulstmTest.testMutatingOutputOperandCode());
-    EXPECT_TRUE(ulstmTest.testMutatingOutputOperandCounts());
+    ulstmTest.testOpsValidations();
 }
 
 TEST(OperationValidationTest, UNIDIRECTIONAL_SEQUENCE_LSTM_float32) {
