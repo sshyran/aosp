@@ -48,9 +48,14 @@ class Device {
     virtual PerformanceInfo getFloat32Performance() const = 0;
     virtual PerformanceInfo getQuantized8Performance() const = 0;
     virtual PerformanceInfo getRelaxedFloat32toFloat16Performance() const = 0;
+    virtual bool isCachingSupported() const = 0;
 
     virtual int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                              std::shared_ptr<VersionedIPreparedModel>* preparedModel) = 0;
+    virtual int prepareModelFromCache(
+            const hidl_handle& modelCache, const hidl_handle& dataCache,
+            const hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>& token,
+            std::shared_ptr<VersionedIPreparedModel>* preparedModel) = 0;
 
     uint32_t getSizeOfData(const Operand& operand,
                            const std::map<std::string, uint16_t>& extensionNameToPrefix) const;
