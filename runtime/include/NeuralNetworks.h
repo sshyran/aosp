@@ -4488,6 +4488,41 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN = 93,
+
+    /**
+     * Resizes images to given size using the nearest neighbor interpretation.
+     *
+     * Resized images must be distorted if their output aspect ratio is not the
+     * same as input aspect ratio. The corner pixels of output may not be the
+     * same as corner pixels of input.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
+     * With the default data layout NHWC, the data is stored in the order of:
+     * [batch, height, width, channels]. Alternatively, the data layout could
+     * be NCHW, the data storage order of: [batch, channels, height, width].
+     *
+     * Inputs:
+     * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
+     *      the input.
+     * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
+     *      height of the output tensor.
+     * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
+     *      width of the output tensor.
+     * * 3: An {@link ANEURALNETWORKS_BOOL} scalar, default to false.
+     *      Set to true to specify NCHW data layout for input0 and output0.
+     *
+     * Outputs:
+     * * 0: The output 4-D tensor, of shape
+     *      [batches, new_height, new_width, depth].
+     *
+     * Available since API level 29.
+     */
+    ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR = 94,
 } OperationCode;
 
 /**
