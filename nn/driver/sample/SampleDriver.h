@@ -39,7 +39,9 @@ class SampleDriver : public IDevice {
    public:
     SampleDriver(const char* name,
                  const IOperationResolver* operationResolver = BuiltinOperationResolver::get())
-        : mName(name), mOperationResolver(operationResolver) {}
+        : mName(name), mOperationResolver(operationResolver) {
+        android::nn::initVLogMask();
+    }
     ~SampleDriver() override {}
     Return<void> getCapabilities(getCapabilities_cb cb) override;
     Return<void> getVersionString(getVersionString_cb cb) override;
