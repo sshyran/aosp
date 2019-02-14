@@ -76,7 +76,7 @@ inline bool roiAlignNhwc(const T_Input* inputData, const Shape& inputShape, cons
         // Check for malformed data
         // 1. invalid batch id
         // 2. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
-        // 3. Invalid region: x2 <= x1 || y2 <= y1
+        // 3. Invalid region: x2 < x1 || y2 < y1
         NN_RET_CHECK_GE(batchId, 0);
         NN_RET_CHECK_LT(batchId, numBatches);
         NN_RET_CHECK(roiInfo[0] >= 0);
@@ -206,19 +206,15 @@ inline bool roiAlignNhwc<uint8_t, uint16_t>(const uint8_t* inputData, const Shap
         // Check for malformed data
         // 1. invalid batch id
         // 2. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
-        // 3. Invalid region: x2 <= x1 || y2 <= y1
+        // 3. Invalid region: x2 < x1 || y2 < y1
         NN_RET_CHECK_GE(batchId, 0);
         NN_RET_CHECK_LT(batchId, numBatches);
-        NN_RET_CHECK(wRoiStart >= 0);
-        NN_RET_CHECK(hRoiStart >= 0);
-        NN_RET_CHECK(wRoiEnd >= 0);
-        NN_RET_CHECK(hRoiEnd >= 0);
-        NN_RET_CHECK(wRoiStart * widthScale <= inWidth);
-        NN_RET_CHECK(hRoiStart * heightScale <= inHeight);
-        NN_RET_CHECK(wRoiEnd * widthScale <= inWidth);
-        NN_RET_CHECK(hRoiEnd * heightScale <= inHeight);
-        NN_RET_CHECK(wRoiStart <= wRoiEnd);
-        NN_RET_CHECK(hRoiStart <= hRoiEnd);
+        NN_RET_CHECK(wRoiStart <= inWidth);
+        NN_RET_CHECK(hRoiStart <= inHeight);
+        NN_RET_CHECK(wRoiEnd <= inWidth);
+        NN_RET_CHECK(hRoiEnd <= inHeight);
+        NN_RET_CHECK_LE(wRoiStart, wRoiEnd);
+        NN_RET_CHECK_LE(hRoiStart, hRoiEnd);
 
         float roiWidth = std::max(wRoiEnd - wRoiStart, 1.0f);
         float roiHeight = std::max(hRoiEnd - hRoiStart, 1.0f);
