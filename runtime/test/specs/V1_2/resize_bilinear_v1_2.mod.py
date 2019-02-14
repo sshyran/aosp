@@ -21,13 +21,19 @@ i1 = Input("op1", "TENSOR_FLOAT32", "{1, 2, 2, 1}")
 o1 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 3, 1}")
 Model().Operation("RESIZE_BILINEAR", i1, 3, 3, layout).To(o1)
 
+# Additional data type
+quant8 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.01, 0),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.01, 0)
+})
+
 # Instantiate an example
 example = Example({
     i1: [1.0, 1.0, 2.0, 2.0],
     o1: [1.0, 1.0, 1.0,
          1.666666667, 1.666666667, 1.666666667,
          2.0, 2.0, 2.0]
-}).AddNchw(i1, o1, layout).AddVariations("relaxed", "float16")
+}).AddNchw(i1, o1, layout).AddVariations("relaxed", "float16", quant8)
 
 
 # TEST 2: RESIZE_BILINEAR_NCHW_2, h = 3, w = 3
@@ -35,10 +41,36 @@ i2 = Input("op1", "TENSOR_FLOAT32", "{1, 2, 2, 2}")
 o2 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 3, 2}")
 Model().Operation("RESIZE_BILINEAR", i2, 3, 3, layout).To(o2)
 
+# Additional data type
+quant8 = DataTypeConverter().Identify({
+    i2: ("TENSOR_QUANT8_ASYMM", 0.25, 0),
+    o2: ("TENSOR_QUANT8_ASYMM", 0.25, 0)
+})
+
 # Instantiate an example
 example = Example({
     i2: [3, 4, 6, 10, 9, 10, 12, 16],
     o2: [3, 4, 5, 8, 6, 10,
          7, 8, 9, 12, 10, 14,
          9, 10, 11, 14, 12, 16,]
-}).AddNchw(i2, o2, layout).AddVariations("relaxed", "float16")
+}).AddNchw(i2, o2, layout).AddVariations("relaxed", "float16", quant8)
+
+
+# TEST 3: RESIZE_BILINEAR, h = 3, w = 3
+i3 = Input("op1", "TENSOR_FLOAT32", "{1, 2, 2, 1}")
+o3 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 3, 1}")
+Model().Operation("RESIZE_BILINEAR", i3, 3, 3).To(o3)
+
+# Additional data type
+quant8 = DataTypeConverter().Identify({
+    i3: ("TENSOR_QUANT8_ASYMM", 0.01, 0),
+    o3: ("TENSOR_QUANT8_ASYMM", 0.01, 0)
+})
+
+# Instantiate an example
+example = Example({
+    i3: [1.0, 1.0, 2.0, 2.0],
+    o3: [1.0, 1.0, 1.0,
+         1.666666667, 1.666666667, 1.666666667,
+         2.0, 2.0, 2.0]
+}).AddVariations("float16", quant8, includeDefault=False)
