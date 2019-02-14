@@ -37,37 +37,6 @@ bool copyData(const void* inputData, const Shape& inputShape, void* outputData,
     return true;
 }
 
-bool resizeBilinearFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* outputData,
-                           const Shape& outputShape) {
-    NNTRACE_TRANS("resizeBilinearFloat16");
-    std::vector<float> inputData_float32(getNumberOfElements(inputShape));
-    convertFloat16ToFloat32(inputData, &inputData_float32);
-    std::vector<float> outputData_float32(getNumberOfElements(outputShape));
-
-    resizeBilinearFloat32(inputData_float32.data(), inputShape, outputData_float32.data(),
-                          outputShape);
-    convertFloat32ToFloat16(outputData_float32, outputData);
-    return true;
-}
-
-bool resizeBilinearFloat32(const float* inputData, const Shape& inputShape, float* outputData,
-                           const Shape& outputShape) {
-    NNTRACE_TRANS("resizeBilinearFloat32");
-    int32_t height = static_cast<int32_t>(getSizeOfDimension(outputShape, 1));
-    int32_t width = static_cast<int32_t>(getSizeOfDimension(outputShape, 2));
-
-    int32_t outDimData[2] = {height, width};
-    // We have to fake a tensor here, to satisfy ResizeBilinear().
-    Shape outDimShape;
-    outDimShape.dimensions = {1, 1, 1, 2};
-
-    NNTRACE_COMP_SWITCH("optimized_ops::ResizeBilinear");
-    tflite::optimized_ops::ResizeBilinear(inputData, convertShapeToDims(inputShape), outDimData,
-                                          convertShapeToDims(outDimShape), outputData,
-                                          convertShapeToDims(outputShape));
-    return true;
-}
-
 template <typename T>
 bool depthToSpaceGeneric(const T* inputData, const Shape& inputShape, int32_t blockSize,
                          T* outputData, const Shape& outputShape) {

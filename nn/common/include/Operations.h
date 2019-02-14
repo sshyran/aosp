@@ -236,11 +236,6 @@ bool localResponseNormFloat32(const float* inputData, const Shape& inputShape, i
 bool copyData(const void* inputData, const Shape& inputShape, void* outputData,
               const Shape& outputShape);
 
-bool resizeBilinearFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* outputData,
-                           const Shape& outputShape);
-bool resizeBilinearFloat32(const float* inputData, const Shape& inputShape, float* outputData,
-                           const Shape& outputShape);
-
 template <typename T>
 bool depthToSpaceGeneric(const T* inputData, const Shape& inputShape, int32_t blockSize,
                          T* outputData, const Shape& outputShape);
