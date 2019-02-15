@@ -399,11 +399,6 @@ bool reshapePrepare(const Shape& input,
                     const int32_t targetDimsSize,
                     Shape* output);
 
-bool resizeBilinearPrepare(const Shape& input,
-                           int32_t height,
-                           int32_t width,
-                           Shape* output);
-
 bool depthToSpacePrepare(const Shape& input,
                          int32_t blockSize,
                          Shape* output);
