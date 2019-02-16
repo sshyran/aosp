@@ -165,7 +165,7 @@ class CpuExecutor {
     const Request* mRequest = nullptr;
 
     // We're copying the list of all the dimensions from the model, as
-    // these may be modified when we run the operatins.  Since we're
+    // these may be modified when we run the operations.  Since we're
     // making a full copy, the indexes used in the operand description
     // stay valid.
     //    std::vector<uint32_t> mDimensions;
