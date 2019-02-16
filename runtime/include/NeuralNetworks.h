@@ -75,7 +75,7 @@ typedef enum {
     /**
      * A tensor of 8 bit unsigned integers that represent real numbers.
      *
-     * Attached to this tensor are two numbers that be used to convert the
+     * Attached to this tensor are two numbers that can be used to convert the
      * 8 bit integer to the real value and vice versa. These two numbers are:
      * - scale: a 32 bit floating point value greater than zero.
      * - zeroPoint: a 32 bit integer, in range [0, 255].
@@ -5105,7 +5105,7 @@ int ANeuralNetworksDevice_getType(const ANeuralNetworksDevice* device, int32_t* 
  * @param device The representation of the specified device.
  * @param version The returned version string of the driver for the specified device. The
  *                string will be in UTF-8 and will be null-terminated. For devices with feature
- *                level 28 or lower, "UNKOWN" will be returned. The version string will remain
+ *                level 28 or lower, "UNKNOWN" will be returned. The version string will remain
  *                valid for the duration of the application.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
@@ -5931,8 +5931,8 @@ int ANeuralNetworksExecution_setInput(ANeuralNetworksExecution* execution, int32
  * <p>The provided memory must outlive the execution.</p>
  *
  * If the input is optional, you can indicate that it is omitted by
- * using {@link ANeuralNetworks_setInput} instead, passing nullptr for buffer
- * and 0 for length.
+ * using {@link ANeuralNetworksExecution_setInput} instead, passing nullptr for
+ * buffer and 0 for length.
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  * See {@link ANeuralNetworksMemory_createFromAHardwarBuffer} for information on
@@ -6016,8 +6016,8 @@ int ANeuralNetworksExecution_setOutput(ANeuralNetworksExecution* execution, int3
  * {@link ANeuralNetworksExecution}.
  *
  * If the output is optional, you can indicate that it is omitted by
- * using {@link ANeuralNetworks_setOutput} instead, passing nullptr for buffer
- * and 0 for length.
+ * using {@link ANeuralNetworksExecution_setOutput} instead, passing nullptr for
+ * buffer and 0 for length.
  *
  * <p>The provided memory must outlive the execution.</p>
  *
