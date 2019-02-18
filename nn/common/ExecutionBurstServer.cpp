@@ -14,13 +14,9 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "ExecutionBurstServer"
-
 #include "ExecutionBurstServer.h"
 
 #include <android-base/logging.h>
-#include <set>
-#include <string>
 
 namespace android {
 namespace nn {
@@ -31,37 +27,31 @@ hidl_vec<hidl_memory> BurstMemoryCache::getMemories(const std::vector<int32_t>& 
     std::lock_guard<std::mutex> guard(mMutex);
 
     // find unique unknown slots
-    std::set<int32_t> setOfUnknownSlots;
-    for (int32_t slot : slots) {
-        if (mSlotToMemoryCache.find(slot) == mSlotToMemoryCache.end()) {
-            setOfUnknownSlots.insert(slot);
-        }
-    }
-    const std::vector<int32_t> unknownSlots(setOfUnknownSlots.begin(), setOfUnknownSlots.end());
+    std::vector<int32_t> unknownSlots = slots;
+    std::sort(unknownSlots.begin(), unknownSlots.end());
+    auto last = std::unique(unknownSlots.begin(), unknownSlots.end());
+    unknownSlots.erase(last, unknownSlots.end());
 
     // retrieve unknown slots
-    if (!unknownSlots.empty()) {
-        LOG(ERROR) << "server calling getMemories";
-        ErrorStatus errorStatus = ErrorStatus::GENERAL_FAILURE;
-        std::vector<hidl_memory> returnedMemories;
-        Return<void> ret = mCallback->getMemories(
-                unknownSlots, [&errorStatus, &returnedMemories](
-                                      ErrorStatus status, const hidl_vec<hidl_memory>& memories) {
-                    errorStatus = status;
-                    if (status == ErrorStatus::NONE) {
-                        returnedMemories = memories;
-                    }
-                });
+    ErrorStatus errorStatus = ErrorStatus::GENERAL_FAILURE;
+    std::vector<hidl_memory> returnedMemories;
+    Return<void> ret = mCallback->getMemories(
+            unknownSlots, [&errorStatus, &returnedMemories](ErrorStatus status,
+                                                            const hidl_vec<hidl_memory>& memories) {
+                errorStatus = status;
+                if (status == ErrorStatus::NONE) {
+                    returnedMemories = memories;
+                }
+            });
 
-        if (!ret.isOk() || errorStatus != ErrorStatus::NONE) {
-            LOG(ERROR) << "Error retrieving memories";
-            return {};
-        }
+    if (!ret.isOk() || errorStatus != ErrorStatus::NONE) {
+        LOG(ERROR) << "Error retrieving memories";
+        return {};
+    }
 
-        // add memories to unknown slots
-        for (size_t i = 0; i < unknownSlots.size(); ++i) {
-            mSlotToMemoryCache[unknownSlots[i]] = returnedMemories[i];
-        }
+    // add memories to unknown slots
+    for (size_t i = 0; i < unknownSlots.size(); ++i) {
+        mSlotToMemoryCache[unknownSlots[i]] = returnedMemories[i];
     }
 
     // get all slots
@@ -69,7 +59,6 @@ hidl_vec<hidl_memory> BurstMemoryCache::getMemories(const std::vector<int32_t>& 
     for (size_t i = 0; i < slots.size(); ++i) {
         memories[i] = mSlotToMemoryCache[slots[i]];
     }
-
     return memories;
 }
 
@@ -96,13 +85,9 @@ ExecutionBurstServer::~ExecutionBurstServer() {
     mTeardown = true;
 
     // force unblock
-    // ExecutionBurstServer is by default waiting on a request packet. If the
-    // client process destroys its burst object, the server will still be
-    // waiting on the futex (assuming mBlocking is true). This force unblock
-    // wakes up any thread waiting on the futex.
     if (mBlocking) {
-        // TODO: look for a different/better way to signal/notify the futex to
-        // wake up any thread waiting on it
+        // TODO: look for a different/better way to signal/notify the futex to wake
+        // up any thread waiting on it
         FmqRequestDatum datum;
         datum.packetInformation({/*.packetSize=*/0, /*.numberOfInputOperands=*/0,
                                  /*.numberOfOutputOperands=*/0, /*.numberOfPools=*/0});
@@ -132,13 +117,7 @@ std::vector<FmqRequestDatum> ExecutionBurstServer::getPacketBlocking() {
         return {};
     }
 
-    // wait for request packet and read first element of request packet
-    // TODO: have a more elegant way to wait for data, and read it all at once.
-    // For example, EventFlag can be used to directly wait on the futex, and all
-    // the data can be read at once with a non-blocking call to
-    // MessageQueue::read. For further optimization, MessageQueue::beginRead and
-    // MessageQueue::commitRead can be used to avoid an extra copy of the
-    // metadata.
+    // wait for request packet and read first element of result packet
     FmqRequestDatum datum;
     bool success = false;
     if (mBlocking) {
@@ -395,10 +374,6 @@ void ExecutionBurstServer::task() {
         ErrorStatus errorStatus = ErrorStatus::GENERAL_FAILURE;
         std::vector<OutputShape> outputShapes;
         Timing returnedTiming;
-        // This call to IPreparedModel::executeSynchronously occurs entirely
-        // within the same process, so ignore the Return<> errors via .isOk().
-        // TODO: verify it is safe to always call isOk() here, or if there is
-        // any benefit to checking any potential errors.
         mPreparedModel
                 ->executeSynchronously(request, measure,
                                        [&errorStatus, &outputShapes, &returnedTiming](

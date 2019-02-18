@@ -14,22 +14,14 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "ExecutionBurstServer"
-
 #include "ExecutionBurstController.h"
 
 #include <android-base/logging.h>
-#include <string>
 
 namespace android {
 namespace nn {
 namespace {
-
-using FmqRequestDescriptor = MQDescriptorSync<FmqRequestDatum>;
-using FmqResultDescriptor = MQDescriptorSync<FmqResultDatum>;
-
 constexpr Timing invalidTiming = {UINT64_MAX, UINT64_MAX};
-
 }  // anonymous namespace
 
 Return<void> ExecutionBurstCallback::getMemories(const hidl_vec<int32_t>& slots,
@@ -118,14 +110,8 @@ std::vector<FmqResultDatum> ExecutionBurstController::getPacketBlocking() {
     using discriminator = FmqResultDatum::hidl_discriminator;
 
     // wait for result packet and read first element of result packet
-    // TODO: have a more elegant way to wait for data, and read it all at once.
-    // For example, EventFlag can be used to directly wait on the futex, and all
-    // the data can be read at once with a non-blocking call to
-    // MessageQueue::read. For further optimization, MessageQueue::beginRead and
-    // MessageQueue::commitRead can be used to avoid an extra copy of the
-    // metadata.
     FmqResultDatum datum;
-    bool success = true;
+    bool success = false;
     if (mUsesFutex) {
         success = mFmqResultChannel->readBlocking(&datum, 1);
     } else {
@@ -147,11 +133,7 @@ std::vector<FmqResultDatum> ExecutionBurstController::getPacketBlocking() {
 
     // retrieve remaining elements
     // NOTE: all of the data is already available at this point, so there's no
-    // need to do a blocking wait to wait for more data. This is known because
-    // in FMQ, all writes are published (made available) atomically. Currently,
-    // the producer always publishes the entire packet in one function call, so
-    // if the first element of the packet is available, the remaining elements
-    // are also available.
+    // need to do a blocking wait to wait for more data
     std::vector<FmqResultDatum> packet(count);
     packet.front() = datum;
     success = mFmqResultChannel->read(packet.data() + 1, packet.size() - 1);
