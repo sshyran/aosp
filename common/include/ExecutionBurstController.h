@@ -35,6 +35,8 @@ using ::android::hardware::MessageQueue;
 using ::android::hardware::MQDescriptorSync;
 using FmqRequestChannel = MessageQueue<FmqRequestDatum, kSynchronizedReadWrite>;
 using FmqResultChannel = MessageQueue<FmqResultDatum, kSynchronizedReadWrite>;
+using FmqRequestDescriptor = MQDescriptorSync<FmqRequestDatum>;
+using FmqResultDescriptor = MQDescriptorSync<FmqResultDatum>;
 
 /**
  * Number of elements in the FMQ.
@@ -66,20 +68,7 @@ class ExecutionBurstCallback : public IBurstCallback {
 
     std::vector<int32_t> getSlots(const hidl_vec<hidl_memory>& memories,
                                   const std::vector<intptr_t>& keys);
-
     int32_t getSlot(const hidl_memory& memory, intptr_t key);
-
-    /*
-     * This function performs two different actions:
-     * 1) Removes an entry from the cache (if present), including the copied
-     *    hidl_memory. This frees hidl_memory's underlying file descriptor which
-     *    was duplicated upon creation.
-     * 2) Return whether a cache entry was removed and which slot was removed if
-     *    found. If the key did not to correspond to any entry in the cache, a
-     *    slot number of 0 is returned. The slot number and whether the entry
-     *    existed is useful so the same slot can be freed in the service's
-     *    cache.
-     */
     std::pair<bool, int32_t> freeMemory(intptr_t key);
 
    private:
@@ -110,10 +99,7 @@ class ExecutionBurstController {
      * Execute a request on a model.
      *
      * @param request Arguments to be executed on a model.
-     * @param memoryIds Identifiers corresponding to each memory object in the
-     *                  request's pools.
-     * @return status and output shape of the execution and whether to collect
-     *         execution time measurements.
+     * @return status and output shape of the execution.
      */
     std::tuple<ErrorStatus, std::vector<OutputShape>, Timing> compute(
             const Request& request, MeasureTiming measure, const std::vector<intptr_t>& memoryIds);
