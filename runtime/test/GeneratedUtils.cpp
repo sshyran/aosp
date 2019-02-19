@@ -77,7 +77,8 @@ static void printAll(std::ostream& os, const MixedTyped& test) {
     print(os, test.bool8Operands);
     print(os, test.quant8ChannelOperands);
     print(os, test.quant16AsymmOperands);
-    static_assert(8 == MixedTyped::kNumTypes,
+    print(os, test.quant8SymmOperands);
+    static_assert(9 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but printAll function wasn't updated");
 }
 
