@@ -246,22 +246,6 @@ bool floorFloat32(const float* inputData, float* outputData, const Shape& shape)
     return true;
 }
 
-bool dequantizeQuant8ToFloat16(const uint8_t* inputData, _Float16* outputData, const Shape& shape) {
-    NNTRACE_TRANS("dequantizeQuant8ToFloat16");
-    std::vector<float> outputDataFloat32(getNumberOfElements(shape));
-    dequantizeQuant8ToFloat32(inputData, outputDataFloat32.data(), shape);
-    convertFloat32ToFloat16(outputDataFloat32, outputData);
-    return true;
-}
-
-bool dequantizeQuant8ToFloat32(const uint8_t* inputData, float* outputData, const Shape& shape) {
-    NNTRACE_TRANS("dequantizeQuant8ToFloat32");
-    tflite::Dims<4> dim = convertShapeToDims(shape);
-    NNTRACE_COMP_SWITCH("optimized_ops::Dequantize");
-    tflite::optimized_ops::Dequantize(inputData, dim, shape.offset, shape.scale, outputData, dim);
-    return true;
-}
-
 bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData,
                              const Shape& outputShape) {
     NNTRACE_COMP("quantizeFloat32ToQuant8");

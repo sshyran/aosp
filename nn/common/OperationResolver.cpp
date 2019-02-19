@@ -29,6 +29,7 @@ const OperationRegistration* register_AXIS_ALIGNED_BBOX_TRANSFORM();
 const OperationRegistration* register_BIDIRECTIONAL_SEQUENCE_RNN();
 const OperationRegistration* register_BOX_WITH_NMS_LIMIT();
 const OperationRegistration* register_CHANNEL_SHUFFLE();
+const OperationRegistration* register_DEQUANTIZE();
 const OperationRegistration* register_DETECTION_POSTPROCESSING();
 const OperationRegistration* register_EQUAL();
 const OperationRegistration* register_EXP();
@@ -71,6 +72,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_BIDIRECTIONAL_SEQUENCE_RNN());
     registerOperation(register_BOX_WITH_NMS_LIMIT());
     registerOperation(register_CHANNEL_SHUFFLE());
+    registerOperation(register_DEQUANTIZE());
     registerOperation(register_DETECTION_POSTPROCESSING());
     registerOperation(register_EQUAL());
     registerOperation(register_EXP());
