@@ -222,6 +222,7 @@ const uint32_t kSizeOfDataType[]{
         2,  // ANEURALNETWORKS_FLOAT16
         1,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
         2,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+        1,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM
 };
 
 static_assert(COUNT(kSizeOfDataType) == kNumberOfDataTypes, "kSizeOfDataType is incorrect");
@@ -240,6 +241,7 @@ const bool kScalarDataType[]{
         true,   // ANEURALNETWORKS_FLOAT16
         false,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
         false,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
+        false,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM
 };
 
 static_assert(COUNT(kScalarDataType) == kNumberOfDataTypes, "kScalarDataType is incorrect");
@@ -387,6 +389,12 @@ static bool validateQuant8AsymmParams(const ANeuralNetworksOperandType& type, co
     return true;
 }
 
+static bool validateQuant8SymmParams(const ANeuralNetworksOperandType& type, const char* tag) {
+    NN_RET_CHECK_EQ(type.zeroPoint, 0) << tag << " invalid zeroPoint: " << type.zeroPoint;
+    NN_RET_CHECK_GT(type.scale, 0.f) << tag << " invalid scale";
+    return true;
+}
+
 static bool validateQuant16AsymmParams(const ANeuralNetworksOperandType& type, const char* tag) {
     NN_RET_CHECK(0 <= type.zeroPoint && type.zeroPoint <= 65535)
             << tag << " invalid zeroPoint: " << type.zeroPoint;
@@ -443,6 +451,8 @@ static bool validateOperandTypeHelper(const ANeuralNetworksOperandType& type, co
         NN_RET_CHECK(validateTensorDimensions(type, tag, allowPartial));
         if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
             NN_RET_CHECK(validateQuant8AsymmParams(type, tag));
+        } else if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_SYMM) {
+            NN_RET_CHECK(validateQuant8SymmParams(type, tag));
         } else if (type.type == ANEURALNETWORKS_TENSOR_QUANT16_ASYMM) {
             NN_RET_CHECK(validateQuant16AsymmParams(type, tag));
         } else if (type.type == ANEURALNETWORKS_TENSOR_QUANT16_SYMM) {

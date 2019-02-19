@@ -48,6 +48,7 @@ ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0,
                                          .scale = 0.0,
                                          .zeroPoint = 0};
     if (opcode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM ||
+        opcode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM ||
         opcode == ANEURALNETWORKS_TENSOR_QUANT16_ASYMM ||
         opcode == ANEURALNETWORKS_TENSOR_QUANT16_SYMM) {
         opType.scale = 1. / 256.;
