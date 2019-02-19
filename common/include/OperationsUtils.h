@@ -359,8 +359,6 @@ bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out1);
 
 bool floorPrepare(const Shape& input, Shape* output);
 
-bool dequantizePrepare(const Shape& input, Shape* output);
-
 bool quantizePrepare(const Shape& input, Shape* output);
 
 bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
