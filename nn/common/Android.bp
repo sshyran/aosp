@@ -27,6 +27,7 @@ cc_defaults {
         "operations/BidirectionalSequenceRNN.cpp",
         "operations/ChannelShuffle.cpp",
         "operations/Comparisons.cpp",
+        "operations/Dequantize.cpp",
         "operations/Elementwise.cpp",
         "operations/Gather.cpp",
         "operations/GenerateProposals.cpp",
