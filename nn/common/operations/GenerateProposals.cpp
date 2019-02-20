@@ -67,12 +67,12 @@ inline bool bboxTransformFloat32(const float* roiData, const Shape& roiShape,
     for (const float* roiBase = roiData; roiBase < roiDataEnd; roiBase += roiLength, roiIndex++) {
         uint32_t batchIndex = batchesData[roiIndex];
         // Check for malformed data
-        // 1. invalid batch id
-        // 2. Invalid region: x2 <= x1 || y2 <= y1
+        // 1. Invalid batch id
+        // 2. Invalid region: x2 < x1 || y2 < y1
         NN_RET_CHECK_GE(batchIndex, 0);
         NN_RET_CHECK_LT(batchIndex, numBatches);
-        NN_RET_CHECK_LT(roiBase[0], roiBase[2]);
-        NN_RET_CHECK_LT(roiBase[1], roiBase[3]);
+        NN_RET_CHECK_LE(roiBase[0], roiBase[2]);
+        NN_RET_CHECK_LE(roiBase[1], roiBase[3]);
 
         const float* imageInfoBase = imageInfoData + batchIndex * imageLength;
         float imageHeight = imageInfoBase[0];
@@ -382,6 +382,12 @@ bool boxWithNmsLimitFloat32Compute(const float* scoresData, const Shape& scoresS
     const float* roiBase = roiData;
     selected->clear();
     for (uint32_t b = 0; b < batchSplitIn->size(); b++) {
+        for (uint32_t i = 0; i < batchSplitIn->at(b); i++) {
+            const float* roi = roiBase + i * kRoiDim;
+            // Check for malformed data: invalid region: x2 < x1 || y2 < y1
+            NN_RET_CHECK_LE(roi[0], roi[2]);
+            NN_RET_CHECK_LE(roi[1], roi[3]);
+        }
         std::vector<uint32_t> result;
         hardNmsMultiClass(scoresBase, numClasses, batchSplitIn->at(b), scoreThreshold, iouThreshold,
                           maxNumDetections, maxNumDetections,
