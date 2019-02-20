@@ -72,7 +72,7 @@ inline bool roiPoolingNhwc(const T_Input* inputData, const Shape& inputShape, co
         // Check for malformed data
         // 1. invalid batch id
         // 2. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
-        // 3. Invalid region: x2 <= x1 || y2 <= y1
+        // 3. Invalid region: x2 < x1 || y2 < y1
         NN_RET_CHECK_GE(batchId, 0);
         NN_RET_CHECK_LT(batchId, numBatches);
         NN_RET_CHECK(roiInfo[0] >= 0);
