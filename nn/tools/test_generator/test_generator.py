@@ -154,6 +154,7 @@ class Type(NamedVariable):
         "TENSOR_FLOAT16": "_Float16",
         "TENSOR_FLOAT32": "float",
         "TENSOR_QUANT8_ASYMM": "uint8_t",
+        "TENSOR_QUANT8_SYMM": "int8_t",
         "BOOL": "bool8",
         "TENSOR_QUANT16_ASYMM": "uint16_t",
         "TENSOR_QUANT16_SYMM": "int16_t",
