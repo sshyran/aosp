@@ -66,6 +66,7 @@ static bool validateOperandExtraParams(const V1_2::Operand& operand, uint32_t in
         case OperandType::TENSOR_FLOAT16:
         case OperandType::TENSOR_INT32:
         case OperandType::TENSOR_QUANT8_ASYMM:
+        case OperandType::TENSOR_QUANT8_SYMM:
         case OperandType::TENSOR_QUANT16_ASYMM:
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_BOOL8: {
@@ -155,6 +156,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::TENSOR_FLOAT32:
             case OperandType::TENSOR_INT32:
             case OperandType::TENSOR_QUANT8_ASYMM:
+            case OperandType::TENSOR_QUANT8_SYMM:
             case OperandType::TENSOR_QUANT16_ASYMM:
             case OperandType::TENSOR_QUANT16_SYMM:
             case OperandType::TENSOR_BOOL8:
@@ -209,6 +211,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                 }
                 break;
             case OperandType::TENSOR_QUANT8_ASYMM:
+            case OperandType::TENSOR_QUANT8_SYMM:
             case OperandType::TENSOR_QUANT16_ASYMM:
             case OperandType::TENSOR_QUANT16_SYMM:
                 if (operand.scale <= 0.f) {
@@ -240,6 +243,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::TENSOR_FLOAT32:
             case OperandType::TENSOR_INT32:
             case OperandType::TENSOR_BOOL8:
+            case OperandType::TENSOR_QUANT8_SYMM:
             case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
                 if (operand.zeroPoint != 0) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
@@ -625,6 +629,7 @@ bool validOperandType(V1_2::OperandType operandType) {
         case V1_2::OperandType::TENSOR_FLOAT32:
         case V1_2::OperandType::TENSOR_INT32:
         case V1_2::OperandType::TENSOR_QUANT8_ASYMM:
+        case V1_2::OperandType::TENSOR_QUANT8_SYMM:
         case V1_2::OperandType::TENSOR_QUANT16_ASYMM:
         case V1_2::OperandType::TENSOR_QUANT16_SYMM:
         case V1_2::OperandType::TENSOR_BOOL8:
