@@ -64,8 +64,9 @@ typedef std::map<int, std::vector<_Float16>> Float16Operands;
 typedef std::map<int, std::vector<bool8>> Bool8Operands;
 typedef std::map<int, std::vector<int8_t>> Quant8ChannelOperands;
 typedef std::map<int, std::vector<uint16_t>> Quant16AsymmOperands;
+typedef std::map<int, std::vector<int8_t>> Quant8SymmOperands;
 struct MixedTyped {
-    static constexpr size_t kNumTypes = 8;
+    static constexpr size_t kNumTypes = 9;
     OperandDimensions operandDimensions;
     Float32Operands float32Operands;
     Int32Operands int32Operands;
@@ -75,6 +76,7 @@ struct MixedTyped {
     Bool8Operands bool8Operands;
     Quant8ChannelOperands quant8ChannelOperands;
     Quant16AsymmOperands quant16AsymmOperands;
+    Quant8SymmOperands quant8SymmOperands;
 };
 typedef std::pair<MixedTyped, MixedTyped> MixedTypedExampleType;
 
@@ -149,7 +151,8 @@ inline void for_all(MixedTyped& idx_and_data,
     for_all_internal(idx_and_data.bool8Operands, execute_this);
     for_all_internal(idx_and_data.quant8ChannelOperands, execute_this);
     for_all_internal(idx_and_data.quant16AsymmOperands, execute_this);
-    static_assert(8 == MixedTyped::kNumTypes,
+    for_all_internal(idx_and_data.quant8SymmOperands, execute_this);
+    static_assert(9 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but for_all function wasn't updated");
 }
 
@@ -174,8 +177,9 @@ inline void for_all(const MixedTyped& idx_and_data,
     for_all_internal(idx_and_data.bool8Operands, execute_this);
     for_all_internal(idx_and_data.quant8ChannelOperands, execute_this);
     for_all_internal(idx_and_data.quant16AsymmOperands, execute_this);
+    for_all_internal(idx_and_data.quant8SymmOperands, execute_this);
     static_assert(
-            8 == MixedTyped::kNumTypes,
+            9 == MixedTyped::kNumTypes,
             "Number of types in MixedTyped changed, but const for_all function wasn't updated");
 }
 
@@ -205,7 +209,8 @@ inline void resize_accordingly(const MixedTyped& golden, MixedTyped& test) {
     resize_accordingly_(golden.bool8Operands, test.bool8Operands);
     resize_accordingly_(golden.quant8ChannelOperands, test.quant8ChannelOperands);
     resize_accordingly_(golden.quant16AsymmOperands, test.quant16AsymmOperands);
-    static_assert(8 == MixedTyped::kNumTypes,
+    resize_accordingly_(golden.quant8SymmOperands, test.quant8SymmOperands);
+    static_assert(9 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but resize_accordingly function wasn't "
                   "updated");
 }
@@ -231,7 +236,8 @@ inline MixedTyped filter(const MixedTyped& golden,
     filter_internal(golden.bool8Operands, &filtered.bool8Operands, is_ignored);
     filter_internal(golden.quant8ChannelOperands, &filtered.quant8ChannelOperands, is_ignored);
     filter_internal(golden.quant16AsymmOperands, &filtered.quant16AsymmOperands, is_ignored);
-    static_assert(8 == MixedTyped::kNumTypes,
+    filter_internal(golden.quant8SymmOperands, &filtered.quant8SymmOperands, is_ignored);
+    static_assert(9 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but compare function wasn't updated");
     return filtered;
 }
@@ -336,8 +342,17 @@ inline void compare(const MixedTyped& golden, const MixedTyped& test,
                                totalNumberOfErrors++;
                            }
                        });
+    compare_<int8_t>(golden.quant8SymmOperands, test.quant8SymmOperands,
+                     [&totalNumberOfErrors](int8_t expected, int8_t actual) {
+                         if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                             EXPECT_NEAR(expected, actual, 1);
+                         }
+                         if (std::abs(static_cast<int>(expected) - static_cast<int>(actual)) > 1) {
+                             totalNumberOfErrors++;
+                         }
+                     });
 
-    static_assert(8 == MixedTyped::kNumTypes,
+    static_assert(9 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but compare function wasn't updated");
     EXPECT_EQ(size_t{0}, totalNumberOfErrors);
 }
