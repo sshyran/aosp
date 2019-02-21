@@ -139,7 +139,7 @@ def generate_vts_operand_values(operands):
         ty = w.type.type
         if ty == "TENSOR_QUANT8_ASYMM":
             binit += w.value
-        elif ty == "TENSOR_QUANT8_SYMM_PER_CHANNEL":
+        elif ty == "TENSOR_QUANT8_SYMM_PER_CHANNEL" or ty == "TENSOR_QUANT8_SYMM":
             binit += [struct.pack("b", value)[0] for value in w.value]
         elif ty == "BOOL" or ty == "TENSOR_BOOL8":
             binit += [1 if x else 0 for x in w.value]
