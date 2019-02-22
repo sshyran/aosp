@@ -407,6 +407,7 @@ static bool validateTensorDimensions(const ANeuralNetworksOperandType& type, con
 
 static bool validateOperandTypeHelper(const ANeuralNetworksOperandType& type, const char* tag,
                                       bool allowPartial) {
+    NN_RET_CHECK_EQ(type.dimensionCount == 0, type.dimensions == nullptr);
     if (isExtensionOperandType(type.type)) {
         if (type.dimensionCount == 0) {
             NN_RET_CHECK(validateScalarDimensions(type, tag));
