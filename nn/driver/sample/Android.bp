@@ -38,6 +38,7 @@ cc_defaults {
         "libnativewindow",
         "libtextclassifier_hash",
         "liblog",
+        "libui",
         "libutils",
         "android.hardware.neuralnetworks@1.0",
         "android.hardware.neuralnetworks@1.1",

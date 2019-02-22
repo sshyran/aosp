@@ -151,6 +151,7 @@ cc_library_static {
         "libnativewindow",
         "libfmq",
         "libtextclassifier_hash",
+        "libui",
         "liblog",
         "libutils",
         "android.hardware.neuralnetworks@1.0",
