@@ -22,8 +22,9 @@
 #include "OperationsUtils.h"
 #include "Utils.h"
 
-#include <algorithm>
 #include <android-base/macros.h>
+#include <ui/GraphicBuffer.h>
+#include <algorithm>
 #include <vector>
 
 namespace android {
@@ -109,9 +110,10 @@ private:
     void release();
     void moveFrom(RunTimePoolInfo&& other);
 
-    hidl_memory mHidlMemory;     // always used
-    uint8_t* mBuffer = nullptr;  // always used
-    sp<IMemory> mMemory;         // only used when hidlMemory.name() == "ashmem"
+    hidl_memory mHidlMemory;           // always used
+    uint8_t* mBuffer = nullptr;        // always used
+    sp<IMemory> mMemory;               // only used when hidlMemory.name() == "ashmem"
+    sp<GraphicBuffer> mGraphicBuffer;  // only used when hidlMemory.name() == "hardware_buffer_blob"
 };
 
 bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos,
