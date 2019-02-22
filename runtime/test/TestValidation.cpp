@@ -94,6 +94,20 @@ class ValidationTestModel : public ValidationTest {
     uint32_t mNumOperands = 0;
     uint32_t mNumOperations = 0;
     ANeuralNetworksModel* mModel = nullptr;
+
+    const uint32_t kDummyDimensionValue = 1;
+    const ANeuralNetworksOperandType kInvalidTensorType1{
+            .type = ANEURALNETWORKS_TENSOR_FLOAT32,
+            // dimensionCount must be consistent with dimensions.
+            .dimensionCount = 1,
+            .dimensions = nullptr,
+    };
+    const ANeuralNetworksOperandType kInvalidTensorType2{
+            .type = ANEURALNETWORKS_TENSOR_FLOAT32,
+            // dimensionCount must be consistent with dimensions.
+            .dimensionCount = 0,
+            .dimensions = &kDummyDimensionValue,
+    };
 };
 
 class ValidationTestIdentify : public ValidationTestModel {
@@ -208,6 +222,11 @@ TEST_F(ValidationTestModel, AddOperand) {
             .dimensions = &dim,
     };
     EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &invalidScalarType),
+              ANEURALNETWORKS_BAD_DATA);
+
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &kInvalidTensorType1),
+              ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &kInvalidTensorType2),
               ANEURALNETWORKS_BAD_DATA);
 
     ANeuralNetworksModel_finish(mModel);
@@ -719,6 +738,14 @@ TEST_F(ValidationTestExecution, SetInput) {
     // This should fail, as this operand does not exist.
     EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, -1, nullptr, buffer, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+
+    // These should fail, since the tensor types are invalid.
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, &kInvalidTensorType1, buffer,
+                                                sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, &kInvalidTensorType2, buffer,
+                                                sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
 }
 
 TEST_F(ValidationTestExecution, SetOutput) {
@@ -738,6 +765,14 @@ TEST_F(ValidationTestExecution, SetOutput) {
 
     // This should fail, as this operand does not exist.
     EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, -1, nullptr, buffer, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+
+    // These should fail, since the tensor types are invalid.
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 0, &kInvalidTensorType1, buffer,
+                                                 sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 0, &kInvalidTensorType2, buffer,
+                                                 sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 }
 
@@ -782,6 +817,14 @@ TEST_F(ValidationTestExecution, SetInputFromMemory) {
     EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, memory,
                                                           memorySize - 3, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+
+    // These should fail, since the tensor types are invalid.
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, &kInvalidTensorType1,
+                                                          memory, 0, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, &kInvalidTensorType2,
+                                                          memory, 0, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
 }
 
 TEST_F(ValidationTestExecution, SetInputFromAHardwareBufferBlob) {
@@ -814,6 +857,14 @@ TEST_F(ValidationTestExecution, SetInputFromAHardwareBufferBlob) {
     // This should fail, since requested size is larger than the memory.
     EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, memory,
                                                           memorySize - 3, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+
+    // These should fail, since the tensor types are invalid.
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, &kInvalidTensorType1,
+                                                          memory, 0, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, &kInvalidTensorType2,
+                                                          memory, 0, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 
     AHardwareBuffer_release(buffer);
@@ -863,6 +914,14 @@ TEST_F(ValidationTestExecution, SetOutputFromMemory) {
     EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(execution, 0, nullptr, memory,
                                                            memorySize - 3, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+
+    // These should fail, since the tensor types are invalid.
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(execution, 0, &kInvalidTensorType1,
+                                                           memory, 0, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(execution, 0, &kInvalidTensorType2,
+                                                           memory, 0, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
 }
 
 TEST_F(ValidationTestExecution, SetOutputFromAHardwareBufferBlob) {
@@ -896,6 +955,14 @@ TEST_F(ValidationTestExecution, SetOutputFromAHardwareBufferBlob) {
     // This should fail, since requested size is larger than the memory.
     EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(mExecution, 0, nullptr, memory,
                                                            memorySize - 3, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+
+    // These should fail, since the tensor types are invalid.
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(mExecution, 0, &kInvalidTensorType1,
+                                                           memory, 0, sizeof(float)),
+              ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(mExecution, 0, &kInvalidTensorType2,
+                                                           memory, 0, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 
     AHardwareBuffer_release(buffer);
