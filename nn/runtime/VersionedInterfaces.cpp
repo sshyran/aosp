@@ -191,25 +191,6 @@ std::unique_ptr<ExecutionBurstController> VersionedIPreparedModel::configureExec
     }
 }
 
-ErrorStatus VersionedIPreparedModel::saveToCache(const hidl_handle& cache1,
-                                                 const hidl_handle& cache2,
-                                                 const HidlToken& token) {
-    if (mPreparedModelV1_2 != nullptr) {
-        Return<ErrorStatus> ret = mPreparedModelV1_2->saveToCache(cache1, cache2, token);
-        if (!ret.isOk()) {
-            LOG(ERROR) << "saveToCache failure: " << ret.description();
-            return ErrorStatus::GENERAL_FAILURE;
-        }
-        return static_cast<ErrorStatus>(ret);
-    } else if (mPreparedModelV1_0 != nullptr) {
-        LOG(ERROR) << "saveToCache called on V1_0 preparedModel";
-        return ErrorStatus::GENERAL_FAILURE;
-    } else {
-        LOG(ERROR) << "saveToCache called with no preparedModel";
-        return ErrorStatus::GENERAL_FAILURE;
-    }
-}
-
 bool VersionedIPreparedModel::operator==(nullptr_t) const {
     return mPreparedModelV1_0 == nullptr;
 }
@@ -361,11 +342,15 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
 }
 
 ErrorStatus VersionedIDevice::prepareModel(const Model& model, ExecutionPreference preference,
+                                           const hidl_vec<hidl_handle>& modelCache,
+                                           const hidl_vec<hidl_handle>& dataCache,
+                                           const HidlToken& token,
                                            const sp<PreparedModelCallback>& callback) {
     const auto scoped = mDeathHandler->protectCallback(callback);
 
     if (mDeviceV1_2 != nullptr) {
-        Return<ErrorStatus> ret = mDeviceV1_2->prepareModel_1_2(model, preference, callback);
+        Return<ErrorStatus> ret = mDeviceV1_2->prepareModel_1_2(model, preference, modelCache,
+                                                                dataCache, token, callback);
         callback->wait();
         if (!ret.isOk()) {
             LOG(ERROR) << "prepareModel_1_2 failure: " << ret.description();
@@ -434,15 +419,15 @@ ErrorStatus VersionedIDevice::prepareModel(const Model& model, ExecutionPreferen
     }
 }
 
-ErrorStatus VersionedIDevice::prepareModelFromCache(const hidl_handle& cache1,
-                                                    const hidl_handle& cache2,
+ErrorStatus VersionedIDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
+                                                    const hidl_vec<hidl_handle>& dataCache,
                                                     const HidlToken& token,
                                                     const sp<PreparedModelCallback>& callback) {
     const auto scoped = mDeathHandler->protectCallback(callback);
 
     if (mDeviceV1_2 != nullptr) {
         Return<ErrorStatus> ret =
-                mDeviceV1_2->prepareModelFromCache(cache1, cache2, token, callback);
+                mDeviceV1_2->prepareModelFromCache(modelCache, dataCache, token, callback);
         callback->wait();
         if (!ret.isOk()) {
             LOG(ERROR) << "prepareModelFromCache failure: " << ret.description();
@@ -525,24 +510,24 @@ std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionString() {
     }
 }
 
-std::pair<ErrorStatus, bool> VersionedIDevice::isCachingSupported() {
-    std::pair<ErrorStatus, bool> result;
+std::tuple<ErrorStatus, uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeeded() {
+    std::tuple<ErrorStatus, uint32_t, uint32_t> result;
 
     if (mDeviceV1_2 != nullptr) {
-        Return<void> ret =
-                mDeviceV1_2->isCachingSupported([&result](ErrorStatus error, bool supported) {
-                    result = std::make_pair(error, supported);
+        Return<void> ret = mDeviceV1_2->getNumberOfCacheFilesNeeded(
+                [&result](ErrorStatus error, uint32_t numModelCache, uint32_t numDataCache) {
+                    result = {error, numModelCache, numDataCache};
                 });
         if (!ret.isOk()) {
-            LOG(ERROR) << "isCachingSupported failure: " << ret.description();
-            return {ErrorStatus::GENERAL_FAILURE, false};
+            LOG(ERROR) << "getNumberOfCacheFilesNeeded failure: " << ret.description();
+            return {ErrorStatus::GENERAL_FAILURE, 0, 0};
         }
         return result;
     } else if (mDeviceV1_1 != nullptr || mDeviceV1_0 != nullptr) {
-        return {ErrorStatus::NONE, false};
+        return {ErrorStatus::NONE, 0, 0};
     } else {
-        LOG(ERROR) << "Could not handle isCachingSupported";
-        return {ErrorStatus::GENERAL_FAILURE, false};
+        LOG(ERROR) << "Could not handle getNumberOfCacheFilesNeeded";
+        return {ErrorStatus::GENERAL_FAILURE, 0, 0};
     }
 }
 
