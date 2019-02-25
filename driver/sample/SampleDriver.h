@@ -52,16 +52,19 @@ class SampleDriver : public IDevice {
                                         getSupportedOperations_cb cb) override;
     Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
                                             getSupportedOperations_1_1_cb cb) override;
-    Return<void> isCachingSupported(isCachingSupported_cb cb) override;
+    Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override;
     Return<ErrorStatus> prepareModel(const V1_0::Model& model,
                                      const sp<V1_0::IPreparedModelCallback>& callback) override;
     Return<ErrorStatus> prepareModel_1_1(const V1_1::Model& model, ExecutionPreference preference,
                                          const sp<V1_0::IPreparedModelCallback>& callback) override;
     Return<ErrorStatus> prepareModel_1_2(const V1_2::Model& model, ExecutionPreference preference,
+                                         const hidl_vec<hidl_handle>& modelCache,
+                                         const hidl_vec<hidl_handle>& dataCache,
+                                         const HidlToken& token,
                                          const sp<V1_2::IPreparedModelCallback>& callback) override;
     Return<ErrorStatus> prepareModelFromCache(
-            const hidl_handle& modelCache, const hidl_handle& dataCache, const HidlToken& token,
-            const sp<V1_2::IPreparedModelCallback>& callback) override;
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const HidlToken& token, const sp<V1_2::IPreparedModelCallback>& callback) override;
     Return<DeviceStatus> getStatus() override;
 
     // Starts and runs the driver service.  Typically called from main().
@@ -92,8 +95,6 @@ class SamplePreparedModel : public IPreparedModel {
             const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
             const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
             configureExecutionBurst_cb cb) override;
-    Return<ErrorStatus> saveToCache(const hidl_handle& modelCache, const hidl_handle& dataCache,
-                                    const HidlToken& token) override;
 
    private:
     Model mModel;
