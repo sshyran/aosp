@@ -25,6 +25,8 @@ static std::vector<MixedTypedExample> examples_nhwc = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -46,6 +48,8 @@ static std::vector<MixedTypedExample> examples_nhwc = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -78,6 +82,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -99,6 +105,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -131,6 +139,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {16, 16, 32, 32, 0, 0, 64, 64, 16, 0, 32, 64, 0, 16, 64, 32}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -152,6 +162,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -184,6 +196,8 @@ static std::vector<MixedTypedExample> examples_nhwc_float16 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -205,6 +219,8 @@ static std::vector<MixedTypedExample> examples_nhwc_float16 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -237,6 +253,8 @@ static std::vector<MixedTypedExample> examples_nchw = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -258,6 +276,8 @@ static std::vector<MixedTypedExample> examples_nchw = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -290,6 +310,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -311,6 +333,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -343,6 +367,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {16, 16, 32, 32, 0, 0, 64, 64, 16, 0, 32, 64, 0, 16, 64, 32}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -364,6 +390,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -396,6 +424,8 @@ static std::vector<MixedTypedExample> examples_nchw_float16 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -417,6 +447,8 @@ static std::vector<MixedTypedExample> examples_nchw_float16 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -449,6 +481,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -470,6 +504,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -502,6 +538,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -523,6 +561,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -555,6 +595,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8 
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {16, 16, 32, 32, 0, 0, 64, 64, 16, 0, 32, 64, 0, 16, 64, 32}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -576,6 +618,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8 
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -608,6 +652,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -629,6 +675,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -661,6 +709,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -682,6 +732,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -714,6 +766,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -735,6 +789,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -767,6 +823,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8 
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {16, 16, 32, 32, 0, 0, 64, 64, 16, 0, 32, 64, 0, 16, 64, 32}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -788,6 +846,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8 
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -820,6 +880,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -841,6 +903,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -873,6 +937,8 @@ static std::vector<MixedTypedExample> examples_nhwc_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -894,6 +960,8 @@ static std::vector<MixedTypedExample> examples_nhwc_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -926,6 +994,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -947,6 +1017,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -979,6 +1051,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {32, 32, 224, 96, 32, 32, 256, 128, 56, 8, 232, 120, 8, 56, 72, 88}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1000,6 +1074,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1032,6 +1108,8 @@ static std::vector<MixedTypedExample> examples_nhwc_float16_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1053,6 +1131,8 @@ static std::vector<MixedTypedExample> examples_nhwc_float16_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1085,6 +1165,8 @@ static std::vector<MixedTypedExample> examples_nchw_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1106,6 +1188,8 @@ static std::vector<MixedTypedExample> examples_nchw_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1138,6 +1222,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1159,6 +1245,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1191,6 +1279,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {32, 32, 224, 96, 32, 32, 256, 128, 56, 8, 232, 120, 8, 56, 72, 88}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1212,6 +1302,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1244,6 +1336,8 @@ static std::vector<MixedTypedExample> examples_nchw_float16_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1265,6 +1359,8 @@ static std::vector<MixedTypedExample> examples_nchw_float16_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1297,6 +1393,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1318,6 +1416,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1350,6 +1450,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1371,6 +1473,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1403,6 +1507,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {32, 32, 224, 96, 32, 32, 256, 128, 56, 8, 232, 120, 8, 56, 72, 88}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1424,6 +1530,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1456,6 +1564,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1477,6 +1587,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1509,6 +1621,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1530,6 +1644,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_2 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1562,6 +1678,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1583,6 +1701,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1615,6 +1735,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {32, 32, 224, 96, 32, 32, 256, 128, 56, 8, 232, 120, 8, 56, 72, 88}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1636,6 +1758,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1668,6 +1792,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1689,6 +1815,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1721,6 +1849,8 @@ static std::vector<MixedTypedExample> examples_nhwc_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1742,6 +1872,8 @@ static std::vector<MixedTypedExample> examples_nhwc_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1774,6 +1906,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1795,6 +1929,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1827,6 +1963,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {32, 32, 224, 96, 32, 32, 256, 128, 56, 8, 232, 120, 8, 56, 72, 88}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1848,6 +1986,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1880,6 +2020,8 @@ static std::vector<MixedTypedExample> examples_nhwc_float16_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1901,6 +2043,8 @@ static std::vector<MixedTypedExample> examples_nhwc_float16_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1933,6 +2077,8 @@ static std::vector<MixedTypedExample> examples_nchw_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -1954,6 +2100,8 @@ static std::vector<MixedTypedExample> examples_nchw_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -1986,6 +2134,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2007,6 +2157,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2039,6 +2191,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {32, 32, 224, 96, 32, 32, 256, 128, 56, 8, 232, 120, 8, 56, 72, 88}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2060,6 +2214,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2092,6 +2248,8 @@ static std::vector<MixedTypedExample> examples_nchw_float16_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2113,6 +2271,8 @@ static std::vector<MixedTypedExample> examples_nchw_float16_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2145,6 +2305,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2166,6 +2328,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2198,6 +2362,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2219,6 +2385,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2251,6 +2419,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {32, 32, 224, 96, 32, 32, 256, 128, 56, 8, 232, 120, 8, 56, 72, 88}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2272,6 +2442,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2304,6 +2476,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2325,6 +2499,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2357,6 +2533,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2378,6 +2556,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_3 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2410,6 +2590,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2431,6 +2613,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2463,6 +2647,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {32, 32, 224, 96, 32, 32, 256, 128, 56, 8, 232, 120, 8, 56, 72, 88}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2484,6 +2670,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2516,6 +2704,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2537,6 +2727,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2569,6 +2761,8 @@ static std::vector<MixedTypedExample> examples_nhwc_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2590,6 +2784,8 @@ static std::vector<MixedTypedExample> examples_nhwc_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2622,6 +2818,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2643,6 +2841,8 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2675,6 +2875,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {8, 16, 16, 32, 0, 0, 32, 64, 8, 0, 16, 64, 0, 16, 32, 32, 0, 0, 0, 0}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2696,6 +2898,8 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2728,6 +2932,8 @@ static std::vector<MixedTypedExample> examples_nhwc_float16_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2749,6 +2955,8 @@ static std::vector<MixedTypedExample> examples_nhwc_float16_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2781,6 +2989,8 @@ static std::vector<MixedTypedExample> examples_nchw_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2802,6 +3012,8 @@ static std::vector<MixedTypedExample> examples_nchw_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2834,6 +3046,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2855,6 +3069,8 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2887,6 +3103,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {8, 16, 16, 32, 0, 0, 32, 64, 8, 0, 16, 64, 0, 16, 32, 32, 0, 0, 0, 0}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2908,6 +3126,8 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2940,6 +3160,8 @@ static std::vector<MixedTypedExample> examples_nchw_float16_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -2961,6 +3183,8 @@ static std::vector<MixedTypedExample> examples_nchw_float16_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -2993,6 +3217,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -3014,6 +3240,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -3046,6 +3274,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -3067,6 +3297,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -3099,6 +3331,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {8, 16, 16, 32, 0, 0, 32, 64, 8, 0, 16, 64, 0, 16, 32, 32, 0, 0, 0, 0}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -3120,6 +3354,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -3152,6 +3388,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -3173,6 +3411,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -3205,6 +3445,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -3226,6 +3468,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_4 = {
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -3258,6 +3502,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -3279,6 +3525,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -3311,6 +3559,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {{1, {8, 16, 16, 32, 0, 0, 32, 64, 8, 0, 16, 64, 0, 16, 32, 32, 0, 0, 0, 0}}},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -3332,6 +3582,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example
@@ -3364,6 +3616,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 },
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
@@ -3385,6 +3639,8 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
   .quant8ChannelOperands = {},
   // int -> QUANT16_ASYMM map
   .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
 }
 },
 }, // End of an example

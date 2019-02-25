@@ -71,6 +71,12 @@ class OperandExtraParamsTest : public ::testing::Test {
                         .dimensions = dims,
                         .scale = 1.0,
                         .zeroPoint = 128};
+            case ANEURALNETWORKS_TENSOR_QUANT8_SYMM:
+                return {.type = dataType,
+                        .dimensionCount = 4,
+                        .dimensions = dims,
+                        .scale = 1.0,
+                        .zeroPoint = 0};
             case ANEURALNETWORKS_TENSOR_QUANT16_SYMM:
                 return {.type = dataType,
                         .dimensionCount = 4,
@@ -128,6 +134,7 @@ const uint32_t kOperandCodeNoExtraParams[]{
         ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
         ANEURALNETWORKS_TENSOR_FLOAT16,
         ANEURALNETWORKS_TENSOR_BOOL8,
+        ANEURALNETWORKS_TENSOR_QUANT8_SYMM,
 };
 
 #ifndef NNTEST_ONLY_PUBLIC_API
