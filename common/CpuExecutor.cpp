@@ -713,28 +713,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                        reinterpret_cast<_Float16*>(output.buffer), outShape);
             }
         } break;
-        case OperationType::DEQUANTIZE: {
-            if (!allParametersPresent(1, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            RunTimeOperandInfo& output = mOperands[outs[0]];
-            Shape outShape = output.shape();
-
-            if (!dequantizePrepare(input.shape(), &outShape) ||
-                !setInfoAndAllocateIfNeeded(&output, outShape, &result)) {
-                break;
-            }
-            if (output.type == OperandType::TENSOR_FLOAT32) {
-                success = dequantizeQuant8ToFloat32(reinterpret_cast<const uint8_t*>(input.buffer),
-                                                    reinterpret_cast<float*>(output.buffer),
-                                                    input.shape());
-            } else if (output.type == OperandType::TENSOR_FLOAT16) {
-                success = dequantizeQuant8ToFloat16(reinterpret_cast<const uint8_t*>(input.buffer),
-                                                    reinterpret_cast<_Float16*>(output.buffer),
-                                                    input.shape());
-            }
-        } break;
         case OperationType::QUANTIZE: {
             if (!allParametersPresent(1, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
