@@ -767,7 +767,7 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
         preparedModelCallback->wait();
         ErrorStatus prepareReturnStatus = preparedModelCallback->getStatus();
         if (auto preparedModel = preparedModelCallback->getPreparedModel()) {
-            mPreparedModel = std::make_shared<VersionedIPreparedModel>(preparedModel);
+            mPreparedModel = VersionedIPreparedModel::create(preparedModel);
         }
         if (prepareReturnStatus != ErrorStatus::NONE) {
             return convertErrorStatusToResultCode(prepareReturnStatus);
