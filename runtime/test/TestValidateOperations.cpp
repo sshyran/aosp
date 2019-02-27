@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include "NeuralNetworks.h"
 #include "NeuralNetworksOEM.h"
 #include "NeuralNetworksWrapper.h"
 
@@ -165,6 +166,13 @@ class OperationTestBase {
                 } else if (originalOperandCode == ANEURALNETWORKS_TENSOR_FLOAT32) {
                     operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_FLOAT16);
                 }
+            }
+            // DEQUANTIZE supports any of the inputs types below for any of the
+            // output types.
+            if (mOpCode == ANEURALNETWORKS_DEQUANTIZE && i == 0) {
+                operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+                operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM);
+                operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
             }
             for (int32_t newOperandCode : kAvailableOperandCodes) {
                 if (newOperandCode == originalOperandCode ||
@@ -330,36 +338,26 @@ TEST(OperationValidationTest, ARGMAX) {
     argMinMaxTest(ANEURALNETWORKS_ARGMAX, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
-TEST(OperationValidationTest, DEQUANTIZE_float16) {
+void dequantizeOpTest(int32_t inputOperandType, int32_t outputOperandType) {
+    std::string scope = "inputType: " + std::to_string(inputOperandType) +
+                        ", outputType: " + std::to_string(outputOperandType);
+    SCOPED_TRACE(scope);
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
-    ANeuralNetworksOperandType input = {.type = ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
-                                        .dimensionCount = 4,
-                                        .dimensions = inputDimensions,
-                                        .scale = 1.0f,
-                                        .zeroPoint = 0};
-    ANeuralNetworksOperandType output = {.type = ANEURALNETWORKS_TENSOR_FLOAT16,
-                                         .dimensionCount = 4,
-                                         .dimensions = inputDimensions,
-                                         .scale = 0.0f,
-                                         .zeroPoint = 0};
+    ANeuralNetworksOperandType input = getOpType(inputOperandType, 4, inputDimensions);
+    ANeuralNetworksOperandType output = getOpType(outputOperandType, 4, inputDimensions);
     OperationTestBase dequantizeTest(ANEURALNETWORKS_DEQUANTIZE, {input}, {output});
     dequantizeTest.testOpsValidations();
 }
 
-TEST(OperationValidationTest, DEQUANTIZE_float32) {
-    uint32_t inputDimensions[4] = {2, 2, 2, 2};
-    ANeuralNetworksOperandType input = {.type = ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
-                                        .dimensionCount = 4,
-                                        .dimensions = inputDimensions,
-                                        .scale = 1.0f,
-                                        .zeroPoint = 0};
-    ANeuralNetworksOperandType output = {.type = ANEURALNETWORKS_TENSOR_FLOAT32,
-                                         .dimensionCount = 4,
-                                         .dimensions = inputDimensions,
-                                         .scale = 0.0f,
-                                         .zeroPoint = 0};
-    OperationTestBase dequantizeTest(ANEURALNETWORKS_DEQUANTIZE, {input}, {output});
-    dequantizeTest.testOpsValidations();
+TEST(OperationValidationTest, DEQUANTIZE) {
+    dequantizeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_FLOAT16);
+    dequantizeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_FLOAT32);
+    dequantizeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_SYMM, ANEURALNETWORKS_TENSOR_FLOAT16);
+    dequantizeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_SYMM, ANEURALNETWORKS_TENSOR_FLOAT32);
+    dequantizeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
+                     ANEURALNETWORKS_TENSOR_FLOAT16);
+    dequantizeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
+                     ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
 void expandDimsTest(int32_t inputOperandType) {
