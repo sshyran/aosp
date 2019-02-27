@@ -314,21 +314,6 @@ bool floorPrepare(const Shape& input, Shape* output) {
     return SetShape(input, output);
 }
 
-bool dequantizePrepare(const Shape& input, Shape* output) {
-    if (input.type != OperandType::TENSOR_QUANT8_ASYMM ||
-        (output->type != OperandType::TENSOR_FLOAT16 &&
-         output->type != OperandType::TENSOR_FLOAT32)) {
-        LOG(ERROR) << "bad input / output operand type.";
-        return false;
-    }
-    if (input.dimensions.size() != output->dimensions.size()) {
-        LOG(ERROR) << "input and output tensors don't have the same rank.";
-        return false;
-    }
-    output->dimensions = input.dimensions;
-    return true;
-}
-
 bool quantizePrepare(const Shape& input, Shape* output) {
     if (input.dimensions.size() != output->dimensions.size()) {
         LOG(ERROR) << "QUANTIZE input and output tensors must have the same rank";
