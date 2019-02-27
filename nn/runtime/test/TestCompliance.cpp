@@ -60,7 +60,7 @@ void CreateHidlModel(std::function<void(test_wrapper::Model*)> CreateModel, Mode
     }
 
 TEST_AVAILABLE_SINCE_V1_2(tanh_quantized)
-TEST_AVAILABLE_SINCE_V1_2(sub_quantized)
+TEST_AVAILABLE_SINCE_V1_2(sub_v1_2, quant8)
 TEST_AVAILABLE_SINCE_V1_2(conv2d_v1_2, nchw)
 TEST_AVAILABLE_SINCE_V1_2(depthwise_conv2d_v1_2, nchw)
 TEST_AVAILABLE_SINCE_V1_2(avg_pool_v1_2, nchw)
