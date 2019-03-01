@@ -54,6 +54,7 @@ cc_library {
             version_script: "libneuralnetworks.map.txt",
             shared_libs: [
                 "libbase",
+                "libbinder",
                 "libcutils",
                 "libhidlbase",
                 "libhidltransport",
