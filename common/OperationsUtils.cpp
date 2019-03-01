@@ -351,6 +351,11 @@ bool convPrepare(const Shape& input, const Shape& filter, const Shape& bias, int
     uint32_t filterHeight = getSizeOfDimension(filter, 1);
     uint32_t batches      = getSizeOfDimension(input, 0);
 
+    NN_RET_CHECK_GT(filterWidth, padding_left);
+    NN_RET_CHECK_GT(filterWidth, padding_right);
+    NN_RET_CHECK_GT(filterHeight, padding_top);
+    NN_RET_CHECK_GT(filterHeight, padding_bottom);
+
     uint32_t outWidth = computeOutSize(width, filterWidth, stride_width, dilation_width_factor,
                                        padding_left, padding_right);
     uint32_t outHeight = computeOutSize(height, filterHeight, stride_height, dilation_height_factor,
@@ -391,6 +396,10 @@ bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& 
     uint32_t batches      = getSizeOfDimension(input, 0);
 
     NN_OPS_CHECK(depth_multiplier * channels_in == channels_out);
+    NN_RET_CHECK_GT(filterWidth, padding_left);
+    NN_RET_CHECK_GT(filterWidth, padding_right);
+    NN_RET_CHECK_GT(filterHeight, padding_top);
+    NN_RET_CHECK_GT(filterHeight, padding_bottom);
 
     uint32_t outWidth = computeOutSize(width, filterWidth, stride_width, dilation_width_factor,
                                        padding_left, padding_right);
@@ -414,6 +423,11 @@ bool genericPoolingPrepare(const Shape& input,
     uint32_t width        = getSizeOfDimension(input, 2);
     uint32_t height       = getSizeOfDimension(input, 1);
     uint32_t channels_out = getSizeOfDimension(input, 3);
+
+    NN_RET_CHECK_GT(filter_width, padding_left);
+    NN_RET_CHECK_GT(filter_width, padding_right);
+    NN_RET_CHECK_GT(filter_height, padding_top);
+    NN_RET_CHECK_GT(filter_height, padding_bottom);
 
     uint32_t outWidth = computeOutSize(width, filter_width, stride_width,
                                        padding_left, padding_right);
@@ -1024,6 +1038,11 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
     uint32_t filterHeight = getSizeOfDimension(filter, 1);
     uint32_t batches = getSizeOfDimension(input, 0);
 
+    NN_RET_CHECK_GT(filterWidth, padding_left);
+    NN_RET_CHECK_GT(filterWidth, padding_right);
+    NN_RET_CHECK_GT(filterHeight, padding_top);
+    NN_RET_CHECK_GT(filterHeight, padding_bottom);
+
     uint32_t outWidth =
             computeOutSize(width, filterWidth, stride_width, padding_left, padding_right);
     uint32_t outHeight =
@@ -1065,6 +1084,9 @@ bool transposeConvPrepare(const Shape& input, const Shape& filter, const Shape& 
                                                     padding_right);
     uint32_t outHeight = computeOutSizeTransposeConv(height, filterHeight, stride_height,
                                                      padding_top, padding_bottom);
+
+    NN_RET_CHECK_GT(outWidth, 0);
+    NN_RET_CHECK_GT(outHeight, 0);
 
     output->type = input.type;
     output->dimensions = {batches, outHeight, outWidth, channels_out};
