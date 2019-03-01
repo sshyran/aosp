@@ -76,6 +76,9 @@ class TypeManager {
     // Aborts if the type is an unknown extension type.
     uint32_t getSizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) const;
 
+    // Returns true if extensions usage is allowed in current process.
+    bool areExtensionsAllowed() const { return mExtensionsAllowed; }
+
     // This method is intended for use only by internal unit tests.
     //
     // Registers an extension.
@@ -95,6 +98,12 @@ class TypeManager {
     // state (including assigned prefixes) and re-discovers extensions from
     // available devices.
     void forTest_reset() { *this = TypeManager(); }
+
+    // Check if NNAPI Vendor extensions are usable in process with given binary path
+    // and (in case if binary is android app_process) app location.
+    static bool isExtensionsUseAllowed(const std::string& binaryPath, bool useOnProductImageEnabled,
+                                       bool isSystemApp, bool isAppOnVendorImage,
+                                       bool isAppOnProductImage);
 
    private:
     TypeManager();
@@ -125,6 +134,9 @@ class TypeManager {
     // Entries of mPrefixToExtension point into mExtensionNameToExtension.
     // prefix=0 corresponds to no extension and should never be looked up.
     std::vector<Extension*> mPrefixToExtension = {nullptr};
+
+    // True if Extensions can be used in current process.
+    bool mExtensionsAllowed = false;
 };
 
 }  // namespace nn
