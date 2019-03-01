@@ -18,13 +18,29 @@ import random
 
 random.seed(0)
 
+# FLOAT32 and FLOAT16
+input0 = Input("input0", "TENSOR_FLOAT32", "{1, 2, 2, 1}")
+input1 = Input("input1", "TENSOR_FLOAT32", "{1, 2, 2, 1}")
+activation = Int32Scalar("act", 0)
+output0 = Output("output0", "TENSOR_FLOAT32",  "{1, 2, 2, 1}")
+
+model = Model().Operation("SUB", input0, input1, activation).To(output0)
+
+Example({
+    input0: [2.0, -4.0, 8.0, -16.0],
+    input1: [2.0, -2.0, -4.0, 4.0],
+    output0: [0.0, -2.0, 12.0, -20.0],
+}).AddVariations("float16").AddAllActivations(output0, activation)
+
+
+# QUANT8_ASYMM
 shape = "{2, 4, 16, 2}, 0.5, 0"
 input0 = Input("input0", "TENSOR_QUANT8_ASYMM", shape)
 input1 = Input("input1", "TENSOR_QUANT8_ASYMM", shape)
 activation = 0
 output0 = Output("output0", "TENSOR_QUANT8_ASYMM", shape)
 
-model = Model().Operation("SUB", input0, input1, activation).To(output0)
+model = Model("quant8").Operation("SUB", input0, input1, activation).To(output0)
 
 input0_values = list(range(256))
 input1_values = list(input0_values)

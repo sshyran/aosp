@@ -282,6 +282,14 @@ bool subFloat32(const float* in1, const Shape& shape1, const float* in2, const S
     NNTRACE_COMP_SWITCH("optimized_ops::Sub");
     tflite::optimized_ops::Sub(in1, convertShapeToDims(shape1), in2, convertShapeToDims(shape2),
                                out, convertShapeToDims(shapeOut));
+
+    // TFLite does not apply activation to broadcast sub.
+    float output_activation_min, output_activation_max;
+    CalculateActivationRangeFloat(activation, &output_activation_min, &output_activation_max);
+    uint32_t numOutputElements = getNumberOfElements(shapeOut);
+    for (uint32_t i = 0; i < numOutputElements; i++) {
+        out[i] = std::min(std::max(out[i], output_activation_min), output_activation_max);
+    }
     return true;
 }
 
