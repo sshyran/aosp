@@ -1,0 +1,12 @@
+{
+  "presubmit": [
+    {
+      "name": "CtsNNAPITestCases"
+    }
+  ],
+  "imports": [
+    {
+      "path": "hardware/interfaces/neuralnetworks"
+    }
+  ]
+}
