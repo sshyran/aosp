@@ -20,6 +20,7 @@
 #include <tuple>
 #include <vector>
 
+#include <android-base/macros.h>
 #include <android/sharedmem.h>
 #include <gtest/gtest.h>
 
@@ -86,11 +87,8 @@ class UnspecifiedDimensionsTest : public ::testing::TestWithParam<UnspecifiedDim
     enum class OperandLocation { BUFFER, MEMORY };  // where the operand reside
     enum class InOutType { INPUT, OUTPUT };         // parameter for setInOut()
 
-    struct SharedMemoryForTest {
-        std::shared_ptr<Memory> memory;
-        int fd;
-        uint8_t* buffer;
-        size_t length;
+    class SharedMemoryForTest {
+       public:
         SharedMemoryForTest() : memory(nullptr), fd(-1), buffer(nullptr), length(0) {}
         ~SharedMemoryForTest() {
             if (buffer != nullptr) {
@@ -100,7 +98,7 @@ class UnspecifiedDimensionsTest : public ::testing::TestWithParam<UnspecifiedDim
                 close(fd);
             }
         }
-        void initialize(size_t size, void* data) {
+        void initialize(size_t size, const void* data) {
             length = size;
             fd = ASharedMemory_create(nullptr, size);
             ASSERT_GT(fd, -1);
@@ -110,7 +108,15 @@ class UnspecifiedDimensionsTest : public ::testing::TestWithParam<UnspecifiedDim
             memory = std::make_shared<Memory>(size, PROT_READ | PROT_WRITE, fd, 0);
             ASSERT_TRUE(memory->isValid());
         }
-        Memory* get() { return memory.get(); }
+        const Memory* getMemory() const { return memory.get(); }
+        const uint8_t* getBuffer() const { return buffer; }
+
+       private:
+        DISALLOW_COPY_AND_ASSIGN(SharedMemoryForTest);
+        std::shared_ptr<Memory> memory;
+        int fd;
+        uint8_t* buffer;
+        size_t length;
     };
 
     std::string toString(SpecificationLevel level) {
@@ -241,20 +247,19 @@ class UnspecifiedDimensionsTest : public ::testing::TestWithParam<UnspecifiedDim
 
     template <typename T>
     Result setInOut(Execution* execution, uint32_t index, uint32_t opIndex,
-                    const std::vector<uint32_t>& dim, void* buffer, InOutType inOutType,
+                    const std::vector<uint32_t>& dim, void* buffer,
+                    const SharedMemoryForTest* memory, InOutType inOutType,
                     BufferSize bufferSize = BufferSize::EQUAL) {
         const auto kLevel = mSpecificationLevels[index];
         size_t size = (buffer == nullptr) ? 0 : getSize(index, dim, bufferSize) * sizeof(T);
         auto type = getType(index, dim);
         ANeuralNetworksOperandType* t =
                 (kLevel == SpecificationLevel::UNSPECIFIED_TYPE) ? nullptr : &type.operandType;
-        if (mOperandLocation == OperandLocation::MEMORY && buffer != nullptr) {
-            mMemories.emplace_back();
-            mMemories.back().initialize(size, buffer);
+        if (mOperandLocation == OperandLocation::MEMORY && memory != nullptr) {
             if (inOutType == InOutType::INPUT) {
-                return execution->setInputFromMemory(opIndex, mMemories.back().get(), 0, size, t);
+                return execution->setInputFromMemory(opIndex, memory->getMemory(), 0, size, t);
             } else {
-                return execution->setOutputFromMemory(opIndex, mMemories.back().get(), 0, size, t);
+                return execution->setOutputFromMemory(opIndex, memory->getMemory(), 0, size, t);
             }
         } else {
             if (inOutType == InOutType::INPUT) {
@@ -284,13 +289,13 @@ class UnspecifiedDimensionsTest : public ::testing::TestWithParam<UnspecifiedDim
         auto op4 = model.addOperand(&type4);
         auto act = model.addOperand(&typeActivation);
 
-        T matrixOp1[2] = {1, 2};
+        T bufferOp1[2] = {1, 2};
+        SharedMemoryForTest memoryOp1;
+        memoryOp1.initialize(sizeof(bufferOp1), bufferOp1);
         if (mOperandLocation == OperandLocation::BUFFER) {
-            model.setOperandValue(op1, matrixOp1, sizeof(T) * 2);
+            model.setOperandValue(op1, bufferOp1, sizeof(bufferOp1));
         } else {
-            mMemories.emplace_back();
-            mMemories.back().initialize(sizeof(T) * 2, matrixOp1);
-            model.setOperandValueFromMemory(op1, mMemories.back().get(), 0, sizeof(T) * 2);
+            model.setOperandValueFromMemory(op1, memoryOp1.getMemory(), 0, sizeof(bufferOp1));
         }
         int32_t kActivation = 0;
         model.setOperandValue(act, &kActivation, sizeof(int32_t));
@@ -324,6 +329,7 @@ class UnspecifiedDimensionsTest : public ::testing::TestWithParam<UnspecifiedDim
 
         std::vector<uint32_t> valueBChoices = {1, 2};
         for (const auto valueB : valueBChoices) {
+            SCOPED_TRACE("ValueB: " + std::to_string(valueB));
             if (valueB != kValueB &&
                 (mSpecificationLevels[kIndex0_Model] == SpecificationLevel::FULLY_SPECIFIED ||
                  mSpecificationLevels[kIndex2_Model] == SpecificationLevel::FULLY_SPECIFIED ||
@@ -336,52 +342,48 @@ class UnspecifiedDimensionsTest : public ::testing::TestWithParam<UnspecifiedDim
 
             // Set input0
             Result result;
-            T matrixOp0[6] = {1, 2, 3, 4, 5, 6};
-            result = setInOut<T>(&execution, kIndex0_Execution, 0, {kValueA, valueB}, matrixOp0,
-                                 InOutType::INPUT);
+            T bufferOp0[6] = {1, 2, 3, 4, 5, 6};
+            SharedMemoryForTest memoryOp0;
+            memoryOp0.initialize(sizeof(bufferOp0), bufferOp0);
+            result = setInOut<T>(&execution, kIndex0_Execution, 0, {kValueA, valueB}, bufferOp0,
+                                 &memoryOp0, InOutType::INPUT);
             ASSERT_EQ(result, expectSetInput0());
-            if (result != Result::NO_ERROR) {
-                continue;
-            }
+            if (result != Result::NO_ERROR) continue;
+
             // Set input1, omitted
             if (mOptionalType == OptionalType::INPUT) {
-                result = setInOut<T>(&execution, kIndex3_Execution, 1, {2}, nullptr,
+                result = setInOut<T>(&execution, kIndex3_Execution, 1, {2}, nullptr, nullptr,
                                      InOutType::INPUT);
                 ASSERT_EQ(result, expectSetInput1());
-                if (result != Result::NO_ERROR) {
-                    continue;
-                }
+                if (result != Result::NO_ERROR) continue;
             }
+
             // Set output0
-            T bufferOp4[8];
+            T bufferOp4[16];
+            SharedMemoryForTest memoryOp4;
+            memoryOp4.initialize(sizeof(bufferOp4), bufferOp4);
             result = setInOut<T>(&execution, kIndex4_Execution, 0, {valueB, kValueA}, bufferOp4,
-                                 InOutType::OUTPUT, mOutputBufferSize);
+                                 &memoryOp4, InOutType::OUTPUT, mOutputBufferSize);
             ASSERT_EQ(result, expectSetOutput0());
-            if (result != Result::NO_ERROR) {
-                continue;
-            }
+            if (result != Result::NO_ERROR) continue;
 
             // Phase 4: Compute and Compare Results
             result = execution.compute();
             ASSERT_EQ(result, expectCompute());
-            if (result == Result::OP_FAILED) {
-                continue;
-            }
+            if (result == Result::OP_FAILED) continue;
 
             std::vector<uint32_t> outputShape;
             ASSERT_EQ(execution.getOutputOperandDimensions(0, &outputShape), result);
             std::vector<uint32_t> expectedOutputShape = {valueB, kDimAGood};
             ASSERT_EQ(outputShape, expectedOutputShape);
-            if (result == Result::OUTPUT_INSUFFICIENT_SIZE) {
-                continue;
-            }
+            if (result == Result::OUTPUT_INSUFFICIENT_SIZE) continue;
 
-            T* outputBuffer = mOperandLocation == OperandLocation::MEMORY
-                                      ? reinterpret_cast<T*>(mMemories.back().buffer)
-                                      : bufferOp4;
+            const T* outputBuffer = mOperandLocation == OperandLocation::MEMORY
+                                            ? reinterpret_cast<const T*>(memoryOp4.getBuffer())
+                                            : bufferOp4;
             T expected_1x2[2] = {2, 4};
             T expected_2x2[4] = {2, 5, 3, 6};
-            for (uint32_t i = 0; i < kValueA * valueB; i++) {
+            for (uint32_t i = 0; i < kDimAGood * valueB; i++) {
                 ASSERT_EQ(outputBuffer[i], valueB == 1 ? expected_1x2[i] : expected_2x2[i]);
             }
         }
@@ -538,7 +540,6 @@ class UnspecifiedDimensionsTest : public ::testing::TestWithParam<UnspecifiedDim
 
     std::vector<SpecificationLevel> mSpecificationLevels;
     std::vector<Type> mOperandTypes;
-    std::vector<SharedMemoryForTest> mMemories;
     OptionalType mOptionalType = OptionalType::CONST;
 
     // Iterate all combinations in TestAll()
