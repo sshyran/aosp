@@ -249,6 +249,7 @@ typedef enum {
      *         ) / sum(1)
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -364,7 +365,7 @@ typedef enum {
      *         ) + bias[channel]
      *
      * Supported tensor {@link OperandCode} configurations:
-     * * 32 bit Floating point :
+     * * 32 bit floating point:
      * * * {@link ANEURALNETWORKS_TENSOR_FLOAT32} for input, filter, output, and bias.
      *
      * * Quantized:
@@ -373,14 +374,14 @@ typedef enum {
      * * * input.scale * filter.scale).
      *
      * Available since API level 29:
+     * * 16 bit floating point:
+     * * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} for input, filter, output, and bias.
+     *
      * * Quantized with symmetric per channel quantization for the filter:
      * * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} for input, and output.
      * * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} for filter.
      * * * {@link ANEURALNETWORKS_TENSOR_INT32} for bias (scale set to 0.0,
      * * * each value scaling is separate and equal to input.scale * filter.scales[channel]).
-     *
-     * * 16 bit Floating point:
-     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} for input, filter, output, and bias.
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
      * With the default data layout NHWC, the data is stored in the order of:
@@ -513,7 +514,7 @@ typedef enum {
      *         ) + bias[k * channel_multiplier + q]
      *
      * Supported tensor {@link OperandCode} configurations:
-     * * 32 bit Floating point :
+     * * 32 bit floating point:
      * * * {@link ANEURALNETWORKS_TENSOR_FLOAT32} for input, filter, output, and bias.
      *
      * * Quantized:
@@ -522,6 +523,9 @@ typedef enum {
      * * * input.scale * filter.scale).
      *
      * Available since API level 29:
+     * * 16 bit floating point:
+     * * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} for input, filter, output, and bias.
+     *
      * * Quantized with symmetric per channel quantization for the filter:
      * * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} for input, and output.
      * * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} for filter.
@@ -1041,6 +1045,7 @@ typedef enum {
      *     output = 1 / (1 + exp(-input))
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1346,6 +1351,7 @@ typedef enum {
      *         )
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1654,6 +1660,7 @@ typedef enum {
      * independently on each 1-D slice along specified dimension.
      *
      * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
@@ -1662,8 +1669,12 @@ typedef enum {
      *
      * Inputs:
      * * 0: A 2-D or 4-D tensor, specifying the tensor to be reshaped.
-     * * 1: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the positive
-     *      scaling factor for the exponent, beta.
+     * * 1: A scalar, specifying the positive scaling factor for the exponent,
+     *      beta. If input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the scalar must be of
+     *      {@link ANEURALNETWORKS_FLOAT32}. If input0 is of {@link
+     *      ANEURALNETWORKS_TENSOR_FLOAT16}, then the scalar must be of {@link
+     *      ANEURALNETWORKS_FLOAT16}.
      * * 2: An optional {@link ANEURALNETWORKS_INT32} scalar, default to -1,
      *      specifying the dimension the activation would be performed on.
      *      Negative index is used to specify axis from the end (e.g. -1 for
@@ -2742,11 +2753,17 @@ typedef enum {
      * * 10: An {@link ANEURALNETWORKS_INT32} scalar, only used when input7 is
      *       set to true, specifying the maximum number of detections when
      *       applying NMS algorithm for each single class.
-     * * 11: An {@link ANEURALNETWORKS_FLOAT32} scalar, score_threshold. Boxes
-     *       with scores lower than the threshold are filtered before sending
-     *       to the NMS algorithm.
-     * * 12: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the IoU
-     *       threshold for hard NMS.
+     * * 11: A scalar, score_threshold. Boxes with scores lower than the
+     *       threshold are filtered before sending to the NMS algorithm. The
+     *       scalar must be of {@link ANEURALNETWORKS_FLOAT16} if input0 is of
+     *       {@link ANEURALNETWORKS_TENSOR_FLOAT16} and of {@link
+     *       ANEURALNETWORKS_FLOAT32} if input0 is of {@link
+     *       ANEURALNETWORKS_TENSOR_FLOAT32}.
+     * * 12: A scalar, specifying the IoU threshold for hard NMS. The scalar
+     *       must be of {@link ANEURALNETWORKS_FLOAT16} if input0 is of {@link
+     *       ANEURALNETWORKS_TENSOR_FLOAT16} and of {@link
+     *       ANEURALNETWORKS_FLOAT32} if input0 is of {@link
+     *       ANEURALNETWORKS_TENSOR_FLOAT32}.
      * * 13: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to include
      *       background class in the list of label map for the output, set
      *       to false to not include the background. When the background
@@ -3042,11 +3059,11 @@ typedef enum {
      * where channel_multiplier = depth_out / num_groups
      *
      * Supported tensor {@link OperandCode} configurations:
-     * * 32 bit Floating point :
-     * * * {@link ANEURALNETWORKS_TENSOR_FLOAT32} for input, filter, output, and bias.
+     * * 16 bit floating point:
+     * * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} for input, filter, output, and bias.
      *
-     * * 16 bit Floating point:
-     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} for input, filter, output, and bias.
+     * * 32 bit floating point:
+     * * * {@link ANEURALNETWORKS_TENSOR_FLOAT32} for input, filter, output, and bias.
      *
      * * Quantized:
      * * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} for input, filter, and output.
@@ -3225,12 +3242,21 @@ typedef enum {
      *
      * Inputs:
      * * 0: An n-D tensor, specifying the tensor to be normalized.
-     * * 1: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying gamma, the
-     *      scale applied to the normalized tensor.
-     * * 2: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying beta, the
-     *      offset applied to the normalized tensor.
-     * * 3: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying epsilon, the
-     *      small value added to variance to avoid dividing by zero.
+     * * 1: A scalar, specifying gamma, the scale applied to the normalized
+     *      tensor. The scalar must be of {@link ANEURALNETWORKS_FLOAT16} if
+     *      input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT16} and of {@link
+     *      ANEURALNETWORKS_FLOAT32} if input0 is of {@link
+     *      ANEURALNETWORKS_TENSOR_FLOAT32}.
+     * * 2: A scalar, specifying beta, the offset applied to the normalized
+     *      tensor. The scalar must be of {@link ANEURALNETWORKS_FLOAT16} if
+     *      input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT16} and of {@link
+     *      ANEURALNETWORKS_FLOAT32} if input0 is of {@link
+     *      ANEURALNETWORKS_TENSOR_FLOAT32}.
+     * * 3: A scalar, specifying epsilon, the small value added to variance to
+     *      avoid dividing by zero. The scalar must be of {@link ANEURALNETWORKS_FLOAT16} if
+     *      input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT16} and of {@link
+     *      ANEURALNETWORKS_FLOAT32} if input0 is of {@link
+     *      ANEURALNETWORKS_TENSOR_FLOAT32}.
      * * 4: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
      *      NCHW data layout for input0 and output0. Set to false for NHWC.
      *
@@ -3512,10 +3538,12 @@ typedef enum {
      *      padding[i, 1] specifies the number of elements to be padded after
      *      the end of dimension i.
      * * 2: An scalar specifying the value to use for padding input0.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the
+     *      pad value must be of {@link ANEURALNETWORKS_FLOAT16}.
      *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the
-     *      pad value should be of {@link ANEURALNETWORKS_FLOAT32}.
+     *      pad value must be of {@link ANEURALNETWORKS_FLOAT32}.
      *      For input tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
-     *      the pad value should be of {@link ANEURALNETWORKS_INT32}. The
+     *      the pad value must be of {@link ANEURALNETWORKS_INT32}. The
      *      scale and zeroPoint are assumed to be the same as in input0.
      *
      * Outputs:
@@ -3664,25 +3692,25 @@ typedef enum {
      *      weights.
      * * 5: The recurrent-to-input weights.
      *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
-     *      and shape [outputSize, inputSize] specifying recurrent-to-input part
+     *      and shape [outputSize, outputSize] specifying recurrent-to-input part
      *      of weights for fully-connected layer inside the LSTM cell.
      *      Quantization zero point and scale must be the same across all the
      *      weights.
      * * 6: The recurrent-to-forget weights.
      *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
-     *      and shape [outputSize, inputSize] specifying recurrent-to-forget
+     *      and shape [outputSize, outputSize] specifying recurrent-to-forget
      *      part of weights for fully-connected layer inside the LSTM cell.
      *      Quantization zero point and scale must be the same across all the
      *      weights.
      * * 7: The recurrent-to-cell weights.
      *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
-     *      and shape [outputSize, inputSize] specifying recurrent-to-cell part
+     *      and shape [outputSize, outputSize] specifying recurrent-to-cell part
      *      of weights for fully-connected layer inside the LSTM cell.
      *      Quantization zero point and scale must be the same across all the
      *      weights.
      * * 8: The recurrent-to-output weights.
      *      A 2-D tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
-     *      and shape [outputSize, inputSize] specifying recurrent-to-output
+     *      and shape [outputSize, outputSize] specifying recurrent-to-output
      *      part of weights for fully-connected layer inside the LSTM cell.
      *      Quantization zero point and scale must be the same across all the
      *      weights.
@@ -4242,7 +4270,10 @@ typedef enum {
      * padding.
      *
      * Supported tensor {@link OperandCode} configurations:
-     * * 32 bit Floating point :
+     * * 16 bit floating point:
+     * * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} for input, filter, output, and bias.
+     *
+     * * 32 bit floating point:
      * * * {@link ANEURALNETWORKS_TENSOR_FLOAT32} for input, filter, output, and bias.
      *
      * * Quantized:
@@ -4250,7 +4281,6 @@ typedef enum {
      * * * {@link ANEURALNETWORKS_TENSOR_INT32} for bias (with scale set to
      * * * input.scale * filter.scale).
      *
-     * Available since API level 29:
      * * Quantized with symmetric per channel quantization for the filter:
      * * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} for input, and output.
      * * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} for filter.
