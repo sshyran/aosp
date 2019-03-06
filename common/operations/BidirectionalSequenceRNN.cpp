@@ -96,7 +96,7 @@ bool executeTyped(IOperationExecutionContext* context) {
     const T* auxInput = nullptr;
     const T* fwAuxWeights = nullptr;
     const T* bwAuxWeights = nullptr;
-    const bool hasAuxInputs = !context->isNullInput(kAuxInputTensor);
+    const bool hasAuxInputs = !context->isOmittedInput(kAuxInputTensor);
     if (hasAuxInputs) {
         auxInput = context->getInputBuffer<T>(kAuxInputTensor);
         fwAuxWeights = context->getInputBuffer<T>(kFwAuxWeightsTensor);
@@ -285,13 +285,14 @@ bool prepare(IOperationExecutionContext* context) {
     Shape fwAuxWeights = context->getInputShape(kFwAuxWeightsTensor);
     Shape bwAuxWeights = context->getInputShape(kBwAuxWeightsTensor);
 
-    const bool auxInputsAllOrNone =
-            (context->isNullInput(kAuxInputTensor) && context->isNullInput(kFwAuxWeightsTensor) &&
-             context->isNullInput(kBwAuxWeightsTensor)) ||
-            (!context->isNullInput(kAuxInputTensor) && !context->isNullInput(kFwAuxWeightsTensor) &&
-             !context->isNullInput(kBwAuxWeightsTensor));
+    const bool auxInputsAllOrNone = (context->isOmittedInput(kAuxInputTensor) &&
+                                     context->isOmittedInput(kFwAuxWeightsTensor) &&
+                                     context->isOmittedInput(kBwAuxWeightsTensor)) ||
+                                    (!context->isOmittedInput(kAuxInputTensor) &&
+                                     !context->isOmittedInput(kFwAuxWeightsTensor) &&
+                                     !context->isOmittedInput(kBwAuxWeightsTensor));
     NN_RET_CHECK(auxInputsAllOrNone);
-    const bool hasAuxInputs = !context->isNullInput(kAuxInputTensor);
+    const bool hasAuxInputs = !context->isOmittedInput(kAuxInputTensor);
 
     int32_t timeMajor = context->getInputValue<bool>(kTimeMajorParam);
     const uint32_t batchSize =
@@ -370,7 +371,7 @@ bool execute(IOperationExecutionContext* context) {
 
 NN_REGISTER_OPERATION(BIDIRECTIONAL_SEQUENCE_RNN, "BIDIRECTIONAL_SEQUENCE_RNN",
                       bidirectional_sequence_rnn::validate, bidirectional_sequence_rnn::prepare,
-                      bidirectional_sequence_rnn::execute);
+                      bidirectional_sequence_rnn::execute, .allowOmittedOperand = true);
 
 }  // namespace nn
 }  // namespace android
