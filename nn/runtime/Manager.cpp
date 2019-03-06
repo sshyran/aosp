@@ -37,40 +37,6 @@ using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 namespace android {
 namespace nn {
 
-uint32_t Device::getSizeOfData(const Operand& operand,
-                               const std::map<std::string, uint16_t>& extensionNameToPrefix) const {
-    if (!isExtensionOperandType(operand.type)) {
-        return sizeOfData(operand);
-    }
-
-    // A slow naive implementation.
-    // TODO(b/123178734): Speed it up.
-    uint32_t operandType = static_cast<uint32_t>(operand.type);
-    uint8_t kLowBitsType = static_cast<uint8_t>(Model::ExtensionTypeEncoding::LOW_BITS_TYPE);
-    uint16_t prefix = operandType >> kLowBitsType;
-    uint16_t typeWithinExtension = operandType & ((1 << kLowBitsType) - 1);
-    for (const Extension& extension : getSupportedExtensions()) {
-        if (extensionNameToPrefix.at(extension.name) != prefix) {
-            continue;
-        }
-        for (auto& extensionOperandType : extension.operandTypes) {
-            if (extensionOperandType.type == typeWithinExtension) {
-                uint32_t numElements = 1;
-                if (extensionOperandType.isTensor) {
-                    for (auto dimension : operand.dimensions) {
-                        numElements *= dimension;
-                    }
-                }
-                return numElements * extensionOperandType.byteSize;
-            }
-        }
-    }
-
-    CHECK(false) << "Cannot determine the size of extension operand type "
-                 << toString(operand.type);
-    return 0;
-}
-
 // A Device with actual underlying driver
 class DriverDevice : public Device {
     DISALLOW_IMPLICIT_CONSTRUCTORS(DriverDevice);

@@ -45,6 +45,7 @@ cc_library {
         "Memory.cpp",
         "ModelBuilder.cpp",
         "NeuralNetworks.cpp",
+        "TypeManager.cpp",
         "VersionedInterfaces.cpp",
     ],
 
