@@ -59,7 +59,13 @@ class OperationExecutionContext : public IOperationExecutionContext {
     bool setOutputShape(uint32_t index, const Shape& shape) override;
     int getResultCode() const;
 
-    bool isNullInput(uint32_t index) const override;
+    bool isOmittedInput(uint32_t index) const override;
+    bool isOmittedOutput(uint32_t index) const override;
+
+    // Return false if any of inputs or outputs is omitted, i.e. has lifetime of NO_VALUE.
+    bool checkNoOmittedOperand() const;
+    // Return false if any of inputs has dimension 0.
+    bool checkNoZeroSizedInput() const;
 
    private:
     const RunTimeOperandInfo* getInputInfo(uint32_t index) const;
@@ -198,8 +204,37 @@ bool OperationExecutionContext::setOutputShape(uint32_t index, const Shape& shap
     return setInfoAndAllocateIfNeeded(getOutputInfo(index), shape, &result);
 }
 
-bool OperationExecutionContext::isNullInput(uint32_t index) const {
+bool OperationExecutionContext::isOmittedInput(uint32_t index) const {
     return getInputInfo(index)->lifetime == OperandLifeTime::NO_VALUE;
+}
+
+bool OperationExecutionContext::isOmittedOutput(uint32_t index) const {
+    return getOutputInfo(index)->lifetime == OperandLifeTime::NO_VALUE;
+}
+
+bool OperationExecutionContext::checkNoOmittedOperand() const {
+    for (uint32_t i = 0; i < operation->inputs.size(); i++) {
+        NN_RET_CHECK(!isOmittedInput(i)) << getOperationName(operation->type) << " input operand "
+                                         << i << " is required but missing.";
+    }
+    for (uint32_t i = 0; i < operation->outputs.size(); i++) {
+        NN_RET_CHECK(!isOmittedOutput(i)) << getOperationName(operation->type) << " output operand "
+                                          << i << " is required but missing.";
+    }
+    return true;
+}
+
+bool OperationExecutionContext::checkNoZeroSizedInput() const {
+    for (uint32_t i = 0; i < operation->inputs.size(); i++) {
+        if (isOmittedInput(i)) continue;
+        for (uint32_t j = 0; j < getInputInfo(i)->dimensions.size(); j++) {
+            NN_RET_CHECK_NE(getInputInfo(i)->dimensions[j], 0)
+                    << getOperationName(operation->type)
+                    << " does not support zero-sized tensor, but input " << i << " dimension " << j
+                    << " is 0.";
+        }
+    }
+    return true;
 }
 
 }  // namespace
@@ -588,8 +623,7 @@ void CpuExecutor::freeNoLongerUsedOperands(const std::vector<uint32_t>& inputs) 
             continue;
         }
         info.numberOfUsesLeft--;
-        if (info.numberOfUsesLeft == 0) {
-            nnAssert(info.buffer != nullptr);
+        if (info.numberOfUsesLeft == 0 && info.buffer != nullptr) {
             delete[] info.buffer;
             info.buffer = nullptr;
         }
@@ -627,7 +661,23 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
             return true;
         };
-        return verify(requiredIns, ins, "in") && verify(requiredOuts, outs, "out");
+
+        auto verifyNoZeroSizedInputs = [&operation, this](const hidl_vec<uint32_t>& indexes) {
+            for (size_t i = 0; i < indexes.size(); i++) {
+                for (size_t j = 0; j < mOperands[indexes[i]].dimensions.size(); j++) {
+                    if (mOperands[indexes[i]].dimensions[j] == 0) {
+                        LOG(ERROR) << getOperationName(operation.type)
+                                   << " does not support zero-sized tensor, but input " << i
+                                   << " dimension " << j << " is zero.";
+                        return false;
+                    }
+                }
+            }
+            return true;
+        };
+
+        return verify(requiredIns, ins, "in") && verify(requiredOuts, outs, "out") &&
+               verifyNoZeroSizedInputs(ins);
     };
 
     switch (operation.type) {
@@ -2301,7 +2351,9 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                               splitQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
                                           input.shape(), axis, &outputDataPtrs, outputShapes);
                 } break;
-                default: { return ANEURALNETWORKS_BAD_DATA; }
+                default: {
+                    return ANEURALNETWORKS_BAD_DATA;
+                }
             }
         } break;
         case OperationType::MAXIMUM:
@@ -2651,7 +2703,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                            << getOperationName(operation.type);
             } else {
                 OperationExecutionContext context(&operation, mOperands.data());
-                success = operationRegistration->prepare(&context) &&
+                success = operationRegistration->flags.allowOmittedOperand ||
+                          context.checkNoOmittedOperand();
+                success = success && (operationRegistration->flags.allowZeroSizedInput ||
+                                      context.checkNoZeroSizedInput());
+                success = success && operationRegistration->prepare(&context) &&
                           operationRegistration->execute(&context);
                 result = context.getResultCode();
             }
