@@ -1499,43 +1499,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                         reinterpret_cast<uint8_t*>(output.buffer), output.shape());
             }
         } break;
-        case OperationType::FULLY_CONNECTED: {
-            if (!allParametersPresent(4, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            RunTimeOperandInfo& input = mOperands[ins[0]];
-            RunTimeOperandInfo& weights = mOperands[ins[1]];
-            RunTimeOperandInfo& bias = mOperands[ins[2]];
-
-            int32_t activation = getScalarData<int32_t>(mOperands[ins[3]]);
-
-            RunTimeOperandInfo& output = mOperands[outs[0]];
-            Shape outShape = output.shape();
-
-            if (!fullyConnectedPrepare(input.shape(), weights.shape(), bias.shape(), &outShape) ||
-                !setInfoAndAllocateIfNeeded(&output, outShape, &result)) {
-                break;
-            }
-            if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = fullyConnectedFloat32(
-                        reinterpret_cast<const float*>(input.buffer), input.shape(),
-                        reinterpret_cast<const float*>(weights.buffer), weights.shape(),
-                        reinterpret_cast<const float*>(bias.buffer), bias.shape(), activation,
-                        reinterpret_cast<float*>(output.buffer), outShape);
-            } else if (input.type == OperandType::TENSOR_FLOAT16) {
-                success = fullyConnectedFloat16(
-                        reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
-                        reinterpret_cast<const _Float16*>(weights.buffer), weights.shape(),
-                        reinterpret_cast<const _Float16*>(bias.buffer), bias.shape(), activation,
-                        reinterpret_cast<_Float16*>(output.buffer), outShape);
-            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-                success = fullyConnectedQuant8(
-                        reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
-                        reinterpret_cast<const uint8_t*>(weights.buffer), weights.shape(),
-                        reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(), activation,
-                        reinterpret_cast<uint8_t*>(output.buffer), outShape);
-            }
-        } break;
         case OperationType::CONCATENATION: {
             if (outs.size() != 1 || ins.size() < 2) {
                 return ANEURALNETWORKS_BAD_DATA;
