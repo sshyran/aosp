@@ -101,7 +101,7 @@ typedef enum {
      * used to convert the 16 bit number to a real value in the following way:
      * realValue = integerValue * scale.
      *
-     * scale is a 32 bit floating point with value greater then zero.
+     * scale is a 32 bit floating point with value greater than zero.
      *
      * Available since API level 29.
      */
@@ -173,7 +173,7 @@ typedef enum {
      * used to convert the 8 bit number to a real value in the following way:
      * realValue = integerValue * scale.
      *
-     * scale is a 32 bit floating point with value greater then zero.
+     * scale is a 32 bit floating point with value greater than zero.
      *
      * Available since API level 29.
      */
@@ -4230,7 +4230,7 @@ typedef enum {
     ANEURALNETWORKS_TOPK_V2 = 90,
 
     /**
-     * Performs the tranpose of 2-D convolution operation.
+     * Performs the transpose of 2-D convolution operation.
      *
      * This operation is sometimes called "deconvolution" after Deconvolutional
      * Networks, but is actually the transpose (gradient) of
