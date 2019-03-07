@@ -174,6 +174,8 @@ inline uint32_t computeOutSizeTransposeConv(uint32_t imageSize, uint32_t filterS
     return imageSize * stride + filterSize - stride - paddingHead - paddingTail;
 }
 
+__wur bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier, int* shift);
+
 __wur
 bool QuantizeMultiplierSmallerThanOne(double double_multiplier,
                                       int32_t* quantized_multiplier,
