@@ -793,7 +793,8 @@ typedef enum {
      *      [batch_size, input_size], where "input_size" corresponds to the
      *      number of inputs to the layer, matching the second dimension of
      *      weights, and "batch_size" is calculated by dividing the number of
-     *      elements by "input_size".
+     *      elements by "input_size". Since API level 29, zero batch_size is
+     *      supported for this tensor.
      * * 1: A 2-D tensor, specifying the weights, of shape
      *      [num_units, input_size], where "num_units" corresponds to the number
      *      of output nodes.

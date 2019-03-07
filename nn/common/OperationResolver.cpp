@@ -33,6 +33,7 @@ const OperationRegistration* register_DEQUANTIZE();
 const OperationRegistration* register_DETECTION_POSTPROCESSING();
 const OperationRegistration* register_EQUAL();
 const OperationRegistration* register_EXP();
+const OperationRegistration* register_FULLY_CONNECTED();
 const OperationRegistration* register_GATHER();
 const OperationRegistration* register_GENERATE_PROPOSALS();
 const OperationRegistration* register_GREATER();
@@ -76,6 +77,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_DETECTION_POSTPROCESSING());
     registerOperation(register_EQUAL());
     registerOperation(register_EXP());
+    registerOperation(register_FULLY_CONNECTED());
     registerOperation(register_GATHER());
     registerOperation(register_GENERATE_PROPOSALS());
     registerOperation(register_GREATER());
