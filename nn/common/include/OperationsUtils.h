@@ -317,11 +317,6 @@ bool genericPoolingPrepare(const Shape& input,
 
 bool genericActivationPrepare(const Shape& input, Shape* output);
 
-bool fullyConnectedPrepare(const Shape& input,
-                           const Shape& weights,
-                           const Shape& bias,
-                           Shape* output);
-
 bool concatenationPrepare(const std::vector<Shape>& inputShapes,
                           int32_t axis,
                           Shape* output);
