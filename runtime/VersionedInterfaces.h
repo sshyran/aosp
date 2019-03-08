@@ -32,6 +32,7 @@ namespace nn {
 class ExecutionBurstController;
 class IDeviceDeathHandler;
 class IPreparedModelDeathHandler;
+class VersionedIPreparedModel;
 
 /**
  * Each class (VersionedIDevice, VersionedIPreparedModel) wraps a HIDL interface
@@ -145,10 +146,10 @@ class VersionedIDevice {
     std::pair<ErrorStatus, hidl_vec<bool>> getSupportedOperations(const Model& model);
 
     /**
-     * Asynchronously creates a prepared model for execution and optionally saves it
+     * Synchronously creates a prepared model for execution and optionally saves it
      * into cache files.
      *
-     * prepareModel is used to make any necessary transformations to or alternative
+     * prepareModel is used to make any necessary transformations or alternative
      * representations to a model for execution, possibly including
      * transformations on the constant data, optimization on the model's graph,
      * or compilation into the device's native binary format. The model itself
@@ -168,35 +169,28 @@ class VersionedIDevice {
      * finished. The driver must dup a file descriptor if it wants to get access to
      * the cache file later.
      *
-     * The model is prepared asynchronously with respect to the caller. The
-     * prepareModel function must verify the inputs to the preparedModel function
-     * related to preparing the model (as opposed to saving the prepared model to
-     * cache) are correct. If there is an error, prepareModel must immediately invoke
-     * the callback with the appropriate ErrorStatus value and nullptr for the
-     * IPreparedModel, then return with the same ErrorStatus. If the inputs to the
-     * prepareModel function that are related to preparing the model are valid and
-     * there is no error, prepareModel must launch an asynchronous task
-     * to prepare the model in the background, and immediately return from
-     * prepareModel with ErrorStatus::NONE. If the asynchronous task fails to launch,
-     * prepareModel must immediately invoke the callback with
-     * ErrorStatus::GENERAL_FAILURE and nullptr for the IPreparedModel, then return
-     * with ErrorStatus::GENERAL_FAILURE.
+     * The model is prepared synchronously with respect to the caller. The
+     * prepareModel function must verify the inputs to the preparedModel
+     * function related to preparing the model (as opposed to saving the
+     * prepared model to cache) are correct. If there is an error, prepareModel
+     * must immediately return the appropriate ErrorStatus value and nullptr for
+     * the VersionedIPreparedModel. If the inputs to the prepareModel function
+     * that are related to preparing the model are valid and there is no error,
+     * prepareModel must prepare the model.
      *
-     * When the asynchronous task has finished preparing the model, it must
-     * immediately invoke the callback function provided as an input to
-     * prepareModel. If the model was prepared successfully, the callback object
-     * must be invoked with an error status of ErrorStatus::NONE and the
-     * produced IPreparedModel object. If an error occurred preparing the model,
-     * the callback object must be invoked with the appropriate ErrorStatus
-     * value and nullptr for the IPreparedModel.
+     * If the model was prepared successfully, prepareModel must return
+     * ErrorStatus::NONE and the produced VersionedIPreparedModel object. If an
+     * error occurred preparing the model, prepareModel must return the
+     * appropriate ErrorStatus value and nullptr for the
+     * VersionedIPreparedModel.
      *
-     * Optionally, the driver may save the prepared model to cache during the
-     * asynchronous preparation. Any error that occurs when saving to cache must
-     * not affect the status of preparing the model. Even if the input arguments
-     * related to the cache may be invalid, or the driver may fail to save to cache,
-     * the prepareModel function must finish preparing the model. The driver
-     * may choose not to save to cache even if the caching information is
-     * provided and valid.
+     * Optionally, the driver may save the prepared model to cache during
+     * preparation. Any error that occurs when saving to cache must not affect
+     * the status of preparing the model. Even if the input arguments related to
+     * the cache may be invalid, or the driver may fail to save to cache, the
+     * prepareModel function must finish preparing the model. The driver may
+     * choose not to save to cache even if the caching information is provided
+     * and valid.
      *
      * The only information that may be unknown to the model at this stage is
      * the shape of the tensors, which may only be known at execution time. As
@@ -231,24 +225,21 @@ class VersionedIDevice {
      *     in a failed execution or in a successful execution that produces incorrect
      *     output values. If both modelCache and dataCache are empty indicating that
      *     caching information is not provided, this token must be ignored.
-     * @param callback A callback object used to return the error status of
-     *     preparing the model for execution and the prepared model if
-     *     successful, nullptr otherwise. The callback object's notify function
-     *     must be called exactly once, even if the model could not be prepared.
-     * @return status Error status of launching a task which prepares the model
-     *     in the background; must be:
-     *     - NONE if preparation task is successfully launched
-     *     - DEVICE_UNAVAILABLE if driver is offline or busy
-     *     - GENERAL_FAILURE if there is an unspecified error
-     *     - INVALID_ARGUMENT if one of the input arguments related to preparing the
-     *       model is invalid
+     * @return A pair of:
+     *     - status Error status of preparing the model; must be:
+     *         - NONE if preparation succeeded
+     *         - DEVICE_UNAVAILABLE if driver is offline or busy
+     *         - GENERAL_FAILURE if there is an unspecified error
+     *         - INVALID_ARGUMENT if one of the input arguments related to
+     *             preparing the model is invalid
+     *     - preparedModel A VersionedIPreparedModel object representing a model
+     *         that has been prepared for execution, else nullptr.
      */
-    ErrorStatus prepareModel(
+    std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModel(
             const Model& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
             const hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
-                    token,
-            const sp<PreparedModelCallback>& callback);
+                    token);
 
     /**
      * Creates a prepared model from cache files for execution.
@@ -266,29 +257,23 @@ class VersionedIDevice {
      * finished. The driver must dup a file descriptor if it wants to get access to
      * the cache file later.
      *
-     * The model is prepared asynchronously with respect to the caller. The
+     * The model is prepared synchronously with respect to the caller. The
      * prepareModelFromCache function must verify the inputs to the
-     * prepareModelFromCache function are correct, and that the security-sensitive
-     * cache has not been modified since it was last written by the driver.
-     * If there is an error, or if compilation caching is not supported, or if the
-     * security-sensitive cache has been modified, prepareModelFromCache must
-     * immediately invoke the callback with the appropriate ErrorStatus value and
-     * nullptr for the IPreparedModel, then return with the same ErrorStatus. If
-     * the inputs to the prepareModelFromCache function are valid, the security-sensitive
-     * cache is not modified, and there is no error, prepareModelFromCache must launch an
-     * asynchronous task to prepare the model in the background, and immediately return
-     * from prepareModelFromCache with ErrorStatus::NONE. If the asynchronous task
-     * fails to launch, prepareModelFromCache must immediately invoke the callback
-     * with ErrorStatus::GENERAL_FAILURE and nullptr for the IPreparedModel, then
-     * return with ErrorStatus::GENERAL_FAILURE.
+     * prepareModelFromCache function are correct, and that the
+     * security-sensitive cache has not been modified since it was last written
+     * by the driver. If there is an error, or if compilation caching is not
+     * supported, or if the security-sensitive cache has been modified,
+     * prepareModelFromCache must return the appropriate ErrorStatus value and
+     * nullptr for the VersionedIPreparedModel. If the inputs to the
+     * prepareModelFromCache function are valid, the security-sensitive cache is
+     * not modified, and there is no error, prepareModelFromCache must prepare
+     * the model.
      *
-     * When the asynchronous task has finished preparing the model, it must
-     * immediately invoke the callback function provided as an input to
-     * prepareModelFromCache. If the model was prepared successfully, the
-     * callback object must be invoked with an error status of ErrorStatus::NONE
-     * and the produced IPreparedModel object. If an error occurred preparing
-     * the model, the callback object must be invoked with the appropriate
-     * ErrorStatus value and nullptr for the IPreparedModel.
+     * If the model was prepared successfully, prepareModelFromCache must return
+     * ErrorStatus::NONE and the produced VersionedIPreparedModel object. If an
+     * error occurred preparing the model, prepareModelFromCache must return the
+     * appropriate ErrorStatus value and nullptr for the
+     * VersionedIPreparedModel.
      *
      * The only information that may be unknown to the model at this stage is
      * the shape of the tensors, which may only be known at execution time. As
@@ -312,23 +297,20 @@ class VersionedIDevice {
      *     to have a low rate of collision for a particular application. The driver
      *     cannot detect a collision; a collision will result in a failed execution
      *     or in a successful execution that produces incorrect output values.
-     * @param callback A callback object used to return the error status of
-     *     preparing the model for execution and the prepared model if
-     *     successful, nullptr otherwise. The callback object's notify function
-     *     must be called exactly once, even if the model could not be prepared.
-     * @return status Error status of launching a task which prepares the model
-     *     in the background; must be:
-     *     - NONE if preparation task is successfully launched
-     *     - DEVICE_UNAVAILABLE if driver is offline or busy
-     *     - GENERAL_FAILURE if caching is not supported or if there is an
-     *       unspecified error
-     *     - INVALID_ARGUMENT if one of the input arguments is invalid
+     * @return A pair of:
+     *     - status Error status of preparing the model; must be:
+     *         - NONE if preparation succeeded
+     *         - DEVICE_UNAVAILABLE if driver is offline or busy
+     *         - GENERAL_FAILURE if caching is not supported or if there is an
+     *             unspecified error
+     *         - INVALID_ARGUMENT if one of the input arguments is invalid
+     *     - preparedModel A VersionedIPreparedModel object representing a model
+     *        that has been prepared for execution, else nullptr.
      */
-    ErrorStatus prepareModelFromCache(
+    std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCache(
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
             const hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
-                    token,
-            const sp<PreparedModelCallback>& callback);
+                    token);
 
     /**
      * Returns the current status of a driver.
@@ -489,21 +471,11 @@ class VersionedIPreparedModel {
 
    public:
     /**
-     * Create a VersionedIPreparedModel object.
-     *
-     * Prefer using this function over the constructor, as it adds more
-     * protections. Specifically, it linksToDeath a hidl_death_recipient that
-     * can proactively handle the case when the service containing the
-     * IPreparedModel object crashes.
-     *
-     * @param preparedModel A prepared model object that is least version 1.0 of the
-     *                      IPreparedModel interface.
-     * @return A valid VersionedIPreparedModelobject, otherwise nullptr.
-     */
-    static std::shared_ptr<VersionedIPreparedModel> create(sp<V1_0::IPreparedModel> preparedModel);
-
-    /**
      * Constructor for the VersionedIPreparedModel object.
+     *
+     * This constructor should not be used directly. Instead,
+     * VersionedIPreparedModel should be created via
+     * VersionedIDevice::prepareModel*.
      *
      * VersionedIPreparedModel is constructed with the V1_0::IPreparedModel object, which
      * represents a device that is at least v1.0 of the interface. The constructor downcasts
