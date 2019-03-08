@@ -1211,6 +1211,22 @@ TEST(ValidationTestIntrospection, DeviceGetName) {
     deviceStringCheck(ANeuralNetworksDevice_getName);
 }
 
+TEST(ValidationTestIntrospection, DeviceGetNameUnique) {
+    uint32_t numDevices = 0;
+    EXPECT_EQ(ANeuralNetworks_getDeviceCount(&numDevices), ANEURALNETWORKS_NO_ERROR);
+
+    std::set<std::string> deviceNames;
+    for (uint32_t i = 0; i < numDevices; i++) {
+        ANeuralNetworksDevice* device = nullptr;
+        EXPECT_EQ(ANeuralNetworks_getDevice(i, &device), ANEURALNETWORKS_NO_ERROR);
+        const char* buffer = nullptr;
+        EXPECT_EQ(ANeuralNetworksDevice_getName(device, &buffer), ANEURALNETWORKS_NO_ERROR);
+        std::string name(buffer);
+        EXPECT_EQ(deviceNames.count(name), (uint32_t)0);
+        deviceNames.insert(name);
+    }
+}
+
 TEST(ValidationTestIntrospection, DeviceGetVersion) {
     deviceStringCheck(ANeuralNetworksDevice_getVersion);
 }
