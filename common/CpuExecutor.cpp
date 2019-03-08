@@ -173,7 +173,7 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
             *result = ANEURALNETWORKS_OP_FAILED;
             return false;
         }
-        uint32_t length = sizeOfData(info->type, info->dimensions);
+        uint32_t length = nonExtensionOperandSizeOfData(info->type, info->dimensions);
         if (length > 0) {
             info->buffer = new uint8_t[length];
             if (info->buffer == nullptr) {
@@ -184,7 +184,7 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
         }
     }
     if (!info->isSufficient()) {
-        uint32_t length = sizeOfData(info->type, info->dimensions);
+        uint32_t length = nonExtensionOperandSizeOfData(info->type, info->dimensions);
         LOG(ERROR) << "Insufficient size for model operand: require = " << length
                    << ", provided = " << info->length;
         *result = ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE;
