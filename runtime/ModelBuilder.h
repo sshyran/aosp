@@ -54,9 +54,6 @@ class ModelBuilder {
     int relaxComputationFloat32toFloat16(bool allow);
     bool isComputationFloat32RelaxedToFloat16() const { return mRelaxComputationFloat32toFloat16; }
 
-    void setExtensionNameToPrefixMap(const std::map<std::string, uint16_t>&);
-    const std::map<std::string, uint16_t>& getExtensionNameToPrefixMap() const;
-
     int finish();
     bool isFinished() const { return mCompletedModel; }
     bool isValid() const { return !mInvalidModel; }
@@ -120,6 +117,12 @@ class ModelBuilder {
     // Copies the large values to a shared memory, if we have any.
     int copyLargeValuesToSharedMemory();
 
+    // Returns the list of extension names and corresponding numeric "prefixes"
+    // of operand and operation type values used in the model.
+    //
+    // Devices rely on this mapping to interpret extension types.
+    std::vector<Model::ExtensionNameAndPrefix> getExtensionNameToPrefixMap() const;
+
     // The operations of the graph.
     std::vector<Operation> mOperations;
     // The mapping from sorted index to the original index of operations in mOperations.
@@ -168,12 +171,6 @@ class ModelBuilder {
     // 'false' indicates TENSOR_FLOAT32 must be calculated using at least the
     // range and precision of the IEEE 754 32-bit floating-point format.
     bool mRelaxComputationFloat32toFloat16 = false;
-
-    // Maps extension names to numeric "prefixes" of operand and operation
-    // type values. Devices rely on these prefixes to interpret extension types.
-    // TODO(b/123523457): Have a global name-to-prefix mapping instead of
-    // storing it here.
-    std::map<std::string, uint16_t> mExtensionNameToPrefix;
 };
 
 }  // namespace nn
