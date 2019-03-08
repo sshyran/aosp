@@ -43,7 +43,7 @@ void CallbackBase::wait() {
     join_thread_locked();
 }
 
-bool CallbackBase::on_finish(std::function<bool(void)> post_work) {
+bool CallbackBase::on_finish(std::function<void()> post_work) {
     std::lock_guard<std::mutex> lock(mMutex);
     if (mPostWork != nullptr) {
         LOG(ERROR) << "CallbackBase::on_finish -- a post-work function has already been bound to "
@@ -73,20 +73,12 @@ bool CallbackBase::bind_thread(std::thread&& asyncThread) {
     return true;
 }
 
-void CallbackBase::join_thread() {
-    std::lock_guard<std::mutex> lock(mMutex);
-    join_thread_locked();
-}
-
 void CallbackBase::notify() {
     {
         std::lock_guard<std::mutex> lock(mMutex);
         mNotified = true;
-        if (mPostWork != nullptr) {
-            bool success = mPostWork();
-            if (!success) {
-                LOG(ERROR) << "CallbackBase::notify -- post work failed";
-            }
+        if (mPostWork) {
+            mPostWork();
         }
     }
     mCondition.notify_all();
@@ -98,47 +90,55 @@ void CallbackBase::join_thread_locked() {
     }
 }
 
-PreparedModelCallback::PreparedModelCallback() :
-        mErrorStatus(ErrorStatus::GENERAL_FAILURE), mPreparedModel(nullptr) {}
-
-PreparedModelCallback::~PreparedModelCallback() {}
-
 Return<void> PreparedModelCallback::notify(ErrorStatus errorStatus,
                                            const sp<V1_0::IPreparedModel>& preparedModel) {
-    mErrorStatus = errorStatus;
-    mPreparedModel = preparedModel;
-    CallbackBase::notify();
+    {
+        std::lock_guard<std::mutex> hold(mMutex);
+
+        // quick-return if object has already been notified
+        if (mNotified) {
+            return Void();
+        }
+
+        // store results and mark as notified
+        mErrorStatus = errorStatus;
+        mPreparedModel = preparedModel;
+        mNotified = true;
+    }
+
+    mCondition.notify_all();
     return Void();
 }
 
 Return<void> PreparedModelCallback::notify_1_2(ErrorStatus errorStatus,
                                                const sp<V1_2::IPreparedModel>& preparedModel) {
-    mErrorStatus = errorStatus;
-    mPreparedModel = preparedModel;
-    CallbackBase::notify();
-    return Void();
+    return notify(errorStatus, preparedModel);
 }
 
-ErrorStatus PreparedModelCallback::getStatus() {
+void PreparedModelCallback::wait() const {
+    std::unique_lock<std::mutex> lock(mMutex);
+    mCondition.wait(lock, [this] { return mNotified; });
+}
+
+ErrorStatus PreparedModelCallback::getStatus() const {
     wait();
     return mErrorStatus;
 }
 
-sp<V1_0::IPreparedModel> PreparedModelCallback::getPreparedModel() {
+sp<V1_0::IPreparedModel> PreparedModelCallback::getPreparedModel() const {
     wait();
     return mPreparedModel;
 }
 
 ExecutionCallback::ExecutionCallback()
     : mErrorStatus(ErrorStatus::GENERAL_FAILURE), mOnFinish(nullptr) {
-    on_finish([this]() {
+    on_finish([this] {
         if (mOnFinish != nullptr) {
             ErrorStatus status = mOnFinish(mErrorStatus, mOutputShapes);
             if (status != ErrorStatus::NONE) {
                 mErrorStatus = status;
             }
         }
-        return true;
     });
 }
 
