@@ -302,7 +302,7 @@ class CpuDevice : public Device {
    private:
     CpuDevice() = default;
     const int64_t kFeatureLevel = __ANDROID_API__;
-    const std::string kName = "google-cpu";
+    const std::string kName = "nnapi-reference";
     const std::string kVersionString = build::GetBuildNumber();
     // Since the performance is a ratio compared to the CPU performance,
     // by definition the performance of the CPU is 1.0.
