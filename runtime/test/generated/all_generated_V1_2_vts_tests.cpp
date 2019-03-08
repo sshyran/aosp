@@ -14125,6 +14125,21 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_nhwc_channelQuant8) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nhwc_channelQuant8_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_nhwc_channelQuant8_2,
+                           depthwise_conv2d_v1_2::is_ignored_nhwc_channelQuant8_2,
+                           depthwise_conv2d_v1_2::get_examples_nhwc_channelQuant8_2());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_nhwc_channelQuant8_2) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_nhwc_channelQuant8_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nhwc_channelQuant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nhwc_quant8) {
   generated_tests::Execute(device,
                            depthwise_conv2d_v1_2::createTestModel_nhwc_quant8,
@@ -14195,6 +14210,21 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nhwc_weight_as_input_channe
 TEST_F(ValidationTest, depthwise_conv2d_v1_2_nhwc_weight_as_input_channelQuant8) {
   const Model model = depthwise_conv2d_v1_2::createTestModel_nhwc_weight_as_input_channelQuant8();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nhwc_weight_as_input_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nhwc_weight_as_input_channelQuant8_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_nhwc_weight_as_input_channelQuant8_2,
+                           depthwise_conv2d_v1_2::is_ignored_nhwc_weight_as_input_channelQuant8_2,
+                           depthwise_conv2d_v1_2::get_examples_nhwc_weight_as_input_channelQuant8_2());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_nhwc_weight_as_input_channelQuant8_2) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_nhwc_weight_as_input_channelQuant8_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nhwc_weight_as_input_channelQuant8_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14275,6 +14305,21 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_nchw_channelQuant8) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nchw_channelQuant8_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_nchw_channelQuant8_2,
+                           depthwise_conv2d_v1_2::is_ignored_nchw_channelQuant8_2,
+                           depthwise_conv2d_v1_2::get_examples_nchw_channelQuant8_2());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_nchw_channelQuant8_2) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_nchw_channelQuant8_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nchw_channelQuant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nchw_quant8) {
   generated_tests::Execute(device,
                            depthwise_conv2d_v1_2::createTestModel_nchw_quant8,
@@ -14345,6 +14390,21 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nchw_weight_as_input_channe
 TEST_F(ValidationTest, depthwise_conv2d_v1_2_nchw_weight_as_input_channelQuant8) {
   const Model model = depthwise_conv2d_v1_2::createTestModel_nchw_weight_as_input_channelQuant8();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nchw_weight_as_input_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nchw_weight_as_input_channelQuant8_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_nchw_weight_as_input_channelQuant8_2,
+                           depthwise_conv2d_v1_2::is_ignored_nchw_weight_as_input_channelQuant8_2,
+                           depthwise_conv2d_v1_2::get_examples_nchw_weight_as_input_channelQuant8_2());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_nchw_weight_as_input_channelQuant8_2) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_nchw_weight_as_input_channelQuant8_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nchw_weight_as_input_channelQuant8_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14427,6 +14487,23 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_c
 TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_channelQuant8) {
   const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_channelQuant8();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_channelQuant8_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_channelQuant8_2,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nhwc_channelQuant8_2,
+                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_channelQuant8_2(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_channelQuant8_2) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_channelQuant8_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_channelQuant8_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14519,6 +14596,23 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_weight_as
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2,
+                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_quant8) {
   generated_tests::Execute(device,
                            depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_weight_as_input_quant8,
@@ -14597,6 +14691,23 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_c
 TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_channelQuant8) {
   const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_channelQuant8();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_channelQuant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_channelQuant8_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_channelQuant8_2,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nchw_channelQuant8_2,
+                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_channelQuant8_2(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_channelQuant8_2) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_channelQuant8_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_channelQuant8_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14689,6 +14800,23 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_weight_as
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2,
+                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_quant8) {
   generated_tests::Execute(device,
                            depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_weight_as_input_quant8,
@@ -14765,16 +14893,16 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_nhwc_quant8_2) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nhwc_channelQuant8_2) {
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nhwc_channelQuant8_3) {
   generated_tests::Execute(device,
-                           depthwise_conv2d_v1_2::createTestModel_nhwc_channelQuant8_2,
-                           depthwise_conv2d_v1_2::is_ignored_nhwc_channelQuant8_2,
-                           depthwise_conv2d_v1_2::get_examples_nhwc_channelQuant8_2());
+                           depthwise_conv2d_v1_2::createTestModel_nhwc_channelQuant8_3,
+                           depthwise_conv2d_v1_2::is_ignored_nhwc_channelQuant8_3,
+                           depthwise_conv2d_v1_2::get_examples_nhwc_channelQuant8_3());
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_v1_2_nhwc_channelQuant8_2) {
-  const Model model = depthwise_conv2d_v1_2::createTestModel_nhwc_channelQuant8_2();
-  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nhwc_channelQuant8_2());
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_nhwc_channelQuant8_3) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_nhwc_channelQuant8_3();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nhwc_channelQuant8_3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14840,16 +14968,16 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_nhwc_weight_as_input_quant8_2) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nhwc_weight_as_input_channelQuant8_2) {
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nhwc_weight_as_input_channelQuant8_3) {
   generated_tests::Execute(device,
-                           depthwise_conv2d_v1_2::createTestModel_nhwc_weight_as_input_channelQuant8_2,
-                           depthwise_conv2d_v1_2::is_ignored_nhwc_weight_as_input_channelQuant8_2,
-                           depthwise_conv2d_v1_2::get_examples_nhwc_weight_as_input_channelQuant8_2());
+                           depthwise_conv2d_v1_2::createTestModel_nhwc_weight_as_input_channelQuant8_3,
+                           depthwise_conv2d_v1_2::is_ignored_nhwc_weight_as_input_channelQuant8_3,
+                           depthwise_conv2d_v1_2::get_examples_nhwc_weight_as_input_channelQuant8_3());
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_v1_2_nhwc_weight_as_input_channelQuant8_2) {
-  const Model model = depthwise_conv2d_v1_2::createTestModel_nhwc_weight_as_input_channelQuant8_2();
-  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nhwc_weight_as_input_channelQuant8_2());
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_nhwc_weight_as_input_channelQuant8_3) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_nhwc_weight_as_input_channelQuant8_3();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nhwc_weight_as_input_channelQuant8_3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14915,16 +15043,16 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_nchw_quant8_2) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nchw_channelQuant8_2) {
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nchw_channelQuant8_3) {
   generated_tests::Execute(device,
-                           depthwise_conv2d_v1_2::createTestModel_nchw_channelQuant8_2,
-                           depthwise_conv2d_v1_2::is_ignored_nchw_channelQuant8_2,
-                           depthwise_conv2d_v1_2::get_examples_nchw_channelQuant8_2());
+                           depthwise_conv2d_v1_2::createTestModel_nchw_channelQuant8_3,
+                           depthwise_conv2d_v1_2::is_ignored_nchw_channelQuant8_3,
+                           depthwise_conv2d_v1_2::get_examples_nchw_channelQuant8_3());
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_v1_2_nchw_channelQuant8_2) {
-  const Model model = depthwise_conv2d_v1_2::createTestModel_nchw_channelQuant8_2();
-  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nchw_channelQuant8_2());
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_nchw_channelQuant8_3) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_nchw_channelQuant8_3();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nchw_channelQuant8_3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -14990,16 +15118,16 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_nchw_weight_as_input_quant8_2) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nchw_weight_as_input_channelQuant8_2) {
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_nchw_weight_as_input_channelQuant8_3) {
   generated_tests::Execute(device,
-                           depthwise_conv2d_v1_2::createTestModel_nchw_weight_as_input_channelQuant8_2,
-                           depthwise_conv2d_v1_2::is_ignored_nchw_weight_as_input_channelQuant8_2,
-                           depthwise_conv2d_v1_2::get_examples_nchw_weight_as_input_channelQuant8_2());
+                           depthwise_conv2d_v1_2::createTestModel_nchw_weight_as_input_channelQuant8_3,
+                           depthwise_conv2d_v1_2::is_ignored_nchw_weight_as_input_channelQuant8_3,
+                           depthwise_conv2d_v1_2::get_examples_nchw_weight_as_input_channelQuant8_3());
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_v1_2_nchw_weight_as_input_channelQuant8_2) {
-  const Model model = depthwise_conv2d_v1_2::createTestModel_nchw_weight_as_input_channelQuant8_2();
-  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nchw_weight_as_input_channelQuant8_2());
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_nchw_weight_as_input_channelQuant8_3) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_nchw_weight_as_input_channelQuant8_3();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_nchw_weight_as_input_channelQuant8_3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -15074,16 +15202,16 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_quant8_2)
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_channelQuant8_2) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_channelQuant8_3) {
   generated_tests::Execute(device,
-                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_channelQuant8_2,
-                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nhwc_channelQuant8_2,
-                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_channelQuant8_2(), true);
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_channelQuant8_3,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nhwc_channelQuant8_3,
+                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_channelQuant8_3(), true);
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_channelQuant8_2) {
-  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_channelQuant8_2();
-  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_channelQuant8_2());
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_channelQuant8_3) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_channelQuant8_3();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_channelQuant8_3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -15159,16 +15287,16 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_weight_as
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_3) {
   generated_tests::Execute(device,
-                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2,
-                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2,
-                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(), true);
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_3,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_3,
+                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_3(), true);
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2) {
-  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2();
-  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2());
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_3) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_3();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -15244,16 +15372,16 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_quant8_2)
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_channelQuant8_2) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_channelQuant8_3) {
   generated_tests::Execute(device,
-                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_channelQuant8_2,
-                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nchw_channelQuant8_2,
-                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_channelQuant8_2(), true);
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_channelQuant8_3,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nchw_channelQuant8_3,
+                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_channelQuant8_3(), true);
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_channelQuant8_2) {
-  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_channelQuant8_2();
-  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_channelQuant8_2());
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_channelQuant8_3) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_channelQuant8_3();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_channelQuant8_3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -15329,16 +15457,16 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_weight_as
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_channelQuant8_3) {
   generated_tests::Execute(device,
-                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2,
-                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2,
-                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(), true);
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8_3,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8_3,
+                           depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_weight_as_input_channelQuant8_3(), true);
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2) {
-  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2();
-  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2());
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_channelQuant8_3) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8_3();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_dynamic_output_shape_nchw_weight_as_input_channelQuant8_3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -16619,6 +16747,134 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_large_dynamic_output_shape_
 TEST_F(ValidationTest, depthwise_conv2d_v1_2_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2) {
   const Model model = depthwise_conv2d_v1_2::createTestModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel,
+                           depthwise_conv2d_v1_2::is_ignored,
+                           depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_relaxed) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_relaxed,
+                           depthwise_conv2d_v1_2::is_ignored_relaxed,
+                           depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_relaxed());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_relaxed) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_weight_as_input) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_weight_as_input,
+                           depthwise_conv2d_v1_2::is_ignored_weight_as_input,
+                           depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_weight_as_input());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_weight_as_input) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_weight_as_input();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_weight_as_input_relaxed) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_weight_as_input_relaxed,
+                           depthwise_conv2d_v1_2::is_ignored_weight_as_input_relaxed,
+                           depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_weight_as_input_relaxed());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_weight_as_input_relaxed) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_weight_as_input_relaxed();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_weight_as_input_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape,
+                           depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_relaxed,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_relaxed,
+                           depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_weight_as_input,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_weight_as_input,
+                           depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_weight_as_input();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed) {
+  generated_tests::Execute(device,
+                           depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_weight_as_input_relaxed,
+                           depthwise_conv2d_v1_2::is_ignored_dynamic_output_shape_weight_as_input_relaxed,
+                           depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed) {
+  const Model model = depthwise_conv2d_v1_2::createTestModel_dynamic_output_shape_weight_as_input_relaxed();
+  const std::vector<Request> requests = createRequests(depthwise_conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
