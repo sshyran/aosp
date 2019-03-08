@@ -32,7 +32,7 @@ namespace nn {
 bool copyData(const void* inputData, const Shape& inputShape, void* outputData,
               const Shape& outputShape) {
     NNTRACE_COMP("copyData");
-    size_t count = sizeOfData(inputShape.type, inputShape.dimensions);
+    size_t count = nonExtensionOperandSizeOfData(inputShape.type, inputShape.dimensions);
     memcpy(outputData, inputData, count);
     return true;
 }

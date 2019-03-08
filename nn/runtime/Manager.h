@@ -56,9 +56,6 @@ class Device {
             const hidl_handle& modelCache, const hidl_handle& dataCache,
             const hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>& token,
             std::shared_ptr<VersionedIPreparedModel>* preparedModel) = 0;
-
-    uint32_t getSizeOfData(const Operand& operand,
-                           const std::map<std::string, uint16_t>& extensionNameToPrefix) const;
 };
 
 // Manages the NN HAL devices.  Only one instance of this class will exist.

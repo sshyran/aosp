@@ -28,6 +28,7 @@
 #include "OperationsUtils.h"
 #include "TokenHasher.h"
 #include "Tracing.h"
+#include "TypeManager.h"
 #include "Utils.h"
 
 #include <cutils/native_handle.h>
@@ -491,7 +492,6 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
     }
 
     mSubModel.relaxComputationFloat32toFloat16(fromModel->isComputationFloat32RelaxedToFloat16());
-    mSubModel.setExtensionNameToPrefixMap(fromModel->getExtensionNameToPrefixMap());
 
     // Input order: mModelInputs, mTempsAsSubModelInputs, mOutputsAsSubModelInputs
     // Output order: mModelOutputs, mTempsAsSubModelOutputs
@@ -709,8 +709,7 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
                     subModelInputsAndOutputs =
                             std::make_shared<Controller::SubModelInputsAndOutputsType>();
                 }
-                const uint32_t size = step->getDevice()->getSizeOfData(
-                        fromModelOperand, fromModel->getExtensionNameToPrefixMap());
+                const uint32_t size = TypeManager::get()->getSizeOfData(fromModelOperand);
                 totalSizeOfTemporaries += alignBytesNeeded(totalSizeOfTemporaries, size);
                 subModelInputsAndOutputs->insert(std::make_pair(fromModelOperandIndex, totalSizeOfTemporaries));
                 totalSizeOfTemporaries += size;
