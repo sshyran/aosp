@@ -23,11 +23,15 @@
 #include <memory>
 #include <string>
 #include <tuple>
+#include "Callbacks.h"
 
 namespace android {
 namespace nn {
 
+// forward declarations
 class ExecutionBurstController;
+class IDeviceDeathHandler;
+class IPreparedModelDeathHandler;
 
 /**
  * Each class (VersionedIDevice, VersionedIPreparedModel) wraps a HIDL interface
@@ -49,6 +53,22 @@ class VersionedIDevice {
 
    public:
     /**
+     * Create a VersionedIDevice object.
+     *
+     * Prefer using this function over the constructor, as it adds more
+     * protections.
+     *
+     * This call linksToDeath a hidl_death_recipient that can
+     * proactively handle the case when the service containing the IDevice
+     * object crashes.
+     *
+     * @param device A device object that is at least version 1.0 of the IDevice
+     *               interface.
+     * @return A valid VersionedIDevice object, otherwise nullptr.
+     */
+    static std::shared_ptr<VersionedIDevice> create(sp<V1_0::IDevice> device);
+
+    /**
      * Constructor for the VersionedIDevice object.
      *
      * VersionedIDevice is constructed with the V1_0::IDevice object, which
@@ -57,10 +77,21 @@ class VersionedIDevice {
      * will default to using the latest version of all IDevice interface
      * methods automatically.
      *
-     * @param device A device object that is least version 1.0 of the IDevice
+     * @param device A device object that is at least version 1.0 of the IDevice
      *               interface.
+     * @param deathHandler A hidl_death_recipient that will proactively handle
+     *                     the case when the service containing the IDevice
+     *                     object crashes.
      */
-    VersionedIDevice(sp<V1_0::IDevice> device);
+    VersionedIDevice(sp<V1_0::IDevice> device, sp<IDeviceDeathHandler> deathHandler);
+
+    /**
+     * Destructor for the VersionedIDevice object.
+     *
+     * This destructor unlinksToDeath this object's hidl_death_recipient as it
+     * no longer needs to handle the case where the IDevice's service crashes.
+     */
+    ~VersionedIDevice();
 
     /**
      * Gets the capabilities of a driver.
@@ -167,7 +198,7 @@ class VersionedIDevice {
      *                  invalid
      */
     ErrorStatus prepareModel(const Model& model, ExecutionPreference preference,
-                             const sp<IPreparedModelCallback>& callback);
+                             const sp<PreparedModelCallback>& callback);
 
     /**
      * Creates a prepared model from cache files for execution.
@@ -248,7 +279,7 @@ class VersionedIDevice {
             const hidl_handle& modelCache, const hidl_handle& dataCache,
             const hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
                     token,
-            const sp<IPreparedModelCallback>& callback);
+            const sp<PreparedModelCallback>& callback);
 
     /**
      * Returns the current status of a driver.
@@ -375,6 +406,11 @@ class VersionedIDevice {
     sp<V1_0::IDevice> mDeviceV1_0;
     sp<V1_1::IDevice> mDeviceV1_1;
     sp<V1_2::IDevice> mDeviceV1_2;
+
+    /**
+     * HIDL callback to be invoked if the service for mDeviceV1_0 crashes.
+     */
+    const sp<IDeviceDeathHandler> mDeathHandler;
 };
 
 /** This class wraps an IPreparedModel object of any version. */
@@ -382,6 +418,20 @@ class VersionedIPreparedModel {
     DISALLOW_IMPLICIT_CONSTRUCTORS(VersionedIPreparedModel);
 
    public:
+    /**
+     * Create a VersionedIPreparedModel object.
+     *
+     * Prefer using this function over the constructor, as it adds more
+     * protections. Specifically, it linksToDeath a hidl_death_recipient that
+     * can proactively handle the case when the service containing the
+     * IPreparedModel object crashes.
+     *
+     * @param preparedModel A prepared model object that is least version 1.0 of the
+     *                      IPreparedModel interface.
+     * @return A valid VersionedIPreparedModelobject, otherwise nullptr.
+     */
+    static std::shared_ptr<VersionedIPreparedModel> create(sp<V1_0::IPreparedModel> preparedModel);
+
     /**
      * Constructor for the VersionedIPreparedModel object.
      *
@@ -392,11 +442,21 @@ class VersionedIPreparedModel {
      *
      * @param preparedModel A prepared model object that is least version 1.0 of the
      *                      IPreparedModel interface.
+     * @param deathHandler A hidl_death_recipient that will proactively handle
+     *                     the case when the service containing the IDevice
+     *                     object crashes.
      */
-    VersionedIPreparedModel(sp<V1_0::IPreparedModel> preparedModel)
-        : mPreparedModelV1_0(preparedModel),
-          mPreparedModelV1_2(
-                  V1_2::IPreparedModel::castFrom(mPreparedModelV1_0).withDefault(nullptr)) {}
+    VersionedIPreparedModel(sp<V1_0::IPreparedModel> preparedModel,
+                            sp<IPreparedModelDeathHandler> deathHandler);
+
+    /**
+     * Destructor for the VersionedIPreparedModel object.
+     *
+     * This destructor unlinksToDeath this object's hidl_death_recipient as it
+     * no longer needs to handle the case where the IPreparedModel's service
+     * crashes.
+     */
+    ~VersionedIPreparedModel();
 
     /**
      * Launches an asynchronous execution on a prepared model.
@@ -444,7 +504,7 @@ class VersionedIPreparedModel {
      *                  invalid
      */
     ErrorStatus execute(const Request& request, MeasureTiming timing,
-                        const sp<IExecutionCallback>& callback);
+                        const sp<ExecutionCallback>& callback);
 
     /**
      * Performs a synchronous execution on a prepared model.
@@ -605,6 +665,11 @@ class VersionedIPreparedModel {
      */
     sp<V1_0::IPreparedModel> mPreparedModelV1_0;
     sp<V1_2::IPreparedModel> mPreparedModelV1_2;
+
+    /**
+     * HIDL callback to be invoked if the service for mPreparedModelV1_0 crashes.
+     */
+    const sp<IPreparedModelDeathHandler> mDeathHandler;
 };
 
 }  // namespace nn
