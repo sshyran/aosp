@@ -31,7 +31,6 @@
 #include <functional>
 
 using ::android::hardware::neuralnetworks::V1_2::implementation::ExecutionCallback;
-using ::android::hardware::neuralnetworks::V1_2::implementation::PreparedModelCallback;
 using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 
 namespace android {
@@ -81,12 +80,6 @@ class DriverDevice : public Device {
                               std::shared_ptr<VersionedIPreparedModel>* preparedModel) override;
 
    private:
-    int prepareModelHelper(
-            const std::function<Return<ErrorStatus>(const sp<PreparedModelCallback>& callback)>&
-                    prepare,
-            const std::string& prepareName,
-            std::shared_ptr<VersionedIPreparedModel>* preparedModel);
-
     std::string mName;
     std::string mVersionString;
     const std::shared_ptr<VersionedIDevice> mInterface;
@@ -232,37 +225,24 @@ PerformanceInfo DriverDevice::getPerformance(OperandType type) const {
     return lookup(mCapabilities.operandPerformance, type);
 }
 
-// Compilation logic copied from StepExecutor::startComputeOnDevice().
-int DriverDevice::prepareModelHelper(
-        const std::function<Return<ErrorStatus>(const sp<PreparedModelCallback>& callback)>&
-                prepare,
-        const std::string& prepareName, std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
-    *preparedModel = nullptr;
-    sp<PreparedModelCallback> preparedModelCallback = new PreparedModelCallback();
+static int prepareModelCheck(ErrorStatus status,
+                             const std::shared_ptr<VersionedIPreparedModel>& preparedModel,
+                             const char* prepareName, const char* serviceName,
+                             std::shared_ptr<VersionedIPreparedModel>* preparedModelOut) {
+    CHECK(preparedModelOut != nullptr) << "prepareModelCheck -- preparedModelOut must be non-null";
+    *preparedModelOut = nullptr;
 
-    Return<ErrorStatus> prepareLaunchStatus = prepare(preparedModelCallback);
-    if (!prepareLaunchStatus.isOk()) {
-        LOG(ERROR) << prepareName << " compilation failed due to transport error: "
-                   << prepareLaunchStatus.description();
+    if (status != ErrorStatus::NONE) {
+        LOG(ERROR) << prepareName << " on " << serviceName << " failed: "
+                   << "prepareReturnStatus=" << toString(status);
         return ANEURALNETWORKS_OP_FAILED;
     }
-    if (prepareLaunchStatus != ErrorStatus::NONE) {
-        LOG(ERROR) << prepareName << " compilation failed with error: "
-                   << toString(static_cast<ErrorStatus>(prepareLaunchStatus));
+    if (preparedModel == nullptr) {
+        LOG(ERROR) << prepareName << " on " << serviceName << " failed: preparedModel is nullptr";
         return ANEURALNETWORKS_OP_FAILED;
     }
 
-    preparedModelCallback->wait();
-    ErrorStatus prepareReturnStatus = preparedModelCallback->getStatus();
-    if (auto returnedPreparedModel = preparedModelCallback->getPreparedModel()) {
-        *preparedModel = VersionedIPreparedModel::create(returnedPreparedModel);
-    }
-    if (prepareReturnStatus != ErrorStatus::NONE || *preparedModel == nullptr) {
-        LOG(ERROR) << prepareName << " on " << getName() << " failed:"
-                   << " prepareReturnStatus=" << toString(prepareReturnStatus)
-                   << ", preparedModel=" << preparedModel->get();
-        return ANEURALNETWORKS_OP_FAILED;
-    }
+    *preparedModelOut = preparedModel;
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -272,13 +252,11 @@ int DriverDevice::prepareModel(const Model& hidlModel, ExecutionPreference execu
                                std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
-    return prepareModelHelper(
-            [this, &hidlModel, &executionPreference, &modelCache, &dataCache,
-             &token](const sp<PreparedModelCallback>& callback) {
-                return mInterface->prepareModel(hidlModel, executionPreference, modelCache,
-                                                dataCache, token, callback);
-            },
-            "prepareModel", preparedModel);
+
+    const auto [status, localPreparedModel] =
+            mInterface->prepareModel(hidlModel, executionPreference, modelCache, dataCache, token);
+
+    return prepareModelCheck(status, localPreparedModel, "prepareModel", getName(), preparedModel);
 }
 
 int DriverDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
@@ -287,11 +265,12 @@ int DriverDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
                                         std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModelFromCache");
-    return prepareModelHelper(
-            [this, &modelCache, &dataCache, &token](const sp<PreparedModelCallback>& callback) {
-                return mInterface->prepareModelFromCache(modelCache, dataCache, token, callback);
-            },
-            "prepareModelFromCache", preparedModel);
+
+    const auto [status, localPreparedModel] =
+            mInterface->prepareModelFromCache(modelCache, dataCache, token);
+
+    return prepareModelCheck(status, localPreparedModel, "prepareModelFromCache", getName(),
+                             preparedModel);
 }
 
 // A special abstracted device for the CPU. Only one instance of this class will exist.
