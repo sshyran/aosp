@@ -5087,8 +5087,8 @@ int ANeuralNetworks_getDevice(uint32_t devIndex, ANeuralNetworksDevice** device)
  * @param name   The returned name of the specified device. The name will be in UTF-8
  *               and will be null-terminated. It will be recognizable as a known device name
  *               rather than a cryptic string. For devices with feature level 29 and above, the
- *               format of the name is {VENDOR}-{DEVICE}, e.g. “google-ipu”. For devices with
- *               feature level 28 or lower, the name will always be “unknown-device”.
+ *               format of the name is {VENDOR}-{DEVICE}. For devices with feature level 28
+ *               or lower, the format of the name is undefined.
  *               The name will remain valid for the duration of the application.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
