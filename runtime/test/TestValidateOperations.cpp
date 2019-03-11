@@ -1517,11 +1517,11 @@ TEST(OperationValidationTest, CONCATENATION_quant8) {
     concatenationTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
-void resizeBilinearOpTest(int32_t inputOperandCode) {
+void resizeBilinearOpTest(int32_t inputOperandCode, int32_t scalarOperandCode) {
     SCOPED_TRACE(inputOperandCode);
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
     ANeuralNetworksOperandType input = getOpType(inputOperandCode, 4, inputDimensions);
-    ANeuralNetworksOperandType height = getOpType(ANEURALNETWORKS_INT32);
+    ANeuralNetworksOperandType height = getOpType(scalarOperandCode);
     ANeuralNetworksOperandType width = height;
     ANeuralNetworksOperandType output = input;
 
@@ -1535,9 +1535,12 @@ void resizeBilinearOpTest(int32_t inputOperandCode) {
 }
 
 TEST(OperationValidationTest, RESIZE_BILINEAR) {
-    resizeBilinearOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
-    resizeBilinearOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
-    resizeBilinearOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    resizeBilinearOpTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_INT32);
+    resizeBilinearOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_INT32);
+    resizeBilinearOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_INT32);
+    resizeBilinearOpTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_FLOAT16);
+    resizeBilinearOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_FLOAT32);
+    resizeBilinearOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_FLOAT32);
 }
 
 void embeddingLookupTest(int32_t operandCode) {
@@ -3209,26 +3212,28 @@ TEST(OperationValidationTest, GENERATE_PROPOSALS_quant) {
                             ANEURALNETWORKS_TENSOR_QUANT16_ASYMM, ANEURALNETWORKS_FLOAT32);
 }
 
-void resizeImageOpTest(int32_t operationCode, int32_t operandCode) {
+void resizeNearestNeighborTest(int32_t inputCode, int32_t scalarCode) {
     uint32_t inputDim[] = {1, 2, 2, 1}, outputDim[] = {1, 1, 1, 1};
-    OperationTestBase resizeImageOpTest(
-            operationCode,
-            {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32),
-             getOpType(ANEURALNETWORKS_INT32), getOpType(ANEURALNETWORKS_BOOL)},
-            {getOpType(operandCode, 4, outputDim)});
+    OperationTestBase resizeImageOpTest(ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR,
+                                        {getOpType(inputCode, 4, inputDim), getOpType(scalarCode),
+                                         getOpType(scalarCode), getOpType(ANEURALNETWORKS_BOOL)},
+                                        {getOpType(inputCode, 4, outputDim)});
     resizeImageOpTest.testOpsValidations();
 }
 
-TEST(OperationValidationTest, RESIZE_NEAREST_NEIGHBOR_float32) {
-    resizeImageOpTest(ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR, ANEURALNETWORKS_TENSOR_FLOAT32);
+TEST(OperationValidationTest, RESIZE_NEAREST_NEIGHBOR) {
+    resizeNearestNeighborTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_INT32);
+    resizeNearestNeighborTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_FLOAT32);
 }
 
 TEST(OperationValidationTest, RESIZE_NEAREST_NEIGHBOR_float16) {
-    resizeImageOpTest(ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR, ANEURALNETWORKS_TENSOR_FLOAT16);
+    resizeNearestNeighborTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_INT32);
+    resizeNearestNeighborTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_FLOAT16);
 }
 
 TEST(OperationValidationTest, RESIZE_NEAREST_NEIGHBOR_quant8) {
-    resizeImageOpTest(ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    resizeNearestNeighborTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_INT32);
+    resizeNearestNeighborTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_FLOAT32);
 }
 
 }  // end namespace
