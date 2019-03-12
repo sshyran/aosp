@@ -808,10 +808,10 @@ typedef enum {
      *      invoke on the result.
      *
      * Outputs:
-     * * 0: The output tensor, of shape [batch_size, num_units]. For output
-     *      tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the following
-     *      condition must be satisfied:
-     *      output_scale > input_scale * filter_scale.
+     * * 0: The output tensor, of shape [batch_size, num_units]. Before API
+     *      level 29, for output tensor of {@link
+     *      ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the following condition must
+     *      be satisfied: output_scale > input_scale * filter_scale.
      *
      * Available since API level 27.
      */
