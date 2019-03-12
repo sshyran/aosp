@@ -15,12 +15,19 @@
 #
 
 model = Model()
-in0 = Input("op1", "TENSOR_FLOAT16", "{3, 1}")
-weights = Parameter("op2", "TENSOR_FLOAT16", "{1, 1}", [2])
-bias = Parameter("b0", "TENSOR_FLOAT16", "{1}", [4])
-out0 = Output("op3", "TENSOR_FLOAT16", "{3, 1}")
+in0 = Input("op1", "TENSOR_FLOAT32", "{3, 1}")
+weights = Parameter("op2", "TENSOR_FLOAT32", "{1, 1}", [2])
+bias = Parameter("b0", "TENSOR_FLOAT32", "{1}", [4])
+out0 = Output("op3", "TENSOR_FLOAT32", "{3, 1}")
 act = Int32Scalar("act", 0)
 model = model.Operation("FULLY_CONNECTED", in0, weights, bias, act).To(out0)
+
+quant8_mult_gt_1 = DataTypeConverter(name="quant8_mult_gt_1").Identify({
+    in0: ("TENSOR_QUANT8_ASYMM", 0.5, 127),
+    weights: ("TENSOR_QUANT8_ASYMM", 0.5, 120),
+    bias: ("TENSOR_INT32", 0.25, 0),
+    out0: ("TENSOR_QUANT8_ASYMM", 0.1, 128),
+})
 
 # Example 1. Input in operand 0,
 input0 = {in0: # input 0
@@ -29,4 +36,4 @@ output0 = {out0: # output 0
                [8, 68, 36]}
 
 # Instantiate an example
-Example((input0, output0))
+Example((input0, output0)).AddVariations("relaxed", "float16", quant8_mult_gt_1)

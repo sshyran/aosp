@@ -19097,40 +19097,136 @@ TEST_F(ValidationTest, floor_float16_dynamic_output_shape) {
 
 
 #endif
-// Generated from: fully_connected_float16.mod.py.
-namespace fully_connected_float16 {
-// Generated fully_connected_float16 test
-#include "examples/fully_connected_float16.example.cpp"
+// Generated from: fully_connected_v1_2.mod.py.
+namespace fully_connected_v1_2 {
+// Generated fully_connected_v1_2 test
+#include "examples/fully_connected_v1_2.example.cpp"
 // Generated model constructor
-#include "vts_models/fully_connected_float16.model.cpp"
-} // namespace fully_connected_float16
+#include "vts_models/fully_connected_v1_2.model.cpp"
+} // namespace fully_connected_v1_2
 
-TEST_F(NeuralnetworksHidlTest, fully_connected_float16) {
+TEST_F(NeuralnetworksHidlTest, fully_connected_v1_2) {
   generated_tests::Execute(device,
-                           fully_connected_float16::createTestModel,
-                           fully_connected_float16::is_ignored,
-                           fully_connected_float16::get_examples());
+                           fully_connected_v1_2::createTestModel,
+                           fully_connected_v1_2::is_ignored,
+                           fully_connected_v1_2::get_examples());
 }
 
-TEST_F(ValidationTest, fully_connected_float16) {
-  const Model model = fully_connected_float16::createTestModel();
-  const std::vector<Request> requests = createRequests(fully_connected_float16::get_examples());
+TEST_F(ValidationTest, fully_connected_v1_2) {
+  const Model model = fully_connected_v1_2::createTestModel();
+  const std::vector<Request> requests = createRequests(fully_connected_v1_2::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, fully_connected_v1_2_relaxed) {
+  generated_tests::Execute(device,
+                           fully_connected_v1_2::createTestModel_relaxed,
+                           fully_connected_v1_2::is_ignored_relaxed,
+                           fully_connected_v1_2::get_examples_relaxed());
+}
+
+TEST_F(ValidationTest, fully_connected_v1_2_relaxed) {
+  const Model model = fully_connected_v1_2::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(fully_connected_v1_2::get_examples_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, fully_connected_v1_2_float16) {
+  generated_tests::Execute(device,
+                           fully_connected_v1_2::createTestModel_float16,
+                           fully_connected_v1_2::is_ignored_float16,
+                           fully_connected_v1_2::get_examples_float16());
+}
+
+TEST_F(ValidationTest, fully_connected_v1_2_float16) {
+  const Model model = fully_connected_v1_2::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(fully_connected_v1_2::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, fully_connected_v1_2_quant8_mult_gt_1) {
+  generated_tests::Execute(device,
+                           fully_connected_v1_2::createTestModel_quant8_mult_gt_1,
+                           fully_connected_v1_2::is_ignored_quant8_mult_gt_1,
+                           fully_connected_v1_2::get_examples_quant8_mult_gt_1());
+}
+
+TEST_F(ValidationTest, fully_connected_v1_2_quant8_mult_gt_1) {
+  const Model model = fully_connected_v1_2::createTestModel_quant8_mult_gt_1();
+  const std::vector<Request> requests = createRequests(fully_connected_v1_2::get_examples_quant8_mult_gt_1());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, fully_connected_float16_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_dynamic_output_shape) {
   generated_tests::Execute(device,
-                           fully_connected_float16::createTestModel_dynamic_output_shape,
-                           fully_connected_float16::is_ignored_dynamic_output_shape,
-                           fully_connected_float16::get_examples_dynamic_output_shape(), true);
+                           fully_connected_v1_2::createTestModel_dynamic_output_shape,
+                           fully_connected_v1_2::is_ignored_dynamic_output_shape,
+                           fully_connected_v1_2::get_examples_dynamic_output_shape(), true);
 }
 
-TEST_F(ValidationTest, fully_connected_float16_dynamic_output_shape) {
-  const Model model = fully_connected_float16::createTestModel_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(fully_connected_float16::get_examples_dynamic_output_shape());
+TEST_F(ValidationTest, fully_connected_v1_2_dynamic_output_shape) {
+  const Model model = fully_connected_v1_2::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(fully_connected_v1_2::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           fully_connected_v1_2::createTestModel_dynamic_output_shape_relaxed,
+                           fully_connected_v1_2::is_ignored_dynamic_output_shape_relaxed,
+                           fully_connected_v1_2::get_examples_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, fully_connected_v1_2_dynamic_output_shape_relaxed) {
+  const Model model = fully_connected_v1_2::createTestModel_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(fully_connected_v1_2::get_examples_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           fully_connected_v1_2::createTestModel_dynamic_output_shape_float16,
+                           fully_connected_v1_2::is_ignored_dynamic_output_shape_float16,
+                           fully_connected_v1_2::get_examples_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, fully_connected_v1_2_dynamic_output_shape_float16) {
+  const Model model = fully_connected_v1_2::createTestModel_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(fully_connected_v1_2::get_examples_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_dynamic_output_shape_quant8_mult_gt_1) {
+  generated_tests::Execute(device,
+                           fully_connected_v1_2::createTestModel_dynamic_output_shape_quant8_mult_gt_1,
+                           fully_connected_v1_2::is_ignored_dynamic_output_shape_quant8_mult_gt_1,
+                           fully_connected_v1_2::get_examples_dynamic_output_shape_quant8_mult_gt_1(), true);
+}
+
+TEST_F(ValidationTest, fully_connected_v1_2_dynamic_output_shape_quant8_mult_gt_1) {
+  const Model model = fully_connected_v1_2::createTestModel_dynamic_output_shape_quant8_mult_gt_1();
+  const std::vector<Request> requests = createRequests(fully_connected_v1_2::get_examples_dynamic_output_shape_quant8_mult_gt_1());
   validateModel(model);
   validateRequests(model, requests);
 }
