@@ -33,8 +33,9 @@ namespace resize_image {
 
 constexpr uint32_t kNumInputs = 4;
 constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kOutputHeightScalar = 1;
-constexpr uint32_t kOutputWidthScalar = 2;
+// The following two scalars represent output shape if INT32, scale if floating point.
+constexpr uint32_t kOutputHeightParamScalar = 1;
+constexpr uint32_t kOutputWidthParamScalar = 2;
 constexpr uint32_t kLayoutScalar = 3;
 
 constexpr uint32_t kNumOutputs = 1;
@@ -110,11 +111,22 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     }
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
+    auto scalarType = context->getInputType(kOutputHeightParamScalar);
+    std::vector<OperandType> inExpectedTypes = {inputType, scalarType, scalarType};
     NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
                  inputType == OperandType::TENSOR_FLOAT32 ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM)
             << "Unsupported tensor type for operation " << getOperationName(opType);
-    std::vector<OperandType> inExpectedTypes = {inputType, OperandType::INT32, OperandType::INT32};
+    if (scalarType != OperandType::INT32) {
+        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        if (inputType == OperandType::TENSOR_FLOAT32) {
+            NN_RET_CHECK(scalarType == OperandType::FLOAT32);
+        } else if (inputType == OperandType::TENSOR_FLOAT16) {
+            NN_RET_CHECK(scalarType == OperandType::FLOAT16);
+        } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+            NN_RET_CHECK(scalarType == OperandType::FLOAT32);
+        }
+    }
     if (context->getNumInputs() == kNumInputs) {
         inExpectedTypes.push_back(OperandType::BOOL);
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
@@ -125,20 +137,40 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
            validateOutputTypes(context, {inputType});
 }
 
-bool prepare(IOperationExecutionContext* context) {
+bool prepare(OperationType opType, IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
-    int32_t height = context->getInputValue<int32_t>(kOutputHeightScalar);
-    int32_t width = context->getInputValue<int32_t>(kOutputWidthScalar);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
     bool useNchw = false;
     if (context->getNumInputs() > kLayoutScalar) {
         useNchw = context->getInputValue<bool>(kLayoutScalar);
     }
+    uint32_t batches = getSizeOfDimension(input, 0);
+    uint32_t inHeight = getSizeOfDimension(input, useNchw ? 2 : 1);
+    uint32_t inWidth = getSizeOfDimension(input, useNchw ? 3 : 2);
+    uint32_t channels = getSizeOfDimension(input, useNchw ? 1 : 3);
 
-    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
+    int32_t height, width;
+    auto scalarType = context->getInputType(kOutputHeightParamScalar);
+    if (scalarType == OperandType::INT32) {
+        height = context->getInputValue<int32_t>(kOutputHeightParamScalar);
+        width = context->getInputValue<int32_t>(kOutputWidthParamScalar);
+    } else if (scalarType == OperandType::FLOAT32) {
+        height = std::floor(static_cast<float>(inHeight) *
+                            context->getInputValue<float>(kOutputHeightParamScalar));
+        width = std::floor(static_cast<float>(inWidth) *
+                           context->getInputValue<float>(kOutputWidthParamScalar));
+    } else if (scalarType == OperandType::FLOAT16) {
+        height = std::floor(
+                static_cast<float>(inHeight) *
+                static_cast<float>(context->getInputValue<_Float16>(kOutputHeightParamScalar)));
+        width = std::floor(
+                static_cast<float>(inWidth) *
+                static_cast<float>(context->getInputValue<_Float16>(kOutputWidthParamScalar)));
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported scalar type for operation " << getOperationName(opType);
+    }
     NN_RET_CHECK_GT(height, 0);
     NN_RET_CHECK_GT(width, 0);
-    uint32_t batches = getSizeOfDimension(input, 0);
-    uint32_t channels = getSizeOfDimension(input, useNchw ? 1 : 3);
 
     Shape output = input;
     if (useNchw) {
@@ -182,12 +214,12 @@ using std::placeholders::_1;
 
 NN_REGISTER_OPERATION(RESIZE_BILINEAR, "RESIZE_BILINEAR",
                       std::bind(resize_image::validate, OperationType::RESIZE_BILINEAR, _1),
-                      resize_image::prepare,
+                      std::bind(resize_image::prepare, OperationType::RESIZE_BILINEAR, _1),
                       std::bind(resize_image::execute, OperationType::RESIZE_BILINEAR, _1));
 
 NN_REGISTER_OPERATION(RESIZE_NEAREST_NEIGHBOR, "RESIZE_NEAREST_NEIGHBOR",
                       std::bind(resize_image::validate, OperationType::RESIZE_NEAREST_NEIGHBOR, _1),
-                      resize_image::prepare,
+                      std::bind(resize_image::prepare, OperationType::RESIZE_NEAREST_NEIGHBOR, _1),
                       std::bind(resize_image::execute, OperationType::RESIZE_NEAREST_NEIGHBOR, _1));
 
 }  // namespace nn
