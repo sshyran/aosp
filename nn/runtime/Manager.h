@@ -112,6 +112,7 @@ class DeviceManager {
     // Re-initialize the list of available devices.
     void forTest_reInitializeDeviceList() {
         mDevices.clear();
+        mDevicesCpuOnly.clear();
         findAvailableDevices();
     }
     // Make a test device
