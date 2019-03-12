@@ -421,4 +421,11 @@ std::cv_status CallbackBase::wait_for(const std::chrono::duration<Rep,Period>& t
 }  // namespace hardware
 }  // namespace android
 
+namespace android::nn {
+
+using ::android::hardware::neuralnetworks::V1_2::implementation::ExecutionCallback;
+using ::android::hardware::neuralnetworks::V1_2::implementation::PreparedModelCallback;
+
+}  // namespace android::nn
+
 #endif  // ANDROID_HARDWARE_NEURALNETWORKS_V1_0_CALLBACKS_H
