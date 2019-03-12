@@ -90,34 +90,34 @@ bool fullyConnectedQuant8(const uint8_t* inputData, const Shape& inputShape,
     int32_t weightsOffset = -weightsShape.offset;
     int32_t outputOffset = outputShape.offset;
 
-    float real_multiplier = 0.0;
-    int32_t output_multiplier = 0;
-    int32_t output_shift = 0;
-    int32_t output_activation_min = 0;
-    int32_t output_activation_max = 0;
+    float realMultiplier = 0.0;
+    int32_t outputMultiplier = 0;
+    int32_t outputShift = 0;
+    int32_t outputActivationMin = 0;
+    int32_t outputActivationMax = 0;
 
-    if (!GetQuantizedConvolutionMultipler(inputShape, weightsShape, biasShape, outputShape,
-                                          &real_multiplier) ||
-        !QuantizeMultiplierSmallerThanOne(real_multiplier, &output_multiplier, &output_shift)) {
-        return false;
-    }
-    CalculateActivationRangeUint8(activation, outputShape, &output_activation_min,
-                                  &output_activation_max);
+    NN_RET_CHECK(GetQuantizedConvolutionMultipler(inputShape, weightsShape, biasShape, outputShape,
+                                                  &realMultiplier));
+    int exponent;
+    NN_RET_CHECK(QuantizeMultiplier(realMultiplier, &outputMultiplier, &exponent));
+    outputShift = -exponent;
+    CalculateActivationRangeUint8(activation, outputShape, &outputActivationMin,
+                                  &outputActivationMax);
 
-    static gemmlowp::GemmContext gemm_context;
+    static gemmlowp::GemmContext gemmContext;
 
-    // Prevent concurrent executions that access gemm_context.
+    // Prevent concurrent executions that access gemmContext.
     std::unique_lock<std::mutex> lock(executionMutex);
     // Alow gemmlowp automatically decide how many threads to use.
-    gemm_context.set_max_num_threads(0);
+    gemmContext.set_max_num_threads(0);
 
     NNTRACE_COMP_SWITCH("optimized_ops::FullyConnected");
     tflite::optimized_ops::FullyConnected(inputData, convertShapeToDims(inputShape), inputOffset,
                                           weightsData, convertShapeToDims(weightsShape),
                                           weightsOffset, biasData, convertShapeToDims(biasShape),
-                                          outputOffset, output_multiplier, output_shift,
-                                          output_activation_min, output_activation_max, outputData,
-                                          convertShapeToDims(outputShape), &gemm_context);
+                                          outputOffset, outputMultiplier, outputShift,
+                                          outputActivationMin, outputActivationMax, outputData,
+                                          convertShapeToDims(outputShape), &gemmContext);
 
     return true;
 }
