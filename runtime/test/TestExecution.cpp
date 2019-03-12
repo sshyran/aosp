@@ -131,8 +131,8 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
     }
 
    private:
-    sp<V1_0::IPreparedModel> mPreparedModelV1_0;
-    sp<V1_2::IPreparedModel> mPreparedModelV1_2;
+    const sp<V1_0::IPreparedModel> mPreparedModelV1_0;
+    const sp<V1_2::IPreparedModel> mPreparedModelV1_2;
     ErrorStatus mErrorStatus;
 };
 
@@ -140,15 +140,15 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
 class TestPreparedModel10 : public V1_0::IPreparedModel {
    public:
     TestPreparedModel10(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
-        : m12PreparedModel(preparedModel, errorStatus) {}
+        : m12PreparedModel(new TestPreparedModel12(preparedModel, errorStatus)) {}
 
     Return<ErrorStatus> execute(const Request& request,
                                 const sp<V1_0::IExecutionCallback>& callback) override {
-        return m12PreparedModel.execute(request, callback);
+        return m12PreparedModel->execute(request, callback);
     }
 
    private:
-    TestPreparedModel12 m12PreparedModel;
+    const sp<V1_2::IPreparedModel> m12PreparedModel;
 };
 
 // Behaves like SampleDriver, except that it produces wrapped IPreparedModel.
@@ -251,57 +251,59 @@ private:
 // Like TestDriver, but implementing 1.1
 class TestDriver11 : public V1_1::IDevice {
    public:
-    TestDriver11(const std::string& name, ErrorStatus errorStatus) : m12Driver(name, errorStatus) {}
+    TestDriver11(const std::string& name, ErrorStatus errorStatus)
+        : m12Driver(new TestDriver12(name, errorStatus)) {}
     Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
-        return m12Driver.getCapabilities_1_1(_hidl_cb);
+        return m12Driver->getCapabilities_1_1(_hidl_cb);
     }
     Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
                                             getSupportedOperations_1_1_cb _hidl_cb) override {
-        return m12Driver.getSupportedOperations_1_1(model, _hidl_cb);
+        return m12Driver->getSupportedOperations_1_1(model, _hidl_cb);
     }
     Return<ErrorStatus> prepareModel_1_1(
             const V1_1::Model& model, ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
-        return m12Driver.prepareModel_1_1(model, preference, actualCallback);
+        return m12Driver->prepareModel_1_1(model, preference, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return m12Driver.getStatus(); }
+    Return<DeviceStatus> getStatus() override { return m12Driver->getStatus(); }
     Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
-        return m12Driver.getCapabilities(_hidl_cb);
+        return m12Driver->getCapabilities(_hidl_cb);
     }
     Return<void> getSupportedOperations(const V1_0::Model& model,
                                         getSupportedOperations_cb _hidl_cb) override {
-        return m12Driver.getSupportedOperations(model, _hidl_cb);
+        return m12Driver->getSupportedOperations(model, _hidl_cb);
     }
     Return<ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
-        return m12Driver.prepareModel(model, actualCallback);
+        return m12Driver->prepareModel(model, actualCallback);
     }
 
    private:
-    TestDriver12 m12Driver;
+    const sp<V1_2::IDevice> m12Driver;
 };
 
 // Like TestDriver, but implementing 1.0
 class TestDriver10 : public V1_0::IDevice {
    public:
-    TestDriver10(const std::string& name, ErrorStatus errorStatus) : m12Driver(name, errorStatus) {}
+    TestDriver10(const std::string& name, ErrorStatus errorStatus)
+        : m12Driver(new TestDriver12(name, errorStatus)) {}
     Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
-        return m12Driver.getCapabilities(_hidl_cb);
+        return m12Driver->getCapabilities(_hidl_cb);
     }
     Return<void> getSupportedOperations(const V1_0::Model& model,
                                         getSupportedOperations_cb _hidl_cb) override {
-        return m12Driver.getSupportedOperations(model, _hidl_cb);
+        return m12Driver->getSupportedOperations(model, _hidl_cb);
     }
     Return<ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
-        return m12Driver.prepareModel(model, actualCallback);
+        return m12Driver->prepareModel(model, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return m12Driver.getStatus(); }
+    Return<DeviceStatus> getStatus() override { return m12Driver->getStatus(); }
 
    private:
-    TestDriver12 m12Driver;
+    const sp<V1_2::IDevice> m12Driver;
 };
 
 // This class adds some simple utilities on top of WrapperCompilation in order
@@ -337,7 +339,6 @@ public:
 
 // This class has roughly the same functionality as TestCompilation class.
 // The major difference is that Introspection API is used to select the device.
-template <typename DriverClass>
 class TestIntrospectionCompilation : public WrapperCompilation {
    public:
     TestIntrospectionCompilation(const WrapperModel* model, const std::string& deviceName) {
@@ -381,7 +382,7 @@ class ExecutionTestTemplate
         if (kUseIntrospectionAPI) {
             DeviceManager::get()->forTest_registerDevice(kName.c_str(),
                                                          new DriverClass(kName, kForceErrorStatus));
-            mCompilation = TestIntrospectionCompilation<DriverClass>(&mModel, kName);
+            mCompilation = TestIntrospectionCompilation(&mModel, kName);
         } else {
             mCompilation = TestCompilation<DriverClass>(&mModel, kName, kForceErrorStatus);
         }
