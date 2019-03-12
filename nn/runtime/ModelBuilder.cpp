@@ -54,7 +54,10 @@ ModelBuilder::ModelBuilder() {
 
     // Only bundled vendor applications (or tests) are allowed to use extensions.
     if (partition == Partition::VENDOR || partition == Partition::ODM ||
-        StartsWith(std::string_view(path), "/data/nativetest")) {
+        // When running tests with mma and adb push.
+        StartsWith(std::string_view(path), "/data/nativetest") ||
+        // When running tests with Atest.
+        StartsWith(std::string_view(path), "/data/local/tmp/NeuralNetworksTest_")) {
         mExtensionsAllowed = true;
     }
 }
