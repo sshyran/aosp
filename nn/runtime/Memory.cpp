@@ -59,10 +59,6 @@ MemoryFd::~MemoryFd() {
 }
 
 int MemoryFd::set(size_t size, int prot, int fd, size_t offset) {
-    if (fd < 0) {
-        LOG(ERROR) << "ANeuralNetworksMemory_createFromFd invalid fd " << fd;
-        return ANEURALNETWORKS_UNEXPECTED_NULL;
-    }
     if (size == 0 || fd < 0) {
         LOG(ERROR) << "Invalid size or fd";
         return ANEURALNETWORKS_BAD_DATA;
