@@ -396,7 +396,7 @@ bool execute(IOperationExecutionContext* context) {
 
 NN_REGISTER_OPERATION(UNIDIRECTIONAL_SEQUENCE_LSTM, "UNIDIRECTIONAL_SEQUENCE_LSTM",
                       unidirectional_sequence_lstm::validate, unidirectional_sequence_lstm::prepare,
-                      unidirectional_sequence_lstm::execute);
+                      unidirectional_sequence_lstm::execute, .allowOmittedOperand = true);
 
 }  // namespace nn
 }  // namespace android
