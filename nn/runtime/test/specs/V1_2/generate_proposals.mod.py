@@ -209,3 +209,47 @@ output0 = {
 }
 
 Example((input0, output0)).AddNchw(i1, i2, layout).AddVariations("relaxed", quant8, "float16")
+
+
+# TEST 3: GENERATE_PROPOSALS_3, zero-sized output
+model = Model()
+i1 = Input("scores", "TENSOR_FLOAT32", "{1, 2, 2, 1}") # scores
+i2 = Input("bboxDeltas", "TENSOR_FLOAT32", "{1, 2, 2, 4}") # bounding box deltas
+i3 = Input("anchors", "TENSOR_FLOAT32", "{1, 4}") # anchors
+i4 = Input("imageInfo", "TENSOR_FLOAT32", "{1, 2}") # image info
+o1 = Output("scoresOut", "TENSOR_FLOAT32", "{0}") # scores out
+o2 = Output("roiOut", "TENSOR_FLOAT32", "{0, 4}") # roi out
+o3 = Output("batchSplit", "TENSOR_INT32", "{0}") # batch split out
+model = model.Operation("GENERATE_PROPOSALS",
+    i1, i2, i3, i4, 4.0, 4.0, -1, -1, 0.30, 1.0, layout).To(o1, o2, o3)
+
+quant8 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.01, 100),
+    i2: ("TENSOR_QUANT8_ASYMM", 0.1, 128),
+    i3: ("TENSOR_QUANT16_SYMM", 0.125, 0),
+    i4: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.01, 100),
+    o2: ("TENSOR_QUANT16_ASYMM", 0.125, 0)
+})
+
+input0 = {
+    i1: [   # scores
+        0.1, 0.2, 0.1, 0.2
+    ],
+    i2: [   # bounding box deltas
+        0.5, 0.1, -10.0, 0.1,
+        0.5, 0.1, 0.5, -10.0,
+        -0.5, 0.1, -10.0, -0.1,
+        -0.5, 0.1, 0.2, -10.0
+    ],
+    i3: [0, 1, 4, 3],    # anchors
+    i4: [32, 32],  # image info
+}
+
+output0 = {
+    o1: [0],
+    o2: [0],
+    o3: [0]
+}
+
+Example((input0, output0)).AddNchw(i1, i2, layout).AddVariations("relaxed", quant8, "float16")

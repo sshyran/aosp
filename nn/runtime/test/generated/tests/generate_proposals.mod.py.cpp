@@ -201,3 +201,99 @@ TEST_F(DynamicOutputShapeTest, generate_proposals_dynamic_output_shape_nchw_floa
             generate_proposals::get_examples_dynamic_output_shape_nchw_float16_2());
 }
 
+TEST_F(GeneratedTests, generate_proposals_nhwc_3) {
+    execute(generate_proposals::CreateModel_nhwc_3,
+            generate_proposals::is_ignored_nhwc_3,
+            generate_proposals::get_examples_nhwc_3());
+}
+
+TEST_F(GeneratedTests, generate_proposals_nhwc_relaxed_3) {
+    execute(generate_proposals::CreateModel_nhwc_relaxed_3,
+            generate_proposals::is_ignored_nhwc_relaxed_3,
+            generate_proposals::get_examples_nhwc_relaxed_3());
+}
+
+TEST_F(GeneratedTests, generate_proposals_nhwc_quant8_3) {
+    execute(generate_proposals::CreateModel_nhwc_quant8_3,
+            generate_proposals::is_ignored_nhwc_quant8_3,
+            generate_proposals::get_examples_nhwc_quant8_3());
+}
+
+TEST_F(GeneratedTests, generate_proposals_nhwc_float16_3) {
+    execute(generate_proposals::CreateModel_nhwc_float16_3,
+            generate_proposals::is_ignored_nhwc_float16_3,
+            generate_proposals::get_examples_nhwc_float16_3());
+}
+
+TEST_F(GeneratedTests, generate_proposals_nchw_3) {
+    execute(generate_proposals::CreateModel_nchw_3,
+            generate_proposals::is_ignored_nchw_3,
+            generate_proposals::get_examples_nchw_3());
+}
+
+TEST_F(GeneratedTests, generate_proposals_nchw_relaxed_3) {
+    execute(generate_proposals::CreateModel_nchw_relaxed_3,
+            generate_proposals::is_ignored_nchw_relaxed_3,
+            generate_proposals::get_examples_nchw_relaxed_3());
+}
+
+TEST_F(GeneratedTests, generate_proposals_nchw_quant8_3) {
+    execute(generate_proposals::CreateModel_nchw_quant8_3,
+            generate_proposals::is_ignored_nchw_quant8_3,
+            generate_proposals::get_examples_nchw_quant8_3());
+}
+
+TEST_F(GeneratedTests, generate_proposals_nchw_float16_3) {
+    execute(generate_proposals::CreateModel_nchw_float16_3,
+            generate_proposals::is_ignored_nchw_float16_3,
+            generate_proposals::get_examples_nchw_float16_3());
+}
+
+TEST_F(DynamicOutputShapeTest, generate_proposals_dynamic_output_shape_nhwc_3) {
+    execute(generate_proposals::CreateModel_dynamic_output_shape_nhwc_3,
+            generate_proposals::is_ignored_dynamic_output_shape_nhwc_3,
+            generate_proposals::get_examples_dynamic_output_shape_nhwc_3());
+}
+
+TEST_F(DynamicOutputShapeTest, generate_proposals_dynamic_output_shape_nhwc_relaxed_3) {
+    execute(generate_proposals::CreateModel_dynamic_output_shape_nhwc_relaxed_3,
+            generate_proposals::is_ignored_dynamic_output_shape_nhwc_relaxed_3,
+            generate_proposals::get_examples_dynamic_output_shape_nhwc_relaxed_3());
+}
+
+TEST_F(DynamicOutputShapeTest, generate_proposals_dynamic_output_shape_nhwc_quant8_3) {
+    execute(generate_proposals::CreateModel_dynamic_output_shape_nhwc_quant8_3,
+            generate_proposals::is_ignored_dynamic_output_shape_nhwc_quant8_3,
+            generate_proposals::get_examples_dynamic_output_shape_nhwc_quant8_3());
+}
+
+TEST_F(DynamicOutputShapeTest, generate_proposals_dynamic_output_shape_nhwc_float16_3) {
+    execute(generate_proposals::CreateModel_dynamic_output_shape_nhwc_float16_3,
+            generate_proposals::is_ignored_dynamic_output_shape_nhwc_float16_3,
+            generate_proposals::get_examples_dynamic_output_shape_nhwc_float16_3());
+}
+
+TEST_F(DynamicOutputShapeTest, generate_proposals_dynamic_output_shape_nchw_3) {
+    execute(generate_proposals::CreateModel_dynamic_output_shape_nchw_3,
+            generate_proposals::is_ignored_dynamic_output_shape_nchw_3,
+            generate_proposals::get_examples_dynamic_output_shape_nchw_3());
+}
+
+TEST_F(DynamicOutputShapeTest, generate_proposals_dynamic_output_shape_nchw_relaxed_3) {
+    execute(generate_proposals::CreateModel_dynamic_output_shape_nchw_relaxed_3,
+            generate_proposals::is_ignored_dynamic_output_shape_nchw_relaxed_3,
+            generate_proposals::get_examples_dynamic_output_shape_nchw_relaxed_3());
+}
+
+TEST_F(DynamicOutputShapeTest, generate_proposals_dynamic_output_shape_nchw_quant8_3) {
+    execute(generate_proposals::CreateModel_dynamic_output_shape_nchw_quant8_3,
+            generate_proposals::is_ignored_dynamic_output_shape_nchw_quant8_3,
+            generate_proposals::get_examples_dynamic_output_shape_nchw_quant8_3());
+}
+
+TEST_F(DynamicOutputShapeTest, generate_proposals_dynamic_output_shape_nchw_float16_3) {
+    execute(generate_proposals::CreateModel_dynamic_output_shape_nchw_float16_3,
+            generate_proposals::is_ignored_dynamic_output_shape_nchw_float16_3,
+            generate_proposals::get_examples_dynamic_output_shape_nchw_float16_3());
+}
+
