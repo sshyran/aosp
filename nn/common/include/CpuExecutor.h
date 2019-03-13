@@ -39,6 +39,17 @@ struct RunTimeOperandInfo {
     // change at runtime.  We include the type because it's useful
     // to pass together with the dimension to the functions implementing
     // the operators.
+    //
+    // A dimension being zero has different meanings for different operands at different stages:
+    // - Model inputs:
+    //   * Specified in model: implies "dynamic", and must be fully-specified in request.
+    //   * Specified in request: illegal.
+    // - Constant operands: illegal.
+    // - Model outputs and internal operands:
+    //   * Before evaluation: implies unknown and to be deduced from execution.
+    //   * After evaluation:
+    //     - If isSufficient reports true: the tensor is zero-sized.
+    //     - Otherwise: implies unknown.
     std::vector<uint32_t> dimensions;
 
     float scale;
