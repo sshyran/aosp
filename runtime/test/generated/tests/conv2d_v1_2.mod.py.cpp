@@ -753,6 +753,12 @@ TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_channelQuant8) {
             conv2d_v1_2::get_examples_large_nhwc_channelQuant8());
 }
 
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_channelQuant8_2) {
+    execute(conv2d_v1_2::CreateModel_large_nhwc_channelQuant8_2,
+            conv2d_v1_2::is_ignored_large_nhwc_channelQuant8_2,
+            conv2d_v1_2::get_examples_large_nhwc_channelQuant8_2());
+}
+
 TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_float16) {
     execute(conv2d_v1_2::CreateModel_large_nhwc_float16,
             conv2d_v1_2::is_ignored_large_nhwc_float16,
@@ -781,6 +787,12 @@ TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_weight_as_input_channelQuant8) {
     execute(conv2d_v1_2::CreateModel_large_nhwc_weight_as_input_channelQuant8,
             conv2d_v1_2::is_ignored_large_nhwc_weight_as_input_channelQuant8,
             conv2d_v1_2::get_examples_large_nhwc_weight_as_input_channelQuant8());
+}
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_weight_as_input_channelQuant8_2) {
+    execute(conv2d_v1_2::CreateModel_large_nhwc_weight_as_input_channelQuant8_2,
+            conv2d_v1_2::is_ignored_large_nhwc_weight_as_input_channelQuant8_2,
+            conv2d_v1_2::get_examples_large_nhwc_weight_as_input_channelQuant8_2());
 }
 
 TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_weight_as_input_float16) {
@@ -813,6 +825,12 @@ TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_channelQuant8) {
             conv2d_v1_2::get_examples_large_nchw_channelQuant8());
 }
 
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_channelQuant8_2) {
+    execute(conv2d_v1_2::CreateModel_large_nchw_channelQuant8_2,
+            conv2d_v1_2::is_ignored_large_nchw_channelQuant8_2,
+            conv2d_v1_2::get_examples_large_nchw_channelQuant8_2());
+}
+
 TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_float16) {
     execute(conv2d_v1_2::CreateModel_large_nchw_float16,
             conv2d_v1_2::is_ignored_large_nchw_float16,
@@ -841,6 +859,12 @@ TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_weight_as_input_channelQuant8) {
     execute(conv2d_v1_2::CreateModel_large_nchw_weight_as_input_channelQuant8,
             conv2d_v1_2::is_ignored_large_nchw_weight_as_input_channelQuant8,
             conv2d_v1_2::get_examples_large_nchw_weight_as_input_channelQuant8());
+}
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_weight_as_input_channelQuant8_2) {
+    execute(conv2d_v1_2::CreateModel_large_nchw_weight_as_input_channelQuant8_2,
+            conv2d_v1_2::is_ignored_large_nchw_weight_as_input_channelQuant8_2,
+            conv2d_v1_2::get_examples_large_nchw_weight_as_input_channelQuant8_2());
 }
 
 TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_weight_as_input_float16) {
@@ -873,6 +897,12 @@ TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_chann
             conv2d_v1_2::get_examples_large_dynamic_output_shape_nhwc_channelQuant8());
 }
 
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_channelQuant8_2) {
+    execute(conv2d_v1_2::CreateModel_large_dynamic_output_shape_nhwc_channelQuant8_2,
+            conv2d_v1_2::is_ignored_large_dynamic_output_shape_nhwc_channelQuant8_2,
+            conv2d_v1_2::get_examples_large_dynamic_output_shape_nhwc_channelQuant8_2());
+}
+
 TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_float16) {
     execute(conv2d_v1_2::CreateModel_large_dynamic_output_shape_nhwc_float16,
             conv2d_v1_2::is_ignored_large_dynamic_output_shape_nhwc_float16,
@@ -901,6 +931,12 @@ TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_weigh
     execute(conv2d_v1_2::CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8,
             conv2d_v1_2::is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8,
             conv2d_v1_2::get_examples_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2) {
+    execute(conv2d_v1_2::CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2,
+            conv2d_v1_2::is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2,
+            conv2d_v1_2::get_examples_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2());
 }
 
 TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_weight_as_input_float16) {
@@ -933,6 +969,12 @@ TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_chann
             conv2d_v1_2::get_examples_large_dynamic_output_shape_nchw_channelQuant8());
 }
 
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_channelQuant8_2) {
+    execute(conv2d_v1_2::CreateModel_large_dynamic_output_shape_nchw_channelQuant8_2,
+            conv2d_v1_2::is_ignored_large_dynamic_output_shape_nchw_channelQuant8_2,
+            conv2d_v1_2::get_examples_large_dynamic_output_shape_nchw_channelQuant8_2());
+}
+
 TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_float16) {
     execute(conv2d_v1_2::CreateModel_large_dynamic_output_shape_nchw_float16,
             conv2d_v1_2::is_ignored_large_dynamic_output_shape_nchw_float16,
@@ -961,6 +1003,12 @@ TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_weigh
     execute(conv2d_v1_2::CreateModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8,
             conv2d_v1_2::is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8,
             conv2d_v1_2::get_examples_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2) {
+    execute(conv2d_v1_2::CreateModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2,
+            conv2d_v1_2::is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2,
+            conv2d_v1_2::get_examples_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2());
 }
 
 TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_weight_as_input_float16) {
@@ -1255,5 +1303,53 @@ TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_dynamic_output_shape_nc
     execute(conv2d_v1_2::CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw_float16,
             conv2d_v1_2::is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_float16,
             conv2d_v1_2::get_examples_3_H3_W2_VALID_dynamic_output_shape_nchw_float16());
+}
+
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1) {
+    execute(conv2d_v1_2::CreateModel,
+            conv2d_v1_2::is_ignored,
+            conv2d_v1_2::get_examples_quant_output_multiplier_gt_1());
+}
+
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_relaxed) {
+    execute(conv2d_v1_2::CreateModel_relaxed,
+            conv2d_v1_2::is_ignored_relaxed,
+            conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_relaxed());
+}
+
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_weight_as_input) {
+    execute(conv2d_v1_2::CreateModel_weight_as_input,
+            conv2d_v1_2::is_ignored_weight_as_input,
+            conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_weight_as_input());
+}
+
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_weight_as_input_relaxed) {
+    execute(conv2d_v1_2::CreateModel_weight_as_input_relaxed,
+            conv2d_v1_2::is_ignored_weight_as_input_relaxed,
+            conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_weight_as_input_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape) {
+    execute(conv2d_v1_2::CreateModel_dynamic_output_shape,
+            conv2d_v1_2::is_ignored_dynamic_output_shape,
+            conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed) {
+    execute(conv2d_v1_2::CreateModel_dynamic_output_shape_relaxed,
+            conv2d_v1_2::is_ignored_dynamic_output_shape_relaxed,
+            conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input) {
+    execute(conv2d_v1_2::CreateModel_dynamic_output_shape_weight_as_input,
+            conv2d_v1_2::is_ignored_dynamic_output_shape_weight_as_input,
+            conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed) {
+    execute(conv2d_v1_2::CreateModel_dynamic_output_shape_weight_as_input_relaxed,
+            conv2d_v1_2::is_ignored_dynamic_output_shape_weight_as_input_relaxed,
+            conv2d_v1_2::get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed());
 }
 

@@ -32,12 +32,26 @@ quant8 = DataTypeConverter().Identify({
     o1: ("TENSOR_QUANT8_ASYMM", 0.5, 80)
 })
 
+quant8_mult_gt_1 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.25, 100),
+    w1: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
+    b1: ("TENSOR_INT32", 0.0625, 0),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.05, 80)
+})
+
 # Per-channel quantization
 channelQuant8 = DataTypeConverter().Identify({
     i1: ("TENSOR_QUANT8_ASYMM", 0.25, 100),
     w1: ("TENSOR_QUANT8_SYMM_PER_CHANNEL", 0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.25, 0.5])),
     b1: ("TENSOR_INT32", 0.0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.0625, 0.125], hide=True)),
     o1: ("TENSOR_QUANT8_ASYMM", 0.5, 80)
+})
+
+channelQuant8_mult_gt_1 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.25, 100),
+    w1: ("TENSOR_QUANT8_SYMM_PER_CHANNEL", 0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.25, 0.5])),
+    b1: ("TENSOR_INT32", 0.0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.0625, 0.125], hide=True)),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.1, 80)
 })
 
 example = Example({
@@ -48,7 +62,7 @@ example = Example({
          33,  7.5,
          31,  4.5,
          27, -9.5]
-}).AddNchw(i1, o1, layout).AddAllActivations(o1, act).AddVariations("relaxed", quant8, channelQuant8, "float16").AddInput(w1, b1)
+}).AddNchw(i1, o1, layout).AddAllActivations(o1, act).AddVariations("relaxed", quant8, quant8_mult_gt_1, channelQuant8, channelQuant8_mult_gt_1, "float16").AddInput(w1, b1)
 
 
 # TEST 2: GROUPED_CONV2D_LARGE, pad = same, stride = 1, numGroups = 2, act = none

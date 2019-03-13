@@ -150,6 +150,24 @@ bool handleNegativeAxis(int32_t numberOfDimensions, int32_t* axis) {
     return true;
 }
 
+bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier, int* shift) {
+    if (double_multiplier == 0.) {
+        *quantized_multiplier = 0;
+        *shift = 0;
+        return true;
+    }
+    const double q = std::frexp(double_multiplier, shift);
+    auto q_fixed = static_cast<int64_t>(std::round(q * (1ll << 31)));
+    NN_RET_CHECK(q_fixed <= (1ll << 31));
+    if (q_fixed == (1ll << 31)) {
+        q_fixed /= 2;
+        ++*shift;
+    }
+    NN_RET_CHECK_LE(q_fixed, std::numeric_limits<int32_t>::max());
+    *quantized_multiplier = static_cast<int32_t>(q_fixed);
+    return true;
+}
+
 bool QuantizeMultiplierSmallerThanOne(double double_multiplier,
                                       int32_t* quantized_multiplier,
                                       int32_t* right_shift) {
@@ -205,7 +223,6 @@ bool GetQuantizedConvolutionMultipler(const Shape& inputShape,
     NN_OPS_CHECK(std::abs(input_product_scale - bias_scale) <=
               1e-6 * std::min(input_product_scale, bias_scale));
     NN_OPS_CHECK(input_product_scale >= 0);
-    NN_OPS_CHECK(input_product_scale < output_scale);
     *multiplier = input_product_scale / output_scale;
     return true;
 }
