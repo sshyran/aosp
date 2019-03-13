@@ -371,6 +371,11 @@ bool prepare(IOperationExecutionContext* context) {
     uint32_t inWidth = getSizeOfDimension(input, useNchw ? 3 : 2);
     uint32_t inDepth = getSizeOfDimension(input, useNchw ? 1 : 3);
     uint32_t numRois = getSizeOfDimension(roiShape, 0);
+    // Every dimension must be positive except for numRois.
+    NN_RET_CHECK_GT(numBatches, 0);
+    NN_RET_CHECK_GT(inHeight, 0);
+    NN_RET_CHECK_GT(inWidth, 0);
+    NN_RET_CHECK_GT(inDepth, 0);
     NN_RET_CHECK_EQ(getSizeOfDimension(roiShape, 1), 4);
     NN_RET_CHECK_EQ(getSizeOfDimension(batchSplitShape, 0), numRois);
 
@@ -412,6 +417,8 @@ bool prepare(IOperationExecutionContext* context) {
 }
 
 bool execute(IOperationExecutionContext* context) {
+    // Bypass execution in the case of zero-sized input.
+    if (getNumberOfElements(context->getInputShape(kRoiTensor)) == 0) return true;
     switch (context->getInputType(kInputTensor)) {
         case OperandType::TENSOR_FLOAT16:
             return roiAlign(context->getInputBuffer<_Float16>(kInputTensor),
@@ -463,7 +470,7 @@ bool execute(IOperationExecutionContext* context) {
 }  // namespace roi_align
 
 NN_REGISTER_OPERATION(ROI_ALIGN, roi_align::kOperationName, roi_align::validate, roi_align::prepare,
-                      roi_align::execute);
+                      roi_align::execute, .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android
