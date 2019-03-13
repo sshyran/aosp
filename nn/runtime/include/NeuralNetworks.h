@@ -481,11 +481,10 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
-     *      [batches, out_height, out_width, depth_out]. For output tensor of
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the following condition
-     *      must be satisfied: output_scale > input_scale * filter_scale (for
-     *      filter tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL}
-     *      this condition must be true for all filter scales).
+     *      [batches, out_height, out_width, depth_out]. Before API level 29,
+     *      for output tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      the following condition must be satisfied:
+     *      output_scale > input_scale * filter_scale
      *
      * Available since API level 27.
      */
@@ -631,11 +630,10 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
-     *      [batches, out_height, out_width, depth_out]. For output tensor of
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the following condition
-     *      must be satisfied: output_scale > input_scale * filter_scale (for
-     *      filter tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL}
-     *      this condition must be true for all filter scales).
+     *      [batches, out_height, out_width, depth_out]. Before API level 29,
+     *      for output tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      the following condition must be satisfied:
+     *      output_scale > input_scale * filter_scale
      *
      * Available since API level 27.
      */
@@ -811,10 +809,10 @@ typedef enum {
      *      invoke on the result.
      *
      * Outputs:
-     * * 0: The output tensor, of shape [batch_size, num_units]. For output
-     *      tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the following
-     *      condition must be satisfied:
-     *      output_scale > input_scale * filter_scale.
+     * * 0: The output tensor, of shape [batch_size, num_units]. Before API
+     *      level 29, for output tensor of {@link
+     *      ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the following condition must
+     *      be satisfied: output_scale > input_scale * filter_scale.
      *
      * Available since API level 27.
      */
@@ -3178,11 +3176,7 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
-     *      [batches, out_height, out_width, depth_out]. For output tensor of
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the following condition
-     *      must be satisfied: output_scale > input_scale * filter_scale (for
-     *      filter tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL}
-     *      this condition must be true for all filter scales).
+     *      [batches, out_height, out_width, depth_out].
      *
      * Available since API level 29.
      */
@@ -4387,11 +4381,7 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
-     *      [batches, out_height, out_width, depth_out]. For output tensor of
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the following condition
-     *      must be satisfied: output_scale > input_scale * filter_scale (for
-     *      filter tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL}
-     *      this condition must be true for all filter scales).
+     *      [batches, out_height, out_width, depth_out].
      *
      * Available since API level 29.
      */
