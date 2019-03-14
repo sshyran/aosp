@@ -305,13 +305,6 @@ bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& 
                           int32_t depth_multiplier, int32_t dilation_width_factor,
                           int32_t dilation_height_factor, Shape* output);
 
-bool genericPoolingPrepare(const Shape& input,
-                           int32_t padding_left, int32_t padding_right,
-                           int32_t padding_top, int32_t padding_bottom,
-                           int32_t stride_width, int32_t stride_height,
-                           int32_t filter_width, int32_t filter_height,
-                           Shape* output);
-
 bool genericActivationPrepare(const Shape& input, Shape* output);
 
 bool concatenationPrepare(const std::vector<Shape>& inputShapes,
