@@ -289,6 +289,7 @@ int32_t CalculateInputRadius(int input_integer_bits, int input_left_shift) {
 }
 
 bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
+    NN_RET_CHECK(in1.type == in2.type);
     uint32_t numberOfDims1 = getNumberOfDimensions(in1);
     uint32_t numberOfDims2 = getNumberOfDimensions(in2);
     uint32_t maxDims = std::max(numberOfDims1, numberOfDims2);
@@ -308,7 +309,7 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
                        << "\nSecond tensor: dimension " << numberOfDims2 - i << "of size " << dim2;
             return false;
         }
-        out->dimensions[maxDims - i] = std::max(dim1, dim2);
+        out->dimensions[maxDims - i] = (dim1 == 1) ? dim2 : dim1;
     }
     return true;
 }
@@ -316,15 +317,6 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
 uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape) {
     double doubleValue = (value - oldShape.offset) * oldShape.scale;
     return static_cast<uint8_t>(doubleValue / newShape.scale + newShape.offset);
-}
-
-bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out) {
-    NN_OPS_CHECK(getNumberOfDimensions(in1) <= 4 && getNumberOfDimensions(in2) <= 4);
-    NN_OPS_CHECK(in1.type == in2.type);
-    if (SameShape(in1, in2)) {
-        return SetShape(in1, out);
-    }
-    return calculateBroadcastedShape(in1, in2, out);
 }
 
 bool floorPrepare(const Shape& input, Shape* output) {

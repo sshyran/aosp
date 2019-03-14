@@ -213,6 +213,10 @@ typedef enum {
      *     input2.dimension = {5, 4, 3, 1}
      *     output.dimension = {5, 4, 3, 2}
      *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -1438,6 +1442,10 @@ typedef enum {
      * of the input operands. It starts with the trailing dimensions, and works
      * its way forward.
      *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -1923,6 +1931,10 @@ typedef enum {
      *     input2.dimension = {5, 4, 3, 1}
      *     output.dimension = {5, 4, 3, 2}
      *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -2156,6 +2168,10 @@ typedef enum {
      *     input1.dimension =    {4, 1, 2}
      *     input2.dimension = {5, 4, 3, 1}
      *     output.dimension = {5, 4, 3, 2}
+     *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
