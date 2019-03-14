@@ -44,20 +44,6 @@ namespace nn {
 
 struct Shape;
 
-bool addFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
-                int32_t activation, _Float16* out, const Shape& shapeOut);
-bool addFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
-                int32_t activation, float* out, const Shape& shapeOut);
-bool addQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
-               int32_t activation, uint8_t* out, const Shape& shapeOut);
-
-bool mulFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
-                int32_t activation, _Float16* out, const Shape& shapeOut);
-bool mulFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
-                int32_t activation, float* out, const Shape& shapeOut);
-bool mulQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
-               int32_t activation, uint8_t* out, const Shape& shapeOut);
-
 bool floorFloat16(const _Float16* inputData, _Float16* outputData, const Shape& shape);
 bool floorFloat32(const float* inputData, float* outputData, const Shape& shape);
 
@@ -171,20 +157,6 @@ template <typename T>
 bool spaceToBatchGeneric(const T* inputData, const Shape& inputShape, const int32_t* blockSize,
                          const int32_t* padding, const Shape& paddingShape, T* outputData,
                          const Shape& outputShape);
-
-bool subFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
-                int32_t activation, _Float16* out, const Shape& shapeOut);
-
-bool subFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
-                int32_t activation, float* out, const Shape& shapeOut);
-
-bool subQuant8(const uint8_t* in1, const Shape& shape1, const uint8_t* in2, const Shape& shape2,
-               int32_t activation, uint8_t* out, const Shape& shapeOut);
-
-bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, const Shape& shape2,
-                int32_t activation, _Float16* out, const Shape& shapeOut);
-bool divFloat32(const float* in1, const Shape& shape1, const float* in2, const Shape& shape2,
-                int32_t activation, float* out, const Shape& shapeOut);
 
 template <typename T>
 bool transposeGeneric(const T* inputData, const Shape& inputShape, const int32_t* perm,
