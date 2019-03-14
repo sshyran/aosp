@@ -14,47 +14,50 @@
 # limitations under the License.
 #
 
-import random
+# TEST 1: MUL float16
+model = Model()
+i1 = Input("op1", "TENSOR_FLOAT16", "{3}") # a vector of 3 float16s
+i2 = Input("op2", "TENSOR_FLOAT16", "{3}") # another vector of 3 float16s
+act = Int32Scalar("act", 0) # an int32_t scalar activation
+i3 = Output("op3", "TENSOR_FLOAT16", "{3}")
+model = model.Operation("MUL", i1, i2, act).To(i3)
+model = model.RelaxedExecution(False)
 
-random.seed(0)
+# Example 1. Input in operand 0,
+input0 = {i1: # input 0
+          [1.0009765625, 1.0, 2.5],
+          i2: # input 1
+          [2, 0.0001, 3.5]}
 
-# FLOAT32 and FLOAT16
-input0 = Input("input0", "TENSOR_FLOAT32", "{1, 2, 2, 1}")
-input1 = Input("input1", "TENSOR_FLOAT32", "{1, 2, 2, 1}")
-activation = Int32Scalar("act", 0)
-output0 = Output("output0", "TENSOR_FLOAT32",  "{1, 2, 2, 1}")
+output0 = {i3: # output 0
+           [2.001953125, 0.0001000165, 8.75]}
 
-model = Model().Operation("SUB", input0, input1, activation).To(output0)
-
-Example({
-    input0: [2.0, -4.0, 8.0, -16.0],
-    input1: [2.0, -2.0, -4.0, 4.0],
-    output0: [0.0, -2.0, 12.0, -20.0],
-}).AddVariations("float16").AddAllActivations(output0, activation)
-
-
-# QUANT8_ASYMM
-shape = "{2, 4, 16, 2}, 0.5, 0"
-input0 = Input("input0", "TENSOR_QUANT8_ASYMM", shape)
-input1 = Input("input1", "TENSOR_QUANT8_ASYMM", shape)
-activation = 0
-output0 = Output("output0", "TENSOR_QUANT8_ASYMM", shape)
-
-model = Model("quant8").Operation("SUB", input0, input1, activation).To(output0)
-
-input0_values = list(range(256))
-input1_values = list(input0_values)
-random.shuffle(input1_values)
-output_values = [max(0, a - b) for a, b in zip(input0_values, input1_values)]
-
-Example({
-    input0: input0_values,
-    input1: input1_values,
-    output0: output_values,
-})
+# Instantiate an example
+Example((input0, output0))
 
 
-# SUB, zero-sized input
+# TEST 2: MUL broadcast float16
+model = Model()
+i1 = Input("op1", "TENSOR_FLOAT16", "{1, 2}")
+i2 = Input("op2", "TENSOR_FLOAT16", "{2, 2}")
+act = Int32Scalar("act", 0)
+i3 = Output("op3", "TENSOR_FLOAT16", "{2, 2}")
+model = model.Operation("MUL", i1, i2, act).To(i3)
+
+# Example 1. Input in operand 0,
+input0 = {i1: # input 0
+          [1, 2],
+          i2: # input 1
+          [1, 2, 3, 4]}
+
+output0 = {i3: # output 0
+           [1, 4, 3, 8]}
+
+# Instantiate an example
+Example((input0, output0))
+
+
+# TEST 3: MUL, zero-sized input
 
 # Use BOX_WITH_NMS_LIMIT op to generate a zero-sized internal tensor for box cooridnates.
 p1 = Parameter("scores", "TENSOR_FLOAT32", "{1, 2}", [0.90, 0.10]) # scores
@@ -71,10 +74,10 @@ i1 = Input("in", "TENSOR_FLOAT32", "{1, 1, 1, 2}")
 zero_sized = Internal("featureMap", "TENSOR_FLOAT32", "{0, 2, 2, 2}")
 model = model.Operation("ROI_ALIGN", i1, tmp1, tmp2, 2, 2, 2.0, 2.0, 4, 4, layout).To(zero_sized)
 
-# SUB op with numBatches = 0.
+# MUL op with numBatches = 0.
 i2 = Parameter("op", "TENSOR_FLOAT32", "{1, 2, 2, 1}", [1, 2, 3, 4]) # weights
 o3 = Output("out", "TENSOR_FLOAT32", "{0, 2, 2, 2}") # out
-model = model.Operation("SUB", zero_sized, i2, 0).To(o3)
+model = model.Operation("MUL", zero_sized, i2, 0).To(o3)
 
 quant8 = DataTypeConverter().Identify({
     p1: ("TENSOR_QUANT8_ASYMM", 0.1, 128),

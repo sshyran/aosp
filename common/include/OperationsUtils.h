@@ -293,8 +293,6 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out);
 uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape);
 
 // Preparation functions for the corresponding ops
-bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out1);
-
 bool floorPrepare(const Shape& input, Shape* output);
 
 bool quantizePrepare(const Shape& input, Shape* output);
