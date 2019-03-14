@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include "CompilationBuilder.h"
 #include "HalInterfaces.h"
 #include "Manager.h"
 #include "NeuralNetworks.h"
@@ -30,6 +31,7 @@
 
 namespace {
 
+using CompilationBuilder = ::android::nn::CompilationBuilder;
 using Device = ::android::nn::Device;
 using DeviceManager = ::android::nn::DeviceManager;
 using ExecutePreference = ::android::nn::test_wrapper::ExecutePreference;
@@ -178,7 +180,6 @@ void createSimpleAddModel(WrapperModel* model) {
     ASSERT_TRUE(model->isValid());
 }
 
-// TODO(b/117983761): update the test to make sure the model is actually running on the test device.
 // This test verifies that a simple ADD model is able to run on a single device that claims being
 // able to handle all operations.
 TEST_F(IntrospectionControlTest, SimpleAddModel) {
@@ -203,6 +204,12 @@ TEST_F(IntrospectionControlTest, SimpleAddModel) {
     EXPECT_TRUE(selectDeviceByName(driverName));
     EXPECT_TRUE(isSupportedOpListExpected({true}));
     EXPECT_EQ(prepareForExecution(), ANEURALNETWORKS_NO_ERROR);
+
+    // Verify that the mCompilation is actually using the "test-all" device.
+    CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(mCompilation);
+    const char* deviceNameBuffer =
+            c->forTest_getExecutionPlan().forTest_simpleGetDevice()->getName();
+    EXPECT_TRUE(driverName.compare(deviceNameBuffer) == 0);
 
     float input1[2] = {1.0f, 2.0f};
     float input2[2] = {3.0f, 4.0f};
