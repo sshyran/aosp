@@ -25,7 +25,7 @@ namespace android {
 namespace nn {
 
 BurstBuilder::BurstBuilder(const CompilationBuilder* compilation,
-                           std::vector<std::unique_ptr<ExecutionBurstController>> burstControllers)
+                           std::vector<std::shared_ptr<ExecutionBurstController>> burstControllers)
     : mCompilation(compilation), mBurstControllers(std::move(burstControllers)) {}
 
 bool BurstBuilder::tryLock() {
@@ -41,8 +41,8 @@ const CompilationBuilder* BurstBuilder::getCompilation() const {
     return mCompilation;
 }
 
-ExecutionBurstController* BurstBuilder::getControllerAt(size_t index) const {
-    return index < mBurstControllers.size() ? mBurstControllers[index].get() : nullptr;
+std::shared_ptr<ExecutionBurstController> BurstBuilder::getControllerAt(size_t index) const {
+    return index < mBurstControllers.size() ? mBurstControllers[index] : nullptr;
 }
 
 }  // namespace nn
