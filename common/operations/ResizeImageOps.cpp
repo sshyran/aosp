@@ -144,10 +144,15 @@ bool prepare(OperationType opType, IOperationExecutionContext* context) {
     if (context->getNumInputs() > kLayoutScalar) {
         useNchw = context->getInputValue<bool>(kLayoutScalar);
     }
+
+    // Only batches can be zero.
     uint32_t batches = getSizeOfDimension(input, 0);
     uint32_t inHeight = getSizeOfDimension(input, useNchw ? 2 : 1);
     uint32_t inWidth = getSizeOfDimension(input, useNchw ? 3 : 2);
     uint32_t channels = getSizeOfDimension(input, useNchw ? 1 : 3);
+    NN_RET_CHECK_GT(inHeight, 0);
+    NN_RET_CHECK_GT(inWidth, 0);
+    NN_RET_CHECK_GT(channels, 0);
 
     int32_t height, width;
     auto scalarType = context->getInputType(kOutputHeightParamScalar);
@@ -182,6 +187,8 @@ bool prepare(OperationType opType, IOperationExecutionContext* context) {
 }
 
 bool execute(OperationType opType, IOperationExecutionContext* context) {
+    // Bypass execution in the case of zero-sized input.
+    if (getNumberOfElements(context->getOutputShape(kOutputTensor)) == 0) return true;
     bool useNchw = false;
     if (context->getNumInputs() > kLayoutScalar) {
         useNchw = context->getInputValue<bool>(kLayoutScalar);
@@ -215,12 +222,14 @@ using std::placeholders::_1;
 NN_REGISTER_OPERATION(RESIZE_BILINEAR, "RESIZE_BILINEAR",
                       std::bind(resize_image::validate, OperationType::RESIZE_BILINEAR, _1),
                       std::bind(resize_image::prepare, OperationType::RESIZE_BILINEAR, _1),
-                      std::bind(resize_image::execute, OperationType::RESIZE_BILINEAR, _1));
+                      std::bind(resize_image::execute, OperationType::RESIZE_BILINEAR, _1),
+                      .allowZeroSizedInput = true);
 
 NN_REGISTER_OPERATION(RESIZE_NEAREST_NEIGHBOR, "RESIZE_NEAREST_NEIGHBOR",
                       std::bind(resize_image::validate, OperationType::RESIZE_NEAREST_NEIGHBOR, _1),
                       std::bind(resize_image::prepare, OperationType::RESIZE_NEAREST_NEIGHBOR, _1),
-                      std::bind(resize_image::execute, OperationType::RESIZE_NEAREST_NEIGHBOR, _1));
+                      std::bind(resize_image::execute, OperationType::RESIZE_NEAREST_NEIGHBOR, _1),
+                      .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android
