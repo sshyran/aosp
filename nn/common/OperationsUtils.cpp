@@ -463,36 +463,6 @@ bool genericActivationPrepare(const Shape& input,
     return SetShape(input, output);
 }
 
-bool fullyConnectedPrepare(const Shape& input,
-                           const Shape& weights,
-                           const Shape& bias,
-                           Shape* output) {
-    // Check all the parameters of tensor match within themselves and match the
-    // input configuration.
-    NN_OPS_CHECK(input.type == weights.type);
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_OPS_CHECK(bias.type == OperandType::TENSOR_INT32);
-    } else {
-        NN_OPS_CHECK(input.type == bias.type);
-    }
-    // The Tensorflow fully connected layer specification says that input should
-    // be of at least rank 2, so we check. Tflite doesn't check.
-    NN_OPS_CHECK(getNumberOfDimensions(input) >= 2);
-    NN_OPS_CHECK(getNumberOfDimensions(weights) == 2);
-    uint32_t input_n_elements = getNumberOfElements(input);
-    uint32_t num_units  = getSizeOfDimension(weights, 0);
-    uint32_t input_size = getSizeOfDimension(weights, 1);
-    uint32_t batch_size = input_n_elements / input_size;
-
-    NN_OPS_CHECK(getSizeOfDimension(bias, 0) == num_units);
-    NN_OPS_CHECK(input_size * batch_size == input_n_elements);
-
-    output->type = input.type;
-    output->dimensions = {batch_size, num_units};
-
-    return true;
-}
-
 bool concatenationPrepare(const std::vector<Shape>& inputShapes, int32_t axis, Shape* output) {
     int num_inputs = inputShapes.size();
     OperandType input_type = inputShapes[0].type;
