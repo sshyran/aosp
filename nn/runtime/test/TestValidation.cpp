@@ -456,6 +456,9 @@ TEST_F(ValidationTestModel, SetOperandValueFromMemory) {
     // This should fail, as the model is already finished.
     EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromMemory(mModel, 0, memory, 0, sizeof(float)),
               ANEURALNETWORKS_BAD_STATE);
+
+    // close memory
+    close(memoryFd);
 }
 
 TEST_F(ValidationTestModel, SetOperandValueFromAHardwareBuffer) {
@@ -888,6 +891,9 @@ TEST_F(ValidationTestExecution, SetInputFromMemory) {
     EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, &kInvalidTensorType2,
                                                           memory, 0, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+
+    // close memory
+    close(memoryFd);
 }
 
 TEST_F(ValidationTestExecution, SetInputFromAHardwareBufferBlob) {
@@ -985,6 +991,9 @@ TEST_F(ValidationTestExecution, SetOutputFromMemory) {
     EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(execution, 0, &kInvalidTensorType2,
                                                            memory, 0, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+
+    // close memory
+    close(memoryFd);
 }
 
 TEST_F(ValidationTestExecution, SetOutputFromAHardwareBufferBlob) {
@@ -1055,14 +1064,14 @@ TEST_F(ValidationTestExecution, GetOutputOperandRankAndDimensions) {
     EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
 
     float input0[] = {1.0f, 1.0f}, input1[] = {2.0f, 2.0f}, output0[2];
-    int32_t input2 = 0;
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, &input0, sizeof(input0)),
+    int32_t input2[] = {0};
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, input0, sizeof(input0)),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 1, nullptr, &input1, sizeof(input1)),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 1, nullptr, input1, sizeof(input1)),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 2, nullptr, &input2, sizeof(int32_t)),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 2, nullptr, input2, sizeof(input2)),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution, 0, nullptr, &output0, sizeof(output0)),
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution, 0, nullptr, output0, sizeof(output0)),
               ANEURALNETWORKS_NO_ERROR);
 
     uint32_t rank, dims[4], expectedRank = 1, expectedDims = 2;
@@ -1126,12 +1135,13 @@ TEST_F(ValidationTestBurst, BurstComputeDifferentCompilations) {
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(ANeuralNetworksCompilation_finish(secondCompilation), ANEURALNETWORKS_NO_ERROR);
 
-    ANeuralNetworksBurst* burst;
-    EXPECT_EQ(ANeuralNetworksBurst_create(secondCompilation, &burst), ANEURALNETWORKS_NO_ERROR);
+    ANeuralNetworksExecution* execution;
+    EXPECT_EQ(ANeuralNetworksExecution_create(secondCompilation, &execution),
+              ANEURALNETWORKS_NO_ERROR);
 
-    EXPECT_EQ(ANeuralNetworksExecution_burstCompute(mExecution, burst), ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksExecution_burstCompute(execution, mBurst), ANEURALNETWORKS_BAD_DATA);
 
-    ANeuralNetworksBurst_free(burst);
+    ANeuralNetworksExecution_free(execution);
     ANeuralNetworksCompilation_free(secondCompilation);
 }
 
@@ -1142,30 +1152,30 @@ TEST_F(ValidationTestBurst, BurstComputeConcurrent) {
 
     // set inputs of first execution
     float inputA0[] = {1.0f, 1.0f}, inputA1[] = {2.0f, 2.0f}, outputA0[2];
-    int32_t inputA2 = 0;
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, nullptr, &inputA0, sizeof(inputA0)),
+    int32_t inputA2[] = {0};
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, nullptr, inputA0, sizeof(inputA0)),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 1, nullptr, &inputA1, sizeof(inputA1)),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 1, nullptr, inputA1, sizeof(inputA1)),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 2, nullptr, &inputA2, sizeof(int32_t)),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 2, nullptr, inputA2, sizeof(inputA2)),
               ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(
-            ANeuralNetworksExecution_setOutput(mExecution, 0, nullptr, &outputA0, sizeof(outputA0)),
+            ANeuralNetworksExecution_setOutput(mExecution, 0, nullptr, outputA0, sizeof(outputA0)),
             ANEURALNETWORKS_NO_ERROR);
 
     // set inputs of second execution
     float inputB0[] = {1.0f, 1.0f}, inputB1[] = {2.0f, 2.0f}, outputB0[2];
-    int32_t inputB2 = 0;
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(secondExecution, 0, nullptr, &inputB0,
+    int32_t inputB2[] = {0};
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(secondExecution, 0, nullptr, inputB0,
                                                 sizeof(inputB0)),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(secondExecution, 1, nullptr, &inputB1,
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(secondExecution, 1, nullptr, inputB1,
                                                 sizeof(inputB1)),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_setInput(secondExecution, 2, nullptr, &inputB2,
-                                                sizeof(int32_t)),
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(secondExecution, 2, nullptr, inputB2,
+                                                sizeof(inputB2)),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_setOutput(secondExecution, 0, nullptr, &outputB0,
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(secondExecution, 0, nullptr, outputB0,
                                                  sizeof(outputB0)),
               ANEURALNETWORKS_NO_ERROR);
 
@@ -1178,11 +1188,110 @@ TEST_F(ValidationTestBurst, BurstComputeConcurrent) {
     auto second = std::async(std::launch::async, [this, secondExecution] {
         return ANeuralNetworksExecution_burstCompute(secondExecution, mBurst);
     });
+
     const int result1 = first.get();
     const int result2 = second.get();
     EXPECT_TRUE(result1 == ANEURALNETWORKS_BAD_STATE || result1 == ANEURALNETWORKS_NO_ERROR);
     EXPECT_TRUE(result2 == ANEURALNETWORKS_BAD_STATE || result2 == ANEURALNETWORKS_NO_ERROR);
     EXPECT_TRUE(result1 == ANEURALNETWORKS_NO_ERROR || result2 == ANEURALNETWORKS_NO_ERROR);
+
+    ANeuralNetworksExecution_free(secondExecution);
+}
+
+// The burst object maintains a local cache of memory objects. Because the burst
+// is intended to live for multiple executions, and because memory might be
+// created and freed for each execution, burst includes internal mechanisms to
+// purge memory objects from its cache that have been freed by the NNAPI client.
+// The following two test cases (FreeMemoryBeforeBurst and
+// FreeBurstBeforeMemory) ensure that this internal cleanup is tested in both
+// freeing orders.
+//
+// These two test cases explicitly create a new burst object and a new execution
+// object so that the order of freeing can be specified. If these tests instead
+// relied on the provided mExecution and mBurst, mBurst would always be freed
+// before mExecution.
+
+TEST_F(ValidationTestBurst, FreeMemoryBeforeBurst) {
+    ANeuralNetworksBurst* burst;
+    EXPECT_EQ(ANeuralNetworksBurst_create(mCompilation, &burst), ANEURALNETWORKS_NO_ERROR);
+
+    // prepare data for execution
+    float input0[] = {1.0f, 1.0f}, input1[] = {2.0f, 2.0f}, output0[2];
+    int32_t input2[] = {0};
+
+    const size_t memorySize = sizeof(output0);
+    int memoryFd = ASharedMemory_create("nnMemory", memorySize);
+    ASSERT_GT(memoryFd, 0);
+
+    ANeuralNetworksMemory* memory;
+    EXPECT_EQ(ANeuralNetworksMemory_createFromFd(memorySize, PROT_READ | PROT_WRITE, memoryFd, 0,
+                                                 &memory),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // create and configure execution
+    ANeuralNetworksExecution* execution;
+    EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, input0, sizeof(input0)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 1, nullptr, input1, sizeof(input1)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 2, nullptr, input2, sizeof(input2)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(execution, 0, nullptr, memory, 0,
+                                                           sizeof(output0)),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // preform execution to cache memory into burst
+    EXPECT_EQ(ANeuralNetworksExecution_burstCompute(execution, burst), ANEURALNETWORKS_NO_ERROR);
+    ANeuralNetworksExecution_free(execution);
+
+    // free memory before burst
+    ANeuralNetworksMemory_free(memory);
+    ANeuralNetworksBurst_free(burst);
+
+    // close memory
+    close(memoryFd);
+}
+
+TEST_F(ValidationTestBurst, FreeBurstBeforeMemory) {
+    ANeuralNetworksBurst* burst;
+    EXPECT_EQ(ANeuralNetworksBurst_create(mCompilation, &burst), ANEURALNETWORKS_NO_ERROR);
+
+    // prepare data for execution
+    float input0[] = {1.0f, 1.0f}, input1[] = {2.0f, 2.0f}, output0[2];
+    int32_t input2[] = {0};
+    const size_t memorySize = sizeof(output0);
+    int memoryFd = ASharedMemory_create("nnMemory", memorySize);
+    ASSERT_GT(memoryFd, 0);
+
+    ANeuralNetworksMemory* memory;
+    EXPECT_EQ(ANeuralNetworksMemory_createFromFd(memorySize, PROT_READ | PROT_WRITE, memoryFd, 0,
+                                                 &memory),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // create and configure execution
+    ANeuralNetworksExecution* execution;
+    EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, input0, sizeof(input0)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 1, nullptr, input1, sizeof(input1)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(execution, 2, nullptr, input2, sizeof(input2)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(execution, 0, nullptr, memory, 0,
+                                                           sizeof(output0)),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // preform execution to cache memory into burst
+    EXPECT_EQ(ANeuralNetworksExecution_burstCompute(execution, burst), ANEURALNETWORKS_NO_ERROR);
+    ANeuralNetworksExecution_free(execution);
+
+    // free burst before memory
+    ANeuralNetworksBurst_free(burst);
+    ANeuralNetworksMemory_free(memory);
+
+    // close memory
+    close(memoryFd);
 }
 
 TEST(ValidationTestIntrospection, GetNumDevices) {

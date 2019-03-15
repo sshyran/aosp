@@ -40,18 +40,18 @@ class CompilationBuilder;
 class BurstBuilder {
    public:
     BurstBuilder(const CompilationBuilder* compilation,
-                 std::vector<std::unique_ptr<ExecutionBurstController>> burstControllers);
+                 std::vector<std::shared_ptr<ExecutionBurstController>> burstControllers);
 
     bool tryLock();
     void unlock();
 
     const CompilationBuilder* getCompilation() const;
-    ExecutionBurstController* getControllerAt(size_t index) const;
+    std::shared_ptr<ExecutionBurstController> getControllerAt(size_t index) const;
 
    private:
     std::atomic_flag mCurrentlyRunning = ATOMIC_FLAG_INIT;
     const CompilationBuilder* mCompilation;
-    std::vector<std::unique_ptr<ExecutionBurstController>> mBurstControllers;
+    std::vector<std::shared_ptr<ExecutionBurstController>> mBurstControllers;
 };
 
 }  // namespace nn

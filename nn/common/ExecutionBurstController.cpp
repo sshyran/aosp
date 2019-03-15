@@ -38,14 +38,15 @@ Return<void> ExecutionBurstController::ExecutionBurstCallback::getMemories(
 
     // get all memories
     hidl_vec<hidl_memory> memories(slots.size());
-    for (size_t i = 0; i < slots.size(); ++i) {
-        // if memory is available, return it; otherwise return error
-        auto iter = mSlotToMemoryCache.find(slots[i]);
-        if (iter == mSlotToMemoryCache.end()) {
-            cb(ErrorStatus::INVALID_ARGUMENT, {});
-            return Void();
-        }
-        memories[i] = iter->second;
+    std::transform(slots.begin(), slots.end(), memories.begin(), [this](int32_t slot) {
+        return slot < mMemoryCache.size() ? mMemoryCache[slot] : hidl_memory{};
+    });
+
+    // ensure all memories are valid
+    if (!std::all_of(memories.begin(), memories.end(),
+                     [](const hidl_memory& memory) { return memory.valid(); })) {
+        cb(ErrorStatus::INVALID_ARGUMENT, {});
+        return Void();
     }
 
     // return successful
@@ -70,31 +71,47 @@ std::pair<bool, int32_t> ExecutionBurstController::ExecutionBurstCallback::freeM
         intptr_t key) {
     std::lock_guard<std::mutex> guard(mMutex);
 
-    auto iter = mMemoryIdToSlotCache.find(key);
-    if (iter != mMemoryIdToSlotCache.end()) {
-        const int32_t slot = iter->second;
-        mMemoryIdToSlotCache.erase(key);
-        mSlotToMemoryCache.erase(slot);
-        return {true, slot};
-    } else {
+    auto iter = mMemoryIdToSlot.find(key);
+    if (iter == mMemoryIdToSlot.end()) {
         return {false, 0};
     }
+    const int32_t slot = iter->second;
+    mMemoryIdToSlot.erase(key);
+    mMemoryCache[slot] = {};
+    mFreeSlots.push(slot);
+    return {true, slot};
 }
 
 int32_t ExecutionBurstController::ExecutionBurstCallback::getSlotLocked(const hidl_memory& memory,
                                                                         intptr_t key) {
-    auto iter = mMemoryIdToSlotCache.find(key);
-    if (iter == mMemoryIdToSlotCache.end()) {
-        const int32_t slot = mNextSlot;
-        // TODO: change mNextSlot to uint64_t or maintain a free list of IDs
-        mNextSlot = (mNextSlot + 1) % (1 << 30);
-        mMemoryIdToSlotCache[key] = slot;
-        mSlotToMemoryCache[slot] = memory;
+    auto iter = mMemoryIdToSlot.find(key);
+    if (iter == mMemoryIdToSlot.end()) {
+        const int32_t slot = allocateSlotLocked();
+        mMemoryIdToSlot[key] = slot;
+        mMemoryCache[slot] = memory;
         return slot;
     } else {
         const int32_t slot = iter->second;
         return slot;
     }
+}
+
+int32_t ExecutionBurstController::ExecutionBurstCallback::allocateSlotLocked() {
+    constexpr size_t kMaxNumberOfSlots = std::numeric_limits<int32_t>::max();
+
+    // if there is a free slot, use it
+    if (mFreeSlots.size() > 0) {
+        const int32_t slot = mFreeSlots.top();
+        mFreeSlots.pop();
+        return slot;
+    }
+
+    // otherwise use a slot for the first time
+    CHECK(mMemoryCache.size() < kMaxNumberOfSlots) << "Exceeded maximum number of slots!";
+    const int32_t slot = static_cast<int32_t>(mMemoryCache.size());
+    mMemoryCache.emplace_back();
+
+    return slot;
 }
 
 std::unique_ptr<ExecutionBurstController> ExecutionBurstController::create(
@@ -386,6 +403,8 @@ std::tuple<ErrorStatus, std::vector<OutputShape>, Timing> ExecutionBurstControll
         const Request& request, MeasureTiming measure, const std::vector<intptr_t>& memoryIds) {
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION, "ExecutionBurstController::compute");
 
+    std::lock_guard<std::mutex> guard(mMutex);
+
     // serialize request
     std::vector<FmqRequestDatum> requestData = serialize(request, measure, memoryIds);
 
@@ -411,6 +430,8 @@ std::tuple<ErrorStatus, std::vector<OutputShape>, Timing> ExecutionBurstControll
 }
 
 void ExecutionBurstController::freeMemory(intptr_t key) {
+    std::lock_guard<std::mutex> guard(mMutex);
+
     bool valid;
     int32_t slot;
     std::tie(valid, slot) = mMemoryCache->freeMemory(key);
