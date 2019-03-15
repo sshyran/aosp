@@ -83,43 +83,6 @@ bool depthwiseConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputS
                                    const Shape& outputShape);
 
 template <typename T>
-bool reluFloat(const T* inputData, const Shape& inputShape, T* outputData, const Shape& outputShape,
-               float reluMin = 0.f, float reluMax = std::numeric_limits<float>::max());
-template <typename T>
-bool relu1Float(const T* inputData, const Shape& inputShape, T* outputData,
-                const Shape& outputShape);
-template <typename T>
-bool relu6Float(const T* inputData, const Shape& inputShape, T* outputData,
-                const Shape& outputShape);
-
-bool tanhFloat16(const _Float16* inputData, const Shape& inputShape, _Float16* outputData,
-                 const Shape& outputShape);
-bool tanhFloat32(const float* inputData, const Shape& inputShape, float* outputData,
-                 const Shape& outputShape);
-bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
-                const Shape& outputShape);
-
-template <typename T>
-bool logisticFloat(const T* inputData, const Shape& inputShape, T* outputData,
-                   const Shape& outputShape);
-
-bool softmaxFloat16(const _Float16* inputData, const Shape& inputShape, const float beta,
-                    int32_t axis, _Float16* outputData, const Shape& outputShape);
-bool softmaxFloat32(const float* inputData, const Shape& inputShape, const float beta, int32_t axis,
-                    float* outputData, const Shape& outputShape);
-
-bool reluQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
-                const Shape& outputShape);
-bool relu1Quant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
-                 const Shape& outputShape);
-bool relu6Quant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
-                 const Shape& outputShape);
-bool logisticQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
-                    const Shape& outputShape);
-bool softmaxQuant8(const uint8_t* inputData, const Shape& inputShape, const float beta,
-                   int32_t axis, uint8_t* outputData, const Shape& outputShape);
-
-template <typename T>
 bool concatenation(const std::vector<const T*>& inputDataPtrs,
                    const std::vector<Shape>& inputShapes, int32_t axis, T* outputData,
                    const Shape& outputShape);
