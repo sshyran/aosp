@@ -1,11 +1,11 @@
 // clang-format off
-// Generated file (from: sub_v1_2.mod.py). Do not edit
+// Generated file (from: div_v1_2.mod.py). Do not edit
 // Create the model
-Model createTestModel_none() {
+Model createTestModel() {
     const std::vector<Operand> operands = {
         {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {3},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -13,8 +13,8 @@ Model createTestModel_none() {
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         },
         {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {3},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -31,8 +31,8 @@ Model createTestModel_none() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {3},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -43,7 +43,7 @@ Model createTestModel_none() {
 
     const std::vector<Operation> operations = {
         {
-            .type = OperationType::SUB,
+            .type = OperationType::DIV,
             .inputs = {0, 1, 2},
             .outputs = {3},
         }
@@ -66,230 +66,17 @@ Model createTestModel_none() {
     };
 }
 
-inline bool is_ignored_none(int i) {
+inline bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_relu() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      1, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_relu(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_relu1() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_relu1(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_relu6() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      3, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_relu6(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_float16_none() {
+Model createTestModel_dynamic_output_shape() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
+            .dimensions = {3},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -298,7 +85,7 @@ Model createTestModel_float16_none() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
+            .dimensions = {3},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -316,7 +103,7 @@ Model createTestModel_float16_none() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
+            .dimensions = {0},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -327,7 +114,7 @@ Model createTestModel_float16_none() {
 
     const std::vector<Operation> operations = {
         {
-            .type = OperationType::SUB,
+            .type = OperationType::DIV,
             .inputs = {0, 1, 2},
             .outputs = {3},
         }
@@ -350,17 +137,17 @@ Model createTestModel_float16_none() {
     };
 }
 
-inline bool is_ignored_float16_none(int i) {
+inline bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_float16_relu() {
+Model createTestModel_2() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
+            .dimensions = {2, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -369,7 +156,7 @@ Model createTestModel_float16_relu() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
+            .dimensions = {1, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -387,7 +174,7 @@ Model createTestModel_float16_relu() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
+            .dimensions = {2, 2},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -398,220 +185,7 @@ Model createTestModel_float16_relu() {
 
     const std::vector<Operation> operations = {
         {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      1, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_float16_relu(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_float16_relu1() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_float16_relu1(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_float16_relu6() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      3, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_float16_relu6(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_dynamic_output_shape_none() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0, 0},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
+            .type = OperationType::DIV,
             .inputs = {0, 1, 2},
             .outputs = {3},
         }
@@ -634,230 +208,17 @@ Model createTestModel_dynamic_output_shape_none() {
     };
 }
 
-inline bool is_ignored_dynamic_output_shape_none(int i) {
+inline bool is_ignored_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_dynamic_output_shape_relu() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0, 0},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      1, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_dynamic_output_shape_relu(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_dynamic_output_shape_relu1() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0, 0},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_dynamic_output_shape_relu1(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_dynamic_output_shape_relu6() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0, 0},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      3, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_dynamic_output_shape_relu6(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_dynamic_output_shape_float16_none() {
+Model createTestModel_dynamic_output_shape_2() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
+            .dimensions = {2, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -866,7 +227,7 @@ Model createTestModel_dynamic_output_shape_float16_none() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
+            .dimensions = {1, 2},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -884,7 +245,7 @@ Model createTestModel_dynamic_output_shape_float16_none() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0, 0},
+            .dimensions = {0, 0},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -895,7 +256,7 @@ Model createTestModel_dynamic_output_shape_float16_none() {
 
     const std::vector<Operation> operations = {
         {
-            .type = OperationType::SUB,
+            .type = OperationType::DIV,
             .inputs = {0, 1, 2},
             .outputs = {3},
         }
@@ -918,362 +279,7 @@ Model createTestModel_dynamic_output_shape_float16_none() {
     };
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_none(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_dynamic_output_shape_float16_relu() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0, 0},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      1, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_dynamic_output_shape_float16_relu(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_dynamic_output_shape_float16_relu1() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0, 0},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_dynamic_output_shape_float16_relu1(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_dynamic_output_shape_float16_relu6() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0, 0},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      3, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_dynamic_output_shape_float16_relu6(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_quant8() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {2, 4, 16, 2},
-            .numberOfConsumers = 1,
-            .scale = 0.5f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {2, 4, 16, 2},
-            .numberOfConsumers = 1,
-            .scale = 0.5f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {2, 4, 16, 2},
-            .numberOfConsumers = 0,
-            .scale = 0.5f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      0, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_quant8(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_quant8_dynamic_output_shape() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {2, 4, 16, 2},
-            .numberOfConsumers = 1,
-            .scale = 0.5f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {2, 4, 16, 2},
-            .numberOfConsumers = 1,
-            .scale = 0.5f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {0, 0, 0, 0},
-            .numberOfConsumers = 0,
-            .scale = 0.5f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::SUB,
-            .inputs = {0, 1, 2},
-            .outputs = {3},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {0, 1};
-    const std::vector<uint32_t> outputIndexes = {3};
-    std::vector<uint8_t> operandValues = {
-      0, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_quant8_dynamic_output_shape(int i) {
+inline bool is_ignored_dynamic_output_shape_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -1493,7 +499,7 @@ Model createTestModel_zero_sized() {
             .outputs = {18},
         },
         {
-            .type = OperationType::SUB,
+            .type = OperationType::DIV,
             .inputs = {18, 19, 20},
             .outputs = {21},
         }
@@ -1736,7 +742,7 @@ Model createTestModel_zero_sized_relaxed() {
             .outputs = {18},
         },
         {
-            .type = OperationType::SUB,
+            .type = OperationType::DIV,
             .inputs = {18, 19, 20},
             .outputs = {21},
         }
@@ -1761,249 +767,6 @@ Model createTestModel_zero_sized_relaxed() {
 }
 
 inline bool is_ignored_zero_sized_relaxed(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_zero_sized_quant8() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {1, 2},
-            .numberOfConsumers = 1,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 2},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT16_ASYMM,
-            .dimensions = {1, 8},
-            .numberOfConsumers = 1,
-            .scale = 0.125f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 2, .length = 16},
-        },
-        {
-            .type = OperandType::TENSOR_INT32,
-            .dimensions = {1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 18, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 22, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 26, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 30, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {0},
-            .numberOfConsumers = 0,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT16_ASYMM,
-            .dimensions = {0, 4},
-            .numberOfConsumers = 1,
-            .scale = 0.125f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_INT32,
-            .dimensions = {0},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_INT32,
-            .dimensions = {0},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {1, 1, 1, 2},
-            .numberOfConsumers = 1,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 34, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 38, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 42, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 46, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 50, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 54, .length = 4},
-        },
-        {
-            .type = OperandType::BOOL,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 58, .length = 1},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {0, 2, 2, 2},
-            .numberOfConsumers = 1,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 59, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 63, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {0, 2, 2, 2},
-            .numberOfConsumers = 0,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
-        },
-        {
-            .type = OperationType::ROI_ALIGN,
-            .inputs = {10, 7, 9, 11, 12, 13, 14, 15, 16, 17},
-            .outputs = {18},
-        },
-        {
-            .type = OperationType::SUB,
-            .inputs = {18, 19, 20},
-            .outputs = {21},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {10};
-    const std::vector<uint32_t> outputIndexes = {6, 8, 21};
-    std::vector<uint8_t> operandValues = {
-      137, 129, 8, 0, 8, 0, 80, 0, 80, 0, 0, 0, 0, 0, 80, 0, 80, 0, 0, 0, 0, 0, 154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64, 4, 0, 0, 0, 4, 0, 0, 0, 0, 138, 148, 158, 168, 0, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_zero_sized_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -2223,7 +986,7 @@ Model createTestModel_zero_sized_float16() {
             .outputs = {18},
         },
         {
-            .type = OperationType::SUB,
+            .type = OperationType::DIV,
             .inputs = {18, 19, 20},
             .outputs = {21},
         }
@@ -2466,7 +1229,7 @@ Model createTestModel_zero_sized_dynamic_output_shape() {
             .outputs = {18},
         },
         {
-            .type = OperationType::SUB,
+            .type = OperationType::DIV,
             .inputs = {18, 19, 20},
             .outputs = {21},
         }
@@ -2709,7 +1472,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_relaxed() {
             .outputs = {18},
         },
         {
-            .type = OperationType::SUB,
+            .type = OperationType::DIV,
             .inputs = {18, 19, 20},
             .outputs = {21},
         }
@@ -2734,249 +1497,6 @@ Model createTestModel_zero_sized_dynamic_output_shape_relaxed() {
 }
 
 inline bool is_ignored_zero_sized_dynamic_output_shape_relaxed(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-// Create the model
-Model createTestModel_zero_sized_dynamic_output_shape_quant8() {
-    const std::vector<Operand> operands = {
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {1, 2},
-            .numberOfConsumers = 1,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 0, .length = 2},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT16_ASYMM,
-            .dimensions = {1, 8},
-            .numberOfConsumers = 1,
-            .scale = 0.125f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 2, .length = 16},
-        },
-        {
-            .type = OperandType::TENSOR_INT32,
-            .dimensions = {1},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 18, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 22, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 26, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 30, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {0},
-            .numberOfConsumers = 0,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT16_ASYMM,
-            .dimensions = {0, 4},
-            .numberOfConsumers = 1,
-            .scale = 0.125f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_INT32,
-            .dimensions = {0},
-            .numberOfConsumers = 0,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_INT32,
-            .dimensions = {0},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {1, 1, 1, 2},
-            .numberOfConsumers = 1,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::MODEL_INPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 34, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 38, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 42, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 46, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 50, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 54, .length = 4},
-        },
-        {
-            .type = OperandType::BOOL,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 58, .length = 1},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {0, 2, 2, 2},
-            .numberOfConsumers = 1,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {1, 2, 2, 1},
-            .numberOfConsumers = 1,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 59, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 63, .length = 4},
-        },
-        {
-            .type = OperandType::TENSOR_QUANT8_ASYMM,
-            .dimensions = {0, 0, 0, 0},
-            .numberOfConsumers = 0,
-            .scale = 0.1f,
-            .zeroPoint = 128,
-            .lifetime = OperandLifeTime::MODEL_OUTPUT,
-            .location = {.poolIndex = 0, .offset = 0, .length = 0},
-        }
-    };
-
-    const std::vector<Operation> operations = {
-        {
-            .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
-        },
-        {
-            .type = OperationType::ROI_ALIGN,
-            .inputs = {10, 7, 9, 11, 12, 13, 14, 15, 16, 17},
-            .outputs = {18},
-        },
-        {
-            .type = OperationType::SUB,
-            .inputs = {18, 19, 20},
-            .outputs = {21},
-        }
-    };
-
-    const std::vector<uint32_t> inputIndexes = {10};
-    const std::vector<uint32_t> outputIndexes = {6, 8, 21};
-    std::vector<uint8_t> operandValues = {
-      137, 129, 8, 0, 8, 0, 80, 0, 80, 0, 0, 0, 0, 0, 80, 0, 80, 0, 0, 0, 0, 0, 154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64, 4, 0, 0, 0, 4, 0, 0, 0, 0, 138, 148, 158, 168, 0, 0, 0, 0
-    };
-    const std::vector<hidl_memory> pools = {};
-
-    return {
-        .operands = operands,
-        .operations = operations,
-        .inputIndexes = inputIndexes,
-        .outputIndexes = outputIndexes,
-        .operandValues = operandValues,
-        .pools = pools,
-    };
-}
-
-inline bool is_ignored_zero_sized_dynamic_output_shape_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
@@ -3196,7 +1716,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_float16() {
             .outputs = {18},
         },
         {
-            .type = OperationType::SUB,
+            .type = OperationType::DIV,
             .inputs = {18, 19, 20},
             .outputs = {21},
         }

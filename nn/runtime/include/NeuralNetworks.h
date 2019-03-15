@@ -213,6 +213,10 @@ typedef enum {
      *     input2.dimension = {5, 4, 3, 1}
      *     output.dimension = {5, 4, 3, 2}
      *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -1439,6 +1443,10 @@ typedef enum {
      * of the input operands. It starts with the trailing dimensions, and works
      * its way forward.
      *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -1583,7 +1591,8 @@ typedef enum {
      *
      * Inputs (resizing by shape):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Since API level 29, zero batches is supported for this
+     *      tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
      *      height of the output tensor.
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
@@ -1594,7 +1603,7 @@ typedef enum {
      *
      * Inputs (resizing by scale, since API level 29):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Zero batches is supported for this tensor.
      * * 1: A scalar, specifying height_scale, the scaling factor of the height
      *      dimension from the input tensor to the output tensor. The output
      *      height is calculated as new_height = floor(height * height_scale).
@@ -1923,6 +1932,10 @@ typedef enum {
      *     input2.dimension = {5, 4, 3, 1}
      *     output.dimension = {5, 4, 3, 2}
      *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -2156,6 +2169,10 @@ typedef enum {
      *     input1.dimension =    {4, 1, 2}
      *     input2.dimension = {5, 4, 3, 1}
      *     output.dimension = {5, 4, 3, 2}
+     *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
@@ -4587,7 +4604,7 @@ typedef enum {
      *
      * Inputs (resizing by shape):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Zero batches is supported for this tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
      *      height of the output tensor.
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
@@ -4597,7 +4614,7 @@ typedef enum {
      *
      * Inputs (resizing by scale):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Zero batches is supported for this tensor.
      * * 1: A scalar, specifying height_scale, the scaling factor of the height
      *      dimension from the input tensor to the output tensor. The output
      *      height is calculated as new_height = floor(height * height_scale).
