@@ -36,6 +36,12 @@ channelQuant8 = DataTypeConverter().Identify({
     b1: ("TENSOR_INT32", 0.0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.005, 0.0025, 0.005, 0.0025], hide=True)),
     o1: ("TENSOR_QUANT8_ASYMM", 0.1, 0)
 })
+channelQuant8_mult_gt_1 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.5, 0),
+    f1: ("TENSOR_QUANT8_SYMM_PER_CHANNEL", 0, 0, SymmPerChannelQuantParams(channelDim=3, scales=[0.01, 0.005, 0.01, 0.005])),
+    b1: ("TENSOR_INT32", 0.0, 0, SymmPerChannelQuantParams(channelDim=0, scales=[0.005, 0.0025, 0.005, 0.0025], hide=True)),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.0001, 0)
+})
 
 # Instantiate an example
 example = Example({
@@ -46,7 +52,7 @@ example = Example({
          11, 3, 7.4, 10.9,
          11, 3, 7.8, 11.5,
          11, 3, 8.0, 11.8]
-}).AddNchw(i1, o1, layout).AddInput(f1, b1).AddVariations("relaxed", "float16", channelQuant8, quant8)
+}).AddNchw(i1, o1, layout).AddInput(f1, b1).AddVariations("relaxed", "float16", channelQuant8, channelQuant8_mult_gt_1, quant8)
 
 
 # TEST 2: DEPTHWISE_CONV2D_NCHW_2, pad = valid, stride = 1, cm = 2, act = none
@@ -134,3 +140,28 @@ example = Example({
          10, 24, 40, 0],
     o4: [6010, 7046, 11000, 9000]
 }).AddNchw(i4, o4, layout).AddInput(f4, b4).AddVariations("relaxed", "float16", quant8, channelQuant8)
+
+# TEST 9: quantized with scale product greater than output scale
+input_scale = 127.5 / 255
+input_zero_point = 127
+filter_scale = 256.5 / 255
+filter_zero_point = 128
+i9 = Input("op1",
+           ("TENSOR_QUANT8_ASYMM", [1, 3, 2, 2], input_scale, input_zero_point))
+f9 = Parameter(
+    "op2",
+    ("TENSOR_QUANT8_ASYMM", [1, 2, 2, 4], filter_scale, filter_zero_point), [
+        129, 130, 131, 132, 119, 138, 117, 140, 133, 134, 135, 136, 141, 114,
+        143, 112
+    ])
+b9 = Parameter("op3", ("TENSOR_INT32", [4], input_scale * filter_scale, 0),
+               [2, 4, 6, 8])
+o9 = Output("op4", ("TENSOR_QUANT8_ASYMM", [1, 2, 1, 4], 1.0, 127))
+model9 = Model().Operation("DEPTHWISE_CONV_2D", i9, f9, b9, 2, 1, 1, 2,
+                           0).To(o9)
+
+# Instantiate an example
+example = Example({
+    i9: [129, 131, 141, 143, 133, 135, 145, 147, 137, 139, 149, 151],
+    o9: [198, 93, 227, 107, 219, 101, 255, 123]
+}, model=model9, name="quant_output_multiplier_gt_1").AddInput(f9, b9).AddVariations("relaxed")

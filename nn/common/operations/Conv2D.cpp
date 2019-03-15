@@ -17,6 +17,7 @@
 #include "CpuOperationUtils.h"
 #include "Operations.h"
 
+#include "Utils.h"
 #include "tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h"
 
 #include "Tracing.h"
@@ -123,11 +124,11 @@ bool convQuant8(const uint8_t* inputData, const Shape& inputShape, const uint8_t
     int32_t output_activation_min = 0;
     int32_t output_activation_max = 0;
 
-    if (!GetQuantizedConvolutionMultipler(inputShape, filterShape, biasShape, outputShape,
-                                          &real_multiplier) ||
-        !QuantizeMultiplierSmallerThanOne(real_multiplier, &output_multiplier, &output_shift)) {
-        return false;
-    }
+    NN_RET_CHECK(GetQuantizedConvolutionMultipler(inputShape, filterShape, biasShape, outputShape,
+                                                  &real_multiplier));
+    int exponent;
+    NN_RET_CHECK(QuantizeMultiplier(real_multiplier, &output_multiplier, &exponent));
+    output_shift = -exponent;
     CalculateActivationRangeUint8(activation, outputShape, &output_activation_min,
                                   &output_activation_max);
 
@@ -209,13 +210,11 @@ bool convQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
         filterChannelShape.scale = filterScales[i];
         Shape biasChannelShape = biasShape;
         biasChannelShape.scale = filterScales[i] * inputShape.scale;
-
-        if (!GetQuantizedConvolutionMultipler(inputShape, filterChannelShape, biasChannelShape,
-                                              outputShape, &realMultiplier[i]) ||
-            !QuantizeMultiplierSmallerThanOne(realMultiplier[i], &outputMultiplier[i],
-                                              &outputShift[i])) {
-            return false;
-        }
+        NN_RET_CHECK(GetQuantizedConvolutionMultipler(
+                inputShape, filterChannelShape, biasChannelShape, outputShape, &realMultiplier[i]));
+        int exponent;
+        NN_RET_CHECK(QuantizeMultiplier(realMultiplier[i], &outputMultiplier[i], &exponent));
+        outputShift[i] = -exponent;
     }
 
     int32_t output_activation_min = 0, output_activation_max = 0;

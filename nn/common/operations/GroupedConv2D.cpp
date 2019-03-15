@@ -112,11 +112,11 @@ bool groupedConvQuant8(const uint8_t* inputData, const Shape& inputShape, const 
     float realMultiplier = 0.0;
     int32_t outputMultiplier = 0;
     int32_t outputShift = 0;
-    if (!GetQuantizedConvolutionMultipler(inputShape, filterShape, biasShape, outputShape,
-                                          &realMultiplier) ||
-        !QuantizeMultiplierSmallerThanOne(realMultiplier, &outputMultiplier, &outputShift)) {
-        return false;
-    }
+    NN_RET_CHECK(GetQuantizedConvolutionMultipler(inputShape, filterShape, biasShape, outputShape,
+                                                  &realMultiplier));
+    int exponent;
+    NN_RET_CHECK(QuantizeMultiplier(realMultiplier, &outputMultiplier, &exponent));
+    outputShift = -exponent;
 
     int32_t output_activation_min = 0, output_activation_max = 0;
     CalculateActivationRangeUint8(activation, outputShape, &output_activation_min,
@@ -197,12 +197,11 @@ bool groupedConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputSha
         Shape biasChannelShape = biasShape;
         biasChannelShape.scale = filterScales[i] * inputShape.scale;
 
-        if (!GetQuantizedConvolutionMultipler(inputShape, filterChannelShape, biasChannelShape,
-                                              outputShape, &realMultiplier[i]) ||
-            !QuantizeMultiplierSmallerThanOne(realMultiplier[i], &outputMultiplier[i],
-                                              &outputShift[i])) {
-            return false;
-        }
+        NN_RET_CHECK(GetQuantizedConvolutionMultipler(
+                inputShape, filterChannelShape, biasChannelShape, outputShape, &realMultiplier[i]));
+        int exponent;
+        NN_RET_CHECK(QuantizeMultiplier(realMultiplier[i], &outputMultiplier[i], &exponent));
+        outputShift[i] = -exponent;
     }
 
     int32_t output_activation_min = 0, output_activation_max = 0;
