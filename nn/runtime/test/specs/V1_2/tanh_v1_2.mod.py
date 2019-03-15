@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2018 The Android Open Source Project
+# Copyright (C) 2019 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,41 +14,39 @@
 # limitations under the License.
 #
 
-i = Input("op1", "TENSOR_FLOAT32", "{2, 2, 2, 5}") # input 0
-o = Output("op2", "TENSOR_FLOAT32", "{2, 2, 2, 5}") # output 0
-axis = Int32Scalar("axis", -1) # last axis
+# TEST 1
+input0 = Input("input0", "TENSOR_FLOAT16", "{1, 2, 2, 1}")
+output0 = Output("output0", "TENSOR_FLOAT16", "{1, 2, 2, 1}")
 
-# Additional data type
-quant8 = DataTypeConverter().Identify({
-    i: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
-    o: ("TENSOR_QUANT8_ASYMM", 1./256, 0)
+model = Model().Operation("TANH", input0).To(output0)
+
+Example({
+    input0: [-1, 0, 1, 10],
+    output0: [-.761594156, 0, .761594156, 0.999999996],
 })
 
-example1 = {
-    i: [1., 2., 3., 4., 5., -1., -2., -3., -4., -5.] * 4,
-    o: [0.011656231, 0.031684921, 0.086128544, 0.234121657, 0.636408647,
-         0.636408647, 0.234121657, 0.086128544, 0.031684921, 0.011656231] * 4
-}
-example2 = {
-    i: [1., 2., 3., 4., 5., -1., -2., -3., -4., -5.] * 4,
-    o: [0.2] * 40
-}
 
-# TEST 1: All dimensions other than 2 or 4, without axis parameter
-# beta = 1.0
-Model().Operation("SOFTMAX", i, 1.0).To(o)
-Example(example1).AddVariations("relaxed", "float16", quant8).AddDims([1, 3], i, o)
-# beta = 0.000001
-Model().Operation("SOFTMAX", i, 0.000001).To(o)
-Example(example2).AddVariations("relaxed", "float16", quant8).AddDims([1, 3], i, o)
+# TEST 2
+input_scale, input_offset = 0.05, 100
+output_scale, output_offset = 1.0 / 128, 128  # Required.
 
-# TEST 2: All dimensions, with all possible axis parameter
-# beta = 1.0
-Model("axis").Operation("SOFTMAX", i, 1.0, axis).To(o)
-Example(example1).AddVariations("relaxed", "float16", quant8).AddAllDimsAndAxis(i, o, axis)
-# beta = 0.000001
-Model("axis").Operation("SOFTMAX", i, 0.000001, axis).To(o)
-Example(example2).AddVariations("relaxed", "float16", quant8).AddAllDimsAndAxis(i, o, axis)
+def dequantize(x):
+  return (x - input_offset) * input_scale
+
+def quantize(x):
+  return max(0, min(255, int(round(x / output_scale)) + output_offset))
+
+input0 = Input("input0", "TENSOR_QUANT8_ASYMM", "{256}, %g, %d" % (input_scale, input_offset))
+output0 = Output("output0", "TENSOR_QUANT8_ASYMM", "{256}, %g, %d" % (output_scale, output_offset))
+model = Model().Operation("TANH", input0).To(output0)
+
+input_values = list(range(256))
+output_values = [quantize(math.tanh(dequantize(x))) for x in input_values]
+
+Example({
+    input0: input_values,
+    output0: output_values,
+})
 
 
 # TEST 3: zero-sized input
@@ -68,9 +66,9 @@ i1 = Input("in", "TENSOR_FLOAT32", "{1, 1, 1, 1}")
 zero_sized = Internal("featureMap", "TENSOR_FLOAT32", "{0, 2, 2, 1}")
 model = model.Operation("ROI_ALIGN", i1, tmp1, tmp2, 2, 2, 2.0, 2.0, 4, 4, layout).To(zero_sized)
 
-# SOFTMAX op with numBatches = 0.
+# TANH op with numBatches = 0.
 o3 = Output("out", "TENSOR_FLOAT32", "{0, 2, 2, 1}") # out
-model = model.Operation("SOFTMAX", zero_sized, 1.0).To(o3)
+model = model.Operation("TANH", zero_sized).To(o3)
 
 quant8 = DataTypeConverter().Identify({
     p1: ("TENSOR_QUANT8_ASYMM", 0.1, 128),
@@ -79,7 +77,7 @@ quant8 = DataTypeConverter().Identify({
     tmp1: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
     i1: ("TENSOR_QUANT8_ASYMM", 0.1, 128),
     zero_sized: ("TENSOR_QUANT8_ASYMM", 0.1, 128),
-    o3: ("TENSOR_QUANT8_ASYMM", 1./256, 0)
+    o3: ("TENSOR_QUANT8_ASYMM", 1.0 / 128, 128)
 })
 
 # Create test case with dummy values.
