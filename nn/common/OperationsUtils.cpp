@@ -323,15 +323,6 @@ bool floorPrepare(const Shape& input, Shape* output) {
     return SetShape(input, output);
 }
 
-bool quantizePrepare(const Shape& input, Shape* output) {
-    if (input.dimensions.size() != output->dimensions.size()) {
-        LOG(ERROR) << "QUANTIZE input and output tensors must have the same rank";
-        return false;
-    }
-    output->dimensions = input.dimensions;
-    return true;
-}
-
 bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
                           int32_t padding_left, int32_t padding_right, int32_t padding_top,
                           int32_t padding_bottom, int32_t stride_width, int32_t stride_height,

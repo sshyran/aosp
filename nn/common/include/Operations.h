@@ -47,10 +47,6 @@ struct Shape;
 bool floorFloat16(const _Float16* inputData, _Float16* outputData, const Shape& shape);
 bool floorFloat32(const float* inputData, float* outputData, const Shape& shape);
 
-bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData, const Shape& outputShape);
-bool quantizeFloat16ToQuant8(const _Float16* inputData, uint8_t* outputData,
-                             const Shape& outputShape);
-
 bool depthwiseConvFloat16(const _Float16* inputData, const Shape& inputShape,
                           const _Float16* filterData, const Shape& filterShape,
                           const _Float16* biasData, const Shape& biasShape, int32_t paddingLeft,
