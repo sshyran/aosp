@@ -336,6 +336,7 @@
 #include "../generated/tests/avg_pool_v1_2.mod.py.cpp"
 #include "../generated/tests/axis_aligned_bbox_transform.mod.py.cpp"
 #include "../generated/tests/batch_to_space_v1_2.mod.py.cpp"
+#include "../generated/tests/bbox_graph.mod.py.cpp"
 #include "../generated/tests/bidirectional_sequence_lstm.mod.py.cpp"
 #include "../generated/tests/bidirectional_sequence_lstm_cifg_peephole.mod.py.cpp"
 #include "../generated/tests/bidirectional_sequence_lstm_float16_batch_major.mod.py.cpp"
