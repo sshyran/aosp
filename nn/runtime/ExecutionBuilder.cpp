@@ -404,7 +404,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
     while (true) {
         std::shared_ptr<StepExecutor> executor;
         VLOG(EXECUTION) << "looking for next StepExecutor";
-        ExecutionBurstController* burstController = nullptr;
+        std::shared_ptr<ExecutionBurstController> burstController = nullptr;
         int n = plan->next(controller, &executor, &burstController);
         if (n != ANEURALNETWORKS_NO_ERROR) {
             if (allowFallback) {
@@ -733,7 +733,7 @@ bool StepExecutor::isCpu() const {
 }
 
 int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback,
-                               ExecutionBurstController* burstController) {
+                               const std::shared_ptr<ExecutionBurstController>& burstController) {
     if (VLOG_IS_ON(EXECUTION)) {
         logArguments("input", mInputs);
         logArguments("output", mOutputs);
@@ -745,8 +745,9 @@ int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback,
     }
 }
 
-int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCallback,
-                                       ExecutionBurstController* burstController) {
+int StepExecutor::startComputeOnDevice(
+        sp<ExecutionCallback>* synchronizationCallback,
+        const std::shared_ptr<ExecutionBurstController>& burstController) {
     CHECK(!isCpu());
 
     *synchronizationCallback = nullptr;
@@ -844,9 +845,11 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
     sp<ExecutionCallback> executionCallback = new ExecutionCallback();
 
     if (burstController != nullptr) {
-        std::vector<intptr_t> memoryIds(mMemories.size());
-        for (size_t i = 0; i < mMemories.size(); ++i) {
-            memoryIds[i] = reinterpret_cast<intptr_t>(mMemories[i]);
+        std::vector<intptr_t> memoryIds;
+        memoryIds.reserve(mMemories.size());
+        for (const Memory* memory : mMemories) {
+            memory->usedBy(burstController);
+            memoryIds.push_back(memory->getKey());
         }
 
         VLOG(EXECUTION) << "Before ExecutionBurstController->compute() "
