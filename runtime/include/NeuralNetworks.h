@@ -709,7 +709,7 @@ typedef enum {
      * Supported tensor rank: up to 4
      *
      * Inputs:
-     * * 0: A tensor.
+     * * 0: A tensor. Since API level 29, this tensor may be zero-sized.
      *
      * Outputs:
      * * 0: A tensor with the same shape as input0.
@@ -3690,7 +3690,7 @@ typedef enum {
      * Supported tensor rank: from 1
      *
      * Inputs:
-     * * 0: A tensor.
+     * * 0: A tensor, may be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0, but with

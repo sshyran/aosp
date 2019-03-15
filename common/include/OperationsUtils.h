@@ -295,8 +295,6 @@ uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape);
 // Preparation functions for the corresponding ops
 bool floorPrepare(const Shape& input, Shape* output);
 
-bool quantizePrepare(const Shape& input, Shape* output);
-
 bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
                           int32_t padding_left, int32_t padding_right, int32_t padding_top,
                           int32_t padding_bottom, int32_t stride_width, int32_t stride_height,

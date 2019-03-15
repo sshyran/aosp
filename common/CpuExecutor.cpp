@@ -710,28 +710,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                                        reinterpret_cast<_Float16*>(output.buffer), outShape);
             }
         } break;
-        case OperationType::QUANTIZE: {
-            if (!allParametersPresent(1, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            RunTimeOperandInfo& output = mOperands[outs[0]];
-            Shape outShape = output.shape();
-
-            if (!quantizePrepare(input.shape(), &outShape) ||
-                !setInfoAndAllocateIfNeeded(&output, outShape, &result)) {
-                break;
-            }
-            if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = quantizeFloat32ToQuant8(reinterpret_cast<const float*>(input.buffer),
-                                                  reinterpret_cast<uint8_t*>(output.buffer),
-                                                  output.shape());
-            } else if (input.type == OperandType::TENSOR_FLOAT16) {
-                success = quantizeFloat16ToQuant8(reinterpret_cast<const _Float16*>(input.buffer),
-                                                  reinterpret_cast<uint8_t*>(output.buffer),
-                                                  output.shape());
-            }
-        } break;
         case OperationType::DEPTHWISE_CONV_2D: {
             const size_t inCount = ins.size();
             if ((inCount != 14 && inCount != 12 && inCount != 11 && inCount != 9 && inCount != 8) ||
