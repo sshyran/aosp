@@ -25,10 +25,12 @@ namespace nn {
 
 // TODO(b/119608412): Find a way to not reference every operation here.
 const OperationRegistration* register_ABS();
+const OperationRegistration* register_AVERAGE_POOL_2D();
 const OperationRegistration* register_AXIS_ALIGNED_BBOX_TRANSFORM();
 const OperationRegistration* register_BIDIRECTIONAL_SEQUENCE_RNN();
 const OperationRegistration* register_BOX_WITH_NMS_LIMIT();
 const OperationRegistration* register_CHANNEL_SHUFFLE();
+const OperationRegistration* register_CONV_2D();
 const OperationRegistration* register_DEQUANTIZE();
 const OperationRegistration* register_DETECTION_POSTPROCESSING();
 const OperationRegistration* register_EQUAL();
@@ -40,6 +42,7 @@ const OperationRegistration* register_GREATER();
 const OperationRegistration* register_GREATER_EQUAL();
 const OperationRegistration* register_HEATMAP_MAX_KEYPOINT();
 const OperationRegistration* register_INSTANCE_NORMALIZATION();
+const OperationRegistration* register_L2_POOL_2D();
 const OperationRegistration* register_LESS();
 const OperationRegistration* register_LESS_EQUAL();
 const OperationRegistration* register_LOG();
@@ -47,6 +50,7 @@ const OperationRegistration* register_LOGICAL_AND();
 const OperationRegistration* register_LOGICAL_NOT();
 const OperationRegistration* register_LOGICAL_OR();
 const OperationRegistration* register_LOG_SOFTMAX();
+const OperationRegistration* register_MAX_POOL_2D();
 const OperationRegistration* register_NEG();
 const OperationRegistration* register_NOT_EQUAL();
 const OperationRegistration* register_PRELU();
@@ -69,10 +73,12 @@ const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_RNN();
 
 BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_ABS());
+    registerOperation(register_AVERAGE_POOL_2D());
     registerOperation(register_AXIS_ALIGNED_BBOX_TRANSFORM());
     registerOperation(register_BIDIRECTIONAL_SEQUENCE_RNN());
     registerOperation(register_BOX_WITH_NMS_LIMIT());
     registerOperation(register_CHANNEL_SHUFFLE());
+    registerOperation(register_CONV_2D());
     registerOperation(register_DEQUANTIZE());
     registerOperation(register_DETECTION_POSTPROCESSING());
     registerOperation(register_EQUAL());
@@ -84,6 +90,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_GREATER_EQUAL());
     registerOperation(register_HEATMAP_MAX_KEYPOINT());
     registerOperation(register_INSTANCE_NORMALIZATION());
+    registerOperation(register_L2_POOL_2D());
     registerOperation(register_LESS());
     registerOperation(register_LESS_EQUAL());
     registerOperation(register_LOG());
@@ -91,6 +98,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_LOGICAL_NOT());
     registerOperation(register_LOGICAL_OR());
     registerOperation(register_LOG_SOFTMAX());
+    registerOperation(register_MAX_POOL_2D());
     registerOperation(register_NEG());
     registerOperation(register_NOT_EQUAL());
     registerOperation(register_PRELU());
