@@ -17569,70 +17569,70 @@ TEST_F(ValidationTest, depthwise_conv2d_v1_2_quant_output_multiplier_gt_1_dynami
 
 
 #endif
-// Generated from: dequantize_1_2.mod.py.
-namespace dequantize_1_2 {
-// Generated dequantize_1_2 test
-#include "examples/dequantize_1_2.example.cpp"
+// Generated from: dequantize_v1_2.mod.py.
+namespace dequantize_v1_2 {
+// Generated dequantize_v1_2 test
+#include "examples/dequantize_v1_2.example.cpp"
 // Generated model constructor
-#include "vts_models/dequantize_1_2.model.cpp"
-} // namespace dequantize_1_2
+#include "vts_models/dequantize_v1_2.model.cpp"
+} // namespace dequantize_v1_2
 
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_1d_quant8_asymm) {
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_1d_quant8_asymm) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel,
-                           dequantize_1_2::is_ignored,
-                           dequantize_1_2::get_examples_1d_quant8_asymm());
+                           dequantize_v1_2::createTestModel,
+                           dequantize_v1_2::is_ignored,
+                           dequantize_v1_2::get_examples_1d_quant8_asymm());
 }
 
-TEST_F(ValidationTest, dequantize_1_2_1d_quant8_asymm) {
-  const Model model = dequantize_1_2::createTestModel();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_1d_quant8_asymm());
+TEST_F(ValidationTest, dequantize_v1_2_1d_quant8_asymm) {
+  const Model model = dequantize_v1_2::createTestModel();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_1d_quant8_asymm());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_1d_quant8_asymm_relaxed) {
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_1d_quant8_asymm_relaxed) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_relaxed,
-                           dequantize_1_2::is_ignored_relaxed,
-                           dequantize_1_2::get_examples_1d_quant8_asymm_relaxed());
+                           dequantize_v1_2::createTestModel_relaxed,
+                           dequantize_v1_2::is_ignored_relaxed,
+                           dequantize_v1_2::get_examples_1d_quant8_asymm_relaxed());
 }
 
-TEST_F(ValidationTest, dequantize_1_2_1d_quant8_asymm_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_relaxed();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_1d_quant8_asymm_relaxed());
+TEST_F(ValidationTest, dequantize_v1_2_1d_quant8_asymm_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_1d_quant8_asymm_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_1d_quant8_asymm_float16) {
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_1d_quant8_asymm_float16) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_float16,
-                           dequantize_1_2::is_ignored_float16,
-                           dequantize_1_2::get_examples_1d_quant8_asymm_float16());
+                           dequantize_v1_2::createTestModel_float16,
+                           dequantize_v1_2::is_ignored_float16,
+                           dequantize_v1_2::get_examples_1d_quant8_asymm_float16());
 }
 
-TEST_F(ValidationTest, dequantize_1_2_1d_quant8_asymm_float16) {
-  const Model model = dequantize_1_2::createTestModel_float16();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_1d_quant8_asymm_float16());
+TEST_F(ValidationTest, dequantize_v1_2_1d_quant8_asymm_float16) {
+  const Model model = dequantize_v1_2::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_1d_quant8_asymm_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_1d_quant8_asymm_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_1d_quant8_asymm_dynamic_output_shape) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape,
-                           dequantize_1_2::is_ignored_dynamic_output_shape,
-                           dequantize_1_2::get_examples_1d_quant8_asymm_dynamic_output_shape(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape,
+                           dequantize_v1_2::get_examples_1d_quant8_asymm_dynamic_output_shape(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_1d_quant8_asymm_dynamic_output_shape) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_1d_quant8_asymm_dynamic_output_shape());
+TEST_F(ValidationTest, dequantize_v1_2_1d_quant8_asymm_dynamic_output_shape) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_1d_quant8_asymm_dynamic_output_shape());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -17640,16 +17640,16 @@ TEST_F(ValidationTest, dequantize_1_2_1d_quant8_asymm_dynamic_output_shape) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_1d_quant8_asymm_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_1d_quant8_asymm_dynamic_output_shape_relaxed) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_relaxed,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_relaxed,
-                           dequantize_1_2::get_examples_1d_quant8_asymm_dynamic_output_shape_relaxed(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_relaxed,
+                           dequantize_v1_2::get_examples_1d_quant8_asymm_dynamic_output_shape_relaxed(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_1d_quant8_asymm_dynamic_output_shape_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_relaxed();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_1d_quant8_asymm_dynamic_output_shape_relaxed());
+TEST_F(ValidationTest, dequantize_v1_2_1d_quant8_asymm_dynamic_output_shape_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_1d_quant8_asymm_dynamic_output_shape_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -17657,95 +17657,78 @@ TEST_F(ValidationTest, dequantize_1_2_1d_quant8_asymm_dynamic_output_shape_relax
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_1d_quant8_asymm_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_1d_quant8_asymm_dynamic_output_shape_float16) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_float16,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_float16,
-                           dequantize_1_2::get_examples_1d_quant8_asymm_dynamic_output_shape_float16(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_float16,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_float16,
+                           dequantize_v1_2::get_examples_1d_quant8_asymm_dynamic_output_shape_float16(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_1d_quant8_asymm_dynamic_output_shape_float16) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_float16();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_1d_quant8_asymm_dynamic_output_shape_float16());
+TEST_F(ValidationTest, dequantize_v1_2_1d_quant8_asymm_dynamic_output_shape_float16) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_1d_quant8_asymm_dynamic_output_shape_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #endif
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_2d_quant8_asymm) {
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_2d_quant8_asymm) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_2,
-                           dequantize_1_2::is_ignored_2,
-                           dequantize_1_2::get_examples_2d_quant8_asymm());
+                           dequantize_v1_2::createTestModel_2,
+                           dequantize_v1_2::is_ignored_2,
+                           dequantize_v1_2::get_examples_2d_quant8_asymm());
 }
 
-TEST_F(ValidationTest, dequantize_1_2_2d_quant8_asymm) {
-  const Model model = dequantize_1_2::createTestModel_2();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_2d_quant8_asymm());
+TEST_F(ValidationTest, dequantize_v1_2_2d_quant8_asymm) {
+  const Model model = dequantize_v1_2::createTestModel_2();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_2d_quant8_asymm());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_2d_quant8_asymm_relaxed) {
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_2d_quant8_asymm_relaxed) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_relaxed_2,
-                           dequantize_1_2::is_ignored_relaxed_2,
-                           dequantize_1_2::get_examples_2d_quant8_asymm_relaxed());
+                           dequantize_v1_2::createTestModel_relaxed_2,
+                           dequantize_v1_2::is_ignored_relaxed_2,
+                           dequantize_v1_2::get_examples_2d_quant8_asymm_relaxed());
 }
 
-TEST_F(ValidationTest, dequantize_1_2_2d_quant8_asymm_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_relaxed_2();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_2d_quant8_asymm_relaxed());
+TEST_F(ValidationTest, dequantize_v1_2_2d_quant8_asymm_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_2d_quant8_asymm_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_2d_quant8_asymm_float16) {
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_2d_quant8_asymm_float16) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_float16_2,
-                           dequantize_1_2::is_ignored_float16_2,
-                           dequantize_1_2::get_examples_2d_quant8_asymm_float16());
+                           dequantize_v1_2::createTestModel_float16_2,
+                           dequantize_v1_2::is_ignored_float16_2,
+                           dequantize_v1_2::get_examples_2d_quant8_asymm_float16());
 }
 
-TEST_F(ValidationTest, dequantize_1_2_2d_quant8_asymm_float16) {
-  const Model model = dequantize_1_2::createTestModel_float16_2();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_2d_quant8_asymm_float16());
+TEST_F(ValidationTest, dequantize_v1_2_2d_quant8_asymm_float16) {
+  const Model model = dequantize_v1_2::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_2d_quant8_asymm_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_2d_quant8_asymm_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_2d_quant8_asymm_dynamic_output_shape) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_2,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_2,
-                           dequantize_1_2::get_examples_2d_quant8_asymm_dynamic_output_shape(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_2,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_2,
+                           dequantize_v1_2::get_examples_2d_quant8_asymm_dynamic_output_shape(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_2d_quant8_asymm_dynamic_output_shape) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_2d_quant8_asymm_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_2d_quant8_asymm_dynamic_output_shape_relaxed) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_relaxed_2,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_relaxed_2,
-                           dequantize_1_2::get_examples_2d_quant8_asymm_dynamic_output_shape_relaxed(), true);
-}
-
-TEST_F(ValidationTest, dequantize_1_2_2d_quant8_asymm_dynamic_output_shape_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_relaxed_2();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_2d_quant8_asymm_dynamic_output_shape_relaxed());
+TEST_F(ValidationTest, dequantize_v1_2_2d_quant8_asymm_dynamic_output_shape) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_2();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_2d_quant8_asymm_dynamic_output_shape());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -17753,78 +17736,16 @@ TEST_F(ValidationTest, dequantize_1_2_2d_quant8_asymm_dynamic_output_shape_relax
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_2d_quant8_asymm_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_2d_quant8_asymm_dynamic_output_shape_relaxed) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_float16_2,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_float16_2,
-                           dequantize_1_2::get_examples_2d_quant8_asymm_dynamic_output_shape_float16(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed_2,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_relaxed_2,
+                           dequantize_v1_2::get_examples_2d_quant8_asymm_dynamic_output_shape_relaxed(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_2d_quant8_asymm_dynamic_output_shape_float16) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_float16_2();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_2d_quant8_asymm_dynamic_output_shape_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_3d_quant8_symm) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_3,
-                           dequantize_1_2::is_ignored_3,
-                           dequantize_1_2::get_examples_3d_quant8_symm());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_quant8_symm) {
-  const Model model = dequantize_1_2::createTestModel_3();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_quant8_symm());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_3d_quant8_symm_relaxed) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_relaxed_3,
-                           dequantize_1_2::is_ignored_relaxed_3,
-                           dequantize_1_2::get_examples_3d_quant8_symm_relaxed());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_quant8_symm_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_relaxed_3();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_quant8_symm_relaxed());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_3d_quant8_symm_float16) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_float16_3,
-                           dequantize_1_2::is_ignored_float16_3,
-                           dequantize_1_2::get_examples_3d_quant8_symm_float16());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_quant8_symm_float16) {
-  const Model model = dequantize_1_2::createTestModel_float16_3();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_quant8_symm_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_3d_quant8_symm_dynamic_output_shape) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_3,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_3,
-                           dequantize_1_2::get_examples_3d_quant8_symm_dynamic_output_shape(), true);
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_quant8_symm_dynamic_output_shape) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_quant8_symm_dynamic_output_shape());
+TEST_F(ValidationTest, dequantize_v1_2_2d_quant8_asymm_dynamic_output_shape_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed_2();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_2d_quant8_asymm_dynamic_output_shape_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -17832,16 +17753,78 @@ TEST_F(ValidationTest, dequantize_1_2_3d_quant8_symm_dynamic_output_shape) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_3d_quant8_symm_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_2d_quant8_asymm_dynamic_output_shape_float16) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_relaxed_3,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_relaxed_3,
-                           dequantize_1_2::get_examples_3d_quant8_symm_dynamic_output_shape_relaxed(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_float16_2,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_float16_2,
+                           dequantize_v1_2::get_examples_2d_quant8_asymm_dynamic_output_shape_float16(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_3d_quant8_symm_dynamic_output_shape_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_relaxed_3();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_quant8_symm_dynamic_output_shape_relaxed());
+TEST_F(ValidationTest, dequantize_v1_2_2d_quant8_asymm_dynamic_output_shape_float16) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_float16_2();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_2d_quant8_asymm_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_3d_quant8_symm) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_3,
+                           dequantize_v1_2::is_ignored_3,
+                           dequantize_v1_2::get_examples_3d_quant8_symm());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_quant8_symm) {
+  const Model model = dequantize_v1_2::createTestModel_3();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_quant8_symm());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_3d_quant8_symm_relaxed) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_relaxed_3,
+                           dequantize_v1_2::is_ignored_relaxed_3,
+                           dequantize_v1_2::get_examples_3d_quant8_symm_relaxed());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_quant8_symm_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_relaxed_3();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_quant8_symm_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_3d_quant8_symm_float16) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_float16_3,
+                           dequantize_v1_2::is_ignored_float16_3,
+                           dequantize_v1_2::get_examples_3d_quant8_symm_float16());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_quant8_symm_float16) {
+  const Model model = dequantize_v1_2::createTestModel_float16_3();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_quant8_symm_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_quant8_symm_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_3,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_3,
+                           dequantize_v1_2::get_examples_3d_quant8_symm_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_quant8_symm_dynamic_output_shape) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_3();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_quant8_symm_dynamic_output_shape());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -17849,78 +17832,16 @@ TEST_F(ValidationTest, dequantize_1_2_3d_quant8_symm_dynamic_output_shape_relaxe
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_3d_quant8_symm_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_quant8_symm_dynamic_output_shape_relaxed) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_float16_3,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_float16_3,
-                           dequantize_1_2::get_examples_3d_quant8_symm_dynamic_output_shape_float16(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed_3,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_relaxed_3,
+                           dequantize_v1_2::get_examples_3d_quant8_symm_dynamic_output_shape_relaxed(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_3d_quant8_symm_dynamic_output_shape_float16) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_float16_3();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_quant8_symm_dynamic_output_shape_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_4d_quant8_symm) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_4,
-                           dequantize_1_2::is_ignored_4,
-                           dequantize_1_2::get_examples_4d_quant8_symm());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_4d_quant8_symm) {
-  const Model model = dequantize_1_2::createTestModel_4();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_4d_quant8_symm());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_4d_quant8_symm_relaxed) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_relaxed_4,
-                           dequantize_1_2::is_ignored_relaxed_4,
-                           dequantize_1_2::get_examples_4d_quant8_symm_relaxed());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_4d_quant8_symm_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_relaxed_4();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_4d_quant8_symm_relaxed());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_4d_quant8_symm_float16) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_float16_4,
-                           dequantize_1_2::is_ignored_float16_4,
-                           dequantize_1_2::get_examples_4d_quant8_symm_float16());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_4d_quant8_symm_float16) {
-  const Model model = dequantize_1_2::createTestModel_float16_4();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_4d_quant8_symm_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_4d_quant8_symm_dynamic_output_shape) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_4,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_4,
-                           dequantize_1_2::get_examples_4d_quant8_symm_dynamic_output_shape(), true);
-}
-
-TEST_F(ValidationTest, dequantize_1_2_4d_quant8_symm_dynamic_output_shape) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_4();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_4d_quant8_symm_dynamic_output_shape());
+TEST_F(ValidationTest, dequantize_v1_2_3d_quant8_symm_dynamic_output_shape_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed_3();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_quant8_symm_dynamic_output_shape_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -17928,16 +17849,78 @@ TEST_F(ValidationTest, dequantize_1_2_4d_quant8_symm_dynamic_output_shape) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_4d_quant8_symm_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_quant8_symm_dynamic_output_shape_float16) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_relaxed_4,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_relaxed_4,
-                           dequantize_1_2::get_examples_4d_quant8_symm_dynamic_output_shape_relaxed(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_float16_3,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_float16_3,
+                           dequantize_v1_2::get_examples_3d_quant8_symm_dynamic_output_shape_float16(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_4d_quant8_symm_dynamic_output_shape_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_relaxed_4();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_4d_quant8_symm_dynamic_output_shape_relaxed());
+TEST_F(ValidationTest, dequantize_v1_2_3d_quant8_symm_dynamic_output_shape_float16) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_float16_3();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_quant8_symm_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_4d_quant8_symm) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_4,
+                           dequantize_v1_2::is_ignored_4,
+                           dequantize_v1_2::get_examples_4d_quant8_symm());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_4d_quant8_symm) {
+  const Model model = dequantize_v1_2::createTestModel_4();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_4d_quant8_symm());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_4d_quant8_symm_relaxed) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_relaxed_4,
+                           dequantize_v1_2::is_ignored_relaxed_4,
+                           dequantize_v1_2::get_examples_4d_quant8_symm_relaxed());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_4d_quant8_symm_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_relaxed_4();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_4d_quant8_symm_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_4d_quant8_symm_float16) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_float16_4,
+                           dequantize_v1_2::is_ignored_float16_4,
+                           dequantize_v1_2::get_examples_4d_quant8_symm_float16());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_4d_quant8_symm_float16) {
+  const Model model = dequantize_v1_2::createTestModel_float16_4();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_4d_quant8_symm_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_4d_quant8_symm_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_4,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_4,
+                           dequantize_v1_2::get_examples_4d_quant8_symm_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_4d_quant8_symm_dynamic_output_shape) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_4();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_4d_quant8_symm_dynamic_output_shape());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -17945,78 +17928,16 @@ TEST_F(ValidationTest, dequantize_1_2_4d_quant8_symm_dynamic_output_shape_relaxe
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_4d_quant8_symm_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_4d_quant8_symm_dynamic_output_shape_relaxed) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_float16_4,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_float16_4,
-                           dequantize_1_2::get_examples_4d_quant8_symm_dynamic_output_shape_float16(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed_4,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_relaxed_4,
+                           dequantize_v1_2::get_examples_4d_quant8_symm_dynamic_output_shape_relaxed(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_4d_quant8_symm_dynamic_output_shape_float16) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_float16_4();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_4d_quant8_symm_dynamic_output_shape_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_3d_per_channel_first_dim) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_5,
-                           dequantize_1_2::is_ignored_5,
-                           dequantize_1_2::get_examples_3d_per_channel_first_dim());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_first_dim) {
-  const Model model = dequantize_1_2::createTestModel_5();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_first_dim());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_3d_per_channel_first_dim_relaxed) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_relaxed_5,
-                           dequantize_1_2::is_ignored_relaxed_5,
-                           dequantize_1_2::get_examples_3d_per_channel_first_dim_relaxed());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_first_dim_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_relaxed_5();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_first_dim_relaxed());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_3d_per_channel_first_dim_float16) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_float16_5,
-                           dequantize_1_2::is_ignored_float16_5,
-                           dequantize_1_2::get_examples_3d_per_channel_first_dim_float16());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_first_dim_float16) {
-  const Model model = dequantize_1_2::createTestModel_float16_5();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_first_dim_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_3d_per_channel_first_dim_dynamic_output_shape) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_5,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_5,
-                           dequantize_1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape(), true);
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_first_dim_dynamic_output_shape) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_5();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape());
+TEST_F(ValidationTest, dequantize_v1_2_4d_quant8_symm_dynamic_output_shape_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed_4();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_4d_quant8_symm_dynamic_output_shape_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -18024,16 +17945,78 @@ TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_first_dim_dynamic_output_sh
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_3d_per_channel_first_dim_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_4d_quant8_symm_dynamic_output_shape_float16) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_relaxed_5,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_relaxed_5,
-                           dequantize_1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape_relaxed(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_float16_4,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_float16_4,
+                           dequantize_v1_2::get_examples_4d_quant8_symm_dynamic_output_shape_float16(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_first_dim_dynamic_output_shape_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_relaxed_5();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape_relaxed());
+TEST_F(ValidationTest, dequantize_v1_2_4d_quant8_symm_dynamic_output_shape_float16) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_float16_4();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_4d_quant8_symm_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_3d_per_channel_first_dim) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_5,
+                           dequantize_v1_2::is_ignored_5,
+                           dequantize_v1_2::get_examples_3d_per_channel_first_dim());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_first_dim) {
+  const Model model = dequantize_v1_2::createTestModel_5();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_first_dim());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_3d_per_channel_first_dim_relaxed) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_relaxed_5,
+                           dequantize_v1_2::is_ignored_relaxed_5,
+                           dequantize_v1_2::get_examples_3d_per_channel_first_dim_relaxed());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_first_dim_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_relaxed_5();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_first_dim_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_3d_per_channel_first_dim_float16) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_float16_5,
+                           dequantize_v1_2::is_ignored_float16_5,
+                           dequantize_v1_2::get_examples_3d_per_channel_first_dim_float16());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_first_dim_float16) {
+  const Model model = dequantize_v1_2::createTestModel_float16_5();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_first_dim_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_per_channel_first_dim_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_5,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_5,
+                           dequantize_v1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_first_dim_dynamic_output_shape) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_5();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -18041,78 +18024,16 @@ TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_first_dim_dynamic_output_sh
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_3d_per_channel_first_dim_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_per_channel_first_dim_dynamic_output_shape_relaxed) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_float16_5,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_float16_5,
-                           dequantize_1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape_float16(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed_5,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_relaxed_5,
+                           dequantize_v1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape_relaxed(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_first_dim_dynamic_output_shape_float16) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_float16_5();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_3d_per_channel_second_dim) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_6,
-                           dequantize_1_2::is_ignored_6,
-                           dequantize_1_2::get_examples_3d_per_channel_second_dim());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_second_dim) {
-  const Model model = dequantize_1_2::createTestModel_6();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_second_dim());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_3d_per_channel_second_dim_relaxed) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_relaxed_6,
-                           dequantize_1_2::is_ignored_relaxed_6,
-                           dequantize_1_2::get_examples_3d_per_channel_second_dim_relaxed());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_second_dim_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_relaxed_6();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_second_dim_relaxed());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, dequantize_1_2_3d_per_channel_second_dim_float16) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_float16_6,
-                           dequantize_1_2::is_ignored_float16_6,
-                           dequantize_1_2::get_examples_3d_per_channel_second_dim_float16());
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_second_dim_float16) {
-  const Model model = dequantize_1_2::createTestModel_float16_6();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_second_dim_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_3d_per_channel_second_dim_dynamic_output_shape) {
-  generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_6,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_6,
-                           dequantize_1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape(), true);
-}
-
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_second_dim_dynamic_output_shape) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_6();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape());
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_first_dim_dynamic_output_shape_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed_5();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -18120,16 +18041,78 @@ TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_second_dim_dynamic_output_s
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_3d_per_channel_second_dim_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_per_channel_first_dim_dynamic_output_shape_float16) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_relaxed_6,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_relaxed_6,
-                           dequantize_1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape_relaxed(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_float16_5,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_float16_5,
+                           dequantize_v1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape_float16(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_second_dim_dynamic_output_shape_relaxed) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_relaxed_6();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape_relaxed());
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_first_dim_dynamic_output_shape_float16) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_float16_5();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_first_dim_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_3d_per_channel_second_dim) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_6,
+                           dequantize_v1_2::is_ignored_6,
+                           dequantize_v1_2::get_examples_3d_per_channel_second_dim());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_second_dim) {
+  const Model model = dequantize_v1_2::createTestModel_6();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_second_dim());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_3d_per_channel_second_dim_relaxed) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_relaxed_6,
+                           dequantize_v1_2::is_ignored_relaxed_6,
+                           dequantize_v1_2::get_examples_3d_per_channel_second_dim_relaxed());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_second_dim_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_relaxed_6();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_second_dim_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_3d_per_channel_second_dim_float16) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_float16_6,
+                           dequantize_v1_2::is_ignored_float16_6,
+                           dequantize_v1_2::get_examples_3d_per_channel_second_dim_float16());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_second_dim_float16) {
+  const Model model = dequantize_v1_2::createTestModel_float16_6();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_second_dim_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_per_channel_second_dim_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_6,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_6,
+                           dequantize_v1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_second_dim_dynamic_output_shape) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_6();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -18137,56 +18120,161 @@ TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_second_dim_dynamic_output_s
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_1_2_3d_per_channel_second_dim_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_per_channel_second_dim_dynamic_output_shape_relaxed) {
   generated_tests::Execute(device,
-                           dequantize_1_2::createTestModel_dynamic_output_shape_float16_6,
-                           dequantize_1_2::is_ignored_dynamic_output_shape_float16_6,
-                           dequantize_1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape_float16(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed_6,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_relaxed_6,
+                           dequantize_v1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape_relaxed(), true);
 }
 
-TEST_F(ValidationTest, dequantize_1_2_3d_per_channel_second_dim_dynamic_output_shape_float16) {
-  const Model model = dequantize_1_2::createTestModel_dynamic_output_shape_float16_6();
-  const std::vector<Request> requests = createRequests(dequantize_1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape_float16());
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_second_dim_dynamic_output_shape_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_relaxed_6();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #endif
-// Generated from: dequantize_float16.mod.py.
-namespace dequantize_float16 {
-// Generated dequantize_float16 test
-#include "examples/dequantize_float16.example.cpp"
-// Generated model constructor
-#include "vts_models/dequantize_float16.model.cpp"
-} // namespace dequantize_float16
-
-TEST_F(NeuralnetworksHidlTest, dequantize_float16) {
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_per_channel_second_dim_dynamic_output_shape_float16) {
   generated_tests::Execute(device,
-                           dequantize_float16::createTestModel,
-                           dequantize_float16::is_ignored,
-                           dequantize_float16::get_examples());
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_float16_6,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_float16_6,
+                           dequantize_v1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape_float16(), true);
 }
 
-TEST_F(ValidationTest, dequantize_float16) {
-  const Model model = dequantize_float16::createTestModel();
-  const std::vector<Request> requests = createRequests(dequantize_float16::get_examples());
+TEST_F(ValidationTest, dequantize_v1_2_3d_per_channel_second_dim_dynamic_output_shape_float16) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_float16_6();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_3d_per_channel_second_dim_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_7,
+                           dequantize_v1_2::is_ignored_7,
+                           dequantize_v1_2::get_examples());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2) {
+  const Model model = dequantize_v1_2::createTestModel_7();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, dequantize_float16_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_dynamic_output_shape) {
   generated_tests::Execute(device,
-                           dequantize_float16::createTestModel_dynamic_output_shape,
-                           dequantize_float16::is_ignored_dynamic_output_shape,
-                           dequantize_float16::get_examples_dynamic_output_shape(), true);
+                           dequantize_v1_2::createTestModel_dynamic_output_shape_7,
+                           dequantize_v1_2::is_ignored_dynamic_output_shape_7,
+                           dequantize_v1_2::get_examples_dynamic_output_shape(), true);
 }
 
-TEST_F(ValidationTest, dequantize_float16_dynamic_output_shape) {
-  const Model model = dequantize_float16::createTestModel_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(dequantize_float16::get_examples_dynamic_output_shape());
+TEST_F(ValidationTest, dequantize_v1_2_dynamic_output_shape) {
+  const Model model = dequantize_v1_2::createTestModel_dynamic_output_shape_7();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_zero_sized) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_zero_sized,
+                           dequantize_v1_2::is_ignored_zero_sized,
+                           dequantize_v1_2::get_examples_zero_sized());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_zero_sized) {
+  const Model model = dequantize_v1_2::createTestModel_zero_sized();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_zero_sized());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_zero_sized_relaxed) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_zero_sized_relaxed,
+                           dequantize_v1_2::is_ignored_zero_sized_relaxed,
+                           dequantize_v1_2::get_examples_zero_sized_relaxed());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_zero_sized_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_zero_sized_relaxed();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_zero_sized_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, dequantize_v1_2_zero_sized_float16) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_zero_sized_float16,
+                           dequantize_v1_2::is_ignored_zero_sized_float16,
+                           dequantize_v1_2::get_examples_zero_sized_float16());
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_zero_sized_float16) {
+  const Model model = dequantize_v1_2::createTestModel_zero_sized_float16();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_zero_sized_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_zero_sized_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_zero_sized_dynamic_output_shape,
+                           dequantize_v1_2::is_ignored_zero_sized_dynamic_output_shape,
+                           dequantize_v1_2::get_examples_zero_sized_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_zero_sized_dynamic_output_shape) {
+  const Model model = dequantize_v1_2::createTestModel_zero_sized_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_zero_sized_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_zero_sized_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_zero_sized_dynamic_output_shape_relaxed,
+                           dequantize_v1_2::is_ignored_zero_sized_dynamic_output_shape_relaxed,
+                           dequantize_v1_2::get_examples_zero_sized_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_zero_sized_dynamic_output_shape_relaxed) {
+  const Model model = dequantize_v1_2::createTestModel_zero_sized_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_zero_sized_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, dequantize_v1_2_zero_sized_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           dequantize_v1_2::createTestModel_zero_sized_dynamic_output_shape_float16,
+                           dequantize_v1_2::is_ignored_zero_sized_dynamic_output_shape_float16,
+                           dequantize_v1_2::get_examples_zero_sized_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, dequantize_v1_2_zero_sized_dynamic_output_shape_float16) {
+  const Model model = dequantize_v1_2::createTestModel_zero_sized_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(dequantize_v1_2::get_examples_zero_sized_dynamic_output_shape_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -47275,6 +47363,102 @@ TEST_F(DynamicOutputShapeTest, quantize_dynamic_output_shape_quant8_8) {
 TEST_F(ValidationTest, quantize_dynamic_output_shape_quant8_8) {
   const Model model = quantize::createTestModel_dynamic_output_shape_quant8_8();
   const std::vector<Request> requests = createRequests(quantize::get_examples_dynamic_output_shape_quant8_8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, quantize_zero_sized) {
+  generated_tests::Execute(device,
+                           quantize::createTestModel_zero_sized,
+                           quantize::is_ignored_zero_sized,
+                           quantize::get_examples_zero_sized());
+}
+
+TEST_F(ValidationTest, quantize_zero_sized) {
+  const Model model = quantize::createTestModel_zero_sized();
+  const std::vector<Request> requests = createRequests(quantize::get_examples_zero_sized());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, quantize_zero_sized_relaxed) {
+  generated_tests::Execute(device,
+                           quantize::createTestModel_zero_sized_relaxed,
+                           quantize::is_ignored_zero_sized_relaxed,
+                           quantize::get_examples_zero_sized_relaxed());
+}
+
+TEST_F(ValidationTest, quantize_zero_sized_relaxed) {
+  const Model model = quantize::createTestModel_zero_sized_relaxed();
+  const std::vector<Request> requests = createRequests(quantize::get_examples_zero_sized_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, quantize_zero_sized_float16) {
+  generated_tests::Execute(device,
+                           quantize::createTestModel_zero_sized_float16,
+                           quantize::is_ignored_zero_sized_float16,
+                           quantize::get_examples_zero_sized_float16());
+}
+
+TEST_F(ValidationTest, quantize_zero_sized_float16) {
+  const Model model = quantize::createTestModel_zero_sized_float16();
+  const std::vector<Request> requests = createRequests(quantize::get_examples_zero_sized_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, quantize_zero_sized_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           quantize::createTestModel_zero_sized_dynamic_output_shape,
+                           quantize::is_ignored_zero_sized_dynamic_output_shape,
+                           quantize::get_examples_zero_sized_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, quantize_zero_sized_dynamic_output_shape) {
+  const Model model = quantize::createTestModel_zero_sized_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(quantize::get_examples_zero_sized_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, quantize_zero_sized_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           quantize::createTestModel_zero_sized_dynamic_output_shape_relaxed,
+                           quantize::is_ignored_zero_sized_dynamic_output_shape_relaxed,
+                           quantize::get_examples_zero_sized_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, quantize_zero_sized_dynamic_output_shape_relaxed) {
+  const Model model = quantize::createTestModel_zero_sized_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(quantize::get_examples_zero_sized_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, quantize_zero_sized_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           quantize::createTestModel_zero_sized_dynamic_output_shape_float16,
+                           quantize::is_ignored_zero_sized_dynamic_output_shape_float16,
+                           quantize::get_examples_zero_sized_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, quantize_zero_sized_dynamic_output_shape_float16) {
+  const Model model = quantize::createTestModel_zero_sized_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(quantize::get_examples_zero_sized_dynamic_output_shape_float16());
   validateModel(model);
   validateRequests(model, requests);
 }

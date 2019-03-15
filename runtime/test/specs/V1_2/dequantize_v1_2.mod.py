@@ -90,3 +90,52 @@ test(
         63., 63.5
     ],
 )
+
+
+# FLOAT16
+model = Model()
+i1 = Input("op1",  "TENSOR_QUANT8_ASYMM", "{1, 2, 2, 1}, 1.f, 0")
+i2 = Output("op2", "TENSOR_FLOAT16", "{1, 2, 2, 1}")
+model = model.Operation("DEQUANTIZE", i1).To(i2)
+
+# Example 1. Input in operand 0,
+input0 = {i1: # input 0
+          [0, 32, 128, 255]}
+
+output0 = {i2: # output 0
+           [0.0, 32.0, 128.0, 255.0]}
+
+# Instantiate an example
+Example((input0, output0))
+
+
+# Zero-sized input
+
+# Use BOX_WITH_NMS_LIMIT op to generate a zero-sized internal tensor for box cooridnates.
+p1 = Parameter("scores", "TENSOR_QUANT8_ASYMM", "{1, 2}, 0.1f, 128", [137, 129]) # scores
+p2 = Parameter("roi", "TENSOR_QUANT16_ASYMM", "{1, 8}, 0.125f, 0", [8, 8, 80, 80, 0, 0, 80, 80]) # roi
+o1 = Output("scoresOut", "TENSOR_QUANT8_ASYMM", "{0}, 0.1f, 128") # scores out
+o2 = Output("classesOut", "TENSOR_INT32", "{0}") # classes out
+tmp1 = Internal("roiOut", "TENSOR_QUANT16_ASYMM", "{0, 4}, 0.125f, 0") # roi out
+tmp2 = Internal("batchSplitOut", "TENSOR_INT32", "{0}") # batch split out
+model = Model("zero_sized").Operation("BOX_WITH_NMS_LIMIT", p1, p2, [0], 0.3, 0.4, -1).To(o1, tmp1, o2, tmp2)
+
+# Use ROI_ALIGN op to convert into zero-sized feature map.
+layout = BoolScalar("layout", False) # NHWC
+i1 = Input("in", "TENSOR_QUANT8_ASYMM", "{1, 1, 1, 1}, 0.1f, 128")
+zero_sized = Internal("featureMap", "TENSOR_QUANT8_ASYMM", "{0, 2, 2, 1}, 0.1f, 128")
+model = model.Operation("ROI_ALIGN", i1, tmp1, tmp2, 2, 2, 2.0, 2.0, 4, 4, layout).To(zero_sized)
+
+# DEQUANTIZE op with numBatches = 0.
+o3 = Output("out", "TENSOR_FLOAT32", "{0, 2, 2, 1}") # out
+model = model.Operation("DEQUANTIZE", zero_sized).To(o3)
+
+float16 = DataTypeConverter().Identify({o3: ("TENSOR_FLOAT16",)})
+
+# Create test case with dummy values.
+Example({
+    i1: [1],
+    o1: [0],
+    o2: [0],
+    o3: [0],
+}).AddVariations("relaxed", float16)

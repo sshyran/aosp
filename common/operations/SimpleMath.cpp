@@ -48,30 +48,6 @@ bool floorFloat32(const float* inputData, float* outputData, const Shape& shape)
     return true;
 }
 
-bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData,
-                             const Shape& outputShape) {
-    NNTRACE_COMP("quantizeFloat32ToQuant8");
-    uint32_t size = getNumberOfElements(outputShape);
-    for (uint32_t i = 0; i < size; ++i) {
-        outputData[i] = static_cast<uint8_t>(std::max<float>(
-                0, std::min<float>(255, outputShape.offset +
-                                                std::round(inputData[i] / outputShape.scale))));
-    }
-    return true;
-}
-
-bool quantizeFloat16ToQuant8(const _Float16* inputData, uint8_t* outputData,
-                             const Shape& outputShape) {
-    NNTRACE_COMP("quantizeFloat16ToQuant8");
-    uint32_t size = getNumberOfElements(outputShape);
-    for (uint32_t i = 0; i < size; ++i) {
-        outputData[i] = static_cast<uint8_t>(std::max<float>(
-                0, std::min<float>(255, outputShape.offset +
-                                                std::round(inputData[i] / outputShape.scale))));
-    }
-    return true;
-}
-
 bool meanFloat16(_Float16* inputData, const Shape& inputShape, const int32_t* axis,
                  const Shape& axisShape, bool keepDims, _Float16* outputData,
                  const Shape& outputShape) {
