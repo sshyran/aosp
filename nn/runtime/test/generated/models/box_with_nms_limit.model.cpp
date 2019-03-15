@@ -83,23 +83,23 @@ inline bool is_ignored_relaxed(int i) {
 }
 
 void CreateModel_float16(Model *model) {
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {19, 12});
-  OperandType type19(Type::TENSOR_FLOAT16, {12, 4});
+  OperandType type11(Type::FLOAT16, {});
+  OperandType type12(Type::TENSOR_FLOAT16, {19, 12});
+  OperandType type13(Type::TENSOR_FLOAT16, {12, 4});
+  OperandType type14(Type::TENSOR_FLOAT16, {19, 3});
+  OperandType type15(Type::TENSOR_FLOAT16, {12});
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type20(Type::TENSOR_FLOAT16, {19, 3});
-  OperandType type21(Type::TENSOR_FLOAT16, {12});
   OperandType type5(Type::TENSOR_INT32, {12});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
-  auto scores = model->addOperand(&type20);
-  auto roi = model->addOperand(&type18);
+  auto scores = model->addOperand(&type14);
+  auto roi = model->addOperand(&type12);
   auto batchSplit = model->addOperand(&type2);
-  auto param = model->addOperand(&type17);
-  auto param1 = model->addOperand(&type17);
+  auto param = model->addOperand(&type11);
+  auto param1 = model->addOperand(&type11);
   auto param2 = model->addOperand(&type7);
-  auto scoresOut = model->addOperand(&type21);
-  auto roiOut = model->addOperand(&type19);
+  auto scoresOut = model->addOperand(&type15);
+  auto roiOut = model->addOperand(&type13);
   auto classesOut = model->addOperand(&type5);
   auto batchSplitOut = model->addOperand(&type5);
   // Phase 2, operations
@@ -123,23 +123,23 @@ inline bool is_ignored_float16(int i) {
 }
 
 void CreateModel_quant8(Model *model) {
+  OperandType type16(Type::TENSOR_QUANT16_ASYMM, {19, 12}, 0.125f, 0);
+  OperandType type17(Type::TENSOR_QUANT16_ASYMM, {12, 4}, 0.125f, 0);
+  OperandType type18(Type::TENSOR_QUANT8_ASYMM, {19, 3}, 0.01f, 0);
+  OperandType type19(Type::TENSOR_QUANT8_ASYMM, {12}, 0.01f, 0);
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type22(Type::TENSOR_QUANT16_ASYMM, {19, 12}, 0.125f, 0);
-  OperandType type23(Type::TENSOR_QUANT16_ASYMM, {12, 4}, 0.125f, 0);
-  OperandType type24(Type::TENSOR_QUANT8_ASYMM, {19, 3}, 0.01f, 0);
-  OperandType type25(Type::TENSOR_QUANT8_ASYMM, {12}, 0.01f, 0);
   OperandType type5(Type::TENSOR_INT32, {12});
   OperandType type6(Type::FLOAT32, {});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
-  auto scores = model->addOperand(&type24);
-  auto roi = model->addOperand(&type22);
+  auto scores = model->addOperand(&type18);
+  auto roi = model->addOperand(&type16);
   auto batchSplit = model->addOperand(&type2);
   auto param = model->addOperand(&type6);
   auto param1 = model->addOperand(&type6);
   auto param2 = model->addOperand(&type7);
-  auto scoresOut = model->addOperand(&type25);
-  auto roiOut = model->addOperand(&type23);
+  auto scoresOut = model->addOperand(&type19);
+  auto roiOut = model->addOperand(&type17);
   auto classesOut = model->addOperand(&type5);
   auto batchSplitOut = model->addOperand(&type5);
   // Phase 2, operations
@@ -165,10 +165,10 @@ inline bool is_ignored_quant8(int i) {
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {19, 3});
   OperandType type1(Type::TENSOR_FLOAT32, {19, 12});
-  OperandType type14(Type::TENSOR_FLOAT32, {0});
-  OperandType type16(Type::TENSOR_INT32, {0});
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type26(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type20(Type::TENSOR_FLOAT32, {0});
+  OperandType type21(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type22(Type::TENSOR_INT32, {0});
   OperandType type6(Type::FLOAT32, {});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
@@ -178,10 +178,10 @@ void CreateModel_dynamic_output_shape(Model *model) {
   auto param = model->addOperand(&type6);
   auto param1 = model->addOperand(&type6);
   auto param2 = model->addOperand(&type7);
-  auto scoresOut = model->addOperand(&type14);
-  auto roiOut = model->addOperand(&type26);
-  auto classesOut = model->addOperand(&type16);
-  auto batchSplitOut = model->addOperand(&type16);
+  auto scoresOut = model->addOperand(&type20);
+  auto roiOut = model->addOperand(&type21);
+  auto classesOut = model->addOperand(&type22);
+  auto batchSplitOut = model->addOperand(&type22);
   // Phase 2, operations
   static float param_init[] = {0.3f};
   model->setOperandValue(param, param_init, sizeof(float) * 1);
@@ -205,10 +205,10 @@ inline bool is_ignored_dynamic_output_shape(int i) {
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {19, 3});
   OperandType type1(Type::TENSOR_FLOAT32, {19, 12});
-  OperandType type14(Type::TENSOR_FLOAT32, {0});
-  OperandType type16(Type::TENSOR_INT32, {0});
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type26(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type20(Type::TENSOR_FLOAT32, {0});
+  OperandType type21(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type22(Type::TENSOR_INT32, {0});
   OperandType type6(Type::FLOAT32, {});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
@@ -218,10 +218,10 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   auto param = model->addOperand(&type6);
   auto param1 = model->addOperand(&type6);
   auto param2 = model->addOperand(&type7);
-  auto scoresOut = model->addOperand(&type14);
-  auto roiOut = model->addOperand(&type26);
-  auto classesOut = model->addOperand(&type16);
-  auto batchSplitOut = model->addOperand(&type16);
+  auto scoresOut = model->addOperand(&type20);
+  auto roiOut = model->addOperand(&type21);
+  auto classesOut = model->addOperand(&type22);
+  auto batchSplitOut = model->addOperand(&type22);
   // Phase 2, operations
   static float param_init[] = {0.3f};
   model->setOperandValue(param, param_init, sizeof(float) * 1);
@@ -245,25 +245,25 @@ inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
 }
 
 void CreateModel_dynamic_output_shape_float16(Model *model) {
-  OperandType type16(Type::TENSOR_INT32, {0});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {19, 12});
+  OperandType type11(Type::FLOAT16, {});
+  OperandType type12(Type::TENSOR_FLOAT16, {19, 12});
+  OperandType type14(Type::TENSOR_FLOAT16, {19, 3});
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type20(Type::TENSOR_FLOAT16, {19, 3});
-  OperandType type27(Type::TENSOR_FLOAT16, {0});
-  OperandType type28(Type::TENSOR_FLOAT16, {0, 0});
+  OperandType type22(Type::TENSOR_INT32, {0});
+  OperandType type23(Type::TENSOR_FLOAT16, {0});
+  OperandType type24(Type::TENSOR_FLOAT16, {0, 0});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
-  auto scores = model->addOperand(&type20);
-  auto roi = model->addOperand(&type18);
+  auto scores = model->addOperand(&type14);
+  auto roi = model->addOperand(&type12);
   auto batchSplit = model->addOperand(&type2);
-  auto param = model->addOperand(&type17);
-  auto param1 = model->addOperand(&type17);
+  auto param = model->addOperand(&type11);
+  auto param1 = model->addOperand(&type11);
   auto param2 = model->addOperand(&type7);
-  auto scoresOut = model->addOperand(&type27);
-  auto roiOut = model->addOperand(&type28);
-  auto classesOut = model->addOperand(&type16);
-  auto batchSplitOut = model->addOperand(&type16);
+  auto scoresOut = model->addOperand(&type23);
+  auto roiOut = model->addOperand(&type24);
+  auto classesOut = model->addOperand(&type22);
+  auto batchSplitOut = model->addOperand(&type22);
   // Phase 2, operations
   static _Float16 param_init[] = {0.30000001192092896f};
   model->setOperandValue(param, param_init, sizeof(_Float16) * 1);
@@ -285,25 +285,25 @@ inline bool is_ignored_dynamic_output_shape_float16(int i) {
 }
 
 void CreateModel_dynamic_output_shape_quant8(Model *model) {
-  OperandType type16(Type::TENSOR_INT32, {0});
+  OperandType type16(Type::TENSOR_QUANT16_ASYMM, {19, 12}, 0.125f, 0);
+  OperandType type18(Type::TENSOR_QUANT8_ASYMM, {19, 3}, 0.01f, 0);
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type22(Type::TENSOR_QUANT16_ASYMM, {19, 12}, 0.125f, 0);
-  OperandType type24(Type::TENSOR_QUANT8_ASYMM, {19, 3}, 0.01f, 0);
-  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {0}, 0.01f, 0);
-  OperandType type30(Type::TENSOR_QUANT16_ASYMM, {0, 0}, 0.125f, 0);
+  OperandType type22(Type::TENSOR_INT32, {0});
+  OperandType type25(Type::TENSOR_QUANT8_ASYMM, {0}, 0.01f, 0);
+  OperandType type26(Type::TENSOR_QUANT16_ASYMM, {0, 0}, 0.125f, 0);
   OperandType type6(Type::FLOAT32, {});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
-  auto scores = model->addOperand(&type24);
-  auto roi = model->addOperand(&type22);
+  auto scores = model->addOperand(&type18);
+  auto roi = model->addOperand(&type16);
   auto batchSplit = model->addOperand(&type2);
   auto param = model->addOperand(&type6);
   auto param1 = model->addOperand(&type6);
   auto param2 = model->addOperand(&type7);
-  auto scoresOut = model->addOperand(&type29);
-  auto roiOut = model->addOperand(&type30);
-  auto classesOut = model->addOperand(&type16);
-  auto batchSplitOut = model->addOperand(&type16);
+  auto scoresOut = model->addOperand(&type25);
+  auto roiOut = model->addOperand(&type26);
+  auto classesOut = model->addOperand(&type22);
+  auto batchSplitOut = model->addOperand(&type22);
   // Phase 2, operations
   static float param_init[] = {0.3f};
   model->setOperandValue(param, param_init, sizeof(float) * 1);
@@ -408,22 +408,22 @@ inline bool is_ignored_relaxed_2(int i) {
 
 void CreateModel_float16_2(Model *model) {
   OperandType type10(Type::TENSOR_INT32, {10});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {19, 12});
+  OperandType type11(Type::FLOAT16, {});
+  OperandType type12(Type::TENSOR_FLOAT16, {19, 12});
+  OperandType type14(Type::TENSOR_FLOAT16, {19, 3});
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type20(Type::TENSOR_FLOAT16, {19, 3});
-  OperandType type31(Type::TENSOR_FLOAT16, {10, 4});
-  OperandType type32(Type::TENSOR_FLOAT16, {10});
+  OperandType type27(Type::TENSOR_FLOAT16, {10, 4});
+  OperandType type28(Type::TENSOR_FLOAT16, {10});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
-  auto scores1 = model->addOperand(&type20);
-  auto roi1 = model->addOperand(&type18);
+  auto scores1 = model->addOperand(&type14);
+  auto roi1 = model->addOperand(&type12);
   auto batchSplit1 = model->addOperand(&type2);
-  auto param3 = model->addOperand(&type17);
-  auto param4 = model->addOperand(&type17);
+  auto param3 = model->addOperand(&type11);
+  auto param4 = model->addOperand(&type11);
   auto param5 = model->addOperand(&type7);
-  auto scoresOut1 = model->addOperand(&type32);
-  auto roiOut1 = model->addOperand(&type31);
+  auto scoresOut1 = model->addOperand(&type28);
+  auto roiOut1 = model->addOperand(&type27);
   auto classesOut1 = model->addOperand(&type10);
   auto batchSplitOut1 = model->addOperand(&type10);
   // Phase 2, operations
@@ -448,22 +448,22 @@ inline bool is_ignored_float16_2(int i) {
 
 void CreateModel_quant8_2(Model *model) {
   OperandType type10(Type::TENSOR_INT32, {10});
+  OperandType type16(Type::TENSOR_QUANT16_ASYMM, {19, 12}, 0.125f, 0);
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type22(Type::TENSOR_QUANT16_ASYMM, {19, 12}, 0.125f, 0);
-  OperandType type33(Type::TENSOR_QUANT16_ASYMM, {10, 4}, 0.125f, 0);
-  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {19, 3}, 0.01f, 128);
-  OperandType type35(Type::TENSOR_QUANT8_ASYMM, {10}, 0.01f, 128);
+  OperandType type29(Type::TENSOR_QUANT16_ASYMM, {10, 4}, 0.125f, 0);
+  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {19, 3}, 0.01f, 128);
+  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {10}, 0.01f, 128);
   OperandType type6(Type::FLOAT32, {});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
-  auto scores1 = model->addOperand(&type34);
-  auto roi1 = model->addOperand(&type22);
+  auto scores1 = model->addOperand(&type30);
+  auto roi1 = model->addOperand(&type16);
   auto batchSplit1 = model->addOperand(&type2);
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto param5 = model->addOperand(&type7);
-  auto scoresOut1 = model->addOperand(&type35);
-  auto roiOut1 = model->addOperand(&type33);
+  auto scoresOut1 = model->addOperand(&type31);
+  auto roiOut1 = model->addOperand(&type29);
   auto classesOut1 = model->addOperand(&type10);
   auto batchSplitOut1 = model->addOperand(&type10);
   // Phase 2, operations
@@ -489,10 +489,10 @@ inline bool is_ignored_quant8_2(int i) {
 void CreateModel_dynamic_output_shape_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {19, 3});
   OperandType type1(Type::TENSOR_FLOAT32, {19, 12});
-  OperandType type14(Type::TENSOR_FLOAT32, {0});
-  OperandType type16(Type::TENSOR_INT32, {0});
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type26(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type20(Type::TENSOR_FLOAT32, {0});
+  OperandType type21(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type22(Type::TENSOR_INT32, {0});
   OperandType type6(Type::FLOAT32, {});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
@@ -502,10 +502,10 @@ void CreateModel_dynamic_output_shape_2(Model *model) {
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto param5 = model->addOperand(&type7);
-  auto scoresOut1 = model->addOperand(&type14);
-  auto roiOut1 = model->addOperand(&type26);
-  auto classesOut1 = model->addOperand(&type16);
-  auto batchSplitOut1 = model->addOperand(&type16);
+  auto scoresOut1 = model->addOperand(&type20);
+  auto roiOut1 = model->addOperand(&type21);
+  auto classesOut1 = model->addOperand(&type22);
+  auto batchSplitOut1 = model->addOperand(&type22);
   // Phase 2, operations
   static float param3_init[] = {0.3f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -529,10 +529,10 @@ inline bool is_ignored_dynamic_output_shape_2(int i) {
 void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {19, 3});
   OperandType type1(Type::TENSOR_FLOAT32, {19, 12});
-  OperandType type14(Type::TENSOR_FLOAT32, {0});
-  OperandType type16(Type::TENSOR_INT32, {0});
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type26(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type20(Type::TENSOR_FLOAT32, {0});
+  OperandType type21(Type::TENSOR_FLOAT32, {0, 0});
+  OperandType type22(Type::TENSOR_INT32, {0});
   OperandType type6(Type::FLOAT32, {});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
@@ -542,10 +542,10 @@ void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto param5 = model->addOperand(&type7);
-  auto scoresOut1 = model->addOperand(&type14);
-  auto roiOut1 = model->addOperand(&type26);
-  auto classesOut1 = model->addOperand(&type16);
-  auto batchSplitOut1 = model->addOperand(&type16);
+  auto scoresOut1 = model->addOperand(&type20);
+  auto roiOut1 = model->addOperand(&type21);
+  auto classesOut1 = model->addOperand(&type22);
+  auto batchSplitOut1 = model->addOperand(&type22);
   // Phase 2, operations
   static float param3_init[] = {0.3f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -569,25 +569,25 @@ inline bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
 }
 
 void CreateModel_dynamic_output_shape_float16_2(Model *model) {
-  OperandType type16(Type::TENSOR_INT32, {0});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type18(Type::TENSOR_FLOAT16, {19, 12});
+  OperandType type11(Type::FLOAT16, {});
+  OperandType type12(Type::TENSOR_FLOAT16, {19, 12});
+  OperandType type14(Type::TENSOR_FLOAT16, {19, 3});
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type20(Type::TENSOR_FLOAT16, {19, 3});
-  OperandType type27(Type::TENSOR_FLOAT16, {0});
-  OperandType type28(Type::TENSOR_FLOAT16, {0, 0});
+  OperandType type22(Type::TENSOR_INT32, {0});
+  OperandType type23(Type::TENSOR_FLOAT16, {0});
+  OperandType type24(Type::TENSOR_FLOAT16, {0, 0});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
-  auto scores1 = model->addOperand(&type20);
-  auto roi1 = model->addOperand(&type18);
+  auto scores1 = model->addOperand(&type14);
+  auto roi1 = model->addOperand(&type12);
   auto batchSplit1 = model->addOperand(&type2);
-  auto param3 = model->addOperand(&type17);
-  auto param4 = model->addOperand(&type17);
+  auto param3 = model->addOperand(&type11);
+  auto param4 = model->addOperand(&type11);
   auto param5 = model->addOperand(&type7);
-  auto scoresOut1 = model->addOperand(&type27);
-  auto roiOut1 = model->addOperand(&type28);
-  auto classesOut1 = model->addOperand(&type16);
-  auto batchSplitOut1 = model->addOperand(&type16);
+  auto scoresOut1 = model->addOperand(&type23);
+  auto roiOut1 = model->addOperand(&type24);
+  auto classesOut1 = model->addOperand(&type22);
+  auto batchSplitOut1 = model->addOperand(&type22);
   // Phase 2, operations
   static _Float16 param3_init[] = {0.30000001192092896f};
   model->setOperandValue(param3, param3_init, sizeof(_Float16) * 1);
@@ -609,25 +609,25 @@ inline bool is_ignored_dynamic_output_shape_float16_2(int i) {
 }
 
 void CreateModel_dynamic_output_shape_quant8_2(Model *model) {
-  OperandType type16(Type::TENSOR_INT32, {0});
+  OperandType type16(Type::TENSOR_QUANT16_ASYMM, {19, 12}, 0.125f, 0);
   OperandType type2(Type::TENSOR_INT32, {19});
-  OperandType type22(Type::TENSOR_QUANT16_ASYMM, {19, 12}, 0.125f, 0);
-  OperandType type30(Type::TENSOR_QUANT16_ASYMM, {0, 0}, 0.125f, 0);
-  OperandType type34(Type::TENSOR_QUANT8_ASYMM, {19, 3}, 0.01f, 128);
-  OperandType type36(Type::TENSOR_QUANT8_ASYMM, {0}, 0.01f, 128);
+  OperandType type22(Type::TENSOR_INT32, {0});
+  OperandType type26(Type::TENSOR_QUANT16_ASYMM, {0, 0}, 0.125f, 0);
+  OperandType type30(Type::TENSOR_QUANT8_ASYMM, {19, 3}, 0.01f, 128);
+  OperandType type32(Type::TENSOR_QUANT8_ASYMM, {0}, 0.01f, 128);
   OperandType type6(Type::FLOAT32, {});
   OperandType type7(Type::INT32, {});
   // Phase 1, operands
-  auto scores1 = model->addOperand(&type34);
-  auto roi1 = model->addOperand(&type22);
+  auto scores1 = model->addOperand(&type30);
+  auto roi1 = model->addOperand(&type16);
   auto batchSplit1 = model->addOperand(&type2);
   auto param3 = model->addOperand(&type6);
   auto param4 = model->addOperand(&type6);
   auto param5 = model->addOperand(&type7);
-  auto scoresOut1 = model->addOperand(&type36);
-  auto roiOut1 = model->addOperand(&type30);
-  auto classesOut1 = model->addOperand(&type16);
-  auto batchSplitOut1 = model->addOperand(&type16);
+  auto scoresOut1 = model->addOperand(&type32);
+  auto roiOut1 = model->addOperand(&type26);
+  auto classesOut1 = model->addOperand(&type22);
+  auto batchSplitOut1 = model->addOperand(&type22);
   // Phase 2, operations
   static float param3_init[] = {0.3f};
   model->setOperandValue(param3, param3_init, sizeof(float) * 1);
@@ -644,330 +644,6 @@ void CreateModel_dynamic_output_shape_quant8_2(Model *model) {
 }
 
 inline bool is_ignored_dynamic_output_shape_quant8_2(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_3(Model *model) {
-  OperandType type11(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type12(Type::TENSOR_FLOAT32, {2, 12});
-  OperandType type13(Type::TENSOR_INT32, {2});
-  OperandType type14(Type::TENSOR_FLOAT32, {0});
-  OperandType type15(Type::TENSOR_FLOAT32, {0, 4});
-  OperandType type16(Type::TENSOR_INT32, {0});
-  OperandType type6(Type::FLOAT32, {});
-  OperandType type7(Type::INT32, {});
-  // Phase 1, operands
-  auto scores2 = model->addOperand(&type11);
-  auto roi2 = model->addOperand(&type12);
-  auto batchSplit2 = model->addOperand(&type13);
-  auto param6 = model->addOperand(&type6);
-  auto param7 = model->addOperand(&type6);
-  auto param8 = model->addOperand(&type7);
-  auto scoresOut2 = model->addOperand(&type14);
-  auto roiOut2 = model->addOperand(&type15);
-  auto classesOut2 = model->addOperand(&type16);
-  auto batchSplitOut2 = model->addOperand(&type16);
-  // Phase 2, operations
-  static float param6_init[] = {0.3f};
-  model->setOperandValue(param6, param6_init, sizeof(float) * 1);
-  static float param7_init[] = {0.4f};
-  model->setOperandValue(param7, param7_init, sizeof(float) * 1);
-  static int32_t param8_init[] = {-1};
-  model->setOperandValue(param8, param8_init, sizeof(int32_t) * 1);
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores2, roi2, batchSplit2, param6, param7, param8}, {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {scores2, roi2, batchSplit2},
-    {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  assert(model->isValid());
-}
-
-inline bool is_ignored_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_relaxed_3(Model *model) {
-  OperandType type11(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type12(Type::TENSOR_FLOAT32, {2, 12});
-  OperandType type13(Type::TENSOR_INT32, {2});
-  OperandType type14(Type::TENSOR_FLOAT32, {0});
-  OperandType type15(Type::TENSOR_FLOAT32, {0, 4});
-  OperandType type16(Type::TENSOR_INT32, {0});
-  OperandType type6(Type::FLOAT32, {});
-  OperandType type7(Type::INT32, {});
-  // Phase 1, operands
-  auto scores2 = model->addOperand(&type11);
-  auto roi2 = model->addOperand(&type12);
-  auto batchSplit2 = model->addOperand(&type13);
-  auto param6 = model->addOperand(&type6);
-  auto param7 = model->addOperand(&type6);
-  auto param8 = model->addOperand(&type7);
-  auto scoresOut2 = model->addOperand(&type14);
-  auto roiOut2 = model->addOperand(&type15);
-  auto classesOut2 = model->addOperand(&type16);
-  auto batchSplitOut2 = model->addOperand(&type16);
-  // Phase 2, operations
-  static float param6_init[] = {0.3f};
-  model->setOperandValue(param6, param6_init, sizeof(float) * 1);
-  static float param7_init[] = {0.4f};
-  model->setOperandValue(param7, param7_init, sizeof(float) * 1);
-  static int32_t param8_init[] = {-1};
-  model->setOperandValue(param8, param8_init, sizeof(int32_t) * 1);
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores2, roi2, batchSplit2, param6, param7, param8}, {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {scores2, roi2, batchSplit2},
-    {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  // Phase 4: set relaxed execution
-  model->relaxComputationFloat32toFloat16(true);
-  assert(model->isValid());
-}
-
-inline bool is_ignored_relaxed_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_float16_3(Model *model) {
-  OperandType type13(Type::TENSOR_INT32, {2});
-  OperandType type16(Type::TENSOR_INT32, {0});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type37(Type::TENSOR_FLOAT16, {2, 12});
-  OperandType type38(Type::TENSOR_FLOAT16, {0, 4});
-  OperandType type39(Type::TENSOR_FLOAT16, {2, 3});
-  OperandType type40(Type::TENSOR_FLOAT16, {0});
-  OperandType type7(Type::INT32, {});
-  // Phase 1, operands
-  auto scores2 = model->addOperand(&type39);
-  auto roi2 = model->addOperand(&type37);
-  auto batchSplit2 = model->addOperand(&type13);
-  auto param6 = model->addOperand(&type17);
-  auto param7 = model->addOperand(&type17);
-  auto param8 = model->addOperand(&type7);
-  auto scoresOut2 = model->addOperand(&type40);
-  auto roiOut2 = model->addOperand(&type38);
-  auto classesOut2 = model->addOperand(&type16);
-  auto batchSplitOut2 = model->addOperand(&type16);
-  // Phase 2, operations
-  static _Float16 param6_init[] = {0.30000001192092896f};
-  model->setOperandValue(param6, param6_init, sizeof(_Float16) * 1);
-  static _Float16 param7_init[] = {0.4000000059604645f};
-  model->setOperandValue(param7, param7_init, sizeof(_Float16) * 1);
-  static int32_t param8_init[] = {-1};
-  model->setOperandValue(param8, param8_init, sizeof(int32_t) * 1);
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores2, roi2, batchSplit2, param6, param7, param8}, {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {scores2, roi2, batchSplit2},
-    {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  assert(model->isValid());
-}
-
-inline bool is_ignored_float16_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_quant8_3(Model *model) {
-  OperandType type13(Type::TENSOR_INT32, {2});
-  OperandType type16(Type::TENSOR_INT32, {0});
-  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {0}, 0.01f, 0);
-  OperandType type41(Type::TENSOR_QUANT16_ASYMM, {2, 12}, 0.125f, 0);
-  OperandType type42(Type::TENSOR_QUANT16_ASYMM, {0, 4}, 0.125f, 0);
-  OperandType type43(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 0.01f, 0);
-  OperandType type6(Type::FLOAT32, {});
-  OperandType type7(Type::INT32, {});
-  // Phase 1, operands
-  auto scores2 = model->addOperand(&type43);
-  auto roi2 = model->addOperand(&type41);
-  auto batchSplit2 = model->addOperand(&type13);
-  auto param6 = model->addOperand(&type6);
-  auto param7 = model->addOperand(&type6);
-  auto param8 = model->addOperand(&type7);
-  auto scoresOut2 = model->addOperand(&type29);
-  auto roiOut2 = model->addOperand(&type42);
-  auto classesOut2 = model->addOperand(&type16);
-  auto batchSplitOut2 = model->addOperand(&type16);
-  // Phase 2, operations
-  static float param6_init[] = {0.3f};
-  model->setOperandValue(param6, param6_init, sizeof(float) * 1);
-  static float param7_init[] = {0.4f};
-  model->setOperandValue(param7, param7_init, sizeof(float) * 1);
-  static int32_t param8_init[] = {-1};
-  model->setOperandValue(param8, param8_init, sizeof(int32_t) * 1);
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores2, roi2, batchSplit2, param6, param7, param8}, {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {scores2, roi2, batchSplit2},
-    {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  assert(model->isValid());
-}
-
-inline bool is_ignored_quant8_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_dynamic_output_shape_3(Model *model) {
-  OperandType type11(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type12(Type::TENSOR_FLOAT32, {2, 12});
-  OperandType type13(Type::TENSOR_INT32, {2});
-  OperandType type14(Type::TENSOR_FLOAT32, {0});
-  OperandType type16(Type::TENSOR_INT32, {0});
-  OperandType type26(Type::TENSOR_FLOAT32, {0, 0});
-  OperandType type6(Type::FLOAT32, {});
-  OperandType type7(Type::INT32, {});
-  // Phase 1, operands
-  auto scores2 = model->addOperand(&type11);
-  auto roi2 = model->addOperand(&type12);
-  auto batchSplit2 = model->addOperand(&type13);
-  auto param6 = model->addOperand(&type6);
-  auto param7 = model->addOperand(&type6);
-  auto param8 = model->addOperand(&type7);
-  auto scoresOut2 = model->addOperand(&type14);
-  auto roiOut2 = model->addOperand(&type26);
-  auto classesOut2 = model->addOperand(&type16);
-  auto batchSplitOut2 = model->addOperand(&type16);
-  // Phase 2, operations
-  static float param6_init[] = {0.3f};
-  model->setOperandValue(param6, param6_init, sizeof(float) * 1);
-  static float param7_init[] = {0.4f};
-  model->setOperandValue(param7, param7_init, sizeof(float) * 1);
-  static int32_t param8_init[] = {-1};
-  model->setOperandValue(param8, param8_init, sizeof(int32_t) * 1);
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores2, roi2, batchSplit2, param6, param7, param8}, {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {scores2, roi2, batchSplit2},
-    {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  assert(model->isValid());
-}
-
-inline bool is_ignored_dynamic_output_shape_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_dynamic_output_shape_relaxed_3(Model *model) {
-  OperandType type11(Type::TENSOR_FLOAT32, {2, 3});
-  OperandType type12(Type::TENSOR_FLOAT32, {2, 12});
-  OperandType type13(Type::TENSOR_INT32, {2});
-  OperandType type14(Type::TENSOR_FLOAT32, {0});
-  OperandType type16(Type::TENSOR_INT32, {0});
-  OperandType type26(Type::TENSOR_FLOAT32, {0, 0});
-  OperandType type6(Type::FLOAT32, {});
-  OperandType type7(Type::INT32, {});
-  // Phase 1, operands
-  auto scores2 = model->addOperand(&type11);
-  auto roi2 = model->addOperand(&type12);
-  auto batchSplit2 = model->addOperand(&type13);
-  auto param6 = model->addOperand(&type6);
-  auto param7 = model->addOperand(&type6);
-  auto param8 = model->addOperand(&type7);
-  auto scoresOut2 = model->addOperand(&type14);
-  auto roiOut2 = model->addOperand(&type26);
-  auto classesOut2 = model->addOperand(&type16);
-  auto batchSplitOut2 = model->addOperand(&type16);
-  // Phase 2, operations
-  static float param6_init[] = {0.3f};
-  model->setOperandValue(param6, param6_init, sizeof(float) * 1);
-  static float param7_init[] = {0.4f};
-  model->setOperandValue(param7, param7_init, sizeof(float) * 1);
-  static int32_t param8_init[] = {-1};
-  model->setOperandValue(param8, param8_init, sizeof(int32_t) * 1);
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores2, roi2, batchSplit2, param6, param7, param8}, {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {scores2, roi2, batchSplit2},
-    {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  // Phase 4: set relaxed execution
-  model->relaxComputationFloat32toFloat16(true);
-  assert(model->isValid());
-}
-
-inline bool is_ignored_dynamic_output_shape_relaxed_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_dynamic_output_shape_float16_3(Model *model) {
-  OperandType type13(Type::TENSOR_INT32, {2});
-  OperandType type16(Type::TENSOR_INT32, {0});
-  OperandType type17(Type::FLOAT16, {});
-  OperandType type27(Type::TENSOR_FLOAT16, {0});
-  OperandType type28(Type::TENSOR_FLOAT16, {0, 0});
-  OperandType type37(Type::TENSOR_FLOAT16, {2, 12});
-  OperandType type39(Type::TENSOR_FLOAT16, {2, 3});
-  OperandType type7(Type::INT32, {});
-  // Phase 1, operands
-  auto scores2 = model->addOperand(&type39);
-  auto roi2 = model->addOperand(&type37);
-  auto batchSplit2 = model->addOperand(&type13);
-  auto param6 = model->addOperand(&type17);
-  auto param7 = model->addOperand(&type17);
-  auto param8 = model->addOperand(&type7);
-  auto scoresOut2 = model->addOperand(&type27);
-  auto roiOut2 = model->addOperand(&type28);
-  auto classesOut2 = model->addOperand(&type16);
-  auto batchSplitOut2 = model->addOperand(&type16);
-  // Phase 2, operations
-  static _Float16 param6_init[] = {0.30000001192092896f};
-  model->setOperandValue(param6, param6_init, sizeof(_Float16) * 1);
-  static _Float16 param7_init[] = {0.4000000059604645f};
-  model->setOperandValue(param7, param7_init, sizeof(_Float16) * 1);
-  static int32_t param8_init[] = {-1};
-  model->setOperandValue(param8, param8_init, sizeof(int32_t) * 1);
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores2, roi2, batchSplit2, param6, param7, param8}, {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {scores2, roi2, batchSplit2},
-    {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  assert(model->isValid());
-}
-
-inline bool is_ignored_dynamic_output_shape_float16_3(int i) {
-  static std::set<int> ignore = {};
-  return ignore.find(i) != ignore.end();
-}
-
-void CreateModel_dynamic_output_shape_quant8_3(Model *model) {
-  OperandType type13(Type::TENSOR_INT32, {2});
-  OperandType type16(Type::TENSOR_INT32, {0});
-  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {0}, 0.01f, 0);
-  OperandType type30(Type::TENSOR_QUANT16_ASYMM, {0, 0}, 0.125f, 0);
-  OperandType type41(Type::TENSOR_QUANT16_ASYMM, {2, 12}, 0.125f, 0);
-  OperandType type43(Type::TENSOR_QUANT8_ASYMM, {2, 3}, 0.01f, 0);
-  OperandType type6(Type::FLOAT32, {});
-  OperandType type7(Type::INT32, {});
-  // Phase 1, operands
-  auto scores2 = model->addOperand(&type43);
-  auto roi2 = model->addOperand(&type41);
-  auto batchSplit2 = model->addOperand(&type13);
-  auto param6 = model->addOperand(&type6);
-  auto param7 = model->addOperand(&type6);
-  auto param8 = model->addOperand(&type7);
-  auto scoresOut2 = model->addOperand(&type29);
-  auto roiOut2 = model->addOperand(&type30);
-  auto classesOut2 = model->addOperand(&type16);
-  auto batchSplitOut2 = model->addOperand(&type16);
-  // Phase 2, operations
-  static float param6_init[] = {0.3f};
-  model->setOperandValue(param6, param6_init, sizeof(float) * 1);
-  static float param7_init[] = {0.4f};
-  model->setOperandValue(param7, param7_init, sizeof(float) * 1);
-  static int32_t param8_init[] = {-1};
-  model->setOperandValue(param8, param8_init, sizeof(int32_t) * 1);
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores2, roi2, batchSplit2, param6, param7, param8}, {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  // Phase 3, inputs and outputs
-  model->identifyInputsAndOutputs(
-    {scores2, roi2, batchSplit2},
-    {scoresOut2, roiOut2, classesOut2, batchSplitOut2});
-  assert(model->isValid());
-}
-
-inline bool is_ignored_dynamic_output_shape_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
