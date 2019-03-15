@@ -51,6 +51,7 @@ const OperationRegistration* register_LOG();
 const OperationRegistration* register_LOGICAL_AND();
 const OperationRegistration* register_LOGICAL_NOT();
 const OperationRegistration* register_LOGICAL_OR();
+const OperationRegistration* register_LOGISTIC();
 const OperationRegistration* register_LOG_SOFTMAX();
 const OperationRegistration* register_MAX_POOL_2D();
 const OperationRegistration* register_MUL();
@@ -63,6 +64,9 @@ const OperationRegistration* register_REDUCE_MAX();
 const OperationRegistration* register_REDUCE_MIN();
 const OperationRegistration* register_REDUCE_PROD();
 const OperationRegistration* register_REDUCE_SUM();
+const OperationRegistration* register_RELU();
+const OperationRegistration* register_RELU1();
+const OperationRegistration* register_RELU6();
 const OperationRegistration* register_RESIZE_BILINEAR();
 const OperationRegistration* register_RESIZE_NEAREST_NEIGHBOR();
 const OperationRegistration* register_ROI_ALIGN();
@@ -70,8 +74,10 @@ const OperationRegistration* register_ROI_POOLING();
 const OperationRegistration* register_RSQRT();
 const OperationRegistration* register_SELECT();
 const OperationRegistration* register_SIN();
+const OperationRegistration* register_SOFTMAX();
 const OperationRegistration* register_SQRT();
 const OperationRegistration* register_SUB();
+const OperationRegistration* register_TANH();
 const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_LSTM();
 const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_RNN();
 
@@ -103,6 +109,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_LOGICAL_AND());
     registerOperation(register_LOGICAL_NOT());
     registerOperation(register_LOGICAL_OR());
+    registerOperation(register_LOGISTIC());
     registerOperation(register_LOG_SOFTMAX());
     registerOperation(register_MAX_POOL_2D());
     registerOperation(register_MUL());
@@ -115,6 +122,9 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_REDUCE_MIN());
     registerOperation(register_REDUCE_PROD());
     registerOperation(register_REDUCE_SUM());
+    registerOperation(register_RELU());
+    registerOperation(register_RELU1());
+    registerOperation(register_RELU6());
     registerOperation(register_RESIZE_BILINEAR());
     registerOperation(register_RESIZE_NEAREST_NEIGHBOR());
     registerOperation(register_ROI_ALIGN());
@@ -122,8 +132,10 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_RSQRT());
     registerOperation(register_SELECT());
     registerOperation(register_SIN());
+    registerOperation(register_SOFTMAX());
     registerOperation(register_SQRT());
     registerOperation(register_SUB());
+    registerOperation(register_TANH());
     registerOperation(register_UNIDIRECTIONAL_SEQUENCE_LSTM());
     registerOperation(register_UNIDIRECTIONAL_SEQUENCE_RNN());
 }

@@ -1060,7 +1060,8 @@ typedef enum {
      * Supported tensor rank: up to 4.
      *
      * Inputs:
-     * * 0: A tensor, specifying the input.
+     * * 0: A tensor, specifying the input. Since API level 29, this tensor may
+     *      be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1486,7 +1487,8 @@ typedef enum {
      * Supported tensor rank: up to 4.
      *
      * Inputs:
-     * * 0: A tensor, specifying the input.
+     * * 0: A tensor, specifying the input. Since API level 29, this tensor may
+     *      be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1510,7 +1512,8 @@ typedef enum {
      * Supported tensor rank: up to 4.
      *
      * Inputs:
-     * * 0: A tensor, specifying the input.
+     * * 0: A tensor, specifying the input. Since API level 29, this tensor may
+     *      be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1534,7 +1537,8 @@ typedef enum {
      * Supported tensor rank: up to 4.
      *
      * Inputs:
-     * * 0: A tensor, specifying the input.
+     * * 0: A tensor, specifying the input. Since API level 29, this tensor may
+     *      be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1703,7 +1707,8 @@ typedef enum {
      * Tensors with rank other than 2 or 4 are only supported since API level 29.
      *
      * Inputs:
-     * * 0: A 2-D or 4-D tensor, specifying the tensor to be reshaped.
+     * * 0: A 2-D or 4-D tensor, specifying the tensor to be reshaped. Since
+     *      API level 29, this tensor may be zero-sized.
      * * 1: A scalar, specifying the positive scaling factor for the exponent,
      *      beta. If input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the scalar must be of
@@ -1861,7 +1866,8 @@ typedef enum {
      * Supported tensor rank: up to 4.
      *
      * Inputs:
-     * * 0: A tensor, specifying the input.
+     * * 0: A tensor, specifying the input. Since API level 29, this tensor may
+     *      be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
