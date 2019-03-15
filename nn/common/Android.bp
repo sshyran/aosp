@@ -43,6 +43,7 @@ cc_defaults {
         "operations/Neg.cpp",
         "operations/Pooling.cpp",
         "operations/PRelu.cpp",
+        "operations/Quantize.cpp",
         "operations/Reduce.cpp",
         "operations/ResizeImageOps.cpp",
         "operations/RoiAlign.cpp",
