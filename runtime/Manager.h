@@ -45,9 +45,9 @@ class Device {
     virtual hidl_vec<Extension> getSupportedExtensions() const = 0;
     virtual void getSupportedOperations(const Model& hidlModel,
                                         hidl_vec<bool>* supportedOperations) = 0;
-    virtual PerformanceInfo getFloat32Performance() const = 0;
-    virtual PerformanceInfo getQuantized8Performance() const = 0;
-    virtual PerformanceInfo getRelaxedFloat32toFloat16Performance() const = 0;
+    virtual PerformanceInfo getPerformance(OperandType type) const = 0;
+    virtual PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
+    virtual PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const = 0;
     virtual std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const = 0;
     bool isCachingSupported() const;
 

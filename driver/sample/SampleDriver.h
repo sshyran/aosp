@@ -44,6 +44,7 @@ class SampleDriver : public IDevice {
     }
     ~SampleDriver() override {}
     Return<void> getCapabilities(getCapabilities_cb cb) override;
+    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb cb) override;
     Return<void> getVersionString(getVersionString_cb cb) override;
     Return<void> getType(getType_cb cb) override;
     Return<void> getSupportedExtensions(getSupportedExtensions_cb) override;

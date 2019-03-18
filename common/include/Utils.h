@@ -154,6 +154,22 @@ class FalseyErrorStream {
     std::ostringstream mBuffer;
 };
 
+// Return a vector with one entry for each non extension OperandType, set to the
+// specified PerformanceInfo value.  The vector will be sorted by OperandType.
+hidl_vec<Capabilities::OperandPerformance> nonExtensionOperandPerformance(PerformanceInfo perf);
+
+// Update the vector entry corresponding to the specified OperandType with the
+// specified PerformanceInfo value.  The vector must already have an entry for
+// that OperandType, and must be sorted by OperandType.
+void update(hidl_vec<Capabilities::OperandPerformance>* operandPerformance, OperandType type,
+            PerformanceInfo perf);
+
+// Look for a vector entry corresponding to the specified OperandType.  If
+// found, return the associated PerformanceInfo.  If not, return a pessimistic
+// PerformanceInfo (FLT_MAX).  The vector must be sorted by OperandType.
+PerformanceInfo lookup(const hidl_vec<Capabilities::OperandPerformance>& operandPerformance,
+                       OperandType type);
+
 // Returns true if an operand type is an extension type.
 bool isExtensionOperandType(OperandType type);
 
@@ -287,8 +303,13 @@ int convertErrorStatusToResultCode(ErrorStatus status);
 
 bool compliantWithV1_0(const V1_0::Capabilities& capabilities);
 bool compliantWithV1_0(const V1_1::Capabilities& capabilities);
+bool compliantWithV1_0(const V1_2::Capabilities& capabilities);
 bool compliantWithV1_1(const V1_0::Capabilities& capabilities);
 bool compliantWithV1_1(const V1_1::Capabilities& capabilities);
+bool compliantWithV1_1(const V1_2::Capabilities& capabilities);
+bool compliantWithV1_2(const V1_0::Capabilities& capabilities);
+bool compliantWithV1_2(const V1_1::Capabilities& capabilities);
+bool compliantWithV1_2(const V1_2::Capabilities& capabilities);
 
 bool compliantWithV1_0(const V1_0::Model& model);
 bool compliantWithV1_0(const V1_1::Model& model);
@@ -299,8 +320,13 @@ bool compliantWithV1_1(const V1_2::Model& model);
 
 V1_0::Capabilities convertToV1_0(const V1_0::Capabilities& capabilities);
 V1_0::Capabilities convertToV1_0(const V1_1::Capabilities& capabilities);
+V1_0::Capabilities convertToV1_0(const V1_2::Capabilities& capabilities);
 V1_1::Capabilities convertToV1_1(const V1_0::Capabilities& capabilities);
 V1_1::Capabilities convertToV1_1(const V1_1::Capabilities& capabilities);
+V1_1::Capabilities convertToV1_1(const V1_2::Capabilities& capabilities);
+V1_2::Capabilities convertToV1_2(const V1_0::Capabilities& capabilities);
+V1_2::Capabilities convertToV1_2(const V1_1::Capabilities& capabilities);
+V1_2::Capabilities convertToV1_2(const V1_2::Capabilities& capabilities);
 
 V1_0::Model convertToV1_0(const V1_0::Model& model);
 V1_0::Model convertToV1_0(const V1_1::Model& model);

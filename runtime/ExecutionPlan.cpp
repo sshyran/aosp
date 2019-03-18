@@ -1056,33 +1056,21 @@ PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> d
     const uint32_t operandIndex = operation.inputs[0];
     const OperandType operandType = mOperands[operandIndex].type;
     switch(operandType) {
-        case OperandType::FLOAT16:
         case OperandType::FLOAT32:
-        case OperandType::TENSOR_FLOAT16:
+            if (mRelaxComputationFloat32toFloat16) {
+                return device->getRelaxedFloat32toFloat16PerformanceScalar();
+            }
+            break;
         case OperandType::TENSOR_FLOAT32:
             if (mRelaxComputationFloat32toFloat16) {
-                return device->getRelaxedFloat32toFloat16Performance();
-            } else {
-                return device->getFloat32Performance();
+                return device->getRelaxedFloat32toFloat16PerformanceTensor();
             }
-        case OperandType::INT32:
-        case OperandType::UINT32:
-        case OperandType::BOOL:
-        case OperandType::TENSOR_INT32:
-        case OperandType::TENSOR_QUANT8_ASYMM:
-        case OperandType::TENSOR_QUANT8_SYMM:
-        case OperandType::TENSOR_QUANT16_ASYMM:
-        case OperandType::TENSOR_QUANT16_SYMM:
-        case OperandType::TENSOR_BOOL8:
-        case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
-            // For OEM, the real selection will be made from who can run the operand.
-        case OperandType::OEM:
-        case OperandType::TENSOR_OEM_BYTE:
-            return device->getQuantized8Performance();
+            break;
         default:
-            CHECK(isExtensionOperandType(operandType)) << "Unhandled base operand type";
-            return device->getQuantized8Performance();
+            break;
     }
+
+    return device->getPerformance(operandType);
 }
 
 namespace {
@@ -1149,9 +1137,8 @@ int ModelBuilder::findBestDeviceForEachOperation(
 
         (*bestDeviceForOperation)[operationIndex] = bestChoice;
         VLOG(COMPILATION) << "ModelBuilder::findBestDeviceForEachOperation("
-                          << toString(getOperation(operationIndex).type)
-                          << ") = "
-                          << (*bestDeviceForOperation)[operationIndex];
+                          << toString(getOperation(operationIndex).type) << ") = " << bestChoice
+                          << " (" << devices[bestChoice]->getName() << ")";
     }
     return ANEURALNETWORKS_NO_ERROR;
 }

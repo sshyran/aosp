@@ -52,11 +52,19 @@ static const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UIN
 Return<void> SampleDriver::getCapabilities(getCapabilities_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
                  "SampleDriver::getCapabilities");
-    return getCapabilities_1_1(
-        [&](ErrorStatus error, const V1_1::Capabilities& capabilities) {
-            // TODO(dgross): Do we need to check compliantWithV1_0(capabilities)?
-            cb(error, convertToV1_0(capabilities));
-        });
+    return getCapabilities_1_2([&](ErrorStatus error, const V1_2::Capabilities& capabilities) {
+        // TODO(dgross): Do we need to check compliantWithV1_0(capabilities)?
+        cb(error, convertToV1_0(capabilities));
+    });
+}
+
+Return<void> SampleDriver::getCapabilities_1_1(getCapabilities_1_1_cb cb) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
+                 "SampleDriver::getCapabilities_1_1");
+    return getCapabilities_1_2([&](ErrorStatus error, const V1_2::Capabilities& capabilities) {
+        // TODO(dgross): Do we need to check compliantWithV1_1(capabilities)?
+        cb(error, convertToV1_1(capabilities));
+    });
 }
 
 Return<void> SampleDriver::getVersionString(getVersionString_cb cb) {
