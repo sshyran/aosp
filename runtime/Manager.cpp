@@ -55,10 +55,12 @@ class DriverDevice : public Device {
     hidl_vec<Extension> getSupportedExtensions() const override;
     void getSupportedOperations(const Model& hidlModel,
                                 hidl_vec<bool>* supportedOperations) override;
-    PerformanceInfo getFloat32Performance() const override { return mFloat32Performance; }
-    PerformanceInfo getQuantized8Performance() const override { return mQuantized8Performance; }
-    PerformanceInfo getRelaxedFloat32toFloat16Performance() const override {
-        return mRelaxedFloat32toFloat16Performance;
+    PerformanceInfo getPerformance(OperandType type) const override;
+    PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const override {
+        return mCapabilities.relaxedFloat32toFloat16PerformanceScalar;
+    }
+    PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const override {
+        return mCapabilities.relaxedFloat32toFloat16PerformanceTensor;
     }
     bool isCachingSupported() const override { return mIsCachingSupported; }
 
@@ -78,9 +80,7 @@ class DriverDevice : public Device {
     std::string mName;
     std::string mVersionString;
     const std::shared_ptr<VersionedIDevice> mInterface;
-    PerformanceInfo mFloat32Performance;
-    PerformanceInfo mQuantized8Performance;
-    PerformanceInfo mRelaxedFloat32toFloat16Performance;
+    Capabilities mCapabilities;
     hidl_vec<Extension> mSupportedExtensions;
     bool mIsCachingSupported = false;
 
@@ -112,18 +112,12 @@ bool DriverDevice::initialize() {
         return false;
     }
 
-    Capabilities capabilities;
-    std::tie(status, capabilities) = mInterface->getCapabilities();
+    std::tie(status, mCapabilities) = mInterface->getCapabilities();
     if (status != ErrorStatus::NONE) {
         LOG(ERROR) << "IDevice::getCapabilities returned the error " << toString(status);
         return false;
     }
-    VLOG(MANAGER) << "Capab " << capabilities.float32Performance.execTime;
-    VLOG(MANAGER) << "Capab " << capabilities.quantized8Performance.execTime;
-    VLOG(MANAGER) << "Capab " << capabilities.relaxedFloat32toFloat16Performance.execTime;
-    mFloat32Performance = capabilities.float32Performance;
-    mQuantized8Performance = capabilities.quantized8Performance;
-    mRelaxedFloat32toFloat16Performance = capabilities.relaxedFloat32toFloat16Performance;
+    VLOG(MANAGER) << "Capab " << toString(mCapabilities);
 
     std::tie(status, mVersionString) = mInterface->getVersionString();
     // TODO(miaowang): add a validation test case for in case of error.
@@ -214,6 +208,10 @@ void DriverDevice::getSupportedOperations(const Model& hidlModel,
 #endif  // NN_DEBUGGABLE
 }
 
+PerformanceInfo DriverDevice::getPerformance(OperandType type) const {
+    return lookup(mCapabilities.operandPerformance, type);
+}
+
 // Compilation logic copied from StepExecutor::startComputeOnDevice().
 int DriverDevice::prepareModelHelper(
         const std::function<Return<ErrorStatus>(const sp<PreparedModelCallback>& callback)>&
@@ -291,10 +289,14 @@ class CpuDevice : public Device {
     hidl_vec<Extension> getSupportedExtensions() const override { return {/* No extensions. */}; }
     void getSupportedOperations(const Model& hidlModel,
                                 hidl_vec<bool>* supportedOperations) override;
-    PerformanceInfo getFloat32Performance() const override { return kPerformance; }
-    PerformanceInfo getQuantized8Performance() const override { return kPerformance; }
-    PerformanceInfo getRelaxedFloat32toFloat16Performance() const override { return kPerformance; }
+    PerformanceInfo getPerformance(OperandType) const override { return kPerformance; }
+    PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const override {
+        return kPerformance;
+    }
     bool isCachingSupported() const override { return false; }
+    PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const override {
+        return kPerformance;
+    }
 
     int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                      std::shared_ptr<VersionedIPreparedModel>* preparedModel) override;
