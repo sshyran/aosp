@@ -112,9 +112,14 @@ class CachingDriver : public sample_driver::SampleDriver {
     }
 
     // Reports faster than cpu.
-    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb cb) override {
-        cb(ErrorStatus::NONE, {.float32Performance = {.execTime = 0.1, .powerUsage = 0.1},
-                               .quantized8Performance = {.execTime = 0.1, .powerUsage = 0.1}});
+    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override {
+        android::nn::initVLogMask();
+        const PerformanceInfo kPerf = {.execTime = 0.1, .powerUsage = 0.1};
+        Capabilities capabilities = {
+                .relaxedFloat32toFloat16PerformanceScalar = kPerf,
+                .relaxedFloat32toFloat16PerformanceTensor = kPerf,
+                .operandPerformance = android::nn::nonExtensionOperandPerformance(kPerf)};
+        cb(ErrorStatus::NONE, capabilities);
         return Void();
     }
 
