@@ -85,6 +85,23 @@ struct OperandType {
     std::vector<uint32_t> dimensions;
     std::optional<SymmPerChannelQuantParams> channelQuant;
 
+    OperandType(const OperandType& other)
+        : operandType(other.operandType),
+          dimensions(other.dimensions),
+          channelQuant(other.channelQuant) {
+        operandType.dimensions = dimensions.size() > 0 ? dimensions.data() : nullptr;
+    }
+
+    OperandType& operator=(const OperandType& other) {
+        if (this != &other) {
+            operandType = other.operandType;
+            dimensions = other.dimensions;
+            channelQuant = other.channelQuant;
+            operandType.dimensions = dimensions.size() > 0 ? dimensions.data() : nullptr;
+        }
+        return *this;
+    }
+
     OperandType(Type type, std::vector<uint32_t> d, float scale = 0.0f, int32_t zeroPoint = 0)
         : dimensions(std::move(d)), channelQuant(std::nullopt) {
         operandType = {

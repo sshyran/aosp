@@ -245,11 +245,22 @@ VersionedIDevice::~VersionedIDevice() {
 std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() {
     std::pair<ErrorStatus, Capabilities> result;
 
-    if (mDeviceV1_1 != nullptr) {
-        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_1");
-        Return<void> ret = mDeviceV1_1->getCapabilities_1_1(
+    if (mDeviceV1_2 != nullptr) {
+        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_2");
+        Return<void> ret = mDeviceV1_2->getCapabilities_1_2(
                 [&result](ErrorStatus error, const Capabilities& capabilities) {
                     result = std::make_pair(error, capabilities);
+                });
+        if (!ret.isOk()) {
+            LOG(ERROR) << "getCapabilities_1_2 failure: " << ret.description();
+            return {ErrorStatus::GENERAL_FAILURE, {}};
+        }
+    } else if (mDeviceV1_1 != nullptr) {
+        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_1");
+        Return<void> ret = mDeviceV1_1->getCapabilities_1_1(
+                [&result](ErrorStatus error, const V1_1::Capabilities& capabilities) {
+                    // Time taken to convert capabilities is trivial
+                    result = std::make_pair(error, convertToV1_2(capabilities));
                 });
         if (!ret.isOk()) {
             LOG(ERROR) << "getCapabilities_1_1 failure: " << ret.description();
@@ -260,7 +271,7 @@ std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() {
         Return<void> ret = mDeviceV1_0->getCapabilities(
                 [&result](ErrorStatus error, const V1_0::Capabilities& capabilities) {
                     // Time taken to convert capabilities is trivial
-                    result = std::make_pair(error, convertToV1_1(capabilities));
+                    result = std::make_pair(error, convertToV1_2(capabilities));
                 });
         if (!ret.isOk()) {
             LOG(ERROR) << "getCapabilities failure: " << ret.description();
