@@ -117,10 +117,6 @@ bool spaceToBatchGeneric(const T* inputData, const Shape& inputShape, const int3
                          const int32_t* padding, const Shape& paddingShape, T* outputData,
                          const Shape& outputShape);
 
-template <typename T>
-bool transposeGeneric(const T* inputData, const Shape& inputShape, const int32_t* perm,
-                      const Shape& permShape, T* outputData, const Shape& outputShape);
-
 bool meanFloat16(_Float16* inputData, const Shape& inputShape, const int32_t* axis,
                  const Shape& axisShape, bool keepDims, _Float16* outputData,
                  const Shape& outputShape);
