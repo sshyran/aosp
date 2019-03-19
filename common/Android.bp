@@ -50,6 +50,7 @@ cc_defaults {
         "operations/RoiPooling.cpp",
         "operations/Select.cpp",
         "operations/Softmax.cpp",
+        "operations/Transpose.cpp",
         "operations/UnidirectionalSequenceLSTM.cpp",
         "operations/UnidirectionalSequenceRNN.cpp",
     ],

@@ -354,11 +354,6 @@ bool squeezePrepare(const Shape& input,
                     const Shape& squeezeDimsShape,
                     Shape* output);
 
-bool transposePrepare(const Shape& input,
-                      const int32_t* permData,
-                      const Shape& permShape,
-                      Shape* output);
-
 bool meanPrepare(const Shape& input,
                  const int32_t* axisData,
                  const Shape& axisShape,
