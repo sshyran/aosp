@@ -1,15 +1,18 @@
 // clang-format off
-// Generated file (from: bidirectional_sequence_lstm_cifg_peephole.mod.py). Do not edit
+// Generated file (from: bidirectional_sequence_lstm_norm_fw_output.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {3, 1, 2});
-  OperandType type1(Type::TENSOR_FLOAT32, {4, 2});
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
+  OperandType type0(Type::TENSOR_FLOAT32, {3, 2, 5});
+  OperandType type1(Type::TENSOR_FLOAT32, {4, 5});
+  OperandType type10(Type::FLOAT32, {});
+  OperandType type11(Type::BOOL, {});
+  OperandType type2(Type::TENSOR_FLOAT32, {4, 3});
   OperandType type3(Type::TENSOR_FLOAT32, {4});
-  OperandType type4(Type::TENSOR_FLOAT32, {1, 4});
-  OperandType type5(Type::TENSOR_FLOAT32, {3, 1, 4});
-  OperandType type6(Type::INT32, {});
-  OperandType type7(Type::FLOAT32, {});
-  OperandType type8(Type::BOOL, {});
+  OperandType type4(Type::TENSOR_FLOAT32, {3, 4});
+  OperandType type5(Type::TENSOR_FLOAT32, {3});
+  OperandType type6(Type::TENSOR_FLOAT32, {2, 3});
+  OperandType type7(Type::TENSOR_FLOAT32, {2, 4});
+  OperandType type8(Type::TENSOR_FLOAT32, {3, 2, 3});
+  OperandType type9(Type::INT32, {});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto fw_input_to_input_weights = model->addOperand(&type1);
@@ -27,8 +30,8 @@ void CreateModel(Model *model) {
   auto fw_forget_gate_bias = model->addOperand(&type3);
   auto fw_cell_bias = model->addOperand(&type3);
   auto fw_output_gate_bias = model->addOperand(&type3);
-  auto fw_projection_weights = model->addOperand(&type2);
-  auto fw_projection_bias = model->addOperand(&type3);
+  auto fw_projection_weights = model->addOperand(&type4);
+  auto fw_projection_bias = model->addOperand(&type5);
   auto bw_input_to_input_weights = model->addOperand(&type1);
   auto bw_input_to_forget_weights = model->addOperand(&type1);
   auto bw_input_to_cell_weights = model->addOperand(&type1);
@@ -44,12 +47,12 @@ void CreateModel(Model *model) {
   auto bw_forget_gate_bias = model->addOperand(&type3);
   auto bw_cell_bias = model->addOperand(&type3);
   auto bw_output_gate_bias = model->addOperand(&type3);
-  auto bw_projection_weights = model->addOperand(&type2);
-  auto bw_projection_bias = model->addOperand(&type3);
-  auto fw_activatiom_state = model->addOperand(&type4);
-  auto fw_cell_state = model->addOperand(&type4);
-  auto bw_activatiom_state = model->addOperand(&type4);
-  auto bw_cell_state = model->addOperand(&type4);
+  auto bw_projection_weights = model->addOperand(&type4);
+  auto bw_projection_bias = model->addOperand(&type5);
+  auto fw_activatiom_state = model->addOperand(&type6);
+  auto fw_cell_state = model->addOperand(&type7);
+  auto bw_activatiom_state = model->addOperand(&type6);
+  auto bw_cell_state = model->addOperand(&type7);
   auto input1 = model->addOperand(&type0);
   auto fw_aux_input_to_input_weights = model->addOperand(&type1);
   auto fw_input_to_forget_weights1 = model->addOperand(&type1);
@@ -59,11 +62,11 @@ void CreateModel(Model *model) {
   auto bw_input_to_forget_weights1 = model->addOperand(&type1);
   auto bw_aux_input_to_cell_weights = model->addOperand(&type1);
   auto bw_aux_input_to_output_weights = model->addOperand(&type1);
-  auto activation = model->addOperand(&type6);
-  auto cell_clip = model->addOperand(&type7);
-  auto proj_clip = model->addOperand(&type7);
-  auto merge_outputs = model->addOperand(&type8);
-  auto time_major = model->addOperand(&type8);
+  auto activation = model->addOperand(&type9);
+  auto cell_clip = model->addOperand(&type10);
+  auto proj_clip = model->addOperand(&type10);
+  auto merge_outputs = model->addOperand(&type11);
+  auto time_major = model->addOperand(&type11);
   auto input_layer_norm_weights = model->addOperand(&type3);
   auto forget_layer_norm_weights = model->addOperand(&type3);
   auto cell_layer_norm_weights = model->addOperand(&type3);
@@ -72,8 +75,8 @@ void CreateModel(Model *model) {
   auto forget_layer_norm_weights1 = model->addOperand(&type3);
   auto cell_layer_norm_weights1 = model->addOperand(&type3);
   auto output_layer_norm_weights1 = model->addOperand(&type3);
-  auto fw_output = model->addOperand(&type5);
-  auto bw_output = model->addOperand(&type5);
+  auto fw_output = model->addOperand(&type8);
+  auto bw_output = model->addOperand(&type8);
   // Phase 2, operations
   static int32_t activation_init[] = {4};
   model->setOperandValue(activation, activation_init, sizeof(int32_t) * 1);
@@ -94,20 +97,23 @@ void CreateModel(Model *model) {
 }
 
 inline bool is_ignored(int i) {
-  static std::set<int> ignore = {};
+  static std::set<int> ignore = {1};
   return ignore.find(i) != ignore.end();
 }
 
 void CreateModel_dynamic_output_shape(Model *model) {
-  OperandType type0(Type::TENSOR_FLOAT32, {3, 1, 2});
-  OperandType type1(Type::TENSOR_FLOAT32, {4, 2});
-  OperandType type2(Type::TENSOR_FLOAT32, {4, 4});
+  OperandType type0(Type::TENSOR_FLOAT32, {3, 2, 5});
+  OperandType type1(Type::TENSOR_FLOAT32, {4, 5});
+  OperandType type10(Type::FLOAT32, {});
+  OperandType type11(Type::BOOL, {});
+  OperandType type12(Type::TENSOR_FLOAT32, {0, 0, 0});
+  OperandType type2(Type::TENSOR_FLOAT32, {4, 3});
   OperandType type3(Type::TENSOR_FLOAT32, {4});
-  OperandType type4(Type::TENSOR_FLOAT32, {1, 4});
-  OperandType type6(Type::INT32, {});
-  OperandType type7(Type::FLOAT32, {});
-  OperandType type8(Type::BOOL, {});
-  OperandType type9(Type::TENSOR_FLOAT32, {0, 0, 0});
+  OperandType type4(Type::TENSOR_FLOAT32, {3, 4});
+  OperandType type5(Type::TENSOR_FLOAT32, {3});
+  OperandType type6(Type::TENSOR_FLOAT32, {2, 3});
+  OperandType type7(Type::TENSOR_FLOAT32, {2, 4});
+  OperandType type9(Type::INT32, {});
   // Phase 1, operands
   auto input = model->addOperand(&type0);
   auto fw_input_to_input_weights = model->addOperand(&type1);
@@ -125,8 +131,8 @@ void CreateModel_dynamic_output_shape(Model *model) {
   auto fw_forget_gate_bias = model->addOperand(&type3);
   auto fw_cell_bias = model->addOperand(&type3);
   auto fw_output_gate_bias = model->addOperand(&type3);
-  auto fw_projection_weights = model->addOperand(&type2);
-  auto fw_projection_bias = model->addOperand(&type3);
+  auto fw_projection_weights = model->addOperand(&type4);
+  auto fw_projection_bias = model->addOperand(&type5);
   auto bw_input_to_input_weights = model->addOperand(&type1);
   auto bw_input_to_forget_weights = model->addOperand(&type1);
   auto bw_input_to_cell_weights = model->addOperand(&type1);
@@ -142,12 +148,12 @@ void CreateModel_dynamic_output_shape(Model *model) {
   auto bw_forget_gate_bias = model->addOperand(&type3);
   auto bw_cell_bias = model->addOperand(&type3);
   auto bw_output_gate_bias = model->addOperand(&type3);
-  auto bw_projection_weights = model->addOperand(&type2);
-  auto bw_projection_bias = model->addOperand(&type3);
-  auto fw_activatiom_state = model->addOperand(&type4);
-  auto fw_cell_state = model->addOperand(&type4);
-  auto bw_activatiom_state = model->addOperand(&type4);
-  auto bw_cell_state = model->addOperand(&type4);
+  auto bw_projection_weights = model->addOperand(&type4);
+  auto bw_projection_bias = model->addOperand(&type5);
+  auto fw_activatiom_state = model->addOperand(&type6);
+  auto fw_cell_state = model->addOperand(&type7);
+  auto bw_activatiom_state = model->addOperand(&type6);
+  auto bw_cell_state = model->addOperand(&type7);
   auto input1 = model->addOperand(&type0);
   auto fw_aux_input_to_input_weights = model->addOperand(&type1);
   auto fw_input_to_forget_weights1 = model->addOperand(&type1);
@@ -157,11 +163,11 @@ void CreateModel_dynamic_output_shape(Model *model) {
   auto bw_input_to_forget_weights1 = model->addOperand(&type1);
   auto bw_aux_input_to_cell_weights = model->addOperand(&type1);
   auto bw_aux_input_to_output_weights = model->addOperand(&type1);
-  auto activation = model->addOperand(&type6);
-  auto cell_clip = model->addOperand(&type7);
-  auto proj_clip = model->addOperand(&type7);
-  auto merge_outputs = model->addOperand(&type8);
-  auto time_major = model->addOperand(&type8);
+  auto activation = model->addOperand(&type9);
+  auto cell_clip = model->addOperand(&type10);
+  auto proj_clip = model->addOperand(&type10);
+  auto merge_outputs = model->addOperand(&type11);
+  auto time_major = model->addOperand(&type11);
   auto input_layer_norm_weights = model->addOperand(&type3);
   auto forget_layer_norm_weights = model->addOperand(&type3);
   auto cell_layer_norm_weights = model->addOperand(&type3);
@@ -170,8 +176,8 @@ void CreateModel_dynamic_output_shape(Model *model) {
   auto forget_layer_norm_weights1 = model->addOperand(&type3);
   auto cell_layer_norm_weights1 = model->addOperand(&type3);
   auto output_layer_norm_weights1 = model->addOperand(&type3);
-  auto fw_output = model->addOperand(&type9);
-  auto bw_output = model->addOperand(&type9);
+  auto fw_output = model->addOperand(&type12);
+  auto bw_output = model->addOperand(&type12);
   // Phase 2, operations
   static int32_t activation_init[] = {4};
   model->setOperandValue(activation, activation_init, sizeof(int32_t) * 1);
@@ -192,7 +198,7 @@ void CreateModel_dynamic_output_shape(Model *model) {
 }
 
 inline bool is_ignored_dynamic_output_shape(int i) {
-  static std::set<int> ignore = {};
+  static std::set<int> ignore = {1};
   return ignore.find(i) != ignore.end();
 }
 
