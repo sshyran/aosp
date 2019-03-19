@@ -4183,7 +4183,6 @@ typedef enum {
      * for each dimension. The size is specified as a 1-D tensor containing
      * either size of a slice along corresponding dimension or -1. In the latter
      * case, all the remaining elements in dimension are included in the slice.
-     * Slice size in each dimension cannot be zero.
      *
      * A sum of begin offset and a size of a slice must not exceed size of a
      * corresponding dimension.
@@ -4197,7 +4196,7 @@ typedef enum {
      * Supported tensor rank: from 1
      *
      * Inputs:
-     * * 0: An n-D tensor to take slice from.
+     * * 0: An n-D tensor to take slice from, may be zero-sized.
      * * 1: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} specifying
      *      the beginning indices of the slice in each dimension.
      * * 2: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} specifying
