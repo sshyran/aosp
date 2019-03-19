@@ -133,6 +133,17 @@ class BidirectionalSequenceLSTM {
     static constexpr int kMergeOutputsParam = 51;
     static constexpr int kTimeMajorParam = 52;
 
+    // Forward layer norm weights tensors of size {n_cell}, representing a diagonal matrix.
+    static constexpr int kFwInputLayerNormWeightsTensor = 53;   // Optional
+    static constexpr int kFwForgetLayerNormWeightsTensor = 54;  // Optional
+    static constexpr int kFwCellLayerNormWeightsTensor = 55;    // Optional
+    static constexpr int kFwOutputLayerNormWeightsTensor = 56;  // Optional
+    // Backward layer norm weights tensors of size {n_cell}, representing a diagonal matrix.
+    static constexpr int kBwInputLayerNormWeightsTensor = 57;   // Optional
+    static constexpr int kBwForgetLayerNormWeightsTensor = 58;  // Optional
+    static constexpr int kBwCellLayerNormWeightsTensor = 59;    // Optional
+    static constexpr int kBwOutputLayerNormWeightsTensor = 60;  // Optional
+
     // Output tensors.
     static constexpr int kFwOutputTensor = 0;
     static constexpr int kBwOutputTensor = 1;  // Ignored if merge_outputs is set.
@@ -176,6 +187,11 @@ class BidirectionalSequenceLSTM {
     const RunTimeOperandInfo* fw_projection_weights_;
     const RunTimeOperandInfo* fw_projection_bias_;
 
+    const RunTimeOperandInfo* fw_input_layer_norm_weights_;
+    const RunTimeOperandInfo* fw_forget_layer_norm_weights_;
+    const RunTimeOperandInfo* fw_cell_layer_norm_weights_;
+    const RunTimeOperandInfo* fw_output_layer_norm_weights_;
+
     RunTimeOperandInfo* fw_activation_state_;
     RunTimeOperandInfo* fw_cell_state_;
     RunTimeOperandInfo* fw_output_;
@@ -201,6 +217,11 @@ class BidirectionalSequenceLSTM {
 
     const RunTimeOperandInfo* bw_projection_weights_;
     const RunTimeOperandInfo* bw_projection_bias_;
+
+    const RunTimeOperandInfo* bw_input_layer_norm_weights_;
+    const RunTimeOperandInfo* bw_forget_layer_norm_weights_;
+    const RunTimeOperandInfo* bw_cell_layer_norm_weights_;
+    const RunTimeOperandInfo* bw_output_layer_norm_weights_;
 
     RunTimeOperandInfo* bw_activation_state_;
     RunTimeOperandInfo* bw_cell_state_;
