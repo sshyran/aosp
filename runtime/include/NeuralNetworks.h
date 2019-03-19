@@ -2220,6 +2220,7 @@ typedef enum {
      *
      * Inputs:
      * * 0: An n-D tensor, specifying the tensor to be transposed.
+     *      Since API level 29, this tensor may be zero-sized.
      * * 1: An optional 1-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32},
      *      the permutation of the dimensions of the input tensor.
      *
