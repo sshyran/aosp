@@ -696,44 +696,6 @@ bool squeezePrepare(const Shape& input,
     return true;
 }
 
-bool transposePrepare(const Shape& input,
-                      const int32_t* permData,
-                      const Shape& permShape,
-                      Shape* output) {
-    uint32_t numInputDims = getNumberOfDimensions(input);
-
-    // permData can be NO_VALUE representing a regular 2D matrix transpose
-    if (permData == nullptr) {
-        NN_OPS_CHECK(numInputDims == 2);
-        output->type = input.type;
-        output->dimensions = {getSizeOfDimension(input, 1), getSizeOfDimension(input, 0)};
-        output->offset = input.offset;
-        output->scale = input.scale;
-        return true;
-    }
-
-    // Transpose op only supports 1D-4D input arrays.
-    NN_OPS_CHECK(numInputDims <= 4);
-
-    // perm need to be provided as a 1-D int32 tensor.
-    NN_OPS_CHECK(permShape.type == OperandType::TENSOR_INT32);
-    NN_OPS_CHECK(getNumberOfDimensions(permShape) == 1);
-    NN_OPS_CHECK(numInputDims == getSizeOfDimension(permShape, 0));
-
-    std::vector<uint32_t> outDims(numInputDims);
-    for (int32_t idx = 0; idx < static_cast<int32_t>(numInputDims); ++idx) {
-        NN_OPS_CHECK(permData[idx] >= 0 && permData[idx] < static_cast<int32_t>(numInputDims));
-        outDims[idx] = getSizeOfDimension(input, permData[idx]);
-    }
-
-    output->type = input.type;
-    output->dimensions = outDims;
-    output->offset = input.offset;
-    output->scale = input.scale;
-
-    return true;
-}
-
 bool meanPrepare(const Shape& input,
                  const int32_t* axisData,
                  const Shape& axisShape,
