@@ -1883,26 +1883,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       topk_v2::eval(input.buffer, input.shape(), k, values.buffer, valuesShape,
                                     indices.buffer, indicesShape);
         } break;
-        case OperationType::SLICE: {
-            if (!allParametersPresent(3, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& begin = mOperands[ins[1]];
-            const RunTimeOperandInfo& size = mOperands[ins[2]];
-
-            RunTimeOperandInfo& output = mOperands[outs[0]];
-            Shape outputShape = output.shape();
-
-            const int32_t* beginBuffer = reinterpret_cast<int32_t*>(begin.buffer);
-            const int32_t* sizeBuffer = reinterpret_cast<int32_t*>(size.buffer);
-
-            success = slice::prepare(input.shape(), beginBuffer, begin.shape(), sizeBuffer,
-                                     size.shape(), &outputShape) &&
-                      setInfoAndAllocateIfNeeded(&output, outputShape, &result) &&
-                      slice::eval(input.buffer, input.shape(), beginBuffer, begin.shape(),
-                                  sizeBuffer, size.shape(), output.buffer, output.shape());
-        } break;
         default: {
             const OperationRegistration* operationRegistration =
                     mOperationResolver->findOperation(operation.type);
