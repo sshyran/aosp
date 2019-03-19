@@ -1039,8 +1039,11 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                               : OperandType::FLOAT16);
             inExpectedTypes.push_back(OperandType::BOOL);
             inExpectedTypes.push_back(OperandType::BOOL);
+            for (int i = 0; i < 8; ++i) {
+                inExpectedTypes.push_back(inputType);
+            }
 
-            if (inputCount != 53 || outputCount != 2) {
+            if (inputCount != 61 || outputCount != 2) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
                            << ", expected 52) or output operands (" << outputCount
                            << ", expected 2) for operation " << getOperationName(opType);

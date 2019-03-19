@@ -1924,6 +1924,14 @@ void lstmBidirectionalSequence(int32_t operandCode) {
     ANeuralNetworksOperandType clipProjLayer = floatScalar;
     ANeuralNetworksOperandType mergeOutputs = boolScalar;
     ANeuralNetworksOperandType timeMajor = boolScalar;
+    ANeuralNetworksOperandType inputLayerNormWeightsFw = floatTensor1D;
+    ANeuralNetworksOperandType forgetLayerNormWeightsFw = floatTensor1D;
+    ANeuralNetworksOperandType cellLayerNormWeightsFw = floatTensor1D;
+    ANeuralNetworksOperandType outputLayerNormWeightsFw = floatTensor1D;
+    ANeuralNetworksOperandType inputLayerNormWeightsBw = floatTensor1D;
+    ANeuralNetworksOperandType forgetLayerNormWeightsBw = floatTensor1D;
+    ANeuralNetworksOperandType cellLayerNormWeightsBw = floatTensor1D;
+    ANeuralNetworksOperandType outputLayerNormWeightsBw = floatTensor1D;
 
     ANeuralNetworksOperandType outputFw = floatTensor2D;
     ANeuralNetworksOperandType outputBw = floatTensor2D;
@@ -1983,6 +1991,14 @@ void lstmBidirectionalSequence(int32_t operandCode) {
                                        clipProjLayer,
                                        mergeOutputs,
                                        timeMajor,
+                                       inputLayerNormWeightsFw,
+                                       forgetLayerNormWeightsFw,
+                                       cellLayerNormWeightsFw,
+                                       outputLayerNormWeightsFw,
+                                       inputLayerNormWeightsBw,
+                                       forgetLayerNormWeightsBw,
+                                       cellLayerNormWeightsBw,
+                                       outputLayerNormWeightsBw,
                                },
                                {
                                        outputFw,
