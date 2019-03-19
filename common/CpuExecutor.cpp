@@ -1407,53 +1407,6 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       setInfoAndAllocateIfNeeded(&output, outShape, &result) &&
                       copyData(input.buffer, input.shape(), output.buffer, outShape);
         } break;
-        case OperationType::TRANSPOSE: {
-            if (ins.size() != 2 || outs.size() != 1 ||
-                mOperands[ins[0]].lifetime == OperandLifeTime::NO_VALUE ||
-                mOperands[outs[0]].lifetime == OperandLifeTime::NO_VALUE) {
-                LOG(ERROR) << "Wrong input/output count or lifetime for TRANSPOSE op.";
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& perms = mOperands[ins[1]];
-
-            RunTimeOperandInfo& output = mOperands[outs[0]];
-            Shape outShape = output.shape();
-
-            if (!transposePrepare(input.shape(), reinterpret_cast<const int32_t*>(perms.buffer),
-                                  perms.shape(), &outShape) ||
-                !setInfoAndAllocateIfNeeded(&output, outShape, &result)) {
-                break;
-            }
-            switch (input.type) {
-                case OperandType::TENSOR_FLOAT32: {
-                    success = transposeGeneric(
-                            reinterpret_cast<const float*>(input.buffer), input.shape(),
-                            reinterpret_cast<const int32_t*>(perms.buffer), perms.shape(),
-                            reinterpret_cast<float*>(output.buffer), outShape);
-                    break;
-                }
-                case OperandType::TENSOR_FLOAT16: {
-                    success = transposeGeneric(
-                            reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
-                            reinterpret_cast<const int32_t*>(perms.buffer), perms.shape(),
-                            reinterpret_cast<_Float16*>(output.buffer), outShape);
-                    break;
-                }
-                case OperandType::TENSOR_QUANT8_ASYMM: {
-                    success = transposeGeneric(
-                            reinterpret_cast<const uint8_t*>(input.buffer), input.shape(),
-                            reinterpret_cast<const int32_t*>(perms.buffer), perms.shape(),
-                            reinterpret_cast<uint8_t*>(output.buffer), outShape);
-                    break;
-                }
-                default: {
-                    LOG(ERROR) << "Unsupported data type";
-                    success = false;
-                }
-            }
-
-        } break;
         case OperationType::STRIDED_SLICE: {
             if (!allParametersPresent(7, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
