@@ -104,6 +104,9 @@ bool prepare(IOperationExecutionContext* context) {
 }
 
 bool execute(IOperationExecutionContext* context) {
+    // Bypass execution in the case of zero-sized input.
+    if (getNumberOfElements(context->getOutputShape(kOutputTensor)) == 0) return true;
+
     const OperandType inputType = context->getInputType(kInputTensor);
     const OperandType outputType = context->getOutputType(kOutputTensor);
 
@@ -141,7 +144,7 @@ bool execute(IOperationExecutionContext* context) {
 }  // namespace dequantize
 
 NN_REGISTER_OPERATION(DEQUANTIZE, "DEQUANTIZE", dequantize::validate, dequantize::prepare,
-                      dequantize::execute);
+                      dequantize::execute, .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

@@ -117,3 +117,51 @@ TEST_F(DynamicOutputShapeTest, sub_v1_2_quant8_dynamic_output_shape) {
             sub_v1_2::get_examples_quant8_dynamic_output_shape());
 }
 
+TEST_F(GeneratedTests, sub_v1_2_zero_sized) {
+    execute(sub_v1_2::CreateModel_zero_sized,
+            sub_v1_2::is_ignored_zero_sized,
+            sub_v1_2::get_examples_zero_sized());
+}
+
+TEST_F(GeneratedTests, sub_v1_2_zero_sized_relaxed) {
+    execute(sub_v1_2::CreateModel_zero_sized_relaxed,
+            sub_v1_2::is_ignored_zero_sized_relaxed,
+            sub_v1_2::get_examples_zero_sized_relaxed());
+}
+
+TEST_F(GeneratedTests, sub_v1_2_zero_sized_quant8) {
+    execute(sub_v1_2::CreateModel_zero_sized_quant8,
+            sub_v1_2::is_ignored_zero_sized_quant8,
+            sub_v1_2::get_examples_zero_sized_quant8());
+}
+
+TEST_F(GeneratedTests, sub_v1_2_zero_sized_float16) {
+    execute(sub_v1_2::CreateModel_zero_sized_float16,
+            sub_v1_2::is_ignored_zero_sized_float16,
+            sub_v1_2::get_examples_zero_sized_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_dynamic_output_shape) {
+    execute(sub_v1_2::CreateModel_zero_sized_dynamic_output_shape,
+            sub_v1_2::is_ignored_zero_sized_dynamic_output_shape,
+            sub_v1_2::get_examples_zero_sized_dynamic_output_shape());
+}
+
+TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_dynamic_output_shape_relaxed) {
+    execute(sub_v1_2::CreateModel_zero_sized_dynamic_output_shape_relaxed,
+            sub_v1_2::is_ignored_zero_sized_dynamic_output_shape_relaxed,
+            sub_v1_2::get_examples_zero_sized_dynamic_output_shape_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_dynamic_output_shape_quant8) {
+    execute(sub_v1_2::CreateModel_zero_sized_dynamic_output_shape_quant8,
+            sub_v1_2::is_ignored_zero_sized_dynamic_output_shape_quant8,
+            sub_v1_2::get_examples_zero_sized_dynamic_output_shape_quant8());
+}
+
+TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_dynamic_output_shape_float16) {
+    execute(sub_v1_2::CreateModel_zero_sized_dynamic_output_shape_float16,
+            sub_v1_2::is_ignored_zero_sized_dynamic_output_shape_float16,
+            sub_v1_2::get_examples_zero_sized_dynamic_output_shape_float16());
+}
+

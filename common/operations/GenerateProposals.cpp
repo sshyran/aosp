@@ -197,21 +197,23 @@ bool prepare(IOperationExecutionContext* context) {
     Shape imageInfoShape = context->getInputShape(kImageInfoTensor);
     Shape outputShape = context->getOutputShape(kOutputTensor);
 
-    NN_OPS_CHECK(getNumberOfDimensions(roiShape) == 2);
-    NN_OPS_CHECK(getNumberOfDimensions(bboxDeltasShape) == 2);
-    NN_OPS_CHECK(getNumberOfDimensions(batchesShape) == 1);
-    NN_OPS_CHECK(getNumberOfDimensions(imageInfoShape) == 2);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(roiShape), 2);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bboxDeltasShape), 2);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(batchesShape), 1);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(imageInfoShape), 2);
 
+    // Only numRois can be zero.
     const uint32_t kRoiDim = 4;
     uint32_t numRois = getSizeOfDimension(roiShape, 0);
     uint32_t numClasses = getSizeOfDimension(bboxDeltasShape, 1) / kRoiDim;
     uint32_t numBatches = getSizeOfDimension(imageInfoShape, 0);
-
-    NN_OPS_CHECK(getSizeOfDimension(roiShape, 1) == kRoiDim);
-    NN_OPS_CHECK(getSizeOfDimension(bboxDeltasShape, 0) == numRois);
-    NN_OPS_CHECK(getSizeOfDimension(bboxDeltasShape, 1) == kRoiDim * numClasses);
-    NN_OPS_CHECK(getSizeOfDimension(batchesShape, 0) == numRois);
-    NN_OPS_CHECK(getSizeOfDimension(imageInfoShape, 1) == 2);
+    NN_RET_CHECK_GT(numClasses, 0);
+    NN_RET_CHECK_GT(numBatches, 0);
+    NN_RET_CHECK_EQ(getSizeOfDimension(roiShape, 1), kRoiDim);
+    NN_RET_CHECK_EQ(getSizeOfDimension(bboxDeltasShape, 0), numRois);
+    NN_RET_CHECK_EQ(getSizeOfDimension(bboxDeltasShape, 1), kRoiDim * numClasses);
+    NN_RET_CHECK_EQ(getSizeOfDimension(batchesShape, 0), numRois);
+    NN_RET_CHECK_EQ(getSizeOfDimension(imageInfoShape, 1), 2);
 
     if (roiShape.type == OperandType::TENSOR_QUANT16_ASYMM) {
         NN_RET_CHECK_EQ(roiShape.scale, 0.125f);
@@ -230,6 +232,8 @@ bool prepare(IOperationExecutionContext* context) {
 
 bool execute(IOperationExecutionContext* context) {
     NNTRACE_TRANS("axisAlignedBBoxTransform");
+    // Bypass execution in the case of zero-sized input.
+    if (getNumberOfElements(context->getOutputShape(kOutputTensor)) == 0) return true;
     switch (context->getInputType(kRoiTensor)) {
         case OperandType::TENSOR_FLOAT16: {
             return bboxTransformFloat16(context->getInputBuffer<_Float16>(kRoiTensor),
@@ -418,6 +422,7 @@ bool boxWithNmsLimitWriteOutput(const std::vector<uint32_t>& selected,
 
     // Set output dimensions.
     uint32_t numOutRois = selected.size();
+    if (numOutRois == 0) return true;
     Shape scoresOutShape = context->getOutputShape(kOutputScoreTensor);
     scoresOutShape.dimensions = {numOutRois};
     NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, scoresOutShape));
@@ -567,6 +572,7 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK(getNumberOfDimensions(roiShape) == 2);
     NN_RET_CHECK(getNumberOfDimensions(batchesShape) == 1);
 
+    // Only numRois can be zero.
     const uint32_t kRoiDim = 4;
     uint32_t numRois = getSizeOfDimension(scoreShape, 0);
     uint32_t numClasses = getSizeOfDimension(scoreShape, 1);
@@ -604,6 +610,8 @@ bool prepare(IOperationExecutionContext* context) {
 
 bool execute(IOperationExecutionContext* context) {
     NNTRACE_TRANS("boxWithNMSLimit");
+    // Bypass execution in the case of zero numRois.
+    if (getSizeOfDimension(context->getInputShape(kScoreTensor), 0) == 0) return true;
     switch (context->getInputType(kScoreTensor)) {
         case OperandType::TENSOR_FLOAT16: {
             return boxWithNmsLimitFloat16(context->getInputBuffer<_Float16>(kScoreTensor),
@@ -849,6 +857,7 @@ bool generateProposalsFloat32(const float* scoresData, const Shape& scoresShape,
 
     // Set output dimensions.
     uint32_t numOutRois = scoresOut_float32.size();
+    if (numOutRois == 0) return true;
     Shape scoresOutShape = context->getOutputShape(kOutputScoreTensor);
     scoresOutShape.dimensions = {numOutRois};
     NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, scoresOutShape));
@@ -900,6 +909,7 @@ bool generateProposalsFloat16(const _Float16* scoresData, const Shape& scoresSha
 
     // Set output dimensions.
     uint32_t numOutRois = scoresOut_float32.size();
+    if (numOutRois == 0) return true;
     Shape scoresOutShape = context->getOutputShape(kOutputScoreTensor);
     scoresOutShape.dimensions = {numOutRois};
     NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, scoresOutShape));
@@ -949,6 +959,7 @@ bool generateProposalsQuant(const uint8_t* scoresData, const Shape& scoresShape,
 
     // Set output dimensions.
     uint32_t numOutRois = scoresOut_float32.size();
+    if (numOutRois == 0) return true;
     Shape scoresOutShape = context->getOutputShape(kOutputScoreTensor);
     scoresOutShape.dimensions = {numOutRois};
     NN_RET_CHECK(context->setOutputShape(kOutputScoreTensor, scoresOutShape));
@@ -1484,11 +1495,11 @@ NN_REGISTER_OPERATION(AXIS_ALIGNED_BBOX_TRANSFORM,
                       bbox_ops::axis_aligned_bbox_transform::kOperationName,
                       bbox_ops::axis_aligned_bbox_transform::validate,
                       bbox_ops::axis_aligned_bbox_transform::prepare,
-                      bbox_ops::axis_aligned_bbox_transform::execute);
+                      bbox_ops::axis_aligned_bbox_transform::execute, .allowZeroSizedInput = true);
 
 NN_REGISTER_OPERATION(BOX_WITH_NMS_LIMIT, bbox_ops::box_with_nms_limit::kOperationName,
                       bbox_ops::box_with_nms_limit::validate, bbox_ops::box_with_nms_limit::prepare,
-                      bbox_ops::box_with_nms_limit::execute);
+                      bbox_ops::box_with_nms_limit::execute, .allowZeroSizedInput = true);
 
 NN_REGISTER_OPERATION(GENERATE_PROPOSALS, bbox_ops::generate_proposals::kOperationName,
                       bbox_ops::generate_proposals::validate, bbox_ops::generate_proposals::prepare,
