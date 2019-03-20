@@ -297,3 +297,51 @@ TEST_F(DynamicOutputShapeTest, slice_dynamic_output_shape_float16_8) {
             slice::get_examples_dynamic_output_shape_float16_8());
 }
 
+TEST_F(GeneratedTests, slice_zero_sized) {
+    execute(slice::CreateModel_zero_sized,
+            slice::is_ignored_zero_sized,
+            slice::get_examples_zero_sized());
+}
+
+TEST_F(GeneratedTests, slice_zero_sized_relaxed) {
+    execute(slice::CreateModel_zero_sized_relaxed,
+            slice::is_ignored_zero_sized_relaxed,
+            slice::get_examples_zero_sized_relaxed());
+}
+
+TEST_F(GeneratedTests, slice_zero_sized_quant8) {
+    execute(slice::CreateModel_zero_sized_quant8,
+            slice::is_ignored_zero_sized_quant8,
+            slice::get_examples_zero_sized_quant8());
+}
+
+TEST_F(GeneratedTests, slice_zero_sized_float16) {
+    execute(slice::CreateModel_zero_sized_float16,
+            slice::is_ignored_zero_sized_float16,
+            slice::get_examples_zero_sized_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, slice_zero_sized_dynamic_output_shape) {
+    execute(slice::CreateModel_zero_sized_dynamic_output_shape,
+            slice::is_ignored_zero_sized_dynamic_output_shape,
+            slice::get_examples_zero_sized_dynamic_output_shape());
+}
+
+TEST_F(DynamicOutputShapeTest, slice_zero_sized_dynamic_output_shape_relaxed) {
+    execute(slice::CreateModel_zero_sized_dynamic_output_shape_relaxed,
+            slice::is_ignored_zero_sized_dynamic_output_shape_relaxed,
+            slice::get_examples_zero_sized_dynamic_output_shape_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, slice_zero_sized_dynamic_output_shape_quant8) {
+    execute(slice::CreateModel_zero_sized_dynamic_output_shape_quant8,
+            slice::is_ignored_zero_sized_dynamic_output_shape_quant8,
+            slice::get_examples_zero_sized_dynamic_output_shape_quant8());
+}
+
+TEST_F(DynamicOutputShapeTest, slice_zero_sized_dynamic_output_shape_float16) {
+    execute(slice::CreateModel_zero_sized_dynamic_output_shape_float16,
+            slice::is_ignored_zero_sized_dynamic_output_shape_float16,
+            slice::get_examples_zero_sized_dynamic_output_shape_float16());
+}
+
