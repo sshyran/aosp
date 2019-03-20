@@ -30,7 +30,6 @@
 #include "operations/QuantizedLSTM.h"
 #include "operations/RNN.h"
 #include "operations/SVDF.h"
-#include "operations/Slice.h"
 #include "operations/Tile.h"
 #include "operations/TopK_V2.h"
 

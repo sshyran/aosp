@@ -75,6 +75,7 @@ const OperationRegistration* register_ROI_POOLING();
 const OperationRegistration* register_RSQRT();
 const OperationRegistration* register_SELECT();
 const OperationRegistration* register_SIN();
+const OperationRegistration* register_SLICE();
 const OperationRegistration* register_SOFTMAX();
 const OperationRegistration* register_SQRT();
 const OperationRegistration* register_SUB();
@@ -135,6 +136,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_RSQRT());
     registerOperation(register_SELECT());
     registerOperation(register_SIN());
+    registerOperation(register_SLICE());
     registerOperation(register_SOFTMAX());
     registerOperation(register_SQRT());
     registerOperation(register_SUB());
