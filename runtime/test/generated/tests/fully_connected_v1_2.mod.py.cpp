@@ -57,3 +57,99 @@ TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_dynamic_output_shape_quant8_
             fully_connected_v1_2::get_examples_dynamic_output_shape_quant8_mult_gt_1());
 }
 
+TEST_F(GeneratedTests, fully_connected_v1_2_zero_sized_nhwc) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_nhwc,
+            fully_connected_v1_2::is_ignored_zero_sized_nhwc,
+            fully_connected_v1_2::get_examples_zero_sized_nhwc());
+}
+
+TEST_F(GeneratedTests, fully_connected_v1_2_zero_sized_nhwc_relaxed) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_nhwc_relaxed,
+            fully_connected_v1_2::is_ignored_zero_sized_nhwc_relaxed,
+            fully_connected_v1_2::get_examples_zero_sized_nhwc_relaxed());
+}
+
+TEST_F(GeneratedTests, fully_connected_v1_2_zero_sized_nhwc_quant8) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_nhwc_quant8,
+            fully_connected_v1_2::is_ignored_zero_sized_nhwc_quant8,
+            fully_connected_v1_2::get_examples_zero_sized_nhwc_quant8());
+}
+
+TEST_F(GeneratedTests, fully_connected_v1_2_zero_sized_nhwc_float16) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_nhwc_float16,
+            fully_connected_v1_2::is_ignored_zero_sized_nhwc_float16,
+            fully_connected_v1_2::get_examples_zero_sized_nhwc_float16());
+}
+
+TEST_F(GeneratedTests, fully_connected_v1_2_zero_sized_nchw) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_nchw,
+            fully_connected_v1_2::is_ignored_zero_sized_nchw,
+            fully_connected_v1_2::get_examples_zero_sized_nchw());
+}
+
+TEST_F(GeneratedTests, fully_connected_v1_2_zero_sized_nchw_relaxed) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_nchw_relaxed,
+            fully_connected_v1_2::is_ignored_zero_sized_nchw_relaxed,
+            fully_connected_v1_2::get_examples_zero_sized_nchw_relaxed());
+}
+
+TEST_F(GeneratedTests, fully_connected_v1_2_zero_sized_nchw_quant8) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_nchw_quant8,
+            fully_connected_v1_2::is_ignored_zero_sized_nchw_quant8,
+            fully_connected_v1_2::get_examples_zero_sized_nchw_quant8());
+}
+
+TEST_F(GeneratedTests, fully_connected_v1_2_zero_sized_nchw_float16) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_nchw_float16,
+            fully_connected_v1_2::is_ignored_zero_sized_nchw_float16,
+            fully_connected_v1_2::get_examples_zero_sized_nchw_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_zero_sized_dynamic_output_shape_nhwc) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_dynamic_output_shape_nhwc,
+            fully_connected_v1_2::is_ignored_zero_sized_dynamic_output_shape_nhwc,
+            fully_connected_v1_2::get_examples_zero_sized_dynamic_output_shape_nhwc());
+}
+
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_zero_sized_dynamic_output_shape_nhwc_relaxed) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed,
+            fully_connected_v1_2::is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed,
+            fully_connected_v1_2::get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_zero_sized_dynamic_output_shape_nhwc_quant8) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8,
+            fully_connected_v1_2::is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8,
+            fully_connected_v1_2::get_examples_zero_sized_dynamic_output_shape_nhwc_quant8());
+}
+
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_zero_sized_dynamic_output_shape_nhwc_float16) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_dynamic_output_shape_nhwc_float16,
+            fully_connected_v1_2::is_ignored_zero_sized_dynamic_output_shape_nhwc_float16,
+            fully_connected_v1_2::get_examples_zero_sized_dynamic_output_shape_nhwc_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_zero_sized_dynamic_output_shape_nchw) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_dynamic_output_shape_nchw,
+            fully_connected_v1_2::is_ignored_zero_sized_dynamic_output_shape_nchw,
+            fully_connected_v1_2::get_examples_zero_sized_dynamic_output_shape_nchw());
+}
+
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_zero_sized_dynamic_output_shape_nchw_relaxed) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed,
+            fully_connected_v1_2::is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed,
+            fully_connected_v1_2::get_examples_zero_sized_dynamic_output_shape_nchw_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_zero_sized_dynamic_output_shape_nchw_quant8) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_dynamic_output_shape_nchw_quant8,
+            fully_connected_v1_2::is_ignored_zero_sized_dynamic_output_shape_nchw_quant8,
+            fully_connected_v1_2::get_examples_zero_sized_dynamic_output_shape_nchw_quant8());
+}
+
+TEST_F(DynamicOutputShapeTest, fully_connected_v1_2_zero_sized_dynamic_output_shape_nchw_float16) {
+    execute(fully_connected_v1_2::CreateModel_zero_sized_dynamic_output_shape_nchw_float16,
+            fully_connected_v1_2::is_ignored_zero_sized_dynamic_output_shape_nchw_float16,
+            fully_connected_v1_2::get_examples_zero_sized_dynamic_output_shape_nchw_float16());
+}
+

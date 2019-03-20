@@ -213,6 +213,10 @@ typedef enum {
      *     input2.dimension = {5, 4, 3, 1}
      *     output.dimension = {5, 4, 3, 2}
      *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -262,7 +266,8 @@ typedef enum {
      *
      * Inputs (explicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Since API level 29, zero batches is supported for this
+     *      tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
      *      the left, in the ‘width’ dimension.
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
@@ -288,7 +293,8 @@ typedef enum {
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Since API level 29, zero batches is supported for this
+     *      tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the implicit
      *      padding scheme, has to be one of the
      *      {@link PaddingCode} values.
@@ -335,6 +341,7 @@ typedef enum {
      *            Before API level 29, all input tensors of
      *            {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *            must have the same scale and zeroPoint as the output tensor.
+     *            Since API level 29, zero-sized tensors are supported.
      * * n: An {@link ANEURALNETWORKS_INT32} scalar, specifying the
      *      concatenation axis.
      *
@@ -392,7 +399,8 @@ typedef enum {
      *
      * Inputs (explicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
-     *      specifying the input.
+     *      specifying the input. Since API level 29, zero batches is supported
+     *      for this tensor.
      * * 1: A 4-D tensor, of shape
      *      [depth_out, filter_height, filter_width, depth_in], specifying the
      *      filter. For tensor of type
@@ -439,7 +447,8 @@ typedef enum {
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth_in],
-     *      specifying the input.
+     *      specifying the input. Since API level 29, zero batches is supported
+     *      for this tensor.
      * * 1: A 4-D tensor, of shape
      *      [depth_out, filter_height, filter_width, depth_in], specifying the
      *      filter. For tensor of type
@@ -700,7 +709,7 @@ typedef enum {
      * Supported tensor rank: up to 4
      *
      * Inputs:
-     * * 0: A tensor.
+     * * 0: A tensor. Since API level 29, this tensor may be zero-sized.
      *
      * Outputs:
      * * 0: A tensor with the same shape as input0.
@@ -793,7 +802,8 @@ typedef enum {
      *      [batch_size, input_size], where "input_size" corresponds to the
      *      number of inputs to the layer, matching the second dimension of
      *      weights, and "batch_size" is calculated by dividing the number of
-     *      elements by "input_size".
+     *      elements by "input_size". Since API level 29, zero batch_size is
+     *      supported for this tensor.
      * * 1: A 2-D tensor, specifying the weights, of shape
      *      [num_units, input_size], where "num_units" corresponds to the number
      *      of output nodes.
@@ -933,7 +943,8 @@ typedef enum {
      *
      * Inputs (explicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Since API level 29, zero batches is supported for this
+     *      tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
      *      the left, in the ‘width’ dimension.
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
@@ -959,7 +970,8 @@ typedef enum {
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Since API level 29, zero batches is supported for this
+     *      tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the implicit
      *      padding scheme, has to be one of the
      *      {@link PaddingCode} values.
@@ -1049,7 +1061,8 @@ typedef enum {
      * Supported tensor rank: up to 4.
      *
      * Inputs:
-     * * 0: A tensor, specifying the input.
+     * * 0: A tensor, specifying the input. Since API level 29, this tensor may
+     *      be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1361,7 +1374,8 @@ typedef enum {
      *
      * Inputs (explicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Since API level 29, zero batches is supported for this
+     *      tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
      *      the left, in the ‘width’ dimension.
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the padding on
@@ -1387,7 +1401,8 @@ typedef enum {
      *
      * Inputs (implicit padding):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Since API level 29, zero batches is supported for this
+     *      tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the implicit
      *      padding scheme, has to be one of the
      *      {@link PaddingCode} values.
@@ -1429,6 +1444,10 @@ typedef enum {
      * of the input operands. It starts with the trailing dimensions, and works
      * its way forward.
      *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -1469,7 +1488,8 @@ typedef enum {
      * Supported tensor rank: up to 4.
      *
      * Inputs:
-     * * 0: A tensor, specifying the input.
+     * * 0: A tensor, specifying the input. Since API level 29, this tensor may
+     *      be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1493,7 +1513,8 @@ typedef enum {
      * Supported tensor rank: up to 4.
      *
      * Inputs:
-     * * 0: A tensor, specifying the input.
+     * * 0: A tensor, specifying the input. Since API level 29, this tensor may
+     *      be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1517,7 +1538,8 @@ typedef enum {
      * Supported tensor rank: up to 4.
      *
      * Inputs:
-     * * 0: A tensor, specifying the input.
+     * * 0: A tensor, specifying the input. Since API level 29, this tensor may
+     *      be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1573,7 +1595,8 @@ typedef enum {
      *
      * Inputs (resizing by shape):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Since API level 29, zero batches is supported for this
+     *      tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
      *      height of the output tensor.
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
@@ -1584,7 +1607,7 @@ typedef enum {
      *
      * Inputs (resizing by scale, since API level 29):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Zero batches is supported for this tensor.
      * * 1: A scalar, specifying height_scale, the scaling factor of the height
      *      dimension from the input tensor to the output tensor. The output
      *      height is calculated as new_height = floor(height * height_scale).
@@ -1685,7 +1708,8 @@ typedef enum {
      * Tensors with rank other than 2 or 4 are only supported since API level 29.
      *
      * Inputs:
-     * * 0: A 2-D or 4-D tensor, specifying the tensor to be reshaped.
+     * * 0: A 2-D or 4-D tensor, specifying the tensor to be reshaped. Since
+     *      API level 29, this tensor may be zero-sized.
      * * 1: A scalar, specifying the positive scaling factor for the exponent,
      *      beta. If input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the scalar must be of
@@ -1843,7 +1867,8 @@ typedef enum {
      * Supported tensor rank: up to 4.
      *
      * Inputs:
-     * * 0: A tensor, specifying the input.
+     * * 0: A tensor, specifying the input. Since API level 29, this tensor may
+     *      be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
@@ -1912,6 +1937,10 @@ typedef enum {
      *     input1.dimension =    {4, 1, 2}
      *     input2.dimension = {5, 4, 3, 1}
      *     output.dimension = {5, 4, 3, 2}
+     *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
@@ -2147,6 +2176,10 @@ typedef enum {
      *     input2.dimension = {5, 4, 3, 1}
      *     output.dimension = {5, 4, 3, 2}
      *
+     * Since API level 29, generic zero-sized input tensor is supported. Zero
+     * dimension is only compatible with 0 or 1. The size of the output
+     * dimension is zero if either of corresponding input dimension is zero.
+     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -2187,6 +2220,7 @@ typedef enum {
      *
      * Inputs:
      * * 0: An n-D tensor, specifying the tensor to be transposed.
+     *      Since API level 29, this tensor may be zero-sized.
      * * 1: An optional 1-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32},
      *      the permutation of the dimensions of the input tensor.
      *
@@ -2285,7 +2319,8 @@ typedef enum {
      * * 0: A 2-D Tensor of shape [num_rois, 4], specifying the locations of the
      *      bounding box proposals, each line with format [x1, y1, x2, y2].
      *      For tensor of type {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM},
-     *      the zeroPoint must be 0 and the scale must be 0.125.
+     *      the zeroPoint must be 0 and the scale must be 0.125. Zero num_rois
+     *      is supported for this tensor.
      * * 1: A 2-D Tensor of shape [num_rois, num_classes * 4], specifying the
      *      bounding box delta for each region of interest and each class. The
      *      bounding box deltas are organized in the following order
@@ -2294,10 +2329,12 @@ typedef enum {
      *      and height, dw and dh is the log-scale relative correction factor
      *      for the width and height. For input0 of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, this tensor should be
-     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}.
+     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}. Zero num_rois is
+     *      supported for this tensor.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [num_rois], specifying the batch index of each box. Boxes with
-     *      the same batch index are grouped together.
+     *      the same batch index are grouped together. Zero num_rois is
+     *      supported for this tensor.
      * * 3: A 2-D Tensor of shape [batches, 2], specifying the information of
      *      each image in the batch, each line with format
      *      [image_height, image_width].
@@ -2618,16 +2655,16 @@ typedef enum {
      * Inputs:
      * * 0: A 2-D Tensor of shape [num_rois, num_classes], specifying the score
      *      of each bounding box proposal. The boxes are grouped by batches in the
-     *      first dimension.
+     *      first dimension. Zero num_rois is supported for this tensor.
      * * 1: A 2-D Tensor specifying the bounding boxes of shape
      *      [num_rois, num_classes * 4], organized in the order [x1, y1, x2, y2].
      *      The boxes are grouped by batches in the first dimension. The sequential
      *      order of the boxes corresponds with input0. For input0 of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should be of
      *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, with zeroPoint of 0 and
-     *      scale of 0.125.
-     * * 2: A 1-D Tensor of shape [batches], specifying the number of boxes
-     *      for each image in the batch.
+     *      scale of 0.125. Zero num_rois is supported for this tensor.
+     * * 2: A 1-D Tensor of shape [num_output_rois], specifying the batch index of
+     *      each box. Boxes with the same batch index are grouped together.
      * * 3: An {@link ANEURALNETWORKS_FLOAT32} scalar, score_threshold. Boxes
      *      with scores lower than the threshold are filtered before sending
      *      to the NMS algorithm.
@@ -2653,7 +2690,8 @@ typedef enum {
      *      [num_output_rois], specifying the class of each output box. The
      *      sequential order of the boxes corresponds with output0.
      * * 3: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
-     *      [batches], specifying the number of output boxes for each image.
+     *      [num_output_rois], specifying the batch index of each box. Boxes
+     *      with the same batch index are grouped together.
      *
      * Available since API level 29.
      */
@@ -2989,7 +3027,8 @@ typedef enum {
      *      For type of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, the
      *      scale must be 0.125 and the zero point must be 0.
      * * 2: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
-     *      [batches], specifying the number of output boxes for each image.
+     *      [num_output_rois], specifying the batch index of each box. Boxes
+     *      with the same batch index are grouped together.
      *
      * Available since API level 29.
      */
@@ -3657,7 +3696,7 @@ typedef enum {
      * Supported tensor rank: from 1
      *
      * Inputs:
-     * * 0: A tensor.
+     * * 0: A tensor, may be zero-sized.
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0, but with
@@ -3989,10 +4028,12 @@ typedef enum {
      *      the regions of interest, each line with format [x1, y1, x2, y2].
      *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
      *      this tensor should be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM},
-     *      with zeroPoint of 0 and scale of 0.125.
+     *      with zeroPoint of 0 and scale of 0.125. Zero num_rois is
+     *      supported for this tensor.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [num_rois], specifying the batch index of each box. Boxes with
-     *      the same batch index are grouped together.
+     *      the same batch index are grouped together. Zero num_rois is
+     *      supported for this tensor.
      * * 3: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
      *      height of the output tensor.
      * * 4: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
@@ -4143,7 +4184,6 @@ typedef enum {
      * for each dimension. The size is specified as a 1-D tensor containing
      * either size of a slice along corresponding dimension or -1. In the latter
      * case, all the remaining elements in dimension are included in the slice.
-     * Slice size in each dimension cannot be zero.
      *
      * A sum of begin offset and a size of a slice must not exceed size of a
      * corresponding dimension.
@@ -4157,7 +4197,7 @@ typedef enum {
      * Supported tensor rank: from 1
      *
      * Inputs:
-     * * 0: An n-D tensor to take slice from.
+     * * 0: An n-D tensor to take slice from, may be zero-sized.
      * * 1: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} specifying
      *      the beginning indices of the slice in each dimension.
      * * 2: A 1-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} specifying
@@ -4575,7 +4615,7 @@ typedef enum {
      *
      * Inputs (resizing by shape):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Zero batches is supported for this tensor.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
      *      height of the output tensor.
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the output
@@ -4585,7 +4625,7 @@ typedef enum {
      *
      * Inputs (resizing by scale):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
-     *      the input.
+     *      the input. Zero batches is supported for this tensor.
      * * 1: A scalar, specifying height_scale, the scaling factor of the height
      *      dimension from the input tensor to the output tensor. The output
      *      height is calculated as new_height = floor(height * height_scale).

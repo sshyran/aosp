@@ -74,6 +74,7 @@ class IOperationValidationContext {
     virtual uint32_t getNumInputs() const = 0;
     virtual OperandType getInputType(uint32_t index) const = 0;
     virtual Shape getInputShape(uint32_t index) const = 0;
+    virtual const Operand::ExtraParams getInputExtraParams(uint32_t index) const = 0;
 
     virtual uint32_t getNumOutputs() const = 0;
     virtual OperandType getOutputType(uint32_t index) const = 0;
@@ -89,6 +90,7 @@ class IOperationExecutionContext {
     virtual OperandType getInputType(uint32_t index) const = 0;
     virtual Shape getInputShape(uint32_t index) const = 0;
     virtual const void* getInputBuffer(uint32_t index) const = 0;
+    virtual const Operand::ExtraParams getInputExtraParams(uint32_t index) const = 0;
 
     virtual uint32_t getNumOutputs() const = 0;
     virtual OperandType getOutputType(uint32_t index) const = 0;
@@ -291,11 +293,7 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out);
 uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape);
 
 // Preparation functions for the corresponding ops
-bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out1);
-
 bool floorPrepare(const Shape& input, Shape* output);
-
-bool quantizePrepare(const Shape& input, Shape* output);
 
 bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
                           int32_t padding_left, int32_t padding_right, int32_t padding_top,
@@ -303,28 +301,7 @@ bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& 
                           int32_t depth_multiplier, int32_t dilation_width_factor,
                           int32_t dilation_height_factor, Shape* output);
 
-bool convPrepare(const Shape& input, const Shape& filter, const Shape& bias, int32_t padding_left,
-                 int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
-                 int32_t stride_width, int32_t stride_height, int32_t dilation_width_factor,
-                 int32_t dilation_height_factor, Shape* output);
-
-bool genericPoolingPrepare(const Shape& input,
-                           int32_t padding_left, int32_t padding_right,
-                           int32_t padding_top, int32_t padding_bottom,
-                           int32_t stride_width, int32_t stride_height,
-                           int32_t filter_width, int32_t filter_height,
-                           Shape* output);
-
 bool genericActivationPrepare(const Shape& input, Shape* output);
-
-bool fullyConnectedPrepare(const Shape& input,
-                           const Shape& weights,
-                           const Shape& bias,
-                           Shape* output);
-
-bool concatenationPrepare(const std::vector<Shape>& inputShapes,
-                          int32_t axis,
-                          Shape* output);
 
 bool genericNormalizationPrepare(const Shape& input, Shape* output);
 
@@ -372,11 +349,6 @@ bool squeezePrepare(const Shape& input,
                     const int32_t* squeezeDims,
                     const Shape& squeezeDimsShape,
                     Shape* output);
-
-bool transposePrepare(const Shape& input,
-                      const int32_t* permData,
-                      const Shape& permShape,
-                      Shape* output);
 
 bool meanPrepare(const Shape& input,
                  const int32_t* axisData,

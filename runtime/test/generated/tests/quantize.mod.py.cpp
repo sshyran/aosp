@@ -105,3 +105,39 @@ TEST_F(DynamicOutputShapeTest, quantize_dynamic_output_shape_quant8_8) {
             quantize::get_examples_dynamic_output_shape_quant8_8());
 }
 
+TEST_F(GeneratedTests, quantize_zero_sized) {
+    execute(quantize::CreateModel_zero_sized,
+            quantize::is_ignored_zero_sized,
+            quantize::get_examples_zero_sized());
+}
+
+TEST_F(GeneratedTests, quantize_zero_sized_relaxed) {
+    execute(quantize::CreateModel_zero_sized_relaxed,
+            quantize::is_ignored_zero_sized_relaxed,
+            quantize::get_examples_zero_sized_relaxed());
+}
+
+TEST_F(GeneratedTests, quantize_zero_sized_float16) {
+    execute(quantize::CreateModel_zero_sized_float16,
+            quantize::is_ignored_zero_sized_float16,
+            quantize::get_examples_zero_sized_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, quantize_zero_sized_dynamic_output_shape) {
+    execute(quantize::CreateModel_zero_sized_dynamic_output_shape,
+            quantize::is_ignored_zero_sized_dynamic_output_shape,
+            quantize::get_examples_zero_sized_dynamic_output_shape());
+}
+
+TEST_F(DynamicOutputShapeTest, quantize_zero_sized_dynamic_output_shape_relaxed) {
+    execute(quantize::CreateModel_zero_sized_dynamic_output_shape_relaxed,
+            quantize::is_ignored_zero_sized_dynamic_output_shape_relaxed,
+            quantize::get_examples_zero_sized_dynamic_output_shape_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, quantize_zero_sized_dynamic_output_shape_float16) {
+    execute(quantize::CreateModel_zero_sized_dynamic_output_shape_float16,
+            quantize::is_ignored_zero_sized_dynamic_output_shape_float16,
+            quantize::get_examples_zero_sized_dynamic_output_shape_float16());
+}
+
