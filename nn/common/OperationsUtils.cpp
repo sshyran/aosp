@@ -289,6 +289,7 @@ int32_t CalculateInputRadius(int input_integer_bits, int input_left_shift) {
 }
 
 bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
+    NN_RET_CHECK(in1.type == in2.type);
     uint32_t numberOfDims1 = getNumberOfDimensions(in1);
     uint32_t numberOfDims2 = getNumberOfDimensions(in2);
     uint32_t maxDims = std::max(numberOfDims1, numberOfDims2);
@@ -308,7 +309,7 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
                        << "\nSecond tensor: dimension " << numberOfDims2 - i << "of size " << dim2;
             return false;
         }
-        out->dimensions[maxDims - i] = std::max(dim1, dim2);
+        out->dimensions[maxDims - i] = (dim1 == 1) ? dim2 : dim1;
     }
     return true;
 }
@@ -318,69 +319,8 @@ uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape) 
     return static_cast<uint8_t>(doubleValue / newShape.scale + newShape.offset);
 }
 
-bool addMulPrepare(const Shape& in1, const Shape& in2, Shape* out) {
-    NN_OPS_CHECK(getNumberOfDimensions(in1) <= 4 && getNumberOfDimensions(in2) <= 4);
-    NN_OPS_CHECK(in1.type == in2.type);
-    if (SameShape(in1, in2)) {
-        return SetShape(in1, out);
-    }
-    return calculateBroadcastedShape(in1, in2, out);
-}
-
 bool floorPrepare(const Shape& input, Shape* output) {
     return SetShape(input, output);
-}
-
-bool quantizePrepare(const Shape& input, Shape* output) {
-    if (input.dimensions.size() != output->dimensions.size()) {
-        LOG(ERROR) << "QUANTIZE input and output tensors must have the same rank";
-        return false;
-    }
-    output->dimensions = input.dimensions;
-    return true;
-}
-
-bool convPrepare(const Shape& input, const Shape& filter, const Shape& bias, int32_t padding_left,
-                 int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
-                 int32_t stride_width, int32_t stride_height, int32_t dilation_width_factor,
-                 int32_t dilation_height_factor, Shape* output) {
-    if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-        NN_OPS_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM);
-    } else {
-        NN_OPS_CHECK(input.type == filter.type);
-    }
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_OPS_CHECK(bias.type == OperandType::TENSOR_INT32);
-    } else {
-        NN_OPS_CHECK(input.type == bias.type);
-    }
-    NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
-    NN_OPS_CHECK(getNumberOfDimensions(filter) == 4);
-    NN_OPS_CHECK(getNumberOfDimensions(bias) == 1);
-
-    NN_OPS_CHECK(getSizeOfDimension(filter, 0) == getSizeOfDimension(bias, 0));
-    NN_OPS_CHECK(getSizeOfDimension(filter, 3) == getSizeOfDimension(input, 3));
-
-    uint32_t channels_out = getSizeOfDimension(filter, 0);
-    uint32_t width        = getSizeOfDimension(input, 2);
-    uint32_t height       = getSizeOfDimension(input, 1);
-    uint32_t filterWidth  = getSizeOfDimension(filter, 2);
-    uint32_t filterHeight = getSizeOfDimension(filter, 1);
-    uint32_t batches      = getSizeOfDimension(input, 0);
-
-    NN_RET_CHECK_GT(filterWidth, padding_left);
-    NN_RET_CHECK_GT(filterWidth, padding_right);
-    NN_RET_CHECK_GT(filterHeight, padding_top);
-    NN_RET_CHECK_GT(filterHeight, padding_bottom);
-
-    uint32_t outWidth = computeOutSize(width, filterWidth, stride_width, dilation_width_factor,
-                                       padding_left, padding_right);
-    uint32_t outHeight = computeOutSize(height, filterHeight, stride_height, dilation_height_factor,
-                                        padding_top, padding_bottom);
-
-    output->type = input.type;
-    output->dimensions = {batches, outHeight, outWidth, channels_out};
-    return true;
 }
 
 bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
@@ -428,98 +368,10 @@ bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& 
     return true;
 }
 
-bool genericPoolingPrepare(const Shape& input,
-                           int32_t padding_left, int32_t padding_right,
-                           int32_t padding_top, int32_t padding_bottom,
-                           int32_t stride_width, int32_t stride_height,
-                           int32_t filter_width, int32_t filter_height,
-                           Shape* output) {
-    NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
-
-    uint32_t batches      = getSizeOfDimension(input, 0);
-    uint32_t width        = getSizeOfDimension(input, 2);
-    uint32_t height       = getSizeOfDimension(input, 1);
-    uint32_t channels_out = getSizeOfDimension(input, 3);
-
-    NN_RET_CHECK_GT(filter_width, padding_left);
-    NN_RET_CHECK_GT(filter_width, padding_right);
-    NN_RET_CHECK_GT(filter_height, padding_top);
-    NN_RET_CHECK_GT(filter_height, padding_bottom);
-
-    uint32_t outWidth = computeOutSize(width, filter_width, stride_width,
-                                       padding_left, padding_right);
-    uint32_t outHeight = computeOutSize(height, filter_height, stride_height,
-                                        padding_top, padding_bottom);
-
-    output->type = input.type;
-    output->dimensions = {batches, outHeight, outWidth, channels_out};
-    return true;
-}
-
-
 bool genericActivationPrepare(const Shape& input,
                               Shape* output) {
     NN_OPS_CHECK(getNumberOfDimensions(input) <= 4);
     return SetShape(input, output);
-}
-
-bool fullyConnectedPrepare(const Shape& input,
-                           const Shape& weights,
-                           const Shape& bias,
-                           Shape* output) {
-    // Check all the parameters of tensor match within themselves and match the
-    // input configuration.
-    NN_OPS_CHECK(input.type == weights.type);
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_OPS_CHECK(bias.type == OperandType::TENSOR_INT32);
-    } else {
-        NN_OPS_CHECK(input.type == bias.type);
-    }
-    // The Tensorflow fully connected layer specification says that input should
-    // be of at least rank 2, so we check. Tflite doesn't check.
-    NN_OPS_CHECK(getNumberOfDimensions(input) >= 2);
-    NN_OPS_CHECK(getNumberOfDimensions(weights) == 2);
-    uint32_t input_n_elements = getNumberOfElements(input);
-    uint32_t num_units  = getSizeOfDimension(weights, 0);
-    uint32_t input_size = getSizeOfDimension(weights, 1);
-    uint32_t batch_size = input_n_elements / input_size;
-
-    NN_OPS_CHECK(getSizeOfDimension(bias, 0) == num_units);
-    NN_OPS_CHECK(input_size * batch_size == input_n_elements);
-
-    output->type = input.type;
-    output->dimensions = {batch_size, num_units};
-
-    return true;
-}
-
-bool concatenationPrepare(const std::vector<Shape>& inputShapes, int32_t axis, Shape* output) {
-    int num_inputs = inputShapes.size();
-    OperandType input_type = inputShapes[0].type;
-    uint32_t num_dimensions = getNumberOfDimensions(inputShapes[0]);
-
-    NN_RET_CHECK(axis >= 0);
-    NN_RET_CHECK(axis < (int32_t)num_dimensions);
-
-    int sumAxis = getSizeOfDimension(inputShapes[0], axis);
-    for (int i = 1; i < num_inputs; ++i) {
-        NN_RET_CHECK(getNumberOfDimensions(inputShapes[i]) == num_dimensions);
-        NN_RET_CHECK(inputShapes[i].type == inputShapes[0].type);
-        for (int d = 0; d < (int32_t)num_dimensions; ++d) {
-            if (d == axis) {
-                sumAxis += getSizeOfDimension(inputShapes[i], axis);
-            } else {
-                NN_RET_CHECK_EQ(getSizeOfDimension(inputShapes[0], d),
-                                getSizeOfDimension(inputShapes[i], d));
-            }
-        }
-    }
-
-    output->type = input_type;
-    output->dimensions = inputShapes[0].dimensions;
-    output->dimensions[axis] = sumAxis;
-
-    return true;
 }
 
 bool genericNormalizationPrepare(const Shape& input, Shape* output) {
@@ -805,44 +657,6 @@ bool squeezePrepare(const Shape& input,
         if (!shouldSqueeze[inIdx]) {
             outDims[outIdx++] = getSizeOfDimension(input, inIdx);
         }
-    }
-
-    output->type = input.type;
-    output->dimensions = outDims;
-    output->offset = input.offset;
-    output->scale = input.scale;
-
-    return true;
-}
-
-bool transposePrepare(const Shape& input,
-                      const int32_t* permData,
-                      const Shape& permShape,
-                      Shape* output) {
-    uint32_t numInputDims = getNumberOfDimensions(input);
-
-    // permData can be NO_VALUE representing a regular 2D matrix transpose
-    if (permData == nullptr) {
-        NN_OPS_CHECK(numInputDims == 2);
-        output->type = input.type;
-        output->dimensions = {getSizeOfDimension(input, 1), getSizeOfDimension(input, 0)};
-        output->offset = input.offset;
-        output->scale = input.scale;
-        return true;
-    }
-
-    // Transpose op only supports 1D-4D input arrays.
-    NN_OPS_CHECK(numInputDims <= 4);
-
-    // perm need to be provided as a 1-D int32 tensor.
-    NN_OPS_CHECK(permShape.type == OperandType::TENSOR_INT32);
-    NN_OPS_CHECK(getNumberOfDimensions(permShape) == 1);
-    NN_OPS_CHECK(numInputDims == getSizeOfDimension(permShape, 0));
-
-    std::vector<uint32_t> outDims(numInputDims);
-    for (int32_t idx = 0; idx < static_cast<int32_t>(numInputDims); ++idx) {
-        NN_OPS_CHECK(permData[idx] >= 0 && permData[idx] < static_cast<int32_t>(numInputDims));
-        outDims[idx] = getSizeOfDimension(input, permData[idx]);
     }
 
     output->type = input.type;

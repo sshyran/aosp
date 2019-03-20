@@ -230,41 +230,5 @@ template bool spaceToBatchGeneric<uint8_t>(const uint8_t* inputData, const Shape
                                            const Shape& paddingShape, uint8_t* outputData,
                                            const Shape& outputShape);
 
-template <typename T>
-bool transposeGeneric(const T* inputData, const Shape& inputShape, const int32_t* perm,
-                      const Shape& permShape, T* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("transposeGeneric");
-    // Reverse the permuted axes and convert to 4D due to the way Dims are
-    // constructed.
-    const int32_t kOutputDimensionNum = 4;
-
-    // permData can be NO_VALUE representing a regular 2D matrix transpose
-    int32_t permSize = perm == nullptr ? 2 : static_cast<int32_t>(getSizeOfDimension(permShape, 0));
-    int32_t perm_tmp[2] = {1, 0};
-    if (perm == nullptr) {
-        perm = perm_tmp;
-    }
-    int32_t reversed_perm[kOutputDimensionNum];
-    for (int32_t output_k = 0, input_k = permSize - 1; output_k < permSize; ++output_k, --input_k) {
-        reversed_perm[output_k] = permSize - perm[input_k] - 1;
-    }
-    for (int32_t k = permSize; k < kOutputDimensionNum; ++k) {
-        reversed_perm[k] = k;
-    }
-    NNTRACE_COMP_SWITCH("reference_ops::Transpose");
-    tflite::reference_ops::Transpose(inputData, convertShapeToDims(inputShape), outputData,
-                                     convertShapeToDims(outputShape), reversed_perm);
-    return true;
-}
-template bool transposeGeneric<float>(const float* inputData, const Shape& inputShape,
-                                      const int32_t* perm, const Shape& permShape,
-                                      float* outputData, const Shape& outputShape);
-template bool transposeGeneric<_Float16>(const _Float16* inputData, const Shape& inputShape,
-                                         const int32_t* perm, const Shape& permShape,
-                                         _Float16* outputData, const Shape& outputShape);
-template bool transposeGeneric<uint8_t>(const uint8_t* inputData, const Shape& inputShape,
-                                        const int32_t* perm, const Shape& permShape,
-                                        uint8_t* outputData, const Shape& outputShape);
-
 }  // namespace nn
 }  // namespace android

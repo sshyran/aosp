@@ -81,3 +81,27 @@ TEST_F(DynamicOutputShapeTest, conv2d_per_channel_layouts_dynamic_output_shape_n
             conv2d_per_channel::get_examples_layouts_dynamic_output_shape_nchw_weight_as_input());
 }
 
+TEST_F(GeneratedTests, conv2d_per_channel_zero_sized_nhwc) {
+    execute(conv2d_per_channel::CreateModel_zero_sized_nhwc,
+            conv2d_per_channel::is_ignored_zero_sized_nhwc,
+            conv2d_per_channel::get_examples_zero_sized_nhwc());
+}
+
+TEST_F(GeneratedTests, conv2d_per_channel_zero_sized_nchw) {
+    execute(conv2d_per_channel::CreateModel_zero_sized_nchw,
+            conv2d_per_channel::is_ignored_zero_sized_nchw,
+            conv2d_per_channel::get_examples_zero_sized_nchw());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_per_channel_zero_sized_dynamic_output_shape_nhwc) {
+    execute(conv2d_per_channel::CreateModel_zero_sized_dynamic_output_shape_nhwc,
+            conv2d_per_channel::is_ignored_zero_sized_dynamic_output_shape_nhwc,
+            conv2d_per_channel::get_examples_zero_sized_dynamic_output_shape_nhwc());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_per_channel_zero_sized_dynamic_output_shape_nchw) {
+    execute(conv2d_per_channel::CreateModel_zero_sized_dynamic_output_shape_nchw,
+            conv2d_per_channel::is_ignored_zero_sized_dynamic_output_shape_nchw,
+            conv2d_per_channel::get_examples_zero_sized_dynamic_output_shape_nchw());
+}
+
