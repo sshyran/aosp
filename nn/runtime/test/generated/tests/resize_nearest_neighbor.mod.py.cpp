@@ -1545,3 +1545,195 @@ TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shap
             resize_nearest_neighbor::get_examples_scale_dynamic_output_shape_nchw_float16_8());
 }
 
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nhwc,
+            resize_nearest_neighbor::is_ignored_zero_sized_nhwc,
+            resize_nearest_neighbor::get_examples_zero_sized_nhwc());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_relaxed) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nhwc_relaxed,
+            resize_nearest_neighbor::is_ignored_zero_sized_nhwc_relaxed,
+            resize_nearest_neighbor::get_examples_zero_sized_nhwc_relaxed());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_quant8) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nhwc_quant8,
+            resize_nearest_neighbor::is_ignored_zero_sized_nhwc_quant8,
+            resize_nearest_neighbor::get_examples_zero_sized_nhwc_quant8());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_float16) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nhwc_float16,
+            resize_nearest_neighbor::is_ignored_zero_sized_nhwc_float16,
+            resize_nearest_neighbor::get_examples_zero_sized_nhwc_float16());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nchw) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nchw,
+            resize_nearest_neighbor::is_ignored_zero_sized_nchw,
+            resize_nearest_neighbor::get_examples_zero_sized_nchw());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nchw_relaxed) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nchw_relaxed,
+            resize_nearest_neighbor::is_ignored_zero_sized_nchw_relaxed,
+            resize_nearest_neighbor::get_examples_zero_sized_nchw_relaxed());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nchw_quant8) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nchw_quant8,
+            resize_nearest_neighbor::is_ignored_zero_sized_nchw_quant8,
+            resize_nearest_neighbor::get_examples_zero_sized_nchw_quant8());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nchw_float16) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nchw_float16,
+            resize_nearest_neighbor::is_ignored_zero_sized_nchw_float16,
+            resize_nearest_neighbor::get_examples_zero_sized_nchw_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nhwc,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nhwc,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nhwc());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_relaxed) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_quant8) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nhwc_quant8());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_float16) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nhwc_float16,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nhwc_float16,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nhwc_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nchw,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nchw,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nchw());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_relaxed) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nchw_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_quant8) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nchw_quant8,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nchw_quant8,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nchw_quant8());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_float16) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nchw_float16,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nchw_float16,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nchw_float16());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nhwc_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_nhwc_2,
+            resize_nearest_neighbor::get_examples_zero_sized_nhwc_2());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_relaxed_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nhwc_relaxed_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_nhwc_relaxed_2,
+            resize_nearest_neighbor::get_examples_zero_sized_nhwc_relaxed_2());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_quant8_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nhwc_quant8_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_nhwc_quant8_2,
+            resize_nearest_neighbor::get_examples_zero_sized_nhwc_quant8_2());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_float16_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nhwc_float16_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_nhwc_float16_2,
+            resize_nearest_neighbor::get_examples_zero_sized_nhwc_float16_2());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nchw_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nchw_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_nchw_2,
+            resize_nearest_neighbor::get_examples_zero_sized_nchw_2());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nchw_relaxed_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nchw_relaxed_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_nchw_relaxed_2,
+            resize_nearest_neighbor::get_examples_zero_sized_nchw_relaxed_2());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nchw_quant8_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nchw_quant8_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_nchw_quant8_2,
+            resize_nearest_neighbor::get_examples_zero_sized_nchw_quant8_2());
+}
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nchw_float16_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_nchw_float16_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_nchw_float16_2,
+            resize_nearest_neighbor::get_examples_zero_sized_nchw_float16_2());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nhwc_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nhwc_2,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nhwc_2());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_relaxed_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed_2,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_quant8_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8_2,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nhwc_quant8_2());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_float16_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nhwc_float16_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nhwc_float16_2,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nhwc_float16_2());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nchw_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nchw_2,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nchw_2());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_relaxed_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed_2,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nchw_relaxed_2());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_quant8_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nchw_quant8_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nchw_quant8_2,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nchw_quant8_2());
+}
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_float16_2) {
+    execute(resize_nearest_neighbor::CreateModel_zero_sized_dynamic_output_shape_nchw_float16_2,
+            resize_nearest_neighbor::is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2,
+            resize_nearest_neighbor::get_examples_zero_sized_dynamic_output_shape_nchw_float16_2());
+}
+

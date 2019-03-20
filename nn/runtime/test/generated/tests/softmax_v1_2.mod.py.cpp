@@ -2217,3 +2217,51 @@ TEST_F(DynamicOutputShapeTest, softmax_v1_2_axis_dynamic_output_shape_quant8_dim
             softmax_v1_2::get_examples_axis_dynamic_output_shape_quant8_dim1_axis0_neg_2());
 }
 
+TEST_F(GeneratedTests, softmax_v1_2_zero_sized) {
+    execute(softmax_v1_2::CreateModel_zero_sized,
+            softmax_v1_2::is_ignored_zero_sized,
+            softmax_v1_2::get_examples_zero_sized());
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_zero_sized_relaxed) {
+    execute(softmax_v1_2::CreateModel_zero_sized_relaxed,
+            softmax_v1_2::is_ignored_zero_sized_relaxed,
+            softmax_v1_2::get_examples_zero_sized_relaxed());
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_zero_sized_quant8) {
+    execute(softmax_v1_2::CreateModel_zero_sized_quant8,
+            softmax_v1_2::is_ignored_zero_sized_quant8,
+            softmax_v1_2::get_examples_zero_sized_quant8());
+}
+
+TEST_F(GeneratedTests, softmax_v1_2_zero_sized_float16) {
+    execute(softmax_v1_2::CreateModel_zero_sized_float16,
+            softmax_v1_2::is_ignored_zero_sized_float16,
+            softmax_v1_2::get_examples_zero_sized_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, softmax_v1_2_zero_sized_dynamic_output_shape) {
+    execute(softmax_v1_2::CreateModel_zero_sized_dynamic_output_shape,
+            softmax_v1_2::is_ignored_zero_sized_dynamic_output_shape,
+            softmax_v1_2::get_examples_zero_sized_dynamic_output_shape());
+}
+
+TEST_F(DynamicOutputShapeTest, softmax_v1_2_zero_sized_dynamic_output_shape_relaxed) {
+    execute(softmax_v1_2::CreateModel_zero_sized_dynamic_output_shape_relaxed,
+            softmax_v1_2::is_ignored_zero_sized_dynamic_output_shape_relaxed,
+            softmax_v1_2::get_examples_zero_sized_dynamic_output_shape_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, softmax_v1_2_zero_sized_dynamic_output_shape_quant8) {
+    execute(softmax_v1_2::CreateModel_zero_sized_dynamic_output_shape_quant8,
+            softmax_v1_2::is_ignored_zero_sized_dynamic_output_shape_quant8,
+            softmax_v1_2::get_examples_zero_sized_dynamic_output_shape_quant8());
+}
+
+TEST_F(DynamicOutputShapeTest, softmax_v1_2_zero_sized_dynamic_output_shape_float16) {
+    execute(softmax_v1_2::CreateModel_zero_sized_dynamic_output_shape_float16,
+            softmax_v1_2::is_ignored_zero_sized_dynamic_output_shape_float16,
+            softmax_v1_2::get_examples_zero_sized_dynamic_output_shape_float16());
+}
+
