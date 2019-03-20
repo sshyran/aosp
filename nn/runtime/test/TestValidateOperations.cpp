@@ -2567,6 +2567,10 @@ TEST(OperationValidationTest, L2_NORMALIZATION_float32) {
     normalizationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+TEST(OperationValidationTest, L2_NORMALIZATION_quant8) {
+    normalizationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
 void localResponseNormOpTest(int32_t operandCode) {
     int32_t floatScalarType = (operandCode == ANEURALNETWORKS_TENSOR_FLOAT32)
                                       ? ANEURALNETWORKS_FLOAT32
