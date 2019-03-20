@@ -77,10 +77,6 @@ bool depthwiseConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputS
                                    int32_t depthMultiplier, int32_t activation, uint8_t* outputData,
                                    const Shape& outputShape);
 
-bool l2normFloat16(const _Float16* inputData, const Shape& inputShape, int32_t axis,
-                   _Float16* outputData, const Shape& outputShape);
-bool l2normFloat32(const float* inputData, const Shape& inputShape, int32_t axis, float* outputData,
-                   const Shape& outputShape);
 bool localResponseNormFloat16(const _Float16* inputData, const Shape& inputShape, int32_t radius,
                               float bias, float alpha, float beta, int32_t axis,
                               _Float16* outputData, const Shape& outputShape);

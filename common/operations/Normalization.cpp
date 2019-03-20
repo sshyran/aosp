@@ -26,62 +26,6 @@
 namespace android {
 namespace nn {
 
-inline bool l2normFloat32Impl(const float* inputData, const Shape& inputShape, int32_t axis,
-                              float* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("l2normFloat32");
-    const uint32_t outerSize = getNumberOfElements(inputShape, 0, axis);
-    const uint32_t axisSize = getSizeOfDimension(inputShape, axis);
-    const uint32_t innerSize =
-            getNumberOfElements(inputShape, axis + 1, getNumberOfDimensions(inputShape));
-    for (uint32_t outer = 0; outer < outerSize; ++outer) {
-        const float* inputBeg = inputData + outer * axisSize * innerSize;
-        const float* inputEnd = inputBeg + axisSize * innerSize;
-        float* outputBeg = outputData + outer * axisSize * innerSize;
-        for (uint32_t inner = 0; inner < innerSize; ++inner, ++inputBeg, ++inputEnd, ++outputBeg) {
-            float sum = 0.0f;
-            for (const float* p = inputBeg; p < inputEnd; p += innerSize) {
-                float val = *p;
-                sum += val * val;
-            }
-            float l2_norm = std::sqrt(sum);
-            float* pOut = outputBeg;
-            for (const float* p = inputBeg; p < inputEnd; p += innerSize, pOut += innerSize) {
-                *pOut = *p / l2_norm;
-            }
-        }
-    }
-    return true;
-}
-
-bool l2normFloat16(const _Float16* inputData, const Shape& inputShape, int32_t axis,
-                   _Float16* outputData, const Shape& outputShape) {
-    NNTRACE_TRANS("l2normFloat16");
-    std::vector<float> inputDataFloat32(getNumberOfElements(inputShape));
-    convertFloat16ToFloat32(inputData, &inputDataFloat32);
-    std::vector<float> outputDataFloat32(getNumberOfElements(outputShape));
-
-    l2normFloat32(inputDataFloat32.data(), inputShape, axis, outputDataFloat32.data(), outputShape);
-    convertFloat32ToFloat16(outputDataFloat32, outputData);
-
-    return true;
-}
-
-bool l2normFloat32(const float* inputData, const Shape& inputShape, int32_t axis, float* outputData,
-                   const Shape& outputShape) {
-    int32_t ndim = getNumberOfDimensions(inputShape);
-    NN_CHECK(handleNegativeAxis(inputShape, &axis));
-    // TFLite optimized implementation only supports computation along the last axis
-    if (axis == ndim - 1) {
-        NNTRACE_COMP("optimized_ops::L2Normalization::float");
-        tflite::L2NormalizationParams param = {.input_zero_point = 0};
-        tflite::optimized_ops::L2Normalization(param, convertShapeToTflshape(inputShape), inputData,
-                                               convertShapeToTflshape(outputShape), outputData);
-        return true;
-    } else {
-        return l2normFloat32Impl(inputData, inputShape, axis, outputData, outputShape);
-    }
-}
-
 inline bool localResponseNormFloat32Impl(const float* inputData, const Shape& inputShape,
                                          int32_t radius, float bias, float alpha, float beta,
                                          int32_t axis, float* outputData,
