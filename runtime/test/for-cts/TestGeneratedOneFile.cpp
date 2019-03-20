@@ -348,6 +348,7 @@
 #include "../generated/tests/concat_float16_2.mod.py.cpp"
 #include "../generated/tests/concat_float16_3.mod.py.cpp"
 #include "../generated/tests/concat_mixed_quant.mod.py.cpp"
+#include "../generated/tests/concat_zero_sized.mod.py.cpp"
 #include "../generated/tests/conv2d_dilation.mod.py.cpp"
 #include "../generated/tests/conv2d_per_channel.mod.py.cpp"
 #include "../generated/tests/conv2d_v1_2.mod.py.cpp"
