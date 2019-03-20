@@ -374,35 +374,6 @@ bool genericActivationPrepare(const Shape& input,
     return SetShape(input, output);
 }
 
-bool concatenationPrepare(const std::vector<Shape>& inputShapes, int32_t axis, Shape* output) {
-    int num_inputs = inputShapes.size();
-    OperandType input_type = inputShapes[0].type;
-    uint32_t num_dimensions = getNumberOfDimensions(inputShapes[0]);
-
-    NN_RET_CHECK(axis >= 0);
-    NN_RET_CHECK(axis < (int32_t)num_dimensions);
-
-    int sumAxis = getSizeOfDimension(inputShapes[0], axis);
-    for (int i = 1; i < num_inputs; ++i) {
-        NN_RET_CHECK(getNumberOfDimensions(inputShapes[i]) == num_dimensions);
-        NN_RET_CHECK(inputShapes[i].type == inputShapes[0].type);
-        for (int d = 0; d < (int32_t)num_dimensions; ++d) {
-            if (d == axis) {
-                sumAxis += getSizeOfDimension(inputShapes[i], axis);
-            } else {
-                NN_RET_CHECK_EQ(getSizeOfDimension(inputShapes[0], d),
-                                getSizeOfDimension(inputShapes[i], d));
-            }
-        }
-    }
-
-    output->type = input_type;
-    output->dimensions = inputShapes[0].dimensions;
-    output->dimensions[axis] = sumAxis;
-
-    return true;
-}
-
 bool genericNormalizationPrepare(const Shape& input, Shape* output) {
     return SetShape(input, output);
 }

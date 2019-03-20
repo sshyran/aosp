@@ -303,10 +303,6 @@ bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& 
 
 bool genericActivationPrepare(const Shape& input, Shape* output);
 
-bool concatenationPrepare(const std::vector<Shape>& inputShapes,
-                          int32_t axis,
-                          Shape* output);
-
 bool genericNormalizationPrepare(const Shape& input, Shape* output);
 
 bool reshapePrepare(const Shape& input,
