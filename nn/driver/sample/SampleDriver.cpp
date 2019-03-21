@@ -27,6 +27,7 @@
 #include <android-base/logging.h>
 #include <hidl/LegacySupport.h>
 #include <chrono>
+#include <optional>
 #include <thread>
 
 namespace android {
@@ -344,6 +345,94 @@ Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
     return Void();
 }
 
+// BurstExecutorWithCache maps hidl_memory when it is first seen, and preserves
+// the mapping until either (1) the memory is freed in the runtime, or (2) the
+// burst object is destroyed. This allows for subsequent executions operating on
+// pools that have been used before to reuse the mapping instead of mapping and
+// unmapping the memory on each execution.
+class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCache {
+   public:
+    BurstExecutorWithCache(const Model& model, const SampleDriver* driver,
+                           const std::vector<RunTimePoolInfo>& poolInfos)
+        : mModel(model), mDriver(driver), mModelPoolInfos(poolInfos) {}
+
+    bool isCacheEntryPresent(int32_t slot) const override {
+        return static_cast<size_t>(slot) < mMemoryCache.size() && mMemoryCache[slot].has_value();
+    }
+
+    void addCacheEntry(const hidl_memory& memory, int32_t slot) override {
+        if (static_cast<size_t>(slot) >= mMemoryCache.size()) {
+            mMemoryCache.resize(slot + 1);
+        }
+        mMemoryCache[slot] = RunTimePoolInfo::createFromHidlMemory(memory);
+    }
+
+    void removeCacheEntry(int32_t slot) override {
+        if (static_cast<size_t>(slot) < mMemoryCache.size()) {
+            mMemoryCache[slot] = std::nullopt;
+        }
+    }
+
+    std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> execute(
+            const Request& request, const std::vector<int32_t>& slots,
+            MeasureTiming measure) override {
+        NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
+                     "BurstExecutorWithCache::execute");
+
+        time_point driverStart, driverEnd, deviceStart, deviceEnd;
+        if (measure == MeasureTiming::YES) driverStart = now();
+
+        // ensure all relevant pools are valid
+        if (!std::all_of(slots.begin(), slots.end(),
+                         [this](int32_t slot) { return isCacheEntryPresent(slot); })) {
+            return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
+        }
+
+        // finish the request object (for validation)
+        hidl_vec<hidl_memory> pools(slots.size());
+        std::transform(slots.begin(), slots.end(), pools.begin(),
+                       [this](int32_t slot) { return mMemoryCache[slot]->getHidlMemory(); });
+        Request fullRequest = request;
+        fullRequest.pools = std::move(pools);
+
+        // validate request object against the model
+        if (!validateRequest(fullRequest, mModel)) {
+            return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
+        }
+
+        // select relevant entries from cache
+        std::vector<RunTimePoolInfo> requestPoolInfos;
+        requestPoolInfos.reserve(slots.size());
+        std::transform(slots.begin(), slots.end(), std::back_inserter(requestPoolInfos),
+                       [this](int32_t slot) { return *mMemoryCache[slot]; });
+
+        // execution
+        CpuExecutor executor = mDriver->getExecutor();
+        if (measure == MeasureTiming::YES) deviceStart = now();
+        int n = executor.run(mModel, request, mModelPoolInfos, requestPoolInfos);
+        if (measure == MeasureTiming::YES) deviceEnd = now();
+        VLOG(DRIVER) << "executor.run returned " << n;
+        ErrorStatus executionStatus = convertResultCodeToErrorStatus(n);
+        hidl_vec<OutputShape> outputShapes = executor.getOutputShapes();
+        if (measure == MeasureTiming::YES && executionStatus == ErrorStatus::NONE) {
+            driverEnd = now();
+            Timing timing = {
+                    .timeOnDevice = uint64_t(microsecondsDuration(deviceEnd, deviceStart)),
+                    .timeInDriver = uint64_t(microsecondsDuration(driverEnd, driverStart))};
+            VLOG(DRIVER) << "BurstExecutorWithCache::execute timing = " << toString(timing);
+            return std::make_tuple(executionStatus, outputShapes, timing);
+        } else {
+            return std::make_tuple(executionStatus, outputShapes, kNoTiming);
+        }
+    }
+
+   private:
+    const Model mModel;
+    const SampleDriver* const mDriver;
+    const std::vector<RunTimePoolInfo> mModelPoolInfos;
+    std::vector<std::optional<RunTimePoolInfo>> mMemoryCache;  // cached requestPoolInfos
+};
+
 Return<void> SamplePreparedModel::configureExecutionBurst(
         const sp<V1_2::IBurstCallback>& callback,
         const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
@@ -352,8 +441,17 @@ Return<void> SamplePreparedModel::configureExecutionBurst(
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SampleDriver::configureExecutionBurst");
 
-    const sp<V1_2::IBurstContext> burst =
-            ExecutionBurstServer::create(callback, requestChannel, resultChannel, this);
+    // Alternatively, the burst could be configured via:
+    // const sp<V1_2::IBurstContext> burst =
+    //         ExecutionBurstServer::create(callback, requestChannel,
+    //                                      resultChannel, this);
+    //
+    // However, this alternative representation does not include a memory map
+    // caching optimization, and adds overhead.
+    const std::shared_ptr<BurstExecutorWithCache> executorWithCache =
+            std::make_shared<BurstExecutorWithCache>(mModel, mDriver, mPoolInfos);
+    const sp<V1_2::IBurstContext> burst = ExecutionBurstServer::create(
+            callback, requestChannel, resultChannel, executorWithCache);
 
     if (burst == nullptr) {
         cb(ErrorStatus::GENERAL_FAILURE, {});
