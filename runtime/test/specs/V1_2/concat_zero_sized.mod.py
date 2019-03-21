@@ -23,7 +23,7 @@ o1 = Output("scoresOut", "TENSOR_FLOAT32", "{0}") # scores out
 o2 = Output("classesOut", "TENSOR_INT32", "{0}") # classes out
 tmp1 = Internal("roiOut", "TENSOR_FLOAT32", "{0, 4}") # roi out
 tmp2 = Internal("batchSplitOut", "TENSOR_INT32", "{0}") # batch split out
-model = Model().Operation("BOX_WITH_NMS_LIMIT", p1, p2, [0], 0.3, 0.4, -1).To(o1, tmp1, o2, tmp2)
+model = Model().Operation("BOX_WITH_NMS_LIMIT", p1, p2, [0], 0.3, -1, 0, 0.4, 1.0, 0.3).To(o1, tmp1, o2, tmp2)
 
 # Use ROI_ALIGN op to convert into zero-sized feature map.
 layout = BoolScalar("layout", False) # NHWC
@@ -63,7 +63,7 @@ o1 = Output("scoresOut", "TENSOR_FLOAT32", "{0}") # scores out
 o2 = Output("classesOut", "TENSOR_INT32", "{0}") # classes out
 tmp1 = Internal("roiOut", "TENSOR_FLOAT32", "{0, 4}") # roi out
 tmp2 = Internal("batchSplitOut", "TENSOR_INT32", "{0}") # batch split out
-model = Model().Operation("BOX_WITH_NMS_LIMIT", p1, p2, [0], 0.3, 0.4, -1).To(o1, tmp1, o2, tmp2)
+model = Model().Operation("BOX_WITH_NMS_LIMIT", p1, p2, [0], 0.3, -1, 0, 0.4, 1.0, 0.3).To(o1, tmp1, o2, tmp2)
 
 # Use ROI_ALIGN op to convert into zero-sized feature map.
 layout = BoolScalar("layout", False) # NHWC

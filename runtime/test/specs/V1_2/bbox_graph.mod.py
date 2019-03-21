@@ -52,7 +52,7 @@ scoresOut_6 = Output("scores", "TENSOR_FLOAT32", "{0}")
 roiOut_6 = Output("roi", "TENSOR_FLOAT32", "{0, 4}")
 classOut_6 = Output("classes", "TENSOR_INT32", "{0}")
 batchOut_6 = Output("batches", "TENSOR_INT32", "{0}")
-model = model.Operation("BOX_WITH_NMS_LIMIT", scoresOut_4, roiOut_5, batchOut_1, 0.1, 0.3, -1).To(scoresOut_6, roiOut_6, classOut_6, batchOut_6)
+model = model.Operation("BOX_WITH_NMS_LIMIT", scoresOut_4, roiOut_5, batchOut_1, 0.1, -1, 0, 0.3, 1.0, 0.1).To(scoresOut_6, roiOut_6, classOut_6, batchOut_6)
 
 quant8 = DataTypeConverter().Identify({
     scores: ("TENSOR_QUANT8_ASYMM", 0.1, 128),
