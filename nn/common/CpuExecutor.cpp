@@ -244,26 +244,103 @@ bool OperationExecutionContext::checkNoZeroSizedInput() const {
 
 }  // namespace
 
+// Used to keep a pointer to a memory pool.
+//
+// In the case of an "mmap_fd" pool, owns the mmap region
+// returned by getBuffer() -- i.e., that region goes away
+// when the RunTimePoolInfo is destroyed or is assigned to.
+class RunTimePoolInfo::RunTimePoolInfoImpl {
+   public:
+    RunTimePoolInfoImpl(const hidl_memory& hidlMemory, uint8_t* buffer, const sp<IMemory>& memory,
+                        const sp<GraphicBuffer>& graphicBuffer);
+
+    // rule of five...
+    ~RunTimePoolInfoImpl();
+    RunTimePoolInfoImpl(const RunTimePoolInfoImpl&) = delete;
+    RunTimePoolInfoImpl(RunTimePoolInfoImpl&&) noexcept = delete;
+    RunTimePoolInfoImpl& operator=(const RunTimePoolInfoImpl&) = delete;
+    RunTimePoolInfoImpl& operator=(RunTimePoolInfoImpl&&) noexcept = delete;
+
+    uint8_t* getBuffer() const { return mBuffer; }
+
+    bool update() const;
+
+    hidl_memory getHidlMemory() const { return mHidlMemory; }
+
+   private:
+    const hidl_memory mHidlMemory;     // always used
+    uint8_t* const mBuffer = nullptr;  // always used
+    const sp<IMemory> mMemory;         // only used when hidlMemory.name() == "ashmem"
+    const sp<GraphicBuffer>
+            mGraphicBuffer;  // only used when hidlMemory.name() == "hardware_buffer_blob"
+};
+
+RunTimePoolInfo::RunTimePoolInfoImpl::RunTimePoolInfoImpl(const hidl_memory& hidlMemory,
+                                                          uint8_t* buffer,
+                                                          const sp<IMemory>& memory,
+                                                          const sp<GraphicBuffer>& graphicBuffer)
+    : mHidlMemory(hidlMemory), mBuffer(buffer), mMemory(memory), mGraphicBuffer(graphicBuffer) {}
+
+RunTimePoolInfo::RunTimePoolInfoImpl::~RunTimePoolInfoImpl() {
+    if (mBuffer == nullptr) {
+        return;
+    }
+
+    const std::string memType = mHidlMemory.name();
+    if (memType == "ashmem") {
+        // nothing to do
+    } else if (memType == "mmap_fd") {
+        const size_t size = mHidlMemory.size();
+        if (munmap(mBuffer, size)) {
+            LOG(ERROR) << "RunTimePoolInfoImpl::~RunTimePoolInfo(): Can't munmap";
+        }
+    } else if (memType == "hardware_buffer_blob") {
+        mGraphicBuffer->unlock();
+    } else if (memType == "") {
+        // Represents a POINTER argument; nothing to do
+    } else {
+        LOG(ERROR) << "RunTimePoolInfoImpl::~RunTimePoolInfoImpl(): unsupported hidl_memory type";
+    }
+}
+
+// Making sure the output data are correctly updated after execution.
+bool RunTimePoolInfo::RunTimePoolInfoImpl::update() const {
+    const std::string memType = mHidlMemory.name();
+    if (memType == "ashmem") {
+        mMemory->commit();
+        return true;
+    }
+    if (memType == "mmap_fd") {
+        int prot = mHidlMemory.handle()->data[1];
+        if (prot & PROT_WRITE) {
+            const size_t size = mHidlMemory.size();
+            return msync(mBuffer, size, MS_SYNC) == 0;
+        }
+    }
+    // No-op for other types of memory.
+    return true;
+}
+
 // TODO: short term, make share memory mapping and updating a utility function.
 // TODO: long term, implement mmap_fd as a hidl IMemory service.
-RunTimePoolInfo::RunTimePoolInfo(const hidl_memory& hidlMemory, bool* fail) {
-    sp<IMemory> memory;
+std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
+        const hidl_memory& hidlMemory) {
     uint8_t* buffer = nullptr;
+    sp<IMemory> memory;
+    sp<GraphicBuffer> graphicBuffer;
 
     const auto& memType = hidlMemory.name();
     if (memType == "ashmem") {
         memory = mapMemory(hidlMemory);
         if (memory == nullptr) {
             LOG(ERROR) << "Can't map shared memory.";
-            if (fail) *fail = true;
-            return;
+            return std::nullopt;
         }
         memory->update();
         buffer = reinterpret_cast<uint8_t*>(static_cast<void*>(memory->getPointer()));
         if (buffer == nullptr) {
             LOG(ERROR) << "Can't access shared memory.";
-            if (fail) *fail = true;
-            return;
+            return std::nullopt;
         }
     } else if (memType == "mmap_fd") {
         size_t size = hidlMemory.size();
@@ -273,8 +350,7 @@ RunTimePoolInfo::RunTimePoolInfo(const hidl_memory& hidlMemory, bool* fail) {
         buffer = static_cast<uint8_t*>(mmap(nullptr, size, prot, MAP_SHARED, fd, offset));
         if (buffer == MAP_FAILED) {
             LOG(ERROR) << "RunTimePoolInfo::set(): Can't mmap the file descriptor.";
-            if (fail) *fail = true;
-            return;
+            return std::nullopt;
         }
     } else if (memType == "hardware_buffer_blob") {
         auto handle = hidlMemory.handle();
@@ -284,109 +360,61 @@ RunTimePoolInfo::RunTimePoolInfo(const hidl_memory& hidlMemory, bool* fail) {
         const uint32_t height = 1;  // height is always 1 for BLOB mode AHardwareBuffer.
         const uint32_t layers = 1;  // layers is always 1 for BLOB mode AHardwareBuffer.
         const uint32_t stride = hidlMemory.size();
-        mGraphicBuffer = new GraphicBuffer(handle, GraphicBuffer::HandleWrapMethod::CLONE_HANDLE,
-                                           width, height, format, layers, usage, stride);
+        graphicBuffer = new GraphicBuffer(handle, GraphicBuffer::HandleWrapMethod::CLONE_HANDLE,
+                                          width, height, format, layers, usage, stride);
         void* gBuffer = nullptr;
         int32_t outBytesPerPixel, outBytesPerStride;
         status_t status =
-                mGraphicBuffer->lock(usage, &gBuffer, &outBytesPerPixel, &outBytesPerStride);
+                graphicBuffer->lock(usage, &gBuffer, &outBytesPerPixel, &outBytesPerStride);
         if (status != NO_ERROR) {
             LOG(ERROR) << "RunTimePoolInfo Can't lock the AHardwareBuffer.";
-            if (fail) *fail = true;
-            return;
+            return std::nullopt;
         }
         buffer = static_cast<uint8_t*>(gBuffer);
     } else {
         LOG(ERROR) << "RunTimePoolInfo::set(): unsupported hidl_memory type";
-        if (fail) *fail = true;
-        return;
+        return std::nullopt;
     }
 
-    mHidlMemory = hidlMemory;
-    mBuffer = buffer;
-    mMemory = memory;
+    const auto impl =
+            std::make_shared<const RunTimePoolInfoImpl>(hidlMemory, buffer, memory, graphicBuffer);
+    return {RunTimePoolInfo(impl)};
 }
 
-RunTimePoolInfo::RunTimePoolInfo(uint8_t* buffer) {
-    mBuffer = buffer;
+RunTimePoolInfo RunTimePoolInfo::createFromExistingBuffer(uint8_t* buffer) {
+    const auto impl =
+            std::make_shared<const RunTimePoolInfoImpl>(hidl_memory{}, buffer, nullptr, nullptr);
+    return {impl};
 }
 
-RunTimePoolInfo::RunTimePoolInfo(RunTimePoolInfo&& other) noexcept {
-    moveFrom(std::move(other));
-    other.mBuffer = nullptr;
+RunTimePoolInfo::RunTimePoolInfo(const std::shared_ptr<const RunTimePoolInfoImpl>& impl)
+    : mImpl(impl) {}
+
+uint8_t* RunTimePoolInfo::getBuffer() const {
+    return mImpl->getBuffer();
 }
 
-RunTimePoolInfo& RunTimePoolInfo::operator=(RunTimePoolInfo&& other) noexcept {
-    if (this != &other) {
-        release();
-        moveFrom(std::move(other));
-        other.mBuffer = nullptr;
-    }
-    return *this;
-}
-
-void RunTimePoolInfo::moveFrom(RunTimePoolInfo&& other) {
-    mHidlMemory = std::move(other.mHidlMemory);
-    mBuffer = std::move(other.mBuffer);
-    mMemory = std::move(other.mMemory);
-}
-
-void RunTimePoolInfo::release() {
-    if (mBuffer == nullptr) {
-        return;
-    }
-
-    auto memType = mHidlMemory.name();
-    if (memType == "ashmem") {
-        // nothing to do
-    } else if (memType == "mmap_fd") {
-        size_t size = mHidlMemory.size();
-        if (munmap(mBuffer, size)) {
-            LOG(ERROR) << "RunTimePoolInfo::release(): Can't munmap";
-        }
-    } else if (memType == "hardware_buffer_blob") {
-        mGraphicBuffer->unlock();
-        mGraphicBuffer = nullptr;
-    } else if (memType == "") {
-        // Represents a POINTER argument; nothing to do
-    } else {
-        LOG(ERROR) << "RunTimePoolInfo::release(): unsupported hidl_memory type";
-    }
-
-    mHidlMemory = hidl_memory();
-    mMemory = nullptr;
-    mBuffer = nullptr;
-}
-
-// Making sure the output data are correctly updated after execution.
 bool RunTimePoolInfo::update() const {
-    auto memType = mHidlMemory.name();
-    if (memType == "ashmem") {
-        mMemory->commit();
-        return true;
-    } else if (memType == "mmap_fd") {
-        int prot = mHidlMemory.handle()->data[1];
-        if (prot & PROT_WRITE) {
-            size_t size = mHidlMemory.size();
-            return msync(mBuffer, size, MS_SYNC) == 0;
-        }
-    }
-    // No-op for other types of memory.
-    return true;
+    return mImpl->update();
+}
+
+hidl_memory RunTimePoolInfo::getHidlMemory() const {
+    return mImpl->getHidlMemory();
 }
 
 bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos,
                                          const hidl_vec<hidl_memory>& pools) {
+    CHECK(poolInfos != nullptr);
     poolInfos->clear();
     poolInfos->reserve(pools.size());
-    bool fail = false;
     for (const auto& pool : pools) {
-        poolInfos->emplace_back(pool, &fail);
-    }
-    if (fail) {
-        LOG(ERROR) << "Could not map pools";
-        poolInfos->clear();
-        return false;
+        if (std::optional<RunTimePoolInfo> poolInfo = RunTimePoolInfo::createFromHidlMemory(pool)) {
+            poolInfos->push_back(*poolInfo);
+        } else {
+            LOG(ERROR) << "Could not map pools";
+            poolInfos->clear();
+            return false;
+        }
     }
     return true;
 }
