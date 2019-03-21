@@ -1718,8 +1718,8 @@ inline bool is_ignored_layouts_dynamic_output_shape_nchw_weight_as_input(int i) 
 
 // Create the model
 Model createTestModel_zero_sized_nhwc() {
-    Operand::ExtraParams extraParams19;
-    extraParams19.channelQuant(SymmPerChannelQuantParams{.scales={0.5f, 0.75f, 1.0f}, .channelDim=0});
+    Operand::ExtraParams extraParams22;
+    extraParams22.channelQuant(SymmPerChannelQuantParams{.scales={0.5f, 0.75f, 1.0f}, .channelDim=0});
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -1758,7 +1758,7 @@ Model createTestModel_zero_sized_nhwc() {
             .location = {.poolIndex = 0, .offset = 22, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -1774,6 +1774,33 @@ Model createTestModel_zero_sized_nhwc() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 30, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 34, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 38, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 42, .length = 4},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -1827,33 +1854,6 @@ Model createTestModel_zero_sized_nhwc() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 34, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 38, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 42, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 46, .length = 4},
         },
         {
@@ -1866,7 +1866,7 @@ Model createTestModel_zero_sized_nhwc() {
             .location = {.poolIndex = 0, .offset = 50, .length = 4},
         },
         {
-            .type = OperandType::INT32,
+            .type = OperandType::FLOAT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -1875,13 +1875,40 @@ Model createTestModel_zero_sized_nhwc() {
             .location = {.poolIndex = 0, .offset = 54, .length = 4},
         },
         {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 58, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 62, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 66, .length = 4},
+        },
+        {
             .type = OperandType::BOOL,
             .dimensions = {},
             .numberOfConsumers = 2,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 58, .length = 1},
+            .location = {.poolIndex = 0, .offset = 70, .length = 1},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -1899,8 +1926,8 @@ Model createTestModel_zero_sized_nhwc() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 59, .length = 6},
-            .extraParams = std::move(extraParams19),
+            .location = {.poolIndex = 0, .offset = 71, .length = 6},
+            .extraParams = std::move(extraParams22),
         },
         {
             .type = OperandType::TENSOR_INT32,
@@ -1909,34 +1936,7 @@ Model createTestModel_zero_sized_nhwc() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 65, .length = 12},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 77, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 81, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 85, .length = 4},
+            .location = {.poolIndex = 0, .offset = 77, .length = 12},
         },
         {
             .type = OperandType::INT32,
@@ -1975,6 +1975,33 @@ Model createTestModel_zero_sized_nhwc() {
             .location = {.poolIndex = 0, .offset = 101, .length = 4},
         },
         {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 105, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 109, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 113, .length = 4},
+        },
+        {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {0, 2, 2, 3},
             .numberOfConsumers = 0,
@@ -1988,25 +2015,25 @@ Model createTestModel_zero_sized_nhwc() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         },
         {
             .type = OperationType::ROI_ALIGN,
-            .inputs = {10, 7, 9, 11, 12, 13, 14, 15, 16, 17},
-            .outputs = {18},
+            .inputs = {13, 10, 12, 14, 15, 16, 17, 18, 19, 20},
+            .outputs = {21},
         },
         {
             .type = OperationType::CONV_2D,
-            .inputs = {18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 17},
-            .outputs = {28},
+            .inputs = {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 20},
+            .outputs = {31},
         }
     };
 
-    const std::vector<uint32_t> inputIndexes = {10};
-    const std::vector<uint32_t> outputIndexes = {6, 8, 28};
+    const std::vector<uint32_t> inputIndexes = {13};
+    const std::vector<uint32_t> outputIndexes = {9, 11, 31};
     std::vector<uint8_t> operandValues = {
-      137, 129, 1, 0, 1, 0, 10, 0, 10, 0, 0, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64, 4, 0, 0, 0, 4, 0, 0, 0, 0, 1, 2, 1, 2, 1, 2, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
+      137, 129, 1, 0, 1, 0, 10, 0, 10, 0, 0, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 154, 153, 153, 62, 255, 255, 255, 255, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 128, 63, 154, 153, 153, 62, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64, 4, 0, 0, 0, 4, 0, 0, 0, 0, 1, 2, 1, 2, 1, 2, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2027,8 +2054,8 @@ inline bool is_ignored_zero_sized_nhwc(int i) {
 
 // Create the model
 Model createTestModel_zero_sized_nchw() {
-    Operand::ExtraParams extraParams19;
-    extraParams19.channelQuant(SymmPerChannelQuantParams{.scales={0.5f, 0.75f, 1.0f}, .channelDim=0});
+    Operand::ExtraParams extraParams22;
+    extraParams22.channelQuant(SymmPerChannelQuantParams{.scales={0.5f, 0.75f, 1.0f}, .channelDim=0});
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -2067,7 +2094,7 @@ Model createTestModel_zero_sized_nchw() {
             .location = {.poolIndex = 0, .offset = 22, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -2083,6 +2110,33 @@ Model createTestModel_zero_sized_nchw() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 30, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 34, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 38, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 42, .length = 4},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -2136,33 +2190,6 @@ Model createTestModel_zero_sized_nchw() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 34, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 38, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 42, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 46, .length = 4},
         },
         {
@@ -2175,7 +2202,7 @@ Model createTestModel_zero_sized_nchw() {
             .location = {.poolIndex = 0, .offset = 50, .length = 4},
         },
         {
-            .type = OperandType::INT32,
+            .type = OperandType::FLOAT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -2184,13 +2211,40 @@ Model createTestModel_zero_sized_nchw() {
             .location = {.poolIndex = 0, .offset = 54, .length = 4},
         },
         {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 58, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 62, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 66, .length = 4},
+        },
+        {
             .type = OperandType::BOOL,
             .dimensions = {},
             .numberOfConsumers = 2,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 58, .length = 1},
+            .location = {.poolIndex = 0, .offset = 70, .length = 1},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -2208,8 +2262,8 @@ Model createTestModel_zero_sized_nchw() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 59, .length = 6},
-            .extraParams = std::move(extraParams19),
+            .location = {.poolIndex = 0, .offset = 71, .length = 6},
+            .extraParams = std::move(extraParams22),
         },
         {
             .type = OperandType::TENSOR_INT32,
@@ -2218,34 +2272,7 @@ Model createTestModel_zero_sized_nchw() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 65, .length = 12},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 77, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 81, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 85, .length = 4},
+            .location = {.poolIndex = 0, .offset = 77, .length = 12},
         },
         {
             .type = OperandType::INT32,
@@ -2284,6 +2311,33 @@ Model createTestModel_zero_sized_nchw() {
             .location = {.poolIndex = 0, .offset = 101, .length = 4},
         },
         {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 105, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 109, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 113, .length = 4},
+        },
+        {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {0, 3, 2, 2},
             .numberOfConsumers = 0,
@@ -2297,25 +2351,25 @@ Model createTestModel_zero_sized_nchw() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         },
         {
             .type = OperationType::ROI_ALIGN,
-            .inputs = {10, 7, 9, 11, 12, 13, 14, 15, 16, 17},
-            .outputs = {18},
+            .inputs = {13, 10, 12, 14, 15, 16, 17, 18, 19, 20},
+            .outputs = {21},
         },
         {
             .type = OperationType::CONV_2D,
-            .inputs = {18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 17},
-            .outputs = {28},
+            .inputs = {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 20},
+            .outputs = {31},
         }
     };
 
-    const std::vector<uint32_t> inputIndexes = {10};
-    const std::vector<uint32_t> outputIndexes = {6, 8, 28};
+    const std::vector<uint32_t> inputIndexes = {13};
+    const std::vector<uint32_t> outputIndexes = {9, 11, 31};
     std::vector<uint8_t> operandValues = {
-      137, 129, 1, 0, 1, 0, 10, 0, 10, 0, 0, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64, 4, 0, 0, 0, 4, 0, 0, 0, 1, 1, 2, 1, 2, 1, 2, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
+      137, 129, 1, 0, 1, 0, 10, 0, 10, 0, 0, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 154, 153, 153, 62, 255, 255, 255, 255, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 128, 63, 154, 153, 153, 62, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64, 4, 0, 0, 0, 4, 0, 0, 0, 1, 1, 2, 1, 2, 1, 2, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2336,8 +2390,8 @@ inline bool is_ignored_zero_sized_nchw(int i) {
 
 // Create the model
 Model createTestModel_zero_sized_dynamic_output_shape_nhwc() {
-    Operand::ExtraParams extraParams19;
-    extraParams19.channelQuant(SymmPerChannelQuantParams{.scales={0.5f, 0.75f, 1.0f}, .channelDim=0});
+    Operand::ExtraParams extraParams22;
+    extraParams22.channelQuant(SymmPerChannelQuantParams{.scales={0.5f, 0.75f, 1.0f}, .channelDim=0});
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -2376,7 +2430,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_nhwc() {
             .location = {.poolIndex = 0, .offset = 22, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -2392,6 +2446,33 @@ Model createTestModel_zero_sized_dynamic_output_shape_nhwc() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 30, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 34, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 38, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 42, .length = 4},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -2445,33 +2526,6 @@ Model createTestModel_zero_sized_dynamic_output_shape_nhwc() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 34, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 38, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 42, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 46, .length = 4},
         },
         {
@@ -2484,7 +2538,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_nhwc() {
             .location = {.poolIndex = 0, .offset = 50, .length = 4},
         },
         {
-            .type = OperandType::INT32,
+            .type = OperandType::FLOAT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -2493,13 +2547,40 @@ Model createTestModel_zero_sized_dynamic_output_shape_nhwc() {
             .location = {.poolIndex = 0, .offset = 54, .length = 4},
         },
         {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 58, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 62, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 66, .length = 4},
+        },
+        {
             .type = OperandType::BOOL,
             .dimensions = {},
             .numberOfConsumers = 2,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 58, .length = 1},
+            .location = {.poolIndex = 0, .offset = 70, .length = 1},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -2517,8 +2598,8 @@ Model createTestModel_zero_sized_dynamic_output_shape_nhwc() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 59, .length = 6},
-            .extraParams = std::move(extraParams19),
+            .location = {.poolIndex = 0, .offset = 71, .length = 6},
+            .extraParams = std::move(extraParams22),
         },
         {
             .type = OperandType::TENSOR_INT32,
@@ -2527,34 +2608,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_nhwc() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 65, .length = 12},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 77, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 81, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 85, .length = 4},
+            .location = {.poolIndex = 0, .offset = 77, .length = 12},
         },
         {
             .type = OperandType::INT32,
@@ -2593,6 +2647,33 @@ Model createTestModel_zero_sized_dynamic_output_shape_nhwc() {
             .location = {.poolIndex = 0, .offset = 101, .length = 4},
         },
         {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 105, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 109, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 113, .length = 4},
+        },
+        {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {0, 0, 0, 0},
             .numberOfConsumers = 0,
@@ -2606,25 +2687,25 @@ Model createTestModel_zero_sized_dynamic_output_shape_nhwc() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         },
         {
             .type = OperationType::ROI_ALIGN,
-            .inputs = {10, 7, 9, 11, 12, 13, 14, 15, 16, 17},
-            .outputs = {18},
+            .inputs = {13, 10, 12, 14, 15, 16, 17, 18, 19, 20},
+            .outputs = {21},
         },
         {
             .type = OperationType::CONV_2D,
-            .inputs = {18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 17},
-            .outputs = {28},
+            .inputs = {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 20},
+            .outputs = {31},
         }
     };
 
-    const std::vector<uint32_t> inputIndexes = {10};
-    const std::vector<uint32_t> outputIndexes = {6, 8, 28};
+    const std::vector<uint32_t> inputIndexes = {13};
+    const std::vector<uint32_t> outputIndexes = {9, 11, 31};
     std::vector<uint8_t> operandValues = {
-      137, 129, 1, 0, 1, 0, 10, 0, 10, 0, 0, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64, 4, 0, 0, 0, 4, 0, 0, 0, 0, 1, 2, 1, 2, 1, 2, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
+      137, 129, 1, 0, 1, 0, 10, 0, 10, 0, 0, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 154, 153, 153, 62, 255, 255, 255, 255, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 128, 63, 154, 153, 153, 62, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64, 4, 0, 0, 0, 4, 0, 0, 0, 0, 1, 2, 1, 2, 1, 2, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2645,8 +2726,8 @@ inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int i) {
 
 // Create the model
 Model createTestModel_zero_sized_dynamic_output_shape_nchw() {
-    Operand::ExtraParams extraParams19;
-    extraParams19.channelQuant(SymmPerChannelQuantParams{.scales={0.5f, 0.75f, 1.0f}, .channelDim=0});
+    Operand::ExtraParams extraParams22;
+    extraParams22.channelQuant(SymmPerChannelQuantParams{.scales={0.5f, 0.75f, 1.0f}, .channelDim=0});
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -2685,7 +2766,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_nchw() {
             .location = {.poolIndex = 0, .offset = 22, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -2701,6 +2782,33 @@ Model createTestModel_zero_sized_dynamic_output_shape_nchw() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 30, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 34, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 38, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 42, .length = 4},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -2754,33 +2862,6 @@ Model createTestModel_zero_sized_dynamic_output_shape_nchw() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 34, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 38, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 42, .length = 4},
-        },
-        {
-            .type = OperandType::FLOAT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 46, .length = 4},
         },
         {
@@ -2793,7 +2874,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_nchw() {
             .location = {.poolIndex = 0, .offset = 50, .length = 4},
         },
         {
-            .type = OperandType::INT32,
+            .type = OperandType::FLOAT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -2802,13 +2883,40 @@ Model createTestModel_zero_sized_dynamic_output_shape_nchw() {
             .location = {.poolIndex = 0, .offset = 54, .length = 4},
         },
         {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 58, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 62, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 66, .length = 4},
+        },
+        {
             .type = OperandType::BOOL,
             .dimensions = {},
             .numberOfConsumers = 2,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 58, .length = 1},
+            .location = {.poolIndex = 0, .offset = 70, .length = 1},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -2826,8 +2934,8 @@ Model createTestModel_zero_sized_dynamic_output_shape_nchw() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 59, .length = 6},
-            .extraParams = std::move(extraParams19),
+            .location = {.poolIndex = 0, .offset = 71, .length = 6},
+            .extraParams = std::move(extraParams22),
         },
         {
             .type = OperandType::TENSOR_INT32,
@@ -2836,34 +2944,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_nchw() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 65, .length = 12},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 77, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 81, .length = 4},
-        },
-        {
-            .type = OperandType::INT32,
-            .dimensions = {},
-            .numberOfConsumers = 1,
-            .scale = 0.0f,
-            .zeroPoint = 0,
-            .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 85, .length = 4},
+            .location = {.poolIndex = 0, .offset = 77, .length = 12},
         },
         {
             .type = OperandType::INT32,
@@ -2902,6 +2983,33 @@ Model createTestModel_zero_sized_dynamic_output_shape_nchw() {
             .location = {.poolIndex = 0, .offset = 101, .length = 4},
         },
         {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 105, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 109, .length = 4},
+        },
+        {
+            .type = OperandType::INT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 113, .length = 4},
+        },
+        {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {0, 0, 0, 0},
             .numberOfConsumers = 0,
@@ -2915,25 +3023,25 @@ Model createTestModel_zero_sized_dynamic_output_shape_nchw() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         },
         {
             .type = OperationType::ROI_ALIGN,
-            .inputs = {10, 7, 9, 11, 12, 13, 14, 15, 16, 17},
-            .outputs = {18},
+            .inputs = {13, 10, 12, 14, 15, 16, 17, 18, 19, 20},
+            .outputs = {21},
         },
         {
             .type = OperationType::CONV_2D,
-            .inputs = {18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 17},
-            .outputs = {28},
+            .inputs = {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 20},
+            .outputs = {31},
         }
     };
 
-    const std::vector<uint32_t> inputIndexes = {10};
-    const std::vector<uint32_t> outputIndexes = {6, 8, 28};
+    const std::vector<uint32_t> inputIndexes = {13};
+    const std::vector<uint32_t> outputIndexes = {9, 11, 31};
     std::vector<uint8_t> operandValues = {
-      137, 129, 1, 0, 1, 0, 10, 0, 10, 0, 0, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64, 4, 0, 0, 0, 4, 0, 0, 0, 1, 1, 2, 1, 2, 1, 2, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
+      137, 129, 1, 0, 1, 0, 10, 0, 10, 0, 0, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 154, 153, 153, 62, 255, 255, 255, 255, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 128, 63, 154, 153, 153, 62, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64, 4, 0, 0, 0, 4, 0, 0, 0, 1, 1, 2, 1, 2, 1, 2, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
