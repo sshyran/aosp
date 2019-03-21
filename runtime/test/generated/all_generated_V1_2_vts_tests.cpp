@@ -4153,6 +4153,46 @@ TEST_F(ValidationTest, bidirectional_sequence_lstm_float16_batch_major_blackbox_
 
 
 #endif
+// Generated from: bidirectional_sequence_lstm_norm_fw_output.mod.py.
+namespace bidirectional_sequence_lstm_norm_fw_output {
+// Generated bidirectional_sequence_lstm_norm_fw_output test
+#include "examples/bidirectional_sequence_lstm_norm_fw_output.example.cpp"
+// Generated model constructor
+#include "vts_models/bidirectional_sequence_lstm_norm_fw_output.model.cpp"
+} // namespace bidirectional_sequence_lstm_norm_fw_output
+
+TEST_F(NeuralnetworksHidlTest, bidirectional_sequence_lstm_norm_fw_output_blackbox) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_norm_fw_output::createTestModel,
+                           bidirectional_sequence_lstm_norm_fw_output::is_ignored,
+                           bidirectional_sequence_lstm_norm_fw_output::get_examples_blackbox());
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_norm_fw_output_blackbox) {
+  const Model model = bidirectional_sequence_lstm_norm_fw_output::createTestModel();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_norm_fw_output::get_examples_blackbox());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_norm_fw_output_blackbox_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_norm_fw_output::createTestModel_dynamic_output_shape,
+                           bidirectional_sequence_lstm_norm_fw_output::is_ignored_dynamic_output_shape,
+                           bidirectional_sequence_lstm_norm_fw_output::get_examples_blackbox_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_norm_fw_output_blackbox_dynamic_output_shape) {
+  const Model model = bidirectional_sequence_lstm_norm_fw_output::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_norm_fw_output::get_examples_blackbox_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
 // Generated from: bidirectional_sequence_rnn.mod.py.
 namespace bidirectional_sequence_rnn {
 // Generated bidirectional_sequence_rnn test
