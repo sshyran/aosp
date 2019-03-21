@@ -15,6 +15,7 @@
  */
 
 #include "CompilationBuilder.h"
+#include "ExecutionBurstServer.h"
 #include "HalInterfaces.h"
 #include "Manager.h"
 #include "NeuralNetworks.h"
@@ -26,6 +27,7 @@
 
 #include <gtest/gtest.h>
 
+#include <iterator>
 #include <map>
 #include <queue>
 #include <set>
@@ -38,6 +40,7 @@ using CompilationBuilder = nn::CompilationBuilder;
 using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
 using ExecutePreference = nn::test_wrapper::ExecutePreference;
+using ExecutionBurstServer = nn::ExecutionBurstServer;
 using HidlModel = hardware::neuralnetworks::V1_2::Model;
 using HidlToken = hardware::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 using PreparedModelCallback = hardware::neuralnetworks::V1_2::implementation::PreparedModelCallback;
@@ -264,6 +267,13 @@ enum class DriverKind {
     NEW   // new enough to support timing (1.2 or later)
 };
 
+std::ostream& operator<<(std::ostream& os, DriverKind kind) {
+    const char* names[] = {"CPU", "OLD", "NEW"};
+    const uint32_t index = static_cast<uint32_t>(kind);
+    CHECK(index < std::size(names));
+    return os << names[index];
+}
+
 enum class Success {
     // ASYNC: Return ErrorStatus::NONE; notify ErrorStatus::NONE and timing
     // SYNC, BURST: Return ErrorStatus::NONE and timing
@@ -282,6 +292,14 @@ enum class Success {
     FAIL_WAIT
 };
 
+std::ostream& operator<<(std::ostream& os, Success success) {
+    const char* names[] = {"PASS_NEITHER", "PASS_DEVICE", "PASS_DRIVER", "PASS_BOTH",
+                           "PASS_CPU",     "FAIL_LAUNCH", "FAIL_WAIT"};
+    const uint32_t index = static_cast<uint32_t>(success);
+    CHECK(index < std::size(names));
+    return os << names[index];
+}
+
 std::map<Success, Timing> expectedTimingMap = {
         {Success::PASS_NEITHER, kBadTiming},
         {Success::PASS_DEVICE,
@@ -296,6 +314,13 @@ std::set<Success> expectedPassSet = {Success::PASS_NEITHER, Success::PASS_DEVICE
                                      Success::PASS_DRIVER, Success::PASS_BOTH, Success::PASS_CPU};
 
 enum class Compute { ASYNC, SYNC, BURST };
+
+std::ostream& operator<<(std::ostream& os, Compute compute) {
+    const char* names[] = {"ASYNC", "SYNC", "BURST"};
+    const uint32_t index = static_cast<uint32_t>(compute);
+    CHECK(index < std::size(names));
+    return os << names[index];
+}
 
 // For these tests we don't care about actually running an inference -- we
 // just want to dummy up execution status and timing results.
@@ -369,8 +394,20 @@ class TestPreparedModel12 : public SamplePreparedModel {
         }
     }
 
-    // SampleDriver's burst execution uses executeSynchronously(), so we can
-    // rely on that, rather than having to implement configureExecutionBurst().
+    // ExecutionBurstServer::create has an overload that will use
+    // IPreparedModel::executeSynchronously(), so we can rely on that, rather
+    // than having to implement ExecutionBurstServer::IExecutorWithCache.
+    Return<void> configureExecutionBurst(
+            const sp<V1_2::IBurstCallback>& callback,
+            const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
+            const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
+            configureExecutionBurst_cb cb) override {
+        const sp<V1_2::IBurstContext> burst =
+                ExecutionBurstServer::create(callback, requestChannel, resultChannel, this);
+
+        cb(burst == nullptr ? ErrorStatus::GENERAL_FAILURE : ErrorStatus::NONE, burst);
+        return Void();
+    }
 
    private:
     Success mSuccess;
