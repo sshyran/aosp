@@ -51,8 +51,11 @@ void CreateModel_zero_sized(Model *model) {
   auto scores3 = model->addOperand(&type16);
   auto roi1 = model->addOperand(&type13);
   auto param14 = model->addOperand(&type8);
-  auto param15 = model->addOperand(&type8);
+  auto param15 = model->addOperand(&type9);
   auto param16 = model->addOperand(&type9);
+  auto param17 = model->addOperand(&type8);
+  auto param18 = model->addOperand(&type8);
+  auto param19 = model->addOperand(&type8);
   auto scores4 = model->addOperand(&type5);
   auto roi2 = model->addOperand(&type6);
   auto classes = model->addOperand(&type7);
@@ -98,16 +101,22 @@ void CreateModel_zero_sized(Model *model) {
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static float param14_init[] = {0.1f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {0.3f};
-  model->setOperandValue(param15, param15_init, sizeof(float) * 1);
-  static int32_t param16_init[] = {-1};
+  static int32_t param15_init[] = {-1};
+  model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
+  static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
+  static float param17_init[] = {0.3f};
+  model->setOperandValue(param17, param17_init, sizeof(float) * 1);
+  static float param18_init[] = {1.0f};
+  model->setOperandValue(param18, param18_init, sizeof(float) * 1);
+  static float param19_init[] = {0.1f};
+  model->setOperandValue(param19, param19_init, sizeof(float) * 1);
   model->addOperation(ANEURALNETWORKS_GENERATE_PROPOSALS, {scores, deltas, anchors, imageInfo, param, param1, param2, param3, param4, param5, layout}, {scores1, roi, batches});
   model->addOperation(ANEURALNETWORKS_ROI_ALIGN, {featureMap, roi, batches, param6, param7, param8, param9, param10, param11, layout}, {scores2});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights, bias, param12}, {delta});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights1, bias1, param13}, {scores3});
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, delta, batches, imageInfo}, {roi1});
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16}, {scores4, roi2, classes, batches1});
+  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16, param17, param18, param19}, {scores4, roi2, classes, batches1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
     {scores, deltas, anchors, imageInfo, featureMap},
@@ -171,8 +180,11 @@ void CreateModel_zero_sized_relaxed(Model *model) {
   auto scores3 = model->addOperand(&type16);
   auto roi1 = model->addOperand(&type13);
   auto param14 = model->addOperand(&type8);
-  auto param15 = model->addOperand(&type8);
+  auto param15 = model->addOperand(&type9);
   auto param16 = model->addOperand(&type9);
+  auto param17 = model->addOperand(&type8);
+  auto param18 = model->addOperand(&type8);
+  auto param19 = model->addOperand(&type8);
   auto scores4 = model->addOperand(&type5);
   auto roi2 = model->addOperand(&type6);
   auto classes = model->addOperand(&type7);
@@ -218,16 +230,22 @@ void CreateModel_zero_sized_relaxed(Model *model) {
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static float param14_init[] = {0.1f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {0.3f};
-  model->setOperandValue(param15, param15_init, sizeof(float) * 1);
-  static int32_t param16_init[] = {-1};
+  static int32_t param15_init[] = {-1};
+  model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
+  static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
+  static float param17_init[] = {0.3f};
+  model->setOperandValue(param17, param17_init, sizeof(float) * 1);
+  static float param18_init[] = {1.0f};
+  model->setOperandValue(param18, param18_init, sizeof(float) * 1);
+  static float param19_init[] = {0.1f};
+  model->setOperandValue(param19, param19_init, sizeof(float) * 1);
   model->addOperation(ANEURALNETWORKS_GENERATE_PROPOSALS, {scores, deltas, anchors, imageInfo, param, param1, param2, param3, param4, param5, layout}, {scores1, roi, batches});
   model->addOperation(ANEURALNETWORKS_ROI_ALIGN, {featureMap, roi, batches, param6, param7, param8, param9, param10, param11, layout}, {scores2});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights, bias, param12}, {delta});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights1, bias1, param13}, {scores3});
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, delta, batches, imageInfo}, {roi1});
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16}, {scores4, roi2, classes, batches1});
+  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16, param17, param18, param19}, {scores4, roi2, classes, batches1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
     {scores, deltas, anchors, imageInfo, featureMap},
@@ -293,8 +311,11 @@ void CreateModel_zero_sized_float16(Model *model) {
   auto scores3 = model->addOperand(&type28);
   auto roi1 = model->addOperand(&type20);
   auto param14 = model->addOperand(&type24);
-  auto param15 = model->addOperand(&type24);
+  auto param15 = model->addOperand(&type9);
   auto param16 = model->addOperand(&type9);
+  auto param17 = model->addOperand(&type24);
+  auto param18 = model->addOperand(&type24);
+  auto param19 = model->addOperand(&type24);
   auto scores4 = model->addOperand(&type26);
   auto roi2 = model->addOperand(&type25);
   auto classes = model->addOperand(&type7);
@@ -340,16 +361,22 @@ void CreateModel_zero_sized_float16(Model *model) {
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static _Float16 param14_init[] = {0.10000000149011612f};
   model->setOperandValue(param14, param14_init, sizeof(_Float16) * 1);
-  static _Float16 param15_init[] = {0.30000001192092896f};
-  model->setOperandValue(param15, param15_init, sizeof(_Float16) * 1);
-  static int32_t param16_init[] = {-1};
+  static int32_t param15_init[] = {-1};
+  model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
+  static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
+  static _Float16 param17_init[] = {0.30000001192092896f};
+  model->setOperandValue(param17, param17_init, sizeof(_Float16) * 1);
+  static _Float16 param18_init[] = {1.0f};
+  model->setOperandValue(param18, param18_init, sizeof(_Float16) * 1);
+  static _Float16 param19_init[] = {0.10000000149011612f};
+  model->setOperandValue(param19, param19_init, sizeof(_Float16) * 1);
   model->addOperation(ANEURALNETWORKS_GENERATE_PROPOSALS, {scores, deltas, anchors, imageInfo, param, param1, param2, param3, param4, param5, layout}, {scores1, roi, batches});
   model->addOperation(ANEURALNETWORKS_ROI_ALIGN, {featureMap, roi, batches, param6, param7, param8, param9, param10, param11, layout}, {scores2});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights, bias, param12}, {delta});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights1, bias1, param13}, {scores3});
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, delta, batches, imageInfo}, {roi1});
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16}, {scores4, roi2, classes, batches1});
+  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16, param17, param18, param19}, {scores4, roi2, classes, batches1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
     {scores, deltas, anchors, imageInfo, featureMap},
@@ -414,8 +441,11 @@ void CreateModel_zero_sized_quant8(Model *model) {
   auto scores3 = model->addOperand(&type42);
   auto roi1 = model->addOperand(&type39);
   auto param14 = model->addOperand(&type8);
-  auto param15 = model->addOperand(&type8);
+  auto param15 = model->addOperand(&type9);
   auto param16 = model->addOperand(&type9);
+  auto param17 = model->addOperand(&type8);
+  auto param18 = model->addOperand(&type8);
+  auto param19 = model->addOperand(&type8);
   auto scores4 = model->addOperand(&type40);
   auto roi2 = model->addOperand(&type38);
   auto classes = model->addOperand(&type7);
@@ -461,16 +491,22 @@ void CreateModel_zero_sized_quant8(Model *model) {
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static float param14_init[] = {0.1f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {0.3f};
-  model->setOperandValue(param15, param15_init, sizeof(float) * 1);
-  static int32_t param16_init[] = {-1};
+  static int32_t param15_init[] = {-1};
+  model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
+  static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
+  static float param17_init[] = {0.3f};
+  model->setOperandValue(param17, param17_init, sizeof(float) * 1);
+  static float param18_init[] = {1.0f};
+  model->setOperandValue(param18, param18_init, sizeof(float) * 1);
+  static float param19_init[] = {0.1f};
+  model->setOperandValue(param19, param19_init, sizeof(float) * 1);
   model->addOperation(ANEURALNETWORKS_GENERATE_PROPOSALS, {scores, deltas, anchors, imageInfo, param, param1, param2, param3, param4, param5, layout}, {scores1, roi, batches});
   model->addOperation(ANEURALNETWORKS_ROI_ALIGN, {featureMap, roi, batches, param6, param7, param8, param9, param10, param11, layout}, {scores2});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights, bias, param12}, {delta});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights1, bias1, param13}, {scores3});
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, delta, batches, imageInfo}, {roi1});
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16}, {scores4, roi2, classes, batches1});
+  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16, param17, param18, param19}, {scores4, roi2, classes, batches1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
     {scores, deltas, anchors, imageInfo, featureMap},
@@ -535,8 +571,11 @@ void CreateModel_zero_sized_dynamic_output_shape(Model *model) {
   auto scores3 = model->addOperand(&type16);
   auto roi1 = model->addOperand(&type13);
   auto param14 = model->addOperand(&type8);
-  auto param15 = model->addOperand(&type8);
+  auto param15 = model->addOperand(&type9);
   auto param16 = model->addOperand(&type9);
+  auto param17 = model->addOperand(&type8);
+  auto param18 = model->addOperand(&type8);
+  auto param19 = model->addOperand(&type8);
   auto scores4 = model->addOperand(&type5);
   auto roi2 = model->addOperand(&type45);
   auto classes = model->addOperand(&type7);
@@ -582,16 +621,22 @@ void CreateModel_zero_sized_dynamic_output_shape(Model *model) {
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static float param14_init[] = {0.1f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {0.3f};
-  model->setOperandValue(param15, param15_init, sizeof(float) * 1);
-  static int32_t param16_init[] = {-1};
+  static int32_t param15_init[] = {-1};
+  model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
+  static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
+  static float param17_init[] = {0.3f};
+  model->setOperandValue(param17, param17_init, sizeof(float) * 1);
+  static float param18_init[] = {1.0f};
+  model->setOperandValue(param18, param18_init, sizeof(float) * 1);
+  static float param19_init[] = {0.1f};
+  model->setOperandValue(param19, param19_init, sizeof(float) * 1);
   model->addOperation(ANEURALNETWORKS_GENERATE_PROPOSALS, {scores, deltas, anchors, imageInfo, param, param1, param2, param3, param4, param5, layout}, {scores1, roi, batches});
   model->addOperation(ANEURALNETWORKS_ROI_ALIGN, {featureMap, roi, batches, param6, param7, param8, param9, param10, param11, layout}, {scores2});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights, bias, param12}, {delta});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights1, bias1, param13}, {scores3});
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, delta, batches, imageInfo}, {roi1});
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16}, {scores4, roi2, classes, batches1});
+  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16, param17, param18, param19}, {scores4, roi2, classes, batches1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
     {scores, deltas, anchors, imageInfo, featureMap},
@@ -656,8 +701,11 @@ void CreateModel_zero_sized_dynamic_output_shape_relaxed(Model *model) {
   auto scores3 = model->addOperand(&type16);
   auto roi1 = model->addOperand(&type13);
   auto param14 = model->addOperand(&type8);
-  auto param15 = model->addOperand(&type8);
+  auto param15 = model->addOperand(&type9);
   auto param16 = model->addOperand(&type9);
+  auto param17 = model->addOperand(&type8);
+  auto param18 = model->addOperand(&type8);
+  auto param19 = model->addOperand(&type8);
   auto scores4 = model->addOperand(&type5);
   auto roi2 = model->addOperand(&type45);
   auto classes = model->addOperand(&type7);
@@ -703,16 +751,22 @@ void CreateModel_zero_sized_dynamic_output_shape_relaxed(Model *model) {
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static float param14_init[] = {0.1f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {0.3f};
-  model->setOperandValue(param15, param15_init, sizeof(float) * 1);
-  static int32_t param16_init[] = {-1};
+  static int32_t param15_init[] = {-1};
+  model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
+  static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
+  static float param17_init[] = {0.3f};
+  model->setOperandValue(param17, param17_init, sizeof(float) * 1);
+  static float param18_init[] = {1.0f};
+  model->setOperandValue(param18, param18_init, sizeof(float) * 1);
+  static float param19_init[] = {0.1f};
+  model->setOperandValue(param19, param19_init, sizeof(float) * 1);
   model->addOperation(ANEURALNETWORKS_GENERATE_PROPOSALS, {scores, deltas, anchors, imageInfo, param, param1, param2, param3, param4, param5, layout}, {scores1, roi, batches});
   model->addOperation(ANEURALNETWORKS_ROI_ALIGN, {featureMap, roi, batches, param6, param7, param8, param9, param10, param11, layout}, {scores2});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights, bias, param12}, {delta});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights1, bias1, param13}, {scores3});
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, delta, batches, imageInfo}, {roi1});
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16}, {scores4, roi2, classes, batches1});
+  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16, param17, param18, param19}, {scores4, roi2, classes, batches1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
     {scores, deltas, anchors, imageInfo, featureMap},
@@ -779,8 +833,11 @@ void CreateModel_zero_sized_dynamic_output_shape_float16(Model *model) {
   auto scores3 = model->addOperand(&type28);
   auto roi1 = model->addOperand(&type20);
   auto param14 = model->addOperand(&type24);
-  auto param15 = model->addOperand(&type24);
+  auto param15 = model->addOperand(&type9);
   auto param16 = model->addOperand(&type9);
+  auto param17 = model->addOperand(&type24);
+  auto param18 = model->addOperand(&type24);
+  auto param19 = model->addOperand(&type24);
   auto scores4 = model->addOperand(&type46);
   auto roi2 = model->addOperand(&type47);
   auto classes = model->addOperand(&type7);
@@ -826,16 +883,22 @@ void CreateModel_zero_sized_dynamic_output_shape_float16(Model *model) {
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static _Float16 param14_init[] = {0.10000000149011612f};
   model->setOperandValue(param14, param14_init, sizeof(_Float16) * 1);
-  static _Float16 param15_init[] = {0.30000001192092896f};
-  model->setOperandValue(param15, param15_init, sizeof(_Float16) * 1);
-  static int32_t param16_init[] = {-1};
+  static int32_t param15_init[] = {-1};
+  model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
+  static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
+  static _Float16 param17_init[] = {0.30000001192092896f};
+  model->setOperandValue(param17, param17_init, sizeof(_Float16) * 1);
+  static _Float16 param18_init[] = {1.0f};
+  model->setOperandValue(param18, param18_init, sizeof(_Float16) * 1);
+  static _Float16 param19_init[] = {0.10000000149011612f};
+  model->setOperandValue(param19, param19_init, sizeof(_Float16) * 1);
   model->addOperation(ANEURALNETWORKS_GENERATE_PROPOSALS, {scores, deltas, anchors, imageInfo, param, param1, param2, param3, param4, param5, layout}, {scores1, roi, batches});
   model->addOperation(ANEURALNETWORKS_ROI_ALIGN, {featureMap, roi, batches, param6, param7, param8, param9, param10, param11, layout}, {scores2});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights, bias, param12}, {delta});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights1, bias1, param13}, {scores3});
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, delta, batches, imageInfo}, {roi1});
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16}, {scores4, roi2, classes, batches1});
+  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16, param17, param18, param19}, {scores4, roi2, classes, batches1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
     {scores, deltas, anchors, imageInfo, featureMap},
@@ -901,8 +964,11 @@ void CreateModel_zero_sized_dynamic_output_shape_quant8(Model *model) {
   auto scores3 = model->addOperand(&type42);
   auto roi1 = model->addOperand(&type39);
   auto param14 = model->addOperand(&type8);
-  auto param15 = model->addOperand(&type8);
+  auto param15 = model->addOperand(&type9);
   auto param16 = model->addOperand(&type9);
+  auto param17 = model->addOperand(&type8);
+  auto param18 = model->addOperand(&type8);
+  auto param19 = model->addOperand(&type8);
   auto scores4 = model->addOperand(&type40);
   auto roi2 = model->addOperand(&type48);
   auto classes = model->addOperand(&type7);
@@ -948,16 +1014,22 @@ void CreateModel_zero_sized_dynamic_output_shape_quant8(Model *model) {
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static float param14_init[] = {0.1f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {0.3f};
-  model->setOperandValue(param15, param15_init, sizeof(float) * 1);
-  static int32_t param16_init[] = {-1};
+  static int32_t param15_init[] = {-1};
+  model->setOperandValue(param15, param15_init, sizeof(int32_t) * 1);
+  static int32_t param16_init[] = {0};
   model->setOperandValue(param16, param16_init, sizeof(int32_t) * 1);
+  static float param17_init[] = {0.3f};
+  model->setOperandValue(param17, param17_init, sizeof(float) * 1);
+  static float param18_init[] = {1.0f};
+  model->setOperandValue(param18, param18_init, sizeof(float) * 1);
+  static float param19_init[] = {0.1f};
+  model->setOperandValue(param19, param19_init, sizeof(float) * 1);
   model->addOperation(ANEURALNETWORKS_GENERATE_PROPOSALS, {scores, deltas, anchors, imageInfo, param, param1, param2, param3, param4, param5, layout}, {scores1, roi, batches});
   model->addOperation(ANEURALNETWORKS_ROI_ALIGN, {featureMap, roi, batches, param6, param7, param8, param9, param10, param11, layout}, {scores2});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights, bias, param12}, {delta});
   model->addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {scores2, weights1, bias1, param13}, {scores3});
   model->addOperation(ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM, {roi, delta, batches, imageInfo}, {roi1});
-  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16}, {scores4, roi2, classes, batches1});
+  model->addOperation(ANEURALNETWORKS_BOX_WITH_NMS_LIMIT, {scores3, roi1, batches, param14, param15, param16, param17, param18, param19}, {scores4, roi2, classes, batches1});
   // Phase 3, inputs and outputs
   model->identifyInputsAndOutputs(
     {scores, deltas, anchors, imageInfo, featureMap},
