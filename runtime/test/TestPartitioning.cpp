@@ -252,10 +252,6 @@ private:
          cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
          return Void();
      }
-     Return<ErrorStatus> saveToCache(const hidl_handle&, const hidl_handle&,
-                                     const HidlToken&) override {
-         return ErrorStatus::DEVICE_UNAVAILABLE;
-     }
     };
 public:
     enum OEM {
@@ -279,6 +275,8 @@ public:
     }
 
     Return<ErrorStatus> prepareModel_1_2(const Model& model, ExecutionPreference,
+                                         const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
+                                         const HidlToken&,
                                          const sp<IPreparedModelCallback>& cb) override {
         ErrorStatus status = ErrorStatus::NONE;
         if (mOEM != OEMYes) {
@@ -326,13 +324,13 @@ public:
         return Void();
     }
 
-    Return<void> isCachingSupported(isCachingSupported_cb cb) override {
-        cb(ErrorStatus::NONE, true);
+    Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override {
+        cb(ErrorStatus::NONE, /*numModelCache=*/1, /*numDataCache=*/1);
         return Void();
     }
 
     Return<ErrorStatus> prepareModelFromCache(
-            const hidl_handle&, const hidl_handle&, const HidlToken&,
+            const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const HidlToken&,
             const sp<V1_2::IPreparedModelCallback>& callback) override {
         callback->notify_1_2(ErrorStatus::NONE, new PartitioningPreparedModel);
         return ErrorStatus::NONE;

@@ -37,6 +37,12 @@ using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 namespace android {
 namespace nn {
 
+bool Device::isCachingSupported() const {
+    auto pair = getNumberOfCacheFilesNeeded();
+    // Caching is supported if either of numModelCache or numDataCache is greater than 0.
+    return pair.first > 0 || pair.second > 0;
+}
+
 // A Device with actual underlying driver
 class DriverDevice : public Device {
     DISALLOW_IMPLICIT_CONSTRUCTORS(DriverDevice);
@@ -62,13 +68,17 @@ class DriverDevice : public Device {
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const override {
         return mCapabilities.relaxedFloat32toFloat16PerformanceTensor;
     }
-    bool isCachingSupported() const override { return mIsCachingSupported; }
+    std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const override {
+        return mNumCacheFiles;
+    }
 
     int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
+                     const hidl_vec<hidl_handle>& modelCache,
+                     const hidl_vec<hidl_handle>& dataCache, const HidlToken& token,
                      std::shared_ptr<VersionedIPreparedModel>* preparedModel) override;
-    int prepareModelFromCache(const hidl_handle& cache1, const hidl_handle& cache2,
-                              const HidlToken& token,
-                              std::shared_ptr<VersionedIPreparedModel>* preparedModel);
+    int prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
+                              const hidl_vec<hidl_handle>& dataCache, const HidlToken& token,
+                              std::shared_ptr<VersionedIPreparedModel>* preparedModel) override;
 
    private:
     int prepareModelHelper(
@@ -82,7 +92,7 @@ class DriverDevice : public Device {
     const std::shared_ptr<VersionedIDevice> mInterface;
     Capabilities mCapabilities;
     hidl_vec<Extension> mSupportedExtensions;
-    bool mIsCachingSupported = false;
+    std::pair<uint32_t, uint32_t> mNumCacheFiles;
 
 #ifdef NN_DEBUGGABLE
     // For debugging: behavior of IDevice::getSupportedOperations for SampleDriver.
@@ -132,10 +142,20 @@ bool DriverDevice::initialize() {
         return false;
     }
 
-    std::tie(status, mIsCachingSupported) = mInterface->isCachingSupported();
+    std::tie(status, mNumCacheFiles.first, mNumCacheFiles.second) =
+            mInterface->getNumberOfCacheFilesNeeded();
     if (status != ErrorStatus::NONE) {
-        LOG(WARNING) << "IDevice::isCachingSupported returned the error " << toString(status);
-        mIsCachingSupported = false;
+        LOG(WARNING) << "IDevice::getNumberOfCacheFilesNeeded returned the error "
+                     << toString(status);
+        mNumCacheFiles = {0, 0};
+    }
+    if (mNumCacheFiles.first > static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES) ||
+        mNumCacheFiles.second > static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES)) {
+        LOG(WARNING)
+                << "IDevice::getNumberOfCacheFilesNeeded returned invalid number of cache files "
+                   "numModelCache = "
+                << mNumCacheFiles.first << ", numDataCache = " << mNumCacheFiles.second;
+        mNumCacheFiles = {0, 0};
     }
     return true;
 }
@@ -247,24 +267,29 @@ int DriverDevice::prepareModelHelper(
 }
 
 int DriverDevice::prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
+                               const hidl_vec<hidl_handle>& modelCache,
+                               const hidl_vec<hidl_handle>& dataCache, const HidlToken& token,
                                std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
     return prepareModelHelper(
-            [this, &hidlModel, &executionPreference](const sp<PreparedModelCallback>& callback) {
-                return mInterface->prepareModel(hidlModel, executionPreference, callback);
+            [this, &hidlModel, &executionPreference, &modelCache, &dataCache,
+             &token](const sp<PreparedModelCallback>& callback) {
+                return mInterface->prepareModel(hidlModel, executionPreference, modelCache,
+                                                dataCache, token, callback);
             },
             "prepareModel", preparedModel);
 }
 
-int DriverDevice::prepareModelFromCache(const hidl_handle& cache1, const hidl_handle& cache2,
+int DriverDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
+                                        const hidl_vec<hidl_handle>& dataCache,
                                         const HidlToken& token,
                                         std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModelFromCache");
     return prepareModelHelper(
-            [this, &cache1, &cache2, &token](const sp<PreparedModelCallback>& callback) {
-                return mInterface->prepareModelFromCache(cache1, cache2, token, callback);
+            [this, &modelCache, &dataCache, &token](const sp<PreparedModelCallback>& callback) {
+                return mInterface->prepareModelFromCache(modelCache, dataCache, token, callback);
             },
             "prepareModelFromCache", preparedModel);
 }
@@ -293,14 +318,19 @@ class CpuDevice : public Device {
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const override {
         return kPerformance;
     }
-    bool isCachingSupported() const override { return false; }
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const override {
         return kPerformance;
     }
+    std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const override {
+        return kNumCacheFiles;
+    }
 
     int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
+                     const hidl_vec<hidl_handle>& modelCache,
+                     const hidl_vec<hidl_handle>& dataCache, const HidlToken&,
                      std::shared_ptr<VersionedIPreparedModel>* preparedModel) override;
-    int prepareModelFromCache(const hidl_handle&, const hidl_handle&, const HidlToken&,
+    int prepareModelFromCache(const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
+                              const HidlToken&,
                               std::shared_ptr<VersionedIPreparedModel>*) override {
         CHECK(false) << "Should never call prepareModelFromCache on CpuDevice";
         return ANEURALNETWORKS_OP_FAILED;
@@ -314,6 +344,9 @@ class CpuDevice : public Device {
     // Since the performance is a ratio compared to the CPU performance,
     // by definition the performance of the CPU is 1.0.
     const PerformanceInfo kPerformance = {.execTime = 1.0f, .powerUsage = 1.0f};
+    // CPU device does not support compilation caching.
+    const std::pair<uint32_t, uint32_t> kNumCacheFiles = {/*numModelCache=*/0,
+                                                          /*numDataCache=*/0};
 };
 
 void CpuDevice::getSupportedOperations(const Model& hidlModel,
@@ -330,7 +363,11 @@ void CpuDevice::getSupportedOperations(const Model& hidlModel,
 }
 
 int CpuDevice::prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
+                            const hidl_vec<hidl_handle>& modelCache,
+                            const hidl_vec<hidl_handle>& dataCache, const HidlToken&,
                             std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+    CHECK(modelCache.size() == 0 && dataCache.size() == 0)
+            << "Should never call prepareModel with cache information on CpuDevice";
     *preparedModel = nullptr;
     if (!validateModel(hidlModel) || !validateExecutionPreference(executionPreference)) {
         return ANEURALNETWORKS_OP_FAILED;
