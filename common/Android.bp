@@ -38,6 +38,7 @@ cc_defaults {
         "operations/GenerateProposals.cpp",
         "operations/HeatmapMaxKeypoint.cpp",
         "operations/InstanceNormalization.cpp",
+        "operations/L2Normalization.cpp",
         "operations/LogicalAndOr.cpp",
         "operations/LogicalNot.cpp",
         "operations/LogSoftmax.cpp",
