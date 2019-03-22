@@ -15,136 +15,137 @@
 #
 
 # Bidirectional Sequence LSTM Test:
-# FLOAT16, Batch Major, No Layer Normalization, No Cifg, No Peephole, No Projection, and No Clipping.
+# FLOAT32, Layer Normalization, No Cifg, Peephole, Projection, and No Clipping.
+# Verifies forward output only.
 
-n_batch = 1
-n_input = 2
+n_batch = 2
+n_input = 5
 n_cell = 4
-n_output = 4
+n_output = 3
 max_time = 3
 
-input = Input("input", "TENSOR_FLOAT16", "{{{}, {}, {}}}".format(n_batch, max_time, n_input))
+input = Input("input", "TENSOR_FLOAT32", "{{{}, {}, {}}}".format(max_time, n_batch, n_input))
 
 fw_input_to_input_weights = Input(
-    "fw_input_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_input_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 fw_input_to_forget_weights = Input(
-    "fw_input_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_input_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 fw_input_to_cell_weights = Input(
-    "fw_input_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_input_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 fw_input_to_output_weights = Input(
-    "fw_input_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_input_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 
 fw_recurrent_to_input_weights = Input(
-    "fw_recurrent_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
+    "fw_recurrent_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
 fw_recurrent_to_forget_weights = Input(
-    "fw_recurrent_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
+    "fw_recurrent_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
 fw_recurrent_to_cell_weights = Input(
-    "fw_recurrent_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
+    "fw_recurrent_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
 fw_recurrent_to_output_weights = Input(
-    "fw_recurrent_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
+    "fw_recurrent_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
 
 fw_cell_to_input_weights = Input(
-    "fw_cell_to_input_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "fw_cell_to_input_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 fw_cell_to_forget_weights = Input(
-    "fw_cell_to_forget_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "fw_cell_to_forget_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 fw_cell_to_output_weights = Input(
-    "fw_cell_to_output_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "fw_cell_to_output_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 
 fw_input_gate_bias = Input(
-    "fw_input_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "fw_input_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 fw_forget_gate_bias = Input(
-    "fw_forget_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "fw_forget_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 fw_cell_bias = Input(
-    "fw_cell_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "fw_cell_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 fw_output_gate_bias = Input(
-    "fw_output_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "fw_output_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 
 fw_projection_weights = Input(
-    "fw_projection_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_output, n_cell))
+    "fw_projection_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_output, n_cell))
 fw_projection_bias = Input(
-    "fw_projection_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_output))
+    "fw_projection_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_output))
 
 bw_input_to_input_weights = Input(
-    "bw_input_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_input_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 bw_input_to_forget_weights = Input(
-    "bw_input_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_input_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 bw_input_to_cell_weights = Input(
-    "bw_input_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_input_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 bw_input_to_output_weights = Input(
-    "bw_input_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_input_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 
 bw_recurrent_to_input_weights = Input(
-    "bw_recurrent_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
+    "bw_recurrent_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
 bw_recurrent_to_forget_weights = Input(
-    "bw_recurrent_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
+    "bw_recurrent_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
 bw_recurrent_to_cell_weights = Input(
-    "bw_recurrent_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
+    "bw_recurrent_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
 bw_recurrent_to_output_weights = Input(
-    "bw_recurrent_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
+    "bw_recurrent_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
 
 bw_cell_to_input_weights = Input(
-    "bw_cell_to_input_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "bw_cell_to_input_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 bw_cell_to_forget_weights = Input(
-    "bw_cell_to_forget_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "bw_cell_to_forget_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 bw_cell_to_output_weights = Input(
-    "bw_cell_to_output_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "bw_cell_to_output_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 
 bw_input_gate_bias = Input(
-    "bw_input_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "bw_input_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 bw_forget_gate_bias = Input(
-    "bw_forget_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "bw_forget_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 bw_cell_bias = Input(
-    "bw_cell_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "bw_cell_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 bw_output_gate_bias = Input(
-    "bw_output_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
+    "bw_output_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
 
 bw_projection_weights = Input(
-    "bw_projection_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_output, n_cell))
+    "bw_projection_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_output, n_cell))
 bw_projection_bias = Input(
-    "bw_projection_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_output))
+    "bw_projection_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_output))
 
 fw_activation_state = Input(
-    "fw_activatiom_state", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_batch, n_output))
+    "fw_activatiom_state", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_batch, n_output))
 fw_cell_state = Input(
-    "fw_cell_state", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_batch, n_cell))
+    "fw_cell_state", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_batch, n_cell))
 
 bw_activation_state = Input(
-    "bw_activatiom_state", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_batch, n_output))
+    "bw_activatiom_state", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_batch, n_output))
 bw_cell_state = Input(
-    "bw_cell_state", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_batch, n_cell))
+    "bw_cell_state", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_batch, n_cell))
 
-aux_input = Input("input", "TENSOR_FLOAT16", "{{{}, {}, {}}}".format(n_batch, max_time, n_input))
+aux_input = Input("input", "TENSOR_FLOAT32", "{{{}, {}, {}}}".format(max_time, n_batch, n_input))
 
 fw_aux_input_to_input_weights = Input(
-    "fw_aux_input_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_aux_input_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 fw_aux_input_to_forget_weights = Input(
-    "fw_input_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_input_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 fw_aux_input_to_cell_weights = Input(
-    "fw_aux_input_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_aux_input_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 fw_aux_input_to_output_weights = Input(
-    "fw_aux_input_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_aux_input_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 
 bw_aux_input_to_input_weights = Input(
-    "bw_aux_input_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_aux_input_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 bw_aux_input_to_forget_weights = Input(
-    "bw_input_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_input_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 bw_aux_input_to_cell_weights = Input(
-    "bw_aux_input_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_aux_input_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 bw_aux_input_to_output_weights = Input(
-    "bw_aux_input_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_aux_input_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
 
-fw_input_layer_norm_weights = Input("input_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
-fw_forget_layer_norm_weights = Input("forget_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
-fw_cell_layer_norm_weights = Input("cell_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
-fw_output_layer_norm_weights = Input("output_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
+fw_input_layer_norm_weights = Input("input_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
+fw_forget_layer_norm_weights = Input("forget_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
+fw_cell_layer_norm_weights = Input("cell_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
+fw_output_layer_norm_weights = Input("output_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
 
-bw_input_layer_norm_weights = Input("input_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
-bw_forget_layer_norm_weights = Input("forget_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
-bw_cell_layer_norm_weights = Input("cell_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
-bw_output_layer_norm_weights = Input("output_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
+bw_input_layer_norm_weights = Input("input_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
+bw_forget_layer_norm_weights = Input("forget_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
+bw_cell_layer_norm_weights = Input("cell_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
+bw_output_layer_norm_weights = Input("output_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
 
-fw_output=Output("fw_output", "TENSOR_FLOAT16", "{{{}, {}, {}}}".format(n_batch, max_time, n_output))
-bw_output=Output("bw_output", "TENSOR_FLOAT16", "{{{}, {}, {}}}".format(n_batch, max_time, n_output))
+fw_output=Output("fw_output", "TENSOR_FLOAT32", "{{{}, {}, {}}}".format(max_time, n_batch, n_output))
+bw_output=IgnoredOutput("bw_output", "TENSOR_FLOAT32", "{{{}, {}, {}}}".format(max_time, n_batch, n_output))
 
 def test(
     name,
@@ -208,10 +209,10 @@ def test(
     bw_output_data=[],):
 
   activation = Int32Scalar("activation", 4)
-  cell_clip = Float16Scalar("cell_clip", 0.0)
-  proj_clip = Float16Scalar("proj_clip", 0.0)
+  cell_clip = Float32Scalar("cell_clip", 0.0)
+  proj_clip = Float32Scalar("proj_clip", 0.0)
   merge_outputs = BoolScalar("merge_outputs", False)
-  time_major = BoolScalar("time_major", False)
+  time_major = BoolScalar("time_major", True)
 
   model = Model().Operation(
       "BIDIRECTIONAL_SEQUENCE_LSTM",
@@ -338,74 +339,83 @@ def test(
 
 
 fw_input_to_input_weights_data = [
-    -0.45018822, -0.02338299, -0.0870589,
-    -0.34550029, 0.04266912, -0.15680569,
-    -0.34856534, 0.43890524
+    0.5, 0.6, 0.7, -0.8, -0.9, 0.1, 0.2, 0.3, -0.4, 0.5, -0.8, 0.7, -0.6,
+    0.5, -0.4, -0.5, -0.4, -0.3, -0.2, -0.1
 ]
 bw_input_to_input_weights_data = fw_input_to_input_weights_data
 
 fw_input_to_forget_weights_data = [
-    0.09701663, 0.20334584, -0.50592935,
-    -0.31343272, -0.40032279, 0.44781327,
-    0.01387155, -0.35593212
+    -0.6, -0.1, 0.3, 0.2, 0.9, -0.5, -0.2, -0.4, 0.3, -0.8, -0.4, 0.3, -0.5,
+    -0.4, -0.6, 0.3, -0.4, -0.6, -0.5, -0.5
 ]
 bw_input_to_forget_weights_data = fw_input_to_forget_weights_data
 
 fw_input_to_cell_weights_data = [
-    -0.50013041, 0.1370284, 0.11810488, 0.2013163,
-    -0.20583314, 0.44344562, 0.22077113,
-    -0.29909778
+    -0.4, -0.3, -0.2, -0.1, -0.5, 0.5, -0.2, -0.3, -0.2, -0.6, 0.6, -0.1,
+    -0.4, -0.3, -0.7, 0.7, -0.9, -0.5, 0.8, 0.6
 ]
 bw_input_to_cell_weights_data = fw_input_to_cell_weights_data
 
 fw_input_to_output_weights_data = [
-    -0.25065863, -0.28290087, 0.04613829,
-    0.40525138, 0.44272184, 0.03897077, -0.1556896,
-    0.19487578
+    -0.8, -0.4, -0.2, -0.9, -0.1, -0.7, 0.3, -0.3, -0.8, -0.2, 0.6, -0.2,
+    0.4, -0.7, -0.3, -0.5, 0.1, 0.5, -0.6, -0.4
 ]
 bw_input_to_output_weights_data = fw_input_to_output_weights_data
 
 fw_recurrent_to_input_weights_data = [
-    -0.0063535, -0.2042388, 0.31454784, -0.35746509, 0.28902304, 0.08183324,
-    -0.16555229, 0.02286911, -0.13566875, 0.03034258, 0.48091322,
-    -0.12528998, 0.24077177, -0.51332325, -0.33502164, 0.10629296
+    -0.2, -0.3, 0.4, 0.1, -0.5, 0.9, -0.2, -0.3, -0.7, 0.05, -0.2, -0.6
 ]
 bw_recurrent_to_input_weights_data = fw_recurrent_to_input_weights_data
 
 fw_recurrent_to_forget_weights_data = [
-    -0.48684245, -0.06655136, 0.42224967, 0.2112639, 0.27654213, 0.20864892,
-    -0.07646349, 0.45877004, 0.00141793, -0.14609534, 0.36447752, 0.09196436,
-    0.28053468, 0.01560611, -0.20127171, -0.01140004
+    -0.5, -0.3, -0.5, -0.2, 0.6, 0.4, 0.9, 0.3, -0.1, 0.2, 0.5, 0.2
 ]
 bw_recurrent_to_forget_weights_data = fw_recurrent_to_forget_weights_data
 
 fw_recurrent_to_cell_weights_data = [
-    -0.3407414, 0.24443203, -0.2078532, 0.26320225, 0.05695659, -0.00123841,
-    -0.4744786, -0.35869038, -0.06418842, -0.13502428, -0.501764, 0.22830659,
-    -0.46367589, 0.26016325, -0.03894562, -0.16368064
+    -0.3, 0.2, 0.1, -0.3, 0.8, -0.08, -0.2, 0.3, 0.8, -0.6, -0.1, 0.2
 ]
 bw_recurrent_to_cell_weights_data = fw_recurrent_to_cell_weights_data
 
 fw_recurrent_to_output_weights_data = [
-    0.43385774, -0.17194885, 0.2718237, 0.09215671, 0.24107647, -0.39835793,
-    0.18212086, 0.01301402, 0.48572797, -0.50656658, 0.20047462, -0.20607421,
-    -0.51818722, -0.15390486, 0.0468148, 0.39922136
+    0.3, -0.1, 0.1, -0.2, -0.5, -0.7, -0.2, -0.6, -0.1, -0.4, -0.7, -0.2
 ]
 bw_recurrent_to_output_weights_data = fw_recurrent_to_output_weights_data
 
-fw_input_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
-bw_input_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
+fw_cell_to_input_weights_data = [0.05, 0.1, 0.25, 0.15]
+bw_cell_to_input_weights_data = fw_cell_to_input_weights_data
 
-fw_forget_gate_bias_data = [1.0, 1.0, 1.0, 1.0]
-bw_forget_gate_bias_data = [1.0, 1.0, 1.0, 1.0]
+fw_cell_to_forget_weights_data = [-0.02, -0.15, -0.25, -0.03]
+bw_cell_to_forget_weights_data = fw_cell_to_forget_weights_data
 
-fw_cell_bias_data = [0.0, 0.0, 0.0, 0.0]
-bw_cell_bias_data = [0.0, 0.0, 0.0, 0.0]
+fw_cell_to_output_weights_data = [0.1, -0.1, -0.5, 0.05]
+bw_cell_to_output_weights_data = fw_cell_to_output_weights_data
 
-fw_output_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
-bw_output_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
+fw_projection_weights_data = [
+    -0.1, 0.2, 0.01, -0.2, 0.1, 0.5, 0.3, 0.08, 0.07, 0.2, -0.4, 0.2
+]
+bw_projection_weights_data = fw_projection_weights_data
 
-input_data = [2.0, 3.0, 3.0, 4.0, 1.0, 1.0]
+fw_input_gate_bias_data = [0.03, 0.15, 0.22, 0.38]
+bw_input_gate_bias_data = fw_input_gate_bias_data
+
+fw_forget_gate_bias_data = [0.1, -0.3, -0.2, 0.1]
+bw_forget_gate_bias_data = fw_forget_gate_bias_data
+
+fw_cell_bias_data = [-0.05, 0.72, 0.25, 0.08]
+bw_cell_bias_data = fw_cell_bias_data
+
+fw_output_gate_bias_data = [0.05, -0.01, 0.2, 0.1]
+bw_output_gate_bias_data = fw_output_gate_bias_data
+
+input_layer_norm_weights_data = [0.1, 0.2, 0.3, 0.5]
+forget_layer_norm_weights_data = [0.2, 0.2, 0.4, 0.3]
+cell_layer_norm_weights_data = [0.7, 0.2, 0.3, 0.8]
+output_layer_norm_weights_data = [0.6, 0.2, 0.2, 0.5]
+
+input_data = [0.7, 0.8, 0.1, 0.2, 0.3, 0.3, 0.2, 0.9, 0.8, 0.1,
+    0.8, 0.1, 0.2, 0.4, 0.5, 0.1, 0.5, 0.2, 0.4, 0.2,
+    0.2, 0.7, 0.7, 0.1, 0.7, 0.6, 0.9, 0.2, 0.5, 0.7]
 
 fw_activation_state_data = [0 for _ in range(n_batch * n_output)]
 bw_activation_state_data = [0 for _ in range(n_batch * n_output)]
@@ -414,16 +424,11 @@ fw_cell_state_data = [0 for _ in range(n_batch * n_cell)]
 bw_cell_state_data = [0 for _ in range(n_batch * n_cell)]
 
 fw_golden_output_data = [
-    -0.02973187, 0.1229473,  0.20885126, -0.15358765,
-    -0.03716109, 0.12507336, 0.41193449, -0.20860538,
-    -0.15053082, 0.09120187, 0.24278517, -0.12222792
+    0.0244077, 0.128027, -0.00170918, -0.00692428, 0.0848741, 0.063445,
+    0.0137642, 0.140751, 0.0395835, -0.00403912, 0.139963, 0.072681,
+    -0.00459231, 0.155278, 0.0837377, 0.00752706, 0.161903, 0.0561371,
 ]
-bw_golden_output_data = [
-    -0.0806187, 0.139077, 0.400476, -0.197842,
-    -0.0332076, 0.123838, 0.309777, -0.17621,
-    -0.0490733, 0.0739237, 0.067706, -0.0208124
-]
-
+bw_golden_output_data = [0 for _ in range(n_batch * max_time * n_output)]
 
 test(
     name="blackbox",
@@ -436,10 +441,14 @@ test(
     fw_recurrent_to_forget_weights_data=fw_recurrent_to_forget_weights_data,
     fw_recurrent_to_cell_weights_data=fw_recurrent_to_cell_weights_data,
     fw_recurrent_to_output_weights_data=fw_recurrent_to_output_weights_data,
+    fw_cell_to_input_weights_data=fw_cell_to_input_weights_data,
+    fw_cell_to_forget_weights_data=fw_cell_to_forget_weights_data,
+    fw_cell_to_output_weights_data=fw_cell_to_output_weights_data,
     fw_input_gate_bias_data=fw_input_gate_bias_data,
     fw_forget_gate_bias_data=fw_forget_gate_bias_data,
     fw_cell_bias_data=fw_cell_bias_data,
     fw_output_gate_bias_data=fw_output_gate_bias_data,
+    fw_projection_weights_data=fw_projection_weights_data,
     bw_input_to_input_weights_data=bw_input_to_input_weights_data,
     bw_input_to_forget_weights_data=bw_input_to_forget_weights_data,
     bw_input_to_cell_weights_data=bw_input_to_cell_weights_data,
@@ -448,14 +457,26 @@ test(
     bw_recurrent_to_forget_weights_data=bw_recurrent_to_forget_weights_data,
     bw_recurrent_to_cell_weights_data=bw_recurrent_to_cell_weights_data,
     bw_recurrent_to_output_weights_data=bw_recurrent_to_output_weights_data,
+    bw_cell_to_input_weights_data=bw_cell_to_input_weights_data,
+    bw_cell_to_forget_weights_data=bw_cell_to_forget_weights_data,
+    bw_cell_to_output_weights_data=bw_cell_to_output_weights_data,
     bw_input_gate_bias_data=bw_input_gate_bias_data,
     bw_forget_gate_bias_data=bw_forget_gate_bias_data,
     bw_cell_bias_data=bw_cell_bias_data,
     bw_output_gate_bias_data=bw_output_gate_bias_data,
+    bw_projection_weights_data=bw_projection_weights_data,
     fw_activation_state_data = fw_activation_state_data,
     bw_activation_state_data = bw_activation_state_data,
     fw_cell_state_data = fw_cell_state_data,
     bw_cell_state_data = bw_cell_state_data,
+    fw_input_layer_norm_weights_data = input_layer_norm_weights_data,
+    fw_forget_layer_norm_weights_data = forget_layer_norm_weights_data,
+    fw_cell_layer_norm_weights_data = cell_layer_norm_weights_data,
+    fw_output_layer_norm_weights_data = output_layer_norm_weights_data,
+    bw_input_layer_norm_weights_data = input_layer_norm_weights_data,
+    bw_forget_layer_norm_weights_data = forget_layer_norm_weights_data,
+    bw_cell_layer_norm_weights_data = cell_layer_norm_weights_data,
+    bw_output_layer_norm_weights_data = output_layer_norm_weights_data,
     fw_output_data=fw_golden_output_data,
     bw_output_data=bw_golden_output_data
 )
