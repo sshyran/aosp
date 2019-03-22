@@ -51,6 +51,23 @@ struct OperandType {
     std::vector<uint32_t> dimensions;
     ExtraParams extraParams;
 
+    OperandType(const OperandType& other)
+        : operandType(other.operandType),
+          dimensions(other.dimensions),
+          extraParams(other.extraParams) {
+        operandType.dimensions = dimensions.size() > 0 ? dimensions.data() : nullptr;
+    }
+
+    OperandType& operator=(const OperandType& other) {
+        if (this != &other) {
+            operandType = other.operandType;
+            dimensions = other.dimensions;
+            extraParams = other.extraParams;
+            operandType.dimensions = dimensions.size() > 0 ? dimensions.data() : nullptr;
+        }
+        return *this;
+    }
+
     OperandType(Type type, std::vector<uint32_t> d, float scale = 0.0f, int32_t zeroPoint = 0,
                 ExtraParams&& extraParams = std::monostate())
         : dimensions(std::move(d)), extraParams(std::move(extraParams)) {
