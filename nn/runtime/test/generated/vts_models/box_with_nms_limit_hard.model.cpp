@@ -1,5 +1,5 @@
 // clang-format off
-// Generated file (from: box_with_nms_limit.mod.py). Do not edit
+// Generated file (from: box_with_nms_limit_hard.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
@@ -40,7 +40,7 @@ Model createTestModel() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -56,6 +56,33 @@ Model createTestModel() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -98,15 +125,15 @@ Model createTestModel() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255
+      154, 153, 153, 62, 255, 255, 255, 255, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 128, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -165,7 +192,7 @@ Model createTestModel_relaxed() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -181,6 +208,33 @@ Model createTestModel_relaxed() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -223,15 +277,15 @@ Model createTestModel_relaxed() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255
+      154, 153, 153, 62, 255, 255, 255, 255, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 128, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -291,13 +345,13 @@ Model createTestModel_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 2},
         },
         {
-            .type = OperandType::FLOAT16,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 2, .length = 2},
+            .location = {.poolIndex = 0, .offset = 2, .length = 4},
         },
         {
             .type = OperandType::INT32,
@@ -306,7 +360,34 @@ Model createTestModel_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 10, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 14, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -349,15 +430,15 @@ Model createTestModel_float16() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      205, 52, 102, 54, 255, 255, 255, 255
+      205, 52, 255, 255, 255, 255, 0, 0, 0, 0, 102, 54, 0, 60, 205, 52
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -416,7 +497,7 @@ Model createTestModel_quant8() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -432,6 +513,33 @@ Model createTestModel_quant8() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -474,15 +582,15 @@ Model createTestModel_quant8() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255
+      154, 153, 153, 62, 255, 255, 255, 255, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 128, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -541,7 +649,7 @@ Model createTestModel_dynamic_output_shape() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -557,6 +665,33 @@ Model createTestModel_dynamic_output_shape() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -599,15 +734,15 @@ Model createTestModel_dynamic_output_shape() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255
+      154, 153, 153, 62, 255, 255, 255, 255, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 128, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -666,7 +801,7 @@ Model createTestModel_dynamic_output_shape_relaxed() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -682,6 +817,33 @@ Model createTestModel_dynamic_output_shape_relaxed() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -724,15 +886,15 @@ Model createTestModel_dynamic_output_shape_relaxed() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255
+      154, 153, 153, 62, 255, 255, 255, 255, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 128, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -792,13 +954,13 @@ Model createTestModel_dynamic_output_shape_float16() {
             .location = {.poolIndex = 0, .offset = 0, .length = 2},
         },
         {
-            .type = OperandType::FLOAT16,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 2, .length = 2},
+            .location = {.poolIndex = 0, .offset = 2, .length = 4},
         },
         {
             .type = OperandType::INT32,
@@ -807,7 +969,34 @@ Model createTestModel_dynamic_output_shape_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 10, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 14, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -850,15 +1039,15 @@ Model createTestModel_dynamic_output_shape_float16() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      205, 52, 102, 54, 255, 255, 255, 255
+      205, 52, 255, 255, 255, 255, 0, 0, 0, 0, 102, 54, 0, 60, 205, 52
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -917,7 +1106,7 @@ Model createTestModel_dynamic_output_shape_quant8() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -933,6 +1122,33 @@ Model createTestModel_dynamic_output_shape_quant8() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -975,15 +1191,15 @@ Model createTestModel_dynamic_output_shape_quant8() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 255, 255, 255, 255
+      154, 153, 153, 62, 255, 255, 255, 255, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 128, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1042,7 +1258,7 @@ Model createTestModel_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -1058,6 +1274,33 @@ Model createTestModel_2() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -1100,15 +1343,15 @@ Model createTestModel_2() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 5, 0, 0, 0
+      154, 153, 153, 62, 5, 0, 0, 0, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 0, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1167,7 +1410,7 @@ Model createTestModel_relaxed_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -1183,6 +1426,33 @@ Model createTestModel_relaxed_2() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -1225,15 +1495,15 @@ Model createTestModel_relaxed_2() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 5, 0, 0, 0
+      154, 153, 153, 62, 5, 0, 0, 0, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 0, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1293,13 +1563,13 @@ Model createTestModel_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 2},
         },
         {
-            .type = OperandType::FLOAT16,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 2, .length = 2},
+            .location = {.poolIndex = 0, .offset = 2, .length = 4},
         },
         {
             .type = OperandType::INT32,
@@ -1308,7 +1578,34 @@ Model createTestModel_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 10, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 14, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -1351,15 +1648,15 @@ Model createTestModel_float16_2() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      205, 52, 102, 54, 5, 0, 0, 0
+      205, 52, 5, 0, 0, 0, 0, 0, 0, 0, 102, 54, 0, 56, 205, 52
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1418,7 +1715,7 @@ Model createTestModel_quant8_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -1434,6 +1731,33 @@ Model createTestModel_quant8_2() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -1476,15 +1800,15 @@ Model createTestModel_quant8_2() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 5, 0, 0, 0
+      154, 153, 153, 62, 5, 0, 0, 0, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 0, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1543,7 +1867,7 @@ Model createTestModel_dynamic_output_shape_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -1559,6 +1883,33 @@ Model createTestModel_dynamic_output_shape_2() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -1601,15 +1952,15 @@ Model createTestModel_dynamic_output_shape_2() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 5, 0, 0, 0
+      154, 153, 153, 62, 5, 0, 0, 0, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 0, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1668,7 +2019,7 @@ Model createTestModel_dynamic_output_shape_relaxed_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -1684,6 +2035,33 @@ Model createTestModel_dynamic_output_shape_relaxed_2() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -1726,15 +2104,15 @@ Model createTestModel_dynamic_output_shape_relaxed_2() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 5, 0, 0, 0
+      154, 153, 153, 62, 5, 0, 0, 0, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 0, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1794,13 +2172,13 @@ Model createTestModel_dynamic_output_shape_float16_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 2},
         },
         {
-            .type = OperandType::FLOAT16,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 2, .length = 2},
+            .location = {.poolIndex = 0, .offset = 2, .length = 4},
         },
         {
             .type = OperandType::INT32,
@@ -1809,7 +2187,34 @@ Model createTestModel_dynamic_output_shape_float16_2() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 4, .length = 4},
+            .location = {.poolIndex = 0, .offset = 6, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 10, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 14, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -1852,15 +2257,15 @@ Model createTestModel_dynamic_output_shape_float16_2() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      205, 52, 102, 54, 5, 0, 0, 0
+      205, 52, 5, 0, 0, 0, 0, 0, 0, 0, 102, 54, 0, 56, 205, 52
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1919,7 +2324,7 @@ Model createTestModel_dynamic_output_shape_quant8_2() {
             .location = {.poolIndex = 0, .offset = 0, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -1935,6 +2340,33 @@ Model createTestModel_dynamic_output_shape_quant8_2() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 8, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 12, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 16, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 20, .length = 4},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -1977,15 +2409,15 @@ Model createTestModel_dynamic_output_shape_quant8_2() {
     const std::vector<Operation> operations = {
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {0, 1, 2, 3, 4, 5},
-            .outputs = {6, 7, 8, 9},
+            .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8},
+            .outputs = {9, 10, 11, 12},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2};
-    const std::vector<uint32_t> outputIndexes = {6, 7, 8, 9};
+    const std::vector<uint32_t> outputIndexes = {9, 10, 11, 12};
     std::vector<uint8_t> operandValues = {
-      154, 153, 153, 62, 205, 204, 204, 62, 5, 0, 0, 0
+      154, 153, 153, 62, 5, 0, 0, 0, 0, 0, 0, 0, 205, 204, 204, 62, 0, 0, 0, 63, 154, 153, 153, 62
     };
     const std::vector<hidl_memory> pools = {};
 
