@@ -118,7 +118,7 @@ o1 = Output("scoresOut", "TENSOR_QUANT8_ASYMM", "{0}, 0.1f, 128") # scores out
 o2 = Output("classesOut", "TENSOR_INT32", "{0}") # classes out
 tmp1 = Internal("roiOut", "TENSOR_QUANT16_ASYMM", "{0, 4}, 0.125f, 0") # roi out
 tmp2 = Internal("batchSplitOut", "TENSOR_INT32", "{0}") # batch split out
-model = Model("zero_sized").Operation("BOX_WITH_NMS_LIMIT", p1, p2, [0], 0.3, 0.4, -1).To(o1, tmp1, o2, tmp2)
+model = Model("zero_sized").Operation("BOX_WITH_NMS_LIMIT", p1, p2, [0], 0.3, -1, 0, 0.4, 1.0, 0.3).To(o1, tmp1, o2, tmp2)
 
 # Use ROI_ALIGN op to convert into zero-sized feature map.
 layout = BoolScalar("layout", False) # NHWC
