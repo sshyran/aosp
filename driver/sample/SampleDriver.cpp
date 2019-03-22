@@ -105,10 +105,11 @@ Return<void> SampleDriver::getSupportedOperations_1_1(const V1_1::Model& model,
     return getSupportedOperations_1_2(convertToV1_2(model), cb);
 }
 
-Return<void> SampleDriver::isCachingSupported(isCachingSupported_cb cb) {
+Return<void> SampleDriver::getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
-                 "SampleDriver::isCachingSupported");
-    cb(ErrorStatus::NONE, false);
+                 "SampleDriver::getNumberOfCacheFilesNeeded");
+    // Set both numbers to be 0 for cache not supported.
+    cb(ErrorStatus::NONE, /*numModelCache=*/0, /*numDataCache=*/0);
     return Void();
 }
 
@@ -163,14 +164,15 @@ Return<ErrorStatus> SampleDriver::prepareModel_1_1(
 }
 
 Return<ErrorStatus> SampleDriver::prepareModel_1_2(
-        const V1_2::Model& model, ExecutionPreference preference,
+        const V1_2::Model& model, ExecutionPreference preference, const hidl_vec<hidl_handle>&,
+        const hidl_vec<hidl_handle>&, const HidlToken&,
         const sp<V1_2::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_2");
     return prepareModelBase(model, this, preference, callback);
 }
 
 Return<ErrorStatus> SampleDriver::prepareModelFromCache(
-        const hidl_handle&, const hidl_handle&, const HidlToken&,
+        const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const HidlToken&,
         const sp<V1_2::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
                  "SampleDriver::prepareModelFromCache");
@@ -352,12 +354,6 @@ Return<void> SamplePreparedModel::configureExecutionBurst(
     }
 
     return Void();
-}
-
-Return<ErrorStatus> SamplePreparedModel::saveToCache(const hidl_handle&, const hidl_handle&,
-                                                     const HidlToken&) {
-    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION, "SamplePreparedModel::saveToCache");
-    return ErrorStatus::GENERAL_FAILURE;
 }
 
 } // namespace sample_driver
