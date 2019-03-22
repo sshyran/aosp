@@ -20,6 +20,7 @@
 
 #include <gtest/gtest.h>
 #include <cstdlib>
+#include <filesystem>
 #include <numeric>
 
 using namespace android::nn;
@@ -251,6 +252,12 @@ class CompilationCachingTest : public ::testing::TestWithParam<CompilationCachin
         mToken = std::vector<uint8_t>(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
         mIsCachingSupportedAndNoError = isCachingSupportedAndNoError(kErrorStatusGetNumCacheFiles,
                                                                      kNumModelCache, kNumDataCache);
+    }
+
+    virtual void TearDown() override {
+        if (!::testing::Test::HasFailure()) {
+            std::filesystem::remove_all(mCacheDir);
+        }
     }
 
     void compileModel(const sp<CachingDriver>& driver) {
