@@ -28,6 +28,7 @@
 
 #include <gtest/gtest.h>
 
+#include <filesystem>
 #include <map>
 #include <queue>
 
@@ -1328,95 +1329,118 @@ TEST_F(PartitioningTest, Perf) {
     }
 }
 
-void expectUniqueTokens(const std::vector<std::vector<uint8_t>>& tokens) {
-    for (uint32_t i = 0; i < tokens.size(); i++) {
-        SCOPED_TRACE(i);
-        for (uint32_t j = i + 1; j < tokens.size(); j++) {
-            SCOPED_TRACE(j);
-            EXPECT_NE(tokens[i], tokens[j]);
+// Test token rehashing during the compilation step.
+class CacheTest : public PartitioningTest {
+   protected:
+    virtual void SetUp() override {
+        PartitioningTest::SetUp();
+        char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
+        char* cacheDir = mkdtemp(cacheDirTemp);
+        ASSERT_NE(cacheDir, nullptr);
+        mCacheDir = cacheDir;
+    }
+
+    virtual void TearDown() override {
+        if (!::testing::Test::HasFailure()) {
+            std::filesystem::remove_all(mCacheDir);
         }
+        PartitioningTest::TearDown();
     }
-}
 
-// Launch a single run of the partitioner against the provided model and device list with
-// cache token privided as tokenIn. Find the partition for the device with deviceName.
-// Record the tranformed token into tokenOut.
-// If tokenIn is empty, no caching information will be provided to the partitioner.
-void getTransformedCacheTokenSingle(const PartitioningModel& model,
-                                    const std::vector<std::shared_ptr<Device>>& devices,
-                                    const char* deviceName, const std::vector<uint8_t>& tokenIn,
-                                    ExecutePreference preference, std::vector<uint8_t>* tokenOut) {
-    // Compile the model and get the execution plan.
-    PartitioningCompilation compilation(&model, devices);
-    if (!tokenIn.empty()) {
-        compilation.setCaching("/data/local/tmp", tokenIn);
-    }
-    compilation.setPreference(preference);
-    ASSERT_EQ(compilation.finish(), Result::NO_ERROR);
-    const ExecutionPlan& plan = compilation.getExecutionPlan();
-
-    // Find the cache info for the device.
-    const uint8_t* token = nullptr;
-    if (plan.forTest_getKind() == ExecutionPlan::Kind::SIMPLE) {
-        ASSERT_STREQ(plan.forTest_simpleGetDevice()->getName(), deviceName);
-        token = plan.forTest_simpleGetCacheToken();
-    } else if (plan.forTest_getKind() == ExecutionPlan::Kind::COMPOUND) {
-        const auto& steps = plan.forTest_compoundGetSteps();
-        bool found = false;
-        for (const auto& step : steps) {
-            // In general, two or more partitions can be on the same device. However, this will
-            // not happen on the test models with only 2 operations.
-            if (strcmp(step->getDevice()->getName(), deviceName) == 0) {
-                ASSERT_FALSE(found);
-                token = step->forTest_getCacheToken();
-                found = true;
+    void expectUniqueTokens(const std::vector<std::vector<uint8_t>>& tokens) {
+        for (uint32_t i = 0; i < tokens.size(); i++) {
+            SCOPED_TRACE(i);
+            for (uint32_t j = i + 1; j < tokens.size(); j++) {
+                SCOPED_TRACE(j);
+                EXPECT_NE(tokens[i], tokens[j]);
             }
         }
-        ASSERT_TRUE(found);
-    } else {
-        FAIL();
     }
 
-    // Retrieve the transformed token from the cache info.
-    if (token == nullptr) {
-        tokenOut->clear();
-    } else {
-        tokenOut->resize(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN);
-        std::copy(token, token + ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, tokenOut->begin());
+    // Launch a single run of the partitioner against the provided model and device list with
+    // cache token privided as tokenIn. Find the partition for the device with deviceName.
+    // Record the tranformed token into tokenOut.
+    // If tokenIn is empty, no caching information will be provided to the partitioner.
+    void getTransformedCacheTokenSingle(const PartitioningModel& model,
+                                        const std::vector<std::shared_ptr<Device>>& devices,
+                                        const char* deviceName, const std::vector<uint8_t>& tokenIn,
+                                        ExecutePreference preference,
+                                        std::vector<uint8_t>* tokenOut) {
+        // Compile the model and get the execution plan.
+        PartitioningCompilation compilation(&model, devices);
+        if (!tokenIn.empty()) {
+            compilation.setCaching(mCacheDir.c_str(), tokenIn);
+        }
+        compilation.setPreference(preference);
+        ASSERT_EQ(compilation.finish(), Result::NO_ERROR);
+        const ExecutionPlan& plan = compilation.getExecutionPlan();
+
+        // Find the cache info for the device.
+        const uint8_t* token = nullptr;
+        if (plan.forTest_getKind() == ExecutionPlan::Kind::SIMPLE) {
+            ASSERT_STREQ(plan.forTest_simpleGetDevice()->getName(), deviceName);
+            token = plan.forTest_simpleGetCacheToken();
+        } else if (plan.forTest_getKind() == ExecutionPlan::Kind::COMPOUND) {
+            const auto& steps = plan.forTest_compoundGetSteps();
+            bool found = false;
+            for (const auto& step : steps) {
+                // In general, two or more partitions can be on the same device. However, this will
+                // not happen on the test models with only 2 operations.
+                if (strcmp(step->getDevice()->getName(), deviceName) == 0) {
+                    ASSERT_FALSE(found);
+                    token = step->forTest_getCacheToken();
+                    found = true;
+                }
+            }
+            ASSERT_TRUE(found);
+        } else {
+            FAIL();
+        }
+
+        // Retrieve the transformed token from the cache info.
+        if (token == nullptr) {
+            tokenOut->clear();
+        } else {
+            tokenOut->resize(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN);
+            std::copy(token, token + ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, tokenOut->begin());
+        }
     }
-}
 
-// A wrapper of getTransformedCacheTokenSingle, which runs getTransformedCacheTokenSingle
-// multiple times and checks if the transformation provides consistent result.
-void getTransformedCacheToken(const PartitioningModel& model,
-                              const std::vector<std::shared_ptr<Device>>& devices,
-                              const char* deviceName, const std::vector<uint8_t>& tokenIn,
-                              ExecutePreference preference, std::vector<uint8_t>* tokenOut) {
-    getTransformedCacheTokenSingle(model, devices, deviceName, tokenIn, preference, tokenOut);
+    // A wrapper of getTransformedCacheTokenSingle, which runs getTransformedCacheTokenSingle
+    // multiple times and checks if the transformation provides consistent result.
+    void getTransformedCacheToken(const PartitioningModel& model,
+                                  const std::vector<std::shared_ptr<Device>>& devices,
+                                  const char* deviceName, const std::vector<uint8_t>& tokenIn,
+                                  ExecutePreference preference, std::vector<uint8_t>* tokenOut) {
+        getTransformedCacheTokenSingle(model, devices, deviceName, tokenIn, preference, tokenOut);
 
-    // Test if the runtime maps to the same cache token every time for the same compilation setup.
-    for (uint32_t i = 0; i < 10; i++) {
-        std::vector<uint8_t> token;
-        SCOPED_TRACE(i);
-        getTransformedCacheTokenSingle(model, devices, deviceName, tokenIn, preference, &token);
-        EXPECT_EQ(*tokenOut, token);
+        // Test if the runtime maps to the same cache token every time for the same compilation
+        // setup.
+        for (uint32_t i = 0; i < 10; i++) {
+            std::vector<uint8_t> token;
+            SCOPED_TRACE(i);
+            getTransformedCacheTokenSingle(model, devices, deviceName, tokenIn, preference, &token);
+            EXPECT_EQ(*tokenOut, token);
+        }
     }
-}
 
-void CreateModelForCachingTests(PartitioningModel* model) {
-    uint32_t opnd0 = model->addFloatOperand();
-    uint32_t opnd1 = model->addFloatOperand();
-    uint32_t opnd2 = model->addOperation2To1(0, opnd0, opnd1);
-    uint32_t opnd3 = model->addFloatOperand();
-    uint32_t opnd4 = model->addOperation2To1(1, opnd2, opnd3);
-    model->identifyInputsAndOutputs({opnd0, opnd1, opnd3}, {opnd4});
-    model->finish();
-    ASSERT_TRUE(model->isValid());
-}
+    void CreateModelForCachingTests(PartitioningModel* model) {
+        uint32_t opnd0 = model->addFloatOperand();
+        uint32_t opnd1 = model->addFloatOperand();
+        uint32_t opnd2 = model->addOperation2To1(0, opnd0, opnd1);
+        uint32_t opnd3 = model->addFloatOperand();
+        uint32_t opnd4 = model->addOperation2To1(1, opnd2, opnd3);
+        model->identifyInputsAndOutputs({opnd0, opnd1, opnd3}, {opnd4});
+        model->finish();
+        ASSERT_TRUE(model->isValid());
+    }
+
+    std::string mCacheDir;
+};
 
 // Test the case when no token is provided by the application and the execution plan has a
 // simple body.
-TEST_F(PartitioningTest, CacheTokenNoneSimpleBody) {
+TEST_F(CacheTest, CacheTokenNoneSimpleBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
@@ -1433,7 +1457,7 @@ TEST_F(PartitioningTest, CacheTokenNoneSimpleBody) {
 
 // Test if the runtime maps to different cache tokens for devices with different names in
 // execution plan with a simple body.
-TEST_F(PartitioningTest, CacheTokenDifferentDeviceNamesSimpleBody) {
+TEST_F(CacheTest, CacheTokenDifferentDeviceNamesSimpleBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
@@ -1452,7 +1476,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentDeviceNamesSimpleBody) {
 
 // Test if the runtime maps to different cache tokens for devices with different version strings in
 // execution plan with a simple body.
-TEST_F(PartitioningTest, CacheTokenDifferentDeviceVersionStringsSimpleBody) {
+TEST_F(CacheTest, CacheTokenDifferentDeviceVersionStringsSimpleBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
@@ -1471,7 +1495,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentDeviceVersionStringsSimpleBody) {
 
 // Test if the runtime maps to different cache tokens for compilations with different preferences
 // in execution plan with a simple body.
-TEST_F(PartitioningTest, CacheTokenDifferentPreferencesSimpleBody) {
+TEST_F(CacheTest, CacheTokenDifferentPreferencesSimpleBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
@@ -1491,7 +1515,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentPreferencesSimpleBody) {
 
 // Test if the runtime maps to different cache tokens for compilations with different tokens
 // provided by application in execution plan with a simple body.
-TEST_F(PartitioningTest, CacheTokenDifferentTokensSimpleBody) {
+TEST_F(CacheTest, CacheTokenDifferentTokensSimpleBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
@@ -1510,7 +1534,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentTokensSimpleBody) {
 
 // Test the case when no token is provided by the application and the execution plan has a
 // compound body.
-TEST_F(PartitioningTest, CacheTokenNoneCompoundBody) {
+TEST_F(CacheTest, CacheTokenNoneCompoundBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
@@ -1528,7 +1552,7 @@ TEST_F(PartitioningTest, CacheTokenNoneCompoundBody) {
 
 // Test if the runtime maps to different cache tokens for devices with different names in
 // execution plan with a compound body.
-TEST_F(PartitioningTest, CacheTokenDifferentDeviceNamesCompoundBody) {
+TEST_F(CacheTest, CacheTokenDifferentDeviceNamesCompoundBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
@@ -1548,7 +1572,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentDeviceNamesCompoundBody) {
 
 // Test if the runtime maps to different cache tokens for devices with different names in
 // execution plan with a compound body.
-TEST_F(PartitioningTest, CacheTokenDifferentDeviceVersionStringsCompoundBody) {
+TEST_F(CacheTest, CacheTokenDifferentDeviceVersionStringsCompoundBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
@@ -1568,7 +1592,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentDeviceVersionStringsCompoundBody) {
 
 // Test if the runtime maps to different cache tokens for compilations with different preferences
 // in execution plan with a compound body.
-TEST_F(PartitioningTest, CacheTokenDifferentPreferencesCompoundBody) {
+TEST_F(CacheTest, CacheTokenDifferentPreferencesCompoundBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
@@ -1588,7 +1612,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentPreferencesCompoundBody) {
 
 // Test if the runtime maps to different cache tokens for compilations with different tokens
 // provided by application in execution plan with a compound body.
-TEST_F(PartitioningTest, CacheTokenDifferentTokensCompoundBody) {
+TEST_F(CacheTest, CacheTokenDifferentTokensCompoundBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
@@ -1607,7 +1631,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentTokensCompoundBody) {
 
 // Test if the runtime maps to different cache tokens for compilations with different partitioning
 // outcome in execution plan with a compound body.
-TEST_F(PartitioningTest, CacheTokenDifferentPartitionsCompoundBody) {
+TEST_F(CacheTest, CacheTokenDifferentPartitionsCompoundBody) {
     PartitioningModel model;
     CreateModelForCachingTests(&model);
 
