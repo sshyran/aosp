@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2018 The Android Open Source Project
+# Copyright (C) 2019 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,6 +42,6 @@ example0 = {
          0.64, 0.60, 0.48]
 }
 
-# All dimensions other than 4, without axis parameter
-Model().Operation("L2_NORMALIZATION", i1).To(o1)
-Example(example0).AddRelaxed().AddAllDims(i1, o1).AddVariations("relaxed", "float16", quant8)
+# All dimensions, with all possible axis parameter
+Model().Operation("L2_NORMALIZATION", i1, axis).To(o1)
+Example(example0).AddRelaxed().AddAllDimsAndAxis(i1, o1, axis).AddVariations("relaxed", "float16", quant8)
