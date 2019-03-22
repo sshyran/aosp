@@ -35,6 +35,8 @@
 namespace android {
 namespace nn {
 
+using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
+
 const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
 static MeasureTiming measureTiming(const ExecutionBuilder* execution) {
@@ -762,8 +764,9 @@ int StepExecutor::startComputeOnDevice(sp<ExecutionCallback>* synchronizationCal
         // encountered on an #if-removed code.
         ExecutionPreference preference =
                 static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
-        ErrorStatus prepareLaunchStatus =
-                mDevice->getInterface()->prepareModel(model, preference, preparedModelCallback);
+        ErrorStatus prepareLaunchStatus = mDevice->getInterface()->prepareModel(
+                model, preference, hidl_vec<hidl_handle>(), hidl_vec<hidl_handle>(), HidlToken(),
+                preparedModelCallback);
         if (prepareLaunchStatus != ErrorStatus::NONE) {
             return convertErrorStatusToResultCode(prepareLaunchStatus);
         }
