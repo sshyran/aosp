@@ -125,11 +125,6 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
         }
     }
 
-    Return<ErrorStatus> saveToCache(const hidl_handle&, const hidl_handle&,
-                                    const HidlToken&) override {
-        return ErrorStatus::GENERAL_FAILURE;
-    }
-
    private:
     const sp<V1_0::IPreparedModel> mPreparedModelV1_0;
     const sp<V1_2::IPreparedModel> mPreparedModelV1_2;
@@ -187,10 +182,11 @@ class TestDriver12 : public SampleDriver {
 
     Return<ErrorStatus> prepareModel_1_2(
             const HidlModel& model, ExecutionPreference preference,
-            const sp<IPreparedModelCallback>& actualCallback) override {
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const HidlToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
         sp<PreparedModelCallback> localCallback = new PreparedModelCallback;
-        Return<ErrorStatus> prepareModelReturn =
-                SampleDriver::prepareModel_1_2(model, preference, localCallback);
+        Return<ErrorStatus> prepareModelReturn = SampleDriver::prepareModel_1_2(
+                model, preference, modelCache, dataCache, token, localCallback);
         if (!prepareModelReturn.isOkUnchecked()) {
             return prepareModelReturn;
         }
