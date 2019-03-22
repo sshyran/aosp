@@ -30,29 +30,46 @@ const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MA
 template <typename T>
 using MQDescriptorSync = ::android::hardware::MQDescriptorSync<T>;
 
+namespace android::hardware::neuralnetworks::V1_0 {
+
+::std::ostream& operator<<(::std::ostream& os, ErrorStatus errorStatus) {
+    return os << toString(errorStatus);
+}
+
+}  // namespace android::hardware::neuralnetworks::V1_0
+
 namespace {
 
-enum class IsCachingSupportedReturn { TRUE, FALSE, ERROR };
+enum class HasCalledPrepareModel { NO, WITHOUT_CACHING, WITH_CACHING };
+
+// Whether the driver supports caching based on the returns from getNumberOfCacheFilesNeeded.
+bool isCachingSupportedAndNoError(ErrorStatus error, uint32_t numModelCache,
+                                  uint32_t numDataCache) {
+    return error == ErrorStatus::NONE &&
+           numModelCache <= static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES) &&
+           numDataCache <= static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES) &&
+           (numModelCache != 0 || numDataCache != 0);
+}
 
 // This is an IDevice for testing purposes which overrides several methods from sample driver:
 // - supports all the operations and is faster than cpu fallback.
-// - overrides isCachingSupported to report true/false according to mIsCachingSupported.
+// - overrides getNumberOfCacheFilesNeeded to report according to given parameters.
 // - overrides prepareModelFromCache to return error status according to
 //   mErrorStatusPrepareFromCache.
 // - produces CachingPreparedModel on prepareModel and prepareModelFromCache.
 //
-// The cache entry is written by CachingPreparedModel::saveToCache and is checked later by
+// The cache entry is written by prepareModel_1_2 and is checked later by
 // CachingDriver::prepareModelFromCache.
 //
-// The CachingDriver has 2 flags mHasPreparedFromCache and mHasSavedToCache to check if the
-// correct methods are invoked by the runtime.
+// The CachingDriver has 2 flags mHasCalledPrepareModelFromCache and mHasCalledPrepareModel
+// to check if the correct methods are invoked by the runtime.
 class CachingDriver : public sample_driver::SampleDriver {
    private:
     static constexpr size_t kCacheSize = 256;
 
     class CachingPreparedModel : public IPreparedModel {
        public:
-        CachingPreparedModel(CachingDriver* driver) : mDriver(driver) {}
+        CachingPreparedModel() = default;
 
         Return<ErrorStatus> execute(const Request&, const sp<V1_0::IExecutionCallback>&) override {
             return ErrorStatus::DEVICE_UNAVAILABLE;
@@ -73,43 +90,22 @@ class CachingDriver : public sample_driver::SampleDriver {
             cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
             return Void();
         }
-
-        // Writes the cache entry as provided by CachingDriver and sets mHasSavedToCache in
-        // CachingDriver.
-        Return<ErrorStatus> saveToCache(const hidl_handle& cache1Handle,
-                                        const hidl_handle& cache2Handle,
-                                        const HidlToken&) override {
-            writeToCache(cache1Handle->data[0], mDriver->getCache1Data());
-            writeToCache(cache2Handle->data[0], mDriver->getCache2Data());
-            mDriver->savedToCache();
-            return ErrorStatus::NONE;
-        }
-
-       private:
-        void writeToCache(int fd, const std::vector<uint8_t>& cache) {
-            EXPECT_EQ(write(fd, cache.data(), kCacheSize), static_cast<ssize_t>(kCacheSize));
-        }
-
-        CachingDriver* mDriver;
     };
 
    public:
-    CachingDriver(const char* name, IsCachingSupportedReturn supported, ErrorStatus error)
-        : SampleDriver(name), mIsCachingSupported(supported), mErrorStatusPrepareFromCache(error) {
-        mCache1Data.resize(kCacheSize);
-        std::iota(mCache1Data.begin(), mCache1Data.end(), 0);
-        mCache2Data.resize(kCacheSize);
-        std::iota(mCache2Data.begin(), mCache2Data.end(), 1);
+    CachingDriver(const char* name, ErrorStatus errorStatusGetNumCacheFiles, uint32_t numModelCache,
+                  uint32_t numDataCache, ErrorStatus errorStatusPrepareFromCache)
+        : SampleDriver(name),
+          mErrorStatusGetNumCacheFiles(errorStatusGetNumCacheFiles),
+          mNumModelCache(numModelCache),
+          mNumDataCache(numDataCache),
+          mErrorStatusPrepareFromCache(errorStatusPrepareFromCache) {
+        mModelCacheData.resize(kCacheSize);
+        std::iota(mModelCacheData.begin(), mModelCacheData.end(), 0);
+        mDataCacheData.resize(kCacheSize);
+        std::iota(mDataCacheData.begin(), mDataCacheData.end(), 1);
     }
     ~CachingDriver() override {}
-
-    // Generates CachingPreparedModel.
-    Return<ErrorStatus> prepareModel_1_2(const Model&, ExecutionPreference,
-                                         const sp<IPreparedModelCallback>& cb) override {
-        ErrorStatus status = ErrorStatus::NONE;
-        cb->notify_1_2(status, new CachingPreparedModel(this));
-        return status;
-    }
 
     // Reports faster than cpu.
     Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override {
@@ -131,61 +127,94 @@ class CachingDriver : public sample_driver::SampleDriver {
         return Void();
     }
 
-    // Reports according to mIsCachingSupported.
-    Return<void> isCachingSupported(isCachingSupported_cb cb) override {
-        switch (mIsCachingSupported) {
-            case IsCachingSupportedReturn::TRUE:
-                cb(ErrorStatus::NONE, true);
-                break;
-            case IsCachingSupportedReturn::FALSE:
-                cb(ErrorStatus::NONE, false);
-                break;
-            case IsCachingSupportedReturn::ERROR:
-                cb(ErrorStatus::DEVICE_UNAVAILABLE, true);
-                break;
-        }
+    // Reports according to mGetNumCacheFiles.
+    Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override {
+        cb(mErrorStatusGetNumCacheFiles, mNumModelCache, mNumDataCache);
         return Void();
     }
 
+    // Generates CachingPreparedModel.
+    // Writes the cache entry per mCacheXData and sets mHasCalledPrepareModel.
+    Return<ErrorStatus> prepareModel_1_2(const Model&, ExecutionPreference,
+                                         const hidl_vec<hidl_handle>& modelCacheHandle,
+                                         const hidl_vec<hidl_handle>& dataCacheHandle,
+                                         const HidlToken&,
+                                         const sp<IPreparedModelCallback>& cb) override {
+        checkNumberOfCacheHandles(modelCacheHandle.size(), dataCacheHandle.size());
+        if (modelCacheHandle.size() != 0 || dataCacheHandle.size() != 0) {
+            writeToCache(modelCacheHandle, mModelCacheData);
+            writeToCache(dataCacheHandle, mDataCacheData);
+            mHasCalledPrepareModel = HasCalledPrepareModel::WITH_CACHING;
+        } else {
+            mHasCalledPrepareModel = HasCalledPrepareModel::WITHOUT_CACHING;
+        }
+        cb->notify_1_2(ErrorStatus::NONE, new CachingPreparedModel());
+        return ErrorStatus::NONE;
+    }
+
     // Checks if the cache entry is correct, notifies error status according to
-    // mErrorStatusPrepareFromCache, sets mHasPreparedFromCache.
+    // mErrorStatusPrepareFromCache, sets mHasCalledPrepareModelFromCache.
     Return<ErrorStatus> prepareModelFromCache(
-            const hidl_handle& cache1Handle, const hidl_handle& cache2Handle, const HidlToken&,
+            const hidl_vec<hidl_handle>& modelCacheHandle,
+            const hidl_vec<hidl_handle>& dataCacheHandle, const HidlToken&,
             const sp<V1_2::IPreparedModelCallback>& callback) override {
-        readFromCache(cache1Handle->data[0], mCache1Data);
-        readFromCache(cache2Handle->data[0], mCache2Data);
-        mHasPreparedFromCache = true;
+        readFromCache(modelCacheHandle, mModelCacheData);
+        readFromCache(dataCacheHandle, mDataCacheData);
+        mHasCalledPrepareModelFromCache = true;
         if (mErrorStatusPrepareFromCache == ErrorStatus::NONE) {
-            callback->notify_1_2(mErrorStatusPrepareFromCache, new CachingPreparedModel(this));
+            callback->notify_1_2(mErrorStatusPrepareFromCache, new CachingPreparedModel());
         } else {
             callback->notify_1_2(mErrorStatusPrepareFromCache, nullptr);
         }
         return ErrorStatus::NONE;
     };
 
-    bool hasPreparedFromCache() const { return mHasPreparedFromCache; }
-    bool hasSavedToCache() const { return mHasSavedToCache; }
+    bool hasCalledPrepareModelFromCache() const { return mHasCalledPrepareModelFromCache; }
+    HasCalledPrepareModel hasCalledPrepareModel() const { return mHasCalledPrepareModel; }
 
    private:
-    void savedToCache() { mHasSavedToCache = true; }
-
-    const std::vector<uint8_t>& getCache1Data() const { return mCache1Data; }
-    const std::vector<uint8_t>& getCache2Data() const { return mCache2Data; }
-
-    void readFromCache(int fd, const std::vector<uint8_t>& expected) {
-        std::vector<uint8_t> actual(kCacheSize);
-        EXPECT_EQ(read(fd, actual.data(), kCacheSize), static_cast<ssize_t>(kCacheSize));
-        EXPECT_EQ(actual, expected);
+    // Checks the number of cache files passed to the driver from runtime.
+    void checkNumberOfCacheHandles(size_t modelCache, size_t dataCache) {
+        if (isCachingSupportedAndNoError(mErrorStatusGetNumCacheFiles, mNumModelCache,
+                                         mNumDataCache)) {
+            if (modelCache != 0 || dataCache != 0) {
+                ASSERT_EQ(modelCache, mNumModelCache);
+                ASSERT_EQ(dataCache, mNumDataCache);
+            }
+        } else {
+            ASSERT_EQ(modelCache, 0ul);
+            ASSERT_EQ(dataCache, 0ul);
+        }
     }
 
-    std::vector<uint8_t> mCache1Data;
-    std::vector<uint8_t> mCache2Data;
+    void writeToCache(const hidl_vec<hidl_handle>& handles, const std::vector<uint8_t>& cache) {
+        for (uint32_t i = 0; i < handles.size(); ++i) {
+            ASSERT_EQ(handles[i]->numFds, 1);
+            EXPECT_EQ(write(handles[i]->data[0], cache.data(), kCacheSize),
+                      static_cast<ssize_t>(kCacheSize));
+        }
+    }
 
-    IsCachingSupportedReturn mIsCachingSupported;
-    ErrorStatus mErrorStatusPrepareFromCache;
+    void readFromCache(const hidl_vec<hidl_handle>& handles, const std::vector<uint8_t>& expected) {
+        for (uint32_t i = 0; i < handles.size(); ++i) {
+            ASSERT_EQ(handles[i]->numFds, 1);
+            std::vector<uint8_t> actual(kCacheSize);
+            EXPECT_EQ(read(handles[i]->data[0], actual.data(), kCacheSize),
+                      static_cast<ssize_t>(kCacheSize));
+            EXPECT_EQ(actual, expected);
+        }
+    }
 
-    bool mHasPreparedFromCache = false;
-    bool mHasSavedToCache = false;
+    std::vector<uint8_t> mModelCacheData;
+    std::vector<uint8_t> mDataCacheData;
+
+    const ErrorStatus mErrorStatusGetNumCacheFiles;
+    const uint32_t mNumModelCache;
+    const uint32_t mNumDataCache;
+    const ErrorStatus mErrorStatusPrepareFromCache;
+
+    bool mHasCalledPrepareModelFromCache = false;
+    HasCalledPrepareModel mHasCalledPrepareModel = HasCalledPrepareModel::NO;
 };
 
 void CreateBroadcastAddModel(test_wrapper::Model* model) {
@@ -204,7 +233,14 @@ void CreateBroadcastAddModel(test_wrapper::Model* model) {
     ASSERT_EQ(model->finish(), Result::NO_ERROR);
 }
 
-class CompilationCachingTest : public ::testing::TestWithParam<ErrorStatus> {
+// Test model compilation with a driver parameterized with
+// - ErrorStatus returning from getNumberOfCacheFilesNeeded
+// - Number of model cache files returning from getNumberOfCacheFilesNeeded
+// - Number of data cache files returning from getNumberOfCacheFilesNeeded
+// - ErrorStatus returning from prepareModelFromCache
+using CompilationCachingTestParam = std::tuple<ErrorStatus, uint32_t, uint32_t, ErrorStatus>;
+
+class CompilationCachingTest : public ::testing::TestWithParam<CompilationCachingTestParam> {
    protected:
     virtual void SetUp() override {
         char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
@@ -213,6 +249,8 @@ class CompilationCachingTest : public ::testing::TestWithParam<ErrorStatus> {
         mCacheDir = cacheDir;
         CreateBroadcastAddModel(&mModel);
         mToken = std::vector<uint8_t>(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
+        mIsCachingSupportedAndNoError = isCachingSupportedAndNoError(kErrorStatusGetNumCacheFiles,
+                                                                     kNumModelCache, kNumDataCache);
     }
 
     void compileModel(const sp<CachingDriver>& driver) {
@@ -249,82 +287,82 @@ class CompilationCachingTest : public ::testing::TestWithParam<ErrorStatus> {
     }
 
     void createCache() {
-        sp<CachingDriver> driver =
-                new CachingDriver(kDeviceName, IsCachingSupportedReturn::TRUE, ErrorStatus::NONE);
+        sp<CachingDriver> driver = new CachingDriver(kDeviceName, ErrorStatus::NONE, kNumModelCache,
+                                                     kNumDataCache, ErrorStatus::NONE);
         compileModel(driver);
     }
 
     static constexpr char kDeviceName[] = "deviceTestCompilationCaching";
-    const ErrorStatus kErrorStatusPrepareFromCache = GetParam();
+    const ErrorStatus kErrorStatusGetNumCacheFiles = std::get<0>(GetParam());
+    const uint32_t kNumModelCache = std::get<1>(GetParam());
+    const uint32_t kNumDataCache = std::get<2>(GetParam());
+    const ErrorStatus kErrorStatusPrepareFromCache = std::get<3>(GetParam());
+    bool mIsCachingSupportedAndNoError;
     test_wrapper::Model mModel;
     std::string mCacheDir;
     std::vector<uint8_t> mToken;
 };
 
-// If caching is supported by the driver but the cache files do not exist,
-// the runtime should call IPreparedModel::saveToCache to save the cache.
 TEST_P(CompilationCachingTest, CacheNotExist) {
     if (DeviceManager::get()->getUseCpuOnly()) {
         return;
     }
-    sp<CachingDriver> driver = new CachingDriver(kDeviceName, IsCachingSupportedReturn::TRUE,
-                                                 kErrorStatusPrepareFromCache);
+    sp<CachingDriver> driver =
+            new CachingDriver(kDeviceName, kErrorStatusGetNumCacheFiles, kNumModelCache,
+                              kNumDataCache, kErrorStatusPrepareFromCache);
     compileModel(driver);
-    EXPECT_FALSE(driver->hasPreparedFromCache());
-    EXPECT_TRUE(driver->hasSavedToCache());
+
+    // When cache file does not exist, the runtime should never call prepareModelFromCache.
+    EXPECT_EQ(driver->hasCalledPrepareModelFromCache(), false);
+
+    // The runtime should call prepareModel_1_2. It should request caching iff caching supported.
+    EXPECT_EQ(driver->hasCalledPrepareModel(), mIsCachingSupportedAndNoError
+                                                       ? HasCalledPrepareModel::WITH_CACHING
+                                                       : HasCalledPrepareModel::WITHOUT_CACHING);
 }
 
-// If caching is not supported by the driver, the runtime should call neither
-// IDevice::prepareModelFromCache nor IPreparedModel::saveToCache.
-TEST_P(CompilationCachingTest, CacheNotSupported) {
+TEST_P(CompilationCachingTest, CacheExist) {
     if (DeviceManager::get()->getUseCpuOnly()) {
         return;
     }
     createCache();
-    sp<CachingDriver> driver = new CachingDriver(kDeviceName, IsCachingSupportedReturn::FALSE,
-                                                 kErrorStatusPrepareFromCache);
+    sp<CachingDriver> driver =
+            new CachingDriver(kDeviceName, kErrorStatusGetNumCacheFiles, kNumModelCache,
+                              kNumDataCache, kErrorStatusPrepareFromCache);
     compileModel(driver);
-    EXPECT_FALSE(driver->hasPreparedFromCache());
-    EXPECT_FALSE(driver->hasSavedToCache());
-}
 
-// If the driver reports error on isCachingSupported, the runtime should recover from the error
-// by setting the driver as caching not supported. The runtime should call neither
-// IDevice::prepareModelFromCache nor IPreparedModel::saveToCache.
-TEST_P(CompilationCachingTest, IsCachingSupportedError) {
-    if (DeviceManager::get()->getUseCpuOnly()) {
-        return;
-    }
-    createCache();
-    sp<CachingDriver> driver = new CachingDriver(kDeviceName, IsCachingSupportedReturn::ERROR,
-                                                 kErrorStatusPrepareFromCache);
-    compileModel(driver);
-    EXPECT_FALSE(driver->hasPreparedFromCache());
-    EXPECT_FALSE(driver->hasSavedToCache());
-}
+    // When cache files exist, the runtime should call prepareModelFromCache iff caching supported.
+    EXPECT_EQ(driver->hasCalledPrepareModelFromCache(), mIsCachingSupportedAndNoError);
 
-// If caching is supported by the driver and the cache files exist, the runtime should call
-// IDevice::prepareModelFromCache, and should call IPreparedModel::saveToCache only if
-// IDevice::prepareModelFromCache fails.
-TEST_P(CompilationCachingTest, CacheExistAndSupported) {
-    if (DeviceManager::get()->getUseCpuOnly()) {
-        return;
-    }
-    createCache();
-    sp<CachingDriver> driver = new CachingDriver(kDeviceName, IsCachingSupportedReturn::TRUE,
-                                                 kErrorStatusPrepareFromCache);
-    compileModel(driver);
-    EXPECT_TRUE(driver->hasPreparedFromCache());
-    if (kErrorStatusPrepareFromCache == ErrorStatus::NONE) {
-        EXPECT_FALSE(driver->hasSavedToCache());
+    HasCalledPrepareModel expectHasCalledPrepareModel;
+    if (mIsCachingSupportedAndNoError) {
+        if (kErrorStatusPrepareFromCache == ErrorStatus::NONE) {
+            // The runtime should not call prepareModel_1_2 iff caching supported and
+            // prepareModelFromCache succeeds.
+            expectHasCalledPrepareModel = HasCalledPrepareModel::NO;
+        } else {
+            // The runtime should call prepareModel_1_2 and request caching iff caching supported
+            // but prepareModelFromCache fails.
+            expectHasCalledPrepareModel = HasCalledPrepareModel::WITH_CACHING;
+        }
     } else {
-        EXPECT_TRUE(driver->hasSavedToCache());
+        // The runtime should call prepareModel_1_2 without caching iff caching not supported.
+        expectHasCalledPrepareModel = HasCalledPrepareModel::WITHOUT_CACHING;
     }
+    EXPECT_EQ(driver->hasCalledPrepareModel(), expectHasCalledPrepareModel);
 }
+
+static const auto kErrorStatusGetNumCacheFilesChoices =
+        testing::Values(ErrorStatus::NONE, ErrorStatus::DEVICE_UNAVAILABLE);
+static const auto kNumCacheChoices =
+        testing::Values(0ul, 1ul, static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES),
+                        static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES) + 1);
+static const auto kErrorStatusPrepareFromCacheChoices =
+        testing::Values(ErrorStatus::NONE, ErrorStatus::GENERAL_FAILURE,
+                        ErrorStatus::DEVICE_UNAVAILABLE, ErrorStatus::INVALID_ARGUMENT);
 
 INSTANTIATE_TEST_CASE_P(TestCompilationCaching, CompilationCachingTest,
-                        testing::Values(ErrorStatus::NONE, ErrorStatus::GENERAL_FAILURE,
-                                        ErrorStatus::DEVICE_UNAVAILABLE,
-                                        ErrorStatus::INVALID_ARGUMENT));
+                        testing::Combine(kErrorStatusGetNumCacheFilesChoices, kNumCacheChoices,
+                                         kNumCacheChoices, kErrorStatusPrepareFromCacheChoices));
 
 }  // end namespace
