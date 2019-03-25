@@ -260,7 +260,7 @@ class CompilationCachingTest : public ::testing::TestWithParam<CompilationCachin
         }
     }
 
-    void compileModel(const sp<CachingDriver>& driver) {
+    void compileModel(const sp<CachingDriver>& driver, bool withToken) {
         DeviceManager::get()->forTest_registerDevice(kDeviceName, driver);
 
         // Make device list including only a single driver device.
@@ -285,9 +285,11 @@ class CompilationCachingTest : public ::testing::TestWithParam<CompilationCachin
         ASSERT_EQ(ANeuralNetworksCompilation_createForDevices(mModel.getHandle(), devices.data(),
                                                               devices.size(), &compilation),
                   ANEURALNETWORKS_NO_ERROR);
-        ASSERT_EQ(ANeuralNetworksCompilation_setCaching(compilation, mCacheDir.c_str(),
-                                                        mToken.data()),
-                  ANEURALNETWORKS_NO_ERROR);
+        if (withToken) {
+            ASSERT_EQ(ANeuralNetworksCompilation_setCaching(compilation, mCacheDir.c_str(),
+                                                            mToken.data()),
+                      ANEURALNETWORKS_NO_ERROR);
+        }
         ASSERT_EQ(ANeuralNetworksCompilation_finish(compilation), ANEURALNETWORKS_NO_ERROR);
 
         DeviceManager::get()->forTest_reInitializeDeviceList();
@@ -296,7 +298,7 @@ class CompilationCachingTest : public ::testing::TestWithParam<CompilationCachin
     void createCache() {
         sp<CachingDriver> driver = new CachingDriver(kDeviceName, ErrorStatus::NONE, kNumModelCache,
                                                      kNumDataCache, ErrorStatus::NONE);
-        compileModel(driver);
+        compileModel(driver, /*withToken=*/true);
     }
 
     static constexpr char kDeviceName[] = "deviceTestCompilationCaching";
@@ -310,14 +312,14 @@ class CompilationCachingTest : public ::testing::TestWithParam<CompilationCachin
     std::vector<uint8_t> mToken;
 };
 
-TEST_P(CompilationCachingTest, CacheNotExist) {
+TEST_P(CompilationCachingTest, TokenProvidedAndCacheNotExist) {
     if (DeviceManager::get()->getUseCpuOnly()) {
         return;
     }
     sp<CachingDriver> driver =
             new CachingDriver(kDeviceName, kErrorStatusGetNumCacheFiles, kNumModelCache,
                               kNumDataCache, kErrorStatusPrepareFromCache);
-    compileModel(driver);
+    compileModel(driver, /*withToken=*/true);
 
     // When cache file does not exist, the runtime should never call prepareModelFromCache.
     EXPECT_EQ(driver->hasCalledPrepareModelFromCache(), false);
@@ -328,7 +330,7 @@ TEST_P(CompilationCachingTest, CacheNotExist) {
                                                        : HasCalledPrepareModel::WITHOUT_CACHING);
 }
 
-TEST_P(CompilationCachingTest, CacheExist) {
+TEST_P(CompilationCachingTest, TokenProvidedAndCacheExist) {
     if (DeviceManager::get()->getUseCpuOnly()) {
         return;
     }
@@ -336,7 +338,7 @@ TEST_P(CompilationCachingTest, CacheExist) {
     sp<CachingDriver> driver =
             new CachingDriver(kDeviceName, kErrorStatusGetNumCacheFiles, kNumModelCache,
                               kNumDataCache, kErrorStatusPrepareFromCache);
-    compileModel(driver);
+    compileModel(driver, /*withToken=*/true);
 
     // When cache files exist, the runtime should call prepareModelFromCache iff caching supported.
     EXPECT_EQ(driver->hasCalledPrepareModelFromCache(), mIsCachingSupportedAndNoError);
@@ -357,6 +359,21 @@ TEST_P(CompilationCachingTest, CacheExist) {
         expectHasCalledPrepareModel = HasCalledPrepareModel::WITHOUT_CACHING;
     }
     EXPECT_EQ(driver->hasCalledPrepareModel(), expectHasCalledPrepareModel);
+}
+
+TEST_P(CompilationCachingTest, TokenNotProvided) {
+    if (DeviceManager::get()->getUseCpuOnly()) {
+        return;
+    }
+    sp<CachingDriver> driver =
+            new CachingDriver(kDeviceName, kErrorStatusGetNumCacheFiles, kNumModelCache,
+                              kNumDataCache, kErrorStatusPrepareFromCache);
+    compileModel(driver, /*withToken=*/false);
+
+    // When no NDK token is provided by the client, the runtime should never call
+    // prepareModelFromCache or request caching with prepareModel_1_2.
+    EXPECT_EQ(driver->hasCalledPrepareModelFromCache(), false);
+    EXPECT_EQ(driver->hasCalledPrepareModel(), HasCalledPrepareModel::WITHOUT_CACHING);
 }
 
 static const auto kErrorStatusGetNumCacheFilesChoices =
