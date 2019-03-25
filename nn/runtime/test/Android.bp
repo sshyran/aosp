@@ -60,7 +60,7 @@ cc_defaults {
         // Changes to this list must be reflected in cts/tests/tests/neuralnetworks/Android.mk
         // to ensure CTS tests coverage.
         "generated/tests/*.cpp",
-        "GeneratedUtils.cpp",
+        "TestGenerated.cpp",
         "TestMemory.cpp",
         "TestOperandExtraParams.cpp",
         "TestTrivialModel.cpp",
@@ -185,7 +185,7 @@ cc_defaults {
         "TestNeuralNetworksWrapper.cpp",
         "TestMain.cpp",
         "generated/tests/*.cpp",
-        "GeneratedUtils.cpp",
+        "TestGenerated.cpp",
     ],
     cflags: [
         "-DNNTEST_MULTITHREADED"
