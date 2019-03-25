@@ -17,17 +17,39 @@
 #ifndef ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_TESTGENERATED_H
 #define ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_TESTGENERATED_H
 
-#include "GeneratedUtils.h"
-#include "NeuralNetworksWrapper.h"
 #include "TestHarness.h"
+#include "TestNeuralNetworksWrapper.h"
 
 #include <gtest/gtest.h>
+
+using namespace android::nn::test_wrapper;
+using namespace test_helper;
 
 namespace generated_tests {
 
 class GeneratedTests : public ::testing::Test {
-protected:
-    virtual void SetUp() {}
+   protected:
+    virtual void SetUp() override;
+    virtual void TearDown() override;
+
+    Compilation compileModel(const Model* model);
+    void executeWithCompilation(const Model* model, Compilation* compilation,
+                                std::function<bool(int)> isIgnored,
+                                std::vector<MixedTypedExample>& examples, std::string dumpFile);
+    void executeOnce(const Model* model, std::function<bool(int)> isIgnored,
+                     std::vector<MixedTypedExample>& examples, std::string dumpFile);
+    void executeMultithreadedOwnCompilation(const Model* model, std::function<bool(int)> isIgnored,
+                                            std::vector<MixedTypedExample>& examples);
+    void executeMultithreadedSharedCompilation(const Model* model,
+                                               std::function<bool(int)> isIgnored,
+                                               std::vector<MixedTypedExample>& examples);
+    // Test driver for those generated from ml/nn/runtime/test/spec
+    void execute(std::function<void(Model*)> createModel, std::function<bool(int)> isIgnored,
+                 std::vector<MixedTypedExample>& examples, std::string dumpFile = "");
+
+    std::string mCacheDir;
+    std::vector<uint8_t> mToken;
+    bool mTestCompilationCaching;
 };
 
 // Tag for the dynamic output shape tests
@@ -35,7 +57,6 @@ class DynamicOutputShapeTest : public GeneratedTests {};
 
 }  // namespace generated_tests
 
-using namespace test_helper;
 using namespace generated_tests;
 
 #endif  // ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_TESTGENERATED_H

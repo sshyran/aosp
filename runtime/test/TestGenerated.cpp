@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-#include "GeneratedUtils.h"
-
+#include "TestGenerated.h"
 #include "TestHarness.h"
 
 #include <gtest/gtest.h>
 
+#include <ftw.h>
+#include <unistd.h>
 #include <cassert>
 #include <cmath>
 #include <fstream>
@@ -66,9 +67,8 @@ void print<_Float16>(std::ostream& os, const std::map<int, std::vector<_Float16>
         os << "],\n";
     });
 }
-}  // namespace
 
-static void printAll(std::ostream& os, const MixedTyped& test) {
+void printAll(std::ostream& os, const MixedTyped& test) {
     print(os, test.float32Operands);
     print(os, test.int32Operands);
     print(os, test.quant8AsymmOperands);
@@ -81,24 +81,31 @@ static void printAll(std::ostream& os, const MixedTyped& test) {
     static_assert(9 == MixedTyped::kNumTypes,
                   "Number of types in MixedTyped changed, but printAll function wasn't updated");
 }
+}  // namespace
 
-Compilation createAndCompileModel(Model* model, std::function<void(Model*)> createModel) {
-    NNTRACE_APP(NNTRACE_PHASE_PREPARATION, "createAndCompileModel");
-
-    createModel(model);
-    model->finish();
-
-    NNTRACE_APP_SWITCH(NNTRACE_PHASE_COMPILATION, "createAndCompileModel");
-    Compilation compilation(model);
-    compilation.finish();
-
-    return compilation;
+Compilation GeneratedTests::compileModel(const Model* model) {
+    NNTRACE_APP(NNTRACE_PHASE_COMPILATION, "compileModel");
+    if (mTestCompilationCaching) {
+        // Compile the model twice with the same token, so that compilation caching will be
+        // exercised if supported by the driver.
+        Compilation compilation1(model);
+        compilation1.setCaching(mCacheDir, mToken);
+        compilation1.finish();
+        Compilation compilation2(model);
+        compilation2.setCaching(mCacheDir, mToken);
+        compilation2.finish();
+        return compilation2;
+    } else {
+        Compilation compilation(model);
+        compilation.finish();
+        return compilation;
+    }
 }
 
-void executeWithCompilation(Model* model, Compilation* compilation,
-                            std::function<bool(int)> isIgnored,
-                            std::vector<MixedTypedExample>& examples,
-                            std::string dumpFile) {
+void GeneratedTests::executeWithCompilation(const Model* model, Compilation* compilation,
+                                            std::function<bool(int)> isIgnored,
+                                            std::vector<MixedTypedExample>& examples,
+                                            std::string dumpFile) {
     bool dumpToFile = !dumpFile.empty();
     std::ofstream s;
     if (dumpToFile) {
@@ -173,67 +180,86 @@ void executeWithCompilation(Model* model, Compilation* compilation,
         exampleNo++;
 
         if (example.expectedMultinomialDistributionTolerance > 0) {
-          expectMultinomialDistributionWithinTolerance(test, example);
+            expectMultinomialDistributionWithinTolerance(test, example);
         }
     }
 }
 
-void executeOnce(std::function<void(Model*)> createModel,
-                 std::function<bool(int)> isIgnored,
-                 std::vector<MixedTypedExample>& examples,
-                 std::string dumpFile) {
+void GeneratedTests::executeOnce(const Model* model, std::function<bool(int)> isIgnored,
+                                 std::vector<MixedTypedExample>& examples, std::string dumpFile) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "executeOnce");
-    Model model;
-    Compilation compilation = createAndCompileModel(&model, createModel);
-    executeWithCompilation(&model, &compilation, isIgnored, examples, dumpFile);
+    Compilation compilation = compileModel(model);
+    executeWithCompilation(model, &compilation, isIgnored, examples, dumpFile);
 }
 
-
-void executeMultithreadedOwnCompilation(std::function<void(Model*)> createModel,
-                                        std::function<bool(int)> isIgnored,
-                                        std::vector<MixedTypedExample>& examples) {
+void GeneratedTests::executeMultithreadedOwnCompilation(const Model* model,
+                                                        std::function<bool(int)> isIgnored,
+                                                        std::vector<MixedTypedExample>& examples) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "executeMultithreadedOwnCompilation");
     SCOPED_TRACE("MultithreadedOwnCompilation");
     std::vector<std::thread> threads;
     for (int i = 0; i < 10; i++) {
-        threads.push_back(
-                std::thread([&]() { executeOnce(createModel, isIgnored, examples, ""); }));
+        threads.push_back(std::thread([&]() { executeOnce(model, isIgnored, examples, ""); }));
     }
-    std::for_each(threads.begin(), threads.end(), [](std::thread& t) {
-        t.join();
-    });
+    std::for_each(threads.begin(), threads.end(), [](std::thread& t) { t.join(); });
 }
 
-void executeMultithreadedSharedCompilation(std::function<void(Model*)> createModel,
-                                           std::function<bool(int)> isIgnored,
-                                           std::vector<MixedTypedExample>& examples) {
+void GeneratedTests::executeMultithreadedSharedCompilation(
+        const Model* model, std::function<bool(int)> isIgnored,
+        std::vector<MixedTypedExample>& examples) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "executeMultithreadedSharedCompilation");
     SCOPED_TRACE("MultithreadedSharedCompilation");
-    Model model;
-    Compilation compilation = createAndCompileModel(&model, createModel);
+    Compilation compilation = compileModel(model);
     std::vector<std::thread> threads;
     for (int i = 0; i < 10; i++) {
-        threads.push_back(std::thread([&]() {
-            executeWithCompilation(&model, &compilation, isIgnored, examples, "");
-        }));
+        threads.push_back(std::thread(
+                [&]() { executeWithCompilation(model, &compilation, isIgnored, examples, ""); }));
     }
-    std::for_each(threads.begin(), threads.end(), [](std::thread& t) {
-        t.join();
-    });
+    std::for_each(threads.begin(), threads.end(), [](std::thread& t) { t.join(); });
 }
 
-
 // Test driver for those generated from ml/nn/runtime/test/spec
-void execute(std::function<void(Model*)> createModel,
-             std::function<bool(int)> isIgnored,
-             std::vector<MixedTypedExample>& examples,
-             [[maybe_unused]] std::string dumpFile) {
+void GeneratedTests::execute(std::function<void(Model*)> createModel,
+                             std::function<bool(int)> isIgnored,
+                             std::vector<MixedTypedExample>& examples,
+                             [[maybe_unused]] std::string dumpFile) {
+    NNTRACE_APP(NNTRACE_PHASE_OVERALL, "execute");
+    Model model;
+    createModel(&model);
+    model.finish();
+    auto executeInternal = [&model, &isIgnored, &examples,
+                            this]([[maybe_unused]] std::string dumpFile) {
+        SCOPED_TRACE("TestCompilationCaching = " + std::to_string(mTestCompilationCaching));
 #ifndef NNTEST_MULTITHREADED
-    executeOnce(createModel, isIgnored, examples, dumpFile);
-#else  // defined(NNTEST_MULTITHREADED)
-    executeMultithreadedOwnCompilation(createModel, isIgnored, examples);
-    executeMultithreadedSharedCompilation(createModel, isIgnored, examples);
+        executeOnce(&model, isIgnored, examples, dumpFile);
+#else   // defined(NNTEST_MULTITHREADED)
+        executeMultithreadedOwnCompilation(&model, isIgnored, examples);
+        executeMultithreadedSharedCompilation(&model, isIgnored, examples);
 #endif  // !defined(NNTEST_MULTITHREADED)
+    };
+    mTestCompilationCaching = false;
+    executeInternal(dumpFile);
+    mTestCompilationCaching = true;
+    executeInternal("");
+}
+
+void GeneratedTests::SetUp() {
+    char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
+    char* cacheDir = mkdtemp(cacheDirTemp);
+    ASSERT_NE(cacheDir, nullptr);
+    mCacheDir = cacheDir;
+    mToken = std::vector<uint8_t>(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
+}
+
+void GeneratedTests::TearDown() {
+    if (!::testing::Test::HasFailure()) {
+        // TODO: Switch to std::filesystem::remove_all once libc++fs is made available in CTS.
+        // Remove the cache directory specified by path recursively.
+        auto callback = [](const char* child, const struct stat*, int, struct FTW*) {
+            return remove(child);
+        };
+        nftw(mCacheDir.c_str(), callback, 128, FTW_DEPTH | FTW_MOUNT | FTW_PHYS);
+    }
 }
 
 }  // namespace generated_tests
