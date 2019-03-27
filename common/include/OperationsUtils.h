@@ -403,6 +403,33 @@ inline bool transposeFirstTwoDimensions(const Shape& shape, Shape* transposedSha
     return true;
 }
 
+// Given two 3-dimensional tensors, merge them into one 3-dimensional tensor
+// at the third dimension. The merged tensor's third dimension size will be
+// sum of that of the two inputs.
+template <typename T>
+inline bool mergeThirdDimension(const T* bufferA, const std::vector<uint32_t>& dimsA,
+                                const T* bufferB, const std::vector<uint32_t>& dimsB, T* merged) {
+    NN_RET_CHECK_EQ(dimsA.size(), 3u);
+    NN_RET_CHECK_EQ(dimsB.size(), 3u);
+
+    NN_RET_CHECK_EQ(dimsA[0], dimsB[0]);
+    NN_RET_CHECK_EQ(dimsA[1], dimsB[1]);
+
+    for (unsigned int i = 0; i < dimsA[0]; ++i) {
+        for (unsigned int j = 0; j < dimsA[1]; ++j) {
+            for (unsigned int k = 0; k < dimsA[2]; ++k) {
+                merged[(i * dimsA[1] + j) * (dimsA[2] + dimsB[2]) + k] =
+                        bufferA[(i * dimsA[1] + j) * dimsA[2] + k];
+            }
+            for (unsigned int k = 0; k < dimsB[2]; ++k) {
+                merged[(i * dimsA[1] + j) * (dimsA[2] + dimsB[2]) + dimsA[2] + k] =
+                        bufferB[(i * dimsB[1] + j) * dimsB[2] + k];
+            }
+        }
+    }
+    return true;
+}
+
 } // namespace nn
 } // namespace android
 
