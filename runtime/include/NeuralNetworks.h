@@ -5117,11 +5117,9 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *
  * Available since API level 27.
  *
- * A tensor operand type of unspecified rank is represented by setting
- * dimensionCount to 0 and dimensions to NULL (just as if it were a
- * scalar operand type).
- *
- * Available since API level 29.
+ * Starting at API level 29, a tensor operand type of unspecified rank is
+ * represented by setting dimensionCount to 0 and dimensions to NULL (just as if
+ * it were a scalar operand type).
  */
 typedef struct ANeuralNetworksOperandType {
     /**
@@ -5183,7 +5181,7 @@ typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
  *
  * Available since API level 29.
  */
-int ANeuralNetworks_getDeviceCount(uint32_t* numDevices);
+int ANeuralNetworks_getDeviceCount(uint32_t* numDevices) __INTRODUCED_IN(29);
 
 /**
  * Get the representation of the specified device.
@@ -5198,7 +5196,8 @@ int ANeuralNetworks_getDeviceCount(uint32_t* numDevices);
  *
  * Available since API level 29.
  */
-int ANeuralNetworks_getDevice(uint32_t devIndex, ANeuralNetworksDevice** device);
+int ANeuralNetworks_getDevice(uint32_t devIndex, ANeuralNetworksDevice** device)
+        __INTRODUCED_IN(29);
 
 /**
  * Get the name of the specified device.
@@ -5215,7 +5214,8 @@ int ANeuralNetworks_getDevice(uint32_t devIndex, ANeuralNetworksDevice** device)
  *
  * Available since API level 29.
  */
-int ANeuralNetworksDevice_getName(const ANeuralNetworksDevice* device, const char** name);
+int ANeuralNetworksDevice_getName(const ANeuralNetworksDevice* device, const char** name)
+        __INTRODUCED_IN(29);
 
 /**
  * Get the type of a given device.
@@ -5233,7 +5233,8 @@ int ANeuralNetworksDevice_getName(const ANeuralNetworksDevice* device, const cha
  *
  * Available since API level 29.
  */
-int ANeuralNetworksDevice_getType(const ANeuralNetworksDevice* device, int32_t* type);
+int ANeuralNetworksDevice_getType(const ANeuralNetworksDevice* device, int32_t* type)
+        __INTRODUCED_IN(29);
 
 /**
  * Get the version of the driver implementation of the specified device.
@@ -5262,7 +5263,8 @@ int ANeuralNetworksDevice_getType(const ANeuralNetworksDevice* device, int32_t* 
  *
  * Available since API level 29.
  */
-int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const char** version);
+int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const char** version)
+        __INTRODUCED_IN(29);
 
 /**
  * Get the supported NNAPI version of the specified device.
@@ -5281,7 +5283,7 @@ int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const 
  * Available since API level 29.
  */
 int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
-                                          int64_t* featureLevel);
+                                          int64_t* featureLevel) __INTRODUCED_IN(29);
 
 /**
  * Get the supported operations for a specified set of devices. If multiple devices
@@ -5302,7 +5304,7 @@ int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
  */
 int ANeuralNetworksModel_getSupportedOperationsForDevices(
         const ANeuralNetworksModel* model, const ANeuralNetworksDevice* const* devices,
-        uint32_t numDevices, bool* supportedOps);
+        uint32_t numDevices, bool* supportedOps) __INTRODUCED_IN(29);
 
 /**
  * Create a {@link ANeuralNetworksCompilation} to compile the given model for a specified set
@@ -5330,7 +5332,8 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
 int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
                                                 const ANeuralNetworksDevice* const* devices,
                                                 uint32_t numDevices,
-                                                ANeuralNetworksCompilation** compilation);
+                                                ANeuralNetworksCompilation** compilation)
+        __INTRODUCED_IN(29);
 
 /**
  * Sets the compilation caching signature and the cache directory.
@@ -5358,7 +5361,8 @@ int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
  * Available since API level 29.
  */
 int ANeuralNetworksCompilation_setCaching(ANeuralNetworksCompilation* compilation,
-                                          const char* cacheDir, const uint8_t* token);
+                                          const char* cacheDir, const uint8_t* token)
+        __INTRODUCED_IN(29);
 
 /**
  * Schedule synchronous evaluation of the execution.
@@ -5380,7 +5384,7 @@ int ANeuralNetworksCompilation_setCaching(ANeuralNetworksCompilation* compilatio
  *         ANEURALNETWORKS_UNMAPPABLE if the execution input or output memory cannot
  *         be properly mapped.
  */
-int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution);
+int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution) __INTRODUCED_IN(29);
 
 /**
  * Get the dimensional information of the specified output operand of the model of the
@@ -5404,7 +5408,8 @@ int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution);
  * Available since API level 29.
  */
 int ANeuralNetworksExecution_getOutputOperandRank(ANeuralNetworksExecution* execution,
-                                                  int32_t index, uint32_t* rank);
+                                                  int32_t index, uint32_t* rank)
+        __INTRODUCED_IN(29);
 
 /**
  * Get the dimensional information of the specified output operand of the model of the
@@ -5428,7 +5433,8 @@ int ANeuralNetworksExecution_getOutputOperandRank(ANeuralNetworksExecution* exec
  * Available since API level 29.
  */
 int ANeuralNetworksExecution_getOutputOperandDimensions(ANeuralNetworksExecution* execution,
-                                                        int32_t index, uint32_t* dimensions);
+                                                        int32_t index, uint32_t* dimensions)
+        __INTRODUCED_IN(29);
 
 /**
  * Create a {@link ANeuralNetworksBurst} to apply the given compilation.
@@ -5516,7 +5522,8 @@ int ANeuralNetworksExecution_burstCompute(ANeuralNetworksExecution* execution,
  * @see AHardwareBuffer
  */
 int ANeuralNetworksMemory_createFromAHardwareBuffer(const AHardwareBuffer* ahwb,
-                                                    ANeuralNetworksMemory** memory);
+                                                    ANeuralNetworksMemory** memory)
+        __INTRODUCED_IN(29);
 
 /**
  * Specifies whether duration of the {@link ANeuralNetworksExecution} is to be measured.
@@ -5534,7 +5541,8 @@ int ANeuralNetworksMemory_createFromAHardwareBuffer(const AHardwareBuffer* ahwb,
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
  */
-int ANeuralNetworksExecution_setMeasureTiming(ANeuralNetworksExecution* execution, bool measure);
+int ANeuralNetworksExecution_setMeasureTiming(ANeuralNetworksExecution* execution, bool measure)
+        __INTRODUCED_IN(29);
 
 /**
  * Different duration measurements.
@@ -5556,6 +5564,8 @@ typedef enum {
  * Get the time spent in the specified {@link ANeuralNetworksExecution}, in nanoseconds.
  * The execution must have completed.
  *
+ * Available since API level 29.
+ *
  * @param execution The execution to be queried.
  * @param durationCode The measurement to be queried, specified by {@link DurationCode}.
  * @param duration The returned duration. If no measurement was requested by
@@ -5566,7 +5576,8 @@ typedef enum {
  * @return ANEURALNETWORKS_NO_ERROR if successful.
  */
 int ANeuralNetworksExecution_getDuration(const ANeuralNetworksExecution* execution,
-                                         int32_t durationCode, uint64_t* duration);
+                                         int32_t durationCode, uint64_t* duration)
+        __INTRODUCED_IN(29);
 
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
 
