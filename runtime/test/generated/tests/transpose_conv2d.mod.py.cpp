@@ -2169,3 +2169,195 @@ TEST_F(DynamicOutputShapeTest, transpose_conv2d_dynamic_output_shape_nchw_float1
             transpose_conv2d::get_examples_dynamic_output_shape_nchw_float16_weight_as_input_4());
 }
 
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nhwc) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nhwc,
+            transpose_conv2d::is_ignored_zero_sized_nhwc,
+            transpose_conv2d::get_examples_zero_sized_nhwc());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nhwc_relaxed) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nhwc_relaxed,
+            transpose_conv2d::is_ignored_zero_sized_nhwc_relaxed,
+            transpose_conv2d::get_examples_zero_sized_nhwc_relaxed());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nhwc_quant8) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nhwc_quant8,
+            transpose_conv2d::is_ignored_zero_sized_nhwc_quant8,
+            transpose_conv2d::get_examples_zero_sized_nhwc_quant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nhwc_float16) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nhwc_float16,
+            transpose_conv2d::is_ignored_zero_sized_nhwc_float16,
+            transpose_conv2d::get_examples_zero_sized_nhwc_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nchw) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nchw,
+            transpose_conv2d::is_ignored_zero_sized_nchw,
+            transpose_conv2d::get_examples_zero_sized_nchw());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nchw_relaxed) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nchw_relaxed,
+            transpose_conv2d::is_ignored_zero_sized_nchw_relaxed,
+            transpose_conv2d::get_examples_zero_sized_nchw_relaxed());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nchw_quant8) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nchw_quant8,
+            transpose_conv2d::is_ignored_zero_sized_nchw_quant8,
+            transpose_conv2d::get_examples_zero_sized_nchw_quant8());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nchw_float16) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nchw_float16,
+            transpose_conv2d::is_ignored_zero_sized_nchw_float16,
+            transpose_conv2d::get_examples_zero_sized_nchw_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nhwc) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nhwc,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nhwc,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nhwc());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nhwc_relaxed) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nhwc_quant8) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nhwc_quant8());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nhwc_float16) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nhwc_float16,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nhwc_float16,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nhwc_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nchw) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nchw,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nchw,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nchw());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nchw_relaxed) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nchw_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nchw_quant8) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nchw_quant8,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nchw_quant8,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nchw_quant8());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nchw_float16) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nchw_float16,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nchw_float16,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nchw_float16());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nhwc_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nhwc_2,
+            transpose_conv2d::is_ignored_zero_sized_nhwc_2,
+            transpose_conv2d::get_examples_zero_sized_nhwc_2());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nhwc_relaxed_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nhwc_relaxed_2,
+            transpose_conv2d::is_ignored_zero_sized_nhwc_relaxed_2,
+            transpose_conv2d::get_examples_zero_sized_nhwc_relaxed_2());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nhwc_quant8_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nhwc_quant8_2,
+            transpose_conv2d::is_ignored_zero_sized_nhwc_quant8_2,
+            transpose_conv2d::get_examples_zero_sized_nhwc_quant8_2());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nhwc_float16_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nhwc_float16_2,
+            transpose_conv2d::is_ignored_zero_sized_nhwc_float16_2,
+            transpose_conv2d::get_examples_zero_sized_nhwc_float16_2());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nchw_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nchw_2,
+            transpose_conv2d::is_ignored_zero_sized_nchw_2,
+            transpose_conv2d::get_examples_zero_sized_nchw_2());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nchw_relaxed_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nchw_relaxed_2,
+            transpose_conv2d::is_ignored_zero_sized_nchw_relaxed_2,
+            transpose_conv2d::get_examples_zero_sized_nchw_relaxed_2());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nchw_quant8_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nchw_quant8_2,
+            transpose_conv2d::is_ignored_zero_sized_nchw_quant8_2,
+            transpose_conv2d::get_examples_zero_sized_nchw_quant8_2());
+}
+
+TEST_F(GeneratedTests, transpose_conv2d_zero_sized_nchw_float16_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_nchw_float16_2,
+            transpose_conv2d::is_ignored_zero_sized_nchw_float16_2,
+            transpose_conv2d::get_examples_zero_sized_nchw_float16_2());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nhwc_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nhwc_2,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nhwc_2,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nhwc_2());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nhwc_relaxed_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed_2,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed_2,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nhwc_quant8_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8_2,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8_2,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nhwc_quant8_2());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nhwc_float16_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nhwc_float16_2,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nhwc_float16_2,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nhwc_float16_2());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nchw_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nchw_2,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nchw_2,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nchw_2());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nchw_relaxed_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed_2,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed_2,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nchw_relaxed_2());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nchw_quant8_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nchw_quant8_2,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nchw_quant8_2,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nchw_quant8_2());
+}
+
+TEST_F(DynamicOutputShapeTest, transpose_conv2d_zero_sized_dynamic_output_shape_nchw_float16_2) {
+    execute(transpose_conv2d::CreateModel_zero_sized_dynamic_output_shape_nchw_float16_2,
+            transpose_conv2d::is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2,
+            transpose_conv2d::get_examples_zero_sized_dynamic_output_shape_nchw_float16_2());
+}
+
