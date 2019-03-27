@@ -1615,66 +1615,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
-        case ANEURALNETWORKS_TRANSPOSE_CONV_2D: {
-            if ((inputCount != 11 && inputCount != 9) || outputCount != 1) {
-                LOG(ERROR) << "Invalid number of input operands (" << inputCount
-                           << ", expected 11 or 9) or output operands (" << outputCount
-                           << ", expected 1) for operation " << getOperationName(opType);
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            auto inputType = operands[inputIndexes[0]].type;
-            auto filterType = operands[inputIndexes[1]].type;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
-                                   OperandType::TENSOR_FLOAT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                if (filterType != OperandType::TENSOR_QUANT8_ASYMM &&
-                    filterType != OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-                    LOG(ERROR) << "Unsupported filter tensor type for operation "
-                               << getOperationName(opType);
-                    return ANEURALNETWORKS_BAD_DATA;
-                }
-
-                if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL &&
-                    operands[inputIndexes[1]].extraParams.channelQuant().channelDim != 0) {
-                    LOG(ERROR) << "Unsupported filter tensor channel dimension for operation "
-                               << getOperationName(opType);
-                    return ANEURALNETWORKS_BAD_DATA;
-                }
-
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, filterType,
-                                   OperandType::TENSOR_INT32};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
-                                   OperandType::TENSOR_FLOAT16};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-
-            std::vector<OperandType> argExpectedTypes;
-            if (inputCount == 11) {
-                argExpectedTypes = {OperandType::INT32, OperandType::INT32, OperandType::INT32,
-                                    OperandType::INT32, OperandType::INT32, OperandType::INT32,
-                                    OperandType::INT32, OperandType::BOOL};
-            } else {
-                argExpectedTypes = {OperandType::TENSOR_INT32, OperandType::INT32,
-                                    OperandType::INT32,        OperandType::INT32,
-                                    OperandType::INT32,        OperandType::BOOL};
-            }
-            inExpectedTypes.insert(inExpectedTypes.end(), argExpectedTypes.begin(),
-                                   argExpectedTypes.end());
-            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
-            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
-                                                 inExpectedTypes, outputCount, outputIndexes,
-                                                 outExpectedTypes);
-        }
         case ANEURALNETWORKS_TILE: {
             if (inputCount != 2 || outputCount != 1) {
                 logInvalidInOutNumber(2, 1);

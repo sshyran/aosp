@@ -372,11 +372,6 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
                         int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
                         int32_t numGroups, Shape* output);
 
-bool transposeConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
-                          int32_t padding_left, int32_t padding_right, int32_t padding_top,
-                          int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
-                          Shape* output);
-
 // Transposes the first two dimensions.
 template <typename T>
 inline bool transposeFirstTwoDimensions(const T* buffer, const Shape& shape, T* transposedBuffer) {
