@@ -943,6 +943,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             std::vector<OperandType> inExpectedTypes;
             auto inputType = operands[inputIndexes[0]].type;
             std::vector<OperandType> outExpectedTypes{inputType, inputType};
+            std::vector<OperandType> outExpectedTypesMerged{inputType};
             if (inputType != OperandType::TENSOR_FLOAT32 &&
                 inputType != OperandType::TENSOR_FLOAT16) {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
@@ -968,15 +969,21 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes.push_back(inputType);
             }
 
-            if (inputCount != 61 || outputCount != 2) {
+            if (inputCount != 61 || (outputCount != 1 && outputCount != 2)) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
-                           << ", expected 52) or output operands (" << outputCount
-                           << ", expected 2) for operation " << getOperationName(opType);
+                           << ", expected 61) or output operands (" << outputCount
+                           << ", expected 1 or 2) for operation " << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            return validateOperationOperandTypes(operands, inputCount, inputIndexes,
-                                                 inExpectedTypes, outputCount, outputIndexes,
-                                                 outExpectedTypes);
+            auto status = validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                        inExpectedTypes, outputCount, outputIndexes,
+                                                        outExpectedTypes);
+            if (status != ANEURALNETWORKS_NO_ERROR) {
+                status = validateOperationOperandTypes(operands, inputCount, inputIndexes,
+                                                       inExpectedTypes, outputCount, outputIndexes,
+                                                       outExpectedTypesMerged);
+            }
+            return status;
         }
         case ANEURALNETWORKS_LSTM: {
             std::vector<OperandType> inExpectedTypes;
