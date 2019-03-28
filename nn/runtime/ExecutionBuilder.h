@@ -153,7 +153,11 @@ public:
     // Timing reported from the driver
     Timing mTiming = {};
 
-    // Output shapes can only be queried after the execution is finished.
+    // Properties cannot be set once the execution has started.
+    std::atomic_bool mStarted = false;
+
+    // Timing and output shapes can only be queried after the execution is
+    // finished.
     std::atomic_bool mFinished = false;
 };
 
