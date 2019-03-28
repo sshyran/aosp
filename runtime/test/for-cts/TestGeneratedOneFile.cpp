@@ -476,5 +476,6 @@
 #include "../generated/tests/unidirectional_sequence_lstm_cifg_peephole.mod.py.cpp"
 #include "../generated/tests/unidirectional_sequence_lstm_f16_batch_major.mod.py.cpp"
 #include "../generated/tests/unidirectional_sequence_lstm_f16_norm_peephole_projection.mod.py.cpp"
+#include "../generated/tests/unidirectional_sequence_lstm_layer_norm_cifg_peephole.mod.py.cpp"
 #include "../generated/tests/unidirectional_sequence_lstm_norm_peephole_projection.mod.py.cpp"
 #include "../generated/tests/unidirectional_sequence_rnn.mod.py.cpp"
