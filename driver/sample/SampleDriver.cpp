@@ -35,10 +35,10 @@ namespace sample_driver {
 
 namespace {
 
-using time_point = std::chrono::system_clock::time_point;
+using time_point = std::chrono::steady_clock::time_point;
 
 auto now() {
-    return std::chrono::system_clock::now();
+    return std::chrono::steady_clock::now();
 };
 
 auto microsecondsDuration(decltype(now()) end, decltype(now()) start) {
