@@ -717,7 +717,7 @@ int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
     ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model);
     CompilationBuilder* c = nullptr;
     // No CPU fallback when user specifies the list of devices manually.
-    int result = m->createCompilation(&c, selectedDevices, /* forceNoFallback */ true);
+    int result = m->createCompilation(&c, selectedDevices, /* explicitDeviceList */ true);
     *compilation = reinterpret_cast<ANeuralNetworksCompilation*>(c);
     return result;
 }
