@@ -1924,6 +1924,14 @@ void lstmBidirectionalSequence(int32_t operandCode) {
     ANeuralNetworksOperandType clipProjLayer = floatScalar;
     ANeuralNetworksOperandType mergeOutputs = boolScalar;
     ANeuralNetworksOperandType timeMajor = boolScalar;
+    ANeuralNetworksOperandType inputLayerNormWeightsFw = floatTensor1D;
+    ANeuralNetworksOperandType forgetLayerNormWeightsFw = floatTensor1D;
+    ANeuralNetworksOperandType cellLayerNormWeightsFw = floatTensor1D;
+    ANeuralNetworksOperandType outputLayerNormWeightsFw = floatTensor1D;
+    ANeuralNetworksOperandType inputLayerNormWeightsBw = floatTensor1D;
+    ANeuralNetworksOperandType forgetLayerNormWeightsBw = floatTensor1D;
+    ANeuralNetworksOperandType cellLayerNormWeightsBw = floatTensor1D;
+    ANeuralNetworksOperandType outputLayerNormWeightsBw = floatTensor1D;
 
     ANeuralNetworksOperandType outputFw = floatTensor2D;
     ANeuralNetworksOperandType outputBw = floatTensor2D;
@@ -1983,6 +1991,14 @@ void lstmBidirectionalSequence(int32_t operandCode) {
                                        clipProjLayer,
                                        mergeOutputs,
                                        timeMajor,
+                                       inputLayerNormWeightsFw,
+                                       forgetLayerNormWeightsFw,
+                                       cellLayerNormWeightsFw,
+                                       outputLayerNormWeightsFw,
+                                       inputLayerNormWeightsBw,
+                                       forgetLayerNormWeightsBw,
+                                       cellLayerNormWeightsBw,
+                                       outputLayerNormWeightsBw,
                                },
                                {
                                        outputFw,
@@ -2567,6 +2583,10 @@ TEST(OperationValidationTest, L2_NORMALIZATION_float32) {
     normalizationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+TEST(OperationValidationTest, L2_NORMALIZATION_quant8) {
+    normalizationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
 void localResponseNormOpTest(int32_t operandCode) {
     int32_t floatScalarType = (operandCode == ANEURALNETWORKS_TENSOR_FLOAT32)
                                       ? ANEURALNETWORKS_FLOAT32
@@ -2835,7 +2855,9 @@ void boxWithNmsLimitOpTest(int32_t scoreOperandCode, int32_t roiOperandCode,
             ANEURALNETWORKS_BOX_WITH_NMS_LIMIT,
             {getOpType(scoreOperandCode, 2, scoreDim), getOpType(roiOperandCode, 2, roiDim),
              getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, splitDim), getOpType(scalarOperandCode),
-             getOpType(scalarOperandCode), getOpType(ANEURALNETWORKS_INT32)},
+             getOpType(ANEURALNETWORKS_INT32), getOpType(ANEURALNETWORKS_INT32),
+             getOpType(scalarOperandCode), getOpType(scalarOperandCode),
+             getOpType(scalarOperandCode)},
             {getOpType(scoreOperandCode, 1, outScoreDim), getOpType(roiOperandCode, 2, outRoiDim),
              getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outClassDim),
              getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, outSplitDim)});

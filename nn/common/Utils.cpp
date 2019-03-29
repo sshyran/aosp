@@ -27,6 +27,7 @@
 #include <android-base/properties.h>
 #include <android-base/strings.h>
 #include <sys/system_properties.h>
+#include <algorithm>
 #include <unordered_map>
 
 using ::android::hidl::allocator::V1_0::IAllocator;
@@ -692,41 +693,6 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                                  outputCount, outputIndexes,
                                                  outExpectedTypes);
         }
-        case ANEURALNETWORKS_L2_NORMALIZATION: {
-            if ((inputCount != 2 && inputCount != 1) || outputCount != 1) {
-                LOG(ERROR) << "Invalid number of input operands (" << inputCount
-                           << ", expected 2 or 1) or output operands (" << outputCount
-                           << ", expected 1) for operation " << getOperationName(opType);
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            auto inputType = operands[inputIndexes[0]].type;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
-                inExpectedTypes = {OperandType::TENSOR_FLOAT16};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            if (inputCount == 2) {
-                inExpectedTypes.push_back(OperandType::INT32);
-                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
-            } else if (operands[inputIndexes[0]].dimensions.size() != 4) {
-                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
-            }
-            return validateOperationOperandTypes(operands,
-                                                 inputCount, inputIndexes,
-                                                 inExpectedTypes,
-                                                 outputCount, outputIndexes,
-                                                 outExpectedTypes);
-        }
         case ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION: {
             if ((inputCount != 6 && inputCount != 5) || outputCount != 1) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
@@ -998,8 +964,11 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                               : OperandType::FLOAT16);
             inExpectedTypes.push_back(OperandType::BOOL);
             inExpectedTypes.push_back(OperandType::BOOL);
+            for (int i = 0; i < 8; ++i) {
+                inExpectedTypes.push_back(inputType);
+            }
 
-            if (inputCount != 53 || outputCount != 2) {
+            if (inputCount != 61 || outputCount != 2) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
                            << ", expected 52) or output operands (" << outputCount
                            << ", expected 2) for operation " << getOperationName(opType);
@@ -1852,17 +1821,105 @@ int convertErrorStatusToResultCode(ErrorStatus status) {
     }
 }
 
+// V1_2::Capabilities::operandPerformance utilities.
+// The field V1_2::Capabilities::operandPerformance is a vector sorted by the
+// field V1_2::Capabilities::OperandPerformance::type.
+
+hidl_vec<Capabilities::OperandPerformance> nonExtensionOperandPerformance(PerformanceInfo perf) {
+    using OpPerf = Capabilities::OperandPerformance;
+
+    // Note: range presents enumerators in declaration order, not in numerical order.
+    static constexpr ::android::hardware::hidl_enum_range<OperandType> kOperandTypeRange;
+
+    hidl_vec<OpPerf> ret(kOperandTypeRange.end() - kOperandTypeRange.begin());
+
+    std::transform(kOperandTypeRange.begin(), kOperandTypeRange.end(), ret.begin(),
+                   [perf](OperandType type) {
+                       return Capabilities::OperandPerformance{type, perf};
+                   });
+    std::sort(ret.begin(), ret.end(),
+              [](const OpPerf& a, const OpPerf& b) { return a.type < b.type; });
+
+    return ret;
+}
+
+void update(hidl_vec<Capabilities::OperandPerformance>* operandPerformance, OperandType type,
+            PerformanceInfo perf) {
+    CHECK(operandPerformance != nullptr);
+    const auto it = std::lower_bound(operandPerformance->begin(), operandPerformance->end(), type,
+                                     [](const Capabilities::OperandPerformance& perf,
+                                        OperandType type) { return perf.type < type; });
+    CHECK(it != operandPerformance->end())
+            << toString(type) << " not in " << toString(*operandPerformance);
+    it->info = perf;
+}
+
+PerformanceInfo lookup(const hidl_vec<Capabilities::OperandPerformance>& operandPerformance,
+                       OperandType type) {
+    const auto it = std::lower_bound(operandPerformance.begin(), operandPerformance.end(), type,
+                                     [](const Capabilities::OperandPerformance& perf,
+                                        OperandType type) { return perf.type < type; });
+    if (it == operandPerformance.end()) {
+        LOG(WARNING) << "No PerformanceInfo for " << toString(type);
+        return {.execTime = FLT_MAX, .powerUsage = FLT_MAX};
+    } else {
+        return it->info;
+    }
+}
+
 // Versioning
 
-bool compliantWithV1_0(V1_0::Capabilities) {
+// In Android P, most data types are treated as having the same performance as TENSOR_QUANT8_ASYMM.
+// This array must be in sorted order.
+static const OperandType kQuantized8PerformanceConsistentWithP[] = {
+        OperandType::INT32, OperandType::UINT32, OperandType::TENSOR_INT32, OperandType::OEM,
+        OperandType::TENSOR_OEM_BYTE};
+
+static bool isQuantized8PerformanceConsistentWithP(const V1_2::Capabilities& capabilities) {
+    const PerformanceInfo quantized8Performance =
+            lookup(capabilities.operandPerformance, OperandType::TENSOR_QUANT8_ASYMM);
+    return std::all_of(std::begin(kQuantized8PerformanceConsistentWithP),
+                       std::end(kQuantized8PerformanceConsistentWithP),
+                       [quantized8Performance, &capabilities](OperandType type) {
+                           return quantized8Performance ==
+                                  lookup(capabilities.operandPerformance, type);
+                       });
+}
+
+static hidl_vec<V1_2::Capabilities::OperandPerformance> makeQuantized8PerformanceConsistentWithP(
+        PerformanceInfo quantized8Performance) {
+    hidl_vec<V1_2::Capabilities::OperandPerformance> ret(
+            sizeof(kQuantized8PerformanceConsistentWithP) /
+            sizeof(kQuantized8PerformanceConsistentWithP[0]));
+    std::transform(
+            std::begin(kQuantized8PerformanceConsistentWithP),
+            std::end(kQuantized8PerformanceConsistentWithP), ret.begin(),
+            [quantized8Performance](OperandType type) -> V1_2::Capabilities::OperandPerformance {
+                return {type, quantized8Performance};
+            });
+    return ret;
+}
+
+bool compliantWithV1_0(const V1_0::Capabilities&) {
     return true;
 }
 
 bool compliantWithV1_0(const V1_1::Capabilities& capabilities) {
-    return capabilities.relaxedFloat32toFloat16Performance.execTime ==
-                   capabilities.float32Performance.execTime &&
-           capabilities.relaxedFloat32toFloat16Performance.powerUsage ==
-                   capabilities.float32Performance.powerUsage;
+    return capabilities.relaxedFloat32toFloat16Performance == capabilities.float32Performance;
+}
+
+bool compliantWithV1_0(const V1_2::Capabilities& capabilities) {
+    const PerformanceInfo perfTensorFloat32 =
+            lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32);
+    const PerformanceInfo perfFloat32 =
+            lookup(capabilities.operandPerformance, OperandType::FLOAT32);
+    if (perfTensorFloat32 != perfFloat32 ||
+        perfTensorFloat32 != capabilities.relaxedFloat32toFloat16PerformanceTensor ||
+        perfFloat32 != capabilities.relaxedFloat32toFloat16PerformanceScalar) {
+        return false;
+    }
+
+    return isQuantized8PerformanceConsistentWithP(capabilities);
 }
 
 bool compliantWithV1_1(const V1_0::Capabilities&) {
@@ -1873,7 +1930,26 @@ bool compliantWithV1_1(const V1_1::Capabilities&) {
     return true;
 }
 
-bool compliantWithV1_0(const V1_0::Model&) {
+bool compliantWithV1_1(const V1_2::Capabilities& capabilities) {
+    if ((capabilities.relaxedFloat32toFloat16PerformanceTensor !=
+         capabilities.relaxedFloat32toFloat16PerformanceScalar) ||
+        (lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32) !=
+         lookup(capabilities.operandPerformance, OperandType::FLOAT32))) {
+        return false;
+    }
+
+    return isQuantized8PerformanceConsistentWithP(capabilities);
+}
+
+bool compliantWithV1_2(const V1_0::Capabilities&) {
+    return true;
+}
+
+bool compliantWithV1_2(const V1_1::Capabilities&) {
+    return true;
+}
+
+bool compliantWithV1_2(const V1_0::Model&) {
     return true;
 }
 
@@ -1925,6 +2001,17 @@ V1_0::Capabilities convertToV1_0(const V1_1::Capabilities& capabilities) {
              .quantized8Performance = capabilities.quantized8Performance };
 }
 
+V1_0::Capabilities convertToV1_0(const V1_2::Capabilities& capabilities) {
+    if (!compliantWithV1_0(capabilities)) {
+        LOG(ERROR) << "Upcasting non-compliant capabilities " << toString(capabilities)
+                   << " from V1_2::Capabilities to V1_0::Capabilities";
+    }
+    return {.float32Performance =
+                    lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32),
+            .quantized8Performance =
+                    lookup(capabilities.operandPerformance, OperandType::TENSOR_QUANT8_ASYMM)};
+}
+
 V1_1::Capabilities convertToV1_1(const V1_0::Capabilities& capabilities) {
     return { .float32Performance = capabilities.float32Performance,
              .quantized8Performance = capabilities.quantized8Performance,
@@ -1932,6 +2019,60 @@ V1_1::Capabilities convertToV1_1(const V1_0::Capabilities& capabilities) {
 }
 
 V1_1::Capabilities convertToV1_1(const V1_1::Capabilities& capabilities) {
+    return capabilities;
+}
+
+V1_1::Capabilities convertToV1_1(const V1_2::Capabilities& capabilities) {
+    if (!compliantWithV1_1(capabilities)) {
+        LOG(ERROR) << "Upcasting non-compliant capabilities " << toString(capabilities)
+                   << " from V1_2::Capabilities to V1_1::Capabilities";
+    }
+    return {.float32Performance =
+                    lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32),
+            .quantized8Performance =
+                    lookup(capabilities.operandPerformance, OperandType::TENSOR_QUANT8_ASYMM),
+            .relaxedFloat32toFloat16Performance =
+                    capabilities.relaxedFloat32toFloat16PerformanceTensor};
+}
+
+V1_2::Capabilities convertToV1_2(const V1_0::Capabilities& capabilities) {
+    V1_2::Capabilities ret = {
+            .relaxedFloat32toFloat16PerformanceScalar = capabilities.float32Performance,
+            .relaxedFloat32toFloat16PerformanceTensor = capabilities.float32Performance,
+            .operandPerformance =
+                    makeQuantized8PerformanceConsistentWithP(capabilities.quantized8Performance)};
+    auto& opPerf = ret.operandPerformance;
+    opPerf.resize(opPerf.size() + 2);
+    opPerf[opPerf.size() - 2] = {OperandType::TENSOR_FLOAT32, capabilities.float32Performance};
+    opPerf[opPerf.size() - 1] = {OperandType::FLOAT32, capabilities.float32Performance};
+    using OperandPerformance = V1_2::Capabilities::OperandPerformance;
+    std::sort(opPerf.begin(), opPerf.end(),
+              [](const OperandPerformance& a, const OperandPerformance& b) {
+                  return a.type < b.type;
+              });
+    return ret;
+}
+
+V1_2::Capabilities convertToV1_2(const V1_1::Capabilities& capabilities) {
+    V1_2::Capabilities ret = {.relaxedFloat32toFloat16PerformanceScalar =
+                                      capabilities.relaxedFloat32toFloat16Performance,
+                              .relaxedFloat32toFloat16PerformanceTensor =
+                                      capabilities.relaxedFloat32toFloat16Performance,
+                              .operandPerformance = makeQuantized8PerformanceConsistentWithP(
+                                      capabilities.quantized8Performance)};
+    auto& opPerf = ret.operandPerformance;
+    opPerf.resize(opPerf.size() + 2);
+    opPerf[opPerf.size() - 2] = {OperandType::TENSOR_FLOAT32, capabilities.float32Performance};
+    opPerf[opPerf.size() - 1] = {OperandType::FLOAT32, capabilities.float32Performance};
+    using OperandPerformance = V1_2::Capabilities::OperandPerformance;
+    std::sort(opPerf.begin(), opPerf.end(),
+              [](const OperandPerformance& a, const OperandPerformance& b) {
+                  return a.type < b.type;
+              });
+    return ret;
+}
+
+V1_2::Capabilities convertToV1_2(const V1_2::Capabilities& capabilities) {
     return capabilities;
 }
 

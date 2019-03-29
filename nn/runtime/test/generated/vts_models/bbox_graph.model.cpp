@@ -292,7 +292,7 @@ Model createTestModel_zero_sized() {
             .location = {.poolIndex = 0, .offset = 257, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -308,6 +308,33 @@ Model createTestModel_zero_sized() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 265, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 269, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 273, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 277, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -375,15 +402,15 @@ Model createTestModel_zero_sized() {
         },
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {29, 30, 13, 31, 32, 33},
-            .outputs = {34, 35, 36, 37},
+            .inputs = {29, 30, 13, 31, 32, 33, 34, 35, 36},
+            .outputs = {37, 38, 39, 40},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3, 14};
-    const std::vector<uint32_t> outputIndexes = {11, 34, 35, 36, 37};
+    const std::vector<uint32_t> outputIndexes = {11, 37, 38, 39, 40};
     std::vector<uint8_t> operandValues = {
-      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 205, 204, 204, 61, 154, 153, 153, 62, 255, 255, 255, 255
+      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 205, 204, 204, 61, 255, 255, 255, 255, 0, 0, 0, 0, 154, 153, 153, 62, 0, 0, 128, 63, 205, 204, 204, 61
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -694,7 +721,7 @@ Model createTestModel_zero_sized_relaxed() {
             .location = {.poolIndex = 0, .offset = 257, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -710,6 +737,33 @@ Model createTestModel_zero_sized_relaxed() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 265, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 269, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 273, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 277, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -777,15 +831,15 @@ Model createTestModel_zero_sized_relaxed() {
         },
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {29, 30, 13, 31, 32, 33},
-            .outputs = {34, 35, 36, 37},
+            .inputs = {29, 30, 13, 31, 32, 33, 34, 35, 36},
+            .outputs = {37, 38, 39, 40},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3, 14};
-    const std::vector<uint32_t> outputIndexes = {11, 34, 35, 36, 37};
+    const std::vector<uint32_t> outputIndexes = {11, 37, 38, 39, 40};
     std::vector<uint8_t> operandValues = {
-      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 205, 204, 204, 61, 154, 153, 153, 62, 255, 255, 255, 255
+      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 205, 204, 204, 61, 255, 255, 255, 255, 0, 0, 0, 0, 154, 153, 153, 62, 0, 0, 128, 63, 205, 204, 204, 61
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1097,13 +1151,13 @@ Model createTestModel_zero_sized_float16() {
             .location = {.poolIndex = 0, .offset = 145, .length = 2},
         },
         {
-            .type = OperandType::FLOAT16,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 147, .length = 2},
+            .location = {.poolIndex = 0, .offset = 147, .length = 4},
         },
         {
             .type = OperandType::INT32,
@@ -1112,7 +1166,34 @@ Model createTestModel_zero_sized_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 149, .length = 4},
+            .location = {.poolIndex = 0, .offset = 151, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 155, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 157, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 159, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -1180,15 +1261,15 @@ Model createTestModel_zero_sized_float16() {
         },
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {29, 30, 13, 31, 32, 33},
-            .outputs = {34, 35, 36, 37},
+            .inputs = {29, 30, 13, 31, 32, 33, 34, 35, 36},
+            .outputs = {37, 38, 39, 40},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3, 14};
-    const std::vector<uint32_t> outputIndexes = {11, 34, 35, 36, 37};
+    const std::vector<uint32_t> outputIndexes = {11, 37, 38, 39, 40};
     std::vector<uint8_t> operandValues = {
-      0, 60, 0, 60, 255, 255, 255, 255, 255, 255, 255, 255, 205, 52, 0, 73, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 60, 0, 60, 4, 0, 0, 0, 4, 0, 0, 0, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 102, 46, 205, 52, 255, 255, 255, 255
+      0, 60, 0, 60, 255, 255, 255, 255, 255, 255, 255, 255, 205, 52, 0, 73, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 60, 0, 60, 4, 0, 0, 0, 4, 0, 0, 0, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 102, 46, 255, 255, 255, 255, 0, 0, 0, 0, 205, 52, 0, 60, 102, 46
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1499,7 +1580,7 @@ Model createTestModel_zero_sized_quant8() {
             .location = {.poolIndex = 0, .offset = 137, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -1515,6 +1596,33 @@ Model createTestModel_zero_sized_quant8() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 145, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 149, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 153, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 157, .length = 4},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -1582,15 +1690,15 @@ Model createTestModel_zero_sized_quant8() {
         },
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {29, 30, 13, 31, 32, 33},
-            .outputs = {34, 35, 36, 37},
+            .inputs = {29, 30, 13, 31, 32, 33, 34, 35, 36},
+            .outputs = {37, 38, 39, 40},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3, 14};
-    const std::vector<uint32_t> outputIndexes = {11, 34, 35, 36, 37};
+    const std::vector<uint32_t> outputIndexes = {11, 37, 38, 39, 40};
     std::vector<uint8_t> operandValues = {
-      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 138, 138, 138, 138, 138, 138, 138, 138, 100, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 205, 204, 204, 61, 154, 153, 153, 62, 255, 255, 255, 255
+      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 138, 138, 138, 138, 138, 138, 138, 138, 100, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 205, 204, 204, 61, 255, 255, 255, 255, 0, 0, 0, 0, 154, 153, 153, 62, 0, 0, 128, 63, 205, 204, 204, 61
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -1901,7 +2009,7 @@ Model createTestModel_zero_sized_dynamic_output_shape() {
             .location = {.poolIndex = 0, .offset = 257, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -1917,6 +2025,33 @@ Model createTestModel_zero_sized_dynamic_output_shape() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 265, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 269, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 273, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 277, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -1984,15 +2119,15 @@ Model createTestModel_zero_sized_dynamic_output_shape() {
         },
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {29, 30, 13, 31, 32, 33},
-            .outputs = {34, 35, 36, 37},
+            .inputs = {29, 30, 13, 31, 32, 33, 34, 35, 36},
+            .outputs = {37, 38, 39, 40},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3, 14};
-    const std::vector<uint32_t> outputIndexes = {11, 34, 35, 36, 37};
+    const std::vector<uint32_t> outputIndexes = {11, 37, 38, 39, 40};
     std::vector<uint8_t> operandValues = {
-      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 205, 204, 204, 61, 154, 153, 153, 62, 255, 255, 255, 255
+      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 205, 204, 204, 61, 255, 255, 255, 255, 0, 0, 0, 0, 154, 153, 153, 62, 0, 0, 128, 63, 205, 204, 204, 61
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2303,7 +2438,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_relaxed() {
             .location = {.poolIndex = 0, .offset = 257, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -2319,6 +2454,33 @@ Model createTestModel_zero_sized_dynamic_output_shape_relaxed() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 265, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 269, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 273, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 277, .length = 4},
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
@@ -2386,15 +2548,15 @@ Model createTestModel_zero_sized_dynamic_output_shape_relaxed() {
         },
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {29, 30, 13, 31, 32, 33},
-            .outputs = {34, 35, 36, 37},
+            .inputs = {29, 30, 13, 31, 32, 33, 34, 35, 36},
+            .outputs = {37, 38, 39, 40},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3, 14};
-    const std::vector<uint32_t> outputIndexes = {11, 34, 35, 36, 37};
+    const std::vector<uint32_t> outputIndexes = {11, 37, 38, 39, 40};
     std::vector<uint8_t> operandValues = {
-      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 205, 204, 204, 61, 154, 153, 153, 62, 255, 255, 255, 255
+      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 205, 204, 204, 61, 255, 255, 255, 255, 0, 0, 0, 0, 154, 153, 153, 62, 0, 0, 128, 63, 205, 204, 204, 61
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -2706,13 +2868,13 @@ Model createTestModel_zero_sized_dynamic_output_shape_float16() {
             .location = {.poolIndex = 0, .offset = 145, .length = 2},
         },
         {
-            .type = OperandType::FLOAT16,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 147, .length = 2},
+            .location = {.poolIndex = 0, .offset = 147, .length = 4},
         },
         {
             .type = OperandType::INT32,
@@ -2721,7 +2883,34 @@ Model createTestModel_zero_sized_dynamic_output_shape_float16() {
             .scale = 0.0f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
-            .location = {.poolIndex = 0, .offset = 149, .length = 4},
+            .location = {.poolIndex = 0, .offset = 151, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 155, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 157, .length = 2},
+        },
+        {
+            .type = OperandType::FLOAT16,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 159, .length = 2},
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
@@ -2789,15 +2978,15 @@ Model createTestModel_zero_sized_dynamic_output_shape_float16() {
         },
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {29, 30, 13, 31, 32, 33},
-            .outputs = {34, 35, 36, 37},
+            .inputs = {29, 30, 13, 31, 32, 33, 34, 35, 36},
+            .outputs = {37, 38, 39, 40},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3, 14};
-    const std::vector<uint32_t> outputIndexes = {11, 34, 35, 36, 37};
+    const std::vector<uint32_t> outputIndexes = {11, 37, 38, 39, 40};
     std::vector<uint8_t> operandValues = {
-      0, 60, 0, 60, 255, 255, 255, 255, 255, 255, 255, 255, 205, 52, 0, 73, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 60, 0, 60, 4, 0, 0, 0, 4, 0, 0, 0, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 102, 46, 205, 52, 255, 255, 255, 255
+      0, 60, 0, 60, 255, 255, 255, 255, 255, 255, 255, 255, 205, 52, 0, 73, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 60, 0, 60, 4, 0, 0, 0, 4, 0, 0, 0, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 102, 46, 255, 255, 255, 255, 0, 0, 0, 0, 205, 52, 0, 60, 102, 46
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -3108,7 +3297,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_quant8() {
             .location = {.poolIndex = 0, .offset = 137, .length = 4},
         },
         {
-            .type = OperandType::FLOAT32,
+            .type = OperandType::INT32,
             .dimensions = {},
             .numberOfConsumers = 1,
             .scale = 0.0f,
@@ -3124,6 +3313,33 @@ Model createTestModel_zero_sized_dynamic_output_shape_quant8() {
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 145, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 149, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 153, .length = 4},
+        },
+        {
+            .type = OperandType::FLOAT32,
+            .dimensions = {},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::CONSTANT_COPY,
+            .location = {.poolIndex = 0, .offset = 157, .length = 4},
         },
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -3191,15 +3407,15 @@ Model createTestModel_zero_sized_dynamic_output_shape_quant8() {
         },
         {
             .type = OperationType::BOX_WITH_NMS_LIMIT,
-            .inputs = {29, 30, 13, 31, 32, 33},
-            .outputs = {34, 35, 36, 37},
+            .inputs = {29, 30, 13, 31, 32, 33, 34, 35, 36},
+            .outputs = {37, 38, 39, 40},
         }
     };
 
     const std::vector<uint32_t> inputIndexes = {0, 1, 2, 3, 14};
-    const std::vector<uint32_t> outputIndexes = {11, 34, 35, 36, 37};
+    const std::vector<uint32_t> outputIndexes = {11, 37, 38, 39, 40};
     std::vector<uint8_t> operandValues = {
-      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 138, 138, 138, 138, 138, 138, 138, 138, 100, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 205, 204, 204, 61, 154, 153, 153, 62, 255, 255, 255, 255
+      0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 255, 255, 255, 255, 255, 154, 153, 153, 62, 0, 0, 32, 65, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 4, 0, 0, 0, 4, 0, 0, 0, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 138, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 138, 138, 138, 138, 138, 138, 138, 138, 100, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 205, 204, 204, 61, 255, 255, 255, 255, 0, 0, 0, 0, 154, 153, 153, 62, 0, 0, 128, 63, 205, 204, 204, 61
     };
     const std::vector<hidl_memory> pools = {};
 

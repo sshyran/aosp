@@ -93,6 +93,8 @@ using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
 using ExecutionPlan = nn::ExecutionPlan;
 using HidlModel = hardware::neuralnetworks::V1_2::Model;
+using HidlToken =
+        ::android::hardware::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 using MemoryBuilder = nn::Memory;
 using ModelBuilder = nn::ModelBuilder;
 using Result = nn::test_wrapper::Result;
@@ -471,12 +473,13 @@ public:
     TestDriver(const char* name, std::set<Signature> signatures) :
             SampleDriver(name), mSignatures(std::move(signatures)) { }
 
-    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
+    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb _hidl_cb) override {
         android::nn::initVLogMask();
-        Capabilities capabilities =
-                {.float32Performance = {.execTime = 0.75f, .powerUsage = 0.75f},
-                 .quantized8Performance = {.execTime = 0.75f, .powerUsage = 0.75f},
-                 .relaxedFloat32toFloat16Performance = {.execTime = 0.75f, .powerUsage = 0.75f}};
+        const PerformanceInfo kPerf = {.execTime = 0.75f, .powerUsage = 0.75f};
+        Capabilities capabilities = {
+                .relaxedFloat32toFloat16PerformanceScalar = kPerf,
+                .relaxedFloat32toFloat16PerformanceTensor = kPerf,
+                .operandPerformance = nn::nonExtensionOperandPerformance(kPerf)};
         _hidl_cb(ErrorStatus::NONE, capabilities);
         return Void();
     }
@@ -502,6 +505,9 @@ public:
     }
 
     Return<ErrorStatus> prepareModel_1_2(const HidlModel& model, ExecutionPreference preference,
+                                         const hidl_vec<hidl_handle>& modelCache,
+                                         const hidl_vec<hidl_handle>& dataCache,
+                                         const HidlToken& token,
                                          const sp<IPreparedModelCallback>& callback) override {
         // NOTE: We verify that all operations in the model are supported.
         ErrorStatus outStatus = ErrorStatus::INVALID_ARGUMENT;
@@ -516,7 +522,8 @@ public:
                 }
             });
         if (ret.isOk() && (outStatus == ErrorStatus::NONE)) {
-            return SampleDriver::prepareModel_1_2(model, preference, callback);
+            return SampleDriver::prepareModel_1_2(model, preference, modelCache, dataCache, token,
+                                                  callback);
         } else {
             callback->notify_1_2(ErrorStatus::INVALID_ARGUMENT, nullptr);
             return ErrorStatus::INVALID_ARGUMENT;

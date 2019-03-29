@@ -4153,6 +4153,46 @@ TEST_F(ValidationTest, bidirectional_sequence_lstm_float16_batch_major_blackbox_
 
 
 #endif
+// Generated from: bidirectional_sequence_lstm_norm_fw_output.mod.py.
+namespace bidirectional_sequence_lstm_norm_fw_output {
+// Generated bidirectional_sequence_lstm_norm_fw_output test
+#include "examples/bidirectional_sequence_lstm_norm_fw_output.example.cpp"
+// Generated model constructor
+#include "vts_models/bidirectional_sequence_lstm_norm_fw_output.model.cpp"
+} // namespace bidirectional_sequence_lstm_norm_fw_output
+
+TEST_F(NeuralnetworksHidlTest, bidirectional_sequence_lstm_norm_fw_output_blackbox) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_norm_fw_output::createTestModel,
+                           bidirectional_sequence_lstm_norm_fw_output::is_ignored,
+                           bidirectional_sequence_lstm_norm_fw_output::get_examples_blackbox());
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_norm_fw_output_blackbox) {
+  const Model model = bidirectional_sequence_lstm_norm_fw_output::createTestModel();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_norm_fw_output::get_examples_blackbox());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_norm_fw_output_blackbox_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_norm_fw_output::createTestModel_dynamic_output_shape,
+                           bidirectional_sequence_lstm_norm_fw_output::is_ignored_dynamic_output_shape,
+                           bidirectional_sequence_lstm_norm_fw_output::get_examples_blackbox_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_norm_fw_output_blackbox_dynamic_output_shape) {
+  const Model model = bidirectional_sequence_lstm_norm_fw_output::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_norm_fw_output::get_examples_blackbox_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
 // Generated from: bidirectional_sequence_rnn.mod.py.
 namespace bidirectional_sequence_rnn {
 // Generated bidirectional_sequence_rnn test
@@ -4545,85 +4585,85 @@ TEST_F(ValidationTest, bidirectional_sequence_rnn_blackbox_reversed_inputs_dynam
 
 
 #endif
-// Generated from: box_with_nms_limit.mod.py.
-namespace box_with_nms_limit {
-// Generated box_with_nms_limit test
-#include "examples/box_with_nms_limit.example.cpp"
+// Generated from: box_with_nms_limit_gaussian.mod.py.
+namespace box_with_nms_limit_gaussian {
+// Generated box_with_nms_limit_gaussian test
+#include "examples/box_with_nms_limit_gaussian.example.cpp"
 // Generated model constructor
-#include "vts_models/box_with_nms_limit.model.cpp"
-} // namespace box_with_nms_limit
+#include "vts_models/box_with_nms_limit_gaussian.model.cpp"
+} // namespace box_with_nms_limit_gaussian
 
-TEST_F(NeuralnetworksHidlTest, box_with_nms_limit) {
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_gaussian) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel,
-                           box_with_nms_limit::is_ignored,
-                           box_with_nms_limit::get_examples());
+                           box_with_nms_limit_gaussian::createTestModel,
+                           box_with_nms_limit_gaussian::is_ignored,
+                           box_with_nms_limit_gaussian::get_examples());
 }
 
-TEST_F(ValidationTest, box_with_nms_limit) {
-  const Model model = box_with_nms_limit::createTestModel();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_relaxed) {
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_gaussian_relaxed) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_relaxed,
-                           box_with_nms_limit::is_ignored_relaxed,
-                           box_with_nms_limit::get_examples_relaxed());
+                           box_with_nms_limit_gaussian::createTestModel_relaxed,
+                           box_with_nms_limit_gaussian::is_ignored_relaxed,
+                           box_with_nms_limit_gaussian::get_examples_relaxed());
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_relaxed) {
-  const Model model = box_with_nms_limit::createTestModel_relaxed();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_relaxed());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_relaxed) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_float16) {
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_gaussian_float16) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_float16,
-                           box_with_nms_limit::is_ignored_float16,
-                           box_with_nms_limit::get_examples_float16());
+                           box_with_nms_limit_gaussian::createTestModel_float16,
+                           box_with_nms_limit_gaussian::is_ignored_float16,
+                           box_with_nms_limit_gaussian::get_examples_float16());
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_float16) {
-  const Model model = box_with_nms_limit::createTestModel_float16();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_float16());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_float16) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_quant8) {
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_gaussian_quant8) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_quant8,
-                           box_with_nms_limit::is_ignored_quant8,
-                           box_with_nms_limit::get_examples_quant8());
+                           box_with_nms_limit_gaussian::createTestModel_quant8,
+                           box_with_nms_limit_gaussian::is_ignored_quant8,
+                           box_with_nms_limit_gaussian::get_examples_quant8());
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_quant8) {
-  const Model model = box_with_nms_limit::createTestModel_quant8();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_quant8());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_quant8) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, box_with_nms_limit_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_gaussian_dynamic_output_shape) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_dynamic_output_shape,
-                           box_with_nms_limit::is_ignored_dynamic_output_shape,
-                           box_with_nms_limit::get_examples_dynamic_output_shape(), true);
+                           box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape,
+                           box_with_nms_limit_gaussian::is_ignored_dynamic_output_shape,
+                           box_with_nms_limit_gaussian::get_examples_dynamic_output_shape(), true);
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape) {
-  const Model model = box_with_nms_limit::createTestModel_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_dynamic_output_shape());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_dynamic_output_shape) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_dynamic_output_shape());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -4631,16 +4671,16 @@ TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, box_with_nms_limit_dynamic_output_shape_relaxed) {
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_gaussian_dynamic_output_shape_relaxed) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_dynamic_output_shape_relaxed,
-                           box_with_nms_limit::is_ignored_dynamic_output_shape_relaxed,
-                           box_with_nms_limit::get_examples_dynamic_output_shape_relaxed(), true);
+                           box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_relaxed,
+                           box_with_nms_limit_gaussian::is_ignored_dynamic_output_shape_relaxed,
+                           box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_relaxed(), true);
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_relaxed) {
-  const Model model = box_with_nms_limit::createTestModel_dynamic_output_shape_relaxed();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_dynamic_output_shape_relaxed());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_dynamic_output_shape_relaxed) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -4648,16 +4688,16 @@ TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_relaxed) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, box_with_nms_limit_dynamic_output_shape_float16) {
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_gaussian_dynamic_output_shape_float16) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_dynamic_output_shape_float16,
-                           box_with_nms_limit::is_ignored_dynamic_output_shape_float16,
-                           box_with_nms_limit::get_examples_dynamic_output_shape_float16(), true);
+                           box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_float16,
+                           box_with_nms_limit_gaussian::is_ignored_dynamic_output_shape_float16,
+                           box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_float16(), true);
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_float16) {
-  const Model model = box_with_nms_limit::createTestModel_dynamic_output_shape_float16();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_dynamic_output_shape_float16());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_dynamic_output_shape_float16) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -4665,110 +4705,93 @@ TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_float16) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, box_with_nms_limit_dynamic_output_shape_quant8) {
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_gaussian_dynamic_output_shape_quant8) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_dynamic_output_shape_quant8,
-                           box_with_nms_limit::is_ignored_dynamic_output_shape_quant8,
-                           box_with_nms_limit::get_examples_dynamic_output_shape_quant8(), true);
+                           box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_quant8,
+                           box_with_nms_limit_gaussian::is_ignored_dynamic_output_shape_quant8,
+                           box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_quant8(), true);
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_quant8) {
-  const Model model = box_with_nms_limit::createTestModel_dynamic_output_shape_quant8();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_dynamic_output_shape_quant8());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_dynamic_output_shape_quant8) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_quant8();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #endif
-TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_2) {
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_gaussian_2) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_2,
-                           box_with_nms_limit::is_ignored_2,
-                           box_with_nms_limit::get_examples_2());
+                           box_with_nms_limit_gaussian::createTestModel_2,
+                           box_with_nms_limit_gaussian::is_ignored_2,
+                           box_with_nms_limit_gaussian::get_examples_2());
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_2) {
-  const Model model = box_with_nms_limit::createTestModel_2();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_2());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_2) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_2());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_relaxed_2) {
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_gaussian_relaxed_2) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_relaxed_2,
-                           box_with_nms_limit::is_ignored_relaxed_2,
-                           box_with_nms_limit::get_examples_relaxed_2());
+                           box_with_nms_limit_gaussian::createTestModel_relaxed_2,
+                           box_with_nms_limit_gaussian::is_ignored_relaxed_2,
+                           box_with_nms_limit_gaussian::get_examples_relaxed_2());
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_relaxed_2) {
-  const Model model = box_with_nms_limit::createTestModel_relaxed_2();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_relaxed_2());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_relaxed_2) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_relaxed_2());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_float16_2) {
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_gaussian_float16_2) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_float16_2,
-                           box_with_nms_limit::is_ignored_float16_2,
-                           box_with_nms_limit::get_examples_float16_2());
+                           box_with_nms_limit_gaussian::createTestModel_float16_2,
+                           box_with_nms_limit_gaussian::is_ignored_float16_2,
+                           box_with_nms_limit_gaussian::get_examples_float16_2());
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_float16_2) {
-  const Model model = box_with_nms_limit::createTestModel_float16_2();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_float16_2());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_float16_2) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_float16_2());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_quant8_2) {
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_gaussian_quant8_2) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_quant8_2,
-                           box_with_nms_limit::is_ignored_quant8_2,
-                           box_with_nms_limit::get_examples_quant8_2());
+                           box_with_nms_limit_gaussian::createTestModel_quant8_2,
+                           box_with_nms_limit_gaussian::is_ignored_quant8_2,
+                           box_with_nms_limit_gaussian::get_examples_quant8_2());
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_quant8_2) {
-  const Model model = box_with_nms_limit::createTestModel_quant8_2();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_quant8_2());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_quant8_2) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_quant8_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_quant8_2());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, box_with_nms_limit_dynamic_output_shape_2) {
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_gaussian_dynamic_output_shape_2) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_dynamic_output_shape_2,
-                           box_with_nms_limit::is_ignored_dynamic_output_shape_2,
-                           box_with_nms_limit::get_examples_dynamic_output_shape_2(), true);
+                           box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_2,
+                           box_with_nms_limit_gaussian::is_ignored_dynamic_output_shape_2,
+                           box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_2(), true);
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_2) {
-  const Model model = box_with_nms_limit::createTestModel_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_dynamic_output_shape_2());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, box_with_nms_limit_dynamic_output_shape_relaxed_2) {
-  generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_dynamic_output_shape_relaxed_2,
-                           box_with_nms_limit::is_ignored_dynamic_output_shape_relaxed_2,
-                           box_with_nms_limit::get_examples_dynamic_output_shape_relaxed_2(), true);
-}
-
-TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_relaxed_2) {
-  const Model model = box_with_nms_limit::createTestModel_dynamic_output_shape_relaxed_2();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_dynamic_output_shape_relaxed_2());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_dynamic_output_shape_2) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -4776,16 +4799,16 @@ TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_relaxed_2) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, box_with_nms_limit_dynamic_output_shape_float16_2) {
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_gaussian_dynamic_output_shape_relaxed_2) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_dynamic_output_shape_float16_2,
-                           box_with_nms_limit::is_ignored_dynamic_output_shape_float16_2,
-                           box_with_nms_limit::get_examples_dynamic_output_shape_float16_2(), true);
+                           box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_relaxed_2,
+                           box_with_nms_limit_gaussian::is_ignored_dynamic_output_shape_relaxed_2,
+                           box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_relaxed_2(), true);
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_float16_2) {
-  const Model model = box_with_nms_limit::createTestModel_dynamic_output_shape_float16_2();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_dynamic_output_shape_float16_2());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_dynamic_output_shape_relaxed_2) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_relaxed_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_relaxed_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -4793,16 +4816,561 @@ TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_float16_2) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, box_with_nms_limit_dynamic_output_shape_quant8_2) {
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_gaussian_dynamic_output_shape_float16_2) {
   generated_tests::Execute(device,
-                           box_with_nms_limit::createTestModel_dynamic_output_shape_quant8_2,
-                           box_with_nms_limit::is_ignored_dynamic_output_shape_quant8_2,
-                           box_with_nms_limit::get_examples_dynamic_output_shape_quant8_2(), true);
+                           box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_float16_2,
+                           box_with_nms_limit_gaussian::is_ignored_dynamic_output_shape_float16_2,
+                           box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_float16_2(), true);
 }
 
-TEST_F(ValidationTest, box_with_nms_limit_dynamic_output_shape_quant8_2) {
-  const Model model = box_with_nms_limit::createTestModel_dynamic_output_shape_quant8_2();
-  const std::vector<Request> requests = createRequests(box_with_nms_limit::get_examples_dynamic_output_shape_quant8_2());
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_dynamic_output_shape_float16_2) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_float16_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_gaussian_dynamic_output_shape_quant8_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_quant8_2,
+                           box_with_nms_limit_gaussian::is_ignored_dynamic_output_shape_quant8_2,
+                           box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_quant8_2(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_gaussian_dynamic_output_shape_quant8_2) {
+  const Model model = box_with_nms_limit_gaussian::createTestModel_dynamic_output_shape_quant8_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_gaussian::get_examples_dynamic_output_shape_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+// Generated from: box_with_nms_limit_hard.mod.py.
+namespace box_with_nms_limit_hard {
+// Generated box_with_nms_limit_hard test
+#include "examples/box_with_nms_limit_hard.example.cpp"
+// Generated model constructor
+#include "vts_models/box_with_nms_limit_hard.model.cpp"
+} // namespace box_with_nms_limit_hard
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_hard) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel,
+                           box_with_nms_limit_hard::is_ignored,
+                           box_with_nms_limit_hard::get_examples());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard) {
+  const Model model = box_with_nms_limit_hard::createTestModel();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_hard_relaxed) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_relaxed,
+                           box_with_nms_limit_hard::is_ignored_relaxed,
+                           box_with_nms_limit_hard::get_examples_relaxed());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_relaxed) {
+  const Model model = box_with_nms_limit_hard::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_hard_float16) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_float16,
+                           box_with_nms_limit_hard::is_ignored_float16,
+                           box_with_nms_limit_hard::get_examples_float16());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_float16) {
+  const Model model = box_with_nms_limit_hard::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_hard_quant8) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_quant8,
+                           box_with_nms_limit_hard::is_ignored_quant8,
+                           box_with_nms_limit_hard::get_examples_quant8());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_quant8) {
+  const Model model = box_with_nms_limit_hard::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_hard_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_dynamic_output_shape,
+                           box_with_nms_limit_hard::is_ignored_dynamic_output_shape,
+                           box_with_nms_limit_hard::get_examples_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_dynamic_output_shape) {
+  const Model model = box_with_nms_limit_hard::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_hard_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_dynamic_output_shape_relaxed,
+                           box_with_nms_limit_hard::is_ignored_dynamic_output_shape_relaxed,
+                           box_with_nms_limit_hard::get_examples_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_dynamic_output_shape_relaxed) {
+  const Model model = box_with_nms_limit_hard::createTestModel_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_hard_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_dynamic_output_shape_float16,
+                           box_with_nms_limit_hard::is_ignored_dynamic_output_shape_float16,
+                           box_with_nms_limit_hard::get_examples_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_dynamic_output_shape_float16) {
+  const Model model = box_with_nms_limit_hard::createTestModel_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_hard_dynamic_output_shape_quant8) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_dynamic_output_shape_quant8,
+                           box_with_nms_limit_hard::is_ignored_dynamic_output_shape_quant8,
+                           box_with_nms_limit_hard::get_examples_dynamic_output_shape_quant8(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_dynamic_output_shape_quant8) {
+  const Model model = box_with_nms_limit_hard::createTestModel_dynamic_output_shape_quant8();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_dynamic_output_shape_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_hard_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_2,
+                           box_with_nms_limit_hard::is_ignored_2,
+                           box_with_nms_limit_hard::get_examples_2());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_2) {
+  const Model model = box_with_nms_limit_hard::createTestModel_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_hard_relaxed_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_relaxed_2,
+                           box_with_nms_limit_hard::is_ignored_relaxed_2,
+                           box_with_nms_limit_hard::get_examples_relaxed_2());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_relaxed_2) {
+  const Model model = box_with_nms_limit_hard::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_relaxed_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_hard_float16_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_float16_2,
+                           box_with_nms_limit_hard::is_ignored_float16_2,
+                           box_with_nms_limit_hard::get_examples_float16_2());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_float16_2) {
+  const Model model = box_with_nms_limit_hard::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_hard_quant8_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_quant8_2,
+                           box_with_nms_limit_hard::is_ignored_quant8_2,
+                           box_with_nms_limit_hard::get_examples_quant8_2());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_quant8_2) {
+  const Model model = box_with_nms_limit_hard::createTestModel_quant8_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_hard_dynamic_output_shape_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_dynamic_output_shape_2,
+                           box_with_nms_limit_hard::is_ignored_dynamic_output_shape_2,
+                           box_with_nms_limit_hard::get_examples_dynamic_output_shape_2(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_dynamic_output_shape_2) {
+  const Model model = box_with_nms_limit_hard::createTestModel_dynamic_output_shape_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_dynamic_output_shape_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_hard_dynamic_output_shape_relaxed_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_dynamic_output_shape_relaxed_2,
+                           box_with_nms_limit_hard::is_ignored_dynamic_output_shape_relaxed_2,
+                           box_with_nms_limit_hard::get_examples_dynamic_output_shape_relaxed_2(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_dynamic_output_shape_relaxed_2) {
+  const Model model = box_with_nms_limit_hard::createTestModel_dynamic_output_shape_relaxed_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_dynamic_output_shape_relaxed_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_hard_dynamic_output_shape_float16_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_dynamic_output_shape_float16_2,
+                           box_with_nms_limit_hard::is_ignored_dynamic_output_shape_float16_2,
+                           box_with_nms_limit_hard::get_examples_dynamic_output_shape_float16_2(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_dynamic_output_shape_float16_2) {
+  const Model model = box_with_nms_limit_hard::createTestModel_dynamic_output_shape_float16_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_dynamic_output_shape_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_hard_dynamic_output_shape_quant8_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_hard::createTestModel_dynamic_output_shape_quant8_2,
+                           box_with_nms_limit_hard::is_ignored_dynamic_output_shape_quant8_2,
+                           box_with_nms_limit_hard::get_examples_dynamic_output_shape_quant8_2(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_hard_dynamic_output_shape_quant8_2) {
+  const Model model = box_with_nms_limit_hard::createTestModel_dynamic_output_shape_quant8_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_hard::get_examples_dynamic_output_shape_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+// Generated from: box_with_nms_limit_linear.mod.py.
+namespace box_with_nms_limit_linear {
+// Generated box_with_nms_limit_linear test
+#include "examples/box_with_nms_limit_linear.example.cpp"
+// Generated model constructor
+#include "vts_models/box_with_nms_limit_linear.model.cpp"
+} // namespace box_with_nms_limit_linear
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_linear) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel,
+                           box_with_nms_limit_linear::is_ignored,
+                           box_with_nms_limit_linear::get_examples());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear) {
+  const Model model = box_with_nms_limit_linear::createTestModel();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_linear_relaxed) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_relaxed,
+                           box_with_nms_limit_linear::is_ignored_relaxed,
+                           box_with_nms_limit_linear::get_examples_relaxed());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_relaxed) {
+  const Model model = box_with_nms_limit_linear::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_linear_float16) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_float16,
+                           box_with_nms_limit_linear::is_ignored_float16,
+                           box_with_nms_limit_linear::get_examples_float16());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_float16) {
+  const Model model = box_with_nms_limit_linear::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_linear_quant8) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_quant8,
+                           box_with_nms_limit_linear::is_ignored_quant8,
+                           box_with_nms_limit_linear::get_examples_quant8());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_quant8) {
+  const Model model = box_with_nms_limit_linear::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_linear_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_dynamic_output_shape,
+                           box_with_nms_limit_linear::is_ignored_dynamic_output_shape,
+                           box_with_nms_limit_linear::get_examples_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_dynamic_output_shape) {
+  const Model model = box_with_nms_limit_linear::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_linear_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_dynamic_output_shape_relaxed,
+                           box_with_nms_limit_linear::is_ignored_dynamic_output_shape_relaxed,
+                           box_with_nms_limit_linear::get_examples_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_dynamic_output_shape_relaxed) {
+  const Model model = box_with_nms_limit_linear::createTestModel_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_linear_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_dynamic_output_shape_float16,
+                           box_with_nms_limit_linear::is_ignored_dynamic_output_shape_float16,
+                           box_with_nms_limit_linear::get_examples_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_dynamic_output_shape_float16) {
+  const Model model = box_with_nms_limit_linear::createTestModel_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_linear_dynamic_output_shape_quant8) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_dynamic_output_shape_quant8,
+                           box_with_nms_limit_linear::is_ignored_dynamic_output_shape_quant8,
+                           box_with_nms_limit_linear::get_examples_dynamic_output_shape_quant8(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_dynamic_output_shape_quant8) {
+  const Model model = box_with_nms_limit_linear::createTestModel_dynamic_output_shape_quant8();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_dynamic_output_shape_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_linear_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_2,
+                           box_with_nms_limit_linear::is_ignored_2,
+                           box_with_nms_limit_linear::get_examples_2());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_2) {
+  const Model model = box_with_nms_limit_linear::createTestModel_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_linear_relaxed_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_relaxed_2,
+                           box_with_nms_limit_linear::is_ignored_relaxed_2,
+                           box_with_nms_limit_linear::get_examples_relaxed_2());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_relaxed_2) {
+  const Model model = box_with_nms_limit_linear::createTestModel_relaxed_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_relaxed_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_linear_float16_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_float16_2,
+                           box_with_nms_limit_linear::is_ignored_float16_2,
+                           box_with_nms_limit_linear::get_examples_float16_2());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_float16_2) {
+  const Model model = box_with_nms_limit_linear::createTestModel_float16_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, box_with_nms_limit_linear_quant8_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_quant8_2,
+                           box_with_nms_limit_linear::is_ignored_quant8_2,
+                           box_with_nms_limit_linear::get_examples_quant8_2());
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_quant8_2) {
+  const Model model = box_with_nms_limit_linear::createTestModel_quant8_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_linear_dynamic_output_shape_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_dynamic_output_shape_2,
+                           box_with_nms_limit_linear::is_ignored_dynamic_output_shape_2,
+                           box_with_nms_limit_linear::get_examples_dynamic_output_shape_2(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_dynamic_output_shape_2) {
+  const Model model = box_with_nms_limit_linear::createTestModel_dynamic_output_shape_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_dynamic_output_shape_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_linear_dynamic_output_shape_relaxed_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_dynamic_output_shape_relaxed_2,
+                           box_with_nms_limit_linear::is_ignored_dynamic_output_shape_relaxed_2,
+                           box_with_nms_limit_linear::get_examples_dynamic_output_shape_relaxed_2(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_dynamic_output_shape_relaxed_2) {
+  const Model model = box_with_nms_limit_linear::createTestModel_dynamic_output_shape_relaxed_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_dynamic_output_shape_relaxed_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_linear_dynamic_output_shape_float16_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_dynamic_output_shape_float16_2,
+                           box_with_nms_limit_linear::is_ignored_dynamic_output_shape_float16_2,
+                           box_with_nms_limit_linear::get_examples_dynamic_output_shape_float16_2(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_dynamic_output_shape_float16_2) {
+  const Model model = box_with_nms_limit_linear::createTestModel_dynamic_output_shape_float16_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_dynamic_output_shape_float16_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, box_with_nms_limit_linear_dynamic_output_shape_quant8_2) {
+  generated_tests::Execute(device,
+                           box_with_nms_limit_linear::createTestModel_dynamic_output_shape_quant8_2,
+                           box_with_nms_limit_linear::is_ignored_dynamic_output_shape_quant8_2,
+                           box_with_nms_limit_linear::get_examples_dynamic_output_shape_quant8_2(), true);
+}
+
+TEST_F(ValidationTest, box_with_nms_limit_linear_dynamic_output_shape_quant8_2) {
+  const Model model = box_with_nms_limit_linear::createTestModel_dynamic_output_shape_quant8_2();
+  const std::vector<Request> requests = createRequests(box_with_nms_limit_linear::get_examples_dynamic_output_shape_quant8_2());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -29657,6 +30225,5134 @@ TEST_F(ValidationTest, instance_normalization_dynamic_output_shape_nchw_float16_
 
 
 #endif
+// Generated from: l2_normalization_axis.mod.py.
+namespace l2_normalization_axis {
+// Generated l2_normalization_axis test
+#include "examples/l2_normalization_axis.example.cpp"
+// Generated model constructor
+#include "vts_models/l2_normalization_axis.model.cpp"
+} // namespace l2_normalization_axis
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis0,
+                           l2_normalization_axis::is_ignored_dim4_axis0,
+                           l2_normalization_axis::get_examples_dim4_axis0());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dim4_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dim4_axis0_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis0_float16,
+                           l2_normalization_axis::is_ignored_dim4_axis0_float16,
+                           l2_normalization_axis::get_examples_dim4_axis0_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dim4_axis0_quant8,
+                           l2_normalization_axis::get_examples_dim4_axis0_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis0_neg,
+                           l2_normalization_axis::is_ignored_dim4_axis0_neg,
+                           l2_normalization_axis::get_examples_dim4_axis0_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dim4_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dim4_axis0_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dim4_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dim4_axis0_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dim4_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dim4_axis0_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis1,
+                           l2_normalization_axis::is_ignored_dim4_axis1,
+                           l2_normalization_axis::get_examples_dim4_axis1());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_dim4_axis1_relaxed,
+                           l2_normalization_axis::get_examples_dim4_axis1_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis1_float16,
+                           l2_normalization_axis::is_ignored_dim4_axis1_float16,
+                           l2_normalization_axis::get_examples_dim4_axis1_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis1_quant8,
+                           l2_normalization_axis::is_ignored_dim4_axis1_quant8,
+                           l2_normalization_axis::get_examples_dim4_axis1_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis1_neg,
+                           l2_normalization_axis::is_ignored_dim4_axis1_neg,
+                           l2_normalization_axis::get_examples_dim4_axis1_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dim4_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_dim4_axis1_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_dim4_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_dim4_axis1_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_dim4_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_dim4_axis1_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis2) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis2,
+                           l2_normalization_axis::is_ignored_dim4_axis2,
+                           l2_normalization_axis::get_examples_dim4_axis2());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis2) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis2();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis2_relaxed,
+                           l2_normalization_axis::is_ignored_dim4_axis2_relaxed,
+                           l2_normalization_axis::get_examples_dim4_axis2_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis2_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis2_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis2_float16,
+                           l2_normalization_axis::is_ignored_dim4_axis2_float16,
+                           l2_normalization_axis::get_examples_dim4_axis2_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis2_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis2_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis2_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis2_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis2_quant8,
+                           l2_normalization_axis::is_ignored_dim4_axis2_quant8,
+                           l2_normalization_axis::get_examples_dim4_axis2_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis2_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis2_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis2_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis2_neg,
+                           l2_normalization_axis::is_ignored_dim4_axis2_neg,
+                           l2_normalization_axis::get_examples_dim4_axis2_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis2_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis2_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis2_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis2_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis2_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dim4_axis2_neg_relaxed,
+                           l2_normalization_axis::get_examples_dim4_axis2_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis2_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis2_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis2_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis2_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis2_neg_float16,
+                           l2_normalization_axis::is_ignored_dim4_axis2_neg_float16,
+                           l2_normalization_axis::get_examples_dim4_axis2_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis2_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis2_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis2_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis2_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis2_neg_quant8,
+                           l2_normalization_axis::is_ignored_dim4_axis2_neg_quant8,
+                           l2_normalization_axis::get_examples_dim4_axis2_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis2_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis2_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis2_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis3) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis3,
+                           l2_normalization_axis::is_ignored_dim4_axis3,
+                           l2_normalization_axis::get_examples_dim4_axis3());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis3) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis3();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis3_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis3_relaxed,
+                           l2_normalization_axis::is_ignored_dim4_axis3_relaxed,
+                           l2_normalization_axis::get_examples_dim4_axis3_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis3_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis3_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis3_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis3_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis3_float16,
+                           l2_normalization_axis::is_ignored_dim4_axis3_float16,
+                           l2_normalization_axis::get_examples_dim4_axis3_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis3_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis3_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis3_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis3_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis3_quant8,
+                           l2_normalization_axis::is_ignored_dim4_axis3_quant8,
+                           l2_normalization_axis::get_examples_dim4_axis3_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis3_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis3_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis3_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis3_neg,
+                           l2_normalization_axis::is_ignored_dim4_axis3_neg,
+                           l2_normalization_axis::get_examples_dim4_axis3_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis3_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis3_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis3_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis3_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis3_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dim4_axis3_neg_relaxed,
+                           l2_normalization_axis::get_examples_dim4_axis3_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis3_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis3_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis3_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis3_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis3_neg_float16,
+                           l2_normalization_axis::is_ignored_dim4_axis3_neg_float16,
+                           l2_normalization_axis::get_examples_dim4_axis3_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis3_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis3_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis3_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim4_axis3_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim4_axis3_neg_quant8,
+                           l2_normalization_axis::is_ignored_dim4_axis3_neg_quant8,
+                           l2_normalization_axis::get_examples_dim4_axis3_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim4_axis3_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim4_axis3_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim4_axis3_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis0,
+                           l2_normalization_axis::is_ignored_dim3_axis0,
+                           l2_normalization_axis::get_examples_dim3_axis0());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dim3_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dim3_axis0_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis0_float16,
+                           l2_normalization_axis::is_ignored_dim3_axis0_float16,
+                           l2_normalization_axis::get_examples_dim3_axis0_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dim3_axis0_quant8,
+                           l2_normalization_axis::get_examples_dim3_axis0_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis0_neg,
+                           l2_normalization_axis::is_ignored_dim3_axis0_neg,
+                           l2_normalization_axis::get_examples_dim3_axis0_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dim3_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dim3_axis0_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dim3_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dim3_axis0_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dim3_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dim3_axis0_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis1,
+                           l2_normalization_axis::is_ignored_dim3_axis1,
+                           l2_normalization_axis::get_examples_dim3_axis1());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_dim3_axis1_relaxed,
+                           l2_normalization_axis::get_examples_dim3_axis1_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis1_float16,
+                           l2_normalization_axis::is_ignored_dim3_axis1_float16,
+                           l2_normalization_axis::get_examples_dim3_axis1_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis1_quant8,
+                           l2_normalization_axis::is_ignored_dim3_axis1_quant8,
+                           l2_normalization_axis::get_examples_dim3_axis1_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis1_neg,
+                           l2_normalization_axis::is_ignored_dim3_axis1_neg,
+                           l2_normalization_axis::get_examples_dim3_axis1_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dim3_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_dim3_axis1_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_dim3_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_dim3_axis1_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_dim3_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_dim3_axis1_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis2) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis2,
+                           l2_normalization_axis::is_ignored_dim3_axis2,
+                           l2_normalization_axis::get_examples_dim3_axis2());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis2) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis2();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis2_relaxed,
+                           l2_normalization_axis::is_ignored_dim3_axis2_relaxed,
+                           l2_normalization_axis::get_examples_dim3_axis2_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis2_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis2_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis2_float16,
+                           l2_normalization_axis::is_ignored_dim3_axis2_float16,
+                           l2_normalization_axis::get_examples_dim3_axis2_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis2_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis2_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis2_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis2_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis2_quant8,
+                           l2_normalization_axis::is_ignored_dim3_axis2_quant8,
+                           l2_normalization_axis::get_examples_dim3_axis2_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis2_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis2_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis2_neg,
+                           l2_normalization_axis::is_ignored_dim3_axis2_neg,
+                           l2_normalization_axis::get_examples_dim3_axis2_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis2_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis2_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis2_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis2_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis2_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dim3_axis2_neg_relaxed,
+                           l2_normalization_axis::get_examples_dim3_axis2_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis2_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis2_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis2_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis2_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis2_neg_float16,
+                           l2_normalization_axis::is_ignored_dim3_axis2_neg_float16,
+                           l2_normalization_axis::get_examples_dim3_axis2_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis2_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis2_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis2_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim3_axis2_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim3_axis2_neg_quant8,
+                           l2_normalization_axis::is_ignored_dim3_axis2_neg_quant8,
+                           l2_normalization_axis::get_examples_dim3_axis2_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim3_axis2_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim3_axis2_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim3_axis2_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis0,
+                           l2_normalization_axis::is_ignored_dim2_axis0,
+                           l2_normalization_axis::get_examples_dim2_axis0());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dim2_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dim2_axis0_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis0_float16,
+                           l2_normalization_axis::is_ignored_dim2_axis0_float16,
+                           l2_normalization_axis::get_examples_dim2_axis0_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dim2_axis0_quant8,
+                           l2_normalization_axis::get_examples_dim2_axis0_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis0_neg,
+                           l2_normalization_axis::is_ignored_dim2_axis0_neg,
+                           l2_normalization_axis::get_examples_dim2_axis0_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dim2_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dim2_axis0_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dim2_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dim2_axis0_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dim2_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dim2_axis0_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis1,
+                           l2_normalization_axis::is_ignored_dim2_axis1,
+                           l2_normalization_axis::get_examples_dim2_axis1());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_dim2_axis1_relaxed,
+                           l2_normalization_axis::get_examples_dim2_axis1_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis1_float16,
+                           l2_normalization_axis::is_ignored_dim2_axis1_float16,
+                           l2_normalization_axis::get_examples_dim2_axis1_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis1_quant8,
+                           l2_normalization_axis::is_ignored_dim2_axis1_quant8,
+                           l2_normalization_axis::get_examples_dim2_axis1_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis1_neg,
+                           l2_normalization_axis::is_ignored_dim2_axis1_neg,
+                           l2_normalization_axis::get_examples_dim2_axis1_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dim2_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_dim2_axis1_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_dim2_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_dim2_axis1_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim2_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim2_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_dim2_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_dim2_axis1_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim2_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim2_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim2_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim1_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim1_axis0,
+                           l2_normalization_axis::is_ignored_dim1_axis0,
+                           l2_normalization_axis::get_examples_dim1_axis0());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim1_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dim1_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim1_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim1_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim1_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dim1_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dim1_axis0_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim1_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim1_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim1_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim1_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim1_axis0_float16,
+                           l2_normalization_axis::is_ignored_dim1_axis0_float16,
+                           l2_normalization_axis::get_examples_dim1_axis0_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim1_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim1_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim1_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim1_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim1_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dim1_axis0_quant8,
+                           l2_normalization_axis::get_examples_dim1_axis0_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim1_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim1_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim1_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim1_axis0_neg,
+                           l2_normalization_axis::is_ignored_dim1_axis0_neg,
+                           l2_normalization_axis::get_examples_dim1_axis0_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim1_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dim1_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim1_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim1_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim1_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dim1_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dim1_axis0_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim1_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dim1_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim1_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim1_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim1_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dim1_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dim1_axis0_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim1_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dim1_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim1_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_dim1_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dim1_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dim1_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dim1_axis0_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dim1_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dim1_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dim1_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis0,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis0,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis0());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis0_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis0_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis0_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis0_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis0_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis0_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis0_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis0_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis0_neg,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis0_neg,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis0_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis0_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis0_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis0_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis1,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis1,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis1());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis1_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis1_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis1_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis1_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis1_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis1_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis1_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis1_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis1_neg,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis1_neg,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis1_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis1_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis1_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis1_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis2) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis2,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis2,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis2());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis2) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis2();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis2_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis2_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis2_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis2_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis2_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis2_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis2_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis2_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis2_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis2_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis2_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis2_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis2_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis2_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis2_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis2_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis2_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis2_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis2_neg,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis2_neg,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis2_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis2_neg) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis2_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis2_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis2_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis2_neg_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis2_neg_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis2_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis2_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis2_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis2_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis2_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis2_neg_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis2_neg_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis2_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis2_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis2_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis2_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis2_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis2_neg_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis2_neg_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis2_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis2_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis2_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis2_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis3) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis3,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis3,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis3());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis3) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis3();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis3_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis3_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis3_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis3_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis3_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis3_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis3_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis3_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis3_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis3_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis3_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis3_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis3_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis3_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis3_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis3_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis3_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis3_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis3_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis3_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis3_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis3_neg,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis3_neg,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis3_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis3_neg) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis3_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis3_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis3_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis3_neg_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis3_neg_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis3_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis3_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis3_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis3_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis3_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis3_neg_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis3_neg_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis3_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis3_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis3_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis3_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim4_axis3_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim4_axis3_neg_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim4_axis3_neg_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim4_axis3_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim4_axis3_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim4_axis3_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim4_axis3_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis0,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis0,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis0());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis0_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis0_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis0_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis0_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis0_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis0_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis0_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis0_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis0_neg,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis0_neg,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis0_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis0_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis0_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis0_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis1,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis1,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis1());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis1_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis1_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis1_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis1_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis1_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis1_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis1_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis1_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis1_neg,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis1_neg,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis1_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis1_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis1_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis1_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis2) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis2,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis2,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis2());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis2) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis2();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis2_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis2_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis2_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis2_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis2_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis2_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis2_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis2_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis2_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis2_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis2_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis2_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis2_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis2_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis2_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis2_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis2_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis2_neg,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis2_neg,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis2_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis2_neg) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis2_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis2_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis2_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis2_neg_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis2_neg_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis2_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis2_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis2_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis2_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis2_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis2_neg_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis2_neg_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis2_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis2_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis2_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis2_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim3_axis2_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim3_axis2_neg_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim3_axis2_neg_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim3_axis2_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim3_axis2_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim3_axis2_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim3_axis2_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis0,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis0,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis0());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis0_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis0_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis0_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis0_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis0_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis0_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis0_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis0_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis0_neg,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis0_neg,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis0_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis0_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis0_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis0_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis1,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis1,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis1());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis1_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis1_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis1_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis1_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis1_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis1_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis1_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis1_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis1_neg,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis1_neg,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis1_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis1_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis1_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim2_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim2_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim2_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim2_axis1_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim2_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim2_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim2_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim1_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim1_axis0,
+                           l2_normalization_axis::is_ignored_relaxed_dim1_axis0,
+                           l2_normalization_axis::get_examples_relaxed_dim1_axis0());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim1_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim1_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim1_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim1_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim1_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim1_axis0_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim1_axis0_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim1_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim1_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim1_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim1_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim1_axis0_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim1_axis0_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim1_axis0_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim1_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim1_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim1_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim1_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim1_axis0_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim1_axis0_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim1_axis0_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim1_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim1_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim1_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim1_axis0_neg,
+                           l2_normalization_axis::is_ignored_relaxed_dim1_axis0_neg,
+                           l2_normalization_axis::get_examples_relaxed_dim1_axis0_neg());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim1_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim1_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim1_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim1_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim1_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_relaxed_dim1_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_relaxed_dim1_axis0_neg_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim1_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim1_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim1_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim1_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim1_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_relaxed_dim1_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_relaxed_dim1_axis0_neg_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim1_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim1_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim1_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_axis_relaxed_dim1_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_relaxed_dim1_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_relaxed_dim1_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_relaxed_dim1_axis0_neg_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_relaxed_dim1_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_relaxed_dim1_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_relaxed_dim1_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis0,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis0_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis0_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis0_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis1,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis1_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis1_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis1_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis1_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis2,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis2_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis2_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis2_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis2_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis2_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis2_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis2_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis2_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis2_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis2_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis3,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis3_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis3_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis3_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis3_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis3_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis3_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim4_axis3_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim4_axis3_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim4_axis3_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim4_axis3_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis0,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis0_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis0_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis0_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis1,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis1_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis1_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis1_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis1_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis2,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis2_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis2_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis2_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis2_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis2_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis2_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim3_axis2_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim3_axis2_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim3_axis2_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim3_axis2_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis0,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis0_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis0_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis0_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis1,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis1_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis1_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis1_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis1_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim2_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim2_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim2_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim2_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim1_axis0,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim1_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim1_axis0_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim1_axis0_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim1_axis0_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim1_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim1_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_dim1_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_dim1_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_dim1_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_dim1_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis0,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis0_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis0_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis0_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis1,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis1_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis1_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis1_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis1_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis2,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis2_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis2_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis2_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis2_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis2_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis2_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis2_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis2_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis2_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis3,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim4_axis3_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis0,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis0_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis0_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis0_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis1,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis1_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis1_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis1_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis1_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis2,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim3_axis2_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis0,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis0_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis0_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis0_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis1,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim2_axis1_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim1_axis0,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_neg) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_neg,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_neg,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_neg(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_neg) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_neg();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_neg());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_neg_relaxed,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_neg_relaxed,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_neg_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_relaxed) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_neg_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_neg_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_neg_float16,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_neg_float16,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_neg_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_neg_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_neg_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_neg_quant8,
+                           l2_normalization_axis::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_neg_quant8,
+                           l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_neg_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_quant8) {
+  const Model model = l2_normalization_axis::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_neg_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_axis::get_examples_dynamic_output_shape_relaxed_dim1_axis0_neg_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
 // Generated from: l2_normalization_v1_2.mod.py.
 namespace l2_normalization_v1_2 {
 // Generated l2_normalization_v1_2 test
@@ -29665,61 +35361,61 @@ namespace l2_normalization_v1_2 {
 #include "vts_models/l2_normalization_v1_2.model.cpp"
 } // namespace l2_normalization_v1_2
 
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim1_axis0) {
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim4_axis3) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dim1_axis0,
-                           l2_normalization_v1_2::is_ignored_dim1_axis0,
-                           l2_normalization_v1_2::get_examples_dim1_axis0());
+                           l2_normalization_v1_2::createTestModel_dim4_axis3,
+                           l2_normalization_v1_2::is_ignored_dim4_axis3,
+                           l2_normalization_v1_2::get_examples_dim4_axis3());
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dim1_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_dim1_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim1_axis0());
+TEST_F(ValidationTest, l2_normalization_v1_2_dim4_axis3) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim4_axis3();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim4_axis3());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim1_axis0_float16) {
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim4_axis3_relaxed) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dim1_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_dim1_axis0_float16,
-                           l2_normalization_v1_2::get_examples_dim1_axis0_float16());
+                           l2_normalization_v1_2::createTestModel_dim4_axis3_relaxed,
+                           l2_normalization_v1_2::is_ignored_dim4_axis3_relaxed,
+                           l2_normalization_v1_2::get_examples_dim4_axis3_relaxed());
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dim1_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_dim1_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim1_axis0_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dim4_axis3_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim4_axis3_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim4_axis3_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim2_axis1) {
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim4_axis3_float16) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dim2_axis1,
-                           l2_normalization_v1_2::is_ignored_dim2_axis1,
-                           l2_normalization_v1_2::get_examples_dim2_axis1());
+                           l2_normalization_v1_2::createTestModel_dim4_axis3_float16,
+                           l2_normalization_v1_2::is_ignored_dim4_axis3_float16,
+                           l2_normalization_v1_2::get_examples_dim4_axis3_float16());
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dim2_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_dim2_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim2_axis1());
+TEST_F(ValidationTest, l2_normalization_v1_2_dim4_axis3_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim4_axis3_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim4_axis3_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim2_axis1_float16) {
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim4_axis3_quant8) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dim2_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_dim2_axis1_float16,
-                           l2_normalization_v1_2::get_examples_dim2_axis1_float16());
+                           l2_normalization_v1_2::createTestModel_dim4_axis3_quant8,
+                           l2_normalization_v1_2::is_ignored_dim4_axis3_quant8,
+                           l2_normalization_v1_2::get_examples_dim4_axis3_quant8());
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dim2_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_dim2_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim2_axis1_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dim4_axis3_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim4_axis3_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim4_axis3_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -29740,6 +35436,21 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dim3_axis2) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim3_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dim3_axis2_relaxed,
+                           l2_normalization_v1_2::is_ignored_dim3_axis2_relaxed,
+                           l2_normalization_v1_2::get_examples_dim3_axis2_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dim3_axis2_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim3_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim3_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim3_axis2_float16) {
   generated_tests::Execute(device,
                            l2_normalization_v1_2::createTestModel_dim3_axis2_float16,
@@ -29755,61 +35466,196 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dim3_axis2_float16) {
 }
 
 
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim1_axis0) {
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim3_axis2_quant8) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0,
-                           l2_normalization_v1_2::is_ignored_relaxed_dim1_axis0,
-                           l2_normalization_v1_2::get_examples_relaxed_dim1_axis0());
+                           l2_normalization_v1_2::createTestModel_dim3_axis2_quant8,
+                           l2_normalization_v1_2::is_ignored_dim3_axis2_quant8,
+                           l2_normalization_v1_2::get_examples_dim3_axis2_quant8());
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim1_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim1_axis0());
+TEST_F(ValidationTest, l2_normalization_v1_2_dim3_axis2_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim3_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim3_axis2_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim1_axis0_float16) {
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim2_axis1) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_relaxed_dim1_axis0_float16,
-                           l2_normalization_v1_2::get_examples_relaxed_dim1_axis0_float16());
+                           l2_normalization_v1_2::createTestModel_dim2_axis1,
+                           l2_normalization_v1_2::is_ignored_dim2_axis1,
+                           l2_normalization_v1_2::get_examples_dim2_axis1());
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim1_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim1_axis0_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dim2_axis1) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim2_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim2_axis1());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim2_axis1) {
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim2_axis1_relaxed) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1,
-                           l2_normalization_v1_2::is_ignored_relaxed_dim2_axis1,
-                           l2_normalization_v1_2::get_examples_relaxed_dim2_axis1());
+                           l2_normalization_v1_2::createTestModel_dim2_axis1_relaxed,
+                           l2_normalization_v1_2::is_ignored_dim2_axis1_relaxed,
+                           l2_normalization_v1_2::get_examples_dim2_axis1_relaxed());
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim2_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim2_axis1());
+TEST_F(ValidationTest, l2_normalization_v1_2_dim2_axis1_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim2_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim2_axis1_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim2_axis1_float16) {
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim2_axis1_float16) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_relaxed_dim2_axis1_float16,
-                           l2_normalization_v1_2::get_examples_relaxed_dim2_axis1_float16());
+                           l2_normalization_v1_2::createTestModel_dim2_axis1_float16,
+                           l2_normalization_v1_2::is_ignored_dim2_axis1_float16,
+                           l2_normalization_v1_2::get_examples_dim2_axis1_float16());
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim2_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim2_axis1_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dim2_axis1_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim2_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim2_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim2_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dim2_axis1_quant8,
+                           l2_normalization_v1_2::is_ignored_dim2_axis1_quant8,
+                           l2_normalization_v1_2::get_examples_dim2_axis1_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dim2_axis1_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim2_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim2_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim1_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dim1_axis0,
+                           l2_normalization_v1_2::is_ignored_dim1_axis0,
+                           l2_normalization_v1_2::get_examples_dim1_axis0());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dim1_axis0) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim1_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim1_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim1_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dim1_axis0_relaxed,
+                           l2_normalization_v1_2::is_ignored_dim1_axis0_relaxed,
+                           l2_normalization_v1_2::get_examples_dim1_axis0_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dim1_axis0_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim1_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim1_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim1_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dim1_axis0_float16,
+                           l2_normalization_v1_2::is_ignored_dim1_axis0_float16,
+                           l2_normalization_v1_2::get_examples_dim1_axis0_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dim1_axis0_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim1_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim1_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_dim1_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dim1_axis0_quant8,
+                           l2_normalization_v1_2::is_ignored_dim1_axis0_quant8,
+                           l2_normalization_v1_2::get_examples_dim1_axis0_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dim1_axis0_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dim1_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dim1_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim4_axis3) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim4_axis3,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim4_axis3,
+                           l2_normalization_v1_2::get_examples_relaxed_dim4_axis3());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim4_axis3) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim4_axis3();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim4_axis3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim4_axis3_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim4_axis3_relaxed,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim4_axis3_relaxed,
+                           l2_normalization_v1_2::get_examples_relaxed_dim4_axis3_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim4_axis3_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim4_axis3_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim4_axis3_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim4_axis3_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim4_axis3_float16,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim4_axis3_float16,
+                           l2_normalization_v1_2::get_examples_relaxed_dim4_axis3_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim4_axis3_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim4_axis3_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim4_axis3_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim4_axis3_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim4_axis3_quant8,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim4_axis3_quant8,
+                           l2_normalization_v1_2::get_examples_relaxed_dim4_axis3_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim4_axis3_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim4_axis3_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim4_axis3_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -29830,6 +35676,21 @@ TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim3_axis2) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim3_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim3_axis2_relaxed,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim3_axis2_relaxed,
+                           l2_normalization_v1_2::get_examples_relaxed_dim3_axis2_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim3_axis2_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim3_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim3_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim3_axis2_float16) {
   generated_tests::Execute(device,
                            l2_normalization_v1_2::createTestModel_relaxed_dim3_axis2_float16,
@@ -29845,17 +35706,152 @@ TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim3_axis2_float16) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0) {
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim3_axis2_quant8) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0,
-                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim1_axis0,
-                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0(), true);
+                           l2_normalization_v1_2::createTestModel_relaxed_dim3_axis2_quant8,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim3_axis2_quant8,
+                           l2_normalization_v1_2::get_examples_relaxed_dim3_axis2_quant8());
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0());
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim3_axis2_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim3_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim3_axis2_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim2_axis1) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim2_axis1,
+                           l2_normalization_v1_2::get_examples_relaxed_dim2_axis1());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim2_axis1) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim2_axis1());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim2_axis1_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1_relaxed,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim2_axis1_relaxed,
+                           l2_normalization_v1_2::get_examples_relaxed_dim2_axis1_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim2_axis1_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim2_axis1_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim2_axis1_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1_float16,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim2_axis1_float16,
+                           l2_normalization_v1_2::get_examples_relaxed_dim2_axis1_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim2_axis1_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim2_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim2_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1_quant8,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim2_axis1_quant8,
+                           l2_normalization_v1_2::get_examples_relaxed_dim2_axis1_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim2_axis1_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim2_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim2_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim1_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim1_axis0,
+                           l2_normalization_v1_2::get_examples_relaxed_dim1_axis0());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim1_axis0) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim1_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim1_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0_relaxed,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim1_axis0_relaxed,
+                           l2_normalization_v1_2::get_examples_relaxed_dim1_axis0_relaxed());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim1_axis0_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim1_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim1_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0_float16,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim1_axis0_float16,
+                           l2_normalization_v1_2::get_examples_relaxed_dim1_axis0_float16());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim1_axis0_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim1_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_relaxed_dim1_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0_quant8,
+                           l2_normalization_v1_2::is_ignored_relaxed_dim1_axis0_quant8,
+                           l2_normalization_v1_2::get_examples_relaxed_dim1_axis0_quant8());
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_relaxed_dim1_axis0_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_relaxed_dim1_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_relaxed_dim1_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim4_axis3) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim4_axis3,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim4_axis3,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim4_axis3(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim4_axis3) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim4_axis3();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim4_axis3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -29863,16 +35859,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim4_axis3_relaxed) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim1_axis0_float16,
-                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0_float16(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim4_axis3_relaxed,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim4_axis3_relaxed,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim4_axis3_relaxed(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim4_axis3_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim4_axis3_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim4_axis3_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -29880,16 +35876,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_flo
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim4_axis3_float16) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1,
-                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim2_axis1,
-                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim4_axis3_float16,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim4_axis3_float16,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim4_axis3_float16(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim4_axis3_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim4_axis3_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim4_axis3_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -29897,16 +35893,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim4_axis3_quant8) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim2_axis1_float16,
-                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1_float16(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim4_axis3_quant8,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim4_axis3_quant8,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim4_axis3_quant8(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim4_axis3_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim4_axis3_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim4_axis3_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -29931,6 +35927,23 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim3_axis2_relaxed,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim3_axis2_relaxed,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim3_axis2_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim3_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim3_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2_float16) {
   generated_tests::Execute(device,
                            l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim3_axis2_float16,
@@ -29948,16 +35961,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2_flo
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2_quant8) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0,
-                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim1_axis0,
-                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim3_axis2_quant8,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim3_axis2_quant8,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim3_axis2_quant8(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim3_axis2_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim3_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim3_axis2_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -29965,16 +35978,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_a
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_float16,
-                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0_float16(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim2_axis1,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -29982,16 +35995,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_a
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1_relaxed) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1,
-                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim2_axis1,
-                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1_relaxed,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim2_axis1_relaxed,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1_relaxed(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -29999,16 +36012,169 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_a
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1_float16) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_float16,
-                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1_float16(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1_float16,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim2_axis1_float16,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1_float16(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1_quant8,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim2_axis1_quant8,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim2_axis1_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim2_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim2_axis1_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim1_axis0,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0_relaxed,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim1_axis0_relaxed,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0_float16,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim1_axis0_float16,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0_quant8,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_dim1_axis0_quant8,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_dim1_axis0_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_dim1_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_dim1_axis0_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim4_axis3) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim4_axis3,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim4_axis3,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim4_axis3(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim4_axis3) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim4_axis3();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim4_axis3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim4_axis3_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_relaxed,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_relaxed,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim4_axis3_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim4_axis3_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim4_axis3_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim4_axis3_float16) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_float16,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_float16,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim4_axis3_float16(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim4_axis3_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim4_axis3_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim4_axis3_quant8) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_quant8,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim4_axis3_quant8,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim4_axis3_quant8(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim4_axis3_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim4_axis3_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim4_axis3_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -30033,6 +36199,23 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_a
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_axis2_relaxed) {
+  generated_tests::Execute(device,
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_relaxed,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_relaxed,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim3_axis2_relaxed(), true);
+}
+
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_axis2_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim3_axis2_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_axis2_float16) {
   generated_tests::Execute(device,
                            l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_float16,
@@ -30049,2424 +36232,17 @@ TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_a
 
 
 #endif
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis0());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis0_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis0_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis0_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis1,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis1());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis1_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis1_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis1_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis2) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis2,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis2,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis2());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis2) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis2();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis2());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis2_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis2_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis2_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis2_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis2_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis2_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis2_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis2_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis2_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis2_neg,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis2_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis2_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis2_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis2_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis2_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis2_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis2_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis2_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis2_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis2_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis2_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis3) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis3,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis3,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis3());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis3) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis3();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis3());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis3_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis3_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis3_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis3_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis3_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis3_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis3_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis3_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis3_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis3_neg,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis3_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis3_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis3_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis3_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim4_axis3_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim4_axis3_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim4_axis3_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim4_axis3_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim4_axis3_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim4_axis3_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim4_axis3_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis0());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis0_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis0_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis0_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis1,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis1());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis1_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis1_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis1_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis2) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis2,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis2,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis2());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis2) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis2();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis2());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis2_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis2_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis2_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis2_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis2_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis2_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis2_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis2_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis2_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis2_neg,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis2_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis2_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis2_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis2_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim3_axis2_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim3_axis2_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim3_axis2_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim3_axis2_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim3_axis2_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim3_axis2_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim3_axis2_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim2_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim2_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dim2_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dim2_axis0());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim2_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim2_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim2_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim2_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim2_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim2_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim2_axis0_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim2_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim2_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim2_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim2_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim2_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dim2_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dim2_axis0_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim2_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim2_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim2_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim2_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim2_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim2_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim2_axis0_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim2_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim2_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim2_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim2_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim2_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_dim2_axis1,
-                           l2_normalization_v1_2::get_examples_axis_dim2_axis1());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim2_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim2_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim2_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim2_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim2_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim2_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim2_axis1_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim2_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim2_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim2_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim2_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim2_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dim2_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_dim2_axis1_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim2_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim2_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim2_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim2_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim2_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim2_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim2_axis1_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim2_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim2_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim2_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim1_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim1_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dim1_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dim1_axis0());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim1_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim1_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim1_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim1_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim1_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim1_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim1_axis0_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim1_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim1_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim1_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim1_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim1_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dim1_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dim1_axis0_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim1_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim1_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim1_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_dim1_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dim1_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dim1_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dim1_axis0_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dim1_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dim1_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dim1_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis0,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis0());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis0_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis0_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis0_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis1,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis1());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis1_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis1_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis1_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis2) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis2,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis2,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis2());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis2) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis2();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis2());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis2_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis2_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis2_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis2_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis2_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis2_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis2_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis2_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis2_neg,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis2_neg,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis2_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis2_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis2_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis2_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis2_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis2_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis2_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis2_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis2_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis2_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis2_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis3) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis3,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis3,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis3());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis3) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis3();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis3());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis3_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis3_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis3_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis3_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis3_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis3_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis3_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis3_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis3_neg,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis3_neg,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis3_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis3_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis3_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis3_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim4_axis3_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis3_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim4_axis3_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis3_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim4_axis3_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim4_axis3_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim4_axis3_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis0,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis0());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis0_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis0_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis0_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis1,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis1());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis1_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis1_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis1_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis2) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis2,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis2,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis2());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis2) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis2();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis2());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis2_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis2_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis2_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis2_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis2_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis2_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis2_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis2_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis2_neg,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis2_neg,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis2_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis2_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis2_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis2_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim3_axis2_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis2_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim3_axis2_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis2_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim3_axis2_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim3_axis2_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim3_axis2_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim2_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim2_axis0,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis0());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim2_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim2_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim2_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis0_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim2_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim2_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim2_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis0_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim2_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim2_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim2_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis0_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim2_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim2_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim2_axis1,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis1());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim2_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim2_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim2_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis1_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim2_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim2_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim2_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis1_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim2_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim2_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim2_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis1_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim2_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim2_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim2_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim1_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim1_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim1_axis0,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim1_axis0());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim1_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim1_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim1_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim1_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim1_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim1_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim1_axis0_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim1_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim1_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim1_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim1_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim1_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim1_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim1_axis0_neg());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim1_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim1_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim1_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-TEST_F(NeuralnetworksHidlTest, l2_normalization_v1_2_axis_relaxed_dim1_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_relaxed_dim1_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_relaxed_dim1_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_relaxed_dim1_axis0_neg_float16());
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_relaxed_dim1_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_relaxed_dim1_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_relaxed_dim1_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis2,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis2();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis2_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis2_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis2_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis2_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis2_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis2_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis2_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis2_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis3,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis3();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis3_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis3_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis3_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis3_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis3_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim4_axis3_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim4_axis3_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim4_axis3_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis2,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis2();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis2_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis2_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis2_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis2_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis2_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim3_axis2_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim3_axis2_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim3_axis2_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim2_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim2_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim2_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim1_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim1_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim1_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim1_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim1_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim1_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim1_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_dim1_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_dim1_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_dim1_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis2,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis2();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis2_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis2_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis3,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis3();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis3_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis3_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis2,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis2();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis2_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis2_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_float16) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_float16());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_neg) {
-  generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_neg(), true);
-}
-
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_neg());
-  validateModel(model);
-  validateRequests(model, requests);
-}
-
-
-#endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_axis2_quant8) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_quant8,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim3_axis2_quant8,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim3_axis2_quant8(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim3_axis2_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim3_axis2_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim3_axis2_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -32474,16 +36250,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_d
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis1,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim2_axis1,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis1();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -32491,16 +36267,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_d
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1_relaxed) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis1_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_float16(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_relaxed,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_relaxed,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1_relaxed(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis1_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -32508,16 +36284,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_d
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1_float16) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_neg(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_float16,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_float16,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1_float16(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_neg());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -32525,16 +36301,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_d
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1_quant8) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_quant8,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim2_axis1_quant8,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1_quant8(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim2_axis1_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim2_axis1_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim2_axis1_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -32542,16 +36318,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_d
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim1_axis0,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim1_axis0,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim1_axis0();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -32559,16 +36335,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_d
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0_relaxed) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim1_axis0_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_float16(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_relaxed,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_relaxed,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0_relaxed(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim1_axis0_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0_relaxed) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_relaxed();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0_relaxed());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -32576,16 +36352,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_d
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_neg) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0_float16) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_neg(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_float16,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_float16,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0_float16(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_neg) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_neg());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0_float16) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_float16();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0_float16());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -32593,16 +36369,16 @@ TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_d
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16) {
+TEST_F(DynamicOutputShapeTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0_quant8) {
   generated_tests::Execute(device,
-                           l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16,
-                           l2_normalization_v1_2::is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16,
-                           l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16(), true);
+                           l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_quant8,
+                           l2_normalization_v1_2::is_ignored_dynamic_output_shape_relaxed_dim1_axis0_quant8,
+                           l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0_quant8(), true);
 }
 
-TEST_F(ValidationTest, l2_normalization_v1_2_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16) {
-  const Model model = l2_normalization_v1_2::createTestModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16();
-  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16());
+TEST_F(ValidationTest, l2_normalization_v1_2_dynamic_output_shape_relaxed_dim1_axis0_quant8) {
+  const Model model = l2_normalization_v1_2::createTestModel_dynamic_output_shape_relaxed_dim1_axis0_quant8();
+  const std::vector<Request> requests = createRequests(l2_normalization_v1_2::get_examples_dynamic_output_shape_relaxed_dim1_axis0_quant8());
   validateModel(model);
   validateRequests(model, requests);
 }
