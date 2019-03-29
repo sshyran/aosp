@@ -21,11 +21,13 @@
 #include "NeuralNetworks.h"
 #include "NeuralNetworksExtensions.h"
 #include "SampleDriver.h"
+#include "TypeManager.h"
 
 namespace {
 
 using DeviceManager = ::android::nn::DeviceManager;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
+using TypeManager = ::android::nn::TypeManager;
 
 const char* kTestDriverName = "extensions-test-driver";
 const char* kTestExtension1 = "vendor.test.one";
@@ -108,6 +110,118 @@ TEST_F(ExtensionsTest, DeviceReportsSupportedExtensions) {
     EXPECT_FALSE(testDriverSupportsExtension("asdfasdfas"));
     EXPECT_TRUE(testDriverSupportsExtension(kTestExtension2));
     EXPECT_TRUE(testDriverSupportsExtension(kTestExtension3));
+}
+
+TEST_F(ExtensionsTest, TestAllowedNativeBinaries) {
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed("",
+                                                     /* productEnabled= */ false,
+                                                     /* isSystemApp= */ false,
+                                                     /* isAppOnVendorImage= */ false,
+                                                     /* isAppOnProductImage= */ false));
+
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed("/foobar/foo",
+                                                     /* productEnabled= */ false,
+                                                     /* isSystemApp= */ false,
+                                                     /* isAppOnVendorImage= */ false,
+                                                     /* isAppOnProductImage= */ false));
+
+    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed("/data/foo",
+                                                    /* productEnabled= */ false,
+                                                    /* isSystemApp= */ false,
+                                                    /* isAppOnVendorImage= */ false,
+                                                    /* isAppOnProductImage= */ false));
+
+    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed("/vendor/foo",
+                                                    /* productEnabled= */ false,
+                                                    /* isSystemApp= */ false,
+                                                    /* isAppOnVendorImage= */ false,
+                                                    /* isAppOnProductImage= */ false));
+
+    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed("/odm/foo",
+                                                    /* productEnabled= */ false,
+                                                    /* isSystemApp= */ false,
+                                                    /* isAppOnVendorImage= */ false,
+                                                    /* isAppOnProductImage= */ false));
+
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed("/system/foo",
+                                                     /* productEnabled= */ false,
+                                                     /* isSystemApp= */ false,
+                                                     /* isAppOnVendorImage= */ false,
+                                                     /* isAppOnProductImage= */ false));
+
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed("/product/foo",
+                                                     /* productEnabled= */ false,
+                                                     /* isSystemApp= */ false,
+                                                     /* isAppOnVendorImage= */ false,
+                                                     /* isAppOnProductImage= */ false));
+
+    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed("/product/foo",
+                                                    /* productEnabled= */ true,
+                                                    /* isSystemApp= */ false,
+                                                    /* isAppOnVendorImage= */ false,
+                                                    /* isAppOnProductImage= */ false));
+}
+
+TEST_F(ExtensionsTest, TestAllowedApps) {
+    std::string app_process32 = "/system/bin/app_process32";
+    std::string app_process64 = "/system/bin/app_process64";
+    std::string other_binary = "/system/bin/foo";
+
+    auto test_app_process = [](const std::string& binary) {
+        // /data app
+        EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(binary,
+                                                        /* productEnabled= */ false,
+                                                        /* isSystemApp= */ false,
+                                                        /* isAppOnVendorImage= */ false,
+                                                        /* isAppOnProductImage= */ false));
+
+        // /system app
+        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(binary,
+                                                         /* productEnabled= */ false,
+                                                         /* isSystemApp= */ true,
+                                                         /* isAppOnVendorImage= */ false,
+                                                         /* isAppOnProductImage= */ false));
+
+        // /vendor || /odm app
+        EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(binary,
+                                                        /* productEnabled= */ false,
+                                                        /* isSystemApp= */ true,
+                                                        /* isAppOnVendorImage= */ true,
+                                                        /* isAppOnProductImage= */ false));
+
+        // /product app, disabled
+        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(binary,
+                                                         /* productEnabled= */ false,
+                                                         /* isSystemApp= */ true,
+                                                         /* isAppOnVendorImage= */ false,
+                                                         /* isAppOnProductImage= */ true));
+
+        // /product app, enabled
+        EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(binary,
+                                                        /* productEnabled= */ true,
+                                                        /* isSystemApp= */ true,
+                                                        /* isAppOnVendorImage= */ false,
+                                                        /* isAppOnProductImage= */ true));
+    };
+    test_app_process(app_process64);
+    test_app_process(app_process32);
+
+    // Test all positive cases fail if binary is not app_process32|64
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(other_binary,
+                                                     /* productEnabled= */ false,
+                                                     /* isSystemApp= */ false,
+                                                     /* isAppOnVendorImage= */ false,
+                                                     /* isAppOnProductImage= */ false));
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(other_binary,
+                                                     /* productEnabled= */ false,
+                                                     /* isSystemApp= */ true,
+                                                     /* isAppOnVendorImage= */ true,
+                                                     /* isAppOnProductImage= */ false));
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(other_binary,
+                                                     /* productEnabled= */ true,
+                                                     /* isSystemApp= */ true,
+                                                     /* isAppOnVendorImage= */ false,
+                                                     /* isAppOnProductImage= */ true));
 }
 
 }  // namespace
