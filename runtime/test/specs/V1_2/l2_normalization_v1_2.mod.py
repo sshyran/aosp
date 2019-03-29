@@ -18,6 +18,11 @@ i1 = Input("op1", "TENSOR_FLOAT32", "{2, 2, 2, 3}") # input 0
 o1 = Output("op2", "TENSOR_FLOAT32", "{2, 2, 2, 3}") # output 0
 axis = Int32Scalar("axis", -1) # last axis
 
+quant8 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.1, 32),
+    o1: ("TENSOR_QUANT8_ASYMM", 1.0 / 128, 128)
+})
+
 example0 = {
     i1: [ 0,  3,  4,
           3,  0,  4,
@@ -37,11 +42,6 @@ example0 = {
          0.64, 0.60, 0.48]
 }
 
-# TEST1: All dimensions other than 4, without axis parameter
+# All dimensions other than 4, without axis parameter
 Model().Operation("L2_NORMALIZATION", i1).To(o1)
-Example(
-    example0).AddRelaxed().AddDims([1, 2, 3], i1, o1, includeDefault=False).AddVariations("float16")
-
-# TEST2: All dimensions, with all possible axis parameter
-Model("axis").Operation("L2_NORMALIZATION", i1, axis).To(o1)
-Example(example0).AddRelaxed().AddAllDimsAndAxis(i1, o1, axis).AddVariations("float16")
+Example(example0).AddRelaxed().AddAllDims(i1, o1).AddVariations("relaxed", "float16", quant8)

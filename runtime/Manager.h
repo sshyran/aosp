@@ -45,15 +45,19 @@ class Device {
     virtual hidl_vec<Extension> getSupportedExtensions() const = 0;
     virtual void getSupportedOperations(const Model& hidlModel,
                                         hidl_vec<bool>* supportedOperations) = 0;
-    virtual PerformanceInfo getFloat32Performance() const = 0;
-    virtual PerformanceInfo getQuantized8Performance() const = 0;
-    virtual PerformanceInfo getRelaxedFloat32toFloat16Performance() const = 0;
-    virtual bool isCachingSupported() const = 0;
+    virtual PerformanceInfo getPerformance(OperandType type) const = 0;
+    virtual PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
+    virtual PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const = 0;
+    virtual std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const = 0;
+    bool isCachingSupported() const;
 
-    virtual int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
-                             std::shared_ptr<VersionedIPreparedModel>* preparedModel) = 0;
+    virtual int prepareModel(
+            const Model& hidlModel, ExecutionPreference executionPreference,
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>& token,
+            std::shared_ptr<VersionedIPreparedModel>* preparedModel) = 0;
     virtual int prepareModelFromCache(
-            const hidl_handle& modelCache, const hidl_handle& dataCache,
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
             const hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>& token,
             std::shared_ptr<VersionedIPreparedModel>* preparedModel) = 0;
 };

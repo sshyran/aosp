@@ -131,6 +131,7 @@ using HidlToken =
 using ModelBuilder = ::android::nn::ModelBuilder;
 using Result = ::android::nn::test_wrapper::Result;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
+using WrapperSymmPerChannelQuantParams = ::android::nn::test_wrapper::SymmPerChannelQuantParams;
 using WrapperCompilation = ::android::nn::test_wrapper::Compilation;
 using WrapperModel = ::android::nn::test_wrapper::Model;
 using WrapperOperandType = ::android::nn::test_wrapper::OperandType;
@@ -139,6 +140,22 @@ using WrapperType = ::android::nn::test_wrapper::Type;
 template <typename T> using sp = ::android::sp<T>;
 template <typename T>
 using MQDescriptorSync = ::android::hardware::MQDescriptorSync<T>;
+
+Capabilities makeCapabilities(float perf) {
+    PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};
+    return {.relaxedFloat32toFloat16PerformanceScalar = perfInfo,
+            .relaxedFloat32toFloat16PerformanceTensor = perfInfo,
+            .operandPerformance = ::android::nn::nonExtensionOperandPerformance(perfInfo)};
+};
+
+void update(Capabilities* capabilities, OperandType type, float perf) {
+    PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};
+    ::android::nn::update(&capabilities->operandPerformance, type, perfInfo);
+}
+
+float lookupExecTime(const Capabilities& capabilities, OperandType type) {
+    return ::android::nn::lookup(capabilities.operandPerformance, type).execTime;
+}
 
 // We employ an operation numbering scheme:
 // - 0..FuseCode-1 = ADD with the appropriate activation function
@@ -235,10 +252,6 @@ private:
          cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
          return Void();
      }
-     Return<ErrorStatus> saveToCache(const hidl_handle&, const hidl_handle&,
-                                     const HidlToken&) override {
-         return ErrorStatus::DEVICE_UNAVAILABLE;
-     }
     };
 public:
     enum OEM {
@@ -262,6 +275,8 @@ public:
     }
 
     Return<ErrorStatus> prepareModel_1_2(const Model& model, ExecutionPreference,
+                                         const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
+                                         const HidlToken&,
                                          const sp<IPreparedModelCallback>& cb) override {
         ErrorStatus status = ErrorStatus::NONE;
         if (mOEM != OEMYes) {
@@ -280,7 +295,7 @@ public:
         return DeviceStatus::AVAILABLE;
     }
 
-    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb cb) override {
+    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override {
         cb(ErrorStatus::NONE, mCapabilities);
         return Void();
     }
@@ -309,13 +324,13 @@ public:
         return Void();
     }
 
-    Return<void> isCachingSupported(isCachingSupported_cb cb) override {
-        cb(ErrorStatus::NONE, true);
+    Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override {
+        cb(ErrorStatus::NONE, /*numModelCache=*/1, /*numDataCache=*/1);
         return Void();
     }
 
     Return<ErrorStatus> prepareModelFromCache(
-            const hidl_handle&, const hidl_handle&, const HidlToken&,
+            const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const HidlToken&,
             const sp<V1_2::IPreparedModelCallback>& callback) override {
         callback->notify_1_2(ErrorStatus::NONE, new PartitioningPreparedModel);
         return ErrorStatus::NONE;
@@ -333,17 +348,64 @@ public:
 // operation kind (0..7); and because we care about graph topology rather than
 // details of operand types and values, it greatly simplifies the process of
 // creating operands.
-class PartitioningModel : public WrapperModel {
-public:
+class PartitioningModel : private WrapperModel {
+   public:
+    using WrapperModel::finish;
+    using WrapperModel::getHandle;
+    using WrapperModel::identifyInputsAndOutputs;
+    using WrapperModel::isValid;
+    using WrapperModel::relaxComputationFloat32toFloat16;
+
     // Create a tensor operand of the specified type, and return the
     // corresponding operand index.
-    uint32_t addFloatOperand() {
-        static const WrapperOperandType type(WrapperType::TENSOR_FLOAT32, { 1 });
-        return addOperand(&type);
-    }
-    uint32_t addQuantOperand() {
-        static const WrapperOperandType type(WrapperType::TENSOR_QUANT8_ASYMM, { 1 });
-        return addOperand(&type);
+    uint32_t addFloatOperand() { return addOperand(WrapperType::TENSOR_FLOAT32); }
+    uint32_t addQuantOperand() { return addOperand(WrapperType::TENSOR_QUANT8_ASYMM); }
+
+    // Create an operand of the specified type, and return the corresponding
+    // operand index.
+    uint32_t addOperand(WrapperType wrapperType) {
+        switch (static_cast<int>(wrapperType)) {
+            case ANEURALNETWORKS_BOOL:
+            case ANEURALNETWORKS_FLOAT16:
+            case ANEURALNETWORKS_FLOAT32:
+            case ANEURALNETWORKS_INT32:
+            case ANEURALNETWORKS_UINT32:
+            case ANEURALNETWORKS_OEM_SCALAR: {
+                WrapperOperandType wrapperOperandType(wrapperType, {});
+                mWrapperOperandType.push_back(wrapperOperandType);
+                return WrapperModel::addOperand(&wrapperOperandType);
+            }
+
+            case ANEURALNETWORKS_TENSOR_BOOL8:
+            case ANEURALNETWORKS_TENSOR_FLOAT16:
+            case ANEURALNETWORKS_TENSOR_FLOAT32:
+            case ANEURALNETWORKS_TENSOR_OEM_BYTE: {
+                WrapperOperandType wrapperOperandType(wrapperType, {1});
+                mWrapperOperandType.push_back(wrapperOperandType);
+                return WrapperModel::addOperand(&wrapperOperandType);
+            }
+
+            case ANEURALNETWORKS_TENSOR_INT32:
+            case ANEURALNETWORKS_TENSOR_QUANT8_ASYMM:
+            case ANEURALNETWORKS_TENSOR_QUANT8_SYMM:
+            case ANEURALNETWORKS_TENSOR_QUANT16_ASYMM:
+            case ANEURALNETWORKS_TENSOR_QUANT16_SYMM: {
+                WrapperOperandType wrapperOperandType(wrapperType, {1}, 1.0f);
+                mWrapperOperandType.push_back(wrapperOperandType);
+                return WrapperModel::addOperand(&wrapperOperandType);
+            }
+
+            case ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL: {
+                WrapperOperandType wrapperOperandType(wrapperType, {1}, 0.0f, 0,
+                                                      WrapperSymmPerChannelQuantParams({1.0f}, 0));
+                mWrapperOperandType.push_back(wrapperOperandType);
+                return WrapperModel::addOperand(&wrapperOperandType);
+            }
+
+            default:
+                ADD_FAILURE() << "Unexpected type " << static_cast<uint32_t>(wrapperType);
+                return ~uint32_t(0);
+        }
     }
 
     // Create an operation with two inputs and one output, specifying
@@ -391,8 +453,7 @@ private:
     // Create a scalar integer operand of the specified value, and
     // return the corresponding operand index.
     uint32_t addIntOperand(int32_t value) {
-        static const WrapperOperandType type(WrapperType::INT32, { });
-        uint32_t operand = addOperand(&type);
+        uint32_t operand = addOperand(WrapperType::INT32);
         setOperandValue(operand, &value, sizeof(value));
         return operand;
     }
@@ -400,22 +461,22 @@ private:
     // Create an operand of the same type as the specified operand,
     // and return the operand index of the new operand.
     uint32_t addOperandOfSameType(uint32_t operand, Dimensioned dimensioned = Dimensioned::YES) {
-        const Operand& operandStruct =
-                reinterpret_cast<const ModelBuilder*>(getHandle())->getOperand(operand);
-        WrapperOperandType type(static_cast<WrapperType>(operandStruct.type), { 1 });
-        if (dimensioned == Dimensioned::NO) {
-            for (auto& dimension : type.dimensions) {
-                dimension = 0;
-            }
+        WrapperOperandType type = mWrapperOperandType.at(operand);
+        for (auto& dimension : type.dimensions) {
+            dimension = (dimensioned == Dimensioned::YES);
         }
-        return addOperand(&type);
+        mWrapperOperandType.push_back(type);
+        return WrapperModel::addOperand(&type);
     }
+
+    // operand index to operand type
+    std::vector<WrapperOperandType> mWrapperOperandType;
 };
 
 // This class adds some utilities on top of WrapperCompilation.
 class PartitioningCompilation : public WrapperCompilation {
 public:
- PartitioningCompilation(const WrapperModel* model,
+ PartitioningCompilation(const PartitioningModel* model,
                          const std::vector<std::shared_ptr<Device>>& devices) {
      ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model->getHandle());
      CompilationBuilder* c = nullptr;
@@ -480,27 +541,42 @@ protected:
     // From a vector of DeviceSpecification, create a vector of
     // Devices.
     struct DeviceSpecification {
-        DeviceSpecification(const std::string& name, Capabilities capabilities,
+        DeviceSpecification(const std::string& name, const Capabilities& capabilities,
                             uint32_t operationMask,
                             PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
             : mName(name),
-              mVersionString("JUST_AN_EXAMPLE"),
+              mVersionString(kVersionString),
               mCapabilities(capabilities),
               mOperationMask(operationMask),
               mOEM(oem) {}
-        DeviceSpecification(const std::string& name, const std::string& version,
-                            Capabilities capabilities, uint32_t operationMask,
+        DeviceSpecification(const std::string& name, float perf, uint32_t operationMask,
                             PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
-            : mName(name),
-              mVersionString(version),
-              mCapabilities(capabilities),
-              mOperationMask(operationMask),
-              mOEM(oem) {}
+            : DeviceSpecification(name, perf, perf, operationMask, oem) {}
+        DeviceSpecification(const std::string& name, float perf, float perfRelaxed,
+                            uint32_t operationMask,
+                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
+            : DeviceSpecification(name, kVersionString, perf, perfRelaxed, operationMask, oem) {}
+        DeviceSpecification(const std::string& name, const std::string& version, float perf,
+                            uint32_t operationMask,
+                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
+            : DeviceSpecification(name, version, perf, perf, operationMask, oem) {}
+        DeviceSpecification(const std::string& name, const std::string& version, float perf,
+                            float perfRelaxed, uint32_t operationMask,
+                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
+            : mName(name), mVersionString(version), mOperationMask(operationMask), mOEM(oem) {
+            PerformanceInfo perfRelaxedInfo = {.execTime = perfRelaxed, .powerUsage = perfRelaxed};
+            mCapabilities = {.relaxedFloat32toFloat16PerformanceScalar = perfRelaxedInfo,
+                             .relaxedFloat32toFloat16PerformanceTensor = perfRelaxedInfo,
+                             .operandPerformance = ::android::nn::nonExtensionOperandPerformance(
+                                     {.execTime = perf, .powerUsage = perf})};
+        }
         std::string mName;
         std::string mVersionString;
         Capabilities mCapabilities;
         uint32_t mOperationMask;
         PartitioningDriver::OEM mOEM;
+
+        static constexpr char kVersionString[] = "JUST_AN_EXAMPLE";
     };
     static std::vector<std::shared_ptr<Device>> makeDevices(
             std::vector<DeviceSpecification> specifications) {
@@ -795,7 +871,7 @@ protected:
 
     /*-------------------------------------------------------------------------------------*/
 
-    bool compare(std::shared_ptr<const ExecutionStep> step, const WrapperModel* model,
+    bool compare(std::shared_ptr<const ExecutionStep> step, const PartitioningModel* model,
                  std::shared_ptr<Device> device) {
         return (step->getDevice() == device) &&
                 compare(step->getSubModel(),
@@ -815,13 +891,7 @@ TEST_F(PartitioningTest, SimpleModel) {
     ASSERT_TRUE(model.isValid());
 
     // Simple partition (two devices are each capable of everything, one is the best).
-    const auto devicesA = makeDevices(
-        {
-            {"bad", { .float32Performance = { .execTime = 0.9, .powerUsage = 0.9 },
-                            .quantized8Performance = { .execTime = 0.9, .powerUsage = 0.9 } }, ~0U},
-            {"good", { .float32Performance = { .execTime = 0.5, .powerUsage = 0.5 },
-                            .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } }, ~0U}
-        });
+    const auto devicesA = makeDevices({{"bad", 0.9, ~0U}, {"good", 0.5, ~0U}});
     ExecutionPlan planA;
     ASSERT_EQ(model.partitionTheWork(devicesA, ExecutePreference::PREFER_LOW_POWER, &planA),
               ANEURALNETWORKS_NO_ERROR);
@@ -830,15 +900,7 @@ TEST_F(PartitioningTest, SimpleModel) {
     ASSERT_STREQ(planA.forTest_simpleGetDevice()->getName(), "good");
 
     // Simple partition (two devices are each capable of everything, none better than CPU).
-    const auto devicesC =
-            makeDevices({{"bad",
-                          {.float32Performance = {.execTime = 1.1, .powerUsage = 1.1},
-                           .quantized8Performance = {.execTime = 1.1, .powerUsage = 1.1}},
-                          ~0U},
-                         {"bad2",
-                          {.float32Performance = {.execTime = 1.0, .powerUsage = 1.0},
-                           .quantized8Performance = {.execTime = 1.0, .powerUsage = 1.0}},
-                          ~0U}});
+    const auto devicesC = makeDevices({{"bad", 1.1, ~0U}, {"bad2", 1.0, ~0U}});
     ExecutionPlan planC;
     ASSERT_EQ(model.partitionTheWork(devicesC, ExecutePreference::PREFER_LOW_POWER, &planC),
               ANEURALNETWORKS_NO_ERROR);
@@ -849,13 +911,7 @@ TEST_F(PartitioningTest, SimpleModel) {
     // two operations).  We could do more extensive checking here --
     // for example, verify that each step within the plan has the
     // correct (model and submodel)x(inputs and outputs).
-    const auto devicesB = makeDevices(
-        {
-            {"0", { .float32Performance = { .execTime = 0.9, .powerUsage = 0.9 },
-                            .quantized8Performance = { .execTime = 0.9, .powerUsage = 0.9 } }, 1<<0},
-            {"1", { .float32Performance = { .execTime = 0.5, .powerUsage = 0.5 },
-                            .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } }, 1<<1}
-        });
+    const auto devicesB = makeDevices({{"0", 0.9, 1 << 0}, {"1", 0.5, 1 << 1}});
     ExecutionPlan planB;
     ASSERT_EQ(model.partitionTheWork(devicesB, ExecutePreference::PREFER_LOW_POWER, &planB),
               ANEURALNETWORKS_NO_ERROR);
@@ -919,11 +975,7 @@ TEST_F(PartitioningTest, Cpu) {
     static const uint32_t kCpuOp = 1;
     static const uint32_t kDevOp = 2;
 
-    const auto devices = makeDevices(
-        {
-            {"1", { .float32Performance = { .execTime = 0.5, .powerUsage = 0.5 },
-                    .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } }, 1<<kDevOp}
-        });
+    const auto devices = makeDevices({{"1", 0.5, 1 << kDevOp}});
 
     PartitioningModel model;
 
@@ -1044,10 +1096,7 @@ TEST_F(PartitioningTest, SetPartitioning) {
     // this is not currently handled.
 
     // One device that can and should execute operation 0.
-    const auto devices = makeDevices({
-            {"hw", { .float32Performance = { .execTime = 0.5, .powerUsage = 0.5 },
-                            .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } }, (1<<0)},
-        });
+    const auto devices = makeDevices({{"hw", 0.5, (1 << 0)}});
 
     // Test kPartitioningNo.  We should not even attempt partitioning,
     // so there should be a SIMPLE plan on CPU.
@@ -1094,13 +1143,7 @@ TEST_F(PartitioningTest, ModelOutputAsSubmodelInput) {
     // two operations).  We could do more extensive checking here --
     // for example, verify that each step within the plan has the
     // correct (model and submodel)x(inputs and outputs).
-    const auto devices = makeDevices(
-        {
-            {"0", { .float32Performance = { .execTime = 0.5, .powerUsage = 0.5 },
-                            .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } }, 1<<0},
-            {"1", { .float32Performance = { .execTime = 0.5, .powerUsage = 0.5 },
-                            .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } }, 1<<1}
-        });
+    const auto devices = makeDevices({{"0", 0.5, 1 << 0}, {"1", 0.5, 1 << 1}});
     ExecutionPlan plan;
     ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
               ANEURALNETWORKS_NO_ERROR);
@@ -1161,18 +1204,9 @@ TEST_F(PartitioningTest, OemOperations) {
 
     // Verify that the best driver than can run an OEM operation is
     // used, even if it is not better than the CPU.
-    const auto devicesBestOEM = makeDevices(
-        {
-            {"badOEM", { .float32Performance = { .execTime = 1.5, .powerUsage = 1.5 },
-                         .quantized8Performance = { .execTime = 1.5, .powerUsage = 1.5 } },
-                        ~0U, PartitioningDriver::OEMYes},
-            {"noOEM", { .float32Performance = { .execTime = 0.5, .powerUsage = 0.5 },
-                        .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } },
-                        ~0U, PartitioningDriver::OEMNo},
-            {"goodOEM", { .float32Performance = { .execTime = 1.2, .powerUsage = 1.2 },
-                          .quantized8Performance = { .execTime = 1.2, .powerUsage = 1.2 } },
-                        ~0U, PartitioningDriver::OEMYes}
-        });
+    const auto devicesBestOEM = makeDevices({{"badOEM", 1.5, ~0U, PartitioningDriver::OEMYes},
+                                             {"noOEM", 0.5, ~0U, PartitioningDriver::OEMNo},
+                                             {"goodOEM", 1.2, ~0U, PartitioningDriver::OEMYes}});
     PartitioningCompilation compilationBestOEM(&model, devicesBestOEM);
     ASSERT_EQ(compilationBestOEM.finish(), Result::NO_ERROR);
     const auto& planBestOEM = compilationBestOEM.getExecutionPlan();
@@ -1181,22 +1215,13 @@ TEST_F(PartitioningTest, OemOperations) {
     ASSERT_STREQ(planBestOEM.forTest_simpleGetDevice()->getName(), "goodOEM");
 
     // Verify that we get an error if no driver can run an OEM operation.
-    const auto devicesNoOEM = makeDevices(
-        {
-            {"noOEM", { .float32Performance = { .execTime = 0.5, .powerUsage = 0.5 },
-                        .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } },
-                        ~0U, PartitioningDriver::OEMNo}
-        });
+    const auto devicesNoOEM = makeDevices({{"noOEM", 0.5, ~0U, PartitioningDriver::OEMNo}});
     PartitioningCompilation compilationNoOEM(&model, devicesNoOEM);
     ASSERT_EQ(compilationNoOEM.finish(), Result::BAD_DATA);
 
     // Verify that we get an error if a driver can SUPPORT but not PREPARE an OEM operation.
-    const auto devicesIndecisiveOEM = makeDevices(
-        {
-            {"indecisiveOEM", { .float32Performance = { .execTime = 0.5, .powerUsage = 0.5 },
-                                .quantized8Performance = { .execTime = 0.5, .powerUsage = 0.5 } },
-                                ~0U, PartitioningDriver::OEMIndecisive}
-        });
+    const auto devicesIndecisiveOEM =
+            makeDevices({{"indecisiveOEM", 0.5, ~0U, PartitioningDriver::OEMIndecisive}});
     PartitioningCompilation compilationIndecisiveOEM(&model, devicesIndecisiveOEM);
     ASSERT_NE(compilationIndecisiveOEM.finish(), Result::NO_ERROR);
 
@@ -1206,17 +1231,10 @@ TEST_F(PartitioningTest, OemOperations) {
 }
 
 TEST_F(PartitioningTest, RelaxedFP) {
-    const auto devices = makeDevices(
-        {
-            // Best choice for non-relaxed model.
-            {"f32", { .float32Performance = { .execTime = 0.8, .powerUsage = 0.8 },
-                      .relaxedFloat32toFloat16Performance = { .execTime = 0.9, .powerUsage = 0.9 }},
-                    ~0U},
-            // Best choice for relaxed model.
-            {"f16", { .float32Performance = { .execTime = 0.9, .powerUsage = 0.9 },
-                      .relaxedFloat32toFloat16Performance = { .execTime = 0.8, .powerUsage = 0.8 }},
-                    ~0U}
-        });
+    const auto devices = makeDevices({// Best choice for non-relaxed model.
+                                      {"f32", 0.8, 0.9 /* relaxed */, ~0U},
+                                      // Best choice for relaxed model.
+                                      {"f16", 0.9, 0.8 /* relaxed */, ~0U}});
 
     auto TrivialTest = [&devices](bool doRelax, const char* expectDevice) {
         // Trivial model consisting solely of one operation.
@@ -1239,6 +1257,75 @@ TEST_F(PartitioningTest, RelaxedFP) {
 
     ASSERT_NO_FATAL_FAILURE(TrivialTest(false, "f32"));
     ASSERT_NO_FATAL_FAILURE(TrivialTest(true, "f16"));
+}
+
+TEST_F(PartitioningTest, Perf) {
+    // The various type names used here are confusing.
+    //
+    // OperandType (from HAL file), WrapperType (from NeuralNetworksWrapper.h),
+    // and OperandCode (from NeuralNetworks.h) are different enums representing
+    // the same type kind -- e.g., OperandType::FLOAT32, WrapperType::FLOAT32,
+    // ANEURALNETWORKS_FLOAT32.  Corresponding enumerators have the same value.
+    //
+    // WrapperOperandType is the NeuralNetworksWrapper.h representation of a
+    // full operand type (WrapperType plus dimensions plus other attributes).
+
+    auto TestType = [](OperandType operandType) {
+        SCOPED_TRACE(toString(operandType));
+        // Trivial model consisting solely of OEM operation.  We
+        // pick OEM operation because this allows us to use
+        // inputs and outputs of any number and type.
+        PartitioningModel model;
+        uint32_t opndIn = model.addOperand(static_cast<WrapperType>(operandType));
+        uint32_t opndOut = model.addOperationOEM1To1(opndIn);
+        model.identifyInputsAndOutputs({opndIn}, {opndOut});
+        model.finish();
+        ASSERT_TRUE(model.isValid());
+
+        const Capabilities baseCapabilities = makeCapabilities(0.5);
+
+        {
+            // better than base
+            Capabilities goodCapabilities = baseCapabilities;
+            update(&goodCapabilities, operandType, 0.25);
+
+            const auto devices =
+                    makeDevices({{"base", baseCapabilities, ~0U, PartitioningDriver::OEMYes},
+                                 {"good", goodCapabilities, ~0U, PartitioningDriver::OEMYes}});
+
+            // Verify that model will be executed on "good".
+            ExecutionPlan plan;
+            ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
+                      ANEURALNETWORKS_NO_ERROR);
+            ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
+            ASSERT_STREQ(plan.forTest_simpleGetDevice()->getName(), "good");
+        }
+
+        {
+            // worse than base
+            Capabilities badCapabilities = baseCapabilities;
+            update(&badCapabilities, operandType, 0.75);
+            const auto devices =
+                    makeDevices({{"base", baseCapabilities, ~0U, PartitioningDriver::OEMYes},
+                                 {"bad", badCapabilities, ~0U, PartitioningDriver::OEMYes}});
+
+            // Verify that model will be executed on "base".
+            ExecutionPlan plan;
+            ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
+                      ANEURALNETWORKS_NO_ERROR);
+            ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
+            ASSERT_STREQ(plan.forTest_simpleGetDevice()->getName(), "base");
+        }
+    };
+
+    for (uint32_t type = static_cast<uint32_t>(OperandTypeRange::FUNDAMENTAL_MIN);
+         type <= static_cast<uint32_t>(OperandTypeRange::FUNDAMENTAL_MAX); ++type) {
+        TestType(static_cast<OperandType>(type));
+    }
+    for (uint32_t type = static_cast<uint32_t>(OperandTypeRange::OEM_MIN);
+         type <= static_cast<uint32_t>(OperandTypeRange::OEM_MAX); ++type) {
+        TestType(static_cast<OperandType>(type));
+    }
 }
 
 void expectUniqueTokens(const std::vector<std::vector<uint8_t>>& tokens) {
@@ -1335,10 +1422,7 @@ TEST_F(PartitioningTest, CacheTokenNoneSimpleBody) {
 
     // deviceA can execute the whole model.
     const auto deviceA = makeDevices({
-            {"deviceA",
-             {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-              .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-             ~0U},
+            {"deviceA", 0.5, ~0U},
     });
 
     std::vector<uint8_t> tokenIn, tokenOut;
@@ -1354,18 +1438,8 @@ TEST_F(PartitioningTest, CacheTokenDifferentDeviceNamesSimpleBody) {
     CreateModelForCachingTests(&model);
 
     // Two devices that can both execute the whole model.
-    const auto deviceA = makeDevices({
-            {"deviceA",
-             {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-              .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-             ~0U},
-    });
-    const auto deviceB = makeDevices({
-            {"deviceB",
-             {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-              .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-             ~0U},
-    });
+    const auto deviceA = makeDevices({{"deviceA", 0.5, ~0U}});
+    const auto deviceB = makeDevices({{"deviceB", 0.5, ~0U}});
 
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> deviceAToken, deviceBToken;
@@ -1383,20 +1457,8 @@ TEST_F(PartitioningTest, CacheTokenDifferentDeviceVersionStringsSimpleBody) {
     CreateModelForCachingTests(&model);
 
     // Two devices that can both execute the whole model.
-    const auto deviceA_1_0 = makeDevices({
-            {"deviceA",
-             "1.0",
-             {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-              .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-             ~0U},
-    });
-    const auto deviceA_1_1 = makeDevices({
-            {"deviceA",
-             "1.1",
-             {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-              .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-             ~0U},
-    });
+    const auto deviceA_1_0 = makeDevices({{"deviceA", "1.0", 0.5, ~0U}});
+    const auto deviceA_1_1 = makeDevices({{"deviceA", "1.1", 0.5, ~0U}});
 
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> deviceA_1_0_Token, deviceA_1_1_Token;
@@ -1414,12 +1476,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentPreferencesSimpleBody) {
     CreateModelForCachingTests(&model);
 
     // One device that can execute the whole model.
-    const auto deviceA = makeDevices({
-            {"deviceA",
-             {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-              .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-             ~0U},
-    });
+    const auto deviceA = makeDevices({{"deviceA", 0.5, ~0U}});
 
     std::vector<uint8_t> fastToken, powerToken, sustainedToken;
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
@@ -1439,12 +1496,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentTokensSimpleBody) {
     CreateModelForCachingTests(&model);
 
     // One device that can execute the whole model.
-    const auto deviceA = makeDevices({
-            {"deviceA",
-             {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-              .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-             ~0U},
-    });
+    const auto deviceA = makeDevices({{"deviceA", 0.5, ~0U}});
 
     std::vector<uint8_t> tokenOut1, tokenOut2;
     std::vector<uint8_t> tokenIn1(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
@@ -1463,15 +1515,7 @@ TEST_F(PartitioningTest, CacheTokenNoneCompoundBody) {
     CreateModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
-    const auto devices =
-            makeDevices({{"deviceA",
-                          {.float32Performance = {.execTime = 0.8, .powerUsage = 0.8},
-                           .quantized8Performance = {.execTime = 0.8, .powerUsage = 0.8}},
-                          ~0U},
-                         {"deviceB",
-                          {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-                           .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-                          1 << 1}});
+    const auto devices = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
 
     std::vector<uint8_t> tokenIn, tokenOut;
     getTransformedCacheToken(model, devices, "deviceA", tokenIn,
@@ -1489,25 +1533,9 @@ TEST_F(PartitioningTest, CacheTokenDifferentDeviceNamesCompoundBody) {
     CreateModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
-    const auto devices1 =
-            makeDevices({{"deviceA",
-                          {.float32Performance = {.execTime = 0.8, .powerUsage = 0.8},
-                           .quantized8Performance = {.execTime = 0.8, .powerUsage = 0.8}},
-                          ~0U},
-                         {"deviceC",
-                          {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-                           .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-                          1 << 1}});
+    const auto devices1 = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceC", 0.5, 1 << 1}});
     // DeviceB executes the first operation only.
-    const auto devices2 =
-            makeDevices({{"deviceB",
-                          {.float32Performance = {.execTime = 0.8, .powerUsage = 0.8},
-                           .quantized8Performance = {.execTime = 0.8, .powerUsage = 0.8}},
-                          ~0U},
-                         {"deviceC",
-                          {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-                           .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-                          1 << 1}});
+    const auto devices2 = makeDevices({{"deviceB", 0.8, ~0U}, {"deviceC", 0.5, 1 << 1}});
 
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> deviceAToken, deviceBToken;
@@ -1525,27 +1553,9 @@ TEST_F(PartitioningTest, CacheTokenDifferentDeviceVersionStringsCompoundBody) {
     CreateModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
-    const auto devices1 =
-            makeDevices({{"deviceA",
-                          "1.0",
-                          {.float32Performance = {.execTime = 0.8, .powerUsage = 0.8},
-                           .quantized8Performance = {.execTime = 0.8, .powerUsage = 0.8}},
-                          ~0U},
-                         {"deviceB",
-                          {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-                           .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-                          1 << 1}});
+    const auto devices1 = makeDevices({{"deviceA", "1.0", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
     // DeviceB executes the first operation only.
-    const auto devices2 =
-            makeDevices({{"deviceA",
-                          "1.1",
-                          {.float32Performance = {.execTime = 0.8, .powerUsage = 0.8},
-                           .quantized8Performance = {.execTime = 0.8, .powerUsage = 0.8}},
-                          ~0U},
-                         {"deviceB",
-                          {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-                           .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-                          1 << 1}});
+    const auto devices2 = makeDevices({{"deviceA", "1.1", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
 
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> deviceA_1_0_Token, deviceA_1_1_Token;
@@ -1563,15 +1573,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentPreferencesCompoundBody) {
     CreateModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
-    const auto devices =
-            makeDevices({{"deviceA",
-                          {.float32Performance = {.execTime = 0.8, .powerUsage = 0.8},
-                           .quantized8Performance = {.execTime = 0.8, .powerUsage = 0.8}},
-                          ~0U},
-                         {"deviceB",
-                          {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-                           .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-                          1 << 1}});
+    const auto devices = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
 
     std::vector<uint8_t> fastToken, powerToken, sustainedToken;
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
@@ -1591,15 +1593,7 @@ TEST_F(PartitioningTest, CacheTokenDifferentTokensCompoundBody) {
     CreateModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
-    const auto devices =
-            makeDevices({{"deviceA",
-                          {.float32Performance = {.execTime = 0.8, .powerUsage = 0.8},
-                           .quantized8Performance = {.execTime = 0.8, .powerUsage = 0.8}},
-                          ~0U},
-                         {"deviceB",
-                          {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-                           .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-                          1 << 1}});
+    const auto devices = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
 
     std::vector<uint8_t> tokenOut1, tokenOut2;
     std::vector<uint8_t> tokenIn1(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
@@ -1618,35 +1612,11 @@ TEST_F(PartitioningTest, CacheTokenDifferentPartitionsCompoundBody) {
     CreateModelForCachingTests(&model);
 
     // DeviceA executes the whole model.
-    const auto devices1 =
-            makeDevices({{"deviceA",
-                          {.float32Performance = {.execTime = 0.8, .powerUsage = 0.8},
-                           .quantized8Performance = {.execTime = 0.8, .powerUsage = 0.8}},
-                          ~0U},
-                         {"deviceB",
-                          {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-                           .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-                          0U}});
+    const auto devices1 = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 0U}});
     // DeviceA executes the first operation only.
-    const auto devices2 =
-            makeDevices({{"deviceA",
-                          {.float32Performance = {.execTime = 0.8, .powerUsage = 0.8},
-                           .quantized8Performance = {.execTime = 0.8, .powerUsage = 0.8}},
-                          ~0U},
-                         {"deviceB",
-                          {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-                           .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-                          1 << 1}});
+    const auto devices2 = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
     // DeviceA executes the second operation only.
-    const auto devices3 =
-            makeDevices({{"deviceA",
-                          {.float32Performance = {.execTime = 0.8, .powerUsage = 0.8},
-                           .quantized8Performance = {.execTime = 0.8, .powerUsage = 0.8}},
-                          ~0U},
-                         {"deviceB",
-                          {.float32Performance = {.execTime = 0.5, .powerUsage = 0.5},
-                           .quantized8Performance = {.execTime = 0.5, .powerUsage = 0.5}},
-                          1 << 0}});
+    const auto devices3 = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 1 << 0}});
 
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> tokenOut1, tokenOut2, tokenOut3;
@@ -1657,6 +1627,50 @@ TEST_F(PartitioningTest, CacheTokenDifferentPartitionsCompoundBody) {
     getTransformedCacheToken(model, devices3, "deviceA", tokenIn,
                              ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut3);
     expectUniqueTokens({tokenOut1, tokenOut2, tokenOut3});
+}
+
+// Very basic tests of some of the PerformanceInfo functionality.
+// Placed in this file because partitioning is the consumer of this functionality.
+class PerfTest : public ::testing::Test {};
+
+TEST_F(PerfTest, Lookup) {
+    // Derive an arbitrary (but reproducible) performance value from an OperandType.
+    // We'll use this to ensure that we can save and then recover a type's performance.
+    auto typePerf = [](OperandType type) { return float(static_cast<uint32_t>(type)); };
+
+    Capabilities capabilities = makeCapabilities(-1.0f);
+
+    for (uint32_t type = static_cast<uint32_t>(OperandTypeRange::FUNDAMENTAL_MIN);
+         type <= static_cast<uint32_t>(OperandTypeRange::FUNDAMENTAL_MAX); ++type) {
+        OperandType operandType = static_cast<OperandType>(type);
+        update(&capabilities, operandType, typePerf(operandType));
+    }
+    for (uint32_t type = static_cast<uint32_t>(OperandTypeRange::OEM_MIN);
+         type <= static_cast<uint32_t>(OperandTypeRange::OEM_MAX); ++type) {
+        OperandType operandType = static_cast<OperandType>(type);
+        update(&capabilities, operandType, typePerf(operandType));
+    }
+
+    // Make sure lookup retrieves the values stored by update
+
+    for (uint32_t type = static_cast<uint32_t>(OperandTypeRange::FUNDAMENTAL_MIN);
+         type <= static_cast<uint32_t>(OperandTypeRange::FUNDAMENTAL_MAX); ++type) {
+        OperandType operandType = static_cast<OperandType>(type);
+        SCOPED_TRACE(toString(operandType));
+        EXPECT_EQ(lookupExecTime(capabilities, operandType), typePerf(operandType));
+    }
+    for (uint32_t type = static_cast<uint32_t>(OperandTypeRange::OEM_MIN);
+         type <= static_cast<uint32_t>(OperandTypeRange::OEM_MAX); ++type) {
+        OperandType operandType = static_cast<OperandType>(type);
+        SCOPED_TRACE(toString(operandType));
+        EXPECT_EQ(lookupExecTime(capabilities, operandType), typePerf(operandType));
+    }
+
+    // Check the behavior of a missing type
+
+    OperandType operandType =
+            static_cast<OperandType>(static_cast<uint32_t>(OperandTypeRange::BASE_MAX) + 1);
+    EXPECT_EQ(lookupExecTime(capabilities, operandType), FLT_MAX);
 }
 
 }  // namespace

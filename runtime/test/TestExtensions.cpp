@@ -46,7 +46,7 @@ class TestDriver : public SampleDriver {
         return Void();
     }
 
-    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb cb) override {
+    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override {
         cb(ErrorStatus::NONE, {/* Dummy zero-filled capabilities. */});
         return Void();
     }
