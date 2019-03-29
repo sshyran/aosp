@@ -23,9 +23,17 @@
 
 #include <android-base/logging.h>
 #include <gtest/gtest.h>
+#include <cctype>
 #include <iostream>
+#include <string>
 
 using namespace android::nn::test_wrapper;
+
+// We run through the test suite several times, by invoking test() several
+// times.  Each run is a "pass".
+
+// Bitmask of passes we're allowed to run.
+static uint64_t allowedPasses = ~uint64_t(0);
 
 // DeviceManager::setUseCpuOnly() and Execution::setComputeUsesSynchronousAPI()
 // according to arguments, and return RUN_ALL_TESTS().  It is unspecified what
@@ -41,6 +49,9 @@ using namespace android::nn::test_wrapper;
 // true, and if we are asked to set it to false, we return 0 ("success") without
 // running tests.
 static int test(bool useCpuOnly, Execution::ComputeMode computeMode, bool allowSyncExecHal = true) {
+    uint32_t passIndex =
+            (useCpuOnly << 0) + (static_cast<uint32_t>(computeMode) << 1) + (allowSyncExecHal << 3);
+
 #ifdef NNTEST_ONLY_PUBLIC_API
     if (useCpuOnly || !allowSyncExecHal) {
         return 0;
@@ -65,15 +76,37 @@ static int test(bool useCpuOnly, Execution::ComputeMode computeMode, bool allowS
     };
 
     LOG(INFO) << "test(useCpuOnly = " << useCpuOnly << ", computeMode = " << computeModeText()
-              << ", allowSyncExecHal = " << allowSyncExecHal << ")";
+              << ", allowSyncExecHal = " << allowSyncExecHal << ")  // pass " << passIndex;
     std::cout << "[**********] useCpuOnly = " << useCpuOnly
               << ", computeMode = " << computeModeText()
-              << ", allowSyncExecHal = " << allowSyncExecHal << std::endl;
+              << ", allowSyncExecHal = " << allowSyncExecHal << "  // pass " << passIndex
+              << std::endl;
+
+    if (!((uint64_t(1) << passIndex) & allowedPasses)) {
+        LOG(INFO) << "SKIPPED PASS";
+        std::cout << "SKIPPED PASS" << std::endl;
+        return 0;
+    }
+
     return RUN_ALL_TESTS();
+}
+
+void checkArgs(int argc, char** argv, int nextArg) {
+    if (nextArg != argc) {
+        std::cerr << "Unexpected argument: " << argv[nextArg] << std::endl;
+        exit(1);
+    }
 }
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
+
+    if ((argc > 1) && std::isdigit(argv[1][0])) {
+        allowedPasses = std::stoull(argv[1]);
+        checkArgs(argc, argv, 2);
+    } else {
+        checkArgs(argc, argv, 1);
+    }
 
 #ifndef NNTEST_ONLY_PUBLIC_API
     android::nn::initVLogMask();
