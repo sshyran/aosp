@@ -4073,6 +4073,46 @@ TEST_F(ValidationTest, bidirectional_sequence_lstm_blackbox_dynamic_output_shape
 
 
 #endif
+// Generated from: bidirectional_sequence_lstm_aux_input.mod.py.
+namespace bidirectional_sequence_lstm_aux_input {
+// Generated bidirectional_sequence_lstm_aux_input test
+#include "examples/bidirectional_sequence_lstm_aux_input.example.cpp"
+// Generated model constructor
+#include "vts_models/bidirectional_sequence_lstm_aux_input.model.cpp"
+} // namespace bidirectional_sequence_lstm_aux_input
+
+TEST_F(NeuralnetworksHidlTest, bidirectional_sequence_lstm_aux_input_blackbox) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_aux_input::createTestModel,
+                           bidirectional_sequence_lstm_aux_input::is_ignored,
+                           bidirectional_sequence_lstm_aux_input::get_examples_blackbox());
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_aux_input_blackbox) {
+  const Model model = bidirectional_sequence_lstm_aux_input::createTestModel();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_aux_input::get_examples_blackbox());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_aux_input_blackbox_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_aux_input::createTestModel_dynamic_output_shape,
+                           bidirectional_sequence_lstm_aux_input::is_ignored_dynamic_output_shape,
+                           bidirectional_sequence_lstm_aux_input::get_examples_blackbox_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_aux_input_blackbox_dynamic_output_shape) {
+  const Model model = bidirectional_sequence_lstm_aux_input::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_aux_input::get_examples_blackbox_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
 // Generated from: bidirectional_sequence_lstm_cifg_peephole.mod.py.
 namespace bidirectional_sequence_lstm_cifg_peephole {
 // Generated bidirectional_sequence_lstm_cifg_peephole test
