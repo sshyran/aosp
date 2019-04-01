@@ -69,11 +69,16 @@ class ExtensionsTest : public ::testing::Test {
         }
 
         DeviceManager::get()->forTest_registerDevice(kTestDriverName, new TestDriver());
+        // Discover extensions provided by registered devices.
+        TypeManager::get()->forTest_reset();
         mDevice = getDeviceByName(kTestDriverName);
         ASSERT_NE(mDevice, nullptr);
     }
 
-    virtual void TearDown() { DeviceManager::get()->forTest_reInitializeDeviceList(); }
+    virtual void TearDown() {
+        DeviceManager::get()->forTest_reInitializeDeviceList();
+        TypeManager::get()->forTest_reset();
+    }
 
     ANeuralNetworksDevice* getDeviceByName(const std::string& name) {
         ANeuralNetworksDevice* result = nullptr;
