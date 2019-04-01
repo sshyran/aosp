@@ -149,7 +149,7 @@ class DeviceManager {
     bool mDebugNNCpuOnly = false;  // derived from system property debug.nn.cpuonly
 
     // synchronous execution
-    bool mSyncExecCpu = false;
+    bool mSyncExecCpu = true;
     bool mSyncExecHal = true;         // Call executeSynchronously() when available on device.
     bool mSyncExecHalSetter = false;  // Has mSyncExecHal been set by setSyncExecHal()?
                                       // If so, don't allow the setting to be overridden
