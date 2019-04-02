@@ -32,45 +32,64 @@ hidl_vec<hidl_memory> ExecutionBurstServer::BurstMemoryCache::getMemories(
         const std::vector<int32_t>& slots) {
     std::lock_guard<std::mutex> guard(mMutex);
 
+    const auto slotIsKnown = [this](int32_t slot) {
+        return slot < mMemoryCache.size() && mMemoryCache[slot].valid();
+    };
+
     // find unique unknown slots
-    std::set<int32_t> setOfUnknownSlots;
-    for (int32_t slot : slots) {
-        if (mSlotToMemoryCache.find(slot) == mSlotToMemoryCache.end()) {
-            setOfUnknownSlots.insert(slot);
-        }
-    }
-    const std::vector<int32_t> vecOfUnknownSlots(setOfUnknownSlots.begin(),
-                                                 setOfUnknownSlots.end());
+    std::vector<int32_t> unknownSlots = slots;
+    auto unknownSlotsEnd = unknownSlots.end();
+    std::sort(unknownSlots.begin(), unknownSlotsEnd);
+    unknownSlotsEnd = std::unique(unknownSlots.begin(), unknownSlotsEnd);
+    unknownSlotsEnd = std::remove_if(unknownSlots.begin(), unknownSlotsEnd, slotIsKnown);
+    unknownSlots.erase(unknownSlotsEnd, unknownSlots.end());
 
     // retrieve unknown slots
-    if (!vecOfUnknownSlots.empty()) {
+    if (!unknownSlots.empty()) {
         ErrorStatus errorStatus = ErrorStatus::GENERAL_FAILURE;
         std::vector<hidl_memory> returnedMemories;
-        Return<void> ret = mCallback->getMemories(
-                vecOfUnknownSlots,
-                [&errorStatus, &returnedMemories](ErrorStatus status,
-                                                  const hidl_vec<hidl_memory>& memories) {
-                    errorStatus = status;
-                    if (status == ErrorStatus::NONE) {
-                        returnedMemories = memories;
-                    }
-                });
+        auto cb = [&errorStatus, &returnedMemories](ErrorStatus status,
+                                                    const hidl_vec<hidl_memory>& memories) {
+            errorStatus = status;
+            returnedMemories = memories;
+        };
 
-        if (!ret.isOk() || errorStatus != ErrorStatus::NONE) {
+        Return<void> ret = mCallback->getMemories(unknownSlots, cb);
+
+        // Ensure that the memories were successfully returned.
+        // IBurstCallback.hal specifies the that the number of memories returned
+        // must match the number of slots requested:
+        //     "slots.size() == buffers.size()"
+        if (!ret.isOk() || errorStatus != ErrorStatus::NONE ||
+            returnedMemories.size() != unknownSlots.size()) {
             LOG(ERROR) << "Error retrieving memories";
             return {};
         }
 
+        // resize cache to fit new slots if necessary
+        const int32_t maxUnknownSlot = unknownSlots.back();
+        if (maxUnknownSlot >= mMemoryCache.size()) {
+            mMemoryCache.resize(maxUnknownSlot + 1);
+        }
+
         // add memories to unknown slots
-        for (size_t i = 0; i < vecOfUnknownSlots.size(); ++i) {
-            mSlotToMemoryCache[vecOfUnknownSlots[i]] = returnedMemories[i];
+        for (size_t i = 0; i < unknownSlots.size(); ++i) {
+            mMemoryCache[unknownSlots[i]] = returnedMemories[i];
         }
     }
 
     // get all slots
     hidl_vec<hidl_memory> memories(slots.size());
-    for (size_t i = 0; i < slots.size(); ++i) {
-        memories[i] = mSlotToMemoryCache[slots[i]];
+    std::transform(slots.begin(), slots.end(), memories.begin(),
+                   [this](int32_t slot) { return mMemoryCache[slot]; });
+
+    // Ensure all slots are valid. Although this case is never expected to
+    // occur, theoretically IBurstCallback::getMemories could return invalid
+    // hidl_memory objects that must be protected against.
+    if (!std::all_of(memories.begin(), memories.end(),
+                     [](const hidl_memory& memory) { return memory.valid(); })) {
+        LOG(ERROR) << "Error, not all slots are valid!";
+        return {};
     }
 
     return memories;
@@ -78,7 +97,9 @@ hidl_vec<hidl_memory> ExecutionBurstServer::BurstMemoryCache::getMemories(
 
 void ExecutionBurstServer::BurstMemoryCache::freeMemory(int32_t slot) {
     std::lock_guard<std::mutex> guard(mMutex);
-    mSlotToMemoryCache.erase(slot);
+    if (slot < mMemoryCache.size()) {
+        mMemoryCache[slot] = {};
+    }
 }
 
 sp<ExecutionBurstServer> ExecutionBurstServer::create(
