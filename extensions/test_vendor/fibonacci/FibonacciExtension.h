@@ -19,6 +19,9 @@
 
 /**
  * A sample extension definition.
+ *
+ * Tests are available in
+ * runtime/test/fibonacci_extension/FibonacciExtensionTest.cpp
  */
 
 const char TEST_VENDOR_FIBONACCI_EXTENSION_NAME[] = "com.example.fibonacci";
