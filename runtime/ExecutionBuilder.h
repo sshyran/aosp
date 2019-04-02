@@ -117,7 +117,7 @@ public:
     // If burst is provided, then the burst path will be used. If a burst is not
     // provided (i.e., is nullptr), then a synchronous execution will occur.
     //
-    // Providing both synchronizationCallbak and burstBuilder is an error.
+    // Providing both synchronizationCallback and burstBuilder is an error.
     int compute(sp<ExecutionCallback>* synchronizationCallback,
                 BurstBuilder* burstBuilder = nullptr);
 

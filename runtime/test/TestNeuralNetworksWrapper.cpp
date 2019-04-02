@@ -20,9 +20,7 @@ namespace android {
 namespace nn {
 namespace test_wrapper {
 
-bool Execution::mComputeUsesBurstAPI = false;
-
-bool Execution::mComputeUsesSychronousAPI = true;
+Execution::ComputeMode Execution::mComputeMode = Execution::ComputeMode::SYNC;
 
 }  // namespace test_wrapper
 }  // namespace nn
