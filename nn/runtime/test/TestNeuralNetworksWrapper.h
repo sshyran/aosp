@@ -162,42 +162,46 @@ class Execution {
     }
 
     Result compute() {
-        if (mComputeUsesBurstAPI) {
-            ANeuralNetworksBurst* burst = nullptr;
-            Result result = static_cast<Result>(ANeuralNetworksBurst_create(mCompilation, &burst));
-            if (result != Result::NO_ERROR) {
+        switch (mComputeMode) {
+            case ComputeMode::SYNC: {
+                return static_cast<Result>(ANeuralNetworksExecution_compute(mExecution));
+            }
+            case ComputeMode::ASYNC: {
+                ANeuralNetworksEvent* event = nullptr;
+                Result result = static_cast<Result>(
+                        ANeuralNetworksExecution_startCompute(mExecution, &event));
+                if (result != Result::NO_ERROR) {
+                    return result;
+                }
+                // TODO how to manage the lifetime of events when multiple waiters is not
+                // clear.
+                result = static_cast<Result>(ANeuralNetworksEvent_wait(event));
+                ANeuralNetworksEvent_free(event);
+                return result;
+            }
+            case ComputeMode::BURST: {
+                ANeuralNetworksBurst* burst = nullptr;
+                Result result =
+                        static_cast<Result>(ANeuralNetworksBurst_create(mCompilation, &burst));
+                if (result != Result::NO_ERROR) {
+                    return result;
+                }
+                result = static_cast<Result>(
+                        ANeuralNetworksExecution_burstCompute(mExecution, burst));
                 ANeuralNetworksBurst_free(burst);
                 return result;
             }
-            result = static_cast<Result>(ANeuralNetworksExecution_burstCompute(mExecution, burst));
-            ANeuralNetworksBurst_free(burst);
-            return result;
         }
-
-        if (!mComputeUsesSychronousAPI) {
-            ANeuralNetworksEvent* event = nullptr;
-            Result result =
-                    static_cast<Result>(ANeuralNetworksExecution_startCompute(mExecution, &event));
-            if (result != Result::NO_ERROR) {
-                return result;
-            }
-            // TODO how to manage the lifetime of events when multiple waiters is not
-            // clear.
-            result = static_cast<Result>(ANeuralNetworksEvent_wait(event));
-            ANeuralNetworksEvent_free(event);
-            return result;
-        }
-
-        return static_cast<Result>(ANeuralNetworksExecution_compute(mExecution));
+        return Result::BAD_DATA;
     }
 
-    // By default, compute() uses the synchronous API.
-    // setComputeUsesSynchronousAPI() can be used to change the behavior of
-    // compute() to instead use the asynchronous API and then wait for
-    // computation to complete.
-    static void setComputeUsesSynchronousAPI(bool val) { mComputeUsesSychronousAPI = val; }
-
-    static void setComputeUsesBurstAPI(bool val) { mComputeUsesBurstAPI = val; }
+    // By default, compute() uses the synchronous API. setComputeMode() can be
+    // used to change the behavior of compute() to either:
+    // - use the asynchronous API and then wait for computation to complete
+    // or
+    // - use the burst API
+    enum class ComputeMode { SYNC, ASYNC, BURST };
+    static void setComputeMode(ComputeMode mode) { mComputeMode = mode; }
 
     Result getOutputOperandDimensions(uint32_t index, std::vector<uint32_t>* dimensions) {
         uint32_t rank = 0;
@@ -217,11 +221,8 @@ class Execution {
     ANeuralNetworksCompilation* mCompilation = nullptr;
     ANeuralNetworksExecution* mExecution = nullptr;
 
-    // Initialized to false in TestNeuralNetworksWrapper.cpp.
-    static bool mComputeUsesBurstAPI;
-
-    // Initialized to true in TestNeuralNetworksWrapper.cpp.
-    static bool mComputeUsesSychronousAPI;
+    // Initialized to ComputeMode::SYNC in TestNeuralNetworksWrapper.cpp.
+    static ComputeMode mComputeMode;
 };
 
 }  // namespace test_wrapper

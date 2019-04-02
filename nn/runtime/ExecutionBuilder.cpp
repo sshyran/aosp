@@ -468,7 +468,8 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
 
 int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
                               BurstBuilder* burstBuilder) {
-    assert(synchronizationCallback == nullptr || burstBuilder == nullptr);
+    CHECK(synchronizationCallback == nullptr || burstBuilder == nullptr)
+            << "synchronizationCallback and burstBuilder cannot simultaneously be used";
 
     const bool synchronous = (synchronizationCallback == nullptr);
 
