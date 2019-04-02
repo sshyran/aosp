@@ -26,8 +26,7 @@
 #include <set>
 #include "HalInterfaces.h"
 
-namespace android {
-namespace nn {
+namespace android::nn {
 
 using ::android::hardware::kSynchronizedReadWrite;
 using ::android::hardware::MessageQueue;
@@ -38,29 +37,58 @@ using FmqRequestDescriptor = MQDescriptorSync<FmqRequestDatum>;
 using FmqResultDescriptor = MQDescriptorSync<FmqResultDatum>;
 
 /**
- */
-class BurstMemoryCache {
-    DISALLOW_IMPLICIT_CONSTRUCTORS(BurstMemoryCache);
-
-   public:
-    BurstMemoryCache(const sp<IBurstCallback>& callback);
-
-    hidl_vec<hidl_memory> getMemories(const std::vector<int32_t>& slots);
-    void freeMemory(int32_t slot);
-
-   private:
-    std::mutex mMutex;
-    const sp<IBurstCallback> mCallback;
-    std::map<int32_t, hidl_memory> mSlotToMemoryCache;
-};
-
-/**
- * NN server burst object
+ * The ExecutionBurstServer class is responsible for waiting for and
+ * deserializing a request object from a FMQ, performing the inference, and
+ * serializing the result back across another FMQ.
  */
 class ExecutionBurstServer : public IBurstContext {
     DISALLOW_IMPLICIT_CONSTRUCTORS(ExecutionBurstServer);
 
+    /**
+     * BurstMemoryCache is responsible for managing the local memory cache of
+     * the burst object. If the ExecutionBurstServer requests a memory key that
+     * is unrecognized, the BurstMemoryCache object will retrieve the memory
+     * from the client, transparent from the ExecutionBurstServer object.
+     */
+    class BurstMemoryCache {
+        DISALLOW_IMPLICIT_CONSTRUCTORS(BurstMemoryCache);
+
+       public:
+        BurstMemoryCache(const sp<IBurstCallback>& callback);
+
+        hidl_vec<hidl_memory> getMemories(const std::vector<int32_t>& slots);
+        void freeMemory(int32_t slot);
+
+       private:
+        std::mutex mMutex;
+        const sp<IBurstCallback> mCallback;
+        std::map<int32_t, hidl_memory> mSlotToMemoryCache;
+    };
+
    public:
+    /**
+     * Create automated context to manage FMQ-based executions.
+     *
+     * This function is intended to be used by a service to automatically:
+     * 1) Receive data from a provided FMQ
+     * 2) Execute a model with the given information
+     * 3) Send the result to the created FMQ
+     *
+     * @param callback Callback used to retrieve memories corresponding to
+     *     unrecognized slots.
+     * @param requestChannel Input FMQ channel through which the client passes the
+     *     request to the service.
+     * @param resultChannel Output FMQ channel from which the client can retrieve
+     *     the result of the execution.
+     * @param preparedModel PreparedModel that the burst object was created from.
+     *     This will be used to synchronously perform the execution.
+     * @result IBurstContext Handle to the burst context.
+     */
+    static sp<ExecutionBurstServer> create(const sp<IBurstCallback>& callback,
+                                           const FmqRequestDescriptor& requestChannel,
+                                           const FmqResultDescriptor& resultChannel,
+                                           IPreparedModel* preparedModel);
+
     ExecutionBurstServer(const sp<IBurstCallback>& callback,
                          std::unique_ptr<FmqRequestChannel> requestChannel,
                          std::unique_ptr<FmqResultChannel> resultChannel,
@@ -87,34 +115,6 @@ class ExecutionBurstServer : public IBurstContext {
     const bool mBlocking;
 };
 
-/**
- * Create automated context to manage FMQ-based executions.
- *
- * This function is intended to be used by a service to automatically:
- * 1) Receive data from a provided FMQ
- * 2) Execute a model with the given information
- * 3) Send the result to the created FMQ
- *
- * @param callback Callback used to retrieve memories corresponding to
- *                 unrecognized slots.
- * @param requestChannel Input FMQ channel through which the client passes the
- *                       request to the service.
- * @param resultChannel Output FMQ channel from which the client can retrieve
- *                      the result of the execution.
- * @param preparedModel PreparedModel that the burst object was created from.
- *                      This will be used to synchronously perform the
- *                      execution.
- * @result IBurstContext Handle to the burst context.
- */
-::android::sp<::android::hardware::neuralnetworks::V1_2::IBurstContext> createBurstContext(
-        const sp<::android::hardware::neuralnetworks::V1_2::IBurstCallback>& callback,
-        const ::android::hardware::MQDescriptorSync<
-                ::android::hardware::neuralnetworks::V1_2::FmqRequestDatum>& requestChannel,
-        const ::android::hardware::MQDescriptorSync<
-                ::android::hardware::neuralnetworks::V1_2::FmqResultDatum>& resultChannel,
-        ::android::hardware::neuralnetworks::V1_2::IPreparedModel* preparedModel);
-
-}  // namespace nn
-}  // namespace android
+}  // namespace android::nn
 
 #endif  // ANDROID_ML_NN_COMMON_EXECUTION_BURST_SERVER_H

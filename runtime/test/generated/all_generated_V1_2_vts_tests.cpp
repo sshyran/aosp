@@ -4073,6 +4073,46 @@ TEST_F(ValidationTest, bidirectional_sequence_lstm_blackbox_dynamic_output_shape
 
 
 #endif
+// Generated from: bidirectional_sequence_lstm_aux_input.mod.py.
+namespace bidirectional_sequence_lstm_aux_input {
+// Generated bidirectional_sequence_lstm_aux_input test
+#include "examples/bidirectional_sequence_lstm_aux_input.example.cpp"
+// Generated model constructor
+#include "vts_models/bidirectional_sequence_lstm_aux_input.model.cpp"
+} // namespace bidirectional_sequence_lstm_aux_input
+
+TEST_F(NeuralnetworksHidlTest, bidirectional_sequence_lstm_aux_input_blackbox) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_aux_input::createTestModel,
+                           bidirectional_sequence_lstm_aux_input::is_ignored,
+                           bidirectional_sequence_lstm_aux_input::get_examples_blackbox());
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_aux_input_blackbox) {
+  const Model model = bidirectional_sequence_lstm_aux_input::createTestModel();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_aux_input::get_examples_blackbox());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_aux_input_blackbox_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           bidirectional_sequence_lstm_aux_input::createTestModel_dynamic_output_shape,
+                           bidirectional_sequence_lstm_aux_input::is_ignored_dynamic_output_shape,
+                           bidirectional_sequence_lstm_aux_input::get_examples_blackbox_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, bidirectional_sequence_lstm_aux_input_blackbox_dynamic_output_shape) {
+  const Model model = bidirectional_sequence_lstm_aux_input::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(bidirectional_sequence_lstm_aux_input::get_examples_blackbox_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
 // Generated from: bidirectional_sequence_lstm_cifg_peephole.mod.py.
 namespace bidirectional_sequence_lstm_cifg_peephole {
 // Generated bidirectional_sequence_lstm_cifg_peephole test
@@ -37553,96 +37593,192 @@ namespace layer_norm_lstm {
 #include "vts_models/layer_norm_lstm.model.cpp"
 } // namespace layer_norm_lstm
 
-TEST_F(NeuralnetworksHidlTest, layer_norm_lstm) {
+TEST_F(NeuralnetworksHidlTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm) {
   generated_tests::Execute(device,
                            layer_norm_lstm::createTestModel,
                            layer_norm_lstm::is_ignored,
-                           layer_norm_lstm::get_examples());
+                           layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm());
 }
 
-TEST_F(ValidationTest, layer_norm_lstm) {
+TEST_F(ValidationTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm) {
   const Model model = layer_norm_lstm::createTestModel();
-  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples());
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, layer_norm_lstm_dynamic_output_shape) {
+TEST_F(DynamicOutputShapeTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape) {
   generated_tests::Execute(device,
                            layer_norm_lstm::createTestModel_dynamic_output_shape,
                            layer_norm_lstm::is_ignored_dynamic_output_shape,
-                           layer_norm_lstm::get_examples_dynamic_output_shape(), true);
+                           layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape(), true);
 }
 
-TEST_F(ValidationTest, layer_norm_lstm_dynamic_output_shape) {
+TEST_F(ValidationTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape) {
   const Model model = layer_norm_lstm::createTestModel_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_dynamic_output_shape());
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #endif
-TEST_F(NeuralnetworksHidlTest, layer_norm_lstm_2) {
+TEST_F(NeuralnetworksHidlTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2) {
   generated_tests::Execute(device,
                            layer_norm_lstm::createTestModel_2,
                            layer_norm_lstm::is_ignored_2,
-                           layer_norm_lstm::get_examples_2());
+                           layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2());
 }
 
-TEST_F(ValidationTest, layer_norm_lstm_2) {
+TEST_F(ValidationTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2) {
   const Model model = layer_norm_lstm::createTestModel_2();
-  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_2());
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, layer_norm_lstm_dynamic_output_shape_2) {
+TEST_F(DynamicOutputShapeTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2) {
   generated_tests::Execute(device,
                            layer_norm_lstm::createTestModel_dynamic_output_shape_2,
                            layer_norm_lstm::is_ignored_dynamic_output_shape_2,
-                           layer_norm_lstm::get_examples_dynamic_output_shape_2(), true);
+                           layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2(), true);
 }
 
-TEST_F(ValidationTest, layer_norm_lstm_dynamic_output_shape_2) {
+TEST_F(ValidationTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2) {
   const Model model = layer_norm_lstm::createTestModel_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_dynamic_output_shape_2());
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #endif
-TEST_F(NeuralnetworksHidlTest, layer_norm_lstm_3) {
+TEST_F(NeuralnetworksHidlTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3) {
   generated_tests::Execute(device,
                            layer_norm_lstm::createTestModel_3,
                            layer_norm_lstm::is_ignored_3,
-                           layer_norm_lstm::get_examples_3());
+                           layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3());
 }
 
-TEST_F(ValidationTest, layer_norm_lstm_3) {
+TEST_F(ValidationTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3) {
   const Model model = layer_norm_lstm::createTestModel_3();
-  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_3());
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3());
   validateModel(model);
   validateRequests(model, requests);
 }
 
 
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
-TEST_F(DynamicOutputShapeTest, layer_norm_lstm_dynamic_output_shape_3) {
+TEST_F(DynamicOutputShapeTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3) {
   generated_tests::Execute(device,
                            layer_norm_lstm::createTestModel_dynamic_output_shape_3,
                            layer_norm_lstm::is_ignored_dynamic_output_shape_3,
-                           layer_norm_lstm::get_examples_dynamic_output_shape_3(), true);
+                           layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3(), true);
 }
 
-TEST_F(ValidationTest, layer_norm_lstm_dynamic_output_shape_3) {
+TEST_F(ValidationTest, layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3) {
   const Model model = layer_norm_lstm::createTestModel_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_dynamic_output_shape_3());
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm) {
+  generated_tests::Execute(device,
+                           layer_norm_lstm::createTestModel_4,
+                           layer_norm_lstm::is_ignored_4,
+                           layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm());
+}
+
+TEST_F(ValidationTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm) {
+  const Model model = layer_norm_lstm::createTestModel_4();
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           layer_norm_lstm::createTestModel_dynamic_output_shape_4,
+                           layer_norm_lstm::is_ignored_dynamic_output_shape_4,
+                           layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape) {
+  const Model model = layer_norm_lstm::createTestModel_dynamic_output_shape_4();
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_2) {
+  generated_tests::Execute(device,
+                           layer_norm_lstm::createTestModel_5,
+                           layer_norm_lstm::is_ignored_5,
+                           layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_2());
+}
+
+TEST_F(ValidationTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_2) {
+  const Model model = layer_norm_lstm::createTestModel_5();
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2) {
+  generated_tests::Execute(device,
+                           layer_norm_lstm::createTestModel_dynamic_output_shape_5,
+                           layer_norm_lstm::is_ignored_dynamic_output_shape_5,
+                           layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2(), true);
+}
+
+TEST_F(ValidationTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2) {
+  const Model model = layer_norm_lstm::createTestModel_dynamic_output_shape_5();
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_3) {
+  generated_tests::Execute(device,
+                           layer_norm_lstm::createTestModel_6,
+                           layer_norm_lstm::is_ignored_6,
+                           layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_3());
+}
+
+TEST_F(ValidationTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_3) {
+  const Model model = layer_norm_lstm::createTestModel_6();
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3) {
+  generated_tests::Execute(device,
+                           layer_norm_lstm::createTestModel_dynamic_output_shape_6,
+                           layer_norm_lstm::is_ignored_dynamic_output_shape_6,
+                           layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3(), true);
+}
+
+TEST_F(ValidationTest, layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3) {
+  const Model model = layer_norm_lstm::createTestModel_dynamic_output_shape_6();
+  const std::vector<Request> requests = createRequests(layer_norm_lstm::get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -84115,6 +84251,110 @@ TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_f16_norm_peephole_pr
 TEST_F(ValidationTest, unidirectional_sequence_lstm_f16_norm_peephole_projection_dynamic_output_shape) {
   const Model model = unidirectional_sequence_lstm_f16_norm_peephole_projection::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(unidirectional_sequence_lstm_f16_norm_peephole_projection::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+// Generated from: unidirectional_sequence_lstm_layer_norm_cifg_peephole.mod.py.
+namespace unidirectional_sequence_lstm_layer_norm_cifg_peephole {
+// Generated unidirectional_sequence_lstm_layer_norm_cifg_peephole test
+#include "examples/unidirectional_sequence_lstm_layer_norm_cifg_peephole.example.cpp"
+// Generated model constructor
+#include "vts_models/unidirectional_sequence_lstm_layer_norm_cifg_peephole.model.cpp"
+} // namespace unidirectional_sequence_lstm_layer_norm_cifg_peephole
+
+TEST_F(NeuralnetworksHidlTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::is_ignored,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples());
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole) {
+  const Model model = unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_relaxed) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel_relaxed,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::is_ignored_relaxed,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_relaxed());
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_relaxed) {
+  const Model model = unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel_relaxed();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_float16) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel_float16,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::is_ignored_float16,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_float16());
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_float16) {
+  const Model model = unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel_dynamic_output_shape,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::is_ignored_dynamic_output_shape,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_dynamic_output_shape) {
+  const Model model = unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_dynamic_output_shape_relaxed) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel_dynamic_output_shape_relaxed,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::is_ignored_dynamic_output_shape_relaxed,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_dynamic_output_shape_relaxed(), true);
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_dynamic_output_shape_relaxed) {
+  const Model model = unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel_dynamic_output_shape_relaxed();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_dynamic_output_shape_relaxed());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel_dynamic_output_shape_float16,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::is_ignored_dynamic_output_shape_float16,
+                           unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_dynamic_output_shape_float16) {
+  const Model model = unidirectional_sequence_lstm_layer_norm_cifg_peephole::createTestModel_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_dynamic_output_shape_float16());
   validateModel(model);
   validateRequests(model, requests);
 }

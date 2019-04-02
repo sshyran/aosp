@@ -100,7 +100,7 @@ inline LSTMParams getLSTMParams(IOperationExecutionContext* context) {
     params.proj_clip = static_cast<float>(context->getInputValue<T>(kProjClipParam));
     params.use_cifg = !hasTensor(context, kInputToInputWeightsTensor);
     params.use_peephole = hasTensor(context, kCellToOutputWeightsTensor);
-    params.use_layer_norm = hasTensor(context, kInputLayerNormWeightsTensor);
+    params.use_layer_norm = hasTensor(context, kOutputLayerNormWeightsTensor);
     params.use_projection_weight = hasTensor(context, kProjectionWeightsTensor);
     params.use_projection_bias = hasTensor(context, kProjectionBiasTensor);
     return params;
@@ -207,6 +207,14 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK_EQ(getSizeOfDimension(recurrentToCellShape, 0), numCells);
     NN_RET_CHECK_EQ(getSizeOfDimension(recurrentToCellShape, 1), outputSize);
 
+    // We make sure the input-gate's parameters are either both present (regular
+    // LSTM) or not at all (CIFG-LSTM).
+    const bool cifgWeightsAllOrNone = (hasTensor(context, kInputToInputWeightsTensor) &&
+                                       hasTensor(context, kRecurrentToInputWeightsTensor)) ||
+                                      (!hasTensor(context, kInputToInputWeightsTensor) &&
+                                       !hasTensor(context, kRecurrentToInputWeightsTensor));
+    NN_RET_CHECK(cifgWeightsAllOrNone);
+
     if (hasTensor(context, kCellToInputWeightsTensor)) {
         const Shape cellToInputShape = context->getInputShape(kCellToInputWeightsTensor);
         NN_RET_CHECK_EQ(getNumberOfDimensions(cellToInputShape), 1);
@@ -225,10 +233,25 @@ bool prepare(IOperationExecutionContext* context) {
         NN_RET_CHECK_EQ(getSizeOfDimension(cellToOutputShape, 0), numCells);
     }
 
-    if (hasTensor(context, kInputGateBiasTensor)) {
+    // Making sure the peephole weights are there all or none.
+    const bool cifgUsed = !hasTensor(context, kInputToInputWeightsTensor);
+    const bool peepholeWeightsAllOrNone =
+            ((hasTensor(context, kCellToInputWeightsTensor) || cifgUsed) &&
+             hasTensor(context, kCellToForgetWeightsTensor) &&
+             hasTensor(context, kCellToOutputWeightsTensor)) ||
+            (!hasTensor(context, kCellToInputWeightsTensor) &&
+             !hasTensor(context, kCellToForgetWeightsTensor) &&
+             !hasTensor(context, kCellToOutputWeightsTensor));
+    NN_RET_CHECK(peepholeWeightsAllOrNone);
+
+    if (!cifgUsed) {
+        NN_RET_CHECK(hasTensor(context, kInputGateBiasTensor));
         const Shape inputGateBiasShape = context->getInputShape(kInputGateBiasTensor);
         NN_RET_CHECK_EQ(getNumberOfDimensions(inputGateBiasShape), 1);
         NN_RET_CHECK_EQ(getSizeOfDimension(inputGateBiasShape, 0), numCells);
+    } else {
+        NN_RET_CHECK(!hasTensor(context, kInputGateBiasTensor))
+                << "Input gate bias tensor is present when CIFG is used";
     }
 
     const Shape forgetGateBiasShape = context->getInputShape(kForgetGateBiasTensor);
@@ -285,6 +308,30 @@ bool prepare(IOperationExecutionContext* context) {
         const Shape outputLayerNormShape = context->getInputShape(kOutputLayerNormWeightsTensor);
         NN_RET_CHECK_EQ(getNumberOfDimensions(outputLayerNormShape), 1);
         NN_RET_CHECK_EQ(getSizeOfDimension(outputLayerNormShape, 0), numCells);
+    }
+
+    if (cifgUsed) {
+        NN_RET_CHECK(!hasTensor(context, kInputLayerNormWeightsTensor))
+                << "Input layer norm weights tensor is present when CIFG is used";
+        const bool layerNormWeightsAllOrNoneCifg =
+                (hasTensor(context, kForgetLayerNormWeightsTensor) &&
+                 hasTensor(context, kCellLayerNormWeightsTensor) &&
+                 hasTensor(context, kOutputLayerNormWeightsTensor)) ||
+                (!hasTensor(context, kForgetLayerNormWeightsTensor) &&
+                 !hasTensor(context, kCellLayerNormWeightsTensor) &&
+                 !hasTensor(context, kOutputLayerNormWeightsTensor));
+        NN_RET_CHECK(layerNormWeightsAllOrNoneCifg);
+    } else {
+        const bool layerNormWeightsAllOrNone =
+                (hasTensor(context, kInputLayerNormWeightsTensor) &&
+                 hasTensor(context, kForgetLayerNormWeightsTensor) &&
+                 hasTensor(context, kCellLayerNormWeightsTensor) &&
+                 hasTensor(context, kOutputLayerNormWeightsTensor)) ||
+                (!hasTensor(context, kInputLayerNormWeightsTensor) &&
+                 !hasTensor(context, kForgetLayerNormWeightsTensor) &&
+                 !hasTensor(context, kCellLayerNormWeightsTensor) &&
+                 !hasTensor(context, kOutputLayerNormWeightsTensor));
+        NN_RET_CHECK(layerNormWeightsAllOrNone);
     }
 
     Shape outputShape = context->getInputShape(kInputTensor);
