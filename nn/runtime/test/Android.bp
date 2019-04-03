@@ -40,6 +40,7 @@ cc_defaults {
         "android.hidl.memory@1.0",
     ],
     static_libs: [
+        "libc++fs",
         "libcrypto",
     ],
     header_libs: [
