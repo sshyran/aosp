@@ -210,13 +210,13 @@ public:
         size_t mNextStepIndex;
     };
 
-    std::vector<std::unique_ptr<ExecutionBurstController>> makeBursts() const;
+    std::vector<std::shared_ptr<ExecutionBurstController>> makeBursts() const;
 
     std::shared_ptr<Controller> makeController(ExecutionBuilder* executionBuilder,
                                                const BurstBuilder* burstBuilder) const;
 
     int next(std::shared_ptr<Controller> controller, std::shared_ptr<StepExecutor>* executor,
-             ExecutionBurstController** burstController = nullptr) const;
+             std::shared_ptr<ExecutionBurstController>* burstController = nullptr) const;
 
     // Create the same executor as the last one created by next().
     int fallback(std::shared_ptr<Controller> controller, std::shared_ptr<StepExecutor>* executor) const;
