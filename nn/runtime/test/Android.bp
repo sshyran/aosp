@@ -108,6 +108,8 @@ cc_defaults {
         "TestPartitioningRandom.cpp",
         "TestIntrospectionControl.cpp",
         "TestExtensions.cpp",
+        "fibonacci_extension/FibonacciExtensionTest.cpp",
+        "fibonacci_extension/FibonacciDriver.cpp",
     ],
     static_libs: [
         "libgmock",
@@ -120,6 +122,7 @@ cc_defaults {
     ],
     header_libs: [
         "libneuralnetworks_private_headers",
+        "neuralnetworks_test_vendor_fibonacci_extension",
     ],
     test_suites: [
         "general-tests",
