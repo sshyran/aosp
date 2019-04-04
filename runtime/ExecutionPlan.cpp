@@ -643,11 +643,11 @@ ExecutionPlan::Controller::Controller(
 // indicate the regular execution path should be used. This can occur either
 // because PreparedModel was nullptr (cpu was best choice), or because the
 // IPreparedModel was of insufficient version or failed to configure the burst.
-std::vector<std::unique_ptr<ExecutionBurstController>> ExecutionPlan::makeBursts() const {
+std::vector<std::shared_ptr<ExecutionBurstController>> ExecutionPlan::makeBursts() const {
     switch (mState) {
         // burst object for each partition in the compound case
         case COMPOUND: {
-            std::vector<std::unique_ptr<ExecutionBurstController>> bursts;
+            std::vector<std::shared_ptr<ExecutionBurstController>> bursts;
             bursts.reserve(compound()->mSteps.size());
             for (const auto& step : compound()->mSteps) {
                 if (const auto preparedModel = step->getPreparedSubModel()) {
@@ -660,7 +660,7 @@ std::vector<std::unique_ptr<ExecutionBurstController>> ExecutionPlan::makeBursts
         }
         // single burst object for the simple case
         case SIMPLE: {
-            std::vector<std::unique_ptr<ExecutionBurstController>> burst;
+            std::vector<std::shared_ptr<ExecutionBurstController>> burst;
             auto simpleBody = static_cast<const SimpleBody*>(mBody);
             if (const auto preparedModel = simpleBody->mPreparedModel) {
                 burst.push_back(preparedModel->configureExecutionBurst(/*blocking=*/true));
@@ -756,7 +756,7 @@ int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
 
 int ExecutionPlan::next(std::shared_ptr<Controller> controller,
                         std::shared_ptr<StepExecutor>* executor,
-                        ExecutionBurstController** burstController) const {
+                        std::shared_ptr<ExecutionBurstController>* burstController) const {
     *executor = nullptr;
     if (burstController != nullptr) {
         *burstController = nullptr;

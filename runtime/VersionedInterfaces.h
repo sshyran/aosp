@@ -636,7 +636,7 @@ class VersionedIPreparedModel {
      *                                  nullptr is returned if the burst cannot
      *                                  be configured for any reason.
      */
-    std::unique_ptr<ExecutionBurstController> configureExecutionBurst(bool blocking) const;
+    std::shared_ptr<ExecutionBurstController> configureExecutionBurst(bool blocking) const;
 
     /**
      * Returns whether this handle to an IPreparedModel object is valid or not.

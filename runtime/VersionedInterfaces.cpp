@@ -183,7 +183,7 @@ VersionedIPreparedModel::executeSynchronously(const Request& request, MeasureTim
     }
 }
 
-std::unique_ptr<ExecutionBurstController> VersionedIPreparedModel::configureExecutionBurst(
+std::shared_ptr<ExecutionBurstController> VersionedIPreparedModel::configureExecutionBurst(
         bool blocking) const {
     if (mPreparedModelV1_2 != nullptr) {
         return ExecutionBurstController::create(mPreparedModelV1_2, blocking);
