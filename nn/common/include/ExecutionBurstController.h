@@ -24,6 +24,7 @@
 #include <map>
 #include <memory>
 #include <mutex>
+#include <stack>
 #include <tuple>
 #include "HalInterfaces.h"
 
@@ -93,11 +94,12 @@ class ExecutionBurstController {
 
        private:
         int32_t getSlotLocked(const hidl_memory& memory, intptr_t key);
+        int32_t allocateSlotLocked();
 
         std::mutex mMutex;
-        int32_t mNextSlot = 0;
-        std::map<intptr_t, int32_t> mMemoryIdToSlotCache;
-        std::map<int32_t, hidl_memory> mSlotToMemoryCache;
+        std::stack<int32_t, std::vector<int32_t>> mFreeSlots;
+        std::map<intptr_t, int32_t> mMemoryIdToSlot;
+        std::vector<hidl_memory> mMemoryCache;
     };
 
    public:
@@ -150,6 +152,7 @@ class ExecutionBurstController {
     std::tuple<ErrorStatus, std::vector<OutputShape>, Timing> deserialize(
             const std::vector<FmqResultDatum>& data);
 
+    std::mutex mMutex;
     const std::unique_ptr<FmqRequestChannel> mFmqRequestChannel;
     const std::unique_ptr<FmqResultChannel> mFmqResultChannel;
     const sp<IBurstContext> mBurstContext;
