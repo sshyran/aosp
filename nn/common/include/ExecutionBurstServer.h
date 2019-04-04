@@ -22,8 +22,7 @@
 #include <hidl/MQDescriptor.h>
 #include <atomic>
 #include <future>
-#include <map>
-#include <set>
+#include <vector>
 #include "HalInterfaces.h"
 
 namespace android::nn {
@@ -62,7 +61,7 @@ class ExecutionBurstServer : public IBurstContext {
        private:
         std::mutex mMutex;
         const sp<IBurstCallback> mCallback;
-        std::map<int32_t, hidl_memory> mSlotToMemoryCache;
+        std::vector<hidl_memory> mMemoryCache;
     };
 
    public:

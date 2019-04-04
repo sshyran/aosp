@@ -22,19 +22,21 @@
 
 #include <cutils/native_handle.h>
 #include <sys/mman.h>
+#include <mutex>
 #include <unordered_map>
 #include "vndk/hardware_buffer.h"
 
 namespace android {
 namespace nn {
 
+class ExecutionBurstController;
 class ModelBuilder;
 
 // Represents a memory region.
 class Memory {
    public:
     Memory() {}
-    virtual ~Memory() {}
+    virtual ~Memory();
 
     // Disallow copy semantics to ensure the runtime object can only be freed
     // once. Copy semantics could be enabled if some sort of reference counting
@@ -60,11 +62,30 @@ class Memory {
 
     virtual bool validateSize(uint32_t offset, uint32_t length) const;
 
+    // Unique key representing this memory object.
+    intptr_t getKey() const;
+
+    // Marks a burst object as currently using this memory. When this
+    // memory object is destroyed, it will automatically free this memory from
+    // the bursts' memory cache.
+    void usedBy(const std::shared_ptr<ExecutionBurstController>& burst) const;
+
    protected:
     // The hidl_memory handle for this shared memory.  We will pass this value when
     // communicating with the drivers.
     hardware::hidl_memory mHidlMemory;
     sp<IMemory> mMemory;
+
+    mutable std::mutex mMutex;
+    // mUsedBy is essentially a set of burst objects which use this Memory
+    // object. However, std::weak_ptr does not have comparison operations nor a
+    // std::hash implementation. This is because it is either a valid pointer
+    // (non-null) if the shared object is still alive, or it is null if the
+    // object has been freed. To circumvent this, mUsedBy is a map with the raw
+    // pointer as the key and the weak_ptr as the value.
+    mutable std::unordered_map<const ExecutionBurstController*,
+                               std::weak_ptr<ExecutionBurstController>>
+            mUsedBy;
 };
 
 class MemoryFd : public Memory {
