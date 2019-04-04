@@ -21,11 +21,13 @@
 #include "NeuralNetworks.h"
 #include "NeuralNetworksExtensions.h"
 #include "SampleDriver.h"
+#include "TypeManager.h"
 
 namespace {
 
 using DeviceManager = ::android::nn::DeviceManager;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
+using TypeManager = ::android::nn::TypeManager;
 
 const char* kTestDriverName = "extensions-test-driver";
 const char* kTestExtension1 = "vendor.test.one";
@@ -67,11 +69,16 @@ class ExtensionsTest : public ::testing::Test {
         }
 
         DeviceManager::get()->forTest_registerDevice(kTestDriverName, new TestDriver());
+        // Discover extensions provided by registered devices.
+        TypeManager::get()->forTest_reset();
         mDevice = getDeviceByName(kTestDriverName);
         ASSERT_NE(mDevice, nullptr);
     }
 
-    virtual void TearDown() { DeviceManager::get()->forTest_reInitializeDeviceList(); }
+    virtual void TearDown() {
+        DeviceManager::get()->forTest_reInitializeDeviceList();
+        TypeManager::get()->forTest_reset();
+    }
 
     ANeuralNetworksDevice* getDeviceByName(const std::string& name) {
         ANeuralNetworksDevice* result = nullptr;
