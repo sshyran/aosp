@@ -18,11 +18,20 @@
 
 #include "Memory.h"
 
+#include "ExecutionBurstController.h"
 #include "HalInterfaces.h"
 #include "Utils.h"
 
 namespace android {
 namespace nn {
+
+Memory::~Memory() {
+    for (const auto [ptr, weakBurst] : mUsedBy) {
+        if (const std::shared_ptr<ExecutionBurstController> burst = weakBurst.lock()) {
+            burst->freeMemory(getKey());
+        }
+    }
+}
 
 int Memory::create(uint32_t size) {
     mHidlMemory = allocateSharedMemory(size);
@@ -41,6 +50,15 @@ bool Memory::validateSize(uint32_t offset, uint32_t length) const {
     } else {
         return true;
     }
+}
+
+intptr_t Memory::getKey() const {
+    return reinterpret_cast<intptr_t>(this);
+}
+
+void Memory::usedBy(const std::shared_ptr<ExecutionBurstController>& burst) const {
+    std::lock_guard<std::mutex> guard(mMutex);
+    mUsedBy.emplace(burst.get(), burst);
 }
 
 MemoryFd::~MemoryFd() {
