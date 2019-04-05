@@ -437,6 +437,19 @@ bool validate(const IOperationValidationContext* context) {
         NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << kOperationName;
     }
 
+    // NeuralNetworks.h specifies that ANEURALNETWORKS_CONV_2D's output must
+    // meet "outputScale > inputScale * filterScale" for the operand type
+    // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM before API level 29. For other
+    // operand types (e.g., ANEURALNETWORKS_TENSOR_FLOAT32), this constraint
+    // does not apply, so by default the constraint is met.
+    bool meetsQuantizedScaleConstraintBeforeV1_2 = true;
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+        const float inputScale = context->getInputShape(kInputTensor).scale;
+        const float filterScale = context->getInputShape(kFilterTensor).scale;
+        const float outputScale = context->getInputShape(kOutputTensor).scale;
+        meetsQuantizedScaleConstraintBeforeV1_2 = (outputScale > inputScale * filterScale);
+    }
+
     bool withExplicitPadding = false;
     bool withLayout = false;
     bool withDilation = false;
@@ -462,7 +475,8 @@ bool validate(const IOperationValidationContext* context) {
         }
     }
 
-    if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout || withDilation) {
+    if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout || withDilation ||
+        !meetsQuantizedScaleConstraintBeforeV1_2) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
     } else {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
