@@ -28681,7 +28681,7 @@ inline bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_float16(int i) {
 }
 
 // Create the model
-Model createTestModel() {
+Model createTestModel_quant_output_multiplier_gt_1() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -28782,13 +28782,13 @@ Model createTestModel() {
     };
 }
 
-inline bool is_ignored(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_relaxed() {
+Model createTestModel_quant_output_multiplier_gt_1_relaxed() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -28890,13 +28890,13 @@ Model createTestModel_relaxed() {
     };
 }
 
-inline bool is_ignored_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_weight_as_input() {
+Model createTestModel_quant_output_multiplier_gt_1_weight_as_input() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -28997,13 +28997,13 @@ Model createTestModel_weight_as_input() {
     };
 }
 
-inline bool is_ignored_weight_as_input(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_weight_as_input_relaxed() {
+Model createTestModel_quant_output_multiplier_gt_1_weight_as_input_relaxed() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -29105,13 +29105,13 @@ Model createTestModel_weight_as_input_relaxed() {
     };
 }
 
-inline bool is_ignored_weight_as_input_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_dynamic_output_shape() {
+Model createTestModel_quant_output_multiplier_gt_1_dynamic_output_shape() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -29212,13 +29212,13 @@ Model createTestModel_dynamic_output_shape() {
     };
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_dynamic_output_shape_relaxed() {
+Model createTestModel_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -29320,13 +29320,13 @@ Model createTestModel_dynamic_output_shape_relaxed() {
     };
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_dynamic_output_shape_weight_as_input() {
+Model createTestModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -29427,13 +29427,13 @@ Model createTestModel_dynamic_output_shape_weight_as_input() {
     };
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_dynamic_output_shape_weight_as_input_relaxed() {
+Model createTestModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
@@ -29535,7 +29535,7 @@ Model createTestModel_dynamic_output_shape_weight_as_input_relaxed() {
     };
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
