@@ -19,6 +19,7 @@
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
+#include "OperationsUtils.h"
 
 #include "Tracing.h"
 
@@ -151,7 +152,9 @@ BidirectionalSequenceLSTM::BidirectionalSequenceLSTM(const Operation& operation,
     params_.use_layer_norm = !IsNullInput(fw_input_layer_norm_weights_);
 
     fw_output_ = GetOutput(operation, operands, kFwOutputTensor);
-    bw_output_ = GetOutput(operation, operands, kBwOutputTensor);
+    if (!params_.merge_outputs) {
+        bw_output_ = GetOutput(operation, operands, kBwOutputTensor);
+    }
 }
 
 bool BidirectionalSequenceLSTM::Prepare(const Operation& operation,
@@ -263,6 +266,15 @@ bool BidirectionalSequenceLSTM::Prepare(const Operation& operation,
 
 bool BidirectionalSequenceLSTM::Eval() {
     const uint32_t n_fw_output = SizeOfDimension(fw_recurrent_to_output_weights_, 1);
+    const uint32_t n_bw_output = SizeOfDimension(bw_recurrent_to_output_weights_, 1);
+    std::vector<uint32_t> fw_output_dims = input_->shape().dimensions;
+    fw_output_dims[2] = n_fw_output;
+    std::vector<uint32_t> bw_output_dims = fw_output_dims;
+    bw_output_dims[2] = n_bw_output;
+    const uint32_t n_fw_output_elements = fw_output_dims[0] * fw_output_dims[1] * fw_output_dims[2];
+    const uint32_t n_output_elements =
+            fw_output_dims[0] * fw_output_dims[1] * (fw_output_dims[2] + bw_output_dims[2]);
+
     switch (input_->type) {
         case OperandType::TENSOR_FLOAT32: {
             std::vector<float> fw_scratch_buffer(getNumberOfElements(fw_scratch_shape_));
@@ -338,9 +350,17 @@ bool BidirectionalSequenceLSTM::Eval() {
                     GetOptionalBuffer<const float>(bw_cell_layer_norm_weights_),
                     GetOptionalBuffer<const float>(bw_output_layer_norm_weights_),
                     GetBuffer<float>(bw_activation_state_), GetBuffer<float>(bw_cell_state_),
-                    params_.merge_outputs ? GetBuffer<float>(fw_output_) + n_fw_output
+                    params_.merge_outputs ? GetBuffer<float>(fw_output_) + n_fw_output_elements
                                           : GetBuffer<float>(bw_output_),
                     bw_scratch_buffer.data(), params_.time_major, kBackwardSequence);
+            if (params_.merge_outputs) {
+                std::vector<float> temp(n_output_elements);
+                mergeThirdDimension(GetBuffer<float>(fw_output_), fw_output_dims,
+                                    GetBuffer<float>(fw_output_) + n_fw_output_elements,
+                                    bw_output_dims, temp.data());
+                std::copy(temp.data(), temp.data() + n_output_elements,
+                          GetBuffer<float>(fw_output_));
+            }
         } break;
         case OperandType::TENSOR_FLOAT16: {
             std::vector<_Float16> fw_scratch_buffer(getNumberOfElements(fw_scratch_shape_));
@@ -416,9 +436,17 @@ bool BidirectionalSequenceLSTM::Eval() {
                     GetOptionalBuffer<const _Float16>(bw_cell_layer_norm_weights_),
                     GetOptionalBuffer<const _Float16>(bw_output_layer_norm_weights_),
                     GetBuffer<_Float16>(bw_activation_state_), GetBuffer<_Float16>(bw_cell_state_),
-                    params_.merge_outputs ? GetBuffer<_Float16>(fw_output_) + n_fw_output
+                    params_.merge_outputs ? GetBuffer<_Float16>(fw_output_) + n_fw_output_elements
                                           : GetBuffer<_Float16>(bw_output_),
                     bw_scratch_buffer.data(), params_.time_major, kBackwardSequence);
+            if (params_.merge_outputs) {
+                std::vector<_Float16> temp(n_output_elements);
+                mergeThirdDimension(GetBuffer<_Float16>(fw_output_), fw_output_dims,
+                                    GetBuffer<_Float16>(fw_output_) + n_fw_output_elements,
+                                    bw_output_dims, temp.data());
+                std::copy(temp.data(), temp.data() + n_output_elements,
+                          GetBuffer<_Float16>(fw_output_));
+            }
         } break;
         default: {
             LOG(ERROR) << "Unsupported data type: " << static_cast<int>(input_->type);
