@@ -5529,7 +5529,10 @@ int ANeuralNetworksMemory_createFromAHardwareBuffer(const AHardwareBuffer* ahwb,
         __INTRODUCED_IN(29);
 
 /**
- * Specifies whether duration of the {@link ANeuralNetworksExecution} is to be measured.
+
+ * Specifies whether duration of the {@link ANeuralNetworksExecution} is to be
+ * measured. Evaluation of the execution must not have been scheduled.
+ *
  * By default, duration is not measured.
  *
  * The {@link ANeuralNetworksExecution} must have been created with
@@ -6051,7 +6054,8 @@ void ANeuralNetworksExecution_free(ANeuralNetworksExecution* execution) __INTROD
 
 /**
  * Associate a user buffer with an input of the model of the
- * {@link ANeuralNetworksExecution}.
+ * {@link ANeuralNetworksExecution}. Evaluation of the execution must not have
+ * been scheduled.
  *
  * <p>The provided buffer must outlive the execution.</p>
  *
@@ -6090,7 +6094,8 @@ int ANeuralNetworksExecution_setInput(ANeuralNetworksExecution* execution, int32
 
 /**
  * Associate part of a memory object with an input of the model of the
- * {@link ANeuralNetworksExecution}.
+ * {@link ANeuralNetworksExecution}. Evaluation of the execution must not have
+ * been scheduled.
  *
  * <p>The provided memory must outlive the execution.</p>
  *
@@ -6133,7 +6138,8 @@ int ANeuralNetworksExecution_setInputFromMemory(ANeuralNetworksExecution* execut
 
 /**
  * Associate a user buffer with an output of the model of the
- * {@link ANeuralNetworksExecution}.
+ * {@link ANeuralNetworksExecution}. Evaluation of the execution must not have
+ * been scheduled.
  *
  * If the output is optional, you can indicate that it is omitted by
  * passing nullptr for buffer and 0 for length.
@@ -6177,7 +6183,8 @@ int ANeuralNetworksExecution_setOutput(ANeuralNetworksExecution* execution, int3
 
 /**
  * Associate part of a memory object with an output of the model of the
- * {@link ANeuralNetworksExecution}.
+ * {@link ANeuralNetworksExecution}. Evaluation of the execution must not have
+ * been scheduled.
  *
  * If the output is optional, you can indicate that it is omitted by
  * using {@link ANeuralNetworksExecution_setOutput} instead, passing nullptr for
