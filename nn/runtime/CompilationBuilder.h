@@ -35,8 +35,12 @@ class CompilationBuilder {
 public:
     friend class ExecutionBuilder;  // TODO remove this
 
+    // explicitDeviceList is true if the list of devices was provided explicitly
+    // via the ANeuralNetworksModel_createForDevices API (which has certain
+    // special semantics) and false otherwise.
     CompilationBuilder(const ModelBuilder* model,
-                       const std::vector<std::shared_ptr<Device>>& devices);
+                       const std::vector<std::shared_ptr<Device>>& devices,
+                       bool explicitDeviceList = false);
 
     int setPreference(int32_t preference);
 
@@ -72,6 +76,11 @@ private:
     // The set of devices that the partitioning algorithm operates on when
     // finish() is called.
     std::vector<std::shared_ptr<Device>> mDevices;
+
+    // mExplicitDeviceList is true if the list of devices was provided
+    // explicitly via the ANeuralNetworksModel_createForDevices API (which has
+    // certain special semantics) and false otherwise.
+    bool mExplicitDeviceList;
 
     // Compilation caching information.
     std::string mCacheDir;

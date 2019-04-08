@@ -379,7 +379,7 @@ class ExecutionCallback : public CallbackBase,  public IExecutionCallback {
     const std::vector<OutputShape>& getOutputShapes();
 
     /**
-     * Retrieves the duration of execution ofthe asynchronous task launched
+     * Retrieves the duration of execution of the asynchronous task launched
      * by IPreparedModel::execute_1_2. If IPreparedModel::execute_1_2 has not finished
      * asynchronously executing, this call will block until the asynchronous task
      * notifies the object.
