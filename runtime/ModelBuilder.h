@@ -61,9 +61,12 @@ class ModelBuilder {
     bool hasOEMOperation() const { return mHasOEMOperation; }
     bool hasExtensionOperation() const { return mHasExtensionOperation; }
 
+    // explicitDeviceList is true if the list of devices was provided explicitly
+    // via the ANeuralNetworksModel_createForDevices API (which has certain
+    // special semantics) and false otherwise.
     int createCompilation(CompilationBuilder** compilation,
                           const std::vector<std::shared_ptr<Device>>& devices,
-                          bool forceNoFallback = false);
+                          bool explicitDeviceList = false);
 
     void setHidlModel(Model* model) const;
 
