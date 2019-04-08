@@ -1213,8 +1213,11 @@ typedef enum {
      *   value if the recurrent projection layer exists, and should otherwise
      *   have no value.
      * * (API level >= 29) The four layer normalization weights either all have
-     *   values or none of them have values. Layer normalization is used when
-     *   values are present.
+     *   values or none of them have values. Additionally, if CIFG is used,
+     *   input layer normalization weights tensor is omitted and the other layer
+     *   normalization weights either all have values or none of them have
+     *   values. Layer normalization is used when the values of all the layer
+     *   normalization weights are present.
      *
      * References:
      *
