@@ -30,8 +30,13 @@ namespace android {
 namespace nn {
 
 CompilationBuilder::CompilationBuilder(const ModelBuilder* model,
-                                       const std::vector<std::shared_ptr<Device>>& devices)
-    : mModel(model), mPartitioning(DeviceManager::get()->getPartitioning()), mDevices(devices) {
+                                       const std::vector<std::shared_ptr<Device>>& devices,
+                                       bool explicitDeviceList)
+    : mModel(model),
+      mPartitioning(explicitDeviceList ? DeviceManager::kPartitioningWithoutFallback
+                                       : DeviceManager::get()->getPartitioning()),
+      mDevices(devices),
+      mExplicitDeviceList(explicitDeviceList) {
     VLOG(COMPILATION) << "CompilationBuilder::CompilationBuilder";
 }
 
