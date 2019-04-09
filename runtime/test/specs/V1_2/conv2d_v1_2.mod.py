@@ -199,7 +199,7 @@ f9 = Parameter("op2", ("TENSOR_QUANT8_ASYMM", [3, 2, 2, 1], scale, zero_point),
                [129, 130, 131, 132, 127, 129, 127, 129, 127, 127, 129, 129])
 b9 = Parameter("op3", ("TENSOR_INT32", [3], scale * scale, 0), [1, 2, 3])
 o9 = Output("op4", ("TENSOR_QUANT8_ASYMM", [2, 1, 2, 3], 1.0, 127))
-model9 = Model().Operation("CONV_2D", i9, f9, b9, 2, 2, 2, 0).To(o9)
+model9 = Model("quant_output_multiplier_gt_1").Operation("CONV_2D", i9, f9, b9, 2, 2, 2, 0).To(o9)
 
 # Instantiate an example
 example = Example({
@@ -208,7 +208,7 @@ example = Example({
         131, 132
     ],
     o9: [145, 129, 132, 145, 129, 132, 144, 131, 130, 164, 131, 130]
-}, model=model9, name="quant_output_multiplier_gt_1").AddInput(f9, b9).AddVariations("relaxed")
+}, model=model9).AddInput(f9, b9).AddVariations("relaxed")
 
 
 # TEST 10: zero-sized input, explicit padding
