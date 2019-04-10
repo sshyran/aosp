@@ -51470,6 +51470,51 @@ TEST_F(ValidationTest, prelu_quant8) {
 }
 
 
+TEST_F(NeuralnetworksHidlTest, prelu_quant8_2) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_quant8_2,
+                           prelu::is_ignored_quant8_2,
+                           prelu::get_examples_quant8_2());
+}
+
+TEST_F(ValidationTest, prelu_quant8_2) {
+  const Model model = prelu::createTestModel_quant8_2();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, prelu_quant8_3) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_quant8_3,
+                           prelu::is_ignored_quant8_3,
+                           prelu::get_examples_quant8_3());
+}
+
+TEST_F(ValidationTest, prelu_quant8_3) {
+  const Model model = prelu::createTestModel_quant8_3();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_quant8_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, prelu_quant8_4) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_quant8_4,
+                           prelu::is_ignored_quant8_4,
+                           prelu::get_examples_quant8_4());
+}
+
+TEST_F(ValidationTest, prelu_quant8_4) {
+  const Model model = prelu::createTestModel_quant8_4();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_quant8_4());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
 TEST_F(NeuralnetworksHidlTest, prelu_float16) {
   generated_tests::Execute(device,
                            prelu::createTestModel_float16,
@@ -51525,6 +51570,51 @@ TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input_quant8) {
 TEST_F(ValidationTest, prelu_weight_as_input_quant8) {
   const Model model = prelu::createTestModel_weight_as_input_quant8();
   const std::vector<Request> requests = createRequests(prelu::get_examples_weight_as_input_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input_quant8_2) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_weight_as_input_quant8_2,
+                           prelu::is_ignored_weight_as_input_quant8_2,
+                           prelu::get_examples_weight_as_input_quant8_2());
+}
+
+TEST_F(ValidationTest, prelu_weight_as_input_quant8_2) {
+  const Model model = prelu::createTestModel_weight_as_input_quant8_2();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_weight_as_input_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input_quant8_3) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_weight_as_input_quant8_3,
+                           prelu::is_ignored_weight_as_input_quant8_3,
+                           prelu::get_examples_weight_as_input_quant8_3());
+}
+
+TEST_F(ValidationTest, prelu_weight_as_input_quant8_3) {
+  const Model model = prelu::createTestModel_weight_as_input_quant8_3();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_weight_as_input_quant8_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, prelu_weight_as_input_quant8_4) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_weight_as_input_quant8_4,
+                           prelu::is_ignored_weight_as_input_quant8_4,
+                           prelu::get_examples_weight_as_input_quant8_4());
+}
+
+TEST_F(ValidationTest, prelu_weight_as_input_quant8_4) {
+  const Model model = prelu::createTestModel_weight_as_input_quant8_4();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_weight_as_input_quant8_4());
   validateModel(model);
   validateRequests(model, requests);
 }
@@ -51597,6 +51687,57 @@ TEST_F(ValidationTest, prelu_dynamic_output_shape_quant8) {
 
 #endif
 #ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_quant8_2) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_dynamic_output_shape_quant8_2,
+                           prelu::is_ignored_dynamic_output_shape_quant8_2,
+                           prelu::get_examples_dynamic_output_shape_quant8_2(), true);
+}
+
+TEST_F(ValidationTest, prelu_dynamic_output_shape_quant8_2) {
+  const Model model = prelu::createTestModel_dynamic_output_shape_quant8_2();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_dynamic_output_shape_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_quant8_3) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_dynamic_output_shape_quant8_3,
+                           prelu::is_ignored_dynamic_output_shape_quant8_3,
+                           prelu::get_examples_dynamic_output_shape_quant8_3(), true);
+}
+
+TEST_F(ValidationTest, prelu_dynamic_output_shape_quant8_3) {
+  const Model model = prelu::createTestModel_dynamic_output_shape_quant8_3();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_dynamic_output_shape_quant8_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_quant8_4) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_dynamic_output_shape_quant8_4,
+                           prelu::is_ignored_dynamic_output_shape_quant8_4,
+                           prelu::get_examples_dynamic_output_shape_quant8_4(), true);
+}
+
+TEST_F(ValidationTest, prelu_dynamic_output_shape_quant8_4) {
+  const Model model = prelu::createTestModel_dynamic_output_shape_quant8_4();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_dynamic_output_shape_quant8_4());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_float16) {
   generated_tests::Execute(device,
                            prelu::createTestModel_dynamic_output_shape_float16,
@@ -51658,6 +51799,57 @@ TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_weight_as_input_quant8
 TEST_F(ValidationTest, prelu_dynamic_output_shape_weight_as_input_quant8) {
   const Model model = prelu::createTestModel_dynamic_output_shape_weight_as_input_quant8();
   const std::vector<Request> requests = createRequests(prelu::get_examples_dynamic_output_shape_weight_as_input_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_weight_as_input_quant8_2) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_dynamic_output_shape_weight_as_input_quant8_2,
+                           prelu::is_ignored_dynamic_output_shape_weight_as_input_quant8_2,
+                           prelu::get_examples_dynamic_output_shape_weight_as_input_quant8_2(), true);
+}
+
+TEST_F(ValidationTest, prelu_dynamic_output_shape_weight_as_input_quant8_2) {
+  const Model model = prelu::createTestModel_dynamic_output_shape_weight_as_input_quant8_2();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_dynamic_output_shape_weight_as_input_quant8_2());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_weight_as_input_quant8_3) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_dynamic_output_shape_weight_as_input_quant8_3,
+                           prelu::is_ignored_dynamic_output_shape_weight_as_input_quant8_3,
+                           prelu::get_examples_dynamic_output_shape_weight_as_input_quant8_3(), true);
+}
+
+TEST_F(ValidationTest, prelu_dynamic_output_shape_weight_as_input_quant8_3) {
+  const Model model = prelu::createTestModel_dynamic_output_shape_weight_as_input_quant8_3();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_dynamic_output_shape_weight_as_input_quant8_3());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_weight_as_input_quant8_4) {
+  generated_tests::Execute(device,
+                           prelu::createTestModel_dynamic_output_shape_weight_as_input_quant8_4,
+                           prelu::is_ignored_dynamic_output_shape_weight_as_input_quant8_4,
+                           prelu::get_examples_dynamic_output_shape_weight_as_input_quant8_4(), true);
+}
+
+TEST_F(ValidationTest, prelu_dynamic_output_shape_weight_as_input_quant8_4) {
+  const Model model = prelu::createTestModel_dynamic_output_shape_weight_as_input_quant8_4();
+  const std::vector<Request> requests = createRequests(prelu::get_examples_dynamic_output_shape_weight_as_input_quant8_4());
   validateModel(model);
   validateRequests(model, requests);
 }
