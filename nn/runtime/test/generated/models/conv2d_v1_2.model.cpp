@@ -10570,7 +10570,7 @@ inline bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_float16(int i) {
   return ignore.find(i) != ignore.end();
 }
 
-void CreateModel(Model *model) {
+void CreateModel_quant_output_multiplier_gt_1(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
   OperandType type17(Type::TENSOR_QUANT8_ASYMM, {3, 2, 2, 1}, 1.0058823529411764f, 128);
   OperandType type18(Type::TENSOR_INT32, {3}, 1.0117993079584775f, 0);
@@ -10606,12 +10606,12 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
-void CreateModel_relaxed(Model *model) {
+void CreateModel_quant_output_multiplier_gt_1_relaxed(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
   OperandType type17(Type::TENSOR_QUANT8_ASYMM, {3, 2, 2, 1}, 1.0058823529411764f, 128);
   OperandType type18(Type::TENSOR_INT32, {3}, 1.0117993079584775f, 0);
@@ -10649,12 +10649,12 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
-void CreateModel_weight_as_input(Model *model) {
+void CreateModel_quant_output_multiplier_gt_1_weight_as_input(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
   OperandType type17(Type::TENSOR_QUANT8_ASYMM, {3, 2, 2, 1}, 1.0058823529411764f, 128);
   OperandType type18(Type::TENSOR_INT32, {3}, 1.0117993079584775f, 0);
@@ -10686,12 +10686,12 @@ void CreateModel_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_weight_as_input(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
-void CreateModel_weight_as_input_relaxed(Model *model) {
+void CreateModel_quant_output_multiplier_gt_1_weight_as_input_relaxed(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
   OperandType type17(Type::TENSOR_QUANT8_ASYMM, {3, 2, 2, 1}, 1.0058823529411764f, 128);
   OperandType type18(Type::TENSOR_INT32, {3}, 1.0117993079584775f, 0);
@@ -10725,12 +10725,12 @@ void CreateModel_weight_as_input_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_weight_as_input_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
-void CreateModel_dynamic_output_shape(Model *model) {
+void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
   OperandType type17(Type::TENSOR_QUANT8_ASYMM, {3, 2, 2, 1}, 1.0058823529411764f, 128);
   OperandType type18(Type::TENSOR_INT32, {3}, 1.0117993079584775f, 0);
@@ -10766,12 +10766,12 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
-void CreateModel_dynamic_output_shape_relaxed(Model *model) {
+void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
   OperandType type17(Type::TENSOR_QUANT8_ASYMM, {3, 2, 2, 1}, 1.0058823529411764f, 128);
   OperandType type18(Type::TENSOR_INT32, {3}, 1.0117993079584775f, 0);
@@ -10809,12 +10809,12 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
-void CreateModel_dynamic_output_shape_weight_as_input(Model *model) {
+void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
   OperandType type17(Type::TENSOR_QUANT8_ASYMM, {3, 2, 2, 1}, 1.0058823529411764f, 128);
   OperandType type18(Type::TENSOR_INT32, {3}, 1.0117993079584775f, 0);
@@ -10846,12 +10846,12 @@ void CreateModel_dynamic_output_shape_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
-void CreateModel_dynamic_output_shape_weight_as_input_relaxed(Model *model) {
+void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
   OperandType type17(Type::TENSOR_QUANT8_ASYMM, {3, 2, 2, 1}, 1.0058823529411764f, 128);
   OperandType type18(Type::TENSOR_INT32, {3}, 1.0117993079584775f, 0);
@@ -10885,7 +10885,7 @@ void CreateModel_dynamic_output_shape_weight_as_input_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
