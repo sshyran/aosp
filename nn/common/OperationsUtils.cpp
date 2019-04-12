@@ -288,6 +288,29 @@ int32_t CalculateInputRadius(int input_integer_bits, int input_left_shift) {
     return static_cast<int32_t>(std::floor(max_input_rescaled));
 }
 
+void calculateExplicitPaddingImpl(int32_t in_size, int32_t stride, int32_t dilation_factor,
+                                  int32_t filter_size, int32_t padding_implicit,
+                                  bool isTransposeConv, int32_t* padding_head,
+                                  int32_t* padding_tail) {
+    *padding_head = 0;
+    *padding_tail = 0;
+
+    int32_t effective_filter_size = (filter_size - 1) * dilation_factor + 1;
+
+    if (padding_implicit == kPaddingSame) {
+        int32_t out_size = (in_size + stride - 1) / stride;
+        int32_t tmp = (out_size - 1) * stride + effective_filter_size;
+        if (tmp > in_size) {
+            *padding_head = (tmp - in_size) / 2;
+            *padding_tail = (tmp - in_size) - *padding_head;
+        }
+        // For transpose conv, make padding tail fit tightly to the end of the last stride.
+        if (isTransposeConv) {
+            *padding_tail = (tmp - in_size) - *padding_head;
+        }
+    }
+}
+
 bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
     NN_RET_CHECK(in1.type == in2.type);
     uint32_t numberOfDims1 = getNumberOfDimensions(in1);
@@ -353,10 +376,12 @@ bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& 
     uint32_t batches      = getSizeOfDimension(input, 0);
 
     NN_OPS_CHECK(depth_multiplier * channels_in == channels_out);
-    NN_RET_CHECK_GT(filterWidth, padding_left);
-    NN_RET_CHECK_GT(filterWidth, padding_right);
-    NN_RET_CHECK_GT(filterHeight, padding_top);
-    NN_RET_CHECK_GT(filterHeight, padding_bottom);
+    int32_t effectiveFilterWidth = (filterWidth - 1) * dilation_width_factor + 1;
+    int32_t effectiveFilterHeight = (filterHeight - 1) * dilation_height_factor + 1;
+    NN_RET_CHECK_GT(effectiveFilterWidth, padding_left);
+    NN_RET_CHECK_GT(effectiveFilterWidth, padding_right);
+    NN_RET_CHECK_GT(effectiveFilterHeight, padding_top);
+    NN_RET_CHECK_GT(effectiveFilterHeight, padding_bottom);
 
     uint32_t outWidth = computeOutSize(width, filterWidth, stride_width, dilation_width_factor,
                                        padding_left, padding_right);
@@ -869,10 +894,10 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
     uint32_t filterHeight = getSizeOfDimension(filter, 1);
     uint32_t batches = getSizeOfDimension(input, 0);
 
-    NN_RET_CHECK_GT(filterWidth, padding_left);
-    NN_RET_CHECK_GT(filterWidth, padding_right);
-    NN_RET_CHECK_GT(filterHeight, padding_top);
-    NN_RET_CHECK_GT(filterHeight, padding_bottom);
+    NN_RET_CHECK_GT(static_cast<int32_t>(filterWidth), padding_left);
+    NN_RET_CHECK_GT(static_cast<int32_t>(filterWidth), padding_right);
+    NN_RET_CHECK_GT(static_cast<int32_t>(filterHeight), padding_top);
+    NN_RET_CHECK_GT(static_cast<int32_t>(filterHeight), padding_bottom);
 
     uint32_t outWidth =
             computeOutSize(width, filterWidth, stride_width, padding_left, padding_right);
