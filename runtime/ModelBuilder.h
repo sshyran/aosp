@@ -35,7 +35,7 @@ class Memory;
 
 class ModelBuilder {
    public:
-    ModelBuilder();
+    ModelBuilder() {}
     // Returns an operand/operation type corresponding to a given extension operand/operation type.
     int getExtensionType(const char* extensionName, uint16_t typeWithinExtension, int32_t* type);
     // Adds an operand to the model.
@@ -166,8 +166,6 @@ class ModelBuilder {
     // No further modifications are allowed to the model.
     bool mInvalidModel = false;
 
-    // True if Extensions can be used in the model.
-    bool mExtensionsAllowed = false;
 
     // 'true' indicates TENSOR_FLOAT32 may be calculated with range and/or
     // precision as low as that of the IEEE 754 16-bit floating-point format.
