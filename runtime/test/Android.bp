@@ -23,6 +23,7 @@ cc_defaults {
     shared_libs: [
         "libandroid",
         "libbase",
+        "libbinder",
         "libcutils",
         "libfmq",
         "libhidlbase",

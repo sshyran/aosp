@@ -20,10 +20,25 @@
 
 #include "Utils.h"
 
+#include <android-base/properties.h>
+#include <android/content/pm/IPackageManagerNative.h>
+#include <binder/IServiceManager.h>
+#include <procpartition/procpartition.h>
 #include <algorithm>
+#include <string_view>
 
 namespace android {
 namespace nn {
+
+// Replacement function for std::string_view::starts_with()
+// which shall be available in C++20.
+#if __cplusplus >= 202000L
+#error "When upgrading to C++20, remove this error and file a bug to remove this workaround."
+#endif
+inline bool StartsWith(std::string_view sv, std::string_view prefix) {
+    return sv.substr(0u, prefix.size()) == prefix;
+}
+
 namespace {
 
 const uint8_t kLowBitsType = static_cast<uint8_t>(Model::ExtensionTypeEncoding::LOW_BITS_TYPE);
@@ -39,11 +54,95 @@ bool equal(const Extension& a, const Extension& b) {
     return true;
 }
 
+// Property for disabling NNAPI vendor extensions on product image (used on GSI /product image,
+// which can't use NNAPI vendor extensions).
+const char kVExtProductDeny[] = "ro.nnapi.extensions.deny_on_product";
+bool isNNAPIVendorExtensionsUseAllowedInProductImage() {
+    const std::string vExtProductDeny = android::base::GetProperty(kVExtProductDeny, "");
+    return vExtProductDeny.empty();
+}
+
+// Query PackageManagerNative service about Android app properties.
+bool fetchAppPackageLocationInfo(uid_t uid, bool* isSystemApp, bool* isOnVendorImage,
+                                 bool* isOnProductImage) {
+    sp<::android::IServiceManager> sm(::android::defaultServiceManager());
+    sp<::android::IBinder> binder(sm->getService(String16("package_native")));
+    if (binder == nullptr) {
+        LOG(ERROR) << "getService package_native failed";
+        return false;
+    }
+
+    sp<content::pm::IPackageManagerNative> packageMgr =
+            interface_cast<content::pm::IPackageManagerNative>(binder);
+    std::vector<int> uids{static_cast<int>(uid)};
+    std::vector<std::string> names;
+    binder::Status status = packageMgr->getNamesForUids(uids, &names);
+    if (!status.isOk()) {
+        LOG(ERROR) << "package_native::getNamesForUids failed: "
+                   << status.exceptionMessage().c_str();
+        return false;
+    }
+
+    int flags = 0;
+    status = packageMgr->getLocationFlags(names[0], &flags);
+    if (!status.isOk()) {
+        LOG(ERROR) << "package_native::getLocationFlags failed: "
+                   << status.exceptionMessage().c_str();
+        return false;
+    }
+    // isSystemApp()
+    *isSystemApp = ((flags & content::pm::IPackageManagerNative::LOCATION_SYSTEM) != 0);
+    // isVendor()
+    *isOnVendorImage = ((flags & content::pm::IPackageManagerNative::LOCATION_VENDOR) != 0);
+    // isProduct()
+    *isOnProductImage = ((flags & content::pm::IPackageManagerNative::LOCATION_PRODUCT) != 0);
+    return true;
+}
+
+// Check if this process is allowed to use NNAPI Vendor extensions.
+bool isNNAPIVendorExtensionsUseAllowed() {
+    std::string binaryPath = ::android::procpartition::getExe(getpid());
+    bool isSystemApp = false;
+    bool isAppOnVendorImage = false;
+    bool isAppOnProductImage = false;
+
+    if (binaryPath == "/system/bin/app_process64" || binaryPath == "/system/bin/app_process32") {
+        if (!fetchAppPackageLocationInfo(getuid(), &isSystemApp, &isAppOnVendorImage,
+                                         &isAppOnProductImage)) {
+            LOG(ERROR) << "Failed to get app information from package_manager_native";
+            return false;
+        }
+    }
+
+    return TypeManager::isExtensionsUseAllowed(
+            binaryPath, isNNAPIVendorExtensionsUseAllowedInProductImage(), isSystemApp,
+            isAppOnVendorImage, isAppOnProductImage);
+}
+
 }  // namespace
 
 TypeManager::TypeManager() {
     VLOG(MANAGER) << "TypeManager::TypeManager";
+    mExtensionsAllowed = isNNAPIVendorExtensionsUseAllowed();
+    VLOG(MANAGER) << "NNAPI Vendor extensions enabled: " << mExtensionsAllowed;
     findAvailableExtensions();
+}
+
+bool TypeManager::isExtensionsUseAllowed(const std::string& binaryPath,
+                                         bool useOnProductImageEnabled, bool isSystemApp,
+                                         bool isAppOnVendorImage, bool isAppOnProductImage) {
+    // Only selected partitions and user-installed apps (/data)
+    // are allowed to use extensions.
+    if (StartsWith(binaryPath, "/vendor/") || StartsWith(binaryPath, "/odm/") ||
+        StartsWith(binaryPath, "/data/") ||
+        (StartsWith(binaryPath, "/product/") && useOnProductImageEnabled)) {
+        return true;
+    } else if (binaryPath == "/system/bin/app_process64" ||
+               binaryPath == "/system/bin/app_process32") {
+        return !isSystemApp || isAppOnVendorImage ||
+               (isAppOnProductImage && useOnProductImageEnabled);
+    }
+    return false;
 }
 
 void TypeManager::findAvailableExtensions() {
