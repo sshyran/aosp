@@ -117,3 +117,30 @@ example = Example({
          0, 0, 0, 0, 0, 0, 0, 0, 0],
     o2: [5, 5, 5, 5, 5, 5, 5, 5, 5]
 }, name="valid_padding").AddNchw(i2, o2, layout).AddInput(f2, b2).AddVariations("relaxed", quant8, "float16")
+
+
+# TEST 5: dilation set to 3, SAME padding
+i3 = Input("op1", "TENSOR_FLOAT32", "{1, 6, 6, 1}")
+f3 = Parameter("op2", "TENSOR_FLOAT32", "{1, 2, 2, 1}", [1, 2, 3, 4])
+b3 = Parameter("op3", "TENSOR_FLOAT32", "{1}", [0])
+o3 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 3, 1}")
+Model().Operation("CONV_2D", i3, f3, b3, 1, 2, 2, 0, layout, 3, 3).To(o3)
+
+# Additional data type
+quant8 = DataTypeConverter().Identify({
+    i3: ("TENSOR_QUANT8_ASYMM", 0.5, 0),
+    f3: ("TENSOR_QUANT8_ASYMM", 0.125, 0),
+    b3: ("TENSOR_INT32", 0.0625, 0),
+    o3: ("TENSOR_QUANT8_ASYMM", 0.125, 0)
+})
+
+# Instantiate an example
+example = Example({
+    i3: [0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0,
+         0, 0, 4, 3, 0, 0,
+         0, 0, 2, 1, 0, 0,
+         0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0],
+    o3: [16, 0, 9, 0, 0, 0, 4, 0, 1]
+}).AddNchw(i3, o3, layout).AddInput(f3, b3).AddVariations("relaxed", quant8, "float16")
