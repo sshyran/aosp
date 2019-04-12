@@ -118,53 +118,70 @@ TEST_F(ExtensionsTest, DeviceReportsSupportedExtensions) {
 }
 
 TEST_F(ExtensionsTest, TestAllowedNativeBinaries) {
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed("",
-                                                     /* productEnabled= */ false,
-                                                     /* isSystemApp= */ false,
-                                                     /* isAppOnVendorImage= */ false,
-                                                     /* isAppOnProductImage= */ false));
+    std::vector<std::string> whitelist = {"/data/foo",    "/vendor/foo",         "/odm/foo",
+                                          "/product/foo", "/system/whitelisted", "/foobar/foo"};
 
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed("/foobar/foo",
-                                                     /* productEnabled= */ false,
-                                                     /* isSystemApp= */ false,
-                                                     /* isAppOnVendorImage= */ false,
-                                                     /* isAppOnProductImage= */ false));
+    auto native_info =
+            [&](const std::string& binaryPath) -> android::nn::TypeManager::AppPackageInfo {
+        return {.binaryPath = binaryPath,
+                .appPackageName = "",
+                .appIsSystemApp = false,
+                .appIsOnVendorImage = false,
+                .appIsOnProductImage = false};
+    };
 
-    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed("/data/foo",
-                                                    /* productEnabled= */ false,
-                                                    /* isSystemApp= */ false,
-                                                    /* isAppOnVendorImage= */ false,
-                                                    /* isAppOnProductImage= */ false));
-
-    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed("/vendor/foo",
-                                                    /* productEnabled= */ false,
-                                                    /* isSystemApp= */ false,
-                                                    /* isAppOnVendorImage= */ false,
-                                                    /* isAppOnProductImage= */ false));
-
-    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed("/odm/foo",
-                                                    /* productEnabled= */ false,
-                                                    /* isSystemApp= */ false,
-                                                    /* isAppOnVendorImage= */ false,
-                                                    /* isAppOnProductImage= */ false));
-
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed("/system/foo",
-                                                     /* productEnabled= */ false,
-                                                     /* isSystemApp= */ false,
-                                                     /* isAppOnVendorImage= */ false,
-                                                     /* isAppOnProductImage= */ false));
-
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed("/product/foo",
-                                                     /* productEnabled= */ false,
-                                                     /* isSystemApp= */ false,
-                                                     /* isAppOnVendorImage= */ false,
-                                                     /* isAppOnProductImage= */ false));
-
-    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed("/product/foo",
-                                                    /* productEnabled= */ true,
-                                                    /* isSystemApp= */ false,
-                                                    /* isAppOnVendorImage= */ false,
-                                                    /* isAppOnProductImage= */ false));
+    // No binary info
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info(""),
+                                                     /* useOnProductImageEnabled = */ false,
+                                                     whitelist));
+    // Non-approved top-level dir
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/foobar/foo"),
+                                                     /* useOnProductImageEnabled = */ false,
+                                                     whitelist));
+    // Whitelisted /data binary
+    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(native_info("/data/foo"),
+                                                    /* useOnProductImageEnabled = */ false,
+                                                    whitelist));
+    // Whitelisted /vendor binary
+    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(native_info("/vendor/foo"),
+                                                    /* useOnProductImageEnabled = */ false,
+                                                    whitelist));
+    // Whitelisted /odm binary
+    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(native_info("/odm/foo"),
+                                                    /* useOnProductImageEnabled = */ false,
+                                                    whitelist));
+    // Non-whitelisted /system binary
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/system/foo"),
+                                                     /* useOnProductImageEnabled = */ false,
+                                                     whitelist));
+    // whitelisted /system binary (can't be whitelisted)
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/system/whitelisted"),
+                                                     /* useOnProductImageEnabled = */ false,
+                                                     whitelist));
+    // Whitelisted /product binary, product disabled
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/product/foo"),
+                                                     /* useOnProductImageEnabled = */ false,
+                                                     whitelist));
+    // Whitelisted /product binary, product enabled
+    EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(native_info("/product/foo"),
+                                                    /* useOnProductImageEnabled = */ true,
+                                                    whitelist));
+    // Non-whitelisted /product binary, product enabled
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/product/foo_not_whitelisted"),
+                                                     /* useOnProductImageEnabled = */ true,
+                                                     whitelist));
+    // Non-whitelisted /odm binary
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/odm/foo_not_whitelisted"),
+                                                     /* useOnProductImageEnabled = */ false,
+                                                     whitelist));
+    // Non-whitelisted /vendor binary
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/vendor/foo_not_whitelisted"),
+                                                     /* useOnProductImageEnabled = */ false,
+                                                     whitelist));
+    // Non-whitelisted /data binary
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/data/foo_not_whitelisted"),
+                                                     /* useOnProductImageEnabled = */ false,
+                                                     whitelist));
 }
 
 TEST_F(ExtensionsTest, TestAllowedApps) {
@@ -172,61 +189,110 @@ TEST_F(ExtensionsTest, TestAllowedApps) {
     std::string app_process64 = "/system/bin/app_process64";
     std::string other_binary = "/system/bin/foo";
 
-    auto test_app_process = [](const std::string& binary) {
+    std::string package = "com.foo";
+    std::string package_non_whitelisted = "com.foo2";
+
+    std::vector<std::string> whitelist = {"com.foo"};
+
+    auto test_app_process = [&](const std::string& binary) {
         // /data app
-        EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(binary,
-                                                        /* productEnabled= */ false,
-                                                        /* isSystemApp= */ false,
-                                                        /* isAppOnVendorImage= */ false,
-                                                        /* isAppOnProductImage= */ false));
+        EXPECT_TRUE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                         .appPackageName = package,
+                                                         .appIsSystemApp = false,
+                                                         .appIsOnVendorImage = false,
+                                                         .appIsOnProductImage = false},
+                                                        /* useOnProductImageEnabled = */ false,
+                                                        whitelist));
 
         // /system app
-        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(binary,
-                                                         /* productEnabled= */ false,
-                                                         /* isSystemApp= */ true,
-                                                         /* isAppOnVendorImage= */ false,
-                                                         /* isAppOnProductImage= */ false));
+        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                          .appPackageName = package,
+                                                          .appIsSystemApp = true,
+                                                          .appIsOnVendorImage = false,
+                                                          .appIsOnProductImage = false},
+                                                         /* useOnProductImageEnabled = */ false,
+                                                         whitelist));
 
         // /vendor || /odm app
-        EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(binary,
-                                                        /* productEnabled= */ false,
-                                                        /* isSystemApp= */ true,
-                                                        /* isAppOnVendorImage= */ true,
-                                                        /* isAppOnProductImage= */ false));
+        EXPECT_TRUE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                         .appPackageName = package,
+                                                         .appIsSystemApp = true,
+                                                         .appIsOnVendorImage = true,
+                                                         .appIsOnProductImage = false},
+                                                        /* useOnProductImageEnabled = */ false,
+                                                        whitelist));
 
         // /product app, disabled
-        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(binary,
-                                                         /* productEnabled= */ false,
-                                                         /* isSystemApp= */ true,
-                                                         /* isAppOnVendorImage= */ false,
-                                                         /* isAppOnProductImage= */ true));
+        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                          .appPackageName = package,
+                                                          .appIsSystemApp = true,
+                                                          .appIsOnVendorImage = false,
+                                                          .appIsOnProductImage = true},
+                                                         /* useOnProductImageEnabled = */ false,
+                                                         whitelist));
 
         // /product app, enabled
-        EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(binary,
-                                                        /* productEnabled= */ true,
-                                                        /* isSystemApp= */ true,
-                                                        /* isAppOnVendorImage= */ false,
-                                                        /* isAppOnProductImage= */ true));
+        EXPECT_TRUE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                         .appPackageName = package,
+                                                         .appIsSystemApp = true,
+                                                         .appIsOnVendorImage = false,
+                                                         .appIsOnProductImage = true},
+                                                        /* useOnProductImageEnabled = */ true,
+                                                        whitelist));
+
+        // /product app, enabled, package name not on whitelist
+        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                          .appPackageName = package_non_whitelisted,
+                                                          .appIsSystemApp = true,
+                                                          .appIsOnVendorImage = false,
+                                                          .appIsOnProductImage = true},
+                                                         /* useOnProductImageEnabled = */ true,
+                                                         whitelist));
+
+        // /data app, package name not on whitelist
+        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                          .appPackageName = package_non_whitelisted,
+                                                          .appIsSystemApp = false,
+                                                          .appIsOnVendorImage = false,
+                                                          .appIsOnProductImage = false},
+                                                         /* useOnProductImageEnabled = */ false,
+                                                         whitelist));
+
+        // /vendor || /odm app, package name not on whitelist
+        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                          .appPackageName = package_non_whitelisted,
+                                                          .appIsSystemApp = true,
+                                                          .appIsOnVendorImage = true,
+                                                          .appIsOnProductImage = false},
+                                                         /* useOnProductImageEnabled = */ false,
+                                                         whitelist));
     };
     test_app_process(app_process64);
     test_app_process(app_process32);
 
     // Test all positive cases fail if binary is not app_process32|64
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(other_binary,
-                                                     /* productEnabled= */ false,
-                                                     /* isSystemApp= */ false,
-                                                     /* isAppOnVendorImage= */ false,
-                                                     /* isAppOnProductImage= */ false));
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(other_binary,
-                                                     /* productEnabled= */ false,
-                                                     /* isSystemApp= */ true,
-                                                     /* isAppOnVendorImage= */ true,
-                                                     /* isAppOnProductImage= */ false));
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(other_binary,
-                                                     /* productEnabled= */ true,
-                                                     /* isSystemApp= */ true,
-                                                     /* isAppOnVendorImage= */ false,
-                                                     /* isAppOnProductImage= */ true));
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = other_binary,
+                                                      .appPackageName = package,
+                                                      .appIsSystemApp = false,
+                                                      .appIsOnVendorImage = false,
+                                                      .appIsOnProductImage = false},
+                                                     /* useOnProductImageEnabled = */ false,
+                                                     whitelist));
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = other_binary,
+                                                      .appPackageName = package,
+                                                      .appIsSystemApp = true,
+                                                      .appIsOnVendorImage = true,
+                                                      .appIsOnProductImage = false},
+                                                     /* useOnProductImageEnabled = */ false,
+                                                     whitelist));
+
+    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = other_binary,
+                                                      .appPackageName = package,
+                                                      .appIsSystemApp = true,
+                                                      .appIsOnVendorImage = false,
+                                                      .appIsOnProductImage = true},
+                                                     /* useOnProductImageEnabled = */ true,
+                                                     whitelist));
 }
 
 }  // namespace
