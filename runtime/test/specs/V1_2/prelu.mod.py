@@ -20,11 +20,32 @@ a1 = Parameter("alpha", "TENSOR_FLOAT32", "{1, 1, 3}", [0, 1, 2])
 o1 = Output("output", "TENSOR_FLOAT32", "{1, 2, 2, 3}")
 Model().Operation("PRELU", i1, a1).To(o1)
 
-# Additional data type
-quant8 = DataTypeConverter().Identify({
+# output.scale > input.scale && output.scale > input.scale * alpha.scale
+quant8_gt = DataTypeConverter().Identify({
     i1: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
     a1: ("TENSOR_QUANT8_ASYMM", 0.25, 50),
     o1: ("TENSOR_QUANT8_ASYMM", 0.5, 120)
+})
+
+# output.scale == input.scale
+quant8_eq1 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
+    a1: ("TENSOR_QUANT8_ASYMM", 0.25, 50),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.25, 120)
+})
+
+# output.scale == input.scale * alpha.scale
+quant8_eq2 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
+    a1: ("TENSOR_QUANT8_ASYMM", 0.5, 50),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.125, 120)
+})
+
+# output.scale < input.scale && output.scale < input.scale * alpha.scale
+quant8_lt = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
+    a1: ("TENSOR_QUANT8_ASYMM", 0.5, 50),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.1, 120)
 })
 
 # Instantiate an example
@@ -37,4 +58,4 @@ Example({
           1,  1,  1,
           0, -1, -2,
           0, -2, -4]
-}).AddInput(a1).AddVariations("relaxed", quant8, "float16")
+}).AddInput(a1).AddVariations("relaxed", quant8_gt, quant8_eq1, quant8_eq2, quant8_lt, "float16")
