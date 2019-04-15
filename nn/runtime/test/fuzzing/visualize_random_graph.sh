@@ -17,11 +17,7 @@
 
 set -Eeuo pipefail
 
-if [ $# -gt 0 ]; then
-    TEST_NAME=TestRandomGraph/RandomGraphTest.$1
-else
-    TEST_NAME=TestRandomGraph/RandomGraphTest.Large/0
-fi
+TEST_NAME=$1
 SPEC_NAME=${TEST_NAME//[\/.]/_}
 
 GENERATOR_DIR=$ANDROID_BUILD_TOP/frameworks/ml/nn/tools/test_generator
