@@ -15,7 +15,6 @@
  */
 
 #include "RandomVariable.h"
-#include "RandomGraphGeneratorUtils.h"
 
 #include <algorithm>
 #include <memory>
@@ -23,6 +22,8 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
+
+#include "RandomGraphGeneratorUtils.h"
 
 namespace android {
 namespace nn {
@@ -134,11 +135,11 @@ RandomVariable::RandomVariable(const RandomVariable& lhs, const RandomVariable& 
     if (mVar->parent1->type == RandomVariableType::CONST) {
         mVar->parent1 = RandomVariable(mVar->parent1->value).get();
     }
-    if (mVar->parent2->type == RandomVariableType::CONST) {
+    if (mVar->parent2 != nullptr && mVar->parent2->type == RandomVariableType::CONST) {
         mVar->parent2 = RandomVariable(mVar->parent2->value).get();
     }
     mVar->parent1->children.push_back(mVar);
-    mVar->parent2->children.push_back(mVar);
+    if (mVar->parent2 != nullptr) mVar->parent2->children.push_back(mVar);
     RandomVariableNetwork::get()->add(mVar);
     NN_FUZZER_LOG << "New RandomVariable " << toString(mVar);
 }
@@ -386,37 +387,15 @@ class Division : public IRandomVariableOp {
             return RandomVariableRange(lhs.min() / rhs.max(), lhs.max() / rhs.min());
         }
     }
-    virtual void eval(const std::set<int>* parent1In, const std::set<int>* parent2In,
-                      const std::set<int>* childIn, std::set<int>* parent1Out,
-                      std::set<int>* parent2Out, std::set<int>* childOut) const override {
-        if (*parent1In->begin() < 0 || *parent2In->begin() < 0 || *childIn->begin() < 0) {
-            IRandomVariableOp::eval(parent1In, parent2In, childIn, parent1Out, parent2Out,
-                                    childOut);
-        } else {
-            // Record the valid child range: [low, high).
-            int low = *childIn->begin(), high = low;
-            for (auto i : *parent1In) {
-                bool valid = false;
-                for (auto j : *parent2In) {
-                    // Since res increases monotonically with j, the loop can break early.
-                    if (i < j * high) {
-                        if (i >= j * low) valid = true;
-                        break;
-                    }
-                    int res = this->eval(i, j);
-                    if (childIn->find(res) != childIn->end()) {
-                        valid = true;
-                        parent2Out->insert(j);
-                        childOut->insert(res);
-                        // Extend the child range.
-                        if (res == high) high++;
-                    }
-                }
-                if (valid) parent1Out->insert(i);
-            }
-        }
-    }
     virtual const char* getName() const override { return "DIV"; }
+};
+
+class ExactDivision : public Division {
+   public:
+    virtual int eval(int lhs, int rhs) const override {
+        return (rhs == 0 || lhs % rhs != 0) ? kInvalidValue : lhs / rhs;
+    }
+    virtual const char* getName() const override { return "EXACT_DIV"; }
 };
 
 class Modulo : public IRandomVariableOp {
@@ -516,6 +495,18 @@ class GreaterEqual : public IConstraintOp {
     virtual const char* getName() const override { return "GREATER_EQUAL"; }
 };
 
+class FloatMultiplication : public IUnaryOp {
+   public:
+    FloatMultiplication(float multiplicand) : mMultiplicand(multiplicand) {}
+    virtual int eval(int val) const override {
+        return static_cast<int>(std::floor(static_cast<float>(val) * mMultiplicand));
+    }
+    virtual const char* getName() const override { return "MUL_FLOAT"; }
+
+   private:
+    float mMultiplicand;
+};
+
 // Arithmetic operators and methods on RandomVariables will create OP RandomVariableNodes.
 // Since there must be at most one edge between two RandomVariableNodes, we have to do something
 // special when both sides are refering to the same node.
@@ -532,6 +523,9 @@ RandomVariable operator*(const RandomVariable& lhs, const RandomVariable& rhs) {
     return lhs.get() == rhs.get() ? RandomVariable(lhs, RandomVariable(), Singleton<Square>::get())
                                   : RandomVariable(lhs, rhs, Singleton<Multiplication>::get());
 }
+RandomVariable operator*(const RandomVariable& lhs, const float& rhs) {
+    return RandomVariable(lhs, RandomVariable(), std::make_shared<FloatMultiplication>(rhs));
+}
 RandomVariable operator/(const RandomVariable& lhs, const RandomVariable& rhs) {
     return lhs.get() == rhs.get() ? RandomVariable(1)
                                   : RandomVariable(lhs, rhs, Singleton<Division>::get());
@@ -545,6 +539,11 @@ RandomVariable max(const RandomVariable& lhs, const RandomVariable& rhs) {
 }
 RandomVariable min(const RandomVariable& lhs, const RandomVariable& rhs) {
     return lhs.get() == rhs.get() ? lhs : RandomVariable(lhs, rhs, Singleton<Minimum>::get());
+}
+
+RandomVariable RandomVariable::exactDiv(const RandomVariable& other) {
+    return mVar == other.get() ? RandomVariable(1)
+                               : RandomVariable(*this, other, Singleton<ExactDivision>::get());
 }
 
 RandomVariable RandomVariable::setEqual(const RandomVariable& other) const {

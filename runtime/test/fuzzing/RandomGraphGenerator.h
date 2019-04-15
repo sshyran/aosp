@@ -17,18 +17,18 @@
 #ifndef ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_FUZZING_RANDOM_GRAPH_GENERATOR_H
 #define ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_FUZZING_RANDOM_GRAPH_GENERATOR_H
 
-#include "fuzzing/RandomVariable.h"
-
-#include "TestNeuralNetworksWrapper.h"
-
 #include <string>
 #include <vector>
+
+#include "TestNeuralNetworksWrapper.h"
+#include "fuzzing/RandomVariable.h"
 
 namespace android {
 namespace nn {
 namespace fuzzing_test {
 
 using test_wrapper::Type;
+using OperandBuffer = std::vector<int32_t>;
 
 struct OperandSignature;
 struct OperationSignature;
@@ -39,10 +39,10 @@ enum class RandomOperandType { INPUT = 0, OUTPUT = 1, INTERNAL = 2, CONST = 3 };
 struct RandomOperand {
     RandomOperandType type;
     Type dataType;
-    float scale;
-    uint8_t zeroPoint;
+    float scale = 0.0f;
+    int32_t zeroPoint = 0;
     std::vector<RandomVariable> dimensions;
-    std::vector<uint8_t> buffer;
+    OperandBuffer buffer;
     std::vector<RandomVariable> randomBuffer;
 
     // The finalizer will be invoked after RandomVariableNetwork::freeze().
@@ -54,17 +54,32 @@ struct RandomOperand {
     // The index of the input/output as specified in model->identifyInputsAndOutputs(...).
     int32_t ioIndex = -1;
 
-    RandomOperand(const OperandSignature& op);
+    RandomOperand(const OperandSignature& op, Type dataType, uint32_t rank);
+
+    // Resize the underlying operand buffer.
+    template <typename T>
+    void resizeBuffer(uint32_t len) {
+        constexpr size_t valueSize = sizeof(OperandBuffer::value_type);
+        uint32_t bufferSize = (sizeof(T) * len + valueSize - 1) / valueSize;
+        buffer.resize(bufferSize);
+    }
 
     // Get the operand value as the specified type. The caller is reponsible for making sure that
     // the index is not out of range.
     template <typename T>
-    T& getValue(uint32_t index = 0) {
+    T& value(uint32_t index = 0) {
         return reinterpret_cast<T*>(buffer.data())[index];
     }
     template <>
-    RandomVariable& getValue<RandomVariable>(uint32_t index) {
+    RandomVariable& value<RandomVariable>(uint32_t index) {
         return randomBuffer[index];
+    }
+
+    // The caller is reponsible for making sure that the operand is indeed a scalar.
+    template <typename T>
+    void setScalarValue(const T& val) {
+        resizeBuffer<T>(/*len=*/1);
+        value<T>() = val;
     }
 
     // Check if a directed edge between [other -> this] is valid. If yes, add the edge.
@@ -88,7 +103,7 @@ struct RandomOperation {
 // The main interface of the random graph generator.
 class RandomGraph {
    public:
-    RandomGraph(const OperationManager* manager) : mManager(manager) {}
+    RandomGraph() = default;
 
     // Generate a random graph with numOperations and dimensionRange from a seed.
     bool generate(uint32_t seed, uint32_t numOperations, uint32_t dimensionRange);
@@ -111,7 +126,6 @@ class RandomGraph {
 
     std::vector<RandomOperation> mOperations;
     std::vector<std::shared_ptr<RandomOperand>> mOperands;
-    const OperationManager* mManager;
 };
 
 }  // namespace fuzzing_test
