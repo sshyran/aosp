@@ -168,10 +168,12 @@ class RandomVariable {
     friend RandomVariable operator+(const RandomVariable& lhs, const RandomVariable& rhs);
     friend RandomVariable operator-(const RandomVariable& lhs, const RandomVariable& rhs);
     friend RandomVariable operator*(const RandomVariable& lhs, const RandomVariable& rhs);
+    friend RandomVariable operator*(const RandomVariable& lhs, const float& rhs);
     friend RandomVariable operator/(const RandomVariable& lhs, const RandomVariable& rhs);
     friend RandomVariable operator%(const RandomVariable& lhs, const RandomVariable& rhs);
     friend RandomVariable max(const RandomVariable& lhs, const RandomVariable& rhs);
     friend RandomVariable min(const RandomVariable& lhs, const RandomVariable& rhs);
+    RandomVariable exactDiv(const RandomVariable& other);
 
     // Set constraints on the RandomVariable. Use kInvalidValue to indicate unlimited bound.
     void setRange(int lower, int upper);
