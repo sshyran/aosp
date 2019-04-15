@@ -140,6 +140,7 @@ cc_test {
     defaults: ["NeuralNetworksTest_default_libs"],
     srcs: [
         "TestNeuralNetworksWrapper.cpp",
+        "fuzzing/operation_signatures/*.cpp",
         "fuzzing/OperationManager.cpp",
         "fuzzing/RandomGraphGenerator.cpp",
         "fuzzing/RandomGraphGeneratorUtils.cpp",
