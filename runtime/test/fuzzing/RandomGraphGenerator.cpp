@@ -15,34 +15,31 @@
  */
 
 #include "fuzzing/RandomGraphGenerator.h"
-#include "fuzzing/OperationManager.h"
-#include "fuzzing/RandomGraphGeneratorUtils.h"
-#include "fuzzing/RandomVariable.h"
 
-#include "TestNeuralNetworksWrapper.h"
+#include <gtest/gtest.h>
 
 #include <cmath>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
-#include <gtest/gtest.h>
+#include "TestNeuralNetworksWrapper.h"
+#include "fuzzing/OperationManager.h"
+#include "fuzzing/RandomGraphGeneratorUtils.h"
+#include "fuzzing/RandomVariable.h"
 
 namespace android {
 namespace nn {
 namespace fuzzing_test {
 
 using test_wrapper::Result;
+using test_wrapper::Type;
 
 // Construct a RandomOperand from OperandSignature.
-RandomOperand::RandomOperand(const OperandSignature& operand)
-    : type(operand.type),
-      dataType(operand.dataType),
-      scale(operand.scale),
-      zeroPoint(operand.zeroPoint),
-      finalizer(operand.finalizer) {
-    NN_FUZZER_LOG << "Operand: " << toString(type) << ", " << toString(dataType);
-    if (operand.constructor) operand.constructor(this);
+RandomOperand::RandomOperand(const OperandSignature& operand, Type dataType, uint32_t rank)
+    : type(operand.type), finalizer(operand.finalizer) {
+    NN_FUZZER_LOG << "Operand: " << toString(type);
+    if (operand.constructor) operand.constructor(dataType, rank, this);
 }
 
 std::vector<uint32_t> RandomOperand::getDimensions() const {
@@ -74,12 +71,24 @@ size_t RandomOperand::getBufferSize() const {
 RandomOperation::RandomOperation(const OperationSignature& operation)
     : opType(operation.opType), finalizer(operation.finalizer) {
     NN_FUZZER_LOG << "Operation: " << kOperationNames[static_cast<int32_t>(opType)];
-    for (const auto& op : operation.inputs) inputs.emplace_back(new RandomOperand(op));
-    for (const auto& op : operation.outputs) outputs.emplace_back(new RandomOperand(op));
-    if (operation.constructor) operation.constructor(this);
+
+    // Determine the data type and rank of the operation and invoke the constructor.
+    Type dataType = getRandomChoice(operation.supportedDataTypes);
+    uint32_t rank = getRandomChoice(operation.supportedRanks);
+
+    // Initialize operands and operation.
+    for (const auto& op : operation.inputs) {
+        inputs.emplace_back(new RandomOperand(op, dataType, rank));
+    }
+    for (const auto& op : operation.outputs) {
+        outputs.emplace_back(new RandomOperand(op, dataType, rank));
+    }
+    if (operation.constructor) operation.constructor(dataType, rank, this);
+
     // Add constraints on the number of elements.
     if (RandomVariable::defaultValue > 10) {
         for (auto in : inputs) RandomVariableNetwork::get()->addDimensionProd(in->dimensions);
+        for (auto out : outputs) RandomVariableNetwork::get()->addDimensionProd(out->dimensions);
     }
     // The output operands should have dimensions larger than 0.
     for (auto out : outputs) {
@@ -105,7 +114,7 @@ bool RandomGraph::generateGraph(uint32_t numOperations) {
     NN_FUZZER_LOG << "Generate Graph";
     // Randomly generate a vector of operations, this is a valid topological sort.
     for (uint32_t i = 0; i < numOperations; i++) {
-        mOperations.emplace_back(mManager->getRandomOperation());
+        mOperations.emplace_back(OperationManager::get()->getRandomOperation());
     }
 
     // Randomly add edges from the output of one operation to the input of another operation
@@ -175,7 +184,7 @@ bool RandomGraph::generateValue() {
             operand->type = RandomOperandType::CONST;
         }
         if (operand->type != RandomOperandType::INTERNAL) {
-            if (operand->buffer.empty()) operand->buffer.resize(operand->getBufferSize());
+            if (operand->buffer.empty()) operand->resizeBuffer<uint8_t>(operand->getBufferSize());
             // If operand is set by randomBuffer, copy the frozen values into buffer.
             if (!operand->randomBuffer.empty()) {
                 int32_t* data = reinterpret_cast<int32_t*>(operand->buffer.data());
@@ -200,7 +209,6 @@ void RandomGraph::createModel(test_wrapper::Model* model) {
     std::vector<uint32_t> modelInputs;
     std::vector<uint32_t> modelOutputs;
     for (auto& operand : mOperands) {
-        NN_FUZZER_LOG << toString(*operand);
         // TODO: Model operands are always fully-specified at model construction time.
         test_wrapper::OperandType type(operand->dataType, operand->getDimensions(), operand->scale,
                                        operand->zeroPoint);
@@ -224,8 +232,14 @@ void RandomGraph::createModel(test_wrapper::Model* model) {
     for (auto& operation : mOperations) {
         NN_FUZZER_LOG << "Operation: " << kOperationNames[static_cast<int32_t>(operation.opType)];
         std::vector<uint32_t> inputIndices, outputIndices;
-        for (auto& op : operation.inputs) inputIndices.push_back(op->opIndex);
-        for (auto& op : operation.outputs) outputIndices.push_back(op->opIndex);
+        for (auto& op : operation.inputs) {
+            NN_FUZZER_LOG << toString(*op);
+            inputIndices.push_back(op->opIndex);
+        }
+        for (auto& op : operation.outputs) {
+            NN_FUZZER_LOG << toString(*op);
+            outputIndices.push_back(op->opIndex);
+        }
         model->addOperation(operation.opType, inputIndices, outputIndices);
     }
 
@@ -238,11 +252,11 @@ void RandomGraph::createRequest(test_wrapper::Execution* execution) {
     for (auto& operand : mOperands) {
         if (operand->type == RandomOperandType::INPUT) {
             EXPECT_EQ(execution->setInput(operand->ioIndex, operand->buffer.data(),
-                                          operand->buffer.size(), nullptr),
+                                          operand->getBufferSize(), nullptr),
                       Result::NO_ERROR);
         } else if (operand->type == RandomOperandType::OUTPUT) {
             EXPECT_EQ(execution->setOutput(operand->ioIndex, operand->buffer.data(),
-                                           operand->buffer.size(), nullptr),
+                                           operand->getBufferSize(), nullptr),
                       Result::NO_ERROR);
         }
     }

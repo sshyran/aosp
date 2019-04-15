@@ -15,14 +15,15 @@
  */
 
 #include "RandomGraphGeneratorUtils.h"
-#include "RandomGraphGenerator.h"
-#include "RandomVariable.h"
 
 #include <algorithm>
 #include <iomanip>
 #include <memory>
 #include <sstream>
 #include <string>
+
+#include "RandomGraphGenerator.h"
+#include "RandomVariable.h"
 
 namespace android {
 namespace nn {
@@ -73,7 +74,8 @@ void SpecWriter::dump(const std::vector<RandomOperation>& operations,
             continue;
         }
         os << "    op" << operand->opIndex << ": [";
-        dump(operand->dataType, operand->buffer.data(), operand->getNumberOfElements());
+        dump(operand->dataType, reinterpret_cast<uint8_t*>(operand->buffer.data()),
+             operand->getNumberOfElements());
         os << "],\n";
     }
     os << "})\n";
@@ -94,6 +96,23 @@ void SpecWriter::dump(test_wrapper::Type type, const uint8_t* buffer, uint32_t l
         case test_wrapper::Type::TENSOR_QUANT8_ASYMM:
             dump(reinterpret_cast<const uint8_t*>(buffer), length);
             break;
+        case test_wrapper::Type::TENSOR_QUANT8_SYMM:
+            dump(reinterpret_cast<const int8_t*>(buffer), length);
+            break;
+        case test_wrapper::Type::TENSOR_QUANT16_ASYMM:
+            dump(reinterpret_cast<const uint16_t*>(buffer), length);
+            break;
+        case test_wrapper::Type::TENSOR_QUANT16_SYMM:
+            dump(reinterpret_cast<const int16_t*>(buffer), length);
+            break;
+        case test_wrapper::Type::BOOL:
+        case test_wrapper::Type::TENSOR_BOOL8:
+            dump(reinterpret_cast<const bool8*>(buffer), length);
+            break;
+        case test_wrapper::Type::FLOAT16:
+        case test_wrapper::Type::TENSOR_FLOAT16:
+            dump(reinterpret_cast<const _Float16*>(buffer), length);
+            break;
         default:
             NN_FUZZER_CHECK(false) << "Unknown type when dumping the buffer";
     }
@@ -113,10 +132,14 @@ void SpecWriter::dump(const std::shared_ptr<RandomOperand>& op) {
     os << "op" << op->opIndex << " = " << toString(op->type) << "(\"op" << op->opIndex << "\", \""
        << toString(op->dataType) << "\", \"";
     dump(op->dimensions);
+    if (op->scale != 0.0f || op->zeroPoint != 0) {
+        os << ", " << op->scale << "f, " << op->zeroPoint;
+    }
     os << "\"";
     if (op->type == RandomOperandType::CONST) {
         os << ", [";
-        dump(op->dataType, op->buffer.data(), op->getNumberOfElements());
+        dump(op->dataType, reinterpret_cast<uint8_t*>(op->buffer.data()),
+             op->getNumberOfElements());
         os << "]";
     }
     os << ")\n";
