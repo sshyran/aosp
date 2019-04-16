@@ -10,6 +10,9 @@
   "imports": [
     {
       "path": "hardware/interfaces/neuralnetworks"
+    },
+    {
+      "path": "external/tensorflow/tensorflow/lite/delegates/nnapi"
     }
   ]
 }
