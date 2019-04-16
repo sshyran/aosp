@@ -1265,7 +1265,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
         }
         case ANEURALNETWORKS_PAD_V2: {
             if (inputCount != 3 || outputCount != 1) {
-                logInvalidInOutNumber(2, 1);
+                logInvalidInOutNumber(3, 1);
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
