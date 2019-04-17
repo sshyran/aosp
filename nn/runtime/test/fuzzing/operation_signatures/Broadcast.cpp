@@ -91,6 +91,29 @@ DEFINE_BROADCAST_SIGNATURE(MINIMUM, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLO
 DEFINE_BROADCAST_SIGNATURE(LOGICAL_AND, V1_2, Type::TENSOR_BOOL8);
 DEFINE_BROADCAST_SIGNATURE(LOGICAL_OR, V1_2, Type::TENSOR_BOOL8);
 
+// Comparisons
+#define DEFINE_COMPARISON_SIGNATURE(op, ver, ...)                                         \
+    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = ANEURALNETWORKS_##op,                \
+                                           .supportedDataTypes = {__VA_ARGS__},           \
+                                           .supportedRanks = {1, 2, 3, 4},                \
+                                           .version = HalVersion::ver,                    \
+                                           .inputs = {INPUT_DEFAULT, INPUT_DEFAULT},      \
+                                           .outputs = {OUTPUT_TYPED(Type::TENSOR_BOOL8)}, \
+                                           .constructor = broadcastOpConstructor};
+
+DEFINE_COMPARISON_SIGNATURE(EQUAL, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16,
+                            Type::TENSOR_INT32, Type::TENSOR_QUANT8_ASYMM, Type::TENSOR_BOOL8);
+DEFINE_COMPARISON_SIGNATURE(GREATER, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16,
+                            Type::TENSOR_INT32, Type::TENSOR_QUANT8_ASYMM);
+DEFINE_COMPARISON_SIGNATURE(GREATER_EQUAL, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16,
+                            Type::TENSOR_INT32, Type::TENSOR_QUANT8_ASYMM);
+DEFINE_COMPARISON_SIGNATURE(LESS, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16,
+                            Type::TENSOR_INT32, Type::TENSOR_QUANT8_ASYMM);
+DEFINE_COMPARISON_SIGNATURE(LESS_EQUAL, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16,
+                            Type::TENSOR_INT32, Type::TENSOR_QUANT8_ASYMM);
+DEFINE_COMPARISON_SIGNATURE(NOT_EQUAL, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16,
+                            Type::TENSOR_INT32, Type::TENSOR_QUANT8_ASYMM, Type::TENSOR_BOOL8);
+
 }  // namespace fuzzing_test
 }  // namespace nn
 }  // namespace android
