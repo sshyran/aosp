@@ -1983,9 +1983,6 @@ typedef enum {
      * in axis. If keep_dims is true, the reduced dimensions are retained with
      * length 1.
      *
-     * If dimensions to reduce have no entries, all dimensions are reduced, and
-     * a tensor with a single element is returned.
-     *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
@@ -1996,8 +1993,14 @@ typedef enum {
      * Inputs:
      * * 0: A tensor, specifying the input.
      * * 1: A 1-D Tensor of {@link ANEURALNETWORKS_TENSOR_INT32}. The dimensions
-     *      to reduce. If None (the default), reduces all dimensions. Must be in
-     *      the range [-rank(input_tensor), rank(input_tensor)).
+     *      to reduce. Must be in the range
+     *      [-rank(input_tensor), rank(input_tensor)).
+     *
+     *      NOTE: When the operation was introduced, the documentation
+     *      incorrectly stated that if dimensions were empty, the operation
+     *      would reduce across all dimensions. This behavior was never
+     *      implemented.
+     *
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, keep_dims. If positive,
      *      retains reduced dimensions with length 1.
      *
