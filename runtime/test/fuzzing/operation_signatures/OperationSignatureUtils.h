@@ -199,6 +199,16 @@ inline void setFreeDimensions(const std::shared_ptr<RandomOperand>& op, uint32_t
     for (uint32_t i = 0; i < rank; i++) op->dimensions[i] = RandomVariableType::FREE;
 }
 
+inline void setConvFCScale(bool applyOutputScaleBound, RandomOperation* op) {
+    if (op->inputs[0]->dataType == Type::TENSOR_QUANT8_ASYMM) {
+        float biasScale = op->inputs[0]->scale * op->inputs[1]->scale;
+        op->inputs[2]->scale = biasScale;
+        if (applyOutputScaleBound) {
+            op->outputs[0]->scale = getUniform(biasScale, biasScale * 5);
+        }
+    }
+}
+
 // For ops with input0 and output0 of the same dimension.
 inline void sameDimensionOpConstructor(Type, uint32_t rank, RandomOperation* op) {
     setFreeDimensions(op->inputs[0], rank);
