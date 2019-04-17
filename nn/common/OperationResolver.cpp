@@ -83,6 +83,7 @@ const OperationRegistration* register_SQRT();
 const OperationRegistration* register_SUB();
 const OperationRegistration* register_TANH();
 const OperationRegistration* register_TRANSPOSE();
+const OperationRegistration* register_TRANSPOSE_CONV_2D();
 const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_LSTM();
 const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_RNN();
 
@@ -146,6 +147,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_SUB());
     registerOperation(register_TANH());
     registerOperation(register_TRANSPOSE());
+    registerOperation(register_TRANSPOSE_CONV_2D());
     registerOperation(register_UNIDIRECTIONAL_SEQUENCE_LSTM());
     registerOperation(register_UNIDIRECTIONAL_SEQUENCE_RNN());
 }
