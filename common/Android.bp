@@ -54,6 +54,7 @@ cc_defaults {
         "operations/Slice.cpp",
         "operations/Softmax.cpp",
         "operations/Transpose.cpp",
+        "operations/TransposeConv2D.cpp",
         "operations/UnidirectionalSequenceLSTM.cpp",
         "operations/UnidirectionalSequenceRNN.cpp",
     ],
@@ -148,7 +149,6 @@ cc_library_static {
         "operations/StridedSlice.cpp",
         "operations/SVDF.cpp",
         "operations/Tile.cpp",
-        "operations/TransposeConv2D.cpp",
     ],
     shared_libs: [
         "libbase",
