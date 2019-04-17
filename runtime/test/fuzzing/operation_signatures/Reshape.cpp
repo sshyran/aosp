@@ -410,6 +410,100 @@ DEFINE_OPERATION_SIGNATURE(CHANNEL_SHUFFLE_V1_2){
         .outputs = {OUTPUT_DEFAULT},
         .constructor = channelShuffleConstructor};
 
+static void squeezeConstructor(Type, uint32_t rank, RandomOperation* op) {
+    // A boolean array indicating whether each dimension is selected to be squeezed.
+    bool squeeze[4] = {false, false, false, false};
+    uint32_t numAxis = getUniform<int32_t>(1, 10);
+    op->inputs[1]->dimensions = {numAxis};
+    op->inputs[1]->resizeBuffer<int32_t>(numAxis);
+    for (uint32_t i = 0; i < numAxis; i++) {
+        // Generate values for the "axis" tensor.
+        int32_t dim = getUniform<int32_t>(0, rank - 1);
+        op->inputs[1]->value<int32_t>(i) = dim;
+        squeeze[dim] = true;
+    }
+
+    op->inputs[0]->dimensions.resize(rank);
+    for (uint32_t i = 0; i < rank; i++) {
+        if (squeeze[i]) {
+            op->inputs[0]->dimensions[i] = 1;
+        } else {
+            op->inputs[0]->dimensions[i] = RandomVariableType::FREE;
+            op->outputs[0]->dimensions.emplace_back(op->inputs[0]->dimensions[i]);
+        }
+    }
+    setSameQuantization(op->outputs[0], op->inputs[0]);
+}
+
+// TODO: Test the case when the second input is omitted.
+DEFINE_OPERATION_SIGNATURE(SQUEEZE_V1_1){
+        .opType = ANEURALNETWORKS_SQUEEZE,
+        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = HalVersion::V1_1,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = squeezeConstructor};
+
+DEFINE_OPERATION_SIGNATURE(SQUEEZE_V1_2){
+        .opType = ANEURALNETWORKS_SQUEEZE,
+        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = HalVersion::V1_2,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = squeezeConstructor};
+
+static void expandDimsConstructor(Type, uint32_t rank, RandomOperation* op) {
+    // Generate values for the "axis" tensor.
+    int32_t axis = getUniform<int32_t>(-rank - 1, rank);
+    op->inputs[1]->setScalarValue<int32_t>(axis);
+    if (axis < 0) axis += rank + 1;
+
+    setFreeDimensions(op->inputs[0], rank);
+    for (uint32_t i = 0; i < rank; i++) {
+        if (i == static_cast<uint32_t>(axis)) {
+            op->outputs[0]->dimensions.push_back(1);
+        }
+        op->outputs[0]->dimensions.push_back(op->inputs[0]->dimensions[i]);
+    }
+    if (rank == static_cast<uint32_t>(axis)) op->outputs[0]->dimensions.push_back(1);
+    setSameQuantization(op->outputs[0], op->inputs[0]);
+}
+
+DEFINE_OPERATION_SIGNATURE(EXPAND_DIMS_V1_2){
+        .opType = ANEURALNETWORKS_EXPAND_DIMS,
+        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16, Type::TENSOR_INT32,
+                               Type::TENSOR_QUANT8_ASYMM},
+        .supportedRanks = {1, 2, 3, 4, 5},
+        .version = HalVersion::V1_2,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::INT32)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = expandDimsConstructor};
+
+static void tileConstructor(Type, uint32_t rank, RandomOperation* op) {
+    setFreeDimensions(op->inputs[0], rank);
+    op->outputs[0]->dimensions.resize(rank);
+    op->inputs[1]->dimensions = {rank};
+    op->inputs[1]->resizeBuffer<int32_t>(rank);
+    for (uint32_t i = 0; i < rank; i++) {
+        int32_t multiple = getUniform<int32_t>(1, 5);
+        op->inputs[1]->value<int32_t>(i) = multiple;
+        op->outputs[0]->dimensions[i] = op->inputs[0]->dimensions[i] * multiple;
+    }
+    setSameQuantization(op->outputs[0], op->inputs[0]);
+}
+
+DEFINE_OPERATION_SIGNATURE(TILE_V1_2){
+        .opType = ANEURALNETWORKS_TILE,
+        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16, Type::TENSOR_INT32,
+                               Type::TENSOR_QUANT8_ASYMM},
+        .supportedRanks = {1, 2, 3, 4, 5},
+        .version = HalVersion::V1_2,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = tileConstructor};
+
 }  // namespace fuzzing_test
 }  // namespace nn
 }  // namespace android
