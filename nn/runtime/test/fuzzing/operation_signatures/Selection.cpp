@@ -192,6 +192,148 @@ DEFINE_OPERATION_SIGNATURE(TOPK_V2_V1_2){
         .outputs = {OUTPUT_DEFAULT, OUTPUT_TYPED(Type::TENSOR_INT32)},
         .constructor = topKConstructor};
 
+static void sliceConstructor(Type, uint32_t rank, RandomOperation* op) {
+    op->inputs[1]->dimensions = {rank};
+    op->inputs[2]->dimensions = {rank};
+    setFreeDimensions(op->inputs[0], rank);
+    setFreeDimensions(op->outputs[0], rank);
+    // The axis size of output must be less than or equal to input.
+    for (uint32_t i = 0; i < rank; i++) {
+        op->inputs[0]->dimensions[i].setGreaterEqual(op->outputs[0]->dimensions[i]);
+    }
+    setSameQuantization(op->outputs[0], op->inputs[0]);
+}
+
+static void sliceFinalizer(RandomOperation* op) {
+    uint32_t rank = op->inputs[0]->dimensions.size();
+    int32_t* begin = reinterpret_cast<int32_t*>(op->inputs[1]->buffer.data());
+    int32_t* size = reinterpret_cast<int32_t*>(op->inputs[2]->buffer.data());
+    for (uint32_t i = 0; i < rank; i++) {
+        int32_t inputSize = op->inputs[0]->dimensions[i].getValue();
+        int32_t outputSize = op->outputs[0]->dimensions[i].getValue();
+        // Randomly choose a valid begin index for each axis.
+        begin[i] = getUniform<int32_t>(0, inputSize - outputSize);
+        size[i] = outputSize;
+    }
+}
+
+DEFINE_OPERATION_SIGNATURE(SLICE_V1_2){
+        .opType = ANEURALNETWORKS_SLICE,
+        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16, Type::TENSOR_INT32,
+                               Type::TENSOR_QUANT8_ASYMM},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = HalVersion::V1_2,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32),
+                   PARAMETER_NONE(Type::TENSOR_INT32)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = sliceConstructor,
+        .finalizer = sliceFinalizer};
+
+inline int32_t convertToBitMask(const std::vector<bool>& flags) {
+    int32_t mask = 0, bit = 1;
+    for (bool flag : flags) {
+        if (flag) mask |= bit;
+        bit <<= 1;
+    }
+    return mask;
+}
+
+static void stridedSliceConstructor(Type, uint32_t rank, RandomOperation* op) {
+    op->inputs[1]->dimensions = {rank};
+    op->inputs[2]->dimensions = {rank};
+    op->inputs[3]->dimensions = {rank};
+    op->inputs[3]->resizeBuffer<int32_t>(rank);
+    setFreeDimensions(op->inputs[0], rank);
+    std::vector<bool> shrinkMask(rank, false);
+    for (uint32_t i = 0; i < rank; i++) {
+        // TODO: Currently shrinkMask is always set to false.
+        shrinkMask[i] = false;
+        int32_t stride = getUniform<int32_t>(1, 3);
+        op->inputs[3]->value<int32_t>(i) = stride;
+        if (!shrinkMask[i]) {
+            op->outputs[0]->dimensions.push_back(RandomVariableType::FREE);
+            auto maxOut = (op->inputs[0]->dimensions[i] + (stride - 1)) / stride;
+            maxOut.setGreaterEqual(op->outputs[0]->dimensions.back());
+        }
+    }
+    setSameQuantization(op->outputs[0], op->inputs[0]);
+    op->inputs[6]->setScalarValue<int32_t>(convertToBitMask(shrinkMask));
+}
+
+static void stridedSliceFinalizer(RandomOperation* op) {
+    uint32_t rank = op->inputs[0]->dimensions.size();
+    int32_t* begin = reinterpret_cast<int32_t*>(op->inputs[1]->buffer.data());
+    int32_t* end = reinterpret_cast<int32_t*>(op->inputs[2]->buffer.data());
+    std::vector<bool> beginMask(rank, false), endMask(rank, false);
+    int32_t shrinkMask = op->inputs[6]->value<int32_t>();
+    for (uint32_t i = 0, o = 0; i < rank; i++) {
+        int32_t inputSize = op->inputs[0]->dimensions[i].getValue();
+        int32_t stride = op->inputs[3]->value<int32_t>(i);
+        if ((shrinkMask & (1 << i)) == 0) {
+            int32_t outputSize = op->outputs[0]->dimensions[o++].getValue();
+            int32_t maxStart = inputSize - (outputSize - 1) * stride - 1;
+            begin[i] = getUniform<int32_t>(0, maxStart);
+
+            int32_t minEnd = begin[i] + (outputSize - 1) * stride + 1;
+            int32_t maxEnd = std::min(begin[i] + outputSize * stride, inputSize);
+            end[i] = getUniform<int32_t>(minEnd, maxEnd);
+
+            // Switch to masked begin/end.
+            beginMask[i] = (begin[i] == 0 && getBernoulli(0.2f));
+            endMask[i] = (end[i] == 0 && getBernoulli(0.2f));
+
+            // When begin or end mask is set, begin[i] or end[i] is ignored and can have any
+            // arbitrary value.
+            if (beginMask[i]) begin[i] = getUniform<int32_t>(-inputSize, inputSize - 1);
+            if (endMask[i]) end[i] = getUniform<int32_t>(-inputSize, inputSize - 1);
+        } else {
+            // When shrink mask is set, the begin and end must define a slice of size 1, e.g.
+            // begin[i] = x, end[i] = x + 1.
+            begin[i] = getUniform<int32_t>(0, inputSize - 1);
+            end[i] = begin[i] + 1;
+        }
+
+        // Switch to negative stride.
+        if (getBernoulli(0.2f)) {
+            op->inputs[3]->value<int32_t>(i) = -stride;
+            std::swap(begin[i], end[i]);
+            std::swap(beginMask[i], endMask[i]);
+            begin[i]--;
+            end[i]--;
+            // end = -1 will be intepreted to inputSize - 1 if not setting endMask.
+            if (end[i] < 0) endMask[i] = true;
+        }
+    }
+    op->inputs[4]->setScalarValue<int32_t>(convertToBitMask(beginMask));
+    op->inputs[5]->setScalarValue<int32_t>(convertToBitMask(endMask));
+}
+
+DEFINE_OPERATION_SIGNATURE(STRIDED_SLICE_V1_1){
+        .opType = ANEURALNETWORKS_STRIDED_SLICE,
+        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = HalVersion::V1_1,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32),
+                   PARAMETER_NONE(Type::TENSOR_INT32), PARAMETER_NONE(Type::TENSOR_INT32),
+                   PARAMETER_CHOICE(Type::INT32, 0), PARAMETER_CHOICE(Type::INT32, 0),
+                   PARAMETER_CHOICE(Type::INT32, 0)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = stridedSliceConstructor,
+        .finalizer = stridedSliceFinalizer};
+
+DEFINE_OPERATION_SIGNATURE(STRIDED_SLICE_V1_2){
+        .opType = ANEURALNETWORKS_STRIDED_SLICE,
+        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = HalVersion::V1_2,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32),
+                   PARAMETER_NONE(Type::TENSOR_INT32), PARAMETER_NONE(Type::TENSOR_INT32),
+                   PARAMETER_NONE(Type::INT32), PARAMETER_NONE(Type::INT32),
+                   PARAMETER_NONE(Type::INT32)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = stridedSliceConstructor,
+        .finalizer = stridedSliceFinalizer};
+
 }  // namespace fuzzing_test
 }  // namespace nn
 }  // namespace android
