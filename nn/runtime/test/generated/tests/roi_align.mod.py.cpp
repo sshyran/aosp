@@ -489,3 +489,99 @@ TEST_F(DynamicOutputShapeTest, roi_align_zero_sized_dynamic_output_shape_nchw_fl
             roi_align::get_examples_zero_sized_dynamic_output_shape_nchw_float16());
 }
 
+TEST_F(GeneratedTests, roi_align_nhwc_5) {
+    execute(roi_align::CreateModel_nhwc_5,
+            roi_align::is_ignored_nhwc_5,
+            roi_align::get_examples_nhwc_5());
+}
+
+TEST_F(GeneratedTests, roi_align_nhwc_relaxed_5) {
+    execute(roi_align::CreateModel_nhwc_relaxed_5,
+            roi_align::is_ignored_nhwc_relaxed_5,
+            roi_align::get_examples_nhwc_relaxed_5());
+}
+
+TEST_F(GeneratedTests, roi_align_nhwc_quant8_5) {
+    execute(roi_align::CreateModel_nhwc_quant8_5,
+            roi_align::is_ignored_nhwc_quant8_5,
+            roi_align::get_examples_nhwc_quant8_5());
+}
+
+TEST_F(GeneratedTests, roi_align_nhwc_float16_5) {
+    execute(roi_align::CreateModel_nhwc_float16_5,
+            roi_align::is_ignored_nhwc_float16_5,
+            roi_align::get_examples_nhwc_float16_5());
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_5) {
+    execute(roi_align::CreateModel_nchw_5,
+            roi_align::is_ignored_nchw_5,
+            roi_align::get_examples_nchw_5());
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_relaxed_5) {
+    execute(roi_align::CreateModel_nchw_relaxed_5,
+            roi_align::is_ignored_nchw_relaxed_5,
+            roi_align::get_examples_nchw_relaxed_5());
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_quant8_5) {
+    execute(roi_align::CreateModel_nchw_quant8_5,
+            roi_align::is_ignored_nchw_quant8_5,
+            roi_align::get_examples_nchw_quant8_5());
+}
+
+TEST_F(GeneratedTests, roi_align_nchw_float16_5) {
+    execute(roi_align::CreateModel_nchw_float16_5,
+            roi_align::is_ignored_nchw_float16_5,
+            roi_align::get_examples_nchw_float16_5());
+}
+
+TEST_F(DynamicOutputShapeTest, roi_align_dynamic_output_shape_nhwc_5) {
+    execute(roi_align::CreateModel_dynamic_output_shape_nhwc_5,
+            roi_align::is_ignored_dynamic_output_shape_nhwc_5,
+            roi_align::get_examples_dynamic_output_shape_nhwc_5());
+}
+
+TEST_F(DynamicOutputShapeTest, roi_align_dynamic_output_shape_nhwc_relaxed_5) {
+    execute(roi_align::CreateModel_dynamic_output_shape_nhwc_relaxed_5,
+            roi_align::is_ignored_dynamic_output_shape_nhwc_relaxed_5,
+            roi_align::get_examples_dynamic_output_shape_nhwc_relaxed_5());
+}
+
+TEST_F(DynamicOutputShapeTest, roi_align_dynamic_output_shape_nhwc_quant8_5) {
+    execute(roi_align::CreateModel_dynamic_output_shape_nhwc_quant8_5,
+            roi_align::is_ignored_dynamic_output_shape_nhwc_quant8_5,
+            roi_align::get_examples_dynamic_output_shape_nhwc_quant8_5());
+}
+
+TEST_F(DynamicOutputShapeTest, roi_align_dynamic_output_shape_nhwc_float16_5) {
+    execute(roi_align::CreateModel_dynamic_output_shape_nhwc_float16_5,
+            roi_align::is_ignored_dynamic_output_shape_nhwc_float16_5,
+            roi_align::get_examples_dynamic_output_shape_nhwc_float16_5());
+}
+
+TEST_F(DynamicOutputShapeTest, roi_align_dynamic_output_shape_nchw_5) {
+    execute(roi_align::CreateModel_dynamic_output_shape_nchw_5,
+            roi_align::is_ignored_dynamic_output_shape_nchw_5,
+            roi_align::get_examples_dynamic_output_shape_nchw_5());
+}
+
+TEST_F(DynamicOutputShapeTest, roi_align_dynamic_output_shape_nchw_relaxed_5) {
+    execute(roi_align::CreateModel_dynamic_output_shape_nchw_relaxed_5,
+            roi_align::is_ignored_dynamic_output_shape_nchw_relaxed_5,
+            roi_align::get_examples_dynamic_output_shape_nchw_relaxed_5());
+}
+
+TEST_F(DynamicOutputShapeTest, roi_align_dynamic_output_shape_nchw_quant8_5) {
+    execute(roi_align::CreateModel_dynamic_output_shape_nchw_quant8_5,
+            roi_align::is_ignored_dynamic_output_shape_nchw_quant8_5,
+            roi_align::get_examples_dynamic_output_shape_nchw_quant8_5());
+}
+
+TEST_F(DynamicOutputShapeTest, roi_align_dynamic_output_shape_nchw_float16_5) {
+    execute(roi_align::CreateModel_dynamic_output_shape_nchw_float16_5,
+            roi_align::is_ignored_dynamic_output_shape_nchw_float16_5,
+            roi_align::get_examples_dynamic_output_shape_nchw_float16_5());
+}
+
