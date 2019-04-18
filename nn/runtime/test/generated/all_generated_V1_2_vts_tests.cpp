@@ -50321,6 +50321,110 @@ TEST_F(ValidationTest, not_equal_quantized_different_zero_point_dynamic_output_s
 
 
 #endif
+// Generated from: pad_all_dims.mod.py.
+namespace pad_all_dims {
+// Generated pad_all_dims test
+#include "examples/pad_all_dims.example.cpp"
+// Generated model constructor
+#include "vts_models/pad_all_dims.model.cpp"
+} // namespace pad_all_dims
+
+TEST_F(NeuralnetworksHidlTest, pad_all_dims) {
+  generated_tests::Execute(device,
+                           pad_all_dims::createTestModel,
+                           pad_all_dims::is_ignored,
+                           pad_all_dims::get_examples());
+}
+
+TEST_F(ValidationTest, pad_all_dims) {
+  const Model model = pad_all_dims::createTestModel();
+  const std::vector<Request> requests = createRequests(pad_all_dims::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, pad_all_dims_float16) {
+  generated_tests::Execute(device,
+                           pad_all_dims::createTestModel_float16,
+                           pad_all_dims::is_ignored_float16,
+                           pad_all_dims::get_examples_float16());
+}
+
+TEST_F(ValidationTest, pad_all_dims_float16) {
+  const Model model = pad_all_dims::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(pad_all_dims::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, pad_all_dims_quant8) {
+  generated_tests::Execute(device,
+                           pad_all_dims::createTestModel_quant8,
+                           pad_all_dims::is_ignored_quant8,
+                           pad_all_dims::get_examples_quant8());
+}
+
+TEST_F(ValidationTest, pad_all_dims_quant8) {
+  const Model model = pad_all_dims::createTestModel_quant8();
+  const std::vector<Request> requests = createRequests(pad_all_dims::get_examples_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, pad_all_dims_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           pad_all_dims::createTestModel_dynamic_output_shape,
+                           pad_all_dims::is_ignored_dynamic_output_shape,
+                           pad_all_dims::get_examples_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, pad_all_dims_dynamic_output_shape) {
+  const Model model = pad_all_dims::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(pad_all_dims::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, pad_all_dims_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           pad_all_dims::createTestModel_dynamic_output_shape_float16,
+                           pad_all_dims::is_ignored_dynamic_output_shape_float16,
+                           pad_all_dims::get_examples_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, pad_all_dims_dynamic_output_shape_float16) {
+  const Model model = pad_all_dims::createTestModel_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(pad_all_dims::get_examples_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, pad_all_dims_dynamic_output_shape_quant8) {
+  generated_tests::Execute(device,
+                           pad_all_dims::createTestModel_dynamic_output_shape_quant8,
+                           pad_all_dims::is_ignored_dynamic_output_shape_quant8,
+                           pad_all_dims::get_examples_dynamic_output_shape_quant8(), true);
+}
+
+TEST_F(ValidationTest, pad_all_dims_dynamic_output_shape_quant8) {
+  const Model model = pad_all_dims::createTestModel_dynamic_output_shape_quant8();
+  const std::vector<Request> requests = createRequests(pad_all_dims::get_examples_dynamic_output_shape_quant8());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
 // Generated from: pad_float16.mod.py.
 namespace pad_float16 {
 // Generated pad_float16 test
@@ -50547,6 +50651,118 @@ TEST_F(DynamicOutputShapeTest, pad_v2_1_quant8_dynamic_output_shape) {
 TEST_F(ValidationTest, pad_v2_1_quant8_dynamic_output_shape) {
   const Model model = pad_v2_1_quant8::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(pad_v2_1_quant8::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+// Generated from: pad_v2_all_dims.mod.py.
+namespace pad_v2_all_dims {
+// Generated pad_v2_all_dims test
+#include "examples/pad_v2_all_dims.example.cpp"
+// Generated model constructor
+#include "vts_models/pad_v2_all_dims.model.cpp"
+} // namespace pad_v2_all_dims
+
+TEST_F(NeuralnetworksHidlTest, pad_v2_all_dims) {
+  generated_tests::Execute(device,
+                           pad_v2_all_dims::createTestModel,
+                           pad_v2_all_dims::is_ignored,
+                           pad_v2_all_dims::get_examples());
+}
+
+TEST_F(ValidationTest, pad_v2_all_dims) {
+  const Model model = pad_v2_all_dims::createTestModel();
+  const std::vector<Request> requests = createRequests(pad_v2_all_dims::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+TEST_F(NeuralnetworksHidlTest, pad_v2_all_dims_float16) {
+  generated_tests::Execute(device,
+                           pad_v2_all_dims::createTestModel_float16,
+                           pad_v2_all_dims::is_ignored_float16,
+                           pad_v2_all_dims::get_examples_float16());
+}
+
+TEST_F(ValidationTest, pad_v2_all_dims_float16) {
+  const Model model = pad_v2_all_dims::createTestModel_float16();
+  const std::vector<Request> requests = createRequests(pad_v2_all_dims::get_examples_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, pad_v2_all_dims_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           pad_v2_all_dims::createTestModel_dynamic_output_shape,
+                           pad_v2_all_dims::is_ignored_dynamic_output_shape,
+                           pad_v2_all_dims::get_examples_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, pad_v2_all_dims_dynamic_output_shape) {
+  const Model model = pad_v2_all_dims::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(pad_v2_all_dims::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, pad_v2_all_dims_dynamic_output_shape_float16) {
+  generated_tests::Execute(device,
+                           pad_v2_all_dims::createTestModel_dynamic_output_shape_float16,
+                           pad_v2_all_dims::is_ignored_dynamic_output_shape_float16,
+                           pad_v2_all_dims::get_examples_dynamic_output_shape_float16(), true);
+}
+
+TEST_F(ValidationTest, pad_v2_all_dims_dynamic_output_shape_float16) {
+  const Model model = pad_v2_all_dims::createTestModel_dynamic_output_shape_float16();
+  const std::vector<Request> requests = createRequests(pad_v2_all_dims::get_examples_dynamic_output_shape_float16());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
+// Generated from: pad_v2_all_dims_quant8.mod.py.
+namespace pad_v2_all_dims_quant8 {
+// Generated pad_v2_all_dims_quant8 test
+#include "examples/pad_v2_all_dims_quant8.example.cpp"
+// Generated model constructor
+#include "vts_models/pad_v2_all_dims_quant8.model.cpp"
+} // namespace pad_v2_all_dims_quant8
+
+TEST_F(NeuralnetworksHidlTest, pad_v2_all_dims_quant8) {
+  generated_tests::Execute(device,
+                           pad_v2_all_dims_quant8::createTestModel,
+                           pad_v2_all_dims_quant8::is_ignored,
+                           pad_v2_all_dims_quant8::get_examples());
+}
+
+TEST_F(ValidationTest, pad_v2_all_dims_quant8) {
+  const Model model = pad_v2_all_dims_quant8::createTestModel();
+  const std::vector<Request> requests = createRequests(pad_v2_all_dims_quant8::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, pad_v2_all_dims_quant8_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           pad_v2_all_dims_quant8::createTestModel_dynamic_output_shape,
+                           pad_v2_all_dims_quant8::is_ignored_dynamic_output_shape,
+                           pad_v2_all_dims_quant8::get_examples_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, pad_v2_all_dims_quant8_dynamic_output_shape) {
+  const Model model = pad_v2_all_dims_quant8::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(pad_v2_all_dims_quant8::get_examples_dynamic_output_shape());
   validateModel(model);
   validateRequests(model, requests);
 }
