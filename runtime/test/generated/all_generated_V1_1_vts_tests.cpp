@@ -6881,6 +6881,46 @@ TEST_F(ValidationTest, svdf2_relaxed_dynamic_output_shape) {
 
 
 #endif
+// Generated from: svdf_bias_present_relaxed.mod.py.
+namespace svdf_bias_present_relaxed {
+// Generated svdf_bias_present_relaxed test
+#include "examples/svdf_bias_present_relaxed.example.cpp"
+// Generated model constructor
+#include "vts_models/svdf_bias_present_relaxed.model.cpp"
+} // namespace svdf_bias_present_relaxed
+
+TEST_F(NeuralnetworksHidlTest, svdf_bias_present_relaxed) {
+  generated_tests::Execute(device,
+                           svdf_bias_present_relaxed::createTestModel,
+                           svdf_bias_present_relaxed::is_ignored,
+                           svdf_bias_present_relaxed::get_examples());
+}
+
+TEST_F(ValidationTest, svdf_bias_present_relaxed) {
+  const Model model = svdf_bias_present_relaxed::createTestModel();
+  const std::vector<Request> requests = createRequests(svdf_bias_present_relaxed::get_examples());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, svdf_bias_present_relaxed_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           svdf_bias_present_relaxed::createTestModel_dynamic_output_shape,
+                           svdf_bias_present_relaxed::is_ignored_dynamic_output_shape,
+                           svdf_bias_present_relaxed::get_examples_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, svdf_bias_present_relaxed_dynamic_output_shape) {
+  const Model model = svdf_bias_present_relaxed::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(svdf_bias_present_relaxed::get_examples_dynamic_output_shape());
+  validateModel(model);
+  validateRequests(model, requests);
+}
+
+
+#endif
 // Generated from: svdf_relaxed.mod.py.
 namespace svdf_relaxed {
 // Generated svdf_relaxed test
