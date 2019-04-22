@@ -1044,7 +1044,7 @@ bool enforceDimProd(const std::vector<EvaluationOrder>& mDimProd,
         // Initialize EvalInfo of each RandomVariable.
         for (auto& var : evalOrder) {
             if (context->find(var) == context->end()) context->emplace(var, var);
-            NN_FUZZER_LOG << "  - " << toString(var);
+            NN_FUZZER_LOG << "  - " << toString(var, context);
         }
 
         // Enforce the product of the dimension values below kMaxValue:
@@ -1092,7 +1092,7 @@ bool RandomVariableNetwork::evalRange() {
             // Initialize EvalInfo of each RandomVariable.
             for (auto& var : evalOrder) {
                 if (context.find(var) == context.end()) context.emplace(var, var);
-                NN_FUZZER_LOG << "  - " << toString(var);
+                NN_FUZZER_LOG << "  - " << toString(var, &context);
             }
 
             // Dispatch to different algorithm according to search range.
