@@ -84,8 +84,12 @@ struct CppType<Type::FLOAT16> {
     using type = _Float16;
 };
 
-constexpr float kMaxFloat32 = 10;
-constexpr float kMinFloat32 = -10;
+// The buffer value X is chosen uniformly in the range [kMinFloat32, kMaxFloat32]. kMinFloat32 and
+// kMaxFloat32 are selected by setting:
+// * E[X] = 0, so that the sum will less likely to overflow or underflow;
+// * E[abs(X)] = 1, so that the production will less likely to overflow or underflow.
+constexpr float kMaxFloat32 = 2.0f;
+constexpr float kMinFloat32 = -kMaxFloat32;
 
 template <typename T>
 inline void uniform(T low, T up, RandomOperand* op) {
@@ -224,10 +228,10 @@ inline void sameShapeOpConstructor(Type dataType, uint32_t rank, RandomOperation
 inline void defaultOperandConstructor(Type dataType, uint32_t, RandomOperand* op) {
     op->dataType = dataType;
     if (dataType == Type::TENSOR_QUANT8_ASYMM) {
-        op->scale = getUniform<float>(0.1, 10.0);
+        op->scale = getUniform<float>(0.1, 2.0);
         op->zeroPoint = getUniform<int32_t>(0, 255);
     } else if (dataType == Type::TENSOR_QUANT8_SYMM) {
-        op->scale = getUniform<float>(0.1, 10.0);
+        op->scale = getUniform<float>(0.1, 2.0);
         op->zeroPoint = 0;
     } else {
         op->scale = 0.0f;
