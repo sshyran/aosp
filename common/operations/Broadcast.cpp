@@ -26,6 +26,8 @@
 
 #include "Tracing.h"
 
+#include <algorithm>
+
 namespace android {
 namespace nn {
 namespace broadcast {
@@ -346,20 +348,23 @@ bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, c
 }  // namespace
 
 bool validate(OperationType opType, const IOperationValidationContext* context) {
+    const HalVersion opIntroducedAt = (opType == OperationType::DIV || opType == OperationType::SUB)
+                                              ? HalVersion::V1_1
+                                              : HalVersion::V1_0;
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor1);
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_0, opIntroducedAt)));
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_2, opIntroducedAt)));
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         if (opType == OperationType::SUB) {
-            NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+            NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_2, opIntroducedAt)));
         } else if (opType == OperationType::DIV) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation DIV";
         } else {
-            NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+            NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_0, opIntroducedAt)));
         }
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << getOperationName(opType);
