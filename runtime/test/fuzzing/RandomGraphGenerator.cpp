@@ -247,17 +247,126 @@ void RandomGraph::createModel(test_wrapper::Model* model) {
     model->identifyInputsAndOutputs(modelInputs, modelOutputs);
 }
 
-void RandomGraph::createRequest(test_wrapper::Execution* execution) {
+void RandomGraph::createRequest(test_wrapper::Execution* execution,
+                                std::vector<OperandBuffer>* buffers) {
     NN_FUZZER_LOG << "Create Request";
-    for (auto& operand : mOperands) {
+    if (buffers != nullptr) buffers->clear();
+    for (const auto& operand : mOperands) {
         if (operand->type == RandomOperandType::INPUT) {
             EXPECT_EQ(execution->setInput(operand->ioIndex, operand->buffer.data(),
                                           operand->getBufferSize(), nullptr),
                       Result::NO_ERROR);
         } else if (operand->type == RandomOperandType::OUTPUT) {
-            EXPECT_EQ(execution->setOutput(operand->ioIndex, operand->buffer.data(),
-                                           operand->getBufferSize(), nullptr),
-                      Result::NO_ERROR);
+            if (buffers == nullptr) {
+                EXPECT_EQ(execution->setOutput(operand->ioIndex, operand->buffer.data(),
+                                               operand->getBufferSize(), nullptr),
+                          Result::NO_ERROR);
+            } else {
+                // The order of the output buffers corresponds to the order in mOperands.
+                buffers->emplace_back(operand->buffer.size());
+                EXPECT_EQ(execution->setOutput(operand->ioIndex, buffers->back().data(),
+                                               operand->getBufferSize(), nullptr),
+                          Result::NO_ERROR);
+            }
+        }
+    }
+}
+
+// Check if the actual results meet the accuracy criterion.
+constexpr uint32_t kMaxNumberOfPrintedErrors = 5;
+template <typename T>
+void expectNear(const RandomOperand& op, const OperandBuffer& test,
+                const AccuracyCriterion& criterion) {
+    const T* actualBuffer = reinterpret_cast<const T*>(test.data());
+    const T* expectedBuffer = reinterpret_cast<const T*>(op.buffer.data());
+    uint32_t len = op.getNumberOfElements();
+    uint32_t numSkip = 0, numErrors = 0;
+    double bias = 0.0f, mse = 0.0f;
+    for (uint32_t i = 0; i < len; i++) {
+        SCOPED_TRACE(testing::Message() << "When comparing element " << i);
+
+        // Compare all data types in double for precision and signed arithmetic.
+        double actual = static_cast<double>(actualBuffer[i]);
+        double expected = static_cast<double>(expectedBuffer[i]);
+        double tolerableRange = criterion.atol + criterion.rtol * std::fabs(expected);
+
+        // Skip invalid floating point values.
+        if (std::isnan(expected) || std::isinf(expected) || std::isnan(actual) ||
+            std::isinf(actual) || std::fabs(expected) > 1e3) {
+            numSkip++;
+            continue;
+        }
+
+        // Accumulate bias and MSE.
+        double diff = actual - expected;
+        bias += diff;
+        mse += diff * diff;
+
+        // Print at most kMaxNumberOfPrintedErrors errors by EXPECT_NEAR.
+        if (numErrors < kMaxNumberOfPrintedErrors) EXPECT_NEAR(expected, actual, tolerableRange);
+        if (!(std::fabs(diff) <= tolerableRange)) numErrors++;
+    }
+    EXPECT_EQ(numErrors, 0u);
+
+    // Test bias and MSE.
+    if (len == numSkip) return;
+    bias /= static_cast<double>(len - numSkip);
+    mse /= static_cast<double>(len - numSkip);
+    EXPECT_LE(bias, criterion.bias);
+    EXPECT_LE(mse, criterion.mse);
+}
+
+void expectBooleanEqual(const RandomOperand& op, const OperandBuffer& test) {
+    const bool8* actual = reinterpret_cast<const bool8*>(test.data());
+    const bool8* expected = reinterpret_cast<const bool8*>(op.buffer.data());
+    uint32_t len = op.getNumberOfElements();
+    uint32_t numErrors = 0;
+    for (uint32_t i = 0; i < len; i++) {
+        SCOPED_TRACE(testing::Message() << "When comparing element " << i);
+        if (numErrors < kMaxNumberOfPrintedErrors) EXPECT_EQ(expected[i], actual[i]);
+        if (expected[i] != actual[i]) numErrors++;
+    }
+    EXPECT_EQ(numErrors, 0u);
+}
+
+void RandomGraph::checkResults(const std::vector<OperandBuffer>& buffers,
+                               const AccuracyCriteria& criteria) const {
+    NN_FUZZER_LOG << "Check Results";
+    // Make sure to keep the same order as the buffers are created.
+    int i = 0;
+    for (const auto& op : mOperands) {
+        if (op->type == RandomOperandType::OUTPUT) {
+            SCOPED_TRACE(testing::Message() << "When comparing output " << op->ioIndex
+                                            << " of type " << toString(op->dataType));
+            switch (op->dataType) {
+                case Type::TENSOR_FLOAT32:
+                    expectNear<float>(*op, buffers[i], criteria.float32);
+                    break;
+                case Type::TENSOR_FLOAT16:
+                    expectNear<_Float16>(*op, buffers[i], criteria.float16);
+                    break;
+                case Type::TENSOR_INT32:
+                    expectNear<int32_t>(*op, buffers[i], criteria.int32);
+                    break;
+                case Type::TENSOR_QUANT8_ASYMM:
+                    expectNear<uint8_t>(*op, buffers[i], criteria.quant8Asymm);
+                    break;
+                case Type::TENSOR_QUANT8_SYMM:
+                    expectNear<int8_t>(*op, buffers[i], criteria.quant8Symm);
+                    break;
+                case Type::TENSOR_QUANT16_ASYMM:
+                    expectNear<uint16_t>(*op, buffers[i], criteria.quant16Asymm);
+                    break;
+                case Type::TENSOR_QUANT16_SYMM:
+                    expectNear<int16_t>(*op, buffers[i], criteria.quant16Symm);
+                    break;
+                case Type::TENSOR_BOOL8:
+                    expectBooleanEqual(*op, buffers[i]);
+                    break;
+                default:
+                    NN_FUZZER_CHECK(false) << "Data type not supported.";
+            }
+            i++;
         }
     }
 }
