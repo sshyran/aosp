@@ -59,6 +59,17 @@ void CreateHidlModel(std::function<void(test_wrapper::Model*)> CreateModel, Mode
     }                                                                                    \
     }
 
+#define TEST_AVAILABLE_SINCE_V1_1(NamespaceName, ...)                                    \
+    FORWARD_DECLARE_GENERATED_OBJECTS(NamespaceName, ##__VA_ARGS__)                      \
+    namespace compliance_test {                                                          \
+    TEST_F(ComplianceTest, CONCAT_NAME(NamespaceName, ##__VA_ARGS__)) {                  \
+        Model model;                                                                     \
+        CreateHidlModel(NamespaceName::CONCAT_NAME(CreateModel, ##__VA_ARGS__), &model); \
+        ASSERT_TRUE(compliantWithV1_1(model));                                           \
+        ASSERT_FALSE(compliantWithV1_0(model));                                          \
+    }                                                                                    \
+    }
+
 TEST_AVAILABLE_SINCE_V1_2(tanh_v1_2)
 TEST_AVAILABLE_SINCE_V1_2(sub_v1_2, quant8)
 TEST_AVAILABLE_SINCE_V1_2(conv2d_v1_2, nchw)
@@ -80,6 +91,10 @@ TEST_AVAILABLE_SINCE_V1_2(local_response_normalization_v1_2, axis_dim4_axis0)
 TEST_AVAILABLE_SINCE_V1_2(softmax_v1_2, dim1_axis0)
 TEST_AVAILABLE_SINCE_V1_2(softmax_v1_2, axis_dim4_axis0)
 
+TEST_AVAILABLE_SINCE_V1_1(div)
+TEST_AVAILABLE_SINCE_V1_1(sub)
+
+#undef TEST_AVAILABLE_SINCE_V1_1
 #undef TEST_AVAILABLE_SINCE_V1_2
 #undef FORWARD_DECLARE_GENERATED_OBJECTS
 #undef CONCAT_NAME
