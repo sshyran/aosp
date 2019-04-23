@@ -1031,12 +1031,21 @@ typedef enum {
      *      the input.
      * * 1: An {@link ANEURALNETWORKS_INT32} scalar, specifying the radius of
      *      the normalization window.
-     * * 2: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the bias, must
-     *      not be zero.
-     * * 3: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the scale
-     *      factor, alpha.
-     * * 4: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the exponent,
-     *      beta.
+     * * 2: A scalar, specifying the bias, must not be zero.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the bias
+     *      value must be of {@link ANEURALNETWORKS_FLOAT16}.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the bias
+     *      value must be of {@link ANEURALNETWORKS_FLOAT32}.
+     * * 3: A scalar, specifying the scale factor, alpha.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the
+     *      alpha value must be of {@link ANEURALNETWORKS_FLOAT16}.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the
+     *      alpha value must be of {@link ANEURALNETWORKS_FLOAT32}.
+     * * 4: A scalar, specifying the exponent, beta.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the beta
+     *      value must be of {@link ANEURALNETWORKS_FLOAT16}.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the beta
+     *      value must be of {@link ANEURALNETWORKS_FLOAT32}.
      * * 5: An optional {@link ANEURALNETWORKS_INT32} scalar, default to -1,
      *      specifying the dimension normalization would be performed on.
      *      Negative index is used to specify axis from the end (e.g. -1 for
@@ -3529,8 +3538,12 @@ typedef enum {
      *
      * Inputs:
      * * 0: A tensor specifying the input logits.
-     * * 1: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the positive
-     *      scaling factor for the exponent, beta.
+     * * 1: A scalar, specifying the positive scaling factor for the exponent,
+     *      beta.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the beta
+     *      value must be of {@link ANEURALNETWORKS_FLOAT16}.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the beta
+     *      value must be of {@link ANEURALNETWORKS_FLOAT32}.
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar specifying the axis to
      *      reduce across. Negative index is used to specify axis from the
      *      end (e.g. -1 for the last axis). Must be in the range [-n, n).
