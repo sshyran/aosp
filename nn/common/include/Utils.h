@@ -98,7 +98,9 @@ void initVLogMask();
 //   NN_RET_CHECK_FAIL() << "Something went wrong";
 //
 // The containing function must return a bool.
-#define NN_RET_CHECK_FAIL() return ::android::nn::FalseyErrorStream() << "NN_RET_CHECK failed: "
+#define NN_RET_CHECK_FAIL()                   \
+    return ::android::nn::FalseyErrorStream() \
+           << "NN_RET_CHECK failed (" << __FILE__ << ":" << __LINE__ << "): "
 
 // Logs an error and returns false if condition is false. Extra logging can be appended using <<
 // after. For example:
