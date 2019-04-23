@@ -29,6 +29,7 @@
 #include "Utils.h"
 
 #include <mutex>
+#include <optional>
 #include <thread>
 #include <vector>
 
@@ -1021,12 +1022,13 @@ int StepExecutor::startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallba
 
     std::vector<RunTimePoolInfo> requestPoolInfos;
     requestPoolInfos.reserve(mMemories.size());
-    bool fail = false;
     for (const Memory* mem : mMemories) {
-        requestPoolInfos.emplace_back(mem->getHidlMemory(), &fail);
-    }
-    if (fail) {
-        return ANEURALNETWORKS_UNMAPPABLE;
+        if (std::optional<RunTimePoolInfo> poolInfo =
+                    RunTimePoolInfo::createFromHidlMemory(mem->getHidlMemory())) {
+            requestPoolInfos.emplace_back(*poolInfo);
+        } else {
+            return ANEURALNETWORKS_UNMAPPABLE;
+        }
     }
     // Create as many pools as there are input / output.
     auto fixPointerArguments = [&requestPoolInfos](std::vector<ModelArgumentInfo>& argumentInfos) {
@@ -1035,7 +1037,8 @@ int StepExecutor::startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallba
                 argumentInfo.locationAndLength.poolIndex =
                         static_cast<uint32_t>(requestPoolInfos.size());
                 argumentInfo.locationAndLength.offset = 0;
-                requestPoolInfos.emplace_back(static_cast<uint8_t*>(argumentInfo.buffer));
+                requestPoolInfos.emplace_back(RunTimePoolInfo::createFromExistingBuffer(
+                        static_cast<uint8_t*>(argumentInfo.buffer)));
             }
         }
     };
