@@ -129,3 +129,15 @@ TEST_F(DynamicOutputShapeTest, maximum_broadcast_dynamic_output_shape_quant8) {
             maximum::get_examples_broadcast_dynamic_output_shape_quant8());
 }
 
+TEST_F(GeneratedTests, maximum_overflow) {
+    execute(maximum::CreateModel_3,
+            maximum::is_ignored_3,
+            maximum::get_examples_overflow());
+}
+
+TEST_F(DynamicOutputShapeTest, maximum_overflow_dynamic_output_shape) {
+    execute(maximum::CreateModel_dynamic_output_shape_3,
+            maximum::is_ignored_dynamic_output_shape_3,
+            maximum::get_examples_overflow_dynamic_output_shape());
+}
+
