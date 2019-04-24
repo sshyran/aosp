@@ -20792,3 +20792,1523 @@ inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+void CreateModel_nhwc_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
+  OperandType type13(Type::TENSOR_FLOAT32, {1, 4, 4, 1});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type1);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type13);
+  // Phase 2, operations
+  static float op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(float) * 1);
+  static float op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(float) * 1);
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nhwc_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nhwc_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
+  OperandType type13(Type::TENSOR_FLOAT32, {1, 4, 4, 1});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type1);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type13);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nhwc_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nhwc_relaxed_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
+  OperandType type13(Type::TENSOR_FLOAT32, {1, 4, 4, 1});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type1);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type13);
+  // Phase 2, operations
+  static float op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(float) * 1);
+  static float op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(float) * 1);
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nhwc_relaxed_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nhwc_relaxed_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
+  OperandType type13(Type::TENSOR_FLOAT32, {1, 4, 4, 1});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type1);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type13);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nhwc_relaxed_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nhwc_quant8_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type154(Type::TENSOR_INT32, {1}, 0.25f, 0);
+  OperandType type155(Type::TENSOR_QUANT8_ASYMM, {1, 4, 4, 1}, 16.0f, 0);
+  OperandType type218(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 1}, 0.5f, 128);
+  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 100);
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type31);
+  auto op25 = model->addOperand(&type218);
+  auto op35 = model->addOperand(&type154);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type155);
+  // Phase 2, operations
+  static uint8_t op25_init[] = {132};
+  model->setOperandValue(op25, op25_init, sizeof(uint8_t) * 1);
+  static int32_t op35_init[] = {0};
+  model->setOperandValue(op35, op35_init, sizeof(int32_t) * 1);
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nhwc_quant8_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nhwc_quant8_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type154(Type::TENSOR_INT32, {1}, 0.25f, 0);
+  OperandType type155(Type::TENSOR_QUANT8_ASYMM, {1, 4, 4, 1}, 16.0f, 0);
+  OperandType type218(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 1}, 0.5f, 128);
+  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 100);
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type31);
+  auto op25 = model->addOperand(&type218);
+  auto op35 = model->addOperand(&type154);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type155);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nhwc_quant8_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nhwc_float16_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type135(Type::TENSOR_FLOAT16, {1});
+  OperandType type158(Type::TENSOR_FLOAT16, {1, 4, 4, 1});
+  OperandType type191(Type::TENSOR_FLOAT16, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type44(Type::TENSOR_FLOAT16, {1, 2, 2, 1});
+  OperandType type5(Type::INT32, {});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type44);
+  auto op25 = model->addOperand(&type191);
+  auto op35 = model->addOperand(&type135);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type158);
+  // Phase 2, operations
+  static _Float16 op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(_Float16) * 1);
+  static _Float16 op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(_Float16) * 1);
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nhwc_float16_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nhwc_float16_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type138(Type::TENSOR_FLOAT16, {1});
+  OperandType type158(Type::TENSOR_FLOAT16, {1, 4, 4, 1});
+  OperandType type219(Type::TENSOR_FLOAT16, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type44(Type::TENSOR_FLOAT16, {1, 2, 2, 1});
+  OperandType type5(Type::INT32, {});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type44);
+  auto op25 = model->addOperand(&type219);
+  auto op35 = model->addOperand(&type138);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type158);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nhwc_float16_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type161(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type62(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type62);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type161);
+  // Phase 2, operations
+  static float op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(float) * 1);
+  static float op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(float) * 1);
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type161(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type62(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type62);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type161);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_relaxed_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type161(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type62(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type62);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type161);
+  // Phase 2, operations
+  static float op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(float) * 1);
+  static float op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(float) * 1);
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_relaxed_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_relaxed_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type161(Type::TENSOR_FLOAT32, {1, 1, 4, 4});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type62(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type62);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type161);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_relaxed_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_quant8_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type154(Type::TENSOR_INT32, {1}, 0.25f, 0);
+  OperandType type163(Type::TENSOR_QUANT8_ASYMM, {1, 1, 4, 4}, 16.0f, 0);
+  OperandType type218(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 1}, 0.5f, 128);
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type66(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 100);
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type66);
+  auto op25 = model->addOperand(&type218);
+  auto op35 = model->addOperand(&type154);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type163);
+  // Phase 2, operations
+  static uint8_t op25_init[] = {132};
+  model->setOperandValue(op25, op25_init, sizeof(uint8_t) * 1);
+  static int32_t op35_init[] = {0};
+  model->setOperandValue(op35, op35_init, sizeof(int32_t) * 1);
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_quant8_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_quant8_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type154(Type::TENSOR_INT32, {1}, 0.25f, 0);
+  OperandType type163(Type::TENSOR_QUANT8_ASYMM, {1, 1, 4, 4}, 16.0f, 0);
+  OperandType type218(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 1}, 0.5f, 128);
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type66(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 100);
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type66);
+  auto op25 = model->addOperand(&type218);
+  auto op35 = model->addOperand(&type154);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type163);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_quant8_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_float16_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type135(Type::TENSOR_FLOAT16, {1});
+  OperandType type165(Type::TENSOR_FLOAT16, {1, 1, 4, 4});
+  OperandType type191(Type::TENSOR_FLOAT16, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type74(Type::TENSOR_FLOAT16, {1, 1, 2, 2});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type74);
+  auto op25 = model->addOperand(&type191);
+  auto op35 = model->addOperand(&type135);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type165);
+  // Phase 2, operations
+  static _Float16 op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(_Float16) * 1);
+  static _Float16 op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(_Float16) * 1);
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_float16_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_nchw_float16_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type138(Type::TENSOR_FLOAT16, {1});
+  OperandType type165(Type::TENSOR_FLOAT16, {1, 1, 4, 4});
+  OperandType type219(Type::TENSOR_FLOAT16, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type74(Type::TENSOR_FLOAT16, {1, 1, 2, 2});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type74);
+  auto op25 = model->addOperand(&type219);
+  auto op35 = model->addOperand(&type138);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type165);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_nchw_float16_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nhwc_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type88(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type1);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type88);
+  // Phase 2, operations
+  static float op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(float) * 1);
+  static float op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(float) * 1);
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nhwc_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type88(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type1);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type88);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nhwc_relaxed_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type88(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type1);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type88);
+  // Phase 2, operations
+  static float op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(float) * 1);
+  static float op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(float) * 1);
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_relaxed_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nhwc_relaxed_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type88(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type1);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type88);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_relaxed_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nhwc_quant8_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type154(Type::TENSOR_INT32, {1}, 0.25f, 0);
+  OperandType type166(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 16.0f, 0);
+  OperandType type218(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 1}, 0.5f, 128);
+  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 100);
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type31);
+  auto op25 = model->addOperand(&type218);
+  auto op35 = model->addOperand(&type154);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type166);
+  // Phase 2, operations
+  static uint8_t op25_init[] = {132};
+  model->setOperandValue(op25, op25_init, sizeof(uint8_t) * 1);
+  static int32_t op35_init[] = {0};
+  model->setOperandValue(op35, op35_init, sizeof(int32_t) * 1);
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_quant8_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nhwc_quant8_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type154(Type::TENSOR_INT32, {1}, 0.25f, 0);
+  OperandType type166(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 16.0f, 0);
+  OperandType type218(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 1}, 0.5f, 128);
+  OperandType type31(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 0.5f, 100);
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type31);
+  auto op25 = model->addOperand(&type218);
+  auto op35 = model->addOperand(&type154);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type166);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_quant8_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nhwc_float16_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type135(Type::TENSOR_FLOAT16, {1});
+  OperandType type191(Type::TENSOR_FLOAT16, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type44(Type::TENSOR_FLOAT16, {1, 2, 2, 1});
+  OperandType type5(Type::INT32, {});
+  OperandType type96(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type44);
+  auto op25 = model->addOperand(&type191);
+  auto op35 = model->addOperand(&type135);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type96);
+  // Phase 2, operations
+  static _Float16 op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(_Float16) * 1);
+  static _Float16 op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(_Float16) * 1);
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_float16_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nhwc_float16_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type138(Type::TENSOR_FLOAT16, {1});
+  OperandType type219(Type::TENSOR_FLOAT16, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type44(Type::TENSOR_FLOAT16, {1, 2, 2, 1});
+  OperandType type5(Type::INT32, {});
+  OperandType type96(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type44);
+  auto op25 = model->addOperand(&type219);
+  auto op35 = model->addOperand(&type138);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type96);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 4, 4, 1};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {false};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nhwc_float16_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type62(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
+  OperandType type88(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type62);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type88);
+  // Phase 2, operations
+  static float op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(float) * 1);
+  static float op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(float) * 1);
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type62(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
+  OperandType type88(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type62);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type88);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_relaxed_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type62(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
+  OperandType type88(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type62);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type88);
+  // Phase 2, operations
+  static float op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(float) * 1);
+  static float op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(float) * 1);
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_relaxed_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_relaxed_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type22(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type62(Type::TENSOR_FLOAT32, {1, 1, 2, 2});
+  OperandType type88(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
+  OperandType type9(Type::TENSOR_FLOAT32, {1});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type62);
+  auto op25 = model->addOperand(&type22);
+  auto op35 = model->addOperand(&type9);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type88);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_relaxed_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_quant8_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type154(Type::TENSOR_INT32, {1}, 0.25f, 0);
+  OperandType type166(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 16.0f, 0);
+  OperandType type218(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 1}, 0.5f, 128);
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type66(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 100);
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type66);
+  auto op25 = model->addOperand(&type218);
+  auto op35 = model->addOperand(&type154);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type166);
+  // Phase 2, operations
+  static uint8_t op25_init[] = {132};
+  model->setOperandValue(op25, op25_init, sizeof(uint8_t) * 1);
+  static int32_t op35_init[] = {0};
+  model->setOperandValue(op35, op35_init, sizeof(int32_t) * 1);
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_quant8_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_quant8_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type154(Type::TENSOR_INT32, {1}, 0.25f, 0);
+  OperandType type166(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 16.0f, 0);
+  OperandType type218(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 1}, 0.5f, 128);
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type66(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 2}, 0.5f, 100);
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type66);
+  auto op25 = model->addOperand(&type218);
+  auto op35 = model->addOperand(&type154);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type166);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_quant8_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_float16_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type135(Type::TENSOR_FLOAT16, {1});
+  OperandType type191(Type::TENSOR_FLOAT16, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type74(Type::TENSOR_FLOAT16, {1, 1, 2, 2});
+  OperandType type96(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type74);
+  auto op25 = model->addOperand(&type191);
+  auto op35 = model->addOperand(&type135);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type96);
+  // Phase 2, operations
+  static _Float16 op25_init[] = {2.0f};
+  model->setOperandValue(op25, op25_init, sizeof(_Float16) * 1);
+  static _Float16 op35_init[] = {0.0f};
+  model->setOperandValue(op35, op35_init, sizeof(_Float16) * 1);
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_float16_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+void CreateModel_dynamic_output_shape_nchw_float16_weight_as_input_5(Model *model) {
+  OperandType type0(Type::BOOL, {});
+  OperandType type138(Type::TENSOR_FLOAT16, {1});
+  OperandType type219(Type::TENSOR_FLOAT16, {1, 1, 1, 1});
+  OperandType type4(Type::TENSOR_INT32, {4});
+  OperandType type5(Type::INT32, {});
+  OperandType type74(Type::TENSOR_FLOAT16, {1, 1, 2, 2});
+  OperandType type96(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
+  // Phase 1, operands
+  auto op15 = model->addOperand(&type74);
+  auto op25 = model->addOperand(&type219);
+  auto op35 = model->addOperand(&type138);
+  auto shape5 = model->addOperand(&type4);
+  auto param59 = model->addOperand(&type5);
+  auto param60 = model->addOperand(&type5);
+  auto param61 = model->addOperand(&type5);
+  auto param62 = model->addOperand(&type5);
+  auto layout = model->addOperand(&type0);
+  auto op45 = model->addOperand(&type96);
+  // Phase 2, operations
+  static int32_t shape5_init[] = {1, 1, 4, 4};
+  model->setOperandValue(shape5, shape5_init, sizeof(int32_t) * 4);
+  static int32_t param59_init[] = {1};
+  model->setOperandValue(param59, param59_init, sizeof(int32_t) * 1);
+  static int32_t param60_init[] = {2};
+  model->setOperandValue(param60, param60_init, sizeof(int32_t) * 1);
+  static int32_t param61_init[] = {2};
+  model->setOperandValue(param61, param61_init, sizeof(int32_t) * 1);
+  static int32_t param62_init[] = {0};
+  model->setOperandValue(param62, param62_init, sizeof(int32_t) * 1);
+  static bool8 layout_init[] = {true};
+  model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
+  model->addOperation(ANEURALNETWORKS_TRANSPOSE_CONV_2D, {op15, op25, op35, shape5, param59, param60, param61, param62, layout}, {op45});
+  // Phase 3, inputs and outputs
+  model->identifyInputsAndOutputs(
+    {op15, op25, op35},
+    {op45});
+  assert(model->isValid());
+}
+
+inline bool is_ignored_dynamic_output_shape_nchw_float16_weight_as_input_5(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
