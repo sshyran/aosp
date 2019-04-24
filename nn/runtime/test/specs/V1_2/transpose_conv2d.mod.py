@@ -260,3 +260,25 @@ Example({
     o2: [0],
     o3: [0],
 }).AddNchw(i1, zero_sized, o3, layout).AddVariations("relaxed", quant8, "float16")
+
+
+# TEST 8: TRANSPOSE_CONV2D_SAME, outputShape = [1, 4, 4, 1], pad = same, stride = 2, act = none
+i8 = Input("op1", "TENSOR_FLOAT32", "{1, 2, 2, 1}") # input 0
+w8 = Parameter("op2", "TENSOR_FLOAT32", "{1, 1, 1, 1}", [2]) # weight
+b8 = Parameter("op3", "TENSOR_FLOAT32", "{1}", [0]) # bias
+s8 = Int32Vector("shape", [1, 4, 4, 1]) # output shape
+o8 = Output("op4", "TENSOR_FLOAT32", "{1, 4, 4, 1}") # output
+Model().Operation("TRANSPOSE_CONV_2D", i8, w8, b8, s8, 1, 2, 2, 0, layout).To(o8)
+
+# Additional data type
+quant8 = DataTypeConverter().Identify({
+    i8: ("TENSOR_QUANT8_ASYMM", 0.5, 100),
+    w8: ("TENSOR_QUANT8_ASYMM", 0.5, 128),
+    b8: ("TENSOR_INT32", 0.25, 0),
+    o8: ("TENSOR_QUANT8_ASYMM", 16.0, 0)
+})
+
+Example({
+    i8: [1,  2,  3,  4],
+    o8: [2, 0, 4, 0, 0, 0, 0, 0, 6, 0, 8, 0, 0, 0, 0, 0]
+}).AddNchw(i8, o8, s8, layout).AddVariations("relaxed", quant8, "float16").AddInput(w8, b8)
