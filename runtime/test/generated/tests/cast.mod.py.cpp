@@ -285,3 +285,51 @@ TEST_F(DynamicOutputShapeTest, cast_quant8_to_quant8_dynamic_output_shape) {
             cast::get_examples_quant8_to_quant8_dynamic_output_shape());
 }
 
+TEST_F(GeneratedTests, cast_float16_to_quant8_overflow) {
+    execute(cast::CreateModel_17,
+            cast::is_ignored_17,
+            cast::get_examples_float16_to_quant8_overflow());
+}
+
+TEST_F(DynamicOutputShapeTest, cast_float16_to_quant8_overflow_dynamic_output_shape) {
+    execute(cast::CreateModel_dynamic_output_shape_17,
+            cast::is_ignored_dynamic_output_shape_17,
+            cast::get_examples_float16_to_quant8_overflow_dynamic_output_shape());
+}
+
+TEST_F(GeneratedTests, cast_float32_to_quant8_overflow) {
+    execute(cast::CreateModel_18,
+            cast::is_ignored_18,
+            cast::get_examples_float32_to_quant8_overflow());
+}
+
+TEST_F(GeneratedTests, cast_float32_to_quant8_overflow_relaxed) {
+    execute(cast::CreateModel_relaxed_8,
+            cast::is_ignored_relaxed_8,
+            cast::get_examples_float32_to_quant8_overflow_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, cast_float32_to_quant8_overflow_dynamic_output_shape) {
+    execute(cast::CreateModel_dynamic_output_shape_18,
+            cast::is_ignored_dynamic_output_shape_18,
+            cast::get_examples_float32_to_quant8_overflow_dynamic_output_shape());
+}
+
+TEST_F(DynamicOutputShapeTest, cast_float32_to_quant8_overflow_dynamic_output_shape_relaxed) {
+    execute(cast::CreateModel_dynamic_output_shape_relaxed_8,
+            cast::is_ignored_dynamic_output_shape_relaxed_8,
+            cast::get_examples_float32_to_quant8_overflow_dynamic_output_shape_relaxed());
+}
+
+TEST_F(GeneratedTests, cast_int32_to_quant8_overflow) {
+    execute(cast::CreateModel_19,
+            cast::is_ignored_19,
+            cast::get_examples_int32_to_quant8_overflow());
+}
+
+TEST_F(DynamicOutputShapeTest, cast_int32_to_quant8_overflow_dynamic_output_shape) {
+    execute(cast::CreateModel_dynamic_output_shape_19,
+            cast::is_ignored_dynamic_output_shape_19,
+            cast::get_examples_int32_to_quant8_overflow_dynamic_output_shape());
+}
+
