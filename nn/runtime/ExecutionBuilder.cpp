@@ -824,30 +824,18 @@ int StepExecutor::startComputeOnDevice(
         Model model;
         mModel->setHidlModel(&model);
 
-        // TODO Dangerous!  In async, the model will outlive it here. Safe for now
-        sp<PreparedModelCallback> preparedModelCallback = new PreparedModelCallback();
         // TODO(butlermichael): Propagate user preference to this point instead of
         // using default value of ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER, or
         // remove this entire block of code since it is a stale path that is only
         // encountered on an #if-removed code.
         ExecutionPreference preference =
                 static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
-        ErrorStatus prepareLaunchStatus = mDevice->getInterface()->prepareModel(
-                model, preference, hidl_vec<hidl_handle>(), hidl_vec<hidl_handle>(), HidlToken(),
-                preparedModelCallback);
-        if (prepareLaunchStatus != ErrorStatus::NONE) {
-            return convertErrorStatusToResultCode(prepareLaunchStatus);
-        }
 
-        // Immediately synchronize with callback object for now
-        // TODO: change to asynchronous later
-        preparedModelCallback->wait();
-        ErrorStatus prepareReturnStatus = preparedModelCallback->getStatus();
-        if (auto preparedModel = preparedModelCallback->getPreparedModel()) {
-            mPreparedModel = VersionedIPreparedModel::create(preparedModel);
-        }
-        if (prepareReturnStatus != ErrorStatus::NONE) {
-            return convertErrorStatusToResultCode(prepareReturnStatus);
+        ErrorStatus status = ErrorStatus::GENERAL_FAILURE;
+        std::tie(status, mPreparedModel) =
+                mDevice->getInterface()->prepareModel(model, preference, {}, {}, {});
+        if (status != ErrorStatus::NONE) {
+            return convertErrorStatusToResultCode(status);
         }
         if (mPreparedModel == nullptr) {
             return ANEURALNETWORKS_OP_FAILED;
