@@ -3036,9 +3036,9 @@ void CreateModel_shape_nhwc_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type6);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3067,9 +3067,9 @@ void CreateModel_shape_nhwc_relaxed_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type6);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3100,9 +3100,9 @@ void CreateModel_shape_nhwc_quant8_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type43);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3131,9 +3131,9 @@ void CreateModel_shape_nhwc_float16_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type44);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3162,9 +3162,9 @@ void CreateModel_shape_nchw_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type45);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3193,9 +3193,9 @@ void CreateModel_shape_nchw_relaxed_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type45);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3226,9 +3226,9 @@ void CreateModel_shape_nchw_quant8_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type46);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3257,9 +3257,9 @@ void CreateModel_shape_nchw_float16_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type47);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3288,9 +3288,9 @@ void CreateModel_shape_dynamic_output_shape_nhwc_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type26);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3319,9 +3319,9 @@ void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type26);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3352,9 +3352,9 @@ void CreateModel_shape_dynamic_output_shape_nhwc_quant8_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type42);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3383,9 +3383,9 @@ void CreateModel_shape_dynamic_output_shape_nhwc_float16_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type28);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3414,9 +3414,9 @@ void CreateModel_shape_dynamic_output_shape_nchw_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type26);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3445,9 +3445,9 @@ void CreateModel_shape_dynamic_output_shape_nchw_relaxed_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type26);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3478,9 +3478,9 @@ void CreateModel_shape_dynamic_output_shape_nchw_quant8_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type42);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3509,9 +3509,9 @@ void CreateModel_shape_dynamic_output_shape_nchw_float16_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type28);
   // Phase 2, operations
-  static int32_t param12_init[] = {2};
+  static int32_t param12_init[] = {5};
   model->setOperandValue(param12, param12_init, sizeof(int32_t) * 1);
-  static int32_t param13_init[] = {5};
+  static int32_t param13_init[] = {2};
   model->setOperandValue(param13, param13_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3540,9 +3540,9 @@ void CreateModel_scale_nhwc_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type6);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3571,9 +3571,9 @@ void CreateModel_scale_nhwc_relaxed_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type6);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3604,9 +3604,9 @@ void CreateModel_scale_nhwc_quant8_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type43);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3635,9 +3635,9 @@ void CreateModel_scale_nhwc_float16_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type44);
   // Phase 2, operations
-  static _Float16 param14_init[] = {1.100000023841858f};
+  static _Float16 param14_init[] = {2.5999999046325684f};
   model->setOperandValue(param14, param14_init, sizeof(_Float16) * 1);
-  static _Float16 param15_init[] = {2.5999999046325684f};
+  static _Float16 param15_init[] = {1.100000023841858f};
   model->setOperandValue(param15, param15_init, sizeof(_Float16) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3666,9 +3666,9 @@ void CreateModel_scale_nchw_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type45);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3697,9 +3697,9 @@ void CreateModel_scale_nchw_relaxed_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type45);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3730,9 +3730,9 @@ void CreateModel_scale_nchw_quant8_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type46);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3761,9 +3761,9 @@ void CreateModel_scale_nchw_float16_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type47);
   // Phase 2, operations
-  static _Float16 param14_init[] = {1.100000023841858f};
+  static _Float16 param14_init[] = {2.5999999046325684f};
   model->setOperandValue(param14, param14_init, sizeof(_Float16) * 1);
-  static _Float16 param15_init[] = {2.5999999046325684f};
+  static _Float16 param15_init[] = {1.100000023841858f};
   model->setOperandValue(param15, param15_init, sizeof(_Float16) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3792,9 +3792,9 @@ void CreateModel_scale_dynamic_output_shape_nhwc_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3823,9 +3823,9 @@ void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3856,9 +3856,9 @@ void CreateModel_scale_dynamic_output_shape_nhwc_quant8_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type42);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3887,9 +3887,9 @@ void CreateModel_scale_dynamic_output_shape_nhwc_float16_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type28);
   // Phase 2, operations
-  static _Float16 param14_init[] = {1.100000023841858f};
+  static _Float16 param14_init[] = {2.5999999046325684f};
   model->setOperandValue(param14, param14_init, sizeof(_Float16) * 1);
-  static _Float16 param15_init[] = {2.5999999046325684f};
+  static _Float16 param15_init[] = {1.100000023841858f};
   model->setOperandValue(param15, param15_init, sizeof(_Float16) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3918,9 +3918,9 @@ void CreateModel_scale_dynamic_output_shape_nchw_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3949,9 +3949,9 @@ void CreateModel_scale_dynamic_output_shape_nchw_relaxed_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -3982,9 +3982,9 @@ void CreateModel_scale_dynamic_output_shape_nchw_quant8_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type42);
   // Phase 2, operations
-  static float param14_init[] = {1.1f};
+  static float param14_init[] = {2.6f};
   model->setOperandValue(param14, param14_init, sizeof(float) * 1);
-  static float param15_init[] = {2.6f};
+  static float param15_init[] = {1.1f};
   model->setOperandValue(param15, param15_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -4013,9 +4013,9 @@ void CreateModel_scale_dynamic_output_shape_nchw_float16_4(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out3 = model->addOperand(&type28);
   // Phase 2, operations
-  static _Float16 param14_init[] = {1.100000023841858f};
+  static _Float16 param14_init[] = {2.5999999046325684f};
   model->setOperandValue(param14, param14_init, sizeof(_Float16) * 1);
-  static _Float16 param15_init[] = {2.5999999046325684f};
+  static _Float16 param15_init[] = {1.100000023841858f};
   model->setOperandValue(param15, param15_init, sizeof(_Float16) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5052,9 +5052,9 @@ void CreateModel_shape_nhwc_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type8);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5083,9 +5083,9 @@ void CreateModel_shape_nhwc_relaxed_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type8);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5116,9 +5116,9 @@ void CreateModel_shape_nhwc_quant8_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type53);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5147,9 +5147,9 @@ void CreateModel_shape_nhwc_float16_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type54);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5178,9 +5178,9 @@ void CreateModel_shape_nchw_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type55);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5209,9 +5209,9 @@ void CreateModel_shape_nchw_relaxed_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type55);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5242,9 +5242,9 @@ void CreateModel_shape_nchw_quant8_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type56);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5273,9 +5273,9 @@ void CreateModel_shape_nchw_float16_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type57);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5304,9 +5304,9 @@ void CreateModel_shape_dynamic_output_shape_nhwc_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type26);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5335,9 +5335,9 @@ void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type26);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5368,9 +5368,9 @@ void CreateModel_shape_dynamic_output_shape_nhwc_quant8_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type42);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5399,9 +5399,9 @@ void CreateModel_shape_dynamic_output_shape_nhwc_float16_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type28);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5430,9 +5430,9 @@ void CreateModel_shape_dynamic_output_shape_nchw_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type26);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5461,9 +5461,9 @@ void CreateModel_shape_dynamic_output_shape_nchw_relaxed_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type26);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5494,9 +5494,9 @@ void CreateModel_shape_dynamic_output_shape_nchw_quant8_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type42);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5525,9 +5525,9 @@ void CreateModel_shape_dynamic_output_shape_nchw_float16_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type28);
   // Phase 2, operations
-  static int32_t param20_init[] = {5};
+  static int32_t param20_init[] = {2};
   model->setOperandValue(param20, param20_init, sizeof(int32_t) * 1);
-  static int32_t param21_init[] = {2};
+  static int32_t param21_init[] = {5};
   model->setOperandValue(param21, param21_init, sizeof(int32_t) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5556,9 +5556,9 @@ void CreateModel_scale_nhwc_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type8);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5587,9 +5587,9 @@ void CreateModel_scale_nhwc_relaxed_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type8);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5620,9 +5620,9 @@ void CreateModel_scale_nhwc_quant8_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type53);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5651,9 +5651,9 @@ void CreateModel_scale_nhwc_float16_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type54);
   // Phase 2, operations
-  static _Float16 param22_init[] = {2.799999952316284f};
+  static _Float16 param22_init[] = {1.399999976158142f};
   model->setOperandValue(param22, param22_init, sizeof(_Float16) * 1);
-  static _Float16 param23_init[] = {1.399999976158142f};
+  static _Float16 param23_init[] = {2.799999952316284f};
   model->setOperandValue(param23, param23_init, sizeof(_Float16) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5682,9 +5682,9 @@ void CreateModel_scale_nchw_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type55);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5713,9 +5713,9 @@ void CreateModel_scale_nchw_relaxed_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type55);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5746,9 +5746,9 @@ void CreateModel_scale_nchw_quant8_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type56);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5777,9 +5777,9 @@ void CreateModel_scale_nchw_float16_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type57);
   // Phase 2, operations
-  static _Float16 param22_init[] = {2.799999952316284f};
+  static _Float16 param22_init[] = {1.399999976158142f};
   model->setOperandValue(param22, param22_init, sizeof(_Float16) * 1);
-  static _Float16 param23_init[] = {1.399999976158142f};
+  static _Float16 param23_init[] = {2.799999952316284f};
   model->setOperandValue(param23, param23_init, sizeof(_Float16) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5808,9 +5808,9 @@ void CreateModel_scale_dynamic_output_shape_nhwc_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5839,9 +5839,9 @@ void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5872,9 +5872,9 @@ void CreateModel_scale_dynamic_output_shape_nhwc_quant8_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type42);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5903,9 +5903,9 @@ void CreateModel_scale_dynamic_output_shape_nhwc_float16_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type28);
   // Phase 2, operations
-  static _Float16 param22_init[] = {2.799999952316284f};
+  static _Float16 param22_init[] = {1.399999976158142f};
   model->setOperandValue(param22, param22_init, sizeof(_Float16) * 1);
-  static _Float16 param23_init[] = {1.399999976158142f};
+  static _Float16 param23_init[] = {2.799999952316284f};
   model->setOperandValue(param23, param23_init, sizeof(_Float16) * 1);
   static bool8 layout_init[] = {false};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5934,9 +5934,9 @@ void CreateModel_scale_dynamic_output_shape_nchw_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5965,9 +5965,9 @@ void CreateModel_scale_dynamic_output_shape_nchw_relaxed_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type26);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -5998,9 +5998,9 @@ void CreateModel_scale_dynamic_output_shape_nchw_quant8_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type42);
   // Phase 2, operations
-  static float param22_init[] = {2.8f};
+  static float param22_init[] = {1.4f};
   model->setOperandValue(param22, param22_init, sizeof(float) * 1);
-  static float param23_init[] = {1.4f};
+  static float param23_init[] = {2.8f};
   model->setOperandValue(param23, param23_init, sizeof(float) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);
@@ -6029,9 +6029,9 @@ void CreateModel_scale_dynamic_output_shape_nchw_float16_6(Model *model) {
   auto layout = model->addOperand(&type0);
   auto out5 = model->addOperand(&type28);
   // Phase 2, operations
-  static _Float16 param22_init[] = {2.799999952316284f};
+  static _Float16 param22_init[] = {1.399999976158142f};
   model->setOperandValue(param22, param22_init, sizeof(_Float16) * 1);
-  static _Float16 param23_init[] = {1.399999976158142f};
+  static _Float16 param23_init[] = {2.799999952316284f};
   model->setOperandValue(param23, param23_init, sizeof(_Float16) * 1);
   static bool8 layout_init[] = {true};
   model->setOperandValue(layout, layout_init, sizeof(bool8) * 1);

@@ -82,8 +82,8 @@ Example(test3, model=model_scale).AddNchw(i1, o1, layout).AddVariations("relaxed
 # TEST 4: RESIZE_NEAREST_NEIGHBOR_4, h = 2, w = 5
 i1 = Input("in", "TENSOR_FLOAT32", "{1, 2, 2, 1}") # input 0
 o1 = Output("out", "TENSOR_FLOAT32", "{1, 2, 5, 1}") # output 0
-model_shape = Model("shape").Operation("RESIZE_NEAREST_NEIGHBOR", i1, 2, 5, layout).To(o1)
-model_scale = Model("scale").Operation("RESIZE_NEAREST_NEIGHBOR", i1, 1.1, 2.6, layout).To(o1)
+model_shape = Model("shape").Operation("RESIZE_NEAREST_NEIGHBOR", i1, 5, 2, layout).To(o1)
+model_scale = Model("scale").Operation("RESIZE_NEAREST_NEIGHBOR", i1, 2.6, 1.1, layout).To(o1)
 
 # Additional data type
 quant8 = DataTypeConverter().Identify({
@@ -124,8 +124,8 @@ Example(test5, model=model_scale).AddNchw(i1, o1, layout).AddVariations("relaxed
 # TEST 6: RESIZE_NEAREST_NEIGHBOR_6, h = 5, w = 2
 i1 = Input("in", "TENSOR_FLOAT32", "{1, 2, 2, 1}") # input 0
 o1 = Output("out", "TENSOR_FLOAT32", "{1, 5, 2, 1}") # output 0
-model_shape = Model("shape").Operation("RESIZE_NEAREST_NEIGHBOR", i1, 5, 2, layout).To(o1)
-model_scale = Model("scale").Operation("RESIZE_NEAREST_NEIGHBOR", i1, 2.8, 1.4, layout).To(o1)
+model_shape = Model("shape").Operation("RESIZE_NEAREST_NEIGHBOR", i1, 2, 5, layout).To(o1)
+model_scale = Model("scale").Operation("RESIZE_NEAREST_NEIGHBOR", i1, 1.4, 2.8, layout).To(o1)
 
 # Additional data type
 quant8 = DataTypeConverter().Identify({
