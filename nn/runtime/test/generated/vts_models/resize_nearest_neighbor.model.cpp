@@ -7765,7 +7765,7 @@ Model createTestModel_shape_nhwc_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 0
+      5, 0, 0, 0, 2, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -7845,7 +7845,7 @@ Model createTestModel_shape_nhwc_relaxed_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 0
+      5, 0, 0, 0, 2, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -7926,7 +7926,7 @@ Model createTestModel_shape_nhwc_quant8_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 0
+      5, 0, 0, 0, 2, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8006,7 +8006,7 @@ Model createTestModel_shape_nhwc_float16_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 0
+      5, 0, 0, 0, 2, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8086,7 +8086,7 @@ Model createTestModel_shape_nchw_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 1
+      5, 0, 0, 0, 2, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8166,7 +8166,7 @@ Model createTestModel_shape_nchw_relaxed_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 1
+      5, 0, 0, 0, 2, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8247,7 +8247,7 @@ Model createTestModel_shape_nchw_quant8_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 1
+      5, 0, 0, 0, 2, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8327,7 +8327,7 @@ Model createTestModel_shape_nchw_float16_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 1
+      5, 0, 0, 0, 2, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8407,7 +8407,7 @@ Model createTestModel_shape_dynamic_output_shape_nhwc_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 0
+      5, 0, 0, 0, 2, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8487,7 +8487,7 @@ Model createTestModel_shape_dynamic_output_shape_nhwc_relaxed_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 0
+      5, 0, 0, 0, 2, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8568,7 +8568,7 @@ Model createTestModel_shape_dynamic_output_shape_nhwc_quant8_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 0
+      5, 0, 0, 0, 2, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8648,7 +8648,7 @@ Model createTestModel_shape_dynamic_output_shape_nhwc_float16_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 0
+      5, 0, 0, 0, 2, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8728,7 +8728,7 @@ Model createTestModel_shape_dynamic_output_shape_nchw_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 1
+      5, 0, 0, 0, 2, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8808,7 +8808,7 @@ Model createTestModel_shape_dynamic_output_shape_nchw_relaxed_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 1
+      5, 0, 0, 0, 2, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8889,7 +8889,7 @@ Model createTestModel_shape_dynamic_output_shape_nchw_quant8_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 1
+      5, 0, 0, 0, 2, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -8969,7 +8969,7 @@ Model createTestModel_shape_dynamic_output_shape_nchw_float16_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      2, 0, 0, 0, 5, 0, 0, 0, 1
+      5, 0, 0, 0, 2, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9049,7 +9049,7 @@ Model createTestModel_scale_nhwc_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 0
+      102, 102, 38, 64, 205, 204, 140, 63, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9129,7 +9129,7 @@ Model createTestModel_scale_nhwc_relaxed_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 0
+      102, 102, 38, 64, 205, 204, 140, 63, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9210,7 +9210,7 @@ Model createTestModel_scale_nhwc_quant8_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 0
+      102, 102, 38, 64, 205, 204, 140, 63, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9290,7 +9290,7 @@ Model createTestModel_scale_nhwc_float16_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      102, 60, 51, 65, 0
+      51, 65, 102, 60, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9370,7 +9370,7 @@ Model createTestModel_scale_nchw_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 1
+      102, 102, 38, 64, 205, 204, 140, 63, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9450,7 +9450,7 @@ Model createTestModel_scale_nchw_relaxed_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 1
+      102, 102, 38, 64, 205, 204, 140, 63, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9531,7 +9531,7 @@ Model createTestModel_scale_nchw_quant8_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 1
+      102, 102, 38, 64, 205, 204, 140, 63, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9611,7 +9611,7 @@ Model createTestModel_scale_nchw_float16_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      102, 60, 51, 65, 1
+      51, 65, 102, 60, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9691,7 +9691,7 @@ Model createTestModel_scale_dynamic_output_shape_nhwc_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 0
+      102, 102, 38, 64, 205, 204, 140, 63, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9771,7 +9771,7 @@ Model createTestModel_scale_dynamic_output_shape_nhwc_relaxed_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 0
+      102, 102, 38, 64, 205, 204, 140, 63, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9852,7 +9852,7 @@ Model createTestModel_scale_dynamic_output_shape_nhwc_quant8_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 0
+      102, 102, 38, 64, 205, 204, 140, 63, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -9932,7 +9932,7 @@ Model createTestModel_scale_dynamic_output_shape_nhwc_float16_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      102, 60, 51, 65, 0
+      51, 65, 102, 60, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -10012,7 +10012,7 @@ Model createTestModel_scale_dynamic_output_shape_nchw_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 1
+      102, 102, 38, 64, 205, 204, 140, 63, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -10092,7 +10092,7 @@ Model createTestModel_scale_dynamic_output_shape_nchw_relaxed_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 1
+      102, 102, 38, 64, 205, 204, 140, 63, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -10173,7 +10173,7 @@ Model createTestModel_scale_dynamic_output_shape_nchw_quant8_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      205, 204, 140, 63, 102, 102, 38, 64, 1
+      102, 102, 38, 64, 205, 204, 140, 63, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -10253,7 +10253,7 @@ Model createTestModel_scale_dynamic_output_shape_nchw_float16_4() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      102, 60, 51, 65, 1
+      51, 65, 102, 60, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -12901,7 +12901,7 @@ Model createTestModel_shape_nhwc_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 0
+      2, 0, 0, 0, 5, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -12981,7 +12981,7 @@ Model createTestModel_shape_nhwc_relaxed_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 0
+      2, 0, 0, 0, 5, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13062,7 +13062,7 @@ Model createTestModel_shape_nhwc_quant8_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 0
+      2, 0, 0, 0, 5, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13142,7 +13142,7 @@ Model createTestModel_shape_nhwc_float16_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 0
+      2, 0, 0, 0, 5, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13222,7 +13222,7 @@ Model createTestModel_shape_nchw_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 1
+      2, 0, 0, 0, 5, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13302,7 +13302,7 @@ Model createTestModel_shape_nchw_relaxed_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 1
+      2, 0, 0, 0, 5, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13383,7 +13383,7 @@ Model createTestModel_shape_nchw_quant8_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 1
+      2, 0, 0, 0, 5, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13463,7 +13463,7 @@ Model createTestModel_shape_nchw_float16_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 1
+      2, 0, 0, 0, 5, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13543,7 +13543,7 @@ Model createTestModel_shape_dynamic_output_shape_nhwc_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 0
+      2, 0, 0, 0, 5, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13623,7 +13623,7 @@ Model createTestModel_shape_dynamic_output_shape_nhwc_relaxed_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 0
+      2, 0, 0, 0, 5, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13704,7 +13704,7 @@ Model createTestModel_shape_dynamic_output_shape_nhwc_quant8_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 0
+      2, 0, 0, 0, 5, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13784,7 +13784,7 @@ Model createTestModel_shape_dynamic_output_shape_nhwc_float16_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 0
+      2, 0, 0, 0, 5, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13864,7 +13864,7 @@ Model createTestModel_shape_dynamic_output_shape_nchw_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 1
+      2, 0, 0, 0, 5, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -13944,7 +13944,7 @@ Model createTestModel_shape_dynamic_output_shape_nchw_relaxed_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 1
+      2, 0, 0, 0, 5, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14025,7 +14025,7 @@ Model createTestModel_shape_dynamic_output_shape_nchw_quant8_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 1
+      2, 0, 0, 0, 5, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14105,7 +14105,7 @@ Model createTestModel_shape_dynamic_output_shape_nchw_float16_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      5, 0, 0, 0, 2, 0, 0, 0, 1
+      2, 0, 0, 0, 5, 0, 0, 0, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14185,7 +14185,7 @@ Model createTestModel_scale_nhwc_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 0
+      51, 51, 179, 63, 51, 51, 51, 64, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14265,7 +14265,7 @@ Model createTestModel_scale_nhwc_relaxed_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 0
+      51, 51, 179, 63, 51, 51, 51, 64, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14346,7 +14346,7 @@ Model createTestModel_scale_nhwc_quant8_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 0
+      51, 51, 179, 63, 51, 51, 51, 64, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14426,7 +14426,7 @@ Model createTestModel_scale_nhwc_float16_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      154, 65, 154, 61, 0
+      154, 61, 154, 65, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14506,7 +14506,7 @@ Model createTestModel_scale_nchw_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 1
+      51, 51, 179, 63, 51, 51, 51, 64, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14586,7 +14586,7 @@ Model createTestModel_scale_nchw_relaxed_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 1
+      51, 51, 179, 63, 51, 51, 51, 64, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14667,7 +14667,7 @@ Model createTestModel_scale_nchw_quant8_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 1
+      51, 51, 179, 63, 51, 51, 51, 64, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14747,7 +14747,7 @@ Model createTestModel_scale_nchw_float16_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      154, 65, 154, 61, 1
+      154, 61, 154, 65, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14827,7 +14827,7 @@ Model createTestModel_scale_dynamic_output_shape_nhwc_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 0
+      51, 51, 179, 63, 51, 51, 51, 64, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14907,7 +14907,7 @@ Model createTestModel_scale_dynamic_output_shape_nhwc_relaxed_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 0
+      51, 51, 179, 63, 51, 51, 51, 64, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -14988,7 +14988,7 @@ Model createTestModel_scale_dynamic_output_shape_nhwc_quant8_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 0
+      51, 51, 179, 63, 51, 51, 51, 64, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -15068,7 +15068,7 @@ Model createTestModel_scale_dynamic_output_shape_nhwc_float16_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      154, 65, 154, 61, 0
+      154, 61, 154, 65, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -15148,7 +15148,7 @@ Model createTestModel_scale_dynamic_output_shape_nchw_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 1
+      51, 51, 179, 63, 51, 51, 51, 64, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -15228,7 +15228,7 @@ Model createTestModel_scale_dynamic_output_shape_nchw_relaxed_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 1
+      51, 51, 179, 63, 51, 51, 51, 64, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -15309,7 +15309,7 @@ Model createTestModel_scale_dynamic_output_shape_nchw_quant8_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      51, 51, 51, 64, 51, 51, 179, 63, 1
+      51, 51, 179, 63, 51, 51, 51, 64, 1
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -15389,7 +15389,7 @@ Model createTestModel_scale_dynamic_output_shape_nchw_float16_6() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {4};
     std::vector<uint8_t> operandValues = {
-      154, 65, 154, 61, 1
+      154, 61, 154, 65, 1
     };
     const std::vector<hidl_memory> pools = {};
 
