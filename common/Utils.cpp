@@ -1771,8 +1771,11 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             OperationValidationContext context(inputCount, inputIndexes, outputCount, outputIndexes,
                                                operands.data(), halVersion);
-            return operationRegistration->validate(&context) ? ANEURALNETWORKS_NO_ERROR
-                                                             : ANEURALNETWORKS_BAD_DATA;
+            if (!operationRegistration->validate(&context)) {
+                LOG(ERROR) << "Validation failed for operation " << getOperationName(opType);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            return ANEURALNETWORKS_NO_ERROR;
         }
     }
 }
