@@ -122,8 +122,11 @@ inline bool roiAlignNhwc(const T_Input* inputData, const Shape& inputShape, cons
                 for (uint32_t k = 0; k < inDepth; k++) outPtr[k] = 0;
 
                 // calculate the sum of the sampling points
-                for (T_Roi y = hStart + hBinSize / 2; y < hEnd; y += hBinSize) {
-                    for (T_Roi x = wStart + wBinSize / 2; x < wEnd; x += wBinSize) {
+                for (uint32_t yInd = 0; yInd < hSamplingRatio; yInd++) {
+                    for (uint32_t xInd = 0; xInd < wSamplingRatio; xInd++) {
+                        T_Roi y = hStart + hBinSize / 2 + hBinSize * yInd;
+                        T_Roi x = wStart + wBinSize / 2 + wBinSize * xInd;
+
                         // bilinear interpolation of point (x,y)
                         // w.r.t box [(x1,y1), (x1,y2), (x2,y1), (x2,y2)]
                         uint32_t x1 = std::floor(static_cast<float>(x));
@@ -247,8 +250,11 @@ inline bool roiAlignNhwc<uint8_t, uint16_t>(const uint8_t* inputData, const Shap
 
                 std::vector<int32_t> outTemp(inDepth, 0);
                 // calculate the sum of the sampling points
-                for (float y = hStart + hBinSize / 2; y < hEnd; y += hBinSize) {
-                    for (float x = wStart + wBinSize / 2; x < wEnd; x += wBinSize) {
+                for (uint32_t yInd = 0; yInd < hSamplingRatio; yInd++) {
+                    for (uint32_t xInd = 0; xInd < wSamplingRatio; xInd++) {
+                        float y = hStart + hBinSize / 2 + hBinSize * yInd;
+                        float x = wStart + wBinSize / 2 + wBinSize * xInd;
+
                         // bilinear interpolation of point (x,y)
                         // w.r.t box [(x1,y1), (x1,y2), (x2,y1), (x2,y2)]
                         uint32_t x1 = std::floor(x), y1 = std::floor(y);

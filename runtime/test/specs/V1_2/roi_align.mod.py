@@ -243,3 +243,23 @@ Example({
     o2: [0],
     zero_sized: [0],
 }).AddNchw(i1, zero_sized, layout).AddVariations("relaxed", quant8, "float16")
+
+
+# TEST 6: ROI_ALIGN_6, hanging issue
+i4 = Input("in", "TENSOR_FLOAT32", "{1, 512, 8, 1}")
+roi4 = Input("roi", "TENSOR_FLOAT32", "{1, 4}")
+o4 = Output("out", "TENSOR_FLOAT32", "{1, 128, 4, 1}")
+Model().Operation("ROI_ALIGN", i4, roi4, [0], 128, 4, 1.0, 64.0, 10, 10, layout).To(o4)
+
+quant8 = DataTypeConverter().Identify({
+    i4: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
+    roi4: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
+    o4: ("TENSOR_QUANT8_ASYMM", 0.0625, 128)
+})
+
+# Instantiate an example
+Example({
+    i4: [0] * (512 * 8),
+    roi4: [450, 500, 466, 508],
+    o4: [0] * (128 * 4)
+}).AddNchw(i4, o4, layout).AddVariations("relaxed", quant8, "float16")
