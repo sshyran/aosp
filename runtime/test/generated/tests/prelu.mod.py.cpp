@@ -27,6 +27,24 @@ TEST_F(GeneratedTests, prelu_quant8) {
             prelu::get_examples_quant8());
 }
 
+TEST_F(GeneratedTests, prelu_quant8_2) {
+    execute(prelu::CreateModel_quant8_2,
+            prelu::is_ignored_quant8_2,
+            prelu::get_examples_quant8_2());
+}
+
+TEST_F(GeneratedTests, prelu_quant8_3) {
+    execute(prelu::CreateModel_quant8_3,
+            prelu::is_ignored_quant8_3,
+            prelu::get_examples_quant8_3());
+}
+
+TEST_F(GeneratedTests, prelu_quant8_4) {
+    execute(prelu::CreateModel_quant8_4,
+            prelu::is_ignored_quant8_4,
+            prelu::get_examples_quant8_4());
+}
+
 TEST_F(GeneratedTests, prelu_float16) {
     execute(prelu::CreateModel_float16,
             prelu::is_ignored_float16,
@@ -49,6 +67,24 @@ TEST_F(GeneratedTests, prelu_weight_as_input_quant8) {
     execute(prelu::CreateModel_weight_as_input_quant8,
             prelu::is_ignored_weight_as_input_quant8,
             prelu::get_examples_weight_as_input_quant8());
+}
+
+TEST_F(GeneratedTests, prelu_weight_as_input_quant8_2) {
+    execute(prelu::CreateModel_weight_as_input_quant8_2,
+            prelu::is_ignored_weight_as_input_quant8_2,
+            prelu::get_examples_weight_as_input_quant8_2());
+}
+
+TEST_F(GeneratedTests, prelu_weight_as_input_quant8_3) {
+    execute(prelu::CreateModel_weight_as_input_quant8_3,
+            prelu::is_ignored_weight_as_input_quant8_3,
+            prelu::get_examples_weight_as_input_quant8_3());
+}
+
+TEST_F(GeneratedTests, prelu_weight_as_input_quant8_4) {
+    execute(prelu::CreateModel_weight_as_input_quant8_4,
+            prelu::is_ignored_weight_as_input_quant8_4,
+            prelu::get_examples_weight_as_input_quant8_4());
 }
 
 TEST_F(GeneratedTests, prelu_weight_as_input_float16) {
@@ -75,6 +111,24 @@ TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_quant8) {
             prelu::get_examples_dynamic_output_shape_quant8());
 }
 
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_quant8_2) {
+    execute(prelu::CreateModel_dynamic_output_shape_quant8_2,
+            prelu::is_ignored_dynamic_output_shape_quant8_2,
+            prelu::get_examples_dynamic_output_shape_quant8_2());
+}
+
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_quant8_3) {
+    execute(prelu::CreateModel_dynamic_output_shape_quant8_3,
+            prelu::is_ignored_dynamic_output_shape_quant8_3,
+            prelu::get_examples_dynamic_output_shape_quant8_3());
+}
+
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_quant8_4) {
+    execute(prelu::CreateModel_dynamic_output_shape_quant8_4,
+            prelu::is_ignored_dynamic_output_shape_quant8_4,
+            prelu::get_examples_dynamic_output_shape_quant8_4());
+}
+
 TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_float16) {
     execute(prelu::CreateModel_dynamic_output_shape_float16,
             prelu::is_ignored_dynamic_output_shape_float16,
@@ -97,6 +151,24 @@ TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_weight_as_input_quant8
     execute(prelu::CreateModel_dynamic_output_shape_weight_as_input_quant8,
             prelu::is_ignored_dynamic_output_shape_weight_as_input_quant8,
             prelu::get_examples_dynamic_output_shape_weight_as_input_quant8());
+}
+
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_weight_as_input_quant8_2) {
+    execute(prelu::CreateModel_dynamic_output_shape_weight_as_input_quant8_2,
+            prelu::is_ignored_dynamic_output_shape_weight_as_input_quant8_2,
+            prelu::get_examples_dynamic_output_shape_weight_as_input_quant8_2());
+}
+
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_weight_as_input_quant8_3) {
+    execute(prelu::CreateModel_dynamic_output_shape_weight_as_input_quant8_3,
+            prelu::is_ignored_dynamic_output_shape_weight_as_input_quant8_3,
+            prelu::get_examples_dynamic_output_shape_weight_as_input_quant8_3());
+}
+
+TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_weight_as_input_quant8_4) {
+    execute(prelu::CreateModel_dynamic_output_shape_weight_as_input_quant8_4,
+            prelu::is_ignored_dynamic_output_shape_weight_as_input_quant8_4,
+            prelu::get_examples_dynamic_output_shape_weight_as_input_quant8_4());
 }
 
 TEST_F(DynamicOutputShapeTest, prelu_dynamic_output_shape_weight_as_input_float16) {
