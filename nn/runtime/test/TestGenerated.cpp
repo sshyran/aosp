@@ -244,6 +244,9 @@ void GeneratedTests::execute(std::function<void(Model*)> createModel,
 }
 
 void GeneratedTests::SetUp() {
+#ifdef NNTEST_COMPUTE_MODE
+    mOldComputeMode = Execution::setComputeMode(GetParam());
+#endif
     char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
     char* cacheDir = mkdtemp(cacheDirTemp);
     ASSERT_NE(cacheDir, nullptr);
@@ -252,6 +255,9 @@ void GeneratedTests::SetUp() {
 }
 
 void GeneratedTests::TearDown() {
+#ifdef NNTEST_COMPUTE_MODE
+    Execution::setComputeMode(mOldComputeMode);
+#endif
     if (!::testing::Test::HasFailure()) {
         // TODO: Switch to std::filesystem::remove_all once libc++fs is made available in CTS.
         // Remove the cache directory specified by path recursively.
@@ -261,5 +267,12 @@ void GeneratedTests::TearDown() {
         nftw(mCacheDir.c_str(), callback, 128, FTW_DEPTH | FTW_MOUNT | FTW_PHYS);
     }
 }
+
+#ifdef NNTEST_COMPUTE_MODE
+INSTANTIATE_TEST_SUITE_P(ComputeMode, GeneratedTests,
+                         testing::Values(Execution::ComputeMode::SYNC,
+                                         Execution::ComputeMode::ASYNC,
+                                         Execution::ComputeMode::BURST));
+#endif
 
 }  // namespace generated_tests
