@@ -481,6 +481,7 @@
 #include "../generated/tests/transpose_v1_2.mod.py.cpp"
 #include "../generated/tests/unidirectional_sequence_lstm_1step.mod.py.cpp"
 #include "../generated/tests/unidirectional_sequence_lstm_batch_major_norm_peephole_projection.mod.py.cpp"
+#include "../generated/tests/unidirectional_sequence_lstm_batch_major_peephole_projection_bias.mod.py.cpp"
 #include "../generated/tests/unidirectional_sequence_lstm_cifg_peephole.mod.py.cpp"
 #include "../generated/tests/unidirectional_sequence_lstm_f16_batch_major.mod.py.cpp"
 #include "../generated/tests/unidirectional_sequence_lstm_f16_norm_peephole_projection.mod.py.cpp"
