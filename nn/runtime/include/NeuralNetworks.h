@@ -3565,6 +3565,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      *
+     * Supported tensor rank: from 1.
+     *
      * Inputs:
      * * 0: A tensor.
      * * 1: A tensor of the same {@link OperandCode} and compatible dimensions
@@ -3585,6 +3587,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *
+     * Supported tensor rank: from 1.
      *
      * Inputs:
      * * 0: A tensor.
