@@ -70,27 +70,21 @@ bool evalQuant8(const uint8_t* aData, const Shape& aShape, const uint8_t* bData,
     const double real_multiplier_neg = input_product_scale / outputShape.scale;
     int32_t output_multiplier_pos, output_shift_pos;
     int32_t output_multiplier_neg, output_shift_neg;
-    if (!QuantizeMultiplierSmallerThanOne(real_multiplier_pos, &output_multiplier_pos,
-                                          &output_shift_pos)) {
-        return false;
-    }
-    if (!QuantizeMultiplierSmallerThanOne(real_multiplier_neg, &output_multiplier_neg,
-                                          &output_shift_neg)) {
-        return false;
-    }
+    tflite::QuantizeMultiplier(real_multiplier_pos, &output_multiplier_pos, &output_shift_pos);
+    tflite::QuantizeMultiplier(real_multiplier_neg, &output_multiplier_neg, &output_shift_neg);
     return eval<uint8_t>(
             [&](const uint8_t& val1, const uint8_t& val2) -> uint8_t {
                 const int32_t input = input_offset + static_cast<int32_t>(val1);
                 int32_t output_val;
                 if (input >= 0) {
-                    output_val = output_offset +
-                                 tflite::MultiplyByQuantizedMultiplierSmallerThanOneExp(
-                                         input, output_multiplier_pos, -output_shift_pos);
+                    output_val =
+                            output_offset + tflite::MultiplyByQuantizedMultiplier(
+                                                    input, output_multiplier_pos, output_shift_pos);
                 } else {
                     const int32_t alpha = alpha_offset + static_cast<int32_t>(val2);
                     output_val = output_offset +
-                                 tflite::MultiplyByQuantizedMultiplierSmallerThanOneExp(
-                                         input * alpha, output_multiplier_neg, -output_shift_neg);
+                                 tflite::MultiplyByQuantizedMultiplier(
+                                         input * alpha, output_multiplier_neg, output_shift_neg);
                 }
                 return static_cast<uint8_t>(output_val);
             },
