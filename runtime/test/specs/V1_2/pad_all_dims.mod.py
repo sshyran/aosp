@@ -40,4 +40,4 @@ Example({
                      [3, 3],
                      [2, 1]],
                     "constant").flatten().tolist(),
-}).AddVariations("float16", quant8)
+}).AddVariations("float16", "relaxed", quant8)
