@@ -200,8 +200,13 @@ class Execution {
     // - use the asynchronous API and then wait for computation to complete
     // or
     // - use the burst API
+    // Returns the previous ComputeMode.
     enum class ComputeMode { SYNC, ASYNC, BURST };
-    static void setComputeMode(ComputeMode mode) { mComputeMode = mode; }
+    static ComputeMode setComputeMode(ComputeMode mode) {
+        ComputeMode oldComputeMode = mComputeMode;
+        mComputeMode = mode;
+        return oldComputeMode;
+    }
 
     Result getOutputOperandDimensions(uint32_t index, std::vector<uint32_t>* dimensions) {
         uint32_t rank = 0;
