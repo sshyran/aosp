@@ -153,3 +153,15 @@ TEST_F(DynamicOutputShapeTest, less_equal_quantized_overflow_first_input_if_requ
             less_equal::get_examples_quantized_overflow_first_input_if_requantized_dynamic_output_shape());
 }
 
+TEST_F(GeneratedTests, less_equal_boolean) {
+    execute(less_equal::CreateModel_7,
+            less_equal::is_ignored_7,
+            less_equal::get_examples_boolean());
+}
+
+TEST_F(DynamicOutputShapeTest, less_equal_boolean_dynamic_output_shape) {
+    execute(less_equal::CreateModel_dynamic_output_shape_7,
+            less_equal::is_ignored_dynamic_output_shape_7,
+            less_equal::get_examples_boolean_dynamic_output_shape());
+}
+
