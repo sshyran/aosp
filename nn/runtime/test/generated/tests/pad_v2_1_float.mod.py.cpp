@@ -21,6 +21,12 @@ TEST_F(GeneratedTests, pad_v2_1_float_float16) {
             pad_v2_1_float::get_examples_float16());
 }
 
+TEST_F(GeneratedTests, pad_v2_1_float_relaxed) {
+    execute(pad_v2_1_float::CreateModel_relaxed,
+            pad_v2_1_float::is_ignored_relaxed,
+            pad_v2_1_float::get_examples_relaxed());
+}
+
 TEST_F(DynamicOutputShapeTest, pad_v2_1_float_dynamic_output_shape) {
     execute(pad_v2_1_float::CreateModel_dynamic_output_shape,
             pad_v2_1_float::is_ignored_dynamic_output_shape,
@@ -31,5 +37,11 @@ TEST_F(DynamicOutputShapeTest, pad_v2_1_float_dynamic_output_shape_float16) {
     execute(pad_v2_1_float::CreateModel_dynamic_output_shape_float16,
             pad_v2_1_float::is_ignored_dynamic_output_shape_float16,
             pad_v2_1_float::get_examples_dynamic_output_shape_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, pad_v2_1_float_dynamic_output_shape_relaxed) {
+    execute(pad_v2_1_float::CreateModel_dynamic_output_shape_relaxed,
+            pad_v2_1_float::is_ignored_dynamic_output_shape_relaxed,
+            pad_v2_1_float::get_examples_dynamic_output_shape_relaxed());
 }
 
