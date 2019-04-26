@@ -30,6 +30,10 @@ def merge_outputs(a, a_shape, b, b_shape):
 def reverse_batch_major(tensor, tensor_shape):
   return np.array(tensor).reshape(tensor_shape)[:, ::-1, :].flatten().tolist()
 
+def split_tensor_in_two(tensor, tensor_shape):
+  tensor = np.array(tensor).reshape(tensor_shape)
+  left, right = np.split(tensor, 2, axis=len(tensor_shape) - 1)
+  return left.flatten().tolist(), right.flatten().tolist()
 
 def test(name, input, fw_weights, fw_recurrent_weights, fw_bias,
          fw_hidden_state, bw_weights, bw_recurrent_weights, bw_bias,
@@ -411,4 +415,120 @@ test(
     bw_aux_weights_data=[],
     fw_output_data=reverse_batch_major(bw_output_data, [num_batches, max_time, bw_num_units]),
     bw_output_data=reverse_batch_major(fw_output_data, [num_batches, max_time, fw_num_units]),
+)
+
+# Same test as blackbox but an input is passed to auxiliary input instead of the
+# regular one. Regular input and weights are set to zero.
+test(
+    name="blackbox_aux_input",
+    input=Input("input", "TENSOR_FLOAT32",
+                "{{ {}, {}, {} }}".format(num_batches, max_time, input_size)),
+    fw_weights=Input("fw_weights", "TENSOR_FLOAT32",
+                     "{{ {}, {} }}".format(fw_num_units, input_size)),
+    fw_recurrent_weights=Input(
+        "fw_recurrent_weights", "TENSOR_FLOAT32",
+        "{{ {}, {} }}".format(fw_num_units, fw_num_units)),
+    fw_bias=Input("fw_bias", "TENSOR_FLOAT32", "{{ {} }}".format(fw_num_units)),
+    fw_hidden_state=Input("fw_hidden_state", "TENSOR_FLOAT32",
+                          "{{ {}, {} }}".format(num_batches, fw_num_units)),
+    bw_weights=Input("bw_weights", "TENSOR_FLOAT32",
+                     "{{ {}, {} }}".format(bw_num_units, input_size)),
+    bw_recurrent_weights=Input(
+        "bw_recurrent_weights", "TENSOR_FLOAT32",
+        "{{ {}, {} }}".format(bw_num_units, bw_num_units)),
+    bw_bias=Input("bw_bias", "TENSOR_FLOAT32", "{{ {} }}".format(bw_num_units)),
+    bw_hidden_state=Input("bw_hidden_state", "TENSOR_FLOAT32",
+                          "{{ {}, {} }}".format(num_batches, bw_num_units)),
+    aux_input=Input(
+        "aux_input", "TENSOR_FLOAT32",
+        "{{ {}, {}, {} }}".format(num_batches, max_time, input_size)),
+    fw_aux_weights=Input("fw_aux_weights", "TENSOR_FLOAT32",
+                         "{{ {}, {} }}".format(fw_num_units, input_size)),
+    bw_aux_weights=Input("bw_aux_weights", "TENSOR_FLOAT32",
+                         "{{ {}, {} }}".format(bw_num_units, input_size)),
+    fw_output=Output(
+        "fw_output", "TENSOR_FLOAT32",
+        "{{ {}, {}, {} }}".format(num_batches, max_time, fw_num_units)),
+    bw_output=Output(
+        "bw_output", "TENSOR_FLOAT32",
+        "{{ {}, {}, {} }}".format(num_batches, max_time, bw_num_units)),
+    activation=1,
+    time_major=0,
+    merge_outputs=0,
+    input_data=[0] * num_batches * max_time * input_size,
+    fw_weights_data=[0] * fw_num_units * input_size,
+    fw_recurrent_weights_data=recurrent_weights_data,
+    fw_bias_data=bias_data,
+    fw_hidden_state_data=[0] * num_batches * fw_num_units,
+    bw_weights_data=[0] * bw_num_units * input_size,
+    bw_recurrent_weights_data=recurrent_weights_data,
+    bw_bias_data=bias_data,
+    bw_hidden_state_data=[0] * num_batches * bw_num_units,
+    aux_input_data=input_data,
+    fw_aux_weights_data=weights_data,
+    bw_aux_weights_data=weights_data,
+    fw_output_data=fw_output_data,
+    bw_output_data=bw_output_data,
+)
+
+# Same test as blackbox but input is split in half and passed to both regular
+# and auxiliary input to test their interaction.
+regular_input_data, aux_input_data = split_tensor_in_two(
+    input_data, [num_batches, max_time, input_size])
+regular_fw_weights, aux_fw_weights = split_tensor_in_two(
+    weights_data, [fw_num_units, input_size])
+regular_bw_weights, aux_bw_weights = split_tensor_in_two(
+    weights_data, [bw_num_units, input_size])
+
+test(
+    name="blackbox_regular_and_aux_input",
+    input=Input(
+        "input", "TENSOR_FLOAT32",
+        "{{ {}, {}, {} }}".format(num_batches, max_time, input_size // 2)),
+    fw_weights=Input("fw_weights", "TENSOR_FLOAT32",
+                     "{{ {}, {} }}".format(fw_num_units, input_size // 2)),
+    fw_recurrent_weights=Input(
+        "fw_recurrent_weights", "TENSOR_FLOAT32",
+        "{{ {}, {} }}".format(fw_num_units, fw_num_units)),
+    fw_bias=Input("fw_bias", "TENSOR_FLOAT32", "{{ {} }}".format(fw_num_units)),
+    fw_hidden_state=Input("fw_hidden_state", "TENSOR_FLOAT32",
+                          "{{ {}, {} }}".format(num_batches, fw_num_units)),
+    bw_weights=Input("bw_weights", "TENSOR_FLOAT32",
+                     "{{ {}, {} }}".format(bw_num_units, input_size // 2)),
+    bw_recurrent_weights=Input(
+        "bw_recurrent_weights", "TENSOR_FLOAT32",
+        "{{ {}, {} }}".format(bw_num_units, bw_num_units)),
+    bw_bias=Input("bw_bias", "TENSOR_FLOAT32", "{{ {} }}".format(bw_num_units)),
+    bw_hidden_state=Input("bw_hidden_state", "TENSOR_FLOAT32",
+                          "{{ {}, {} }}".format(num_batches, bw_num_units)),
+    aux_input=Input(
+        "aux_input", "TENSOR_FLOAT32",
+        "{{ {}, {}, {} }}".format(num_batches, max_time, input_size // 2)),
+    fw_aux_weights=Input("fw_aux_weights", "TENSOR_FLOAT32",
+                         "{{ {}, {} }}".format(fw_num_units, input_size // 2)),
+    bw_aux_weights=Input("bw_aux_weights", "TENSOR_FLOAT32",
+                         "{{ {}, {} }}".format(bw_num_units, input_size // 2)),
+    fw_output=Output(
+        "fw_output", "TENSOR_FLOAT32",
+        "{{ {}, {}, {} }}".format(num_batches, max_time, fw_num_units)),
+    bw_output=Output(
+        "bw_output", "TENSOR_FLOAT32",
+        "{{ {}, {}, {} }}".format(num_batches, max_time, bw_num_units)),
+    activation=1,
+    time_major=0,
+    merge_outputs=0,
+    input_data=regular_input_data,
+    fw_weights_data=regular_fw_weights,
+    fw_recurrent_weights_data=recurrent_weights_data,
+    fw_bias_data=bias_data,
+    fw_hidden_state_data=[0] * num_batches * fw_num_units,
+    bw_weights_data=regular_bw_weights,
+    bw_recurrent_weights_data=recurrent_weights_data,
+    bw_bias_data=bias_data,
+    bw_hidden_state_data=[0] * num_batches * bw_num_units,
+    aux_input_data=aux_input_data,
+    fw_aux_weights_data=aux_fw_weights,
+    bw_aux_weights_data=aux_bw_weights,
+    fw_output_data=fw_output_data,
+    bw_output_data=bw_output_data,
 )
