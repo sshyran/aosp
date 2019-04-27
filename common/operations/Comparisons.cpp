@@ -34,9 +34,10 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
-template <typename T>
-bool compute(const std::function<bool(T, T)>& func, const T* aData, const Shape& aShape,
-             const T* bData, const Shape& bShape, bool8* outputData, const Shape& outputShape) {
+template <typename DataType, typename ComparisonType>
+bool compute(const std::function<bool(ComparisonType, ComparisonType)>& func, const DataType* aData,
+             const Shape& aShape, const DataType* bData, const Shape& bShape, bool8* outputData,
+             const Shape& outputShape) {
     IndexedShapeWrapper aShapeIndexed(aShape);
     IndexedShapeWrapper bShapeIndexed(bShape);
     IndexedShapeWrapper outputShapeIndexed(outputShape);
@@ -50,11 +51,10 @@ bool compute(const std::function<bool(T, T)>& func, const T* aData, const Shape&
         uint32_t bFlatIndex;
         NN_RET_CHECK(bShapeIndexed.broadcastedIndexToFlatIndex(curIndex, &bFlatIndex));
 
-        if (aShape.type == OperandType::TENSOR_QUANT8_ASYMM &&
-            !(aShape.offset == bShape.offset && aShape.scale == bShape.scale)) {
+        if (aShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
+            const float realA = (aData[aFlatIndex] - aShape.offset) * aShape.scale;
             const float realB = (bData[bFlatIndex] - bShape.offset) * bShape.scale;
-            const uint8_t requintizedB = static_cast<uint8_t>(realB / aShape.scale + aShape.offset);
-            outputData[outputFlatIndex] = func(aData[aFlatIndex], requintizedB);
+            outputData[outputFlatIndex] = func(realA, realB);
         } else {
             outputData[outputFlatIndex] = func(aData[aFlatIndex], bData[bFlatIndex]);
         }
@@ -64,56 +64,56 @@ bool compute(const std::function<bool(T, T)>& func, const T* aData, const Shape&
     return true;
 }
 
-template <typename T>
+template <typename DataType, typename ComparisonType>
 bool executeLessTyped(IOperationExecutionContext* context) {
-    return compute<T>(
-            std::less<T>(), context->getInputBuffer<T>(kInputTensor1),
-            context->getInputShape(kInputTensor1), context->getInputBuffer<T>(kInputTensor2),
+    return compute<DataType, ComparisonType>(
+            std::less<ComparisonType>(), context->getInputBuffer<DataType>(kInputTensor1),
+            context->getInputShape(kInputTensor1), context->getInputBuffer<DataType>(kInputTensor2),
             context->getInputShape(kInputTensor2), context->getOutputBuffer<bool8>(kOutputTensor),
             context->getOutputShape(kOutputTensor));
 }
 
-template <typename T>
+template <typename DataType, typename ComparisonType>
 bool executeLessEqualTyped(IOperationExecutionContext* context) {
-    return compute<T>(
-            std::less_equal<T>(), context->getInputBuffer<T>(kInputTensor1),
-            context->getInputShape(kInputTensor1), context->getInputBuffer<T>(kInputTensor2),
+    return compute<DataType, ComparisonType>(
+            std::less_equal<ComparisonType>(), context->getInputBuffer<DataType>(kInputTensor1),
+            context->getInputShape(kInputTensor1), context->getInputBuffer<DataType>(kInputTensor2),
             context->getInputShape(kInputTensor2), context->getOutputBuffer<bool8>(kOutputTensor),
             context->getOutputShape(kOutputTensor));
 }
 
-template <typename T>
+template <typename DataType, typename ComparisonType>
 bool executeEqualTyped(IOperationExecutionContext* context) {
-    return compute<T>(
-            std::equal_to<T>(), context->getInputBuffer<T>(kInputTensor1),
-            context->getInputShape(kInputTensor1), context->getInputBuffer<T>(kInputTensor2),
+    return compute<DataType, ComparisonType>(
+            std::equal_to<ComparisonType>(), context->getInputBuffer<DataType>(kInputTensor1),
+            context->getInputShape(kInputTensor1), context->getInputBuffer<DataType>(kInputTensor2),
             context->getInputShape(kInputTensor2), context->getOutputBuffer<bool8>(kOutputTensor),
             context->getOutputShape(kOutputTensor));
 }
 
-template <typename T>
+template <typename DataType, typename ComparisonType>
 bool executeNotEqualTyped(IOperationExecutionContext* context) {
-    return compute<T>(
-            std::not_equal_to<T>(), context->getInputBuffer<T>(kInputTensor1),
-            context->getInputShape(kInputTensor1), context->getInputBuffer<T>(kInputTensor2),
+    return compute<DataType, ComparisonType>(
+            std::not_equal_to<ComparisonType>(), context->getInputBuffer<DataType>(kInputTensor1),
+            context->getInputShape(kInputTensor1), context->getInputBuffer<DataType>(kInputTensor2),
             context->getInputShape(kInputTensor2), context->getOutputBuffer<bool8>(kOutputTensor),
             context->getOutputShape(kOutputTensor));
 }
 
-template <typename T>
+template <typename DataType, typename ComparisonType>
 bool executeGreaterEqualTyped(IOperationExecutionContext* context) {
-    return compute<T>(
-            std::greater_equal<T>(), context->getInputBuffer<T>(kInputTensor1),
-            context->getInputShape(kInputTensor1), context->getInputBuffer<T>(kInputTensor2),
+    return compute<DataType, ComparisonType>(
+            std::greater_equal<ComparisonType>(), context->getInputBuffer<DataType>(kInputTensor1),
+            context->getInputShape(kInputTensor1), context->getInputBuffer<DataType>(kInputTensor2),
             context->getInputShape(kInputTensor2), context->getOutputBuffer<bool8>(kOutputTensor),
             context->getOutputShape(kOutputTensor));
 }
 
-template <typename T>
+template <typename DataType, typename ComparisonType>
 bool executeGreaterTyped(IOperationExecutionContext* context) {
-    return compute<T>(
-            std::greater<T>(), context->getInputBuffer<T>(kInputTensor1),
-            context->getInputShape(kInputTensor1), context->getInputBuffer<T>(kInputTensor2),
+    return compute<DataType, ComparisonType>(
+            std::greater<ComparisonType>(), context->getInputBuffer<DataType>(kInputTensor1),
+            context->getInputShape(kInputTensor1), context->getInputBuffer<DataType>(kInputTensor2),
             context->getInputShape(kInputTensor2), context->getOutputBuffer<bool8>(kOutputTensor),
             context->getOutputShape(kOutputTensor));
 }
@@ -145,15 +145,15 @@ bool prepare(IOperationExecutionContext* context) {
 bool executeLess(IOperationExecutionContext* context) {
     switch (context->getInputType(kInputTensor1)) {
         case OperandType::TENSOR_FLOAT16:
-            return executeLessTyped<_Float16>(context);
+            return executeLessTyped<_Float16, _Float16>(context);
         case OperandType::TENSOR_FLOAT32:
-            return executeLessTyped<float>(context);
+            return executeLessTyped<float, float>(context);
         case OperandType::TENSOR_INT32:
-            return executeLessTyped<int32_t>(context);
+            return executeLessTyped<int32_t, int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
-            return executeLessTyped<uint8_t>(context);
+            return executeLessTyped<uint8_t, float>(context);
         case OperandType::TENSOR_BOOL8:
-            return executeLessTyped<bool8>(context);
+            return executeLessTyped<bool8, bool8>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for comparison";
     }
@@ -162,15 +162,15 @@ bool executeLess(IOperationExecutionContext* context) {
 bool executeLessEqual(IOperationExecutionContext* context) {
     switch (context->getInputType(kInputTensor1)) {
         case OperandType::TENSOR_FLOAT16:
-            return executeLessEqualTyped<_Float16>(context);
+            return executeLessEqualTyped<_Float16, _Float16>(context);
         case OperandType::TENSOR_FLOAT32:
-            return executeLessEqualTyped<float>(context);
+            return executeLessEqualTyped<float, float>(context);
         case OperandType::TENSOR_INT32:
-            return executeLessEqualTyped<int32_t>(context);
+            return executeLessEqualTyped<int32_t, int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
-            return executeLessEqualTyped<uint8_t>(context);
+            return executeLessEqualTyped<uint8_t, float>(context);
         case OperandType::TENSOR_BOOL8:
-            return executeLessEqualTyped<bool8>(context);
+            return executeLessEqualTyped<bool8, bool8>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for comparison";
     }
@@ -179,15 +179,15 @@ bool executeLessEqual(IOperationExecutionContext* context) {
 bool executeEqual(IOperationExecutionContext* context) {
     switch (context->getInputType(kInputTensor1)) {
         case OperandType::TENSOR_FLOAT16:
-            return executeEqualTyped<_Float16>(context);
+            return executeEqualTyped<_Float16, _Float16>(context);
         case OperandType::TENSOR_FLOAT32:
-            return executeEqualTyped<float>(context);
+            return executeEqualTyped<float, float>(context);
         case OperandType::TENSOR_INT32:
-            return executeEqualTyped<int32_t>(context);
+            return executeEqualTyped<int32_t, int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
-            return executeEqualTyped<uint8_t>(context);
+            return executeEqualTyped<uint8_t, float>(context);
         case OperandType::TENSOR_BOOL8:
-            return executeEqualTyped<bool8>(context);
+            return executeEqualTyped<bool8, bool8>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for comparison";
     }
@@ -196,15 +196,15 @@ bool executeEqual(IOperationExecutionContext* context) {
 bool executeNotEqual(IOperationExecutionContext* context) {
     switch (context->getInputType(kInputTensor1)) {
         case OperandType::TENSOR_FLOAT16:
-            return executeNotEqualTyped<_Float16>(context);
+            return executeNotEqualTyped<_Float16, _Float16>(context);
         case OperandType::TENSOR_FLOAT32:
-            return executeNotEqualTyped<float>(context);
+            return executeNotEqualTyped<float, float>(context);
         case OperandType::TENSOR_INT32:
-            return executeNotEqualTyped<int32_t>(context);
+            return executeNotEqualTyped<int32_t, int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
-            return executeNotEqualTyped<uint8_t>(context);
+            return executeNotEqualTyped<uint8_t, float>(context);
         case OperandType::TENSOR_BOOL8:
-            return executeNotEqualTyped<bool8>(context);
+            return executeNotEqualTyped<bool8, bool8>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for comparison";
     }
@@ -213,15 +213,15 @@ bool executeNotEqual(IOperationExecutionContext* context) {
 bool executeGreaterEqual(IOperationExecutionContext* context) {
     switch (context->getInputType(kInputTensor1)) {
         case OperandType::TENSOR_FLOAT16:
-            return executeGreaterEqualTyped<_Float16>(context);
+            return executeGreaterEqualTyped<_Float16, _Float16>(context);
         case OperandType::TENSOR_FLOAT32:
-            return executeGreaterEqualTyped<float>(context);
+            return executeGreaterEqualTyped<float, float>(context);
         case OperandType::TENSOR_INT32:
-            return executeGreaterEqualTyped<int32_t>(context);
+            return executeGreaterEqualTyped<int32_t, int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
-            return executeGreaterEqualTyped<uint8_t>(context);
+            return executeGreaterEqualTyped<uint8_t, float>(context);
         case OperandType::TENSOR_BOOL8:
-            return executeGreaterEqualTyped<bool8>(context);
+            return executeGreaterEqualTyped<bool8, bool8>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for comparison";
     }
@@ -230,15 +230,15 @@ bool executeGreaterEqual(IOperationExecutionContext* context) {
 bool executeGreater(IOperationExecutionContext* context) {
     switch (context->getInputType(kInputTensor1)) {
         case OperandType::TENSOR_FLOAT16:
-            return executeGreaterTyped<_Float16>(context);
+            return executeGreaterTyped<_Float16, _Float16>(context);
         case OperandType::TENSOR_FLOAT32:
-            return executeGreaterTyped<float>(context);
+            return executeGreaterTyped<float, float>(context);
         case OperandType::TENSOR_INT32:
-            return executeGreaterTyped<int32_t>(context);
+            return executeGreaterTyped<int32_t, int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
-            return executeGreaterTyped<uint8_t>(context);
+            return executeGreaterTyped<uint8_t, float>(context);
         case OperandType::TENSOR_BOOL8:
-            return executeGreaterTyped<bool8>(context);
+            return executeGreaterTyped<bool8, bool8>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for comparison";
     }
