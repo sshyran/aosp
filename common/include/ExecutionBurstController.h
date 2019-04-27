@@ -175,6 +175,7 @@ class RequestChannelSender {
 class ExecutionBurstController {
     DISALLOW_IMPLICIT_CONSTRUCTORS(ExecutionBurstController);
 
+   public:
     /**
      * NN runtime burst callback object and memory cache.
      *
@@ -191,17 +192,11 @@ class ExecutionBurstController {
      * buffer, they must use the same key.
      */
     class ExecutionBurstCallback : public IBurstCallback {
-        DISALLOW_COPY_AND_ASSIGN(ExecutionBurstCallback);
-
        public:
-        ExecutionBurstCallback() = default;
-
         Return<void> getMemories(const hidl_vec<int32_t>& slots, getMemories_cb cb) override;
 
         std::vector<int32_t> getSlots(const hidl_vec<hidl_memory>& memories,
                                       const std::vector<intptr_t>& keys);
-
-        int32_t getSlot(const hidl_memory& memory, intptr_t key);
 
         /*
          * This function performs two different actions:
@@ -227,7 +222,6 @@ class ExecutionBurstController {
         std::vector<hidl_memory> mMemoryCache;
     };
 
-   public:
     /**
      * Creates a burst controller on a prepared model.
      *
