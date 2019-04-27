@@ -271,6 +271,17 @@ bool prepare(IOperationExecutionContext* context) {
         NN_RET_CHECK_EQ(context->getNumOutputs(), 2);
     }
 
+    // Check that none of the required inputs are omitted.
+    const std::vector<int> requiredInputs = {
+            kInputTensor,         kFwWeightsTensor, kFwRecurrentWeightsTensor, kFwBiasTensor,
+            kFwHiddenStateTensor, kBwWeightsTensor, kBwRecurrentWeightsTensor, kBwBiasTensor,
+            kBwHiddenStateTensor, kActivationParam, kTimeMajorParam,           kMergeOutputsParam,
+    };
+    for (const int requiredInput : requiredInputs) {
+        NN_RET_CHECK(!context->isOmittedInput(requiredInput))
+                << "required input " << requiredInput << " is omitted";
+    }
+
     Shape input = context->getInputShape(kInputTensor);
     Shape fwWeights = context->getInputShape(kFwWeightsTensor);
     Shape fwRecurrentWeights = context->getInputShape(kFwRecurrentWeightsTensor);
