@@ -15,7 +15,8 @@
 #
 
 # Bidirectional Sequence LSTM Test:
-# FLOAT32, Aux Input, No Layer Normalization, No Cifg, No Peephole, No Projection, and No Clipping.
+# FLOAT16, Batch Major, Aux Input, No Layer Normalization, No Cifg, No Peephole, No Projection,
+# and No Clipping.
 #
 # Adapted from TFLite's LSTMOpTest.BlackBoxTestWithAuxInput.
 
@@ -25,128 +26,128 @@ n_cell = 4
 n_output = 4
 max_time = 3
 
-input = Input("input", "TENSOR_FLOAT32", "{{{}, {}, {}}}".format(max_time, n_batch, n_input))
+input = Input("input", "TENSOR_FLOAT16", "{{{}, {}, {}}}".format(n_batch, max_time, n_input))
 
 fw_input_to_input_weights = Input(
-    "fw_input_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_input_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 fw_input_to_forget_weights = Input(
-    "fw_input_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_input_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 fw_input_to_cell_weights = Input(
-    "fw_input_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_input_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 fw_input_to_output_weights = Input(
-    "fw_input_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_input_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 
 fw_recurrent_to_input_weights = Input(
-    "fw_recurrent_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
+    "fw_recurrent_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
 fw_recurrent_to_forget_weights = Input(
-    "fw_recurrent_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
+    "fw_recurrent_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
 fw_recurrent_to_cell_weights = Input(
-    "fw_recurrent_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
+    "fw_recurrent_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
 fw_recurrent_to_output_weights = Input(
-    "fw_recurrent_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
+    "fw_recurrent_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
 
 fw_cell_to_input_weights = Input(
-    "fw_cell_to_input_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "fw_cell_to_input_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 fw_cell_to_forget_weights = Input(
-    "fw_cell_to_forget_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "fw_cell_to_forget_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 fw_cell_to_output_weights = Input(
-    "fw_cell_to_output_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "fw_cell_to_output_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 
 fw_input_gate_bias = Input(
-    "fw_input_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "fw_input_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 fw_forget_gate_bias = Input(
-    "fw_forget_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "fw_forget_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 fw_cell_bias = Input(
-    "fw_cell_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "fw_cell_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 fw_output_gate_bias = Input(
-    "fw_output_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "fw_output_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 
 fw_projection_weights = Input(
-    "fw_projection_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_output, n_cell))
+    "fw_projection_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_output, n_cell))
 fw_projection_bias = Input(
-    "fw_projection_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_output))
+    "fw_projection_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_output))
 
 bw_input_to_input_weights = Input(
-    "bw_input_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_input_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 bw_input_to_forget_weights = Input(
-    "bw_input_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_input_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 bw_input_to_cell_weights = Input(
-    "bw_input_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_input_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 bw_input_to_output_weights = Input(
-    "bw_input_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_input_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 
 bw_recurrent_to_input_weights = Input(
-    "bw_recurrent_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
+    "bw_recurrent_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
 bw_recurrent_to_forget_weights = Input(
-    "bw_recurrent_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
+    "bw_recurrent_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
 bw_recurrent_to_cell_weights = Input(
-    "bw_recurrent_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
+    "bw_recurrent_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
 bw_recurrent_to_output_weights = Input(
-    "bw_recurrent_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_output))
+    "bw_recurrent_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_output))
 
 bw_cell_to_input_weights = Input(
-    "bw_cell_to_input_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "bw_cell_to_input_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 bw_cell_to_forget_weights = Input(
-    "bw_cell_to_forget_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "bw_cell_to_forget_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 bw_cell_to_output_weights = Input(
-    "bw_cell_to_output_weights", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "bw_cell_to_output_weights", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 
 bw_input_gate_bias = Input(
-    "bw_input_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "bw_input_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 bw_forget_gate_bias = Input(
-    "bw_forget_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "bw_forget_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 bw_cell_bias = Input(
-    "bw_cell_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "bw_cell_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 bw_output_gate_bias = Input(
-    "bw_output_gate_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_cell))
+    "bw_output_gate_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_cell))
 
 bw_projection_weights = Input(
-    "bw_projection_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_output, n_cell))
+    "bw_projection_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_output, n_cell))
 bw_projection_bias = Input(
-    "bw_projection_bias", "TENSOR_FLOAT32", "{{{}}}".format(n_output))
+    "bw_projection_bias", "TENSOR_FLOAT16", "{{{}}}".format(n_output))
 
 fw_activation_state = Input(
-    "fw_activatiom_state", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_batch, n_output))
+    "fw_activatiom_state", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_batch, n_output))
 fw_cell_state = Input(
-    "fw_cell_state", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_batch, n_cell))
+    "fw_cell_state", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_batch, n_cell))
 
 bw_activation_state = Input(
-    "bw_activatiom_state", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_batch, n_output))
+    "bw_activatiom_state", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_batch, n_output))
 bw_cell_state = Input(
-    "bw_cell_state", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_batch, n_cell))
+    "bw_cell_state", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_batch, n_cell))
 
-aux_input = Input("input", "TENSOR_FLOAT32", "{{{}, {}, {}}}".format(max_time, n_batch, n_input))
+aux_input = Input("input", "TENSOR_FLOAT16", "{{{}, {}, {}}}".format(n_batch, max_time, n_input))
 
 fw_aux_input_to_input_weights = Input(
-    "fw_aux_input_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_aux_input_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 fw_aux_input_to_forget_weights = Input(
-    "fw_input_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_input_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 fw_aux_input_to_cell_weights = Input(
-    "fw_aux_input_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_aux_input_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 fw_aux_input_to_output_weights = Input(
-    "fw_aux_input_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "fw_aux_input_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 
 bw_aux_input_to_input_weights = Input(
-    "bw_aux_input_to_input_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_aux_input_to_input_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 bw_aux_input_to_forget_weights = Input(
-    "bw_input_to_forget_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_input_to_forget_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 bw_aux_input_to_cell_weights = Input(
-    "bw_aux_input_to_cell_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_aux_input_to_cell_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 bw_aux_input_to_output_weights = Input(
-    "bw_aux_input_to_output_weights", "TENSOR_FLOAT32", "{{{}, {}}}".format(n_cell, n_input))
+    "bw_aux_input_to_output_weights", "TENSOR_FLOAT16", "{{{}, {}}}".format(n_cell, n_input))
 
-fw_input_layer_norm_weights = Input("input_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
-fw_forget_layer_norm_weights = Input("forget_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
-fw_cell_layer_norm_weights = Input("cell_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
-fw_output_layer_norm_weights = Input("output_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
+fw_input_layer_norm_weights = Input("input_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
+fw_forget_layer_norm_weights = Input("forget_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
+fw_cell_layer_norm_weights = Input("cell_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
+fw_output_layer_norm_weights = Input("output_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
 
-bw_input_layer_norm_weights = Input("input_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
-bw_forget_layer_norm_weights = Input("forget_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
-bw_cell_layer_norm_weights = Input("cell_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
-bw_output_layer_norm_weights = Input("output_layer_norm_weights", "TENSOR_FLOAT32", "{%d}" % n_cell)
+bw_input_layer_norm_weights = Input("input_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
+bw_forget_layer_norm_weights = Input("forget_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
+bw_cell_layer_norm_weights = Input("cell_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
+bw_output_layer_norm_weights = Input("output_layer_norm_weights", "TENSOR_FLOAT16", "{%d}" % n_cell)
 
-fw_output=Output("fw_output", "TENSOR_FLOAT32", "{{{}, {}, {}}}".format(max_time, n_batch, n_output))
-bw_output=Output("bw_output", "TENSOR_FLOAT32", "{{{}, {}, {}}}".format(max_time, n_batch, n_output))
+fw_output=Output("fw_output", "TENSOR_FLOAT16", "{{{}, {}, {}}}".format(n_batch, max_time, n_output))
+bw_output=Output("bw_output", "TENSOR_FLOAT16", "{{{}, {}, {}}}".format(n_batch, max_time, n_output))
 
 def test(
     name,
@@ -210,10 +211,10 @@ def test(
     bw_output_data=[],):
 
   activation = Int32Scalar("activation", 4) # Tanh
-  cell_clip = Float32Scalar("cell_clip", 0.0)
-  proj_clip = Float32Scalar("proj_clip", 0.0)
+  cell_clip = Float16Scalar("cell_clip", 0.0)
+  proj_clip = Float16Scalar("proj_clip", 0.0)
   merge_outputs = BoolScalar("merge_outputs", False)
-  time_major = BoolScalar("time_major", True)
+  time_major = BoolScalar("time_major", False)
 
   model = Model().Operation(
       "BIDIRECTIONAL_SEQUENCE_LSTM",
