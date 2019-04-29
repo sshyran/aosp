@@ -343,6 +343,7 @@
 #include "../generated/tests/bidirectional_sequence_lstm_aux_input.mod.py.cpp"
 #include "../generated/tests/bidirectional_sequence_lstm_cifg_peephole.mod.py.cpp"
 #include "../generated/tests/bidirectional_sequence_lstm_float16_batch_major.mod.py.cpp"
+#include "../generated/tests/bidirectional_sequence_lstm_float16_batch_major_aux_input.mod.py.cpp"
 #include "../generated/tests/bidirectional_sequence_lstm_float16_batch_major_merge_outputs.mod.py.cpp"
 #include "../generated/tests/bidirectional_sequence_lstm_merge_outputs.mod.py.cpp"
 #include "../generated/tests/bidirectional_sequence_lstm_norm_fw_output.mod.py.cpp"

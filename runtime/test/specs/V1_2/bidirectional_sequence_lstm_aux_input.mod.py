@@ -17,8 +17,7 @@
 # Bidirectional Sequence LSTM Test:
 # FLOAT32, Aux Input, No Layer Normalization, No Cifg, No Peephole, No Projection, and No Clipping.
 #
-# This is a weak test as it sets all aux weights to 0 and verifies that the result is the same as
-# having no aux input.
+# Adapted from TFLite's LSTMOpTest.BlackBoxTestWithAuxInput.
 
 n_batch = 1
 n_input = 2
@@ -210,7 +209,7 @@ def test(
     fw_output_data=[],
     bw_output_data=[],):
 
-  activation = Int32Scalar("activation", 4)
+  activation = Int32Scalar("activation", 4) # Tanh
   cell_clip = Float32Scalar("cell_clip", 0.0)
   proj_clip = Float32Scalar("proj_clip", 0.0)
   merge_outputs = BoolScalar("merge_outputs", False)
@@ -397,28 +396,28 @@ fw_recurrent_to_output_weights_data = [
 bw_recurrent_to_output_weights_data = fw_recurrent_to_output_weights_data
 
 fw_input_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
-bw_input_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
+bw_input_gate_bias_data = fw_input_gate_bias_data
 
 fw_forget_gate_bias_data = [1.0, 1.0, 1.0, 1.0]
-bw_forget_gate_bias_data = [1.0, 1.0, 1.0, 1.0]
+bw_forget_gate_bias_data = fw_forget_gate_bias_data
 
 fw_cell_bias_data = [0.0, 0.0, 0.0, 0.0]
-bw_cell_bias_data = [0.0, 0.0, 0.0, 0.0]
+bw_cell_bias_data = fw_cell_bias_data
 
 fw_output_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
-bw_output_gate_bias_data = [0.0, 0.0, 0.0, 0.0]
+bw_output_gate_bias_data = fw_output_gate_bias_data
 
 input_data = [2.0, 3.0, 3.0, 4.0, 1.0, 1.0]
 aux_input_data = input_data
 
-fw_aux_input_to_input_weights_data = [0 for _ in range(n_cell * n_input)]
-bw_aux_input_to_input_weights_data = [0 for _ in range(n_cell * n_input)]
-fw_aux_input_to_forget_weights_data = [0 for _ in range(n_cell * n_input)]
-bw_aux_input_to_forget_weights_data = [0 for _ in range(n_cell * n_input)]
-fw_aux_input_to_cell_weights_data = [0 for _ in range(n_cell * n_input)]
-bw_aux_input_to_cell_weights_data = [0 for _ in range(n_cell * n_input)]
-fw_aux_input_to_output_weights_data = [0 for _ in range(n_cell * n_input)]
-bw_aux_input_to_output_weights_data = [0 for _ in range(n_cell * n_input)]
+fw_aux_input_to_input_weights_data = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+bw_aux_input_to_input_weights_data = fw_aux_input_to_input_weights_data
+fw_aux_input_to_forget_weights_data = [0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 1.0]
+bw_aux_input_to_forget_weights_data = fw_aux_input_to_forget_weights_data
+fw_aux_input_to_cell_weights_data = [0.5, 0.6, 0.7, 0.8, 0.5, 0.6, 0.7, 0.8]
+bw_aux_input_to_cell_weights_data = fw_aux_input_to_cell_weights_data
+fw_aux_input_to_output_weights_data = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+bw_aux_input_to_output_weights_data = fw_aux_input_to_output_weights_data
 
 fw_activation_state_data = [0 for _ in range(n_batch * n_output)]
 bw_activation_state_data = [0 for _ in range(n_batch * n_output)]
@@ -427,14 +426,14 @@ fw_cell_state_data = [0 for _ in range(n_batch * n_cell)]
 bw_cell_state_data = [0 for _ in range(n_batch * n_cell)]
 
 fw_golden_output_data = [
-    -0.02973187, 0.1229473,  0.20885126, -0.15358765,
-    -0.03716109, 0.12507336, 0.41193449, -0.20860538,
-    -0.15053082, 0.09120187, 0.24278517, -0.12222792
+    0.153335, 0.542754, 0.708602, 0.742855,
+    0.247581, 0.835739, 0.947797, 0.958177,
+    0.410892, 0.672268, 0.761909, 0.829133
 ]
 bw_golden_output_data = [
-    -0.0806187, 0.139077, 0.400476, -0.197842,
-    -0.0332076, 0.123838, 0.309777, -0.17621,
-    -0.0490733, 0.0739237, 0.067706, -0.0208124
+    0.342275, 0.883431, 0.955930, 0.975621,
+    0.204939, 0.806858, 0.914849, 0.934871,
+    0.123236, 0.373087, 0.465377, 0.517630
 ]
 
 
