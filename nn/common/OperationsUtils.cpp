@@ -519,9 +519,7 @@ bool padPrepare(const Shape& input,
                 const int32_t* paddingsData,
                 const Shape& paddingsShape,
                 Shape* output) {
-    // Currently only 4D tensors are supported.
     uint32_t numInputDims = getNumberOfDimensions(input);
-    NN_OPS_CHECK(numInputDims == 4);
 
     // paddings need to be provided as a 2-D int32 tensor.
     NN_OPS_CHECK(paddingsShape.type == OperandType::TENSOR_INT32);
