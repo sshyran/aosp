@@ -312,7 +312,7 @@ void expectNear(const RandomOperand& op, const OperandBuffer& test,
     if (len == numSkip) return;
     bias /= static_cast<double>(len - numSkip);
     mse /= static_cast<double>(len - numSkip);
-    EXPECT_LE(bias, criterion.bias);
+    EXPECT_LE(std::fabs(bias), criterion.bias);
     EXPECT_LE(mse, criterion.mse);
 }
 
