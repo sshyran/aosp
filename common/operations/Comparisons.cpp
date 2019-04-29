@@ -120,9 +120,7 @@ bool executeGreaterTyped(IOperationExecutionContext* context) {
 
 }  // namespace
 
-// EQUAL and NOT_EQUAL ops support TENSOR_BOOL8 in addition to all the other
-// types supported by comparison ops
-bool validateEqualAndNotEqual(const IOperationValidationContext* context) {
+bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor1);
@@ -130,19 +128,6 @@ bool validateEqualAndNotEqual(const IOperationValidationContext* context) {
             inputType == OperandType::TENSOR_BOOL8 || inputType == OperandType::TENSOR_FLOAT16 ||
             inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_INT32 ||
             inputType == OperandType::TENSOR_QUANT8_ASYMM)
-            << "Unsupported input operand type for comparison op: " << toString(inputType);
-    NN_RET_CHECK(validateInputTypes(context, {inputType, inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {OperandType::TENSOR_BOOL8}));
-    return validateHalVersion(context, HalVersion::V1_2);
-}
-
-bool validateComparisons(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor1);
-    NN_RET_CHECK(
-            inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
-            inputType == OperandType::TENSOR_INT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM)
             << "Unsupported input operand type for comparison op: " << toString(inputType);
     NN_RET_CHECK(validateInputTypes(context, {inputType, inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {OperandType::TENSOR_BOOL8}));
@@ -167,6 +152,8 @@ bool executeLess(IOperationExecutionContext* context) {
             return executeLessTyped<int32_t, int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
             return executeLessTyped<uint8_t, float>(context);
+        case OperandType::TENSOR_BOOL8:
+            return executeLessTyped<bool8, bool8>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for comparison";
     }
@@ -182,6 +169,8 @@ bool executeLessEqual(IOperationExecutionContext* context) {
             return executeLessEqualTyped<int32_t, int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
             return executeLessEqualTyped<uint8_t, float>(context);
+        case OperandType::TENSOR_BOOL8:
+            return executeLessEqualTyped<bool8, bool8>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for comparison";
     }
@@ -231,6 +220,8 @@ bool executeGreaterEqual(IOperationExecutionContext* context) {
             return executeGreaterEqualTyped<int32_t, int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
             return executeGreaterEqualTyped<uint8_t, float>(context);
+        case OperandType::TENSOR_BOOL8:
+            return executeGreaterEqualTyped<bool8, bool8>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for comparison";
     }
@@ -246,6 +237,8 @@ bool executeGreater(IOperationExecutionContext* context) {
             return executeGreaterTyped<int32_t, int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
             return executeGreaterTyped<uint8_t, float>(context);
+        case OperandType::TENSOR_BOOL8:
+            return executeGreaterTyped<bool8, bool8>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for comparison";
     }
@@ -253,17 +246,17 @@ bool executeGreater(IOperationExecutionContext* context) {
 
 }  // namespace comparisons
 
-NN_REGISTER_OPERATION(LESS, "LESS", comparisons::validateComparisons, comparisons::prepare,
+NN_REGISTER_OPERATION(LESS, "LESS", comparisons::validate, comparisons::prepare,
                       comparisons::executeLess);
-NN_REGISTER_OPERATION(LESS_EQUAL, "LESS_EQUAL", comparisons::validateComparisons,
-                      comparisons::prepare, comparisons::executeLessEqual);
-NN_REGISTER_OPERATION(EQUAL, "EQUAL", comparisons::validateEqualAndNotEqual, comparisons::prepare,
+NN_REGISTER_OPERATION(LESS_EQUAL, "LESS_EQUAL", comparisons::validate, comparisons::prepare,
+                      comparisons::executeLessEqual);
+NN_REGISTER_OPERATION(EQUAL, "EQUAL", comparisons::validate, comparisons::prepare,
                       comparisons::executeEqual);
-NN_REGISTER_OPERATION(NOT_EQUAL, "NOT_EQUAL", comparisons::validateEqualAndNotEqual,
-                      comparisons::prepare, comparisons::executeNotEqual);
-NN_REGISTER_OPERATION(GREATER_EQUAL, "GREATER_EQUAL", comparisons::validateComparisons,
-                      comparisons::prepare, comparisons::executeGreaterEqual);
-NN_REGISTER_OPERATION(GREATER, "GREATER", comparisons::validateComparisons, comparisons::prepare,
+NN_REGISTER_OPERATION(NOT_EQUAL, "NOT_EQUAL", comparisons::validate, comparisons::prepare,
+                      comparisons::executeNotEqual);
+NN_REGISTER_OPERATION(GREATER_EQUAL, "GREATER_EQUAL", comparisons::validate, comparisons::prepare,
+                      comparisons::executeGreaterEqual);
+NN_REGISTER_OPERATION(GREATER, "GREATER", comparisons::validate, comparisons::prepare,
                       comparisons::executeGreater);
 
 }  // namespace nn
