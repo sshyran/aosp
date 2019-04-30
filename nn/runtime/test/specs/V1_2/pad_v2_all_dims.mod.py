@@ -37,4 +37,4 @@ Example({
                      [2, 1]],
                     "constant",
                     constant_values=3.9).flatten().tolist(),
-}).AddVariations("float16")
+}).AddVariations("float16", "relaxed")
