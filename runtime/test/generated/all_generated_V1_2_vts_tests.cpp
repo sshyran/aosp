@@ -83999,8 +83999,7 @@ TEST_F(NeuralnetworksHidlTest, transpose_conv2d_large_quant8) {
 TEST_F(ValidationTest, transpose_conv2d_large_quant8) {
   const Model model = transpose_conv2d_large::createTestModel_quant8();
   const std::vector<Request> requests = createRequests(transpose_conv2d_large::get_examples_quant8());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -84014,8 +84013,7 @@ TEST_F(NeuralnetworksHidlTest, transpose_conv2d_large_channelQuant8) {
 TEST_F(ValidationTest, transpose_conv2d_large_channelQuant8) {
   const Model model = transpose_conv2d_large::createTestModel_channelQuant8();
   const std::vector<Request> requests = createRequests(transpose_conv2d_large::get_examples_channelQuant8());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -84030,8 +84028,7 @@ TEST_F(DynamicOutputShapeTest, transpose_conv2d_large_dynamic_output_shape_quant
 TEST_F(ValidationTest, transpose_conv2d_large_dynamic_output_shape_quant8) {
   const Model model = transpose_conv2d_large::createTestModel_dynamic_output_shape_quant8();
   const std::vector<Request> requests = createRequests(transpose_conv2d_large::get_examples_dynamic_output_shape_quant8());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -84047,8 +84044,7 @@ TEST_F(DynamicOutputShapeTest, transpose_conv2d_large_dynamic_output_shape_chann
 TEST_F(ValidationTest, transpose_conv2d_large_dynamic_output_shape_channelQuant8) {
   const Model model = transpose_conv2d_large::createTestModel_dynamic_output_shape_channelQuant8();
   const std::vector<Request> requests = createRequests(transpose_conv2d_large::get_examples_dynamic_output_shape_channelQuant8());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
