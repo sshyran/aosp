@@ -278,8 +278,7 @@ TEST_F({test_case_name}, {test_name}) {{
 TEST_F(ValidationTest, {test_name}) {{
   const Model model = {namespace}::{create_model_name}();
   const std::vector<Request> requests = createRequests({namespace}::get_{examples_name}());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }}\n
 """
     if example.model.hasDynamicOutputShape:
