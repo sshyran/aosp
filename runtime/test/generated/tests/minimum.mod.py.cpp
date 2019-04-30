@@ -129,3 +129,15 @@ TEST_F(DynamicOutputShapeTest, minimum_broadcast_dynamic_output_shape_quant8) {
             minimum::get_examples_broadcast_dynamic_output_shape_quant8());
 }
 
+TEST_F(GeneratedTests, minimum_overflow) {
+    execute(minimum::CreateModel_3,
+            minimum::is_ignored_3,
+            minimum::get_examples_overflow());
+}
+
+TEST_F(DynamicOutputShapeTest, minimum_overflow_dynamic_output_shape) {
+    execute(minimum::CreateModel_dynamic_output_shape_3,
+            minimum::is_ignored_dynamic_output_shape_3,
+            minimum::get_examples_overflow_dynamic_output_shape());
+}
+
