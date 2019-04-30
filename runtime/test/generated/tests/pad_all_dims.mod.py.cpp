@@ -21,6 +21,12 @@ TEST_F(GeneratedTests, pad_all_dims_float16) {
             pad_all_dims::get_examples_float16());
 }
 
+TEST_F(GeneratedTests, pad_all_dims_relaxed) {
+    execute(pad_all_dims::CreateModel_relaxed,
+            pad_all_dims::is_ignored_relaxed,
+            pad_all_dims::get_examples_relaxed());
+}
+
 TEST_F(GeneratedTests, pad_all_dims_quant8) {
     execute(pad_all_dims::CreateModel_quant8,
             pad_all_dims::is_ignored_quant8,
@@ -37,6 +43,12 @@ TEST_F(DynamicOutputShapeTest, pad_all_dims_dynamic_output_shape_float16) {
     execute(pad_all_dims::CreateModel_dynamic_output_shape_float16,
             pad_all_dims::is_ignored_dynamic_output_shape_float16,
             pad_all_dims::get_examples_dynamic_output_shape_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, pad_all_dims_dynamic_output_shape_relaxed) {
+    execute(pad_all_dims::CreateModel_dynamic_output_shape_relaxed,
+            pad_all_dims::is_ignored_dynamic_output_shape_relaxed,
+            pad_all_dims::get_examples_dynamic_output_shape_relaxed());
 }
 
 TEST_F(DynamicOutputShapeTest, pad_all_dims_dynamic_output_shape_quant8) {
