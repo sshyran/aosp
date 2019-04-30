@@ -419,7 +419,6 @@
 #include "../generated/tests/pad_low_rank_quant8.mod.py.cpp"
 #include "../generated/tests/pad_quant8.mod.py.cpp"
 #include "../generated/tests/pad_v2_1_float.mod.py.cpp"
-#include "../generated/tests/pad_v2_1_float_relaxed.mod.py.cpp"
 #include "../generated/tests/pad_v2_1_quant8.mod.py.cpp"
 #include "../generated/tests/pad_v2_all_dims.mod.py.cpp"
 #include "../generated/tests/pad_v2_all_dims_quant8.mod.py.cpp"
