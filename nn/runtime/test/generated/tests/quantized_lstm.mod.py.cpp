@@ -33,3 +33,27 @@ TEST_F(DynamicOutputShapeTest, quantized_lstm_dynamic_output_shape_relaxed) {
             quantized_lstm::get_examples_dynamic_output_shape_relaxed());
 }
 
+TEST_F(GeneratedTests, quantized_lstm_constant_weights) {
+    execute(quantized_lstm::CreateModel_2,
+            quantized_lstm::is_ignored_2,
+            quantized_lstm::get_examples_constant_weights());
+}
+
+TEST_F(GeneratedTests, quantized_lstm_constant_weights_relaxed) {
+    execute(quantized_lstm::CreateModel_relaxed_2,
+            quantized_lstm::is_ignored_relaxed_2,
+            quantized_lstm::get_examples_constant_weights_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, quantized_lstm_constant_weights_dynamic_output_shape) {
+    execute(quantized_lstm::CreateModel_dynamic_output_shape_2,
+            quantized_lstm::is_ignored_dynamic_output_shape_2,
+            quantized_lstm::get_examples_constant_weights_dynamic_output_shape());
+}
+
+TEST_F(DynamicOutputShapeTest, quantized_lstm_constant_weights_dynamic_output_shape_relaxed) {
+    execute(quantized_lstm::CreateModel_dynamic_output_shape_relaxed_2,
+            quantized_lstm::is_ignored_dynamic_output_shape_relaxed_2,
+            quantized_lstm::get_examples_constant_weights_dynamic_output_shape_relaxed());
+}
+
