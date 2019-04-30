@@ -153,3 +153,75 @@ TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_reversed_inpu
             bidirectional_sequence_rnn::get_examples_blackbox_reversed_inputs_dynamic_output_shape_float16());
 }
 
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_aux_input) {
+    execute(bidirectional_sequence_rnn::CreateModel_5,
+            bidirectional_sequence_rnn::is_ignored_5,
+            bidirectional_sequence_rnn::get_examples_blackbox_aux_input());
+}
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_aux_input_relaxed) {
+    execute(bidirectional_sequence_rnn::CreateModel_relaxed_5,
+            bidirectional_sequence_rnn::is_ignored_relaxed_5,
+            bidirectional_sequence_rnn::get_examples_blackbox_aux_input_relaxed());
+}
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_aux_input_float16) {
+    execute(bidirectional_sequence_rnn::CreateModel_float16_5,
+            bidirectional_sequence_rnn::is_ignored_float16_5,
+            bidirectional_sequence_rnn::get_examples_blackbox_aux_input_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_dynamic_output_shape) {
+    execute(bidirectional_sequence_rnn::CreateModel_dynamic_output_shape_5,
+            bidirectional_sequence_rnn::is_ignored_dynamic_output_shape_5,
+            bidirectional_sequence_rnn::get_examples_blackbox_aux_input_dynamic_output_shape());
+}
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_dynamic_output_shape_relaxed) {
+    execute(bidirectional_sequence_rnn::CreateModel_dynamic_output_shape_relaxed_5,
+            bidirectional_sequence_rnn::is_ignored_dynamic_output_shape_relaxed_5,
+            bidirectional_sequence_rnn::get_examples_blackbox_aux_input_dynamic_output_shape_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_dynamic_output_shape_float16) {
+    execute(bidirectional_sequence_rnn::CreateModel_dynamic_output_shape_float16_5,
+            bidirectional_sequence_rnn::is_ignored_dynamic_output_shape_float16_5,
+            bidirectional_sequence_rnn::get_examples_blackbox_aux_input_dynamic_output_shape_float16());
+}
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_regular_and_aux_input) {
+    execute(bidirectional_sequence_rnn::CreateModel_6,
+            bidirectional_sequence_rnn::is_ignored_6,
+            bidirectional_sequence_rnn::get_examples_blackbox_regular_and_aux_input());
+}
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_relaxed) {
+    execute(bidirectional_sequence_rnn::CreateModel_relaxed_6,
+            bidirectional_sequence_rnn::is_ignored_relaxed_6,
+            bidirectional_sequence_rnn::get_examples_blackbox_regular_and_aux_input_relaxed());
+}
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_float16) {
+    execute(bidirectional_sequence_rnn::CreateModel_float16_6,
+            bidirectional_sequence_rnn::is_ignored_float16_6,
+            bidirectional_sequence_rnn::get_examples_blackbox_regular_and_aux_input_float16());
+}
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_dynamic_output_shape) {
+    execute(bidirectional_sequence_rnn::CreateModel_dynamic_output_shape_6,
+            bidirectional_sequence_rnn::is_ignored_dynamic_output_shape_6,
+            bidirectional_sequence_rnn::get_examples_blackbox_regular_and_aux_input_dynamic_output_shape());
+}
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_dynamic_output_shape_relaxed) {
+    execute(bidirectional_sequence_rnn::CreateModel_dynamic_output_shape_relaxed_6,
+            bidirectional_sequence_rnn::is_ignored_dynamic_output_shape_relaxed_6,
+            bidirectional_sequence_rnn::get_examples_blackbox_regular_and_aux_input_dynamic_output_shape_relaxed());
+}
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_dynamic_output_shape_float16) {
+    execute(bidirectional_sequence_rnn::CreateModel_dynamic_output_shape_float16_6,
+            bidirectional_sequence_rnn::is_ignored_dynamic_output_shape_float16_6,
+            bidirectional_sequence_rnn::get_examples_blackbox_regular_and_aux_input_dynamic_output_shape_float16());
+}
+
