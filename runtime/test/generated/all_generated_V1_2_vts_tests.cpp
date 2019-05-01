@@ -25751,6 +25751,36 @@ TEST_F(ValidationTest, greater_quantized_overflow_first_input_if_requantized_dyn
 
 
 #endif
+TEST_F(NeuralnetworksHidlTest, greater_boolean) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_7,
+                           greater::is_ignored_7,
+                           greater::get_examples_boolean());
+}
+
+TEST_F(ValidationTest, greater_boolean) {
+  const Model model = greater::createTestModel_7();
+  const std::vector<Request> requests = createRequests(greater::get_examples_boolean());
+  validateEverything(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, greater_boolean_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           greater::createTestModel_dynamic_output_shape_7,
+                           greater::is_ignored_dynamic_output_shape_7,
+                           greater::get_examples_boolean_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, greater_boolean_dynamic_output_shape) {
+  const Model model = greater::createTestModel_dynamic_output_shape_7();
+  const std::vector<Request> requests = createRequests(greater::get_examples_boolean_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+
+#endif
 // Generated from: greater_equal.mod.py.
 namespace greater_equal {
 // Generated greater_equal test
@@ -26114,6 +26144,36 @@ TEST_F(DynamicOutputShapeTest, greater_equal_quantized_overflow_first_input_if_r
 TEST_F(ValidationTest, greater_equal_quantized_overflow_first_input_if_requantized_dynamic_output_shape) {
   const Model model = greater_equal::createTestModel_dynamic_output_shape_6();
   const std::vector<Request> requests = createRequests(greater_equal::get_examples_quantized_overflow_first_input_if_requantized_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, greater_equal_boolean) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_7,
+                           greater_equal::is_ignored_7,
+                           greater_equal::get_examples_boolean());
+}
+
+TEST_F(ValidationTest, greater_equal_boolean) {
+  const Model model = greater_equal::createTestModel_7();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_boolean());
+  validateEverything(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, greater_equal_boolean_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           greater_equal::createTestModel_dynamic_output_shape_7,
+                           greater_equal::is_ignored_dynamic_output_shape_7,
+                           greater_equal::get_examples_boolean_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, greater_equal_boolean_dynamic_output_shape) {
+  const Model model = greater_equal::createTestModel_dynamic_output_shape_7();
+  const std::vector<Request> requests = createRequests(greater_equal::get_examples_boolean_dynamic_output_shape());
   validateEverything(model, requests);
 }
 
@@ -38963,6 +39023,36 @@ TEST_F(ValidationTest, less_quantized_overflow_first_input_if_requantized_dynami
 
 
 #endif
+TEST_F(NeuralnetworksHidlTest, less_boolean) {
+  generated_tests::Execute(device,
+                           less::createTestModel_7,
+                           less::is_ignored_7,
+                           less::get_examples_boolean());
+}
+
+TEST_F(ValidationTest, less_boolean) {
+  const Model model = less::createTestModel_7();
+  const std::vector<Request> requests = createRequests(less::get_examples_boolean());
+  validateEverything(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, less_boolean_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           less::createTestModel_dynamic_output_shape_7,
+                           less::is_ignored_dynamic_output_shape_7,
+                           less::get_examples_boolean_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, less_boolean_dynamic_output_shape) {
+  const Model model = less::createTestModel_dynamic_output_shape_7();
+  const std::vector<Request> requests = createRequests(less::get_examples_boolean_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+
+#endif
 // Generated from: less_equal.mod.py.
 namespace less_equal {
 // Generated less_equal test
@@ -39326,6 +39416,36 @@ TEST_F(DynamicOutputShapeTest, less_equal_quantized_overflow_first_input_if_requ
 TEST_F(ValidationTest, less_equal_quantized_overflow_first_input_if_requantized_dynamic_output_shape) {
   const Model model = less_equal::createTestModel_dynamic_output_shape_6();
   const std::vector<Request> requests = createRequests(less_equal::get_examples_quantized_overflow_first_input_if_requantized_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+
+#endif
+TEST_F(NeuralnetworksHidlTest, less_equal_boolean) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_7,
+                           less_equal::is_ignored_7,
+                           less_equal::get_examples_boolean());
+}
+
+TEST_F(ValidationTest, less_equal_boolean) {
+  const Model model = less_equal::createTestModel_7();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_boolean());
+  validateEverything(model, requests);
+}
+
+
+#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
+TEST_F(DynamicOutputShapeTest, less_equal_boolean_dynamic_output_shape) {
+  generated_tests::Execute(device,
+                           less_equal::createTestModel_dynamic_output_shape_7,
+                           less_equal::is_ignored_dynamic_output_shape_7,
+                           less_equal::get_examples_boolean_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, less_equal_boolean_dynamic_output_shape) {
+  const Model model = less_equal::createTestModel_dynamic_output_shape_7();
+  const std::vector<Request> requests = createRequests(less_equal::get_examples_boolean_dynamic_output_shape());
   validateEverything(model, requests);
 }
 

@@ -153,3 +153,15 @@ TEST_F(DynamicOutputShapeTest, greater_quantized_overflow_first_input_if_requant
             greater::get_examples_quantized_overflow_first_input_if_requantized_dynamic_output_shape());
 }
 
+TEST_F(GeneratedTests, greater_boolean) {
+    execute(greater::CreateModel_7,
+            greater::is_ignored_7,
+            greater::get_examples_boolean());
+}
+
+TEST_F(DynamicOutputShapeTest, greater_boolean_dynamic_output_shape) {
+    execute(greater::CreateModel_dynamic_output_shape_7,
+            greater::is_ignored_dynamic_output_shape_7,
+            greater::get_examples_boolean_dynamic_output_shape());
+}
+
