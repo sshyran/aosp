@@ -413,7 +413,13 @@ inline bool getBernoulli(double p) {
     return dis(RandomNumberGenerator::generator);
 }
 
+// std::is_floating_point_v<_Float16> evaluates to true in CTS build target but false in
+// NeuralNetworksTest_static, so we define getUniform<_Float16> explicitly here if not CTS.
+#ifdef NNTEST_CTS
+#define NN_IS_FLOAT(T) std::is_floating_point_v<T>
+#else
 #define NN_IS_FLOAT(T) std::is_floating_point_v<T> || std::is_same_v<T, _Float16>
+#endif
 
 // getUniform for floating point values operates on a open interval (lower, upper).
 // This is important for generating a scale that is greater than but not equal to a lower bound.
