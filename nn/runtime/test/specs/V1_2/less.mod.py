@@ -86,3 +86,14 @@ test(
     output_data=[True],
     do_variations=False,
 )
+
+test(
+    name="boolean",
+    input0=Input("input0", "TENSOR_BOOL8", "{4}"),
+    input1=Input("input1", "TENSOR_BOOL8", "{4}"),
+    output0=Output("output0", "TENSOR_BOOL8", "{4}"),
+    input0_data=[False, True, False, True],
+    input1_data=[False, False, True, True],
+    output_data=[False, False, True, False],
+    do_variations=False,
+)
