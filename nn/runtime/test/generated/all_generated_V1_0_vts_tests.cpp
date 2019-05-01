@@ -19,8 +19,7 @@ TEST_F(NeuralnetworksHidlTest, add) {
 TEST_F(ValidationTest, add) {
   const Model model = add::createTestModel();
   const std::vector<Request> requests = createRequests(add::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -35,8 +34,7 @@ TEST_F(DynamicOutputShapeTest, add_dynamic_output_shape) {
 TEST_F(ValidationTest, add_dynamic_output_shape) {
   const Model model = add::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(add::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -59,8 +57,7 @@ TEST_F(NeuralnetworksHidlTest, add_broadcast_quant8) {
 TEST_F(ValidationTest, add_broadcast_quant8) {
   const Model model = add_broadcast_quant8::createTestModel();
   const std::vector<Request> requests = createRequests(add_broadcast_quant8::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -75,8 +72,7 @@ TEST_F(DynamicOutputShapeTest, add_broadcast_quant8_dynamic_output_shape) {
 TEST_F(ValidationTest, add_broadcast_quant8_dynamic_output_shape) {
   const Model model = add_broadcast_quant8::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(add_broadcast_quant8::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -99,8 +95,7 @@ TEST_F(NeuralnetworksHidlTest, add_quant8) {
 TEST_F(ValidationTest, add_quant8) {
   const Model model = add_quant8::createTestModel();
   const std::vector<Request> requests = createRequests(add_quant8::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -115,8 +110,7 @@ TEST_F(DynamicOutputShapeTest, add_quant8_dynamic_output_shape) {
 TEST_F(ValidationTest, add_quant8_dynamic_output_shape) {
   const Model model = add_quant8::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(add_quant8::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -139,8 +133,7 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_1) {
 TEST_F(ValidationTest, avg_pool_float_1) {
   const Model model = avg_pool_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(avg_pool_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -155,8 +148,7 @@ TEST_F(DynamicOutputShapeTest, avg_pool_float_1_dynamic_output_shape) {
 TEST_F(ValidationTest, avg_pool_float_1_dynamic_output_shape) {
   const Model model = avg_pool_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(avg_pool_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -179,8 +171,7 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_2) {
 TEST_F(ValidationTest, avg_pool_float_2) {
   const Model model = avg_pool_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(avg_pool_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -195,8 +186,7 @@ TEST_F(DynamicOutputShapeTest, avg_pool_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, avg_pool_float_2_dynamic_output_shape) {
   const Model model = avg_pool_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(avg_pool_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -219,8 +209,7 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_3) {
 TEST_F(ValidationTest, avg_pool_float_3) {
   const Model model = avg_pool_float_3::createTestModel();
   const std::vector<Request> requests = createRequests(avg_pool_float_3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -235,8 +224,7 @@ TEST_F(DynamicOutputShapeTest, avg_pool_float_3_dynamic_output_shape) {
 TEST_F(ValidationTest, avg_pool_float_3_dynamic_output_shape) {
   const Model model = avg_pool_float_3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(avg_pool_float_3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -259,8 +247,7 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_4) {
 TEST_F(ValidationTest, avg_pool_float_4) {
   const Model model = avg_pool_float_4::createTestModel();
   const std::vector<Request> requests = createRequests(avg_pool_float_4::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -275,8 +262,7 @@ TEST_F(DynamicOutputShapeTest, avg_pool_float_4_dynamic_output_shape) {
 TEST_F(ValidationTest, avg_pool_float_4_dynamic_output_shape) {
   const Model model = avg_pool_float_4::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(avg_pool_float_4::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -299,8 +285,7 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_float_5) {
 TEST_F(ValidationTest, avg_pool_float_5) {
   const Model model = avg_pool_float_5::createTestModel();
   const std::vector<Request> requests = createRequests(avg_pool_float_5::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -315,8 +300,7 @@ TEST_F(DynamicOutputShapeTest, avg_pool_float_5_dynamic_output_shape) {
 TEST_F(ValidationTest, avg_pool_float_5_dynamic_output_shape) {
   const Model model = avg_pool_float_5::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(avg_pool_float_5::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -339,8 +323,7 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_quant8_1) {
 TEST_F(ValidationTest, avg_pool_quant8_1) {
   const Model model = avg_pool_quant8_1::createTestModel();
   const std::vector<Request> requests = createRequests(avg_pool_quant8_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -355,8 +338,7 @@ TEST_F(DynamicOutputShapeTest, avg_pool_quant8_1_dynamic_output_shape) {
 TEST_F(ValidationTest, avg_pool_quant8_1_dynamic_output_shape) {
   const Model model = avg_pool_quant8_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(avg_pool_quant8_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -379,8 +361,7 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_quant8_2) {
 TEST_F(ValidationTest, avg_pool_quant8_2) {
   const Model model = avg_pool_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(avg_pool_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -395,8 +376,7 @@ TEST_F(DynamicOutputShapeTest, avg_pool_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, avg_pool_quant8_2_dynamic_output_shape) {
   const Model model = avg_pool_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(avg_pool_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -419,8 +399,7 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_quant8_3) {
 TEST_F(ValidationTest, avg_pool_quant8_3) {
   const Model model = avg_pool_quant8_3::createTestModel();
   const std::vector<Request> requests = createRequests(avg_pool_quant8_3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -435,8 +414,7 @@ TEST_F(DynamicOutputShapeTest, avg_pool_quant8_3_dynamic_output_shape) {
 TEST_F(ValidationTest, avg_pool_quant8_3_dynamic_output_shape) {
   const Model model = avg_pool_quant8_3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(avg_pool_quant8_3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -459,8 +437,7 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_quant8_4) {
 TEST_F(ValidationTest, avg_pool_quant8_4) {
   const Model model = avg_pool_quant8_4::createTestModel();
   const std::vector<Request> requests = createRequests(avg_pool_quant8_4::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -475,8 +452,7 @@ TEST_F(DynamicOutputShapeTest, avg_pool_quant8_4_dynamic_output_shape) {
 TEST_F(ValidationTest, avg_pool_quant8_4_dynamic_output_shape) {
   const Model model = avg_pool_quant8_4::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(avg_pool_quant8_4::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -499,8 +475,7 @@ TEST_F(NeuralnetworksHidlTest, avg_pool_quant8_5) {
 TEST_F(ValidationTest, avg_pool_quant8_5) {
   const Model model = avg_pool_quant8_5::createTestModel();
   const std::vector<Request> requests = createRequests(avg_pool_quant8_5::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -515,8 +490,7 @@ TEST_F(DynamicOutputShapeTest, avg_pool_quant8_5_dynamic_output_shape) {
 TEST_F(ValidationTest, avg_pool_quant8_5_dynamic_output_shape) {
   const Model model = avg_pool_quant8_5::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(avg_pool_quant8_5::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -539,8 +513,7 @@ TEST_F(NeuralnetworksHidlTest, concat_float_1) {
 TEST_F(ValidationTest, concat_float_1) {
   const Model model = concat_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(concat_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -555,8 +528,7 @@ TEST_F(DynamicOutputShapeTest, concat_float_1_dynamic_output_shape) {
 TEST_F(ValidationTest, concat_float_1_dynamic_output_shape) {
   const Model model = concat_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(concat_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -579,8 +551,7 @@ TEST_F(NeuralnetworksHidlTest, concat_float_2) {
 TEST_F(ValidationTest, concat_float_2) {
   const Model model = concat_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(concat_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -595,8 +566,7 @@ TEST_F(DynamicOutputShapeTest, concat_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, concat_float_2_dynamic_output_shape) {
   const Model model = concat_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(concat_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -619,8 +589,7 @@ TEST_F(NeuralnetworksHidlTest, concat_float_3) {
 TEST_F(ValidationTest, concat_float_3) {
   const Model model = concat_float_3::createTestModel();
   const std::vector<Request> requests = createRequests(concat_float_3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -635,8 +604,7 @@ TEST_F(DynamicOutputShapeTest, concat_float_3_dynamic_output_shape) {
 TEST_F(ValidationTest, concat_float_3_dynamic_output_shape) {
   const Model model = concat_float_3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(concat_float_3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -659,8 +627,7 @@ TEST_F(NeuralnetworksHidlTest, concat_quant8_1) {
 TEST_F(ValidationTest, concat_quant8_1) {
   const Model model = concat_quant8_1::createTestModel();
   const std::vector<Request> requests = createRequests(concat_quant8_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -675,8 +642,7 @@ TEST_F(DynamicOutputShapeTest, concat_quant8_1_dynamic_output_shape) {
 TEST_F(ValidationTest, concat_quant8_1_dynamic_output_shape) {
   const Model model = concat_quant8_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(concat_quant8_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -699,8 +665,7 @@ TEST_F(NeuralnetworksHidlTest, concat_quant8_2) {
 TEST_F(ValidationTest, concat_quant8_2) {
   const Model model = concat_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(concat_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -715,8 +680,7 @@ TEST_F(DynamicOutputShapeTest, concat_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, concat_quant8_2_dynamic_output_shape) {
   const Model model = concat_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(concat_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -739,8 +703,7 @@ TEST_F(NeuralnetworksHidlTest, concat_quant8_3) {
 TEST_F(ValidationTest, concat_quant8_3) {
   const Model model = concat_quant8_3::createTestModel();
   const std::vector<Request> requests = createRequests(concat_quant8_3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -755,8 +718,7 @@ TEST_F(DynamicOutputShapeTest, concat_quant8_3_dynamic_output_shape) {
 TEST_F(ValidationTest, concat_quant8_3_dynamic_output_shape) {
   const Model model = concat_quant8_3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(concat_quant8_3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -779,8 +741,7 @@ TEST_F(NeuralnetworksHidlTest, conv_1_h3_w2_SAME) {
 TEST_F(ValidationTest, conv_1_h3_w2_SAME) {
   const Model model = conv_1_h3_w2_SAME::createTestModel();
   const std::vector<Request> requests = createRequests(conv_1_h3_w2_SAME::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -795,8 +756,7 @@ TEST_F(DynamicOutputShapeTest, conv_1_h3_w2_SAME_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_1_h3_w2_SAME_dynamic_output_shape) {
   const Model model = conv_1_h3_w2_SAME::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_1_h3_w2_SAME::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -811,8 +771,7 @@ TEST_F(NeuralnetworksHidlTest, conv_1_h3_w2_SAME_2) {
 TEST_F(ValidationTest, conv_1_h3_w2_SAME_2) {
   const Model model = conv_1_h3_w2_SAME::createTestModel_2();
   const std::vector<Request> requests = createRequests(conv_1_h3_w2_SAME::get_examples_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -827,8 +786,7 @@ TEST_F(DynamicOutputShapeTest, conv_1_h3_w2_SAME_dynamic_output_shape_2) {
 TEST_F(ValidationTest, conv_1_h3_w2_SAME_dynamic_output_shape_2) {
   const Model model = conv_1_h3_w2_SAME::createTestModel_dynamic_output_shape_2();
   const std::vector<Request> requests = createRequests(conv_1_h3_w2_SAME::get_examples_dynamic_output_shape_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -851,8 +809,7 @@ TEST_F(NeuralnetworksHidlTest, conv_1_h3_w2_VALID) {
 TEST_F(ValidationTest, conv_1_h3_w2_VALID) {
   const Model model = conv_1_h3_w2_VALID::createTestModel();
   const std::vector<Request> requests = createRequests(conv_1_h3_w2_VALID::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -867,8 +824,7 @@ TEST_F(DynamicOutputShapeTest, conv_1_h3_w2_VALID_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_1_h3_w2_VALID_dynamic_output_shape) {
   const Model model = conv_1_h3_w2_VALID::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_1_h3_w2_VALID::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -883,8 +839,7 @@ TEST_F(NeuralnetworksHidlTest, conv_1_h3_w2_VALID_2) {
 TEST_F(ValidationTest, conv_1_h3_w2_VALID_2) {
   const Model model = conv_1_h3_w2_VALID::createTestModel_2();
   const std::vector<Request> requests = createRequests(conv_1_h3_w2_VALID::get_examples_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -899,8 +854,7 @@ TEST_F(DynamicOutputShapeTest, conv_1_h3_w2_VALID_dynamic_output_shape_2) {
 TEST_F(ValidationTest, conv_1_h3_w2_VALID_dynamic_output_shape_2) {
   const Model model = conv_1_h3_w2_VALID::createTestModel_dynamic_output_shape_2();
   const std::vector<Request> requests = createRequests(conv_1_h3_w2_VALID::get_examples_dynamic_output_shape_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -923,8 +877,7 @@ TEST_F(NeuralnetworksHidlTest, conv_3_h3_w2_SAME) {
 TEST_F(ValidationTest, conv_3_h3_w2_SAME) {
   const Model model = conv_3_h3_w2_SAME::createTestModel();
   const std::vector<Request> requests = createRequests(conv_3_h3_w2_SAME::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -939,8 +892,7 @@ TEST_F(DynamicOutputShapeTest, conv_3_h3_w2_SAME_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_3_h3_w2_SAME_dynamic_output_shape) {
   const Model model = conv_3_h3_w2_SAME::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_3_h3_w2_SAME::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -955,8 +907,7 @@ TEST_F(NeuralnetworksHidlTest, conv_3_h3_w2_SAME_2) {
 TEST_F(ValidationTest, conv_3_h3_w2_SAME_2) {
   const Model model = conv_3_h3_w2_SAME::createTestModel_2();
   const std::vector<Request> requests = createRequests(conv_3_h3_w2_SAME::get_examples_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -971,8 +922,7 @@ TEST_F(DynamicOutputShapeTest, conv_3_h3_w2_SAME_dynamic_output_shape_2) {
 TEST_F(ValidationTest, conv_3_h3_w2_SAME_dynamic_output_shape_2) {
   const Model model = conv_3_h3_w2_SAME::createTestModel_dynamic_output_shape_2();
   const std::vector<Request> requests = createRequests(conv_3_h3_w2_SAME::get_examples_dynamic_output_shape_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -995,8 +945,7 @@ TEST_F(NeuralnetworksHidlTest, conv_3_h3_w2_VALID) {
 TEST_F(ValidationTest, conv_3_h3_w2_VALID) {
   const Model model = conv_3_h3_w2_VALID::createTestModel();
   const std::vector<Request> requests = createRequests(conv_3_h3_w2_VALID::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1011,8 +960,7 @@ TEST_F(DynamicOutputShapeTest, conv_3_h3_w2_VALID_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_3_h3_w2_VALID_dynamic_output_shape) {
   const Model model = conv_3_h3_w2_VALID::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_3_h3_w2_VALID::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1027,8 +975,7 @@ TEST_F(NeuralnetworksHidlTest, conv_3_h3_w2_VALID_2) {
 TEST_F(ValidationTest, conv_3_h3_w2_VALID_2) {
   const Model model = conv_3_h3_w2_VALID::createTestModel_2();
   const std::vector<Request> requests = createRequests(conv_3_h3_w2_VALID::get_examples_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1043,8 +990,7 @@ TEST_F(DynamicOutputShapeTest, conv_3_h3_w2_VALID_dynamic_output_shape_2) {
 TEST_F(ValidationTest, conv_3_h3_w2_VALID_dynamic_output_shape_2) {
   const Model model = conv_3_h3_w2_VALID::createTestModel_dynamic_output_shape_2();
   const std::vector<Request> requests = createRequests(conv_3_h3_w2_VALID::get_examples_dynamic_output_shape_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1067,8 +1013,7 @@ TEST_F(NeuralnetworksHidlTest, conv_float) {
 TEST_F(ValidationTest, conv_float) {
   const Model model = conv_float::createTestModel();
   const std::vector<Request> requests = createRequests(conv_float::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1083,8 +1028,7 @@ TEST_F(DynamicOutputShapeTest, conv_float_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_float_dynamic_output_shape) {
   const Model model = conv_float::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_float::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1107,8 +1051,7 @@ TEST_F(NeuralnetworksHidlTest, conv_float_2) {
 TEST_F(ValidationTest, conv_float_2) {
   const Model model = conv_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(conv_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1123,8 +1066,7 @@ TEST_F(DynamicOutputShapeTest, conv_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_float_2_dynamic_output_shape) {
   const Model model = conv_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1147,8 +1089,7 @@ TEST_F(NeuralnetworksHidlTest, conv_float_channels) {
 TEST_F(ValidationTest, conv_float_channels) {
   const Model model = conv_float_channels::createTestModel();
   const std::vector<Request> requests = createRequests(conv_float_channels::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1163,8 +1104,7 @@ TEST_F(DynamicOutputShapeTest, conv_float_channels_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_float_channels_dynamic_output_shape) {
   const Model model = conv_float_channels::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_float_channels::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1187,8 +1127,7 @@ TEST_F(NeuralnetworksHidlTest, conv_float_channels_weights_as_inputs) {
 TEST_F(ValidationTest, conv_float_channels_weights_as_inputs) {
   const Model model = conv_float_channels_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(conv_float_channels_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1203,8 +1142,7 @@ TEST_F(DynamicOutputShapeTest, conv_float_channels_weights_as_inputs_dynamic_out
 TEST_F(ValidationTest, conv_float_channels_weights_as_inputs_dynamic_output_shape) {
   const Model model = conv_float_channels_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_float_channels_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1227,8 +1165,7 @@ TEST_F(NeuralnetworksHidlTest, conv_float_large) {
 TEST_F(ValidationTest, conv_float_large) {
   const Model model = conv_float_large::createTestModel();
   const std::vector<Request> requests = createRequests(conv_float_large::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1243,8 +1180,7 @@ TEST_F(DynamicOutputShapeTest, conv_float_large_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_float_large_dynamic_output_shape) {
   const Model model = conv_float_large::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_float_large::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1267,8 +1203,7 @@ TEST_F(NeuralnetworksHidlTest, conv_float_large_weights_as_inputs) {
 TEST_F(ValidationTest, conv_float_large_weights_as_inputs) {
   const Model model = conv_float_large_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(conv_float_large_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1283,8 +1218,7 @@ TEST_F(DynamicOutputShapeTest, conv_float_large_weights_as_inputs_dynamic_output
 TEST_F(ValidationTest, conv_float_large_weights_as_inputs_dynamic_output_shape) {
   const Model model = conv_float_large_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_float_large_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1307,8 +1241,7 @@ TEST_F(NeuralnetworksHidlTest, conv_float_weights_as_inputs) {
 TEST_F(ValidationTest, conv_float_weights_as_inputs) {
   const Model model = conv_float_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(conv_float_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1323,8 +1256,7 @@ TEST_F(DynamicOutputShapeTest, conv_float_weights_as_inputs_dynamic_output_shape
 TEST_F(ValidationTest, conv_float_weights_as_inputs_dynamic_output_shape) {
   const Model model = conv_float_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_float_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1347,8 +1279,7 @@ TEST_F(NeuralnetworksHidlTest, conv_quant8) {
 TEST_F(ValidationTest, conv_quant8) {
   const Model model = conv_quant8::createTestModel();
   const std::vector<Request> requests = createRequests(conv_quant8::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1363,8 +1294,7 @@ TEST_F(DynamicOutputShapeTest, conv_quant8_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_quant8_dynamic_output_shape) {
   const Model model = conv_quant8::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_quant8::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1387,8 +1317,7 @@ TEST_F(NeuralnetworksHidlTest, conv_quant8_2) {
 TEST_F(ValidationTest, conv_quant8_2) {
   const Model model = conv_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(conv_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1403,8 +1332,7 @@ TEST_F(DynamicOutputShapeTest, conv_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_quant8_2_dynamic_output_shape) {
   const Model model = conv_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1427,8 +1355,7 @@ TEST_F(NeuralnetworksHidlTest, conv_quant8_channels) {
 TEST_F(ValidationTest, conv_quant8_channels) {
   const Model model = conv_quant8_channels::createTestModel();
   const std::vector<Request> requests = createRequests(conv_quant8_channels::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1443,8 +1370,7 @@ TEST_F(DynamicOutputShapeTest, conv_quant8_channels_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_quant8_channels_dynamic_output_shape) {
   const Model model = conv_quant8_channels::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_quant8_channels::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1467,8 +1393,7 @@ TEST_F(NeuralnetworksHidlTest, conv_quant8_channels_weights_as_inputs) {
 TEST_F(ValidationTest, conv_quant8_channels_weights_as_inputs) {
   const Model model = conv_quant8_channels_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(conv_quant8_channels_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1483,8 +1408,7 @@ TEST_F(DynamicOutputShapeTest, conv_quant8_channels_weights_as_inputs_dynamic_ou
 TEST_F(ValidationTest, conv_quant8_channels_weights_as_inputs_dynamic_output_shape) {
   const Model model = conv_quant8_channels_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_quant8_channels_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1507,8 +1431,7 @@ TEST_F(NeuralnetworksHidlTest, conv_quant8_large) {
 TEST_F(ValidationTest, conv_quant8_large) {
   const Model model = conv_quant8_large::createTestModel();
   const std::vector<Request> requests = createRequests(conv_quant8_large::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1523,8 +1446,7 @@ TEST_F(DynamicOutputShapeTest, conv_quant8_large_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_quant8_large_dynamic_output_shape) {
   const Model model = conv_quant8_large::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_quant8_large::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1547,8 +1469,7 @@ TEST_F(NeuralnetworksHidlTest, conv_quant8_large_weights_as_inputs) {
 TEST_F(ValidationTest, conv_quant8_large_weights_as_inputs) {
   const Model model = conv_quant8_large_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(conv_quant8_large_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1563,8 +1484,7 @@ TEST_F(DynamicOutputShapeTest, conv_quant8_large_weights_as_inputs_dynamic_outpu
 TEST_F(ValidationTest, conv_quant8_large_weights_as_inputs_dynamic_output_shape) {
   const Model model = conv_quant8_large_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_quant8_large_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1587,8 +1507,7 @@ TEST_F(NeuralnetworksHidlTest, conv_quant8_overflow) {
 TEST_F(ValidationTest, conv_quant8_overflow) {
   const Model model = conv_quant8_overflow::createTestModel();
   const std::vector<Request> requests = createRequests(conv_quant8_overflow::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1603,8 +1522,7 @@ TEST_F(DynamicOutputShapeTest, conv_quant8_overflow_dynamic_output_shape) {
 TEST_F(ValidationTest, conv_quant8_overflow_dynamic_output_shape) {
   const Model model = conv_quant8_overflow::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_quant8_overflow::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1627,8 +1545,7 @@ TEST_F(NeuralnetworksHidlTest, conv_quant8_overflow_weights_as_inputs) {
 TEST_F(ValidationTest, conv_quant8_overflow_weights_as_inputs) {
   const Model model = conv_quant8_overflow_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(conv_quant8_overflow_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1643,8 +1560,7 @@ TEST_F(DynamicOutputShapeTest, conv_quant8_overflow_weights_as_inputs_dynamic_ou
 TEST_F(ValidationTest, conv_quant8_overflow_weights_as_inputs_dynamic_output_shape) {
   const Model model = conv_quant8_overflow_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_quant8_overflow_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1667,8 +1583,7 @@ TEST_F(NeuralnetworksHidlTest, conv_quant8_weights_as_inputs) {
 TEST_F(ValidationTest, conv_quant8_weights_as_inputs) {
   const Model model = conv_quant8_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(conv_quant8_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1683,8 +1598,7 @@ TEST_F(DynamicOutputShapeTest, conv_quant8_weights_as_inputs_dynamic_output_shap
 TEST_F(ValidationTest, conv_quant8_weights_as_inputs_dynamic_output_shape) {
   const Model model = conv_quant8_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(conv_quant8_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1707,8 +1621,7 @@ TEST_F(NeuralnetworksHidlTest, depth_to_space_float_1) {
 TEST_F(ValidationTest, depth_to_space_float_1) {
   const Model model = depth_to_space_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(depth_to_space_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1723,8 +1636,7 @@ TEST_F(DynamicOutputShapeTest, depth_to_space_float_1_dynamic_output_shape) {
 TEST_F(ValidationTest, depth_to_space_float_1_dynamic_output_shape) {
   const Model model = depth_to_space_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depth_to_space_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1747,8 +1659,7 @@ TEST_F(NeuralnetworksHidlTest, depth_to_space_float_2) {
 TEST_F(ValidationTest, depth_to_space_float_2) {
   const Model model = depth_to_space_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(depth_to_space_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1763,8 +1674,7 @@ TEST_F(DynamicOutputShapeTest, depth_to_space_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, depth_to_space_float_2_dynamic_output_shape) {
   const Model model = depth_to_space_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depth_to_space_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1787,8 +1697,7 @@ TEST_F(NeuralnetworksHidlTest, depth_to_space_float_3) {
 TEST_F(ValidationTest, depth_to_space_float_3) {
   const Model model = depth_to_space_float_3::createTestModel();
   const std::vector<Request> requests = createRequests(depth_to_space_float_3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1803,8 +1712,7 @@ TEST_F(DynamicOutputShapeTest, depth_to_space_float_3_dynamic_output_shape) {
 TEST_F(ValidationTest, depth_to_space_float_3_dynamic_output_shape) {
   const Model model = depth_to_space_float_3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depth_to_space_float_3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1827,8 +1735,7 @@ TEST_F(NeuralnetworksHidlTest, depth_to_space_quant8_1) {
 TEST_F(ValidationTest, depth_to_space_quant8_1) {
   const Model model = depth_to_space_quant8_1::createTestModel();
   const std::vector<Request> requests = createRequests(depth_to_space_quant8_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1843,8 +1750,7 @@ TEST_F(DynamicOutputShapeTest, depth_to_space_quant8_1_dynamic_output_shape) {
 TEST_F(ValidationTest, depth_to_space_quant8_1_dynamic_output_shape) {
   const Model model = depth_to_space_quant8_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depth_to_space_quant8_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1867,8 +1773,7 @@ TEST_F(NeuralnetworksHidlTest, depth_to_space_quant8_2) {
 TEST_F(ValidationTest, depth_to_space_quant8_2) {
   const Model model = depth_to_space_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(depth_to_space_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1883,8 +1788,7 @@ TEST_F(DynamicOutputShapeTest, depth_to_space_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, depth_to_space_quant8_2_dynamic_output_shape) {
   const Model model = depth_to_space_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depth_to_space_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1907,8 +1811,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv) {
 TEST_F(ValidationTest, depthwise_conv) {
   const Model model = depthwise_conv::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1923,8 +1826,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv_dynamic_output_shape) {
 TEST_F(ValidationTest, depthwise_conv_dynamic_output_shape) {
   const Model model = depthwise_conv::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1939,8 +1841,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv_2) {
 TEST_F(ValidationTest, depthwise_conv_2) {
   const Model model = depthwise_conv::createTestModel_2();
   const std::vector<Request> requests = createRequests(depthwise_conv::get_examples_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1955,8 +1856,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv_dynamic_output_shape_2) {
 TEST_F(ValidationTest, depthwise_conv_dynamic_output_shape_2) {
   const Model model = depthwise_conv::createTestModel_dynamic_output_shape_2();
   const std::vector<Request> requests = createRequests(depthwise_conv::get_examples_dynamic_output_shape_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1979,8 +1879,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float) {
 TEST_F(ValidationTest, depthwise_conv2d_float) {
   const Model model = depthwise_conv2d_float::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -1995,8 +1894,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_dynamic_output_shape) {
 TEST_F(ValidationTest, depthwise_conv2d_float_dynamic_output_shape) {
   const Model model = depthwise_conv2d_float::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2019,8 +1917,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_2) {
 TEST_F(ValidationTest, depthwise_conv2d_float_2) {
   const Model model = depthwise_conv2d_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2035,8 +1932,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, depthwise_conv2d_float_2_dynamic_output_shape) {
   const Model model = depthwise_conv2d_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2059,8 +1955,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_large) {
 TEST_F(ValidationTest, depthwise_conv2d_float_large) {
   const Model model = depthwise_conv2d_float_large::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2075,8 +1970,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_large_dynamic_output_shape
 TEST_F(ValidationTest, depthwise_conv2d_float_large_dynamic_output_shape) {
   const Model model = depthwise_conv2d_float_large::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2099,8 +1993,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_large_2) {
 TEST_F(ValidationTest, depthwise_conv2d_float_large_2) {
   const Model model = depthwise_conv2d_float_large_2::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2115,8 +2008,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_large_2_dynamic_output_sha
 TEST_F(ValidationTest, depthwise_conv2d_float_large_2_dynamic_output_shape) {
   const Model model = depthwise_conv2d_float_large_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2139,8 +2031,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_large_2_weights_as_inputs)
 TEST_F(ValidationTest, depthwise_conv2d_float_large_2_weights_as_inputs) {
   const Model model = depthwise_conv2d_float_large_2_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large_2_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2155,8 +2046,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_large_2_weights_as_inputs_
 TEST_F(ValidationTest, depthwise_conv2d_float_large_2_weights_as_inputs_dynamic_output_shape) {
   const Model model = depthwise_conv2d_float_large_2_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large_2_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2179,8 +2069,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_large_weights_as_inputs) {
 TEST_F(ValidationTest, depthwise_conv2d_float_large_weights_as_inputs) {
   const Model model = depthwise_conv2d_float_large_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2195,8 +2084,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_large_weights_as_inputs_dy
 TEST_F(ValidationTest, depthwise_conv2d_float_large_weights_as_inputs_dynamic_output_shape) {
   const Model model = depthwise_conv2d_float_large_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_large_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2219,8 +2107,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_float_weights_as_inputs) {
 TEST_F(ValidationTest, depthwise_conv2d_float_weights_as_inputs) {
   const Model model = depthwise_conv2d_float_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2235,8 +2122,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_weights_as_inputs_dynamic_
 TEST_F(ValidationTest, depthwise_conv2d_float_weights_as_inputs_dynamic_output_shape) {
   const Model model = depthwise_conv2d_float_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_float_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2259,8 +2145,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_quant8) {
 TEST_F(ValidationTest, depthwise_conv2d_quant8) {
   const Model model = depthwise_conv2d_quant8::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_quant8::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2275,8 +2160,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_quant8_dynamic_output_shape) {
 TEST_F(ValidationTest, depthwise_conv2d_quant8_dynamic_output_shape) {
   const Model model = depthwise_conv2d_quant8::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_quant8::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2299,8 +2183,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_quant8_2) {
 TEST_F(ValidationTest, depthwise_conv2d_quant8_2) {
   const Model model = depthwise_conv2d_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2315,8 +2198,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, depthwise_conv2d_quant8_2_dynamic_output_shape) {
   const Model model = depthwise_conv2d_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2339,8 +2221,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_quant8_large) {
 TEST_F(ValidationTest, depthwise_conv2d_quant8_large) {
   const Model model = depthwise_conv2d_quant8_large::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_quant8_large::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2355,8 +2236,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_quant8_large_dynamic_output_shap
 TEST_F(ValidationTest, depthwise_conv2d_quant8_large_dynamic_output_shape) {
   const Model model = depthwise_conv2d_quant8_large::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_quant8_large::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2379,8 +2259,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_quant8_large_weights_as_inputs) 
 TEST_F(ValidationTest, depthwise_conv2d_quant8_large_weights_as_inputs) {
   const Model model = depthwise_conv2d_quant8_large_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_quant8_large_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2395,8 +2274,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_quant8_large_weights_as_inputs_d
 TEST_F(ValidationTest, depthwise_conv2d_quant8_large_weights_as_inputs_dynamic_output_shape) {
   const Model model = depthwise_conv2d_quant8_large_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_quant8_large_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2419,8 +2297,7 @@ TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_quant8_weights_as_inputs) {
 TEST_F(ValidationTest, depthwise_conv2d_quant8_weights_as_inputs) {
   const Model model = depthwise_conv2d_quant8_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_quant8_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2435,8 +2312,7 @@ TEST_F(DynamicOutputShapeTest, depthwise_conv2d_quant8_weights_as_inputs_dynamic
 TEST_F(ValidationTest, depthwise_conv2d_quant8_weights_as_inputs_dynamic_output_shape) {
   const Model model = depthwise_conv2d_quant8_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(depthwise_conv2d_quant8_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2459,8 +2335,7 @@ TEST_F(NeuralnetworksHidlTest, dequantize) {
 TEST_F(ValidationTest, dequantize) {
   const Model model = dequantize::createTestModel();
   const std::vector<Request> requests = createRequests(dequantize::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2475,8 +2350,7 @@ TEST_F(DynamicOutputShapeTest, dequantize_dynamic_output_shape) {
 TEST_F(ValidationTest, dequantize_dynamic_output_shape) {
   const Model model = dequantize::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(dequantize::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2499,8 +2373,7 @@ TEST_F(NeuralnetworksHidlTest, embedding_lookup) {
 TEST_F(ValidationTest, embedding_lookup) {
   const Model model = embedding_lookup::createTestModel();
   const std::vector<Request> requests = createRequests(embedding_lookup::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2515,8 +2388,7 @@ TEST_F(DynamicOutputShapeTest, embedding_lookup_dynamic_output_shape) {
 TEST_F(ValidationTest, embedding_lookup_dynamic_output_shape) {
   const Model model = embedding_lookup::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(embedding_lookup::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2539,8 +2411,7 @@ TEST_F(NeuralnetworksHidlTest, floor) {
 TEST_F(ValidationTest, floor) {
   const Model model = floor::createTestModel();
   const std::vector<Request> requests = createRequests(floor::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2555,8 +2426,7 @@ TEST_F(DynamicOutputShapeTest, floor_dynamic_output_shape) {
 TEST_F(ValidationTest, floor_dynamic_output_shape) {
   const Model model = floor::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(floor::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2579,8 +2449,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float) {
 TEST_F(ValidationTest, fully_connected_float) {
   const Model model = fully_connected_float::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_float::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2595,8 +2464,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_float_dynamic_output_shape) {
 TEST_F(ValidationTest, fully_connected_float_dynamic_output_shape) {
   const Model model = fully_connected_float::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_float::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2619,8 +2487,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_2) {
 TEST_F(ValidationTest, fully_connected_float_2) {
   const Model model = fully_connected_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2635,8 +2502,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, fully_connected_float_2_dynamic_output_shape) {
   const Model model = fully_connected_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2659,8 +2525,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_3) {
 TEST_F(ValidationTest, fully_connected_float_3) {
   const Model model = fully_connected_float_3::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_float_3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2675,8 +2540,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_float_3_dynamic_output_shape) {
 TEST_F(ValidationTest, fully_connected_float_3_dynamic_output_shape) {
   const Model model = fully_connected_float_3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_float_3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2699,8 +2563,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_large) {
 TEST_F(ValidationTest, fully_connected_float_large) {
   const Model model = fully_connected_float_large::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_float_large::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2715,8 +2578,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_float_large_dynamic_output_shape)
 TEST_F(ValidationTest, fully_connected_float_large_dynamic_output_shape) {
   const Model model = fully_connected_float_large::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_float_large::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2739,8 +2601,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_large_weights_as_inputs) {
 TEST_F(ValidationTest, fully_connected_float_large_weights_as_inputs) {
   const Model model = fully_connected_float_large_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_float_large_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2755,8 +2616,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_float_large_weights_as_inputs_dyn
 TEST_F(ValidationTest, fully_connected_float_large_weights_as_inputs_dynamic_output_shape) {
   const Model model = fully_connected_float_large_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_float_large_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2779,8 +2639,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_float_weights_as_inputs) {
 TEST_F(ValidationTest, fully_connected_float_weights_as_inputs) {
   const Model model = fully_connected_float_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_float_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2795,8 +2654,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_float_weights_as_inputs_dynamic_o
 TEST_F(ValidationTest, fully_connected_float_weights_as_inputs_dynamic_output_shape) {
   const Model model = fully_connected_float_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_float_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2819,8 +2677,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_quant8) {
 TEST_F(ValidationTest, fully_connected_quant8) {
   const Model model = fully_connected_quant8::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_quant8::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2835,8 +2692,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_quant8_dynamic_output_shape) {
 TEST_F(ValidationTest, fully_connected_quant8_dynamic_output_shape) {
   const Model model = fully_connected_quant8::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_quant8::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2859,8 +2715,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_quant8_2) {
 TEST_F(ValidationTest, fully_connected_quant8_2) {
   const Model model = fully_connected_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2875,8 +2730,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, fully_connected_quant8_2_dynamic_output_shape) {
   const Model model = fully_connected_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2899,8 +2753,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_quant8_large) {
 TEST_F(ValidationTest, fully_connected_quant8_large) {
   const Model model = fully_connected_quant8_large::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_quant8_large::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2915,8 +2768,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_quant8_large_dynamic_output_shape
 TEST_F(ValidationTest, fully_connected_quant8_large_dynamic_output_shape) {
   const Model model = fully_connected_quant8_large::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_quant8_large::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2939,8 +2791,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_quant8_large_weights_as_inputs) {
 TEST_F(ValidationTest, fully_connected_quant8_large_weights_as_inputs) {
   const Model model = fully_connected_quant8_large_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_quant8_large_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2955,8 +2806,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_quant8_large_weights_as_inputs_dy
 TEST_F(ValidationTest, fully_connected_quant8_large_weights_as_inputs_dynamic_output_shape) {
   const Model model = fully_connected_quant8_large_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_quant8_large_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2979,8 +2829,7 @@ TEST_F(NeuralnetworksHidlTest, fully_connected_quant8_weights_as_inputs) {
 TEST_F(ValidationTest, fully_connected_quant8_weights_as_inputs) {
   const Model model = fully_connected_quant8_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(fully_connected_quant8_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -2995,8 +2844,7 @@ TEST_F(DynamicOutputShapeTest, fully_connected_quant8_weights_as_inputs_dynamic_
 TEST_F(ValidationTest, fully_connected_quant8_weights_as_inputs_dynamic_output_shape) {
   const Model model = fully_connected_quant8_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(fully_connected_quant8_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3019,8 +2867,7 @@ TEST_F(NeuralnetworksHidlTest, hashtable_lookup_float) {
 TEST_F(ValidationTest, hashtable_lookup_float) {
   const Model model = hashtable_lookup_float::createTestModel();
   const std::vector<Request> requests = createRequests(hashtable_lookup_float::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3035,8 +2882,7 @@ TEST_F(DynamicOutputShapeTest, hashtable_lookup_float_dynamic_output_shape) {
 TEST_F(ValidationTest, hashtable_lookup_float_dynamic_output_shape) {
   const Model model = hashtable_lookup_float::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(hashtable_lookup_float::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3059,8 +2905,7 @@ TEST_F(NeuralnetworksHidlTest, hashtable_lookup_quant8) {
 TEST_F(ValidationTest, hashtable_lookup_quant8) {
   const Model model = hashtable_lookup_quant8::createTestModel();
   const std::vector<Request> requests = createRequests(hashtable_lookup_quant8::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3075,8 +2920,7 @@ TEST_F(DynamicOutputShapeTest, hashtable_lookup_quant8_dynamic_output_shape) {
 TEST_F(ValidationTest, hashtable_lookup_quant8_dynamic_output_shape) {
   const Model model = hashtable_lookup_quant8::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(hashtable_lookup_quant8::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3099,8 +2943,7 @@ TEST_F(NeuralnetworksHidlTest, l2_normalization) {
 TEST_F(ValidationTest, l2_normalization) {
   const Model model = l2_normalization::createTestModel();
   const std::vector<Request> requests = createRequests(l2_normalization::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3115,8 +2958,7 @@ TEST_F(DynamicOutputShapeTest, l2_normalization_dynamic_output_shape) {
 TEST_F(ValidationTest, l2_normalization_dynamic_output_shape) {
   const Model model = l2_normalization::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(l2_normalization::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3139,8 +2981,7 @@ TEST_F(NeuralnetworksHidlTest, l2_normalization_2) {
 TEST_F(ValidationTest, l2_normalization_2) {
   const Model model = l2_normalization_2::createTestModel();
   const std::vector<Request> requests = createRequests(l2_normalization_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3155,8 +2996,7 @@ TEST_F(DynamicOutputShapeTest, l2_normalization_2_dynamic_output_shape) {
 TEST_F(ValidationTest, l2_normalization_2_dynamic_output_shape) {
   const Model model = l2_normalization_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(l2_normalization_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3179,8 +3019,7 @@ TEST_F(NeuralnetworksHidlTest, l2_normalization_large) {
 TEST_F(ValidationTest, l2_normalization_large) {
   const Model model = l2_normalization_large::createTestModel();
   const std::vector<Request> requests = createRequests(l2_normalization_large::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3195,8 +3034,7 @@ TEST_F(DynamicOutputShapeTest, l2_normalization_large_dynamic_output_shape) {
 TEST_F(ValidationTest, l2_normalization_large_dynamic_output_shape) {
   const Model model = l2_normalization_large::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(l2_normalization_large::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3219,8 +3057,7 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_float) {
 TEST_F(ValidationTest, l2_pool_float) {
   const Model model = l2_pool_float::createTestModel();
   const std::vector<Request> requests = createRequests(l2_pool_float::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3235,8 +3072,7 @@ TEST_F(DynamicOutputShapeTest, l2_pool_float_dynamic_output_shape) {
 TEST_F(ValidationTest, l2_pool_float_dynamic_output_shape) {
   const Model model = l2_pool_float::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(l2_pool_float::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3259,8 +3095,7 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_float_2) {
 TEST_F(ValidationTest, l2_pool_float_2) {
   const Model model = l2_pool_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(l2_pool_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3275,8 +3110,7 @@ TEST_F(DynamicOutputShapeTest, l2_pool_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, l2_pool_float_2_dynamic_output_shape) {
   const Model model = l2_pool_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(l2_pool_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3299,8 +3133,7 @@ TEST_F(NeuralnetworksHidlTest, l2_pool_float_large) {
 TEST_F(ValidationTest, l2_pool_float_large) {
   const Model model = l2_pool_float_large::createTestModel();
   const std::vector<Request> requests = createRequests(l2_pool_float_large::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3315,8 +3148,7 @@ TEST_F(DynamicOutputShapeTest, l2_pool_float_large_dynamic_output_shape) {
 TEST_F(ValidationTest, l2_pool_float_large_dynamic_output_shape) {
   const Model model = l2_pool_float_large::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(l2_pool_float_large::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3339,8 +3171,7 @@ TEST_F(NeuralnetworksHidlTest, local_response_norm_float_1) {
 TEST_F(ValidationTest, local_response_norm_float_1) {
   const Model model = local_response_norm_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(local_response_norm_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3355,8 +3186,7 @@ TEST_F(DynamicOutputShapeTest, local_response_norm_float_1_dynamic_output_shape)
 TEST_F(ValidationTest, local_response_norm_float_1_dynamic_output_shape) {
   const Model model = local_response_norm_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(local_response_norm_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3379,8 +3209,7 @@ TEST_F(NeuralnetworksHidlTest, local_response_norm_float_2) {
 TEST_F(ValidationTest, local_response_norm_float_2) {
   const Model model = local_response_norm_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(local_response_norm_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3395,8 +3224,7 @@ TEST_F(DynamicOutputShapeTest, local_response_norm_float_2_dynamic_output_shape)
 TEST_F(ValidationTest, local_response_norm_float_2_dynamic_output_shape) {
   const Model model = local_response_norm_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(local_response_norm_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3419,8 +3247,7 @@ TEST_F(NeuralnetworksHidlTest, local_response_norm_float_3) {
 TEST_F(ValidationTest, local_response_norm_float_3) {
   const Model model = local_response_norm_float_3::createTestModel();
   const std::vector<Request> requests = createRequests(local_response_norm_float_3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3435,8 +3262,7 @@ TEST_F(DynamicOutputShapeTest, local_response_norm_float_3_dynamic_output_shape)
 TEST_F(ValidationTest, local_response_norm_float_3_dynamic_output_shape) {
   const Model model = local_response_norm_float_3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(local_response_norm_float_3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3459,8 +3285,7 @@ TEST_F(NeuralnetworksHidlTest, local_response_norm_float_4) {
 TEST_F(ValidationTest, local_response_norm_float_4) {
   const Model model = local_response_norm_float_4::createTestModel();
   const std::vector<Request> requests = createRequests(local_response_norm_float_4::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3475,8 +3300,7 @@ TEST_F(DynamicOutputShapeTest, local_response_norm_float_4_dynamic_output_shape)
 TEST_F(ValidationTest, local_response_norm_float_4_dynamic_output_shape) {
   const Model model = local_response_norm_float_4::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(local_response_norm_float_4::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3499,8 +3323,7 @@ TEST_F(NeuralnetworksHidlTest, logistic_float_1) {
 TEST_F(ValidationTest, logistic_float_1) {
   const Model model = logistic_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(logistic_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3515,8 +3338,7 @@ TEST_F(DynamicOutputShapeTest, logistic_float_1_dynamic_output_shape) {
 TEST_F(ValidationTest, logistic_float_1_dynamic_output_shape) {
   const Model model = logistic_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(logistic_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3539,8 +3361,7 @@ TEST_F(NeuralnetworksHidlTest, logistic_float_2) {
 TEST_F(ValidationTest, logistic_float_2) {
   const Model model = logistic_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(logistic_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3555,8 +3376,7 @@ TEST_F(DynamicOutputShapeTest, logistic_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, logistic_float_2_dynamic_output_shape) {
   const Model model = logistic_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(logistic_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3579,8 +3399,7 @@ TEST_F(NeuralnetworksHidlTest, logistic_quant8_1) {
 TEST_F(ValidationTest, logistic_quant8_1) {
   const Model model = logistic_quant8_1::createTestModel();
   const std::vector<Request> requests = createRequests(logistic_quant8_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3595,8 +3414,7 @@ TEST_F(DynamicOutputShapeTest, logistic_quant8_1_dynamic_output_shape) {
 TEST_F(ValidationTest, logistic_quant8_1_dynamic_output_shape) {
   const Model model = logistic_quant8_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(logistic_quant8_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3619,8 +3437,7 @@ TEST_F(NeuralnetworksHidlTest, logistic_quant8_2) {
 TEST_F(ValidationTest, logistic_quant8_2) {
   const Model model = logistic_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(logistic_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3635,8 +3452,7 @@ TEST_F(DynamicOutputShapeTest, logistic_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, logistic_quant8_2_dynamic_output_shape) {
   const Model model = logistic_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(logistic_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3659,8 +3475,7 @@ TEST_F(NeuralnetworksHidlTest, lsh_projection) {
 TEST_F(ValidationTest, lsh_projection) {
   const Model model = lsh_projection::createTestModel();
   const std::vector<Request> requests = createRequests(lsh_projection::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3675,8 +3490,7 @@ TEST_F(DynamicOutputShapeTest, lsh_projection_dynamic_output_shape) {
 TEST_F(ValidationTest, lsh_projection_dynamic_output_shape) {
   const Model model = lsh_projection::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lsh_projection::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3699,8 +3513,7 @@ TEST_F(NeuralnetworksHidlTest, lsh_projection_2) {
 TEST_F(ValidationTest, lsh_projection_2) {
   const Model model = lsh_projection_2::createTestModel();
   const std::vector<Request> requests = createRequests(lsh_projection_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3715,8 +3528,7 @@ TEST_F(DynamicOutputShapeTest, lsh_projection_2_dynamic_output_shape) {
 TEST_F(ValidationTest, lsh_projection_2_dynamic_output_shape) {
   const Model model = lsh_projection_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lsh_projection_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3739,8 +3551,7 @@ TEST_F(NeuralnetworksHidlTest, lsh_projection_weights_as_inputs) {
 TEST_F(ValidationTest, lsh_projection_weights_as_inputs) {
   const Model model = lsh_projection_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(lsh_projection_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3755,8 +3566,7 @@ TEST_F(DynamicOutputShapeTest, lsh_projection_weights_as_inputs_dynamic_output_s
 TEST_F(ValidationTest, lsh_projection_weights_as_inputs_dynamic_output_shape) {
   const Model model = lsh_projection_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lsh_projection_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3779,8 +3589,7 @@ TEST_F(NeuralnetworksHidlTest, lstm) {
 TEST_F(ValidationTest, lstm) {
   const Model model = lstm::createTestModel();
   const std::vector<Request> requests = createRequests(lstm::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3795,8 +3604,7 @@ TEST_F(DynamicOutputShapeTest, lstm_dynamic_output_shape) {
 TEST_F(ValidationTest, lstm_dynamic_output_shape) {
   const Model model = lstm::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lstm::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3819,8 +3627,7 @@ TEST_F(NeuralnetworksHidlTest, lstm2) {
 TEST_F(ValidationTest, lstm2) {
   const Model model = lstm2::createTestModel();
   const std::vector<Request> requests = createRequests(lstm2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3835,8 +3642,7 @@ TEST_F(DynamicOutputShapeTest, lstm2_dynamic_output_shape) {
 TEST_F(ValidationTest, lstm2_dynamic_output_shape) {
   const Model model = lstm2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lstm2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3859,8 +3665,7 @@ TEST_F(NeuralnetworksHidlTest, lstm2_state) {
 TEST_F(ValidationTest, lstm2_state) {
   const Model model = lstm2_state::createTestModel();
   const std::vector<Request> requests = createRequests(lstm2_state::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3875,8 +3680,7 @@ TEST_F(DynamicOutputShapeTest, lstm2_state_dynamic_output_shape) {
 TEST_F(ValidationTest, lstm2_state_dynamic_output_shape) {
   const Model model = lstm2_state::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lstm2_state::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3899,8 +3703,7 @@ TEST_F(NeuralnetworksHidlTest, lstm2_state2) {
 TEST_F(ValidationTest, lstm2_state2) {
   const Model model = lstm2_state2::createTestModel();
   const std::vector<Request> requests = createRequests(lstm2_state2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3915,8 +3718,7 @@ TEST_F(DynamicOutputShapeTest, lstm2_state2_dynamic_output_shape) {
 TEST_F(ValidationTest, lstm2_state2_dynamic_output_shape) {
   const Model model = lstm2_state2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lstm2_state2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3939,8 +3741,7 @@ TEST_F(NeuralnetworksHidlTest, lstm3) {
 TEST_F(ValidationTest, lstm3) {
   const Model model = lstm3::createTestModel();
   const std::vector<Request> requests = createRequests(lstm3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3955,8 +3756,7 @@ TEST_F(DynamicOutputShapeTest, lstm3_dynamic_output_shape) {
 TEST_F(ValidationTest, lstm3_dynamic_output_shape) {
   const Model model = lstm3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lstm3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3979,8 +3779,7 @@ TEST_F(NeuralnetworksHidlTest, lstm3_state) {
 TEST_F(ValidationTest, lstm3_state) {
   const Model model = lstm3_state::createTestModel();
   const std::vector<Request> requests = createRequests(lstm3_state::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -3995,8 +3794,7 @@ TEST_F(DynamicOutputShapeTest, lstm3_state_dynamic_output_shape) {
 TEST_F(ValidationTest, lstm3_state_dynamic_output_shape) {
   const Model model = lstm3_state::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lstm3_state::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4019,8 +3817,7 @@ TEST_F(NeuralnetworksHidlTest, lstm3_state2) {
 TEST_F(ValidationTest, lstm3_state2) {
   const Model model = lstm3_state2::createTestModel();
   const std::vector<Request> requests = createRequests(lstm3_state2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4035,8 +3832,7 @@ TEST_F(DynamicOutputShapeTest, lstm3_state2_dynamic_output_shape) {
 TEST_F(ValidationTest, lstm3_state2_dynamic_output_shape) {
   const Model model = lstm3_state2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lstm3_state2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4059,8 +3855,7 @@ TEST_F(NeuralnetworksHidlTest, lstm3_state3) {
 TEST_F(ValidationTest, lstm3_state3) {
   const Model model = lstm3_state3::createTestModel();
   const std::vector<Request> requests = createRequests(lstm3_state3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4075,8 +3870,7 @@ TEST_F(DynamicOutputShapeTest, lstm3_state3_dynamic_output_shape) {
 TEST_F(ValidationTest, lstm3_state3_dynamic_output_shape) {
   const Model model = lstm3_state3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lstm3_state3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4099,8 +3893,7 @@ TEST_F(NeuralnetworksHidlTest, lstm_state) {
 TEST_F(ValidationTest, lstm_state) {
   const Model model = lstm_state::createTestModel();
   const std::vector<Request> requests = createRequests(lstm_state::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4115,8 +3908,7 @@ TEST_F(DynamicOutputShapeTest, lstm_state_dynamic_output_shape) {
 TEST_F(ValidationTest, lstm_state_dynamic_output_shape) {
   const Model model = lstm_state::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lstm_state::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4139,8 +3931,7 @@ TEST_F(NeuralnetworksHidlTest, lstm_state2) {
 TEST_F(ValidationTest, lstm_state2) {
   const Model model = lstm_state2::createTestModel();
   const std::vector<Request> requests = createRequests(lstm_state2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4155,8 +3946,7 @@ TEST_F(DynamicOutputShapeTest, lstm_state2_dynamic_output_shape) {
 TEST_F(ValidationTest, lstm_state2_dynamic_output_shape) {
   const Model model = lstm_state2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(lstm_state2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4179,8 +3969,7 @@ TEST_F(NeuralnetworksHidlTest, max_pool_float_1) {
 TEST_F(ValidationTest, max_pool_float_1) {
   const Model model = max_pool_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(max_pool_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4195,8 +3984,7 @@ TEST_F(DynamicOutputShapeTest, max_pool_float_1_dynamic_output_shape) {
 TEST_F(ValidationTest, max_pool_float_1_dynamic_output_shape) {
   const Model model = max_pool_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(max_pool_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4219,8 +4007,7 @@ TEST_F(NeuralnetworksHidlTest, max_pool_float_2) {
 TEST_F(ValidationTest, max_pool_float_2) {
   const Model model = max_pool_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(max_pool_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4235,8 +4022,7 @@ TEST_F(DynamicOutputShapeTest, max_pool_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, max_pool_float_2_dynamic_output_shape) {
   const Model model = max_pool_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(max_pool_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4259,8 +4045,7 @@ TEST_F(NeuralnetworksHidlTest, max_pool_float_3) {
 TEST_F(ValidationTest, max_pool_float_3) {
   const Model model = max_pool_float_3::createTestModel();
   const std::vector<Request> requests = createRequests(max_pool_float_3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4275,8 +4060,7 @@ TEST_F(DynamicOutputShapeTest, max_pool_float_3_dynamic_output_shape) {
 TEST_F(ValidationTest, max_pool_float_3_dynamic_output_shape) {
   const Model model = max_pool_float_3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(max_pool_float_3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4299,8 +4083,7 @@ TEST_F(NeuralnetworksHidlTest, max_pool_float_4) {
 TEST_F(ValidationTest, max_pool_float_4) {
   const Model model = max_pool_float_4::createTestModel();
   const std::vector<Request> requests = createRequests(max_pool_float_4::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4315,8 +4098,7 @@ TEST_F(DynamicOutputShapeTest, max_pool_float_4_dynamic_output_shape) {
 TEST_F(ValidationTest, max_pool_float_4_dynamic_output_shape) {
   const Model model = max_pool_float_4::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(max_pool_float_4::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4339,8 +4121,7 @@ TEST_F(NeuralnetworksHidlTest, max_pool_quant8_1) {
 TEST_F(ValidationTest, max_pool_quant8_1) {
   const Model model = max_pool_quant8_1::createTestModel();
   const std::vector<Request> requests = createRequests(max_pool_quant8_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4355,8 +4136,7 @@ TEST_F(DynamicOutputShapeTest, max_pool_quant8_1_dynamic_output_shape) {
 TEST_F(ValidationTest, max_pool_quant8_1_dynamic_output_shape) {
   const Model model = max_pool_quant8_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(max_pool_quant8_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4379,8 +4159,7 @@ TEST_F(NeuralnetworksHidlTest, max_pool_quant8_2) {
 TEST_F(ValidationTest, max_pool_quant8_2) {
   const Model model = max_pool_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(max_pool_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4395,8 +4174,7 @@ TEST_F(DynamicOutputShapeTest, max_pool_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, max_pool_quant8_2_dynamic_output_shape) {
   const Model model = max_pool_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(max_pool_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4419,8 +4197,7 @@ TEST_F(NeuralnetworksHidlTest, max_pool_quant8_3) {
 TEST_F(ValidationTest, max_pool_quant8_3) {
   const Model model = max_pool_quant8_3::createTestModel();
   const std::vector<Request> requests = createRequests(max_pool_quant8_3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4435,8 +4212,7 @@ TEST_F(DynamicOutputShapeTest, max_pool_quant8_3_dynamic_output_shape) {
 TEST_F(ValidationTest, max_pool_quant8_3_dynamic_output_shape) {
   const Model model = max_pool_quant8_3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(max_pool_quant8_3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4459,8 +4235,7 @@ TEST_F(NeuralnetworksHidlTest, max_pool_quant8_4) {
 TEST_F(ValidationTest, max_pool_quant8_4) {
   const Model model = max_pool_quant8_4::createTestModel();
   const std::vector<Request> requests = createRequests(max_pool_quant8_4::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4475,8 +4250,7 @@ TEST_F(DynamicOutputShapeTest, max_pool_quant8_4_dynamic_output_shape) {
 TEST_F(ValidationTest, max_pool_quant8_4_dynamic_output_shape) {
   const Model model = max_pool_quant8_4::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(max_pool_quant8_4::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4499,8 +4273,7 @@ TEST_F(NeuralnetworksHidlTest, mobilenet_224_gender_basic_fixed) {
 TEST_F(ValidationTest, mobilenet_224_gender_basic_fixed) {
   const Model model = mobilenet_224_gender_basic_fixed::createTestModel();
   const std::vector<Request> requests = createRequests(mobilenet_224_gender_basic_fixed::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4515,8 +4288,7 @@ TEST_F(DynamicOutputShapeTest, mobilenet_224_gender_basic_fixed_dynamic_output_s
 TEST_F(ValidationTest, mobilenet_224_gender_basic_fixed_dynamic_output_shape) {
   const Model model = mobilenet_224_gender_basic_fixed::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(mobilenet_224_gender_basic_fixed::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4539,8 +4311,7 @@ TEST_F(NeuralnetworksHidlTest, mobilenet_quantized) {
 TEST_F(ValidationTest, mobilenet_quantized) {
   const Model model = mobilenet_quantized::createTestModel();
   const std::vector<Request> requests = createRequests(mobilenet_quantized::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4555,8 +4326,7 @@ TEST_F(DynamicOutputShapeTest, mobilenet_quantized_dynamic_output_shape) {
 TEST_F(ValidationTest, mobilenet_quantized_dynamic_output_shape) {
   const Model model = mobilenet_quantized::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(mobilenet_quantized::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4579,8 +4349,7 @@ TEST_F(NeuralnetworksHidlTest, mul) {
 TEST_F(ValidationTest, mul) {
   const Model model = mul::createTestModel();
   const std::vector<Request> requests = createRequests(mul::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4595,8 +4364,7 @@ TEST_F(DynamicOutputShapeTest, mul_dynamic_output_shape) {
 TEST_F(ValidationTest, mul_dynamic_output_shape) {
   const Model model = mul::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(mul::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4619,8 +4387,7 @@ TEST_F(NeuralnetworksHidlTest, mul_broadcast_quant8) {
 TEST_F(ValidationTest, mul_broadcast_quant8) {
   const Model model = mul_broadcast_quant8::createTestModel();
   const std::vector<Request> requests = createRequests(mul_broadcast_quant8::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4635,8 +4402,7 @@ TEST_F(DynamicOutputShapeTest, mul_broadcast_quant8_dynamic_output_shape) {
 TEST_F(ValidationTest, mul_broadcast_quant8_dynamic_output_shape) {
   const Model model = mul_broadcast_quant8::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(mul_broadcast_quant8::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4659,8 +4425,7 @@ TEST_F(NeuralnetworksHidlTest, mul_quant8) {
 TEST_F(ValidationTest, mul_quant8) {
   const Model model = mul_quant8::createTestModel();
   const std::vector<Request> requests = createRequests(mul_quant8::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4675,8 +4440,7 @@ TEST_F(DynamicOutputShapeTest, mul_quant8_dynamic_output_shape) {
 TEST_F(ValidationTest, mul_quant8_dynamic_output_shape) {
   const Model model = mul_quant8::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(mul_quant8::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4699,8 +4463,7 @@ TEST_F(NeuralnetworksHidlTest, mul_relu) {
 TEST_F(ValidationTest, mul_relu) {
   const Model model = mul_relu::createTestModel();
   const std::vector<Request> requests = createRequests(mul_relu::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4715,8 +4478,7 @@ TEST_F(DynamicOutputShapeTest, mul_relu_dynamic_output_shape) {
 TEST_F(ValidationTest, mul_relu_dynamic_output_shape) {
   const Model model = mul_relu::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(mul_relu::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4739,8 +4501,7 @@ TEST_F(NeuralnetworksHidlTest, relu1_float_1) {
 TEST_F(ValidationTest, relu1_float_1) {
   const Model model = relu1_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(relu1_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4755,8 +4516,7 @@ TEST_F(DynamicOutputShapeTest, relu1_float_1_dynamic_output_shape) {
 TEST_F(ValidationTest, relu1_float_1_dynamic_output_shape) {
   const Model model = relu1_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu1_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4779,8 +4539,7 @@ TEST_F(NeuralnetworksHidlTest, relu1_float_2) {
 TEST_F(ValidationTest, relu1_float_2) {
   const Model model = relu1_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(relu1_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4795,8 +4554,7 @@ TEST_F(DynamicOutputShapeTest, relu1_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, relu1_float_2_dynamic_output_shape) {
   const Model model = relu1_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu1_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4819,8 +4577,7 @@ TEST_F(NeuralnetworksHidlTest, relu1_quant8_1) {
 TEST_F(ValidationTest, relu1_quant8_1) {
   const Model model = relu1_quant8_1::createTestModel();
   const std::vector<Request> requests = createRequests(relu1_quant8_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4835,8 +4592,7 @@ TEST_F(DynamicOutputShapeTest, relu1_quant8_1_dynamic_output_shape) {
 TEST_F(ValidationTest, relu1_quant8_1_dynamic_output_shape) {
   const Model model = relu1_quant8_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu1_quant8_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4851,8 +4607,7 @@ TEST_F(NeuralnetworksHidlTest, relu1_quant8_1_2) {
 TEST_F(ValidationTest, relu1_quant8_1_2) {
   const Model model = relu1_quant8_1::createTestModel_2();
   const std::vector<Request> requests = createRequests(relu1_quant8_1::get_examples_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4867,8 +4622,7 @@ TEST_F(DynamicOutputShapeTest, relu1_quant8_1_dynamic_output_shape_2) {
 TEST_F(ValidationTest, relu1_quant8_1_dynamic_output_shape_2) {
   const Model model = relu1_quant8_1::createTestModel_dynamic_output_shape_2();
   const std::vector<Request> requests = createRequests(relu1_quant8_1::get_examples_dynamic_output_shape_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4891,8 +4645,7 @@ TEST_F(NeuralnetworksHidlTest, relu1_quant8_2) {
 TEST_F(ValidationTest, relu1_quant8_2) {
   const Model model = relu1_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(relu1_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4907,8 +4660,7 @@ TEST_F(DynamicOutputShapeTest, relu1_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, relu1_quant8_2_dynamic_output_shape) {
   const Model model = relu1_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu1_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4931,8 +4683,7 @@ TEST_F(NeuralnetworksHidlTest, relu6_float_1) {
 TEST_F(ValidationTest, relu6_float_1) {
   const Model model = relu6_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(relu6_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4947,8 +4698,7 @@ TEST_F(DynamicOutputShapeTest, relu6_float_1_dynamic_output_shape) {
 TEST_F(ValidationTest, relu6_float_1_dynamic_output_shape) {
   const Model model = relu6_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu6_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4971,8 +4721,7 @@ TEST_F(NeuralnetworksHidlTest, relu6_float_2) {
 TEST_F(ValidationTest, relu6_float_2) {
   const Model model = relu6_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(relu6_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -4987,8 +4736,7 @@ TEST_F(DynamicOutputShapeTest, relu6_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, relu6_float_2_dynamic_output_shape) {
   const Model model = relu6_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu6_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5011,8 +4759,7 @@ TEST_F(NeuralnetworksHidlTest, relu6_quant8_1) {
 TEST_F(ValidationTest, relu6_quant8_1) {
   const Model model = relu6_quant8_1::createTestModel();
   const std::vector<Request> requests = createRequests(relu6_quant8_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5027,8 +4774,7 @@ TEST_F(DynamicOutputShapeTest, relu6_quant8_1_dynamic_output_shape) {
 TEST_F(ValidationTest, relu6_quant8_1_dynamic_output_shape) {
   const Model model = relu6_quant8_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu6_quant8_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5043,8 +4789,7 @@ TEST_F(NeuralnetworksHidlTest, relu6_quant8_1_2) {
 TEST_F(ValidationTest, relu6_quant8_1_2) {
   const Model model = relu6_quant8_1::createTestModel_2();
   const std::vector<Request> requests = createRequests(relu6_quant8_1::get_examples_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5059,8 +4804,7 @@ TEST_F(DynamicOutputShapeTest, relu6_quant8_1_dynamic_output_shape_2) {
 TEST_F(ValidationTest, relu6_quant8_1_dynamic_output_shape_2) {
   const Model model = relu6_quant8_1::createTestModel_dynamic_output_shape_2();
   const std::vector<Request> requests = createRequests(relu6_quant8_1::get_examples_dynamic_output_shape_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5083,8 +4827,7 @@ TEST_F(NeuralnetworksHidlTest, relu6_quant8_2) {
 TEST_F(ValidationTest, relu6_quant8_2) {
   const Model model = relu6_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(relu6_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5099,8 +4842,7 @@ TEST_F(DynamicOutputShapeTest, relu6_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, relu6_quant8_2_dynamic_output_shape) {
   const Model model = relu6_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu6_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5123,8 +4865,7 @@ TEST_F(NeuralnetworksHidlTest, relu_float_1) {
 TEST_F(ValidationTest, relu_float_1) {
   const Model model = relu_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(relu_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5139,8 +4880,7 @@ TEST_F(DynamicOutputShapeTest, relu_float_1_dynamic_output_shape) {
 TEST_F(ValidationTest, relu_float_1_dynamic_output_shape) {
   const Model model = relu_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5163,8 +4903,7 @@ TEST_F(NeuralnetworksHidlTest, relu_float_2) {
 TEST_F(ValidationTest, relu_float_2) {
   const Model model = relu_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(relu_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5179,8 +4918,7 @@ TEST_F(DynamicOutputShapeTest, relu_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, relu_float_2_dynamic_output_shape) {
   const Model model = relu_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5203,8 +4941,7 @@ TEST_F(NeuralnetworksHidlTest, relu_quant8_1) {
 TEST_F(ValidationTest, relu_quant8_1) {
   const Model model = relu_quant8_1::createTestModel();
   const std::vector<Request> requests = createRequests(relu_quant8_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5219,8 +4956,7 @@ TEST_F(DynamicOutputShapeTest, relu_quant8_1_dynamic_output_shape) {
 TEST_F(ValidationTest, relu_quant8_1_dynamic_output_shape) {
   const Model model = relu_quant8_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu_quant8_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5235,8 +4971,7 @@ TEST_F(NeuralnetworksHidlTest, relu_quant8_1_2) {
 TEST_F(ValidationTest, relu_quant8_1_2) {
   const Model model = relu_quant8_1::createTestModel_2();
   const std::vector<Request> requests = createRequests(relu_quant8_1::get_examples_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5251,8 +4986,7 @@ TEST_F(DynamicOutputShapeTest, relu_quant8_1_dynamic_output_shape_2) {
 TEST_F(ValidationTest, relu_quant8_1_dynamic_output_shape_2) {
   const Model model = relu_quant8_1::createTestModel_dynamic_output_shape_2();
   const std::vector<Request> requests = createRequests(relu_quant8_1::get_examples_dynamic_output_shape_2());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5275,8 +5009,7 @@ TEST_F(NeuralnetworksHidlTest, relu_quant8_2) {
 TEST_F(ValidationTest, relu_quant8_2) {
   const Model model = relu_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(relu_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5291,8 +5024,7 @@ TEST_F(DynamicOutputShapeTest, relu_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, relu_quant8_2_dynamic_output_shape) {
   const Model model = relu_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(relu_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5315,8 +5047,7 @@ TEST_F(NeuralnetworksHidlTest, reshape) {
 TEST_F(ValidationTest, reshape) {
   const Model model = reshape::createTestModel();
   const std::vector<Request> requests = createRequests(reshape::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5331,8 +5062,7 @@ TEST_F(DynamicOutputShapeTest, reshape_dynamic_output_shape) {
 TEST_F(ValidationTest, reshape_dynamic_output_shape) {
   const Model model = reshape::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(reshape::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5355,8 +5085,7 @@ TEST_F(NeuralnetworksHidlTest, reshape_quant8) {
 TEST_F(ValidationTest, reshape_quant8) {
   const Model model = reshape_quant8::createTestModel();
   const std::vector<Request> requests = createRequests(reshape_quant8::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5371,8 +5100,7 @@ TEST_F(DynamicOutputShapeTest, reshape_quant8_dynamic_output_shape) {
 TEST_F(ValidationTest, reshape_quant8_dynamic_output_shape) {
   const Model model = reshape_quant8::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(reshape_quant8::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5395,8 +5123,7 @@ TEST_F(NeuralnetworksHidlTest, reshape_quant8_weights_as_inputs) {
 TEST_F(ValidationTest, reshape_quant8_weights_as_inputs) {
   const Model model = reshape_quant8_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(reshape_quant8_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5411,8 +5138,7 @@ TEST_F(DynamicOutputShapeTest, reshape_quant8_weights_as_inputs_dynamic_output_s
 TEST_F(ValidationTest, reshape_quant8_weights_as_inputs_dynamic_output_shape) {
   const Model model = reshape_quant8_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(reshape_quant8_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5435,8 +5161,7 @@ TEST_F(NeuralnetworksHidlTest, reshape_weights_as_inputs) {
 TEST_F(ValidationTest, reshape_weights_as_inputs) {
   const Model model = reshape_weights_as_inputs::createTestModel();
   const std::vector<Request> requests = createRequests(reshape_weights_as_inputs::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5451,8 +5176,7 @@ TEST_F(DynamicOutputShapeTest, reshape_weights_as_inputs_dynamic_output_shape) {
 TEST_F(ValidationTest, reshape_weights_as_inputs_dynamic_output_shape) {
   const Model model = reshape_weights_as_inputs::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(reshape_weights_as_inputs::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5475,8 +5199,7 @@ TEST_F(NeuralnetworksHidlTest, resize_bilinear) {
 TEST_F(ValidationTest, resize_bilinear) {
   const Model model = resize_bilinear::createTestModel();
   const std::vector<Request> requests = createRequests(resize_bilinear::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5491,8 +5214,7 @@ TEST_F(DynamicOutputShapeTest, resize_bilinear_dynamic_output_shape) {
 TEST_F(ValidationTest, resize_bilinear_dynamic_output_shape) {
   const Model model = resize_bilinear::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(resize_bilinear::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5515,8 +5237,7 @@ TEST_F(NeuralnetworksHidlTest, resize_bilinear_2) {
 TEST_F(ValidationTest, resize_bilinear_2) {
   const Model model = resize_bilinear_2::createTestModel();
   const std::vector<Request> requests = createRequests(resize_bilinear_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5531,8 +5252,7 @@ TEST_F(DynamicOutputShapeTest, resize_bilinear_2_dynamic_output_shape) {
 TEST_F(ValidationTest, resize_bilinear_2_dynamic_output_shape) {
   const Model model = resize_bilinear_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(resize_bilinear_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5555,8 +5275,7 @@ TEST_F(NeuralnetworksHidlTest, rnn) {
 TEST_F(ValidationTest, rnn) {
   const Model model = rnn::createTestModel();
   const std::vector<Request> requests = createRequests(rnn::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5571,8 +5290,7 @@ TEST_F(DynamicOutputShapeTest, rnn_dynamic_output_shape) {
 TEST_F(ValidationTest, rnn_dynamic_output_shape) {
   const Model model = rnn::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(rnn::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5595,8 +5313,7 @@ TEST_F(NeuralnetworksHidlTest, rnn_state) {
 TEST_F(ValidationTest, rnn_state) {
   const Model model = rnn_state::createTestModel();
   const std::vector<Request> requests = createRequests(rnn_state::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5611,8 +5328,7 @@ TEST_F(DynamicOutputShapeTest, rnn_state_dynamic_output_shape) {
 TEST_F(ValidationTest, rnn_state_dynamic_output_shape) {
   const Model model = rnn_state::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(rnn_state::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5635,8 +5351,7 @@ TEST_F(NeuralnetworksHidlTest, softmax_float_1) {
 TEST_F(ValidationTest, softmax_float_1) {
   const Model model = softmax_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(softmax_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5651,8 +5366,7 @@ TEST_F(DynamicOutputShapeTest, softmax_float_1_dynamic_output_shape) {
 TEST_F(ValidationTest, softmax_float_1_dynamic_output_shape) {
   const Model model = softmax_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(softmax_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5675,8 +5389,7 @@ TEST_F(NeuralnetworksHidlTest, softmax_float_2) {
 TEST_F(ValidationTest, softmax_float_2) {
   const Model model = softmax_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(softmax_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5691,8 +5404,7 @@ TEST_F(DynamicOutputShapeTest, softmax_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, softmax_float_2_dynamic_output_shape) {
   const Model model = softmax_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(softmax_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5715,8 +5427,7 @@ TEST_F(NeuralnetworksHidlTest, softmax_quant8_1) {
 TEST_F(ValidationTest, softmax_quant8_1) {
   const Model model = softmax_quant8_1::createTestModel();
   const std::vector<Request> requests = createRequests(softmax_quant8_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5731,8 +5442,7 @@ TEST_F(DynamicOutputShapeTest, softmax_quant8_1_dynamic_output_shape) {
 TEST_F(ValidationTest, softmax_quant8_1_dynamic_output_shape) {
   const Model model = softmax_quant8_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(softmax_quant8_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5755,8 +5465,7 @@ TEST_F(NeuralnetworksHidlTest, softmax_quant8_2) {
 TEST_F(ValidationTest, softmax_quant8_2) {
   const Model model = softmax_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(softmax_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5771,8 +5480,7 @@ TEST_F(DynamicOutputShapeTest, softmax_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, softmax_quant8_2_dynamic_output_shape) {
   const Model model = softmax_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(softmax_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5795,8 +5503,7 @@ TEST_F(NeuralnetworksHidlTest, space_to_depth_float_1) {
 TEST_F(ValidationTest, space_to_depth_float_1) {
   const Model model = space_to_depth_float_1::createTestModel();
   const std::vector<Request> requests = createRequests(space_to_depth_float_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5811,8 +5518,7 @@ TEST_F(DynamicOutputShapeTest, space_to_depth_float_1_dynamic_output_shape) {
 TEST_F(ValidationTest, space_to_depth_float_1_dynamic_output_shape) {
   const Model model = space_to_depth_float_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(space_to_depth_float_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5835,8 +5541,7 @@ TEST_F(NeuralnetworksHidlTest, space_to_depth_float_2) {
 TEST_F(ValidationTest, space_to_depth_float_2) {
   const Model model = space_to_depth_float_2::createTestModel();
   const std::vector<Request> requests = createRequests(space_to_depth_float_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5851,8 +5556,7 @@ TEST_F(DynamicOutputShapeTest, space_to_depth_float_2_dynamic_output_shape) {
 TEST_F(ValidationTest, space_to_depth_float_2_dynamic_output_shape) {
   const Model model = space_to_depth_float_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(space_to_depth_float_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5875,8 +5579,7 @@ TEST_F(NeuralnetworksHidlTest, space_to_depth_float_3) {
 TEST_F(ValidationTest, space_to_depth_float_3) {
   const Model model = space_to_depth_float_3::createTestModel();
   const std::vector<Request> requests = createRequests(space_to_depth_float_3::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5891,8 +5594,7 @@ TEST_F(DynamicOutputShapeTest, space_to_depth_float_3_dynamic_output_shape) {
 TEST_F(ValidationTest, space_to_depth_float_3_dynamic_output_shape) {
   const Model model = space_to_depth_float_3::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(space_to_depth_float_3::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5915,8 +5617,7 @@ TEST_F(NeuralnetworksHidlTest, space_to_depth_quant8_1) {
 TEST_F(ValidationTest, space_to_depth_quant8_1) {
   const Model model = space_to_depth_quant8_1::createTestModel();
   const std::vector<Request> requests = createRequests(space_to_depth_quant8_1::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5931,8 +5632,7 @@ TEST_F(DynamicOutputShapeTest, space_to_depth_quant8_1_dynamic_output_shape) {
 TEST_F(ValidationTest, space_to_depth_quant8_1_dynamic_output_shape) {
   const Model model = space_to_depth_quant8_1::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(space_to_depth_quant8_1::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5955,8 +5655,7 @@ TEST_F(NeuralnetworksHidlTest, space_to_depth_quant8_2) {
 TEST_F(ValidationTest, space_to_depth_quant8_2) {
   const Model model = space_to_depth_quant8_2::createTestModel();
   const std::vector<Request> requests = createRequests(space_to_depth_quant8_2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5971,8 +5670,7 @@ TEST_F(DynamicOutputShapeTest, space_to_depth_quant8_2_dynamic_output_shape) {
 TEST_F(ValidationTest, space_to_depth_quant8_2_dynamic_output_shape) {
   const Model model = space_to_depth_quant8_2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(space_to_depth_quant8_2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -5995,8 +5693,7 @@ TEST_F(NeuralnetworksHidlTest, svdf) {
 TEST_F(ValidationTest, svdf) {
   const Model model = svdf::createTestModel();
   const std::vector<Request> requests = createRequests(svdf::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -6011,8 +5708,7 @@ TEST_F(DynamicOutputShapeTest, svdf_dynamic_output_shape) {
 TEST_F(ValidationTest, svdf_dynamic_output_shape) {
   const Model model = svdf::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(svdf::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -6035,8 +5731,7 @@ TEST_F(NeuralnetworksHidlTest, svdf2) {
 TEST_F(ValidationTest, svdf2) {
   const Model model = svdf2::createTestModel();
   const std::vector<Request> requests = createRequests(svdf2::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -6051,8 +5746,7 @@ TEST_F(DynamicOutputShapeTest, svdf2_dynamic_output_shape) {
 TEST_F(ValidationTest, svdf2_dynamic_output_shape) {
   const Model model = svdf2::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(svdf2::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -6075,8 +5769,7 @@ TEST_F(NeuralnetworksHidlTest, svdf_bias_present) {
 TEST_F(ValidationTest, svdf_bias_present) {
   const Model model = svdf_bias_present::createTestModel();
   const std::vector<Request> requests = createRequests(svdf_bias_present::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -6091,8 +5784,7 @@ TEST_F(DynamicOutputShapeTest, svdf_bias_present_dynamic_output_shape) {
 TEST_F(ValidationTest, svdf_bias_present_dynamic_output_shape) {
   const Model model = svdf_bias_present::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(svdf_bias_present::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -6115,8 +5807,7 @@ TEST_F(NeuralnetworksHidlTest, svdf_state) {
 TEST_F(ValidationTest, svdf_state) {
   const Model model = svdf_state::createTestModel();
   const std::vector<Request> requests = createRequests(svdf_state::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -6131,8 +5822,7 @@ TEST_F(DynamicOutputShapeTest, svdf_state_dynamic_output_shape) {
 TEST_F(ValidationTest, svdf_state_dynamic_output_shape) {
   const Model model = svdf_state::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(svdf_state::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -6155,8 +5845,7 @@ TEST_F(NeuralnetworksHidlTest, tanh) {
 TEST_F(ValidationTest, tanh) {
   const Model model = tanh::createTestModel();
   const std::vector<Request> requests = createRequests(tanh::get_examples());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
@@ -6171,8 +5860,7 @@ TEST_F(DynamicOutputShapeTest, tanh_dynamic_output_shape) {
 TEST_F(ValidationTest, tanh_dynamic_output_shape) {
   const Model model = tanh::createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(tanh::get_examples_dynamic_output_shape());
-  validateModel(model);
-  validateRequests(model, requests);
+  validateEverything(model, requests);
 }
 
 
