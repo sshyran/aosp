@@ -157,6 +157,30 @@ bool validate(const IOperationValidationContext* context) {
 }
 
 bool prepare(IOperationExecutionContext* context) {
+    // Check that none of the required inputs are omitted
+    const std::vector<int> requiredInputs = {
+            kInputTensor,
+            kInputToForgetWeightsTensor,
+            kInputToCellWeightsTensor,
+            kInputToOutputWeightsTensor,
+            kRecurrentToForgetWeightsTensor,
+            kRecurrentToCellWeightsTensor,
+            kRecurrentToOutputWeightsTensor,
+            kForgetGateBiasTensor,
+            kCellGateBiasTensor,
+            kOutputGateBiasTensor,
+            kOutputStateInTensor,
+            kCellStateInTensor,
+            kActivationParam,
+            kCellClipParam,
+            kProjClipParam,
+            kTimeMajorParam,
+    };
+    for (const int requiredInput : requiredInputs) {
+        NN_RET_CHECK(!context->isOmittedInput(requiredInput))
+                << "required input " << requiredInput << " is omitted";
+    }
+
     const Shape inputShape = context->getInputShape(kInputTensor);
     const uint32_t inputRank = getNumberOfDimensions(inputShape);
     NN_RET_CHECK_EQ(inputRank, 3) << "Invalid input tensor rank: " << inputRank;

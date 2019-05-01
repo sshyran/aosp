@@ -64,3 +64,36 @@ test(
     output_data=[False, True, False],
     do_variations=False,
 )
+
+test(
+    name="quantized_overflow_second_input_if_requantized",
+    input0=Input("input0", ("TENSOR_QUANT8_ASYMM", [1], 1.64771, 31)),
+    input1=Input("input1", ("TENSOR_QUANT8_ASYMM", [1], 1.49725, 240)),
+    output0=Output("output0", "TENSOR_BOOL8", "{1}"),
+    input0_data=[0],
+    input1_data=[200],
+    output_data=[False],
+    do_variations=False,
+)
+
+test(
+    name="quantized_overflow_first_input_if_requantized",
+    input0=Input("input0", ("TENSOR_QUANT8_ASYMM", [1], 1.49725, 240)),
+    input1=Input("input1", ("TENSOR_QUANT8_ASYMM", [1], 1.64771, 31)),
+    output0=Output("output0", "TENSOR_BOOL8", "{1}"),
+    input0_data=[200],
+    input1_data=[0],
+    output_data=[False],
+    do_variations=False,
+)
+
+test(
+    name="boolean",
+    input0=Input("input0", "TENSOR_BOOL8", "{4}"),
+    input1=Input("input1", "TENSOR_BOOL8", "{4}"),
+    output0=Output("output0", "TENSOR_BOOL8", "{4}"),
+    input0_data=[False, True, False, True],
+    input1_data=[False, False, True, True],
+    output_data=[True, False, False, True],
+    do_variations=False,
+)

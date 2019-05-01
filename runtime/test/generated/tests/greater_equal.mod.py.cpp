@@ -129,3 +129,27 @@ TEST_F(DynamicOutputShapeTest, greater_equal_quantized_different_zero_point_dyna
             greater_equal::get_examples_quantized_different_zero_point_dynamic_output_shape());
 }
 
+TEST_F(GeneratedTests, greater_equal_quantized_overflow_second_input_if_requantized) {
+    execute(greater_equal::CreateModel_5,
+            greater_equal::is_ignored_5,
+            greater_equal::get_examples_quantized_overflow_second_input_if_requantized());
+}
+
+TEST_F(DynamicOutputShapeTest, greater_equal_quantized_overflow_second_input_if_requantized_dynamic_output_shape) {
+    execute(greater_equal::CreateModel_dynamic_output_shape_5,
+            greater_equal::is_ignored_dynamic_output_shape_5,
+            greater_equal::get_examples_quantized_overflow_second_input_if_requantized_dynamic_output_shape());
+}
+
+TEST_F(GeneratedTests, greater_equal_quantized_overflow_first_input_if_requantized) {
+    execute(greater_equal::CreateModel_6,
+            greater_equal::is_ignored_6,
+            greater_equal::get_examples_quantized_overflow_first_input_if_requantized());
+}
+
+TEST_F(DynamicOutputShapeTest, greater_equal_quantized_overflow_first_input_if_requantized_dynamic_output_shape) {
+    execute(greater_equal::CreateModel_dynamic_output_shape_6,
+            greater_equal::is_ignored_dynamic_output_shape_6,
+            greater_equal::get_examples_quantized_overflow_first_input_if_requantized_dynamic_output_shape());
+}
+
