@@ -652,6 +652,20 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
+
+            // NeuralNetworks.h specifies that ANEURALNETWORKS_DEPTHWISE_CONV_2D's output must
+            // meet "outputScale > inputScale * filterScale" for the operand type
+            // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM before API level 29. For other
+            // operand types (e.g., ANEURALNETWORKS_TENSOR_FLOAT32), this constraint
+            // does not apply, so by default the constraint is met.
+            bool meetsQuantizedScaleConstraintBeforeV1_2 = true;
+            if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                const float inputScale = operands[inputIndexes[0]].scale;
+                const float filterScale = operands[inputIndexes[1]].scale;
+                const float outputScale = operands[outputIndexes[0]].scale;
+                meetsQuantizedScaleConstraintBeforeV1_2 = (outputScale > inputScale * filterScale);
+            }
+
             bool withExplicitPadding = false;
             bool withLayout = false;
             bool withDilation = false;
@@ -682,7 +696,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
 
             if (inputType == OperandType::TENSOR_FLOAT16 ||
                 filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout ||
-                withDilation) {
+                withDilation || !meetsQuantizedScaleConstraintBeforeV1_2) {
                 NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
                 NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_0));
