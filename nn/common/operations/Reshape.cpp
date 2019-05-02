@@ -210,11 +210,12 @@ bool spaceToBatchGeneric(const T* inputData, const Shape& inputShape, const int3
                          const int32_t* padding, const Shape& paddingShape, T* outputData,
                          const Shape& outputShape) {
     // Needed by low level implementation, but not really used.
-    tflite::Dims<4> blockSizeDim;
+    tflite::RuntimeShape blockSizeDim;
     NNTRACE_COMP("optimized_ops::SpaceToBatchND");
-    tflite::optimized_ops::SpaceToBatchND(inputData, convertShapeToDims(inputShape), blockSize,
-                                          blockSizeDim, padding, convertShapeToDims(paddingShape),
-                                          outputData, convertShapeToDims(outputShape));
+    tflite::optimized_ops::SpaceToBatchND(
+            {.output_offset = outputShape.offset}, convertShapeToTflshape(inputShape), inputData,
+            blockSizeDim, blockSize, convertShapeToTflshape(paddingShape), padding,
+            convertShapeToTflshape(outputShape), outputData);
     return true;
 }
 template bool spaceToBatchGeneric<float>(const float* inputData, const Shape& inputShape,
