@@ -20,6 +20,7 @@
 
 #include <android-base/logging.h>
 
+#include <cstring>
 #include <limits>
 #include <map>
 
@@ -368,7 +369,7 @@ std::optional<std::vector<FmqRequestDatum>> RequestChannelReceiver::getPacketBlo
     // are also available.
     const size_t count = mFmqRequestChannel->availableToRead();
     std::vector<FmqRequestDatum> packet(count + 1);
-    packet.front() = datum;
+    std::memcpy(&packet.front(), &datum, sizeof(datum));
     success &= mFmqRequestChannel->read(packet.data() + 1, count);
 
     // terminate loop
@@ -382,7 +383,7 @@ std::optional<std::vector<FmqRequestDatum>> RequestChannelReceiver::getPacketBlo
         return std::nullopt;
     }
 
-    return packet;
+    return std::make_optional(std::move(packet));
 }
 
 // ResultChannelSender methods
