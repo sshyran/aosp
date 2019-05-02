@@ -9613,7 +9613,7 @@ static std::vector<MixedTypedExample> examples_quant_output_multiplier_gt_1 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {198, 93, 227, 107, 219, 101, 255, 123}}},
+  .quant8AsymmOperands = {{0, {255, 58, 255, 87, 255, 74, 255, 119}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -9670,7 +9670,7 @@ static std::vector<MixedTypedExample> examples_quant_output_multiplier_gt_1_rela
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {198, 93, 227, 107, 219, 101, 255, 123}}},
+  .quant8AsymmOperands = {{0, {255, 58, 255, 87, 255, 74, 255, 119}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -9727,7 +9727,7 @@ static std::vector<MixedTypedExample> examples_quant_output_multiplier_gt_1_weig
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {198, 93, 227, 107, 219, 101, 255, 123}}},
+  .quant8AsymmOperands = {{0, {255, 58, 255, 87, 255, 74, 255, 119}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -9784,7 +9784,7 @@ static std::vector<MixedTypedExample> examples_quant_output_multiplier_gt_1_weig
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {198, 93, 227, 107, 219, 101, 255, 123}}},
+  .quant8AsymmOperands = {{0, {255, 58, 255, 87, 255, 74, 255, 119}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -9841,7 +9841,7 @@ static std::vector<MixedTypedExample> examples_quant_output_multiplier_gt_1_dyna
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {198, 93, 227, 107, 219, 101, 255, 123}}},
+  .quant8AsymmOperands = {{0, {255, 58, 255, 87, 255, 74, 255, 119}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -9898,7 +9898,7 @@ static std::vector<MixedTypedExample> examples_quant_output_multiplier_gt_1_dyna
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {198, 93, 227, 107, 219, 101, 255, 123}}},
+  .quant8AsymmOperands = {{0, {255, 58, 255, 87, 255, 74, 255, 119}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -9955,7 +9955,7 @@ static std::vector<MixedTypedExample> examples_quant_output_multiplier_gt_1_dyna
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {198, 93, 227, 107, 219, 101, 255, 123}}},
+  .quant8AsymmOperands = {{0, {255, 58, 255, 87, 255, 74, 255, 119}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -10012,7 +10012,7 @@ static std::vector<MixedTypedExample> examples_quant_output_multiplier_gt_1_dyna
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {198, 93, 227, 107, 219, 101, 255, 123}}},
+  .quant8AsymmOperands = {{0, {255, 58, 255, 87, 255, 74, 255, 119}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
