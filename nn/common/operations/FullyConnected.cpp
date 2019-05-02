@@ -161,7 +161,20 @@ bool validate(const IOperationValidationContext* context) {
                 OperandType::INT32,
         };
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        // NeuralNetworks.h specifies that ANEURALNETWORKS_FULLY_CONNECTED's output must
+        // meet "outputScale > inputScale * weightsScale" for the operand type
+        // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM before API level 29.
+        const float inputScale = context->getInputShape(kInputTensor).scale;
+        const float weightsScale = context->getInputShape(kWeightsTensor).scale;
+        const float outputScale = context->getOutputShape(kOutputTensor).scale;
+        bool meetsQuantizedScaleConstraintBeforeV1_2 = (outputScale > inputScale * weightsScale);
+
+        if (!meetsQuantizedScaleConstraintBeforeV1_2) {
+            NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        } else {
+            NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        }
+
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM,
                 OperandType::TENSOR_QUANT8_ASYMM,
