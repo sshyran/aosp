@@ -199,7 +199,7 @@ bool convNhwc(const uint8_t* inputData, const Shape& inputShape, const uint8_t* 
     int32_t filterOffset = -filterShape.offset;
     int32_t outputOffset = outputShape.offset;
 
-    float real_multiplier = 0.0;
+    double real_multiplier = 0.0;
     int32_t output_multiplier = 0;
     int32_t output_shift = 0;
     int32_t output_activation_min = 0;
@@ -302,7 +302,7 @@ bool convQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& inputShape,
     int32_t inputOffset = -inputShape.offset;
     int32_t outputOffset = outputShape.offset;
 
-    auto realMultiplier = std::vector<float>(outputDepth, .0f);
+    auto realMultiplier = std::vector<double>(outputDepth, .0f);
     auto outputMultiplier = std::vector<int32_t>(outputDepth, 0);
     auto outputShift = std::vector<int32_t>(outputDepth, .0f);
 
