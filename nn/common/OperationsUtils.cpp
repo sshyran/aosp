@@ -210,20 +210,18 @@ bool QuantizeMultiplierGreaterThanOne(double double_multiplier,
     return true;
 }
 
-bool GetQuantizedConvolutionMultipler(const Shape& inputShape,
-                                      const Shape& filterShape,
-                                      const Shape& biasShape,
-                                      const Shape& outputShape,
-                                      float* multiplier) {
-    const float input_product_scale = inputShape.scale * filterShape.scale;
-    const float bias_scale = biasShape.scale;
-    const float output_scale = outputShape.scale;
+bool GetQuantizedConvolutionMultipler(const Shape& inputShape, const Shape& filterShape,
+                                      const Shape& biasShape, const Shape& outputShape,
+                                      double* multiplier) {
+    // Upcast bias and input_product to double
+    const double input_product_scale = inputShape.scale * filterShape.scale;
+    const double bias_scale = biasShape.scale;
 
     // The following conditions must be guaranteed by the training pipeline.
     NN_OPS_CHECK(std::abs(input_product_scale - bias_scale) <=
               1e-6 * std::min(input_product_scale, bias_scale));
     NN_OPS_CHECK(input_product_scale >= 0);
-    *multiplier = input_product_scale / output_scale;
+    *multiplier = input_product_scale / outputShape.scale;
     return true;
 }
 
