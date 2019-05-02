@@ -363,6 +363,12 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
             NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_2, opIntroducedAt)));
         } else if (opType == OperationType::DIV) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation DIV";
+        } else if (opType == OperationType::MUL) {
+            Shape output = context->getOutputShape(kOutputTensor);
+            Shape input1 = context->getInputShape(kInputTensor1);
+            Shape input2 = context->getInputShape(kInputTensor2);
+            NN_RET_CHECK_GT(output.scale, input1.scale * input2.scale);
+            NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_0, opIntroducedAt)));
         } else {
             NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_0, opIntroducedAt)));
         }
