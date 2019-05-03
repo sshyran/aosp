@@ -34,8 +34,8 @@ namespace resize_image {
 constexpr uint32_t kNumInputs = 4;
 constexpr uint32_t kInputTensor = 0;
 // The following two scalars represent output shape if INT32, scale if floating point.
-constexpr uint32_t kOutputHeightParamScalar = 1;
-constexpr uint32_t kOutputWidthParamScalar = 2;
+constexpr uint32_t kOutputWidthParamScalar = 1;
+constexpr uint32_t kOutputHeightParamScalar = 2;
 constexpr uint32_t kLayoutScalar = 3;
 
 constexpr uint32_t kNumOutputs = 1;
