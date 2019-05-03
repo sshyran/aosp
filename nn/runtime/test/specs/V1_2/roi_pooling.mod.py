@@ -18,9 +18,9 @@ layout = BoolScalar("layout", False) # NHWC
 
 # TEST 1: ROI_POOLING_1, outputShape = [2, 2], spatialScale = [0.5, 0.5]
 i1 = Input("in", "TENSOR_FLOAT32", "{1, 4, 4, 1}")
-roi1 = Input("roi", "TENSOR_FLOAT32", "{4, 4}")
-o1 = Output("out", "TENSOR_FLOAT32", "{4, 2, 2, 1}")
-Model().Operation("ROI_POOLING", i1, roi1, [0, 0, 0, 0], 2, 2, 2.0, 2.0, layout).To(o1)
+roi1 = Input("roi", "TENSOR_FLOAT32", "{5, 4}")
+o1 = Output("out", "TENSOR_FLOAT32", "{5, 2, 2, 1}")
+Model().Operation("ROI_POOLING", i1, roi1, [0, 0, 0, 0, 0], 2, 2, 2.0, 2.0, layout).To(o1)
 
 quant8 = DataTypeConverter().Identify({
     i1: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
@@ -40,13 +40,15 @@ Example({
         2, 2, 4, 4,
         0, 0, 6, 6,
         2, 0, 4, 6,
-        0, 2, 6, 4
+        0, 2, 6, 4,
+        8, 8, 8, 8  # empty region
     ],
     o1: [
         -2, 9, -2, 3,
         -1, 9, 10, 5,
         -1, 9, 10, 3,
-        -2, 9,  7, 3
+        -2, 9,  7, 3,
+         0, 0,  0, 0
     ]
 }).AddNchw(i1, o1, layout).AddVariations("relaxed", quant8, "float16")
 
