@@ -142,7 +142,7 @@ example = Example({
 }).AddNchw(i4, o4, layout).AddInput(f4, b4).AddVariations("relaxed", "float16", quant8, channelQuant8)
 
 # TEST 9: quantized with scale product greater than output scale
-input_scale = 127.5 / 255
+input_scale = 256.5 / 255
 input_zero_point = 127
 filter_scale = 256.5 / 255
 filter_zero_point = 128
@@ -157,11 +157,11 @@ f9 = Parameter(
 b9 = Parameter("op3", ("TENSOR_INT32", [4], input_scale * filter_scale, 0),
                [2, 4, 6, 8])
 o9 = Output("op4", ("TENSOR_QUANT8_ASYMM", [1, 2, 1, 4], 1.0, 127))
-model9 = Model().Operation("DEPTHWISE_CONV_2D", i9, f9, b9, 2, 1, 1, 2,
+model9 = Model("quant_output_multiplier_gt_1").Operation("DEPTHWISE_CONV_2D", i9, f9, b9, 2, 1, 1, 2,
                            0).To(o9)
 
 # Instantiate an example
 example = Example({
     i9: [129, 131, 141, 143, 133, 135, 145, 147, 137, 139, 149, 151],
-    o9: [198, 93, 227, 107, 219, 101, 255, 123]
-}, model=model9, name="quant_output_multiplier_gt_1").AddInput(f9, b9).AddVariations("relaxed")
+    o9: [255, 58, 255, 87, 255, 74, 255, 119]
+}, model=model9).AddInput(f9, b9).AddVariations("relaxed")
