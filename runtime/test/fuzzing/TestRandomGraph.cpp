@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
+#ifndef NNTEST_CTS
 #include <android-base/properties.h>
+#endif
+
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -61,8 +64,10 @@ class CompilationForDevice : public test_wrapper::Compilation {
 class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
    public:
     static void SetUpTestCase() {
+#ifndef NNTEST_CTS
         mEnableLog = ::android::base::GetProperty("debug.nn.fuzzer.log", "") == "1";
         mDumpSpec = ::android::base::GetProperty("debug.nn.fuzzer.dumpspec", "") == "1";
+#endif
 
         // Get all the devices and device names.
         uint32_t numDevices = 0;
@@ -447,14 +452,13 @@ TEST_RANDOM_GRAPH_WITH_DATA_TYPE_AND_RANK(TENSOR_BOOL8, 3);
 TEST_RANDOM_GRAPH_WITH_DATA_TYPE_AND_RANK(TENSOR_BOOL8, 2);
 TEST_RANDOM_GRAPH_WITH_DATA_TYPE_AND_RANK(TENSOR_BOOL8, 1);
 
-constexpr uint32_t kFirstSeed = 0;
-constexpr uint32_t kNumTestCases = 100;
-
-INSTANTIATE_TEST_CASE_P(TestRandomGraph, SingleOperationTest,
-                        ::testing::Range(kFirstSeed, kFirstSeed + kNumTestCases));
-
-INSTANTIATE_TEST_CASE_P(TestRandomGraph, RandomGraphTest,
-                        ::testing::Range(kFirstSeed, kFirstSeed + kNumTestCases));
+#ifdef NNTEST_CTS
+INSTANTIATE_TEST_CASE_P(TestRandomGraph, SingleOperationTest, ::testing::Range(0u, 50u));
+INSTANTIATE_TEST_CASE_P(TestRandomGraph, RandomGraphTest, ::testing::Range(0u, 50u));
+#else
+INSTANTIATE_TEST_CASE_P(TestRandomGraph, SingleOperationTest, ::testing::Range(0u, 100u));
+INSTANTIATE_TEST_CASE_P(TestRandomGraph, RandomGraphTest, ::testing::Range(0u, 100u));
+#endif
 
 }  // namespace fuzzing_test
 }  // namespace nn
