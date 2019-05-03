@@ -189,12 +189,9 @@ bool QuantizeMultiplierGreaterThanOne(double double_multiplier,
                                       int32_t* quantized_multiplier,
                                       int* left_shift);
 
-__wur
-bool GetQuantizedConvolutionMultipler(const Shape& inputShape,
-                                      const Shape& filterShape,
-                                      const Shape& biasShape,
-                                      const Shape& outputShape,
-                                      float* multiplier);
+__wur bool GetQuantizedConvolutionMultipler(const Shape& inputShape, const Shape& filterShape,
+                                            const Shape& biasShape, const Shape& outputShape,
+                                            double* multiplier);
 
 void CalculateActivationRangeUint8(int32_t activation,
                                    const Shape& outputShape,
