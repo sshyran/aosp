@@ -193,7 +193,7 @@ bool transposeConvNhwc(const uint8_t* inputData, const Shape& inputShape, const 
     int32_t filterOffset = -filterShape.offset;
     int32_t outputOffset = outputShape.offset;
 
-    float realMultiplier = 0.0;
+    double realMultiplier = 0.0;
     int32_t outputMultiplier = 0;
     int32_t outputShift = 0;
     NN_RET_CHECK(GetQuantizedConvolutionMultipler(inputShape, filterShape, biasShape, outputShape,
@@ -327,7 +327,7 @@ bool transposeConvQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& in
     int32_t inputOffset = -inputShape.offset;
     int32_t outputOffset = outputShape.offset;
 
-    std::vector<float> realMultiplier(outputDepth, 0.0);
+    std::vector<double> realMultiplier(outputDepth, 0.0);
     std::vector<int32_t> outputMultiplier(outputDepth, 0);
     std::vector<int32_t> outputShift(outputDepth, 0);
     for (int i = 0; i < outputDepth; ++i) {
