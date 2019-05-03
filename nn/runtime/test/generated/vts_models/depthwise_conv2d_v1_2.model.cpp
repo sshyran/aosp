@@ -24609,13 +24609,13 @@ inline bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQu
 }
 
 // Create the model
-Model createTestModel() {
+Model createTestModel_quant_output_multiplier_gt_1() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 2, 2},
             .numberOfConsumers = 1,
-            .scale = 0.5f,
+            .scale = 1.0058823529411764f,
             .zeroPoint = 127,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -24633,7 +24633,7 @@ Model createTestModel() {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {4},
             .numberOfConsumers = 1,
-            .scale = 0.5029411764705882f,
+            .scale = 1.0117993079584775f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 16, .length = 16},
@@ -24719,19 +24719,19 @@ Model createTestModel() {
     };
 }
 
-inline bool is_ignored(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_relaxed() {
+Model createTestModel_quant_output_multiplier_gt_1_relaxed() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 2, 2},
             .numberOfConsumers = 1,
-            .scale = 0.5f,
+            .scale = 1.0058823529411764f,
             .zeroPoint = 127,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -24749,7 +24749,7 @@ Model createTestModel_relaxed() {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {4},
             .numberOfConsumers = 1,
-            .scale = 0.5029411764705882f,
+            .scale = 1.0117993079584775f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 16, .length = 16},
@@ -24836,19 +24836,19 @@ Model createTestModel_relaxed() {
     };
 }
 
-inline bool is_ignored_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_weight_as_input() {
+Model createTestModel_quant_output_multiplier_gt_1_weight_as_input() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 2, 2},
             .numberOfConsumers = 1,
-            .scale = 0.5f,
+            .scale = 1.0058823529411764f,
             .zeroPoint = 127,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -24866,7 +24866,7 @@ Model createTestModel_weight_as_input() {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {4},
             .numberOfConsumers = 1,
-            .scale = 0.5029411764705882f,
+            .scale = 1.0117993079584775f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -24952,19 +24952,19 @@ Model createTestModel_weight_as_input() {
     };
 }
 
-inline bool is_ignored_weight_as_input(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_weight_as_input_relaxed() {
+Model createTestModel_quant_output_multiplier_gt_1_weight_as_input_relaxed() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 2, 2},
             .numberOfConsumers = 1,
-            .scale = 0.5f,
+            .scale = 1.0058823529411764f,
             .zeroPoint = 127,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -24982,7 +24982,7 @@ Model createTestModel_weight_as_input_relaxed() {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {4},
             .numberOfConsumers = 1,
-            .scale = 0.5029411764705882f,
+            .scale = 1.0117993079584775f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -25069,19 +25069,19 @@ Model createTestModel_weight_as_input_relaxed() {
     };
 }
 
-inline bool is_ignored_weight_as_input_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_dynamic_output_shape() {
+Model createTestModel_quant_output_multiplier_gt_1_dynamic_output_shape() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 2, 2},
             .numberOfConsumers = 1,
-            .scale = 0.5f,
+            .scale = 1.0058823529411764f,
             .zeroPoint = 127,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -25099,7 +25099,7 @@ Model createTestModel_dynamic_output_shape() {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {4},
             .numberOfConsumers = 1,
-            .scale = 0.5029411764705882f,
+            .scale = 1.0117993079584775f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 16, .length = 16},
@@ -25185,19 +25185,19 @@ Model createTestModel_dynamic_output_shape() {
     };
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_dynamic_output_shape_relaxed() {
+Model createTestModel_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 2, 2},
             .numberOfConsumers = 1,
-            .scale = 0.5f,
+            .scale = 1.0058823529411764f,
             .zeroPoint = 127,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -25215,7 +25215,7 @@ Model createTestModel_dynamic_output_shape_relaxed() {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {4},
             .numberOfConsumers = 1,
-            .scale = 0.5029411764705882f,
+            .scale = 1.0117993079584775f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::CONSTANT_COPY,
             .location = {.poolIndex = 0, .offset = 16, .length = 16},
@@ -25302,19 +25302,19 @@ Model createTestModel_dynamic_output_shape_relaxed() {
     };
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_dynamic_output_shape_weight_as_input() {
+Model createTestModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 2, 2},
             .numberOfConsumers = 1,
-            .scale = 0.5f,
+            .scale = 1.0058823529411764f,
             .zeroPoint = 127,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -25332,7 +25332,7 @@ Model createTestModel_dynamic_output_shape_weight_as_input() {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {4},
             .numberOfConsumers = 1,
-            .scale = 0.5029411764705882f,
+            .scale = 1.0117993079584775f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -25418,19 +25418,19 @@ Model createTestModel_dynamic_output_shape_weight_as_input() {
     };
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
 // Create the model
-Model createTestModel_dynamic_output_shape_weight_as_input_relaxed() {
+Model createTestModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed() {
     const std::vector<Operand> operands = {
         {
             .type = OperandType::TENSOR_QUANT8_ASYMM,
             .dimensions = {1, 3, 2, 2},
             .numberOfConsumers = 1,
-            .scale = 0.5f,
+            .scale = 1.0058823529411764f,
             .zeroPoint = 127,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -25448,7 +25448,7 @@ Model createTestModel_dynamic_output_shape_weight_as_input_relaxed() {
             .type = OperandType::TENSOR_INT32,
             .dimensions = {4},
             .numberOfConsumers = 1,
-            .scale = 0.5029411764705882f,
+            .scale = 1.0117993079584775f,
             .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
@@ -25535,7 +25535,7 @@ Model createTestModel_dynamic_output_shape_weight_as_input_relaxed() {
     };
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input_relaxed(int i) {
+inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
