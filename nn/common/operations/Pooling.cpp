@@ -319,8 +319,7 @@ bool prepare(IOperationExecutionContext* context) {
     uint32_t outHeight = computeOutSize(height, param.filter_height, param.stride_height,
                                         param.padding_top, param.padding_bottom);
 
-    Shape output = context->getOutputShape(kOutputTensor);
-    output.type = input.type;
+    Shape output = input;
     if (param.useNchw) {
         output.dimensions = {batches, channels, outHeight, outWidth};
     } else {
