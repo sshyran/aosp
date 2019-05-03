@@ -2009,7 +2009,7 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_3 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {2, 4, 6, 8, 10, 12, 14, 16, 18, 20}}},
+  .quant8AsymmOperands = {{0, {130, 132, 134, 136, 138, 140, 142, 144, 146, 148}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -2032,7 +2032,7 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_3 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 0, 0, 10, 0, 0, 0, 12, 0, 2, 0, 14, 0, 4, 0, 16, 0, 6, 0, 18, 0, 8, 0, 20}}},
+  .quant8AsymmOperands = {{0, {128, 128, 128, 138, 128, 128, 128, 140, 128, 130, 128, 142, 128, 132, 128, 144, 128, 134, 128, 146, 128, 136, 128, 148}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -2237,7 +2237,7 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_3 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {2, 4, 6, 8, 10, 12, 14, 16, 18, 20}}},
+  .quant8AsymmOperands = {{0, {130, 132, 134, 136, 138, 140, 142, 144, 146, 148}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -2260,7 +2260,7 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_3 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 0, 0, 10, 0, 0, 0, 12, 0, 2, 0, 14, 0, 4, 0, 16, 0, 6, 0, 18, 0, 8, 0, 20}}},
+  .quant8AsymmOperands = {{0, {128, 128, 128, 138, 128, 128, 128, 140, 128, 130, 128, 142, 128, 132, 128, 144, 128, 134, 128, 146, 128, 136, 128, 148}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -2465,7 +2465,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {2, 4, 6, 8, 10, 12, 14, 16, 18, 20}}},
+  .quant8AsymmOperands = {{0, {130, 132, 134, 136, 138, 140, 142, 144, 146, 148}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -2488,7 +2488,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 0, 0, 10, 0, 0, 0, 12, 0, 2, 0, 14, 0, 4, 0, 16, 0, 6, 0, 18, 0, 8, 0, 20}}},
+  .quant8AsymmOperands = {{0, {128, 128, 128, 138, 128, 128, 128, 140, 128, 130, 128, 142, 128, 132, 128, 144, 128, 134, 128, 146, 128, 136, 128, 148}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -2693,7 +2693,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {2, 4, 6, 8, 10, 12, 14, 16, 18, 20}}},
+  .quant8AsymmOperands = {{0, {130, 132, 134, 136, 138, 140, 142, 144, 146, 148}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -2716,7 +2716,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 0, 0, 10, 0, 0, 0, 12, 0, 2, 0, 14, 0, 4, 0, 16, 0, 6, 0, 18, 0, 8, 0, 20}}},
+  .quant8AsymmOperands = {{0, {128, 128, 128, 138, 128, 128, 128, 140, 128, 130, 128, 142, 128, 132, 128, 144, 128, 134, 128, 146, 128, 136, 128, 148}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -2921,7 +2921,7 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_4 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {4, 8, 12, 16, 20, 24, 28, 32}}},
+  .quant8AsymmOperands = {{0, {132, 136, 140, 144, 148, 152, 156, 160}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -2944,7 +2944,7 @@ static std::vector<MixedTypedExample> examples_nhwc_quant8_4 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 4, 0, 0, 0, 28, 0, 0, 0, 8, 0, 0, 0, 32, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0}}},
+  .quant8AsymmOperands = {{0, {128, 128, 128, 128, 128, 148, 128, 128, 128, 128, 128, 128, 128, 152, 128, 128, 128, 132, 128, 128, 128, 156, 128, 128, 128, 136, 128, 128, 128, 160, 128, 128, 128, 140, 128, 128, 128, 128, 128, 128, 128, 144, 128, 128, 128, 128, 128, 128}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -3149,7 +3149,7 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_4 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {4, 8, 12, 16, 20, 24, 28, 32}}},
+  .quant8AsymmOperands = {{0, {132, 136, 140, 144, 148, 152, 156, 160}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -3172,7 +3172,7 @@ static std::vector<MixedTypedExample> examples_nchw_quant8_4 = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 4, 0, 0, 0, 28, 0, 0, 0, 8, 0, 0, 0, 32, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0}}},
+  .quant8AsymmOperands = {{0, {128, 128, 128, 128, 128, 148, 128, 128, 128, 128, 128, 128, 128, 152, 128, 128, 128, 132, 128, 128, 128, 156, 128, 128, 128, 136, 128, 128, 128, 160, 128, 128, 128, 140, 128, 128, 128, 128, 128, 128, 128, 144, 128, 128, 128, 128, 128, 128}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -3377,7 +3377,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {4, 8, 12, 16, 20, 24, 28, 32}}},
+  .quant8AsymmOperands = {{0, {132, 136, 140, 144, 148, 152, 156, 160}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -3400,7 +3400,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_quant8_
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 4, 0, 0, 0, 28, 0, 0, 0, 8, 0, 0, 0, 32, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0}}},
+  .quant8AsymmOperands = {{0, {128, 128, 128, 128, 128, 148, 128, 128, 128, 128, 128, 128, 128, 152, 128, 128, 128, 132, 128, 128, 128, 156, 128, 128, 128, 136, 128, 128, 128, 160, 128, 128, 128, 140, 128, 128, 128, 128, 128, 128, 128, 144, 128, 128, 128, 128, 128, 128}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -3605,7 +3605,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {4, 8, 12, 16, 20, 24, 28, 32}}},
+  .quant8AsymmOperands = {{0, {132, 136, 140, 144, 148, 152, 156, 160}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -3628,7 +3628,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_quant8_
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 4, 0, 0, 0, 28, 0, 0, 0, 8, 0, 0, 0, 32, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0}}},
+  .quant8AsymmOperands = {{0, {128, 128, 128, 128, 128, 148, 128, 128, 128, 128, 128, 128, 128, 152, 128, 128, 128, 132, 128, 128, 128, 156, 128, 128, 128, 136, 128, 128, 128, 160, 128, 128, 128, 140, 128, 128, 128, 128, 128, 128, 128, 144, 128, 128, 128, 128, 128, 128}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
