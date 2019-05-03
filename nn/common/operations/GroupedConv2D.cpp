@@ -109,7 +109,7 @@ bool groupedConvQuant8(const uint8_t* inputData, const Shape& inputShape, const 
     int32_t filterOffset = -filterShape.offset;
     int32_t outputOffset = outputShape.offset;
 
-    float realMultiplier = 0.0;
+    double realMultiplier = 0.0;
     int32_t outputMultiplier = 0;
     int32_t outputShift = 0;
     NN_RET_CHECK(GetQuantizedConvolutionMultipler(inputShape, filterShape, biasShape, outputShape,
@@ -187,7 +187,7 @@ bool groupedConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputSha
     int32_t inputOffset = -inputShape.offset;
     int32_t outputOffset = outputShape.offset;
 
-    auto realMultiplier = std::vector<float>(outputDepth, .0f);
+    auto realMultiplier = std::vector<double>(outputDepth, .0f);
     auto outputMultiplier = std::vector<int32_t>(outputDepth, 0);
     auto outputShift = std::vector<int32_t>(outputDepth, 0);
 

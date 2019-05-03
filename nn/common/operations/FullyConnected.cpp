@@ -104,7 +104,7 @@ bool fullyConnectedQuant8(const uint8_t* inputData, const Shape& inputShape,
     int32_t weightsOffset = -weightsShape.offset;
     int32_t outputOffset = outputShape.offset;
 
-    float realMultiplier = 0.0;
+    double realMultiplier = 0.0;
     int32_t outputMultiplier = 0;
     int32_t outputShift = 0;
     int32_t outputActivationMin = 0;
