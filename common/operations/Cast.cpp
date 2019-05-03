@@ -27,7 +27,13 @@ namespace {
 
 template <typename FromT, typename ToT>
 void copyCast(const FromT* in, ToT* out, int numElements) {
-    std::transform(in, in + numElements, out, [](FromT a) { return static_cast<ToT>(a); });
+    std::transform(in, in + numElements, out, [](FromT a) -> ToT {
+        if constexpr (std::is_same_v<ToT, uint8_t>) {
+            if (a < 0) return 0;
+            if (a > 255) return 255;
+        }
+        return static_cast<ToT>(a);
+    });
 }
 
 template <typename FromT>

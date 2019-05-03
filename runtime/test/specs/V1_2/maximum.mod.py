@@ -49,3 +49,16 @@ test(
     input1_data=[0.5, 2.0],
     output_data=[1.0, 2.0, 0.5, 2.0, 0.5, 11.0],
 )
+
+
+# Test overflow and underflow.
+input0 = Input("input0", "TENSOR_QUANT8_ASYMM", "{2}, 1.0f, 128")
+input1 = Input("input1", "TENSOR_QUANT8_ASYMM", "{2}, 1.0f, 128")
+output0 = Output("output0", "TENSOR_QUANT8_ASYMM", "{2}, 0.5f, 128")
+model = Model().Operation("MAXIMUM", input0, input1).To(output0)
+
+Example({
+    input0: [60, 128],
+    input1: [128, 200],
+    output0: [128, 255],
+}, model=model, name="overflow")
