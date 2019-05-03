@@ -2360,3 +2360,413 @@ inline bool is_ignored_dynamic_output_shape_16(int i) {
   return ignore.find(i) != ignore.end();
 }
 
+// Create the model
+Model createTestModel_17() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {2},
+            .numberOfConsumers = 0,
+            .scale = 4.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::CAST,
+            .inputs = {0},
+            .outputs = {1},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {1};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_17(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_17() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT16,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0},
+            .numberOfConsumers = 0,
+            .scale = 4.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::CAST,
+            .inputs = {0},
+            .outputs = {1},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {1};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_17(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_18() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {2},
+            .numberOfConsumers = 0,
+            .scale = 4.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::CAST,
+            .inputs = {0},
+            .outputs = {1},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {1};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_18(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_relaxed_8() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {2},
+            .numberOfConsumers = 0,
+            .scale = 4.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::CAST,
+            .inputs = {0},
+            .outputs = {1},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {1};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+        .relaxComputationFloat32toFloat16 = true,
+    };
+}
+
+inline bool is_ignored_relaxed_8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_18() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0},
+            .numberOfConsumers = 0,
+            .scale = 4.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::CAST,
+            .inputs = {0},
+            .outputs = {1},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {1};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_18(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_relaxed_8() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_FLOAT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0},
+            .numberOfConsumers = 0,
+            .scale = 4.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::CAST,
+            .inputs = {0},
+            .outputs = {1},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {1};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+        .relaxComputationFloat32toFloat16 = true,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_relaxed_8(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_19() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {2},
+            .numberOfConsumers = 0,
+            .scale = 4.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::CAST,
+            .inputs = {0},
+            .outputs = {1},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {1};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_19(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
+// Create the model
+Model createTestModel_dynamic_output_shape_19() {
+    const std::vector<Operand> operands = {
+        {
+            .type = OperandType::TENSOR_INT32,
+            .dimensions = {2},
+            .numberOfConsumers = 1,
+            .scale = 0.0f,
+            .zeroPoint = 0,
+            .lifetime = OperandLifeTime::MODEL_INPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        },
+        {
+            .type = OperandType::TENSOR_QUANT8_ASYMM,
+            .dimensions = {0},
+            .numberOfConsumers = 0,
+            .scale = 4.0f,
+            .zeroPoint = 100,
+            .lifetime = OperandLifeTime::MODEL_OUTPUT,
+            .location = {.poolIndex = 0, .offset = 0, .length = 0},
+        }
+    };
+
+    const std::vector<Operation> operations = {
+        {
+            .type = OperationType::CAST,
+            .inputs = {0},
+            .outputs = {1},
+        }
+    };
+
+    const std::vector<uint32_t> inputIndexes = {0};
+    const std::vector<uint32_t> outputIndexes = {1};
+    std::vector<uint8_t> operandValues = {};
+    const std::vector<hidl_memory> pools = {};
+
+    return {
+        .operands = operands,
+        .operations = operations,
+        .inputIndexes = inputIndexes,
+        .outputIndexes = outputIndexes,
+        .operandValues = operandValues,
+        .pools = pools,
+    };
+}
+
+inline bool is_ignored_dynamic_output_shape_19(int i) {
+  static std::set<int> ignore = {};
+  return ignore.find(i) != ignore.end();
+}
+
