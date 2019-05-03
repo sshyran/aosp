@@ -58,6 +58,8 @@ static void poolingExplicitOpConstructor(Type, uint32_t rank, RandomOperation* o
     // width
     explicitPadding(op->inputs[0]->dimensions[widthIndex], filterWidth, strideWidth, /*dilation=*/1,
                     paddingLeft, paddingRight, &op->outputs[0]->dimensions[widthIndex]);
+
+    setSameQuantization(op->outputs[0], op->inputs[0]);
 }
 
 // For pooling ops with implicit padding.
@@ -92,6 +94,8 @@ static void poolingImplicitOpConstructor(Type, uint32_t rank, RandomOperation* o
                     /*dilation=*/1, paddingScheme, &op->outputs[0]->dimensions[heightIndex]);
     implicitPadding(op->inputs[0]->dimensions[widthIndex], filterWidth, strideWidth,
                     /*dilation=*/1, paddingScheme, &op->outputs[0]->dimensions[widthIndex]);
+
+    setSameQuantization(op->outputs[0], op->inputs[0]);
 }
 
 #define DEFINE_POOLING_SIGNATURE(op, ver, ...)                         \
