@@ -777,3 +777,195 @@ TEST_F(DynamicOutputShapeTest, conv2d_dilation_valid_padding_dynamic_output_shap
             conv2d_dilation::get_examples_valid_padding_dynamic_output_shape_nchw_weight_as_input_float16_2());
 }
 
+TEST_F(GeneratedTests, conv2d_dilation_nhwc_3) {
+    execute(conv2d_dilation::CreateModel_nhwc_5,
+            conv2d_dilation::is_ignored_nhwc_5,
+            conv2d_dilation::get_examples_nhwc_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nhwc_relaxed_3) {
+    execute(conv2d_dilation::CreateModel_nhwc_relaxed_5,
+            conv2d_dilation::is_ignored_nhwc_relaxed_5,
+            conv2d_dilation::get_examples_nhwc_relaxed_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nhwc_quant8_3) {
+    execute(conv2d_dilation::CreateModel_nhwc_quant8_5,
+            conv2d_dilation::is_ignored_nhwc_quant8_5,
+            conv2d_dilation::get_examples_nhwc_quant8_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nhwc_float16_3) {
+    execute(conv2d_dilation::CreateModel_nhwc_float16_5,
+            conv2d_dilation::is_ignored_nhwc_float16_5,
+            conv2d_dilation::get_examples_nhwc_float16_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nhwc_weight_as_input_3) {
+    execute(conv2d_dilation::CreateModel_nhwc_weight_as_input_5,
+            conv2d_dilation::is_ignored_nhwc_weight_as_input_5,
+            conv2d_dilation::get_examples_nhwc_weight_as_input_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nhwc_weight_as_input_relaxed_3) {
+    execute(conv2d_dilation::CreateModel_nhwc_weight_as_input_relaxed_5,
+            conv2d_dilation::is_ignored_nhwc_weight_as_input_relaxed_5,
+            conv2d_dilation::get_examples_nhwc_weight_as_input_relaxed_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nhwc_weight_as_input_quant8_3) {
+    execute(conv2d_dilation::CreateModel_nhwc_weight_as_input_quant8_5,
+            conv2d_dilation::is_ignored_nhwc_weight_as_input_quant8_5,
+            conv2d_dilation::get_examples_nhwc_weight_as_input_quant8_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nhwc_weight_as_input_float16_3) {
+    execute(conv2d_dilation::CreateModel_nhwc_weight_as_input_float16_5,
+            conv2d_dilation::is_ignored_nhwc_weight_as_input_float16_5,
+            conv2d_dilation::get_examples_nhwc_weight_as_input_float16_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nchw_3) {
+    execute(conv2d_dilation::CreateModel_nchw_5,
+            conv2d_dilation::is_ignored_nchw_5,
+            conv2d_dilation::get_examples_nchw_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nchw_relaxed_3) {
+    execute(conv2d_dilation::CreateModel_nchw_relaxed_5,
+            conv2d_dilation::is_ignored_nchw_relaxed_5,
+            conv2d_dilation::get_examples_nchw_relaxed_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nchw_quant8_3) {
+    execute(conv2d_dilation::CreateModel_nchw_quant8_5,
+            conv2d_dilation::is_ignored_nchw_quant8_5,
+            conv2d_dilation::get_examples_nchw_quant8_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nchw_float16_3) {
+    execute(conv2d_dilation::CreateModel_nchw_float16_5,
+            conv2d_dilation::is_ignored_nchw_float16_5,
+            conv2d_dilation::get_examples_nchw_float16_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nchw_weight_as_input_3) {
+    execute(conv2d_dilation::CreateModel_nchw_weight_as_input_5,
+            conv2d_dilation::is_ignored_nchw_weight_as_input_5,
+            conv2d_dilation::get_examples_nchw_weight_as_input_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nchw_weight_as_input_relaxed_3) {
+    execute(conv2d_dilation::CreateModel_nchw_weight_as_input_relaxed_5,
+            conv2d_dilation::is_ignored_nchw_weight_as_input_relaxed_5,
+            conv2d_dilation::get_examples_nchw_weight_as_input_relaxed_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nchw_weight_as_input_quant8_3) {
+    execute(conv2d_dilation::CreateModel_nchw_weight_as_input_quant8_5,
+            conv2d_dilation::is_ignored_nchw_weight_as_input_quant8_5,
+            conv2d_dilation::get_examples_nchw_weight_as_input_quant8_3());
+}
+
+TEST_F(GeneratedTests, conv2d_dilation_nchw_weight_as_input_float16_3) {
+    execute(conv2d_dilation::CreateModel_nchw_weight_as_input_float16_5,
+            conv2d_dilation::is_ignored_nchw_weight_as_input_float16_5,
+            conv2d_dilation::get_examples_nchw_weight_as_input_float16_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nhwc_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nhwc_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nhwc_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nhwc_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nhwc_relaxed_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nhwc_relaxed_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nhwc_relaxed_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nhwc_relaxed_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nhwc_quant8_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nhwc_quant8_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nhwc_quant8_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nhwc_quant8_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nhwc_float16_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nhwc_float16_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nhwc_float16_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nhwc_float16_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nhwc_weight_as_input_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nhwc_weight_as_input_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nhwc_weight_as_input_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nhwc_weight_as_input_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nhwc_weight_as_input_relaxed_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nhwc_weight_as_input_relaxed_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nhwc_weight_as_input_relaxed_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nhwc_weight_as_input_relaxed_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nhwc_weight_as_input_quant8_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nhwc_weight_as_input_quant8_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nhwc_weight_as_input_quant8_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nhwc_weight_as_input_quant8_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nhwc_weight_as_input_float16_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nhwc_weight_as_input_float16_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nhwc_weight_as_input_float16_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nhwc_weight_as_input_float16_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nchw_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nchw_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nchw_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nchw_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nchw_relaxed_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nchw_relaxed_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nchw_relaxed_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nchw_relaxed_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nchw_quant8_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nchw_quant8_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nchw_quant8_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nchw_quant8_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nchw_float16_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nchw_float16_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nchw_float16_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nchw_float16_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nchw_weight_as_input_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nchw_weight_as_input_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nchw_weight_as_input_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nchw_weight_as_input_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nchw_weight_as_input_relaxed_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nchw_weight_as_input_relaxed_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nchw_weight_as_input_relaxed_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nchw_weight_as_input_relaxed_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nchw_weight_as_input_quant8_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nchw_weight_as_input_quant8_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nchw_weight_as_input_quant8_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nchw_weight_as_input_quant8_3());
+}
+
+TEST_F(DynamicOutputShapeTest, conv2d_dilation_dynamic_output_shape_nchw_weight_as_input_float16_3) {
+    execute(conv2d_dilation::CreateModel_dynamic_output_shape_nchw_weight_as_input_float16_5,
+            conv2d_dilation::is_ignored_dynamic_output_shape_nchw_weight_as_input_float16_5,
+            conv2d_dilation::get_examples_dynamic_output_shape_nchw_weight_as_input_float16_3());
+}
+
