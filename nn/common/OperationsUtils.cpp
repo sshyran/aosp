@@ -337,7 +337,10 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
 
 uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape) {
     double doubleValue = (value - oldShape.offset) * oldShape.scale;
-    return static_cast<uint8_t>(doubleValue / newShape.scale + newShape.offset);
+    double doubleRet = doubleValue / newShape.scale + newShape.offset;
+    if (doubleRet < 0) return 0;
+    if (doubleRet > 255) return 255;
+    return static_cast<uint8_t>(doubleRet);
 }
 
 bool floorPrepare(const Shape& input, Shape* output) {
