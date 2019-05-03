@@ -97,10 +97,11 @@ struct Conv2dParam {
             int32_t input_height = getSizeOfDimension(inputShape, useNchw ? 2 : 1);
             int32_t filter_width = getSizeOfDimension(filterShape, 2);
             int32_t filter_height = getSizeOfDimension(filterShape, 1);
-            calculateExplicitPadding(input_width, stride_width, filter_width, padding_implicit,
-                                     &padding_left, &padding_right);
-            calculateExplicitPadding(input_height, stride_height, filter_height, padding_implicit,
-                                     &padding_top, &padding_bottom);
+            calculateExplicitPadding(input_width, stride_width, dilation_width_factor, filter_width,
+                                     padding_implicit, &padding_left, &padding_right);
+            calculateExplicitPadding(input_height, stride_height, dilation_height_factor,
+                                     filter_height, padding_implicit, &padding_top,
+                                     &padding_bottom);
         }
         NN_RET_CHECK_GE(padding_left, 0);
         NN_RET_CHECK_GE(padding_right, 0);
@@ -521,10 +522,13 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK_GT(width, 0);
     NN_RET_CHECK_GT(channels_in, 0);
     NN_RET_CHECK_GT(channels_out, 0);
-    NN_RET_CHECK_GT(filterWidth, param.padding_left);
-    NN_RET_CHECK_GT(filterWidth, param.padding_right);
-    NN_RET_CHECK_GT(filterHeight, param.padding_top);
-    NN_RET_CHECK_GT(filterHeight, param.padding_bottom);
+
+    int32_t effectiveFilterWidth = (filterWidth - 1) * param.dilation_width_factor + 1;
+    int32_t effectiveFilterHeight = (filterHeight - 1) * param.dilation_height_factor + 1;
+    NN_RET_CHECK_GT(effectiveFilterWidth, param.padding_left);
+    NN_RET_CHECK_GT(effectiveFilterWidth, param.padding_right);
+    NN_RET_CHECK_GT(effectiveFilterHeight, param.padding_top);
+    NN_RET_CHECK_GT(effectiveFilterHeight, param.padding_bottom);
 
     uint32_t outWidth =
             computeOutSize(width, filterWidth, param.stride_width, param.dilation_width_factor,
