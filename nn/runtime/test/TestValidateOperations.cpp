@@ -130,6 +130,11 @@ class OperationTestBase {
         EXPECT_TRUE(testMutatingOutputOperandCounts());
     }
 
+    void testFailure(int32_t expectedResult) {
+        int32_t result = addOperation(mValidInputs, mValidOutputs);
+        EXPECT_TRUE(expectedResult == result);
+    }
+
     bool testSuccess() {
         int32_t result = addOperation(mValidInputs, mValidOutputs);
         return ANEURALNETWORKS_NO_ERROR == result;
@@ -628,6 +633,25 @@ TEST(OperationValidationTest, ADD_quant8) {
 
 TEST(OperationValidationTest, MUL_quant8) {
     simpleMathOpTest(ANEURALNETWORKS_MUL, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, MUL_quant8_bad_output_scale) {
+    uint32_t inputDimensions[4] = {2, 2, 2, 2};
+    ANeuralNetworksOperandType input1 =
+            getOpType(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, 4, inputDimensions);
+    ANeuralNetworksOperandType input2 = input1;
+    ANeuralNetworksOperandType output = input1;
+    input1.scale = 1.0f;
+    input2.scale = 1.0f;
+    output.scale = 0.5f;
+    ANeuralNetworksOperandType activation = {.type = ANEURALNETWORKS_INT32,
+                                             .dimensionCount = 0,
+                                             .dimensions = nullptr,
+                                             .scale = 0.0f,
+                                             .zeroPoint = 0};
+
+    OperationTestBase mulTest(ANEURALNETWORKS_MUL, {input1, input2, activation}, {output});
+    mulTest.testFailure(ANEURALNETWORKS_BAD_DATA);
 }
 
 void binaryOpTest(ANeuralNetworksOperationType operationCode, int32_t operandCode) {
