@@ -120,10 +120,12 @@ std::vector<FmqResultDatum> serialize(ErrorStatus errorStatus,
     // package output shape data
     for (const auto& operand : outputShapes) {
         // package operand information
+        FmqResultDatum::OperandInformation info{};
+        info.isSufficient = operand.isSufficient;
+        info.numberOfDimensions = static_cast<uint32_t>(operand.dimensions.size());
+
         FmqResultDatum datum;
-        datum.operandInformation(
-                {/*.isSufficient=*/operand.isSufficient,
-                 /*.numberOfDimensions=*/static_cast<uint32_t>(operand.dimensions.size())});
+        datum.operandInformation(info);
         data.push_back(datum);
 
         // package operand dimensions
