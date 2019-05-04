@@ -61,8 +61,8 @@ Model().Operation("SPACE_TO_BATCH_ND", i3, [3, 2], pad3, layout).To(o3)
 
 # Additional data type
 quant8 = DataTypeConverter().Identify({
-    i3: ("TENSOR_QUANT8_ASYMM", 0.5, 0),
-    o3: ("TENSOR_QUANT8_ASYMM", 0.5, 0)
+    i3: ("TENSOR_QUANT8_ASYMM", 0.5, 128),
+    o3: ("TENSOR_QUANT8_ASYMM", 0.5, 128)
 })
 
 # Instantiate an example
@@ -81,8 +81,8 @@ Model().Operation("SPACE_TO_BATCH_ND", i4, [3, 2], pad4, layout).To(o4)
 
 # Additional data type
 quant8 = DataTypeConverter().Identify({
-    i4: ("TENSOR_QUANT8_ASYMM", 0.25, 0),
-    o4: ("TENSOR_QUANT8_ASYMM", 0.25, 0)
+    i4: ("TENSOR_QUANT8_ASYMM", 0.25, 128),
+    o4: ("TENSOR_QUANT8_ASYMM", 0.25, 128)
 })
 
 # Instantiate an example
