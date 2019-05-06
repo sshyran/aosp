@@ -21,7 +21,7 @@ paddings = Parameter("paddings", "TENSOR_INT32", "{4, 2}", [0, 0,
                                                             0, 0])
 output0 = Output("output0", "TENSOR_QUANT8_ASYMM", "{1, 4, 7, 1}, 2.3, 9")
 
-model = Model().Operation("PAD", input0, paddings).To(output0)
+model = Model().IntroducedIn("V1_1").Operation("PAD", input0, paddings).To(output0)
 
 Example({
     input0: [1, 2, 3,
