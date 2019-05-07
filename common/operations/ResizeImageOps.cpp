@@ -117,6 +117,9 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
                  inputType == OperandType::TENSOR_FLOAT32 ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM)
             << "Unsupported tensor type for operation " << getOperationName(opType);
+    if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+    }
     if (scalarType != OperandType::INT32) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
         if (inputType == OperandType::TENSOR_FLOAT32) {
