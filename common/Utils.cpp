@@ -1005,6 +1005,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes.push_back(OperandType::FLOAT32);
                 inExpectedTypes.push_back(OperandType::FLOAT32);
             } else {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
                 inExpectedTypes.push_back(OperandType::FLOAT16);
                 inExpectedTypes.push_back(OperandType::FLOAT16);
             }
