@@ -2027,7 +2027,8 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
-     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} (full support since API
+     *   level 29, see the output section)
      *
      * Supported tensor rank: up to 4
      *
@@ -2049,6 +2050,10 @@ typedef enum {
      *      of the padding:
      *          output0.dimension[i] =
      *              padding[i, 0] + input0.dimension[i] + padding[i, 1]
+     *
+     *      NOTE: Before API level 29, the pad value for
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} is undefined.
+     *      Since API level 29, the pad value is always the logical zero.
      *
      * Available since API level 28.
      */
