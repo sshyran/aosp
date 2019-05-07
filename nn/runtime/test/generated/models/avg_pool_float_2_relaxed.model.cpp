@@ -3,7 +3,7 @@
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {5, 52, 60, 3});
   OperandType type1(Type::INT32, {});
-  OperandType type2(Type::TENSOR_FLOAT32, {5, 11, 13, 3});
+  OperandType type2(Type::TENSOR_FLOAT32, {5, 16, 18, 3});
   // Phase 1, operands
   auto i0 = model->addOperand(&type0);
   auto padding = model->addOperand(&type1);
@@ -12,11 +12,11 @@ void CreateModel(Model *model) {
   auto activation = model->addOperand(&type1);
   auto output = model->addOperand(&type2);
   // Phase 2, operations
-  static int32_t padding_init[] = {50};
+  static int32_t padding_init[] = {30};
   model->setOperandValue(padding, padding_init, sizeof(int32_t) * 1);
   static int32_t stride_init[] = {5};
   model->setOperandValue(stride, stride_init, sizeof(int32_t) * 1);
-  static int32_t filter_init[] = {100};
+  static int32_t filter_init[] = {35};
   model->setOperandValue(filter, filter_init, sizeof(int32_t) * 1);
   static int32_t activation_init[] = {0};
   model->setOperandValue(activation, activation_init, sizeof(int32_t) * 1);
@@ -47,11 +47,11 @@ void CreateModel_dynamic_output_shape(Model *model) {
   auto activation = model->addOperand(&type1);
   auto output = model->addOperand(&type3);
   // Phase 2, operations
-  static int32_t padding_init[] = {50};
+  static int32_t padding_init[] = {30};
   model->setOperandValue(padding, padding_init, sizeof(int32_t) * 1);
   static int32_t stride_init[] = {5};
   model->setOperandValue(stride, stride_init, sizeof(int32_t) * 1);
-  static int32_t filter_init[] = {100};
+  static int32_t filter_init[] = {35};
   model->setOperandValue(filter, filter_init, sizeof(int32_t) * 1);
   static int32_t activation_init[] = {0};
   model->setOperandValue(activation, activation_init, sizeof(int32_t) * 1);
