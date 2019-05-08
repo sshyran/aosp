@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, reshape_quant8) {
             reshape_quant8::is_ignored,
             reshape_quant8::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, reshape_quant8, reshape_quant8::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, reshape_quant8_dynamic_output_shape) {
     execute(reshape_quant8::CreateModel_dynamic_output_shape,

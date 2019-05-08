@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, bidirectional_sequence_lstm_merge_outputs_blackbox) {
             bidirectional_sequence_lstm_merge_outputs::is_ignored,
             bidirectional_sequence_lstm_merge_outputs::get_examples_blackbox());
 }
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_lstm_merge_outputs_blackbox, bidirectional_sequence_lstm_merge_outputs::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_merge_outputs_blackbox_dynamic_output_shape) {
     execute(bidirectional_sequence_lstm_merge_outputs::CreateModel_dynamic_output_shape,

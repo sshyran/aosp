@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, unidirectional_sequence_lstm_1step) {
             unidirectional_sequence_lstm_1step::is_ignored,
             unidirectional_sequence_lstm_1step::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_1step, unidirectional_sequence_lstm_1step::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_1step_dynamic_output_shape) {
     execute(unidirectional_sequence_lstm_1step::CreateModel_dynamic_output_shape,

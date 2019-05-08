@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, unidirectional_sequence_lstm_layer_norm_cifg_peephole) {
             unidirectional_sequence_lstm_layer_norm_cifg_peephole::is_ignored,
             unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_layer_norm_cifg_peephole, unidirectional_sequence_lstm_layer_norm_cifg_peephole::CreateModel)
 
 TEST_F(GeneratedTests, unidirectional_sequence_lstm_layer_norm_cifg_peephole_relaxed) {
     execute(unidirectional_sequence_lstm_layer_norm_cifg_peephole::CreateModel_relaxed,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, unidirectional_sequence_lstm_layer_norm_cifg_peephole_flo
             unidirectional_sequence_lstm_layer_norm_cifg_peephole::is_ignored_float16,
             unidirectional_sequence_lstm_layer_norm_cifg_peephole::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_layer_norm_cifg_peephole_float16, unidirectional_sequence_lstm_layer_norm_cifg_peephole::CreateModel_float16)
 
 TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_layer_norm_cifg_peephole_dynamic_output_shape) {
     execute(unidirectional_sequence_lstm_layer_norm_cifg_peephole::CreateModel_dynamic_output_shape,

@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, bidirectional_sequence_lstm_norm_fw_output_blackbox) {
             bidirectional_sequence_lstm_norm_fw_output::is_ignored,
             bidirectional_sequence_lstm_norm_fw_output::get_examples_blackbox());
 }
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_lstm_norm_fw_output_blackbox, bidirectional_sequence_lstm_norm_fw_output::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_norm_fw_output_blackbox_dynamic_output_shape) {
     execute(bidirectional_sequence_lstm_norm_fw_output::CreateModel_dynamic_output_shape,

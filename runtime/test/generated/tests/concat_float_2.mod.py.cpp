@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, concat_float_2) {
             concat_float_2::is_ignored,
             concat_float_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, concat_float_2, concat_float_2::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, concat_float_2_dynamic_output_shape) {
     execute(concat_float_2::CreateModel_dynamic_output_shape,

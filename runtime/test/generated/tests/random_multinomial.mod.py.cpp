@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, random_multinomial) {
             random_multinomial::is_ignored,
             random_multinomial::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, random_multinomial, random_multinomial::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, random_multinomial_dynamic_output_shape) {
     execute(random_multinomial::CreateModel_dynamic_output_shape,
