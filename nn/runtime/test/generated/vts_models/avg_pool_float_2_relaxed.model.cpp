@@ -50,7 +50,7 @@ Model createTestModel() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {5, 11, 13, 3},
+            .dimensions = {5, 16, 18, 3},
             .numberOfConsumers = 0,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -70,7 +70,7 @@ Model createTestModel() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {5};
     std::vector<uint8_t> operandValues = {
-      50, 0, 0, 0, 5, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0
+      30, 0, 0, 0, 5, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
@@ -160,7 +160,7 @@ Model createTestModel_dynamic_output_shape() {
     const std::vector<uint32_t> inputIndexes = {0};
     const std::vector<uint32_t> outputIndexes = {5};
     std::vector<uint8_t> operandValues = {
-      50, 0, 0, 0, 5, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0
+      30, 0, 0, 0, 5, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0
     };
     const std::vector<hidl_memory> pools = {};
 
