@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, dequantize) {
             dequantize::is_ignored,
             dequantize::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, dequantize, dequantize::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, dequantize_dynamic_output_shape) {
     execute(dequantize::CreateModel_dynamic_output_shape,

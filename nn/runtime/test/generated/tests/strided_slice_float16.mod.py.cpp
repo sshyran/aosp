@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, strided_slice_float16) {
             strided_slice_float16::is_ignored,
             strided_slice_float16::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, strided_slice_float16, strided_slice_float16::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, strided_slice_float16_dynamic_output_shape) {
     execute(strided_slice_float16::CreateModel_dynamic_output_shape,

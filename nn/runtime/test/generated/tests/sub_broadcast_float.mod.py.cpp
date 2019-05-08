@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, sub_broadcast_float) {
             sub_broadcast_float::is_ignored,
             sub_broadcast_float::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_1, sub_broadcast_float, sub_broadcast_float::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, sub_broadcast_float_dynamic_output_shape) {
     execute(sub_broadcast_float::CreateModel_dynamic_output_shape,

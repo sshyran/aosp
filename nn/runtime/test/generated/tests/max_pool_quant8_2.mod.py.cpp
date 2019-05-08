@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, max_pool_quant8_2) {
             max_pool_quant8_2::is_ignored,
             max_pool_quant8_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, max_pool_quant8_2, max_pool_quant8_2::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, max_pool_quant8_2_dynamic_output_shape) {
     execute(max_pool_quant8_2::CreateModel_dynamic_output_shape,

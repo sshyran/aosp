@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, lsh_projection_weights_as_inputs) {
             lsh_projection_weights_as_inputs::is_ignored,
             lsh_projection_weights_as_inputs::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, lsh_projection_weights_as_inputs, lsh_projection_weights_as_inputs::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, lsh_projection_weights_as_inputs_dynamic_output_shape) {
     execute(lsh_projection_weights_as_inputs::CreateModel_dynamic_output_shape,

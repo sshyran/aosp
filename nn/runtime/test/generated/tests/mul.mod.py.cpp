@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, mul) {
             mul::is_ignored,
             mul::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, mul, mul::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, mul_dynamic_output_shape) {
     execute(mul::CreateModel_dynamic_output_shape,

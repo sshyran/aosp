@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, reduce_any) {
             reduce_any::is_ignored,
             reduce_any::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, reduce_any, reduce_any::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, reduce_any_dynamic_output_shape) {
     execute(reduce_any::CreateModel_dynamic_output_shape,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, reduce_any_2) {
             reduce_any::is_ignored_2,
             reduce_any::get_examples_2());
 }
+TEST_AVAILABLE_SINCE(V1_2, reduce_any_2, reduce_any::CreateModel_2)
 
 TEST_F(DynamicOutputShapeTest, reduce_any_dynamic_output_shape_2) {
     execute(reduce_any::CreateModel_dynamic_output_shape_2,
@@ -38,6 +40,7 @@ TEST_F(GeneratedTests, reduce_any_3) {
             reduce_any::is_ignored_3,
             reduce_any::get_examples_3());
 }
+TEST_AVAILABLE_SINCE(V1_2, reduce_any_3, reduce_any::CreateModel_3)
 
 TEST_F(DynamicOutputShapeTest, reduce_any_dynamic_output_shape_3) {
     execute(reduce_any::CreateModel_dynamic_output_shape_3,
