@@ -357,21 +357,15 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
         : mModel(model), mDriver(driver), mModelPoolInfos(poolInfos) {}
 
     bool isCacheEntryPresent(int32_t slot) const override {
-        return static_cast<size_t>(slot) < mMemoryCache.size() && mMemoryCache[slot].has_value();
+        const auto it = mMemoryCache.find(slot);
+        return (it != mMemoryCache.end()) && it->second.has_value();
     }
 
     void addCacheEntry(const hidl_memory& memory, int32_t slot) override {
-        if (static_cast<size_t>(slot) >= mMemoryCache.size()) {
-            mMemoryCache.resize(slot + 1);
-        }
         mMemoryCache[slot] = RunTimePoolInfo::createFromHidlMemory(memory);
     }
 
-    void removeCacheEntry(int32_t slot) override {
-        if (static_cast<size_t>(slot) < mMemoryCache.size()) {
-            mMemoryCache[slot] = std::nullopt;
-        }
-    }
+    void removeCacheEntry(int32_t slot) override { mMemoryCache.erase(slot); }
 
     std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> execute(
             const Request& request, const std::vector<int32_t>& slots,
@@ -430,7 +424,7 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
     const Model mModel;
     const SampleDriver* const mDriver;
     const std::vector<RunTimePoolInfo> mModelPoolInfos;
-    std::vector<std::optional<RunTimePoolInfo>> mMemoryCache;  // cached requestPoolInfos
+    std::map<int32_t, std::optional<RunTimePoolInfo>> mMemoryCache;  // cached requestPoolInfos
 };
 
 Return<void> SamplePreparedModel::configureExecutionBurst(
