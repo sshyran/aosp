@@ -175,6 +175,7 @@ class RequestChannelSender {
 class ExecutionBurstController {
     DISALLOW_IMPLICIT_CONSTRUCTORS(ExecutionBurstController);
 
+   public:
     /**
      * NN runtime burst callback object and memory cache.
      *
@@ -198,10 +199,24 @@ class ExecutionBurstController {
 
         Return<void> getMemories(const hidl_vec<int32_t>& slots, getMemories_cb cb) override;
 
+        /**
+         * This function performs one of two different actions:
+         * 1) If a key corresponding to a memory resource is unrecognized by the
+         *    ExecutionBurstCallback object, the ExecutionBurstCallback object
+         *    will allocate a slot, bind the memory to the slot, and return the
+         *    slot identifier.
+         * 2) If a key corresponding to a memory resource is recognized by the
+         *    ExecutionBurstCallback object, the ExecutionBurstCallback object
+         *    will return the existing slot identifier.
+         *
+         * @param memories Memory resources used in an inference.
+         * @param keys Unique identifiers where each element corresponds to a
+         *     memory resource element in "memories".
+         * @return Unique slot identifiers where each returned slot element
+         *     corresponds to a memory resource element in "memories".
+         */
         std::vector<int32_t> getSlots(const hidl_vec<hidl_memory>& memories,
                                       const std::vector<intptr_t>& keys);
-
-        int32_t getSlot(const hidl_memory& memory, intptr_t key);
 
         /*
          * This function performs two different actions:
@@ -227,7 +242,6 @@ class ExecutionBurstController {
         std::vector<hidl_memory> mMemoryCache;
     };
 
-   public:
     /**
      * Creates a burst controller on a prepared model.
      *

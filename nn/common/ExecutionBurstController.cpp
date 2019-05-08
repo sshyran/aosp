@@ -125,7 +125,7 @@ std::optional<std::tuple<ErrorStatus, std::vector<OutputShape>, Timing>> deseria
     size_t index = 0;
 
     // validate packet information
-    if (data[index].getDiscriminator() != discriminator::packetInformation) {
+    if (data.size() == 0 || data[index].getDiscriminator() != discriminator::packetInformation) {
         LOG(ERROR) << "FMQ Result packet ill-formed";
         return std::nullopt;
     }
@@ -136,6 +136,12 @@ std::optional<std::tuple<ErrorStatus, std::vector<OutputShape>, Timing>> deseria
     const uint32_t packetSize = packetInfo.packetSize;
     const ErrorStatus errorStatus = packetInfo.errorStatus;
     const uint32_t numberOfOperands = packetInfo.numberOfOperands;
+
+    // verify packet size
+    if (data.size() != packetSize) {
+        LOG(ERROR) << "FMQ Result packet ill-formed";
+        return std::nullopt;
+    }
 
     // unpackage operands
     for (size_t operand = 0; operand < numberOfOperands; ++operand) {
@@ -242,33 +248,20 @@ void ResultChannelReceiver::invalidate() {
 std::optional<std::vector<FmqResultDatum>> ResultChannelReceiver::getPacketBlocking() {
     using discriminator = FmqResultDatum::hidl_discriminator;
 
+    if (mTeardown) {
+        return std::nullopt;
+    }
+
     // wait for result packet and read first element of result packet
-    // TODO: have a more elegant way to wait for data, and read it all at once.
-    // For example, EventFlag can be used to directly wait on the futex, and all
-    // the data can be read at once with a non-blocking call to
-    // MessageQueue::read. For further optimization, MessageQueue::beginRead and
-    // MessageQueue::commitRead can be used to avoid an extra copy of the
-    // metadata.
     FmqResultDatum datum;
     bool success = true;
     if (mBlocking) {
         success = mFmqResultChannel->readBlocking(&datum, 1);
     } else {
-        // TODO: better handle the case where the service crashes after
-        // receiving the Request but before returning the result.
-        while (!mFmqResultChannel->read(&datum, 1)) {
+        while ((success = !mTeardown.load(std::memory_order_relaxed)) &&
+               !mFmqResultChannel->read(&datum, 1)) {
         }
     }
-
-    // validate packet information
-    if (!success || datum.getDiscriminator() != discriminator::packetInformation) {
-        LOG(ERROR) << "FMQ Result packet ill-formed";
-        return std::nullopt;
-    }
-
-    // unpack packet information
-    const auto& packetInfo = datum.packetInformation();
-    const size_t count = packetInfo.packetSize;
 
     // retrieve remaining elements
     // NOTE: all of the data is already available at this point, so there's no
@@ -277,11 +270,19 @@ std::optional<std::vector<FmqResultDatum>> ResultChannelReceiver::getPacketBlock
     // the producer always publishes the entire packet in one function call, so
     // if the first element of the packet is available, the remaining elements
     // are also available.
-    std::vector<FmqResultDatum> packet(count);
+    const size_t count = mFmqResultChannel->availableToRead();
+    std::vector<FmqResultDatum> packet(count + 1);
     packet.front() = datum;
-    success = mFmqResultChannel->read(packet.data() + 1, packet.size() - 1);
+    success &= mFmqResultChannel->read(packet.data() + 1, count);
 
+    // terminate loop
+    if (mTeardown) {
+        return std::nullopt;
+    }
+
+    // ensure packet was successfully received
     if (!success) {
+        LOG(ERROR) << "Error receiving packet";
         return std::nullopt;
     }
 
@@ -313,7 +314,11 @@ bool RequestChannelSender::send(const Request& request, MeasureTiming measure,
 }
 
 bool RequestChannelSender::sendPacket(const std::vector<FmqRequestDatum>& packet) {
-    // TODO: handle the case where the serialziation exceeds FMQ channel length
+    if (packet.size() > mFmqRequestChannel->availableToWrite()) {
+        LOG(ERROR)
+                << "RequestChannelSender::sendPacket -- packet size exceeds size available in FMQ";
+        return false;
+    }
 
     if (mBlocking) {
         return mFmqRequestChannel->writeBlocking(packet.data(), packet.size());

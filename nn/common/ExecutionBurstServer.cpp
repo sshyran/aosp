@@ -19,7 +19,10 @@
 #include "ExecutionBurstServer.h"
 
 #include <android-base/logging.h>
+
 #include <limits>
+#include <map>
+
 #include "Tracing.h"
 
 namespace android::nn {
@@ -38,30 +41,23 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
     DefaultBurstExecutorWithCache(IPreparedModel* preparedModel) : mpPreparedModel(preparedModel) {}
 
     bool isCacheEntryPresent(int32_t slot) const override {
-        return slot < mMemoryCache.size() && mMemoryCache[slot].valid();
+        const auto it = mMemoryCache.find(slot);
+        return (it != mMemoryCache.end()) && it->second.valid();
     }
 
     void addCacheEntry(const hidl_memory& memory, int32_t slot) override {
-        if (slot >= mMemoryCache.size()) {
-            mMemoryCache.resize(slot + 1);
-        }
         mMemoryCache[slot] = memory;
     }
 
-    void removeCacheEntry(int32_t slot) override {
-        if (slot < mMemoryCache.size()) {
-            mMemoryCache[slot] = {};
-        }
-    }
+    void removeCacheEntry(int32_t slot) override { mMemoryCache.erase(slot); }
 
     std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> execute(
             const Request& request, const std::vector<int32_t>& slots,
             MeasureTiming measure) override {
         // convert slots to pools
         hidl_vec<hidl_memory> pools(slots.size());
-        std::transform(slots.begin(), slots.end(), pools.begin(), [this](int32_t slot) {
-            return slot < mMemoryCache.size() ? mMemoryCache[slot] : hidl_memory{};
-        });
+        std::transform(slots.begin(), slots.end(), pools.begin(),
+                       [this](int32_t slot) { return mMemoryCache[slot]; });
 
         // create full request
         Request fullRequest = request;
@@ -91,7 +87,7 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
 
    private:
     IPreparedModel* const mpPreparedModel;
-    std::vector<hidl_memory> mMemoryCache;
+    std::map<int32_t, hidl_memory> mMemoryCache;
 };
 
 }  // anonymous namespace
@@ -154,7 +150,7 @@ std::optional<std::tuple<Request, std::vector<int32_t>, MeasureTiming>> deserial
     size_t index = 0;
 
     // validate packet information
-    if (data[index].getDiscriminator() != discriminator::packetInformation) {
+    if (data.size() == 0 || data[index].getDiscriminator() != discriminator::packetInformation) {
         LOG(ERROR) << "FMQ Request packet ill-formed";
         return std::nullopt;
     }
@@ -166,6 +162,12 @@ std::optional<std::tuple<Request, std::vector<int32_t>, MeasureTiming>> deserial
     const uint32_t numberOfInputOperands = packetInfo.numberOfInputOperands;
     const uint32_t numberOfOutputOperands = packetInfo.numberOfOutputOperands;
     const uint32_t numberOfPools = packetInfo.numberOfPools;
+
+    // verify packet size
+    if (data.size() != packetSize) {
+        LOG(ERROR) << "FMQ Request packet ill-formed";
+        return std::nullopt;
+    }
 
     // unpackage input operands
     std::vector<RequestArgument> inputs;
@@ -342,12 +344,6 @@ std::optional<std::vector<FmqRequestDatum>> RequestChannelReceiver::getPacketBlo
     }
 
     // wait for request packet and read first element of request packet
-    // TODO: have a more elegant way to wait for data, and read it all at once.
-    // For example, EventFlag can be used to directly wait on the futex, and all
-    // the data can be read at once with a non-blocking call to
-    // MessageQueue::read. For further optimization, MessageQueue::beginRead and
-    // MessageQueue::commitRead can be used to avoid an extra copy of the
-    // metadata.
     FmqRequestDatum datum;
     bool success = false;
     if (mBlocking) {
@@ -358,22 +354,7 @@ std::optional<std::vector<FmqRequestDatum>> RequestChannelReceiver::getPacketBlo
         }
     }
 
-    // terminate loop
-    if (mTeardown) {
-        return std::nullopt;
-    }
-
-    // validate packet information
-    if (!success || datum.getDiscriminator() != discriminator::packetInformation) {
-        LOG(ERROR) << "FMQ Request packet ill-formed";
-        return std::make_optional<std::vector<FmqRequestDatum>>();
-    }
-
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION, "ExecutionBurstServer getting packet");
-
-    // unpack packet information
-    const auto& packetInfo = datum.packetInformation();
-    const size_t count = packetInfo.packetSize;
 
     // retrieve remaining elements
     // NOTE: all of the data is already available at this point, so there's no
@@ -382,12 +363,20 @@ std::optional<std::vector<FmqRequestDatum>> RequestChannelReceiver::getPacketBlo
     // the producer always publishes the entire packet in one function call, so
     // if the first element of the packet is available, the remaining elements
     // are also available.
-    std::vector<FmqRequestDatum> packet(count);
+    const size_t count = mFmqRequestChannel->availableToRead();
+    std::vector<FmqRequestDatum> packet(count + 1);
     packet.front() = datum;
-    success = mFmqRequestChannel->read(packet.data() + 1, packet.size() - 1);
+    success &= mFmqRequestChannel->read(packet.data() + 1, count);
 
+    // terminate loop
+    if (mTeardown) {
+        return std::nullopt;
+    }
+
+    // ensure packet was successfully received
     if (!success) {
-        return std::make_optional<std::vector<FmqRequestDatum>>();
+        LOG(ERROR) << "Error receiving packet";
+        return std::nullopt;
     }
 
     return packet;
@@ -418,6 +407,18 @@ bool ResultChannelSender::send(ErrorStatus errorStatus,
 }
 
 bool ResultChannelSender::sendPacket(const std::vector<FmqResultDatum>& packet) {
+    if (packet.size() > mFmqResultChannel->availableToWrite()) {
+        LOG(ERROR)
+                << "ResultChannelSender::sendPacket -- packet size exceeds size available in FMQ";
+        const std::vector<FmqResultDatum> errorPacket =
+                serialize(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+        if (mBlocking) {
+            return mFmqResultChannel->writeBlocking(errorPacket.data(), errorPacket.size());
+        } else {
+            return mFmqResultChannel->write(errorPacket.data(), errorPacket.size());
+        }
+    }
+
     if (mBlocking) {
         return mFmqResultChannel->writeBlocking(packet.data(), packet.size());
     } else {
