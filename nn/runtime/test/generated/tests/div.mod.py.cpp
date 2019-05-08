@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, div) {
             div::is_ignored,
             div::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_1, div, div::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, div_dynamic_output_shape) {
     execute(div::CreateModel_dynamic_output_shape,

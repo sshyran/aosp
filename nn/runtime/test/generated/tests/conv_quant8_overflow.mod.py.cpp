@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, conv_quant8_overflow) {
             conv_quant8_overflow::is_ignored,
             conv_quant8_overflow::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, conv_quant8_overflow, conv_quant8_overflow::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, conv_quant8_overflow_dynamic_output_shape) {
     execute(conv_quant8_overflow::CreateModel_dynamic_output_shape,

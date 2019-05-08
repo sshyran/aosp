@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, lstm) {
             lstm::is_ignored,
             lstm::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, lstm, lstm::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, lstm_dynamic_output_shape) {
     execute(lstm::CreateModel_dynamic_output_shape,

@@ -108,6 +108,7 @@ Model createTestModel() {
         .outputIndexes = outputIndexes,
         .operandValues = operandValues,
         .pools = pools,
+        .relaxComputationFloat32toFloat16 = true,
     };
 }
 
@@ -224,6 +225,7 @@ Model createTestModel_dynamic_output_shape() {
         .outputIndexes = outputIndexes,
         .operandValues = operandValues,
         .pools = pools,
+        .relaxComputationFloat32toFloat16 = true,
     };
 }
 
@@ -340,6 +342,7 @@ Model createTestModel_2() {
         .outputIndexes = outputIndexes,
         .operandValues = operandValues,
         .pools = pools,
+        .relaxComputationFloat32toFloat16 = true,
     };
 }
 
@@ -456,6 +459,7 @@ Model createTestModel_dynamic_output_shape_2() {
         .outputIndexes = outputIndexes,
         .operandValues = operandValues,
         .pools = pools,
+        .relaxComputationFloat32toFloat16 = true,
     };
 }
 

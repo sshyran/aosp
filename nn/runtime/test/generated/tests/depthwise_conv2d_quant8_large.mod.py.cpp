@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, depthwise_conv2d_quant8_large) {
             depthwise_conv2d_quant8_large::is_ignored,
             depthwise_conv2d_quant8_large::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, depthwise_conv2d_quant8_large, depthwise_conv2d_quant8_large::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_quant8_large_dynamic_output_shape) {
     execute(depthwise_conv2d_quant8_large::CreateModel_dynamic_output_shape,
