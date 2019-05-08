@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, space_to_batch) {
             space_to_batch::is_ignored,
             space_to_batch::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_1, space_to_batch, space_to_batch::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, space_to_batch_dynamic_output_shape) {
     execute(space_to_batch::CreateModel_dynamic_output_shape,

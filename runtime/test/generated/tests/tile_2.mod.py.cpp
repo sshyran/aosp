@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, tile_2) {
             tile_2::is_ignored,
             tile_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, tile_2, tile_2::CreateModel)
 
 TEST_F(GeneratedTests, tile_2_relaxed) {
     execute(tile_2::CreateModel_relaxed,
@@ -26,18 +27,21 @@ TEST_F(GeneratedTests, tile_2_float16) {
             tile_2::is_ignored_float16,
             tile_2::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, tile_2_float16, tile_2::CreateModel_float16)
 
 TEST_F(GeneratedTests, tile_2_quant8) {
     execute(tile_2::CreateModel_quant8,
             tile_2::is_ignored_quant8,
             tile_2::get_examples_quant8());
 }
+TEST_AVAILABLE_SINCE(V1_2, tile_2_quant8, tile_2::CreateModel_quant8)
 
 TEST_F(GeneratedTests, tile_2_int32) {
     execute(tile_2::CreateModel_int32,
             tile_2::is_ignored_int32,
             tile_2::get_examples_int32());
 }
+TEST_AVAILABLE_SINCE(V1_2, tile_2_int32, tile_2::CreateModel_int32)
 
 TEST_F(DynamicOutputShapeTest, tile_2_dynamic_output_shape) {
     execute(tile_2::CreateModel_dynamic_output_shape,

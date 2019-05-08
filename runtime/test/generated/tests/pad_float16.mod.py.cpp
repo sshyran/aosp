@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, pad_float16) {
             pad_float16::is_ignored,
             pad_float16::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, pad_float16, pad_float16::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, pad_float16_dynamic_output_shape) {
     execute(pad_float16::CreateModel_dynamic_output_shape,

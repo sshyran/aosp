@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, log) {
             log::is_ignored,
             log::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, log, log::CreateModel)
 
 TEST_F(GeneratedTests, log_relaxed) {
     execute(log::CreateModel_relaxed,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, log_float16) {
             log::is_ignored_float16,
             log::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, log_float16, log::CreateModel_float16)
 
 TEST_F(DynamicOutputShapeTest, log_dynamic_output_shape) {
     execute(log::CreateModel_dynamic_output_shape,

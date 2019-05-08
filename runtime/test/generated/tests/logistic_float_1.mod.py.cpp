@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, logistic_float_1) {
             logistic_float_1::is_ignored,
             logistic_float_1::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, logistic_float_1, logistic_float_1::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, logistic_float_1_dynamic_output_shape) {
     execute(logistic_float_1::CreateModel_dynamic_output_shape,

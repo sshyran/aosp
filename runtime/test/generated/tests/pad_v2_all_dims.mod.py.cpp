@@ -14,12 +14,14 @@ TEST_F(GeneratedTests, pad_v2_all_dims) {
             pad_v2_all_dims::is_ignored,
             pad_v2_all_dims::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, pad_v2_all_dims, pad_v2_all_dims::CreateModel)
 
 TEST_F(GeneratedTests, pad_v2_all_dims_float16) {
     execute(pad_v2_all_dims::CreateModel_float16,
             pad_v2_all_dims::is_ignored_float16,
             pad_v2_all_dims::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, pad_v2_all_dims_float16, pad_v2_all_dims::CreateModel_float16)
 
 TEST_F(GeneratedTests, pad_v2_all_dims_relaxed) {
     execute(pad_v2_all_dims::CreateModel_relaxed,

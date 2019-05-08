@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, relu_float_2) {
             relu_float_2::is_ignored,
             relu_float_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, relu_float_2, relu_float_2::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, relu_float_2_dynamic_output_shape) {
     execute(relu_float_2::CreateModel_dynamic_output_shape,

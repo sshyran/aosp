@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, svdf_state_float16) {
             svdf_state_float16::is_ignored,
             svdf_state_float16::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, svdf_state_float16, svdf_state_float16::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, svdf_state_float16_dynamic_output_shape) {
     execute(svdf_state_float16::CreateModel_dynamic_output_shape,

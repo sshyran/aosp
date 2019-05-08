@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, strided_slice_quant8_8) {
             strided_slice_quant8_8::is_ignored,
             strided_slice_quant8_8::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_1, strided_slice_quant8_8, strided_slice_quant8_8::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, strided_slice_quant8_8_dynamic_output_shape) {
     execute(strided_slice_quant8_8::CreateModel_dynamic_output_shape,
