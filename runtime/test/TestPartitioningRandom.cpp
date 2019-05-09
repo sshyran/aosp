@@ -28,6 +28,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cstdio>
+#include <iterator>
 #include <random>
 #include <set>
 #include <tuple>
@@ -92,6 +93,7 @@ using CompilationBuilder = nn::CompilationBuilder;
 using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
 using ExecutionPlan = nn::ExecutionPlan;
+using HalVersion = nn::HalVersion;
 using HidlModel = hardware::neuralnetworks::V1_2::Model;
 using HidlToken =
         ::android::hardware::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
@@ -166,7 +168,7 @@ public:
     }
 
     const std::vector<uint32_t>& getOperationOutputs(uint32_t index) const {
-        assert(index < mOperations.size());
+        CHECK(index < mOperations.size());
         return mOperations[index];
     }
 
@@ -183,8 +185,15 @@ public:
         }
     }
 
+    void setOperandValue(uint32_t index, const std::vector<int32_t>& value) {
+        const size_t length = value.size() * sizeof(int32_t);
+
+        CHECK(length <= ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES);
+        WrapperModel::setOperandValue(index, value.data(), length);
+    }
+
     void setOperandValue(uint32_t index, int32_t value) {
-        assert(sizeof(value) <=  ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES);
+        CHECK(sizeof(value) <= ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES);
         WrapperModel::setOperandValue(index, &value, sizeof(value));
     }
 
@@ -260,7 +269,7 @@ public:
     TestMemories& operator=(const TestMemories&) = delete;
 
     unsigned addMemory() {
-        assert(!mLayoutDone);
+        CHECK(!mLayoutDone);
         mMemorySizes.push_back(0);
         return memoryCount() - 1;
     }
@@ -269,8 +278,8 @@ public:
     }
 
     unsigned addRegion(unsigned memoryIndex, uint32_t length) {
-        assert(!mLayoutDone);
-        assert(memoryIndex < memoryCount());
+        CHECK(!mLayoutDone);
+        CHECK(memoryIndex < memoryCount());
         uint32_t& memorySize = mMemorySizes[memoryIndex];
         auto desc = std::make_tuple(memoryIndex, (uint32_t)memorySize, length);
         mRegions.push_back(desc);
@@ -285,8 +294,8 @@ public:
 
     void* getRegion(unsigned regionIndex,
                     const WrapperMemory** pMemory, uint32_t* pOffset, uint32_t* pLength) {
-        assert(mLayoutDone);
-        assert(regionIndex < regionCount());
+        CHECK(mLayoutDone);
+        CHECK(regionIndex < regionCount());
         const auto& regionDescriptor = mRegions[regionIndex];
         const WrapperMemory* memory = &mMemorys[std::get<0>(regionDescriptor)];
         uint32_t offset = std::get<1>(regionDescriptor);
@@ -295,7 +304,7 @@ public:
         uint8_t* buffer;
         if (reinterpret_cast<MemoryBuilder*>(memory->get())->getPointer(&buffer) !=
             ANEURALNETWORKS_NO_ERROR) {
-            assert(0);
+            CHECK(0);
         }
 
         if (pMemory) *pMemory = memory;
@@ -327,10 +336,10 @@ private:
 };
 
 void TestMemories::layout() {
-    assert(!mLayoutDone);
+    CHECK(!mLayoutDone);
     for (uint32_t memorySize : mMemorySizes) {
         const int fd = ASharedMemory_create(nullptr, memorySize);
-        assert(fd >= 0);
+        CHECK(fd >= 0);
         mMemorys.emplace_back(memorySize, PROT_READ | PROT_WRITE, fd, 0);
         mFDs.push_back(fd);
     }
@@ -350,12 +359,17 @@ public:
     static Signature getSignature(const HidlModel& model, const Operation& operation);
 
 protected:
-    bool randBool() {
-        return randUInt(2) == 1;
-    }
+ static V1_0::IDevice* makeTestDriver(HalVersion version, const char* name,
+                                      std::set<Signature> signatures);
 
-    double randFrac() {  // [0.0, 1.0)
-        return mRandNumUnitDist(mRandNumEng);
+ static HalVersion getMinHalVersion(ANeuralNetworksOperationType type);
+
+ static std::string to_string(HalVersion version);
+
+ bool randBool() { return randUInt(2) == 1; }
+
+ double randFrac() {  // [0.0, 1.0)
+     return mRandNumUnitDist(mRandNumEng);
     }
 
     unsigned randUInt(unsigned limit) {  // [0, limit)
@@ -371,6 +385,7 @@ protected:
     // - There be at least one input operand that is neither an
     //    activation function nor "special".
     struct OperationPattern {
+        HalVersion mMinHalVersion;
         int mOperationType;
         unsigned mNumInputs;
         unsigned mNumOutputs;
@@ -387,6 +402,9 @@ protected:
 
     static const OperationPattern kOperationPatterns[];
 
+    // See OperationPattern::mMakeSpecialInput.  This function is used to
+    // manufacture an RNN input operand that doesn't fit the general operand
+    // pattern known to the graph generator infrastructure.
     int makeRnnSpecialInput(unsigned problemSize, TestModel* model, unsigned inputIndex) {
         if (inputIndex != 3) {
             return -1;
@@ -399,6 +417,23 @@ protected:
         std::generate(biasValue.begin(), biasValue.end(),
                       [this]{ return randFrac(); });
         model->setOperandValue(operandIndex, biasValue);
+        return int(operandIndex);
+    }
+
+    // See OperationPattern::mMakeSpecialInput.  This function is used to
+    // manufacture a TRANSPOSE input operand that doesn't fit the general operand
+    // pattern known to the graph generator infrastructure.
+    int makeTransposeSpecialInput(unsigned /* problemSize */, TestModel* model,
+                                  unsigned inputIndex) {
+        if (inputIndex != 1) {
+            return -1;
+        }
+
+        // input operand 1 is perm, a 1-D tensor
+        const WrapperOperandType permType(WrapperType::TENSOR_INT32, {2});
+        const uint32_t operandIndex = model->addOperand(&permType);
+        std::vector<int32_t> permValue = {1, 0};
+        model->setOperandValue(operandIndex, permValue);
         return int(operandIndex);
     }
 
@@ -424,6 +459,15 @@ protected:
     private:
         const ModelBuilder* mBuilder;
     };
+
+    template <typename T_iterator>
+    static void dump(T_iterator I, T_iterator E) {
+        std::cout << "{";
+        for (; I != E; I++) {
+            std::cout << " " << *I;
+        }
+        std::cout << " }" << std::endl;
+    }
 #endif
 
     std::mt19937 mRandNumEng;
@@ -433,15 +477,36 @@ protected:
 };
 
 const RandomPartitioningTest::OperationPattern RandomPartitioningTest::kOperationPatterns[] = {
-    { ANEURALNETWORKS_ADD, 3, 1, 2, nullptr },
-    { ANEURALNETWORKS_LOGISTIC, 1, 1, -1, nullptr },
-    { ANEURALNETWORKS_MUL, 3, 1, 2, nullptr },
-    { ANEURALNETWORKS_RNN, 6, 2, 5, &RandomPartitioningTest::makeRnnSpecialInput },
-    { ANEURALNETWORKS_TANH, 1, 1, -1, nullptr },
+        {HalVersion::V1_0, ANEURALNETWORKS_ADD, 3, 1, 2, nullptr},
+        {HalVersion::V1_0, ANEURALNETWORKS_LOGISTIC, 1, 1, -1, nullptr},
+        {HalVersion::V1_0, ANEURALNETWORKS_MUL, 3, 1, 2, nullptr},
+        {HalVersion::V1_0, ANEURALNETWORKS_RNN, 6, 2, 5,
+         &RandomPartitioningTest::makeRnnSpecialInput},
+        {HalVersion::V1_0, ANEURALNETWORKS_TANH, 1, 1, -1, nullptr},
+
+        {HalVersion::V1_1, ANEURALNETWORKS_SUB, 3, 1, 2, nullptr},
+        {HalVersion::V1_1, ANEURALNETWORKS_TRANSPOSE, 2, 1, -1,
+         &RandomPartitioningTest::makeTransposeSpecialInput},
+
+        {HalVersion::V1_2, ANEURALNETWORKS_MAXIMUM, 2, 1, -1, nullptr},
+        {HalVersion::V1_2, ANEURALNETWORKS_NEG, 1, 1, -1, nullptr},
+        {HalVersion::V1_2, ANEURALNETWORKS_SIN, 1, 1, -1, nullptr},
 };
 
+HalVersion RandomPartitioningTest::getMinHalVersion(ANeuralNetworksOperationType type) {
+    static const auto kOperationToVersion = [] {
+        std::map<ANeuralNetworksOperationType, HalVersion> result;
+        for (const auto& pattern : kOperationPatterns) {
+            result[pattern.mOperationType] = pattern.mMinHalVersion;
+        }
+        return result;
+    }();
+
+    return kOperationToVersion.at(type);
+}
+
 Signature RandomPartitioningTest::getSignature(const HidlModel& model, const Operation& operation) {
-    static const std::map<ANeuralNetworksOperationType, int> kOperationToActivation = []() {
+    static const auto kOperationToActivation = [] {
         std::map<ANeuralNetworksOperationType, int> result;
         for (const auto& pattern : kOperationPatterns) {
             result[pattern.mOperationType] = pattern.mActivationFunctionInputIndex;
@@ -457,14 +522,27 @@ Signature RandomPartitioningTest::getSignature(const HidlModel& model, const Ope
     }
 
     const Operand& operand = model.operands[operation.inputs[activationFunctionInputIndex]];
-    assert(operand.lifetime == OperandLifeTime::CONSTANT_COPY);
-    assert(operand.type == OperandType::INT32);
+    CHECK(operand.lifetime == OperandLifeTime::CONSTANT_COPY);
+    CHECK(operand.type == OperandType::INT32);
     int32_t value;
     memcpy(&value,
            &model.operandValues[operand.location.offset],
            operand.location.length);
     return Signature(operationType, value);
 }
+
+std::string RandomPartitioningTest::to_string(HalVersion version) {
+    switch (version) {
+        case HalVersion::V1_0:
+            return "V1_0";
+        case HalVersion::V1_1:
+            return "V1_1";
+        case HalVersion::V1_2:
+            return "V1_2";
+        default:
+            return "V_UNKNOWN";
+    }
+};
 
 class TestDriver : public SampleDriver {
 public:
@@ -533,6 +611,79 @@ public:
 private:
     const std::set<Signature> mSignatures;
 };
+
+// Like TestDriver, but implementing 1.1
+class TestDriverV1_1 : public V1_1::IDevice {
+   public:
+    TestDriverV1_1(const char* name, std::set<Signature> signatures)
+        : mDriverV1_2(new TestDriver(name, std::move(signatures))) {}
+    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
+        return mDriverV1_2->getCapabilities_1_1(_hidl_cb);
+    }
+    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
+                                            getSupportedOperations_1_1_cb _hidl_cb) override {
+        return mDriverV1_2->getSupportedOperations_1_1(model, _hidl_cb);
+    }
+    Return<ErrorStatus> prepareModel_1_1(
+            const V1_1::Model& model, ExecutionPreference preference,
+            const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
+        return mDriverV1_2->prepareModel_1_1(model, preference, actualCallback);
+    }
+    Return<DeviceStatus> getStatus() override { return mDriverV1_2->getStatus(); }
+    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+        return mDriverV1_2->getCapabilities(_hidl_cb);
+    }
+    Return<void> getSupportedOperations(const V1_0::Model& model,
+                                        getSupportedOperations_cb _hidl_cb) override {
+        return mDriverV1_2->getSupportedOperations(model, _hidl_cb);
+    }
+    Return<ErrorStatus> prepareModel(
+            const V1_0::Model& model,
+            const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
+        return mDriverV1_2->prepareModel(model, actualCallback);
+    }
+
+   private:
+    const sp<V1_2::IDevice> mDriverV1_2;
+};
+
+// Like TestDriver, but implementing 1.0
+class TestDriverV1_0 : public V1_0::IDevice {
+   public:
+    TestDriverV1_0(const char* name, std::set<Signature> signatures)
+        : mDriverV1_2(new TestDriver(name, std::move(signatures))) {}
+    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+        return mDriverV1_2->getCapabilities(_hidl_cb);
+    }
+    Return<void> getSupportedOperations(const V1_0::Model& model,
+                                        getSupportedOperations_cb _hidl_cb) override {
+        return mDriverV1_2->getSupportedOperations(model, _hidl_cb);
+    }
+    Return<ErrorStatus> prepareModel(
+            const V1_0::Model& model,
+            const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
+        return mDriverV1_2->prepareModel(model, actualCallback);
+    }
+    Return<DeviceStatus> getStatus() override { return mDriverV1_2->getStatus(); }
+
+   private:
+    const sp<V1_2::IDevice> mDriverV1_2;
+};
+
+V1_0::IDevice* RandomPartitioningTest::makeTestDriver(HalVersion version, const char* name,
+                                                      std::set<Signature> signatures) {
+    switch (version) {
+        case HalVersion::V1_0:
+            return new TestDriverV1_0(name, std::move(signatures));
+        case HalVersion::V1_1:
+            return new TestDriverV1_1(name, std::move(signatures));
+        case HalVersion::V1_2:
+            return new TestDriver(name, std::move(signatures));
+        default:
+            ADD_FAILURE() << "Unexpected HalVersion " << static_cast<int32_t>(version);
+            return nullptr;
+    }
+}
 
 INSTANTIATE_TEST_CASE_P(Seed, RandomPartitioningTest,
                         ::testing::Range(kFirstSeed, kFirstSeed + kNumTestCases));
@@ -605,8 +756,7 @@ TEST_P(RandomPartitioningTest, Test) {
 
     // Generate operations.
     for (unsigned i = 0; i < numOperations; i++) {
-        const unsigned operationPatternIndex =
-                randUInt(sizeof(kOperationPatterns)/sizeof(kOperationPatterns[0]));
+        const unsigned operationPatternIndex = randUInt(std::size(kOperationPatterns));
         const auto& operationPattern = kOperationPatterns[operationPatternIndex];
 
         // INPUTS //////////////////////////////////////////////////////////////////////////////////
@@ -640,7 +790,7 @@ TEST_P(RandomPartitioningTest, Test) {
             }
             normalOperationInputIndexes.push_back(operationInputIndex);
         }
-        assert(!normalOperationInputIndexes.empty());
+        CHECK(!normalOperationInputIndexes.empty());
         signatures.insert(Signature(operationPattern.mOperationType, activationFunction));
 
         // A (normal) operation input can be one of:
@@ -709,7 +859,7 @@ TEST_P(RandomPartitioningTest, Test) {
             force(IK_OPERATION_OUTPUT);
         }
         if (modelInputs.empty()) {
-            assert(model.operationCount() == 0);
+            CHECK(model.operationCount() == 0);
             force(IK_MODEL_INPUT);
         }
 
@@ -740,8 +890,8 @@ TEST_P(RandomPartitioningTest, Test) {
                         operandIndex =
                             existingOperationOutputs[randUInt(existingOperationOutputs.size())];
                         deadOperandI = deadOperands.find(operandIndex);
-                        assert(deadOperandI == deadOperands.end() ||
-                               deadOperandI->second == existingOperationIndex);
+                        CHECK(deadOperandI == deadOperands.end() ||
+                              deadOperandI->second == existingOperationIndex);
                     }
                     if (deadOperandI != deadOperands.end()) {
                         const uint32_t correspondingOperation = deadOperandI->second;
@@ -832,7 +982,7 @@ TEST_P(RandomPartitioningTest, Test) {
         uint32_t offset, length;
         float* region =
                 static_cast<float*>(weights.getRegion(regionIndex, &memory, &offset, &length));
-        assert(length == problemSize * problemSize * sizeof(float));
+        CHECK(length == problemSize * problemSize * sizeof(float));
         std::generate(region, region + problemSize * problemSize, [this]{ return randFrac(); });
         model.setOperandValueFromMemory(operandIndex, memory, offset, length);
     }
@@ -911,7 +1061,7 @@ TEST_P(RandomPartitioningTest, Test) {
     ASSERT_EQ(c.finish(), Result::NO_ERROR);
 
     // Create some drivers for partitioned compilation.
-    assert(!signatures.empty());
+    CHECK(!signatures.empty());
     std::vector<std::set<Signature>> signaturesForDriver(signatures.size());
     //     First assign each signature to a random driver (a driver is
     //     just represented as an entry in the signaturesForDriver
@@ -929,9 +1079,28 @@ TEST_P(RandomPartitioningTest, Test) {
     //     Now actually create the drivers.
     std::vector<std::shared_ptr<Device>> devices;
     for (unsigned i = 0; i < signaturesForDriver.size(); i++) {
-        const std::string name = "TestDriver(" + std::to_string(i) + ")";
+        const auto& signaturesForThisDriver = signaturesForDriver[i];
+        // Minimum HAL version for this driver is highest minimum HAL version of
+        // any operation supported by this driver.
+        const HalVersion minHalVersion = getMinHalVersion(
+                std::max_element(signaturesForThisDriver.begin(), signaturesForThisDriver.end(),
+                                 [](const Signature& a, const Signature& b) {
+                                     return getMinHalVersion(a.first) < getMinHalVersion(b.first);
+                                 })
+                        ->first);
+        const HalVersion actualHalVersion =
+                static_cast<HalVersion>(static_cast<int32_t>(minHalVersion) +
+                                        randUInt(static_cast<int32_t>(HalVersion::LATEST) -
+                                                 static_cast<int32_t>(minHalVersion) + 1));
+        const std::string name =
+                "TestDriver(" + std::to_string(i) + "){" + to_string(actualHalVersion) + "}";
+#ifdef VERBOSE
+        std::cout << "Creating " + name + " for collection of signatures that requires HAL " +
+                             to_string(minHalVersion)
+                  << std::endl;
+#endif
         auto device = DeviceManager::forTest_makeDriverDevice(
-                name, new TestDriver(name.c_str(), signaturesForDriver[i]));
+                name, makeTestDriver(actualHalVersion, name.c_str(), signaturesForThisDriver));
         devices.push_back(device);
     }
     // CPU fallback device
@@ -980,8 +1149,8 @@ TEST_P(RandomPartitioningTest, Test) {
                 std::cout << "plan: compound, " << steps.size() << " steps over "
                           << devicesInPlan.size() << " devices" << std::endl;
                 for (unsigned i = 0; i < steps.size(); i++) {
-                    std::cout << "Step " << i << ": "
-                              << ModelStats(steps[i]->getSubModel()) << std::endl;
+                    std::cout << "Step " << i << ": " << ModelStats(steps[i]->getSubModel())
+                              << ", device = " << steps[i]->getDevice()->getName() << std::endl;
                 }
                 break;
             }
@@ -1018,6 +1187,12 @@ TEST_P(RandomPartitioningTest, Test) {
     // outputs anyway.
     std::vector<float> masterInputs(problemSize * problemSize * model.inputCount());
     std::generate(masterInputs.begin(), masterInputs.end(), [this]{ return randFrac(); });
+#ifdef VERBOSE
+    {
+        std::cout << "flat inputs = ";
+        dump(masterInputs.begin(), masterInputs.end());
+    }
+#endif
     const float masterOutput = randFrac();
 
     // Create the memory for the actual inputs and outputs.
@@ -1096,7 +1271,7 @@ TEST_P(RandomPartitioningTest, Test) {
                 float* region =
                         static_cast<float*>(ioMemories.getRegion(desc.mMemoryRegion,
                                                                  &memory, &offset, &length));
-                assert(length == problemSize * problemSize * sizeof(float));
+                CHECK(length == problemSize * problemSize * sizeof(float));
                 if (desc.mKind == InputOutputDescriptor::INPUT) {
                     const size_t inputOffset = inputIndex * problemSize * problemSize;
                     std::copy(masterInputs.begin() + inputOffset,
@@ -1112,8 +1287,8 @@ TEST_P(RandomPartitioningTest, Test) {
                 }
             }
         };
-        assert(inputIndex == model.inputCount());
-        assert(outputIndex == model.outputCount());
+        CHECK(inputIndex == model.inputCount());
+        CHECK(outputIndex == model.outputCount());
     };
 
     // Non-partitioned execution.
@@ -1142,14 +1317,9 @@ TEST_P(RandomPartitioningTest, Test) {
             }
 #ifdef VERBOSE
             {
-                std::cout << "output[" << outputIndex << "] = {";
-                for (auto I = nonPartitionedOutputs.begin() + outputOffset,
-                             E = nonPartitionedOutputs.begin() +
-                                     outputOffset + problemSize * problemSize;
-                     I != E; I++) {
-                    std::cout << " " << *I;
-                }
-                std::cout << " }" << std::endl;
+                std::cout << "nonpartitioned output[" << outputIndex << "] = ";
+                dump(nonPartitionedOutputs.begin() + outputOffset,
+                     nonPartitionedOutputs.begin() + outputOffset + problemSize * problemSize);
             }
 #endif
             outputIndex++;
@@ -1172,11 +1342,19 @@ TEST_P(RandomPartitioningTest, Test) {
             SCOPED_TRACE(outputIndex);
             const size_t outputOffset = outputIndex * problemSize * problemSize;
             if (desc.getLocation() == InputOutputDescriptor::VECTOR) {
+#ifdef VERBOSE
+                std::cout << "   partitioned output[" << outputIndex << "] = ";
+                dump(desc.mVector.begin(), desc.mVector.end());
+#endif
                 ASSERT_TRUE(std::equal(desc.mVector.begin(),
                                        desc.mVector.end(),
                                        nonPartitionedOutputs.begin() + outputOffset));
             } else {
                 float* region = static_cast<float*>(ioMemories.getRegion(desc.mMemoryRegion));
+#ifdef VERBOSE
+                std::cout << "part output[" << outputIndex << "] = ";
+                dump(region, region + problemSize * problemSize);
+#endif
                 ASSERT_TRUE(std::equal(region,
                                        region + problemSize * problemSize,
                                        nonPartitionedOutputs.begin() + outputOffset));

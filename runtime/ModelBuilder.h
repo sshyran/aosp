@@ -81,8 +81,10 @@ class ModelBuilder {
     uint32_t inputCount() const { return static_cast<uint32_t>(mInputIndexes.size()); }
     uint32_t outputCount() const { return static_cast<uint32_t>(mOutputIndexes.size()); }
     uint32_t getInputOperandIndex(uint32_t i) const { return mInputIndexes[i]; }
+    const std::vector<uint32_t>& getInputOperandIndexes() const { return mInputIndexes; }
     const Operand& getInputOperand(uint32_t i) const { return mOperands[getInputOperandIndex(i)]; }
     uint32_t getOutputOperandIndex(uint32_t i) const { return mOutputIndexes[i]; }
+    const std::vector<uint32_t>& getOutputOperandIndexes() const { return mOutputIndexes; }
     const Operand& getOutputOperand(uint32_t i) const {
         return mOperands[getOutputOperandIndex(i)];
     }

@@ -2110,35 +2110,43 @@ void logModelToInfo(const V1_2::Model& model) {
     LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
 }
 
-bool compliantWithV1_0(const V1_2::Model& model) {
-    return std::all_of(
-            model.operations.begin(), model.operations.end(), [&model](const V1_2::Operation& op) {
-                int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
-                                              op.inputs.size() > 0 ? op.inputs.data() : nullptr,
-                                              op.outputs.size(),
-                                              op.outputs.size() > 0 ? op.outputs.data() : nullptr,
-                                              model.operands, HalVersion::V1_0);
-                return error == ANEURALNETWORKS_NO_ERROR;
-            });
+static bool compliantWith(HalVersion version, const V1_2::Model& model,
+                          std::set<uint32_t>* noncompliantOperations) {
+    auto localValidateOperation = [&model, version](const V1_2::Operation& op) {
+        int error = validateOperation(
+                static_cast<int32_t>(op.type), op.inputs.size(),
+                op.inputs.size() > 0 ? op.inputs.data() : nullptr, op.outputs.size(),
+                op.outputs.size() > 0 ? op.outputs.data() : nullptr, model.operands, version);
+        return error == ANEURALNETWORKS_NO_ERROR;
+    };
+
+    if (noncompliantOperations) {
+        CHECK(noncompliantOperations->empty());
+        for (uint32_t idx = 0; idx < model.operations.size(); ++idx) {
+            if (!localValidateOperation(model.operations[idx])) {
+                noncompliantOperations->insert(idx);
+            }
+        }
+        return noncompliantOperations->empty();
+    } else {
+        return std::all_of(model.operations.begin(), model.operations.end(),
+                           localValidateOperation);
+    }
 }
 
-bool compliantWithV1_1(const V1_2::Model& model) {
-    return std::all_of(
-            model.operations.begin(), model.operations.end(), [&model](const V1_2::Operation& op) {
-                int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
-                                              op.inputs.size() > 0 ? op.inputs.data() : nullptr,
-                                              op.outputs.size(),
-                                              op.outputs.size() > 0 ? op.outputs.data() : nullptr,
-                                              model.operands, HalVersion::V1_1);
-                return error == ANEURALNETWORKS_NO_ERROR;
-            });
+bool compliantWithV1_0(const V1_2::Model& model, std::set<uint32_t>* noncompliantOperations) {
+    return compliantWith(HalVersion::V1_0, model, noncompliantOperations);
 }
 
-static V1_0::OperationType uncheckedConvertToV1_0(V1_2::OperationType type) {
+bool compliantWithV1_1(const V1_2::Model& model, std::set<uint32_t>* noncompliantOperations) {
+    return compliantWith(HalVersion::V1_1, model, noncompliantOperations);
+}
+
+V1_0::OperationType uncheckedConvertToV1_0(V1_2::OperationType type) {
     return static_cast<V1_0::OperationType>(type);
 }
 
-static V1_1::OperationType uncheckedConvertToV1_1(V1_2::OperationType type) {
+V1_1::OperationType uncheckedConvertToV1_1(V1_2::OperationType type) {
     return static_cast<V1_1::OperationType>(type);
 }
 
