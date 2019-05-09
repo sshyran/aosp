@@ -255,8 +255,29 @@ void compare_(const std::map<int, std::vector<T>>& golden,
     });
 }
 
+// TODO: Allow passing accuracy criteria from spec.
+// Currently we only need relaxed accuracy criteria on mobilenet tests, so we return the quant8
+// tolerance simply based on the current test name.
+inline int getQuant8AllowedError() {
+    const ::testing::TestInfo* const testInfo =
+            ::testing::UnitTest::GetInstance()->current_test_info();
+    const std::string testCaseName = testInfo->test_case_name();
+    const std::string testName = testInfo->name();
+    // We relax the quant8 precision for all tests with mobilenet:
+    // - CTS/VTS GeneratedTest and DynamicOutputShapeTest with mobilenet
+    // - VTS CompilationCachingTest and CompilationCachingSecurityTest except for TOCTOU tests
+    if (testName.find("mobilenet") != std::string::npos ||
+        (testCaseName.find("CompilationCaching") != std::string::npos &&
+         testName.find("TOCTOU") == std::string::npos)) {
+        return 2;
+    } else {
+        return 1;
+    }
+}
+
 inline void compare(const MixedTyped& golden, const MixedTyped& test,
                     float fpAtol = 1e-5f, float fpRtol = 1e-5f) {
+    int quant8AllowedError = getQuant8AllowedError();
     for_each<uint32_t>(
             golden.operandDimensions, test.operandDimensions,
             [](int index, const std::vector<uint32_t>& g, const std::vector<uint32_t>& t) {
@@ -286,11 +307,11 @@ inline void compare(const MixedTyped& golden, const MixedTyped& test,
                           }
                       });
     compare_<uint8_t>(golden.quant8AsymmOperands, test.quant8AsymmOperands,
-                      [&totalNumberOfErrors](uint8_t expected, uint8_t actual) {
+                      [&totalNumberOfErrors, quant8AllowedError](uint8_t expected, uint8_t actual) {
                           if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-                              EXPECT_NEAR(expected, actual, 1);
+                              EXPECT_NEAR(expected, actual, quant8AllowedError);
                           }
-                          if (std::abs(expected - actual) > 1) {
+                          if (std::abs(expected - actual) > quant8AllowedError) {
                               totalNumberOfErrors++;
                           }
                       });
@@ -325,11 +346,12 @@ inline void compare(const MixedTyped& golden, const MixedTyped& test,
                         }
                     });
     compare_<int8_t>(golden.quant8ChannelOperands, test.quant8ChannelOperands,
-                     [&totalNumberOfErrors](int8_t expected, int8_t actual) {
+                     [&totalNumberOfErrors, &quant8AllowedError](int8_t expected, int8_t actual) {
                          if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-                             EXPECT_NEAR(expected, actual, 1);
+                             EXPECT_NEAR(expected, actual, quant8AllowedError);
                          }
-                         if (std::abs(static_cast<int>(expected) - static_cast<int>(actual)) > 1) {
+                         if (std::abs(static_cast<int>(expected) - static_cast<int>(actual)) >
+                             quant8AllowedError) {
                              totalNumberOfErrors++;
                          }
                      });
@@ -343,11 +365,12 @@ inline void compare(const MixedTyped& golden, const MixedTyped& test,
                            }
                        });
     compare_<int8_t>(golden.quant8SymmOperands, test.quant8SymmOperands,
-                     [&totalNumberOfErrors](int8_t expected, int8_t actual) {
+                     [&totalNumberOfErrors, quant8AllowedError](int8_t expected, int8_t actual) {
                          if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-                             EXPECT_NEAR(expected, actual, 1);
+                             EXPECT_NEAR(expected, actual, quant8AllowedError);
                          }
-                         if (std::abs(static_cast<int>(expected) - static_cast<int>(actual)) > 1) {
+                         if (std::abs(static_cast<int>(expected) - static_cast<int>(actual)) >
+                             quant8AllowedError) {
                              totalNumberOfErrors++;
                          }
                      });
