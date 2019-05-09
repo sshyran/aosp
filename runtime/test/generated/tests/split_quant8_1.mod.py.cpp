@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, split_quant8_1) {
             split_quant8_1::is_ignored,
             split_quant8_1::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, split_quant8_1, split_quant8_1::CreateModel)
 
 TEST_F(GeneratedTests, split_quant8_1_relaxed) {
     execute(split_quant8_1::CreateModel_relaxed,

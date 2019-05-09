@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, bidirectional_sequence_lstm_float16_batch_major_blackbox)
             bidirectional_sequence_lstm_float16_batch_major::is_ignored,
             bidirectional_sequence_lstm_float16_batch_major::get_examples_blackbox());
 }
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_lstm_float16_batch_major_blackbox, bidirectional_sequence_lstm_float16_batch_major::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, bidirectional_sequence_lstm_float16_batch_major_blackbox_dynamic_output_shape) {
     execute(bidirectional_sequence_lstm_float16_batch_major::CreateModel_dynamic_output_shape,

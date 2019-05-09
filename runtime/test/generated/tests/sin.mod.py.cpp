@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, sin) {
             sin::is_ignored,
             sin::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, sin, sin::CreateModel)
 
 TEST_F(GeneratedTests, sin_relaxed) {
     execute(sin::CreateModel_relaxed,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, sin_float16) {
             sin::is_ignored_float16,
             sin::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, sin_float16, sin::CreateModel_float16)
 
 TEST_F(DynamicOutputShapeTest, sin_dynamic_output_shape) {
     execute(sin::CreateModel_dynamic_output_shape,

@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, gather_higher_rank) {
             gather_higher_rank::is_ignored,
             gather_higher_rank::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, gather_higher_rank, gather_higher_rank::CreateModel)
 
 TEST_F(GeneratedTests, gather_higher_rank_relaxed) {
     execute(gather_higher_rank::CreateModel_relaxed,
@@ -26,12 +27,14 @@ TEST_F(GeneratedTests, gather_higher_rank_quant8) {
             gather_higher_rank::is_ignored_quant8,
             gather_higher_rank::get_examples_quant8());
 }
+TEST_AVAILABLE_SINCE(V1_2, gather_higher_rank_quant8, gather_higher_rank::CreateModel_quant8)
 
 TEST_F(GeneratedTests, gather_higher_rank_int32) {
     execute(gather_higher_rank::CreateModel_int32,
             gather_higher_rank::is_ignored_int32,
             gather_higher_rank::get_examples_int32());
 }
+TEST_AVAILABLE_SINCE(V1_2, gather_higher_rank_int32, gather_higher_rank::CreateModel_int32)
 
 TEST_F(DynamicOutputShapeTest, gather_higher_rank_dynamic_output_shape) {
     execute(gather_higher_rank::CreateModel_dynamic_output_shape,

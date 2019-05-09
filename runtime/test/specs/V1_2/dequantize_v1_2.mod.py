@@ -91,6 +91,8 @@ test(
     ],
 )
 
+# DEQUANTIZE from TENSOR_QUANT8_ASYMM to TENSOR_FLOAT32 is introduced in V1_0.
+Example.SetVersion("V1_0", "dequantize_v1_2_1d_quant8_asymm", "dequantize_v1_2_2d_quant8_asymm")
 
 # FLOAT16
 model = Model()

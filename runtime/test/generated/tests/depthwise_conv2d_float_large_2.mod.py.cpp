@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, depthwise_conv2d_float_large_2) {
             depthwise_conv2d_float_large_2::is_ignored,
             depthwise_conv2d_float_large_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, depthwise_conv2d_float_large_2, depthwise_conv2d_float_large_2::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_large_2_dynamic_output_shape) {
     execute(depthwise_conv2d_float_large_2::CreateModel_dynamic_output_shape,

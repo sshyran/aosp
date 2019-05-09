@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, fully_connected_quant8_large_weights_as_inputs) {
             fully_connected_quant8_large_weights_as_inputs::is_ignored,
             fully_connected_quant8_large_weights_as_inputs::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, fully_connected_quant8_large_weights_as_inputs, fully_connected_quant8_large_weights_as_inputs::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, fully_connected_quant8_large_weights_as_inputs_dynamic_output_shape) {
     execute(fully_connected_quant8_large_weights_as_inputs::CreateModel_dynamic_output_shape,
