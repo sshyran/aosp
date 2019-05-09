@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, mean_float16) {
             mean_float16::is_ignored,
             mean_float16::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, mean_float16, mean_float16::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, mean_float16_dynamic_output_shape) {
     execute(mean_float16::CreateModel_dynamic_output_shape,

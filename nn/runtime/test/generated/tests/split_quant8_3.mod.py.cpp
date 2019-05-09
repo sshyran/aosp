@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, split_quant8_3) {
             split_quant8_3::is_ignored,
             split_quant8_3::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, split_quant8_3, split_quant8_3::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, split_quant8_3_dynamic_output_shape) {
     execute(split_quant8_3::CreateModel_dynamic_output_shape,

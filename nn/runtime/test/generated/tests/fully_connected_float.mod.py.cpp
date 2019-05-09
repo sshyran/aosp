@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, fully_connected_float) {
             fully_connected_float::is_ignored,
             fully_connected_float::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, fully_connected_float, fully_connected_float::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, fully_connected_float_dynamic_output_shape) {
     execute(fully_connected_float::CreateModel_dynamic_output_shape,

@@ -14,12 +14,14 @@ TEST_F(GeneratedTests, transpose_conv2d_large_quant8) {
             transpose_conv2d_large::is_ignored_quant8,
             transpose_conv2d_large::get_examples_quant8());
 }
+TEST_AVAILABLE_SINCE(V1_2, transpose_conv2d_large_quant8, transpose_conv2d_large::CreateModel_quant8)
 
 TEST_F(GeneratedTests, transpose_conv2d_large_channelQuant8) {
     execute(transpose_conv2d_large::CreateModel_channelQuant8,
             transpose_conv2d_large::is_ignored_channelQuant8,
             transpose_conv2d_large::get_examples_channelQuant8());
 }
+TEST_AVAILABLE_SINCE(V1_2, transpose_conv2d_large_channelQuant8, transpose_conv2d_large::CreateModel_channelQuant8)
 
 TEST_F(DynamicOutputShapeTest, transpose_conv2d_large_dynamic_output_shape_quant8) {
     execute(transpose_conv2d_large::CreateModel_dynamic_output_shape_quant8,

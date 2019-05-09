@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, add_quant8) {
             add_quant8::is_ignored,
             add_quant8::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, add_quant8, add_quant8::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, add_quant8_dynamic_output_shape) {
     execute(add_quant8::CreateModel_dynamic_output_shape,

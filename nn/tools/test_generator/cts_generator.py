@@ -268,6 +268,9 @@ TEST_F({test_case_name}, {test_name}) {{
     execute({namespace}::{create_model_name},
             {namespace}::{is_ignored_name},
             {namespace}::get_{examples_name}(){log_file});\n}}\n"""
+    if example.model.version is not None:
+        testTemplate += """\
+TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::{create_model_name})\n"""
     print(testTemplate.format(
         test_case_name="DynamicOutputShapeTest" if example.model.hasDynamicOutputShape \
                        else "GeneratedTests",
@@ -276,6 +279,7 @@ TEST_F({test_case_name}, {test_name}) {{
         create_model_name=str(example.model.createFunctionName),
         is_ignored_name=str(example.model.isIgnoredFunctionName),
         examples_name=str(example.examplesName),
+        version=example.model.version,
         log_file=tg.FileNames.logFile), file=test_fd)
 
 if __name__ == '__main__':

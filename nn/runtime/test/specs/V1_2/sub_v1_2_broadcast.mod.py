@@ -54,3 +54,7 @@ Example({
     input1: input1_values,
     output0: output_values,
 })
+
+# SUB of data type TENSOR_FLOAT32 is introduced in V1_1.
+Example.SetVersion("V1_1", "sub_v1_2_broadcast_none", "sub_v1_2_broadcast_relu", \
+                           "sub_v1_2_broadcast_relu1", "sub_v1_2_broadcast_relu6")

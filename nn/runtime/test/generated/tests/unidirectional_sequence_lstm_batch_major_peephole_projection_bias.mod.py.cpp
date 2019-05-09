@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, unidirectional_sequence_lstm_batch_major_peephole_project
             unidirectional_sequence_lstm_batch_major_peephole_projection_bias::is_ignored,
             unidirectional_sequence_lstm_batch_major_peephole_projection_bias::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_batch_major_peephole_projection_bias, unidirectional_sequence_lstm_batch_major_peephole_projection_bias::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_batch_major_peephole_projection_bias_dynamic_output_shape) {
     execute(unidirectional_sequence_lstm_batch_major_peephole_projection_bias::CreateModel_dynamic_output_shape,

@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, split_float_2) {
             split_float_2::is_ignored,
             split_float_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, split_float_2, split_float_2::CreateModel)
 
 TEST_F(GeneratedTests, split_float_2_relaxed) {
     execute(split_float_2::CreateModel_relaxed,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, split_float_2_float16) {
             split_float_2::is_ignored_float16,
             split_float_2::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, split_float_2_float16, split_float_2::CreateModel_float16)
 
 TEST_F(DynamicOutputShapeTest, split_float_2_dynamic_output_shape) {
     execute(split_float_2::CreateModel_dynamic_output_shape,

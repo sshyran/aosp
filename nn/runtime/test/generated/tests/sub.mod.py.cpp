@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, sub) {
             sub::is_ignored,
             sub::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_1, sub, sub::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, sub_dynamic_output_shape) {
     execute(sub::CreateModel_dynamic_output_shape,
