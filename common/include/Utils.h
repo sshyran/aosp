@@ -315,6 +315,8 @@ bool compliantWithV1_2(const V1_0::Capabilities& capabilities);
 bool compliantWithV1_2(const V1_1::Capabilities& capabilities);
 bool compliantWithV1_2(const V1_2::Capabilities& capabilities);
 
+bool compliantWithV1_0(const V1_2::Operand& operand);
+
 // If noncompliantOperations != nullptr, then
 //     precondition: noncompliantOperations->empty()
 //     postcondition: *noncompliantOperations consists of the indices of the noncompliant
