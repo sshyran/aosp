@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-#ifndef NNTEST_CTS
-#include <android-base/properties.h>
-#endif
-
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -28,12 +24,96 @@
 #include "fuzzing/RandomGraphGenerator.h"
 #include "fuzzing/RandomGraphGeneratorUtils.h"
 
+#ifndef NNTEST_CTS
+#include <android-base/properties.h>
+#include <vector>
+#include "Manager.h"
+#include "SampleDriverFull.h"
+
+using android::nn::sample_driver::SampleDriverFull;
+
+#endif
+
 namespace android {
 namespace nn {
 namespace fuzzing_test {
 
 using test_wrapper::Result;
 constexpr char kRefDeviceName[] = "nnapi-reference";
+
+#ifndef NNTEST_CTS
+class TestDriverV1_2 : public SampleDriverFull {
+   public:
+    TestDriverV1_2() : SampleDriverFull(name, {.execTime = 0.9f, .powerUsage = 0.9f}) {}
+    static constexpr char name[] = "TestDriverV1_2";
+};
+
+// Like SampleDriverFull, but implementing 1.1
+class TestDriverV1_1 : public V1_1::IDevice {
+   public:
+    TestDriverV1_1()
+        : mDriverV1_2(new SampleDriverFull(name, {.execTime = 0.8f, .powerUsage = 0.8f})) {}
+    static constexpr char name[] = "TestDriverV1_1";
+    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
+        return mDriverV1_2->getCapabilities_1_1(_hidl_cb);
+    }
+    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
+                                            getSupportedOperations_1_1_cb _hidl_cb) override {
+        return mDriverV1_2->getSupportedOperations_1_1(model, _hidl_cb);
+    }
+    Return<ErrorStatus> prepareModel_1_1(
+            const V1_1::Model& model, ExecutionPreference preference,
+            const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
+        return mDriverV1_2->prepareModel_1_1(model, preference, actualCallback);
+    }
+    Return<DeviceStatus> getStatus() override { return mDriverV1_2->getStatus(); }
+    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+        return mDriverV1_2->getCapabilities(_hidl_cb);
+    }
+    Return<void> getSupportedOperations(const V1_0::Model& model,
+                                        getSupportedOperations_cb _hidl_cb) override {
+        return mDriverV1_2->getSupportedOperations(model, _hidl_cb);
+    }
+    Return<ErrorStatus> prepareModel(
+            const V1_0::Model& model,
+            const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
+        return mDriverV1_2->prepareModel(model, actualCallback);
+    }
+
+   private:
+    const sp<V1_2::IDevice> mDriverV1_2;
+};
+
+// Like SampleDriverFull, but implementing 1.0
+class TestDriverV1_0 : public V1_0::IDevice {
+   public:
+    TestDriverV1_0()
+        : mDriverV1_2(new SampleDriverFull(name, {.execTime = 0.7f, .powerUsage = 0.7f})) {}
+    static constexpr char name[] = "TestDriverV1_0";
+    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+        return mDriverV1_2->getCapabilities(_hidl_cb);
+    }
+    Return<void> getSupportedOperations(const V1_0::Model& model,
+                                        getSupportedOperations_cb _hidl_cb) override {
+        return mDriverV1_2->getSupportedOperations(model, _hidl_cb);
+    }
+    Return<ErrorStatus> prepareModel(
+            const V1_0::Model& model,
+            const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
+        return mDriverV1_2->prepareModel(model, actualCallback);
+    }
+    Return<DeviceStatus> getStatus() override { return mDriverV1_2->getStatus(); }
+
+   private:
+    const sp<V1_2::IDevice> mDriverV1_2;
+};
+
+template <class T_TestDriver>
+std::shared_ptr<Device> makeTestDevice() {
+    return DeviceManager::forTest_makeDriverDevice(T_TestDriver::name, new T_TestDriver);
+}
+
+#endif
 
 // Manages compilation on one single device.
 class CompilationForDevice : public test_wrapper::Compilation {
@@ -67,17 +147,27 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
 #ifndef NNTEST_CTS
         mEnableLog = ::android::base::GetProperty("debug.nn.fuzzer.log", "") == "1";
         mDumpSpec = ::android::base::GetProperty("debug.nn.fuzzer.dumpspec", "") == "1";
+
+        mStandardDevices = DeviceManager::get()->forTest_getDevices();
+        mSyntheticDevices.push_back(makeTestDevice<TestDriverV1_2>());
+        mSyntheticDevices.push_back(makeTestDevice<TestDriverV1_1>());
+        mSyntheticDevices.push_back(makeTestDevice<TestDriverV1_0>());
 #endif
 
         // Get all the devices and device names.
+        mStandardDevicesFeatureLevel = __ANDROID_API_FUTURE__;
         uint32_t numDevices = 0;
         ASSERT_EQ(ANeuralNetworks_getDeviceCount(&numDevices), ANEURALNETWORKS_NO_ERROR);
         for (uint32_t i = 0; i < numDevices; i++) {
             ANeuralNetworksDevice* device = nullptr;
             const char* name = nullptr;
+            int64_t featureLevel;
             ASSERT_EQ(ANeuralNetworks_getDevice(i, &device), ANEURALNETWORKS_NO_ERROR);
             ASSERT_EQ(ANeuralNetworksDevice_getName(device, &name), ANEURALNETWORKS_NO_ERROR);
+            ASSERT_EQ(ANeuralNetworksDevice_getFeatureLevel(device, &featureLevel),
+                      ANEURALNETWORKS_NO_ERROR);
             mDevices.emplace(name, device);
+            mStandardDevicesFeatureLevel = std::min(mStandardDevicesFeatureLevel, featureLevel);
         }
     }
 
@@ -165,6 +255,29 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         }
     }
 
+    // Compile and execute the generated graph normally (i.e., allow runtime to
+    // distribute across devices).
+    void compute(const test_wrapper::Model* model, bool checkResults) {
+        // Because we're not using the introspection/control API, the CpuDevice
+        // is available as a fallback, and hence we assume that compilation and
+        // execution will succeed.
+
+        // Create compilation.
+        test_wrapper::Compilation compilation(model);
+        ASSERT_EQ(compilation.finish(), Result::NO_ERROR);
+
+        // Create request.
+        test_wrapper::Execution execution(&compilation);
+        std::vector<OperandBuffer> outputs;
+        mGraph.createRequest(&execution, &outputs);
+
+        // Compute and verify result.
+        ASSERT_EQ(execution.compute(), Result::NO_ERROR);
+        if (checkResults) {
+            mGraph.checkResults(outputs, mCriteria);
+        }
+    }
+
     // Main test entrance.
     void testRandomGraph(uint32_t numOperations, uint32_t dimensionRange) {
         // Generate a random graph.
@@ -179,10 +292,35 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         // Compute reference result.
         compute(&model, numOperations, kRefDeviceName);
 
+        // Compute on each available device.
         for (auto& pair : mDevices) {
             // Skip the nnapi reference device.
             if (pair.first.compare(kRefDeviceName) == 0) continue;
             compute(&model, numOperations, pair.first);
+        }
+
+        if (numOperations > 1) {
+            {
+                // Compute normally (i.e., allow runtime to distribute across
+                // devices).
+                SCOPED_TRACE("Compute normally");
+                compute(&model, mStandardDevicesFeatureLevel >= __ANDROID_API_Q__);
+            }
+
+#ifndef NNTEST_CTS
+            {
+                // Stress partitioner by allowing runtime to distribute across
+                // three synthetic devices.  The synthetic devices use the
+                // CpuExecutor for execution, so we always check results, even
+                // though some are of feature level < __ANDROID_API_Q__: In this
+                // case, we don't take feature level as an indication of
+                // reliability, as we do with real devices.
+                SCOPED_TRACE("Compute across synthetic devices");
+                DeviceManager::get()->forTest_setDevices(mSyntheticDevices);
+                compute(&model, true);
+                DeviceManager::get()->forTest_setDevices(mStandardDevices);
+            }
+#endif
         }
     }
 
@@ -197,11 +335,23 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
     std::string mTestName;
     RandomGraph mGraph;
     AccuracyCriteria mCriteria;
+
+    static int64_t mStandardDevicesFeatureLevel;  // minimum across all devices
+#ifndef NNTEST_CTS
+    static std::vector<std::shared_ptr<Device>> mStandardDevices;
+    static std::vector<std::shared_ptr<Device>> mSyntheticDevices;
+#endif
 };
 
 bool RandomGraphTest::mEnableLog = false;
 bool RandomGraphTest::mDumpSpec = false;
 std::map<std::string, ANeuralNetworksDevice*> RandomGraphTest::mDevices;
+
+int64_t RandomGraphTest::mStandardDevicesFeatureLevel;
+#ifndef NNTEST_CTS
+std::vector<std::shared_ptr<Device>> RandomGraphTest::mStandardDevices;
+std::vector<std::shared_ptr<Device>> RandomGraphTest::mSyntheticDevices;
+#endif
 
 // Single-op graph with dimensions in range [1, 1000].
 class SingleOperationTest : public RandomGraphTest {};
