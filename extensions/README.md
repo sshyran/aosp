@@ -8,9 +8,23 @@ by supporting corresponding vendor extensions.
 
 Note that extensions do not modify behavior of existing operations.
 
-TODO(pszczepaniak): Which apps can use vendor extensions?
-
 This document explains how to create and use extensions.
+
+## Extensions usage allowlist
+
+Vendor extensions can only be used by explicitly specified Android apps and
+native binaries on the /product, /vendor, /odm, and /data partitions. It's not possible to
+specify an app or a native binary located on the /system partition.
+
+The allowlist is stored in `/vendor/etc/nnapi_extensions_app_allowlist`, and contains
+a list of Android apps and binaries permitted to use NNAPI vendor extensions.
+Each line of the file contains a new entry. If an entry is prefixed by '/',
+then it's a native binary path (e.g. '/data/foo'). If not, it's a name of an Android
+app package (e.g. 'com.foo.bar').
+
+Allowlist is enforced from the NNAPI runtime shared library. It protects
+against accidental usage, but not against deliberate circumvention by directly
+using the NNAPI driver HAL interface.
 
 ## Vendor extension definition
 
