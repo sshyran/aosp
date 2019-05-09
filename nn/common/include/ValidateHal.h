@@ -36,17 +36,15 @@ enum class HalVersion : int32_t {
 // IMPORTANT: This function cannot validate that OEM operation and operands
 // are correctly defined, as these are specific to each implementation.
 // Each driver should do their own validation of OEM types.
-bool validateModel(const V1_0::Model& model);
-bool validateModel(const V1_1::Model& model);
-bool validateModel(const V1_2::Model& model);
+template <class T_Model>
+bool validateModel(const T_Model& model);
 
 // Verfies that the request for the given model is valid.
 // IMPORTANT: This function cannot validate that OEM operation and operands
 // are correctly defined, as these are specific to each implementation.
 // Each driver should do their own validation of OEM types.
-bool validateRequest(const Request& request, const V1_0::Model& model);
-bool validateRequest(const Request& request, const V1_1::Model& model);
-bool validateRequest(const Request& request, const V1_2::Model& model);
+template <class T_Model>
+bool validateRequest(const Request& request, const T_Model& model);
 
 // Verfies that the execution preference is valid.
 bool validateExecutionPreference(ExecutionPreference preference);
@@ -57,6 +55,9 @@ bool validOperationType(V1_2::OperationType operation);
 
 bool validOperandType(V1_0::OperandType operand);
 bool validOperandType(V1_2::OperandType operand);
+
+// Verfies that the memory pool is valid in the specified HAL version.
+bool validatePool(const hidl_memory& pool, HalVersion ver = HalVersion::LATEST);
 
 }  // namespace nn
 }  // namespace android
