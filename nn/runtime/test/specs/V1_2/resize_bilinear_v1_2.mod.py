@@ -16,7 +16,7 @@
 
 layout = BoolScalar("layout", False) # NHWC
 
-# TEST 1: RESIZE_BILINEAR_NCHW_1, h = 3, w = 3
+# TEST 1: RESIZE_BILINEAR_NCHW_1, w = 3, h = 3
 i1 = Input("op1", "TENSOR_FLOAT32", "{1, 2, 2, 1}")
 o1 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 3, 1}")
 model_shape = Model("shape").Operation("RESIZE_BILINEAR", i1, 3, 3, layout).To(o1)
@@ -40,7 +40,7 @@ Example(test1, model=model_shape).AddNchw(i1, o1, layout).AddVariations("relaxed
 Example(test1, model=model_scale).AddNchw(i1, o1, layout).AddVariations("relaxed", "float16", quant8)
 
 
-# TEST 2: RESIZE_BILINEAR_NCHW_2, h = 3, w = 3
+# TEST 2: RESIZE_BILINEAR_NCHW_2, w = 3, h = 3
 i2 = Input("op1", "TENSOR_FLOAT32", "{1, 2, 2, 2}")
 o2 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 3, 2}")
 model_shape = Model("shape").Operation("RESIZE_BILINEAR", i2, 3, 3, layout).To(o2)
@@ -64,7 +64,7 @@ Example(test2, model=model_shape).AddNchw(i2, o2, layout).AddVariations("relaxed
 Example(test2, model=model_scale).AddNchw(i2, o2, layout).AddVariations("relaxed", "float16", quant8)
 
 
-# TEST 3: RESIZE_BILINEAR, h = 3, w = 3
+# TEST 3: RESIZE_BILINEAR, w = 3, h = 3
 i3 = Input("op1", "TENSOR_FLOAT32", "{1, 2, 2, 1}")
 o3 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 3, 1}")
 model_shape = Model("shape").Operation("RESIZE_BILINEAR", i3, 3, 3).To(o3)
