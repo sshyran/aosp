@@ -42,10 +42,7 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
 
     bool isCacheEntryPresent(int32_t slot) const override {
         const auto it = mMemoryCache.find(slot);
-        if (it == mMemoryCache.end()) {
-            return false;
-        }
-        return it->second.valid();
+        return (it != mMemoryCache.end()) && it->second.valid();
     }
 
     void addCacheEntry(const hidl_memory& memory, int32_t slot) override {
@@ -415,7 +412,11 @@ bool ResultChannelSender::sendPacket(const std::vector<FmqResultDatum>& packet) 
                 << "ResultChannelSender::sendPacket -- packet size exceeds size available in FMQ";
         const std::vector<FmqResultDatum> errorPacket =
                 serialize(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
-        return mFmqResultChannel->writeBlocking(errorPacket.data(), errorPacket.size());
+        if (mBlocking) {
+            return mFmqResultChannel->writeBlocking(errorPacket.data(), errorPacket.size());
+        } else {
+            return mFmqResultChannel->write(errorPacket.data(), errorPacket.size());
+        }
     }
 
     if (mBlocking) {

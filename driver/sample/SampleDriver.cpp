@@ -358,10 +358,7 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
 
     bool isCacheEntryPresent(int32_t slot) const override {
         const auto it = mMemoryCache.find(slot);
-        if (it == mMemoryCache.end()) {
-            return false;
-        }
-        return it->second.has_value();
+        return (it != mMemoryCache.end()) && it->second.has_value();
     }
 
     void addCacheEntry(const hidl_memory& memory, int32_t slot) override {
