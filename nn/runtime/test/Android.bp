@@ -152,6 +152,10 @@ cc_test {
         "libgmock",
         "libneuralnetworks",
         "libneuralnetworks_common",
+        "libSampleDriver",
+    ],
+    header_libs: [
+        "libneuralnetworks_private_headers",
     ],
 }
 
