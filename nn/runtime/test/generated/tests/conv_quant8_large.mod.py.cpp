@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, conv_quant8_large) {
             conv_quant8_large::is_ignored,
             conv_quant8_large::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, conv_quant8_large, conv_quant8_large::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, conv_quant8_large_dynamic_output_shape) {
     execute(conv_quant8_large::CreateModel_dynamic_output_shape,

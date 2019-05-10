@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, exp) {
             exp::is_ignored,
             exp::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, exp, exp::CreateModel)
 
 TEST_F(GeneratedTests, exp_relaxed) {
     execute(exp::CreateModel_relaxed,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, exp_float16) {
             exp::is_ignored_float16,
             exp::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, exp_float16, exp::CreateModel_float16)
 
 TEST_F(DynamicOutputShapeTest, exp_dynamic_output_shape) {
     execute(exp::CreateModel_dynamic_output_shape,

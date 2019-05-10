@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, softmax_float_2) {
             softmax_float_2::is_ignored,
             softmax_float_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, softmax_float_2, softmax_float_2::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, softmax_float_2_dynamic_output_shape) {
     execute(softmax_float_2::CreateModel_dynamic_output_shape,

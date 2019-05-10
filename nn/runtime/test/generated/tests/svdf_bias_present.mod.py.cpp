@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, svdf_bias_present) {
             svdf_bias_present::is_ignored,
             svdf_bias_present::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, svdf_bias_present, svdf_bias_present::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, svdf_bias_present_dynamic_output_shape) {
     execute(svdf_bias_present::CreateModel_dynamic_output_shape,

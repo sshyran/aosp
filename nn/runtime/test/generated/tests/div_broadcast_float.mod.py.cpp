@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, div_broadcast_float) {
             div_broadcast_float::is_ignored,
             div_broadcast_float::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_1, div_broadcast_float, div_broadcast_float::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, div_broadcast_float_dynamic_output_shape) {
     execute(div_broadcast_float::CreateModel_dynamic_output_shape,

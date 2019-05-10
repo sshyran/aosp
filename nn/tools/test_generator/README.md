@@ -311,6 +311,31 @@ example.AddVariations(
 example.AddAllActivations(*op_list)
 ```
 
+### Specifying the Model Version
+
+If not explicitly specified, the minimal required HAL version will be inferred from the path, e.g. the models defined in `nn/runtime/test/specs/V1_0/add.mod.py` will all have version `V1_0`. However there are several exceptions that a certain operation is under-tested in previous version and more tests are added in a later version. In this case, two methods are provided to set the version manually.
+
+#### Set the version when creating the model
+
+Use `IntroducedIn` to set the version of a model. All variations of the model will have the same version.
+
+```Python
+model_V1_0 = Model().IntroducedIn("V1_0")
+...
+# All variations of model_V1_0 will have the same version V1_0.
+Example(example, model=model_V1_0).AddVariations(var0, var1, ...)
+```
+
+#### Set the version overrides
+
+Use `Example.SetVersion` to override the model version for specific tests. The target tests are specified by names. This method can also override the version specified by `IntroducedIn`.
+
+```Python
+Example.SetVersion(<version>, testName0, testName1, ...)
+```
+
+This is useful when only a subset of variations has a different version.
+
 ### A Complete Example
 
 ```Python

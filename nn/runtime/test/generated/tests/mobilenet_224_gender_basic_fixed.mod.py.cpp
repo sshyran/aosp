@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, mobilenet_224_gender_basic_fixed) {
             mobilenet_224_gender_basic_fixed::is_ignored,
             mobilenet_224_gender_basic_fixed::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, mobilenet_224_gender_basic_fixed, mobilenet_224_gender_basic_fixed::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, mobilenet_224_gender_basic_fixed_dynamic_output_shape) {
     execute(mobilenet_224_gender_basic_fixed::CreateModel_dynamic_output_shape,

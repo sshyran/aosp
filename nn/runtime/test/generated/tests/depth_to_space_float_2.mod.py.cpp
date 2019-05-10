@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, depth_to_space_float_2) {
             depth_to_space_float_2::is_ignored,
             depth_to_space_float_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, depth_to_space_float_2, depth_to_space_float_2::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, depth_to_space_float_2_dynamic_output_shape) {
     execute(depth_to_space_float_2::CreateModel_dynamic_output_shape,
