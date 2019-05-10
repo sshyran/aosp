@@ -1,5 +1,5 @@
 // clang-format off
-// Generated file (from: pad_quant8.mod.py). Do not edit
+// Generated file (from: pad_quant8_nonzero.mod.py). Do not edit
 std::vector<MixedTypedExample>& get_examples() {
 static std::vector<MixedTypedExample> examples = {
 // Begin of an example
@@ -37,7 +37,7 @@ static std::vector<MixedTypedExample> examples = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 1, 2, 3, 0, 0, 0, 0, 4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}},
+  .quant8AsymmOperands = {{0, {9, 1, 2, 3, 9, 9, 9, 9, 4, 5, 6, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -94,7 +94,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 1, 2, 3, 0, 0, 0, 0, 4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}},
+  .quant8AsymmOperands = {{0, {9, 1, 2, 3, 9, 9, 9, 9, 4, 5, 6, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map

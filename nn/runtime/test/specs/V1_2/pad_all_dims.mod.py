@@ -26,8 +26,8 @@ output0 = Output("output0", "TENSOR_FLOAT32", "{4, 8, 8, 6}")
 model = Model().Operation("PAD", input0, paddings).To(output0)
 
 quant8 = DataTypeConverter().Identify({
-    input0: ("TENSOR_QUANT8_ASYMM", 2.3, 9),
-    output0: ("TENSOR_QUANT8_ASYMM", 2.3, 9),
+    input0: ("TENSOR_QUANT8_ASYMM", 2.3, 0),
+    output0: ("TENSOR_QUANT8_ASYMM", 2.3, 0),
 })
 
 Example({
