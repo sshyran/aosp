@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, softmax_quant8_1) {
             softmax_quant8_1::is_ignored,
             softmax_quant8_1::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, softmax_quant8_1, softmax_quant8_1::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, softmax_quant8_1_dynamic_output_shape) {
     execute(softmax_quant8_1::CreateModel_dynamic_output_shape,

@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, reshape) {
             reshape::is_ignored,
             reshape::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, reshape, reshape::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, reshape_dynamic_output_shape) {
     execute(reshape::CreateModel_dynamic_output_shape,

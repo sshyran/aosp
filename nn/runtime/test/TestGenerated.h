@@ -17,10 +17,11 @@
 #ifndef ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_TESTGENERATED_H
 #define ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_TESTGENERATED_H
 
+#include <gtest/gtest.h>
+
+#include "TestCompliance.h"
 #include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
-
-#include <gtest/gtest.h>
 
 #ifdef NNTEST_CTS
 #define NNTEST_COMPUTE_MODE

@@ -14,12 +14,14 @@ TEST_F(GeneratedTests, depthwise_conv2d_per_channel_same) {
             depthwise_conv2d_per_channel::is_ignored_same,
             depthwise_conv2d_per_channel::get_examples_same());
 }
+TEST_AVAILABLE_SINCE(V1_2, depthwise_conv2d_per_channel_same, depthwise_conv2d_per_channel::CreateModel_same)
 
 TEST_F(GeneratedTests, depthwise_conv2d_per_channel_same_weight_as_input) {
     execute(depthwise_conv2d_per_channel::CreateModel_same_weight_as_input,
             depthwise_conv2d_per_channel::is_ignored_same_weight_as_input,
             depthwise_conv2d_per_channel::get_examples_same_weight_as_input());
 }
+TEST_AVAILABLE_SINCE(V1_2, depthwise_conv2d_per_channel_same_weight_as_input, depthwise_conv2d_per_channel::CreateModel_same_weight_as_input)
 
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_same_dynamic_output_shape) {
     execute(depthwise_conv2d_per_channel::CreateModel_same_dynamic_output_shape,
@@ -38,12 +40,14 @@ TEST_F(GeneratedTests, depthwise_conv2d_per_channel_different) {
             depthwise_conv2d_per_channel::is_ignored_different,
             depthwise_conv2d_per_channel::get_examples_different());
 }
+TEST_AVAILABLE_SINCE(V1_2, depthwise_conv2d_per_channel_different, depthwise_conv2d_per_channel::CreateModel_different)
 
 TEST_F(GeneratedTests, depthwise_conv2d_per_channel_different_weight_as_input) {
     execute(depthwise_conv2d_per_channel::CreateModel_different_weight_as_input,
             depthwise_conv2d_per_channel::is_ignored_different_weight_as_input,
             depthwise_conv2d_per_channel::get_examples_different_weight_as_input());
 }
+TEST_AVAILABLE_SINCE(V1_2, depthwise_conv2d_per_channel_different_weight_as_input, depthwise_conv2d_per_channel::CreateModel_different_weight_as_input)
 
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_different_dynamic_output_shape) {
     execute(depthwise_conv2d_per_channel::CreateModel_different_dynamic_output_shape,
@@ -62,24 +66,28 @@ TEST_F(GeneratedTests, depthwise_conv2d_per_channel_layout_nhwc) {
             depthwise_conv2d_per_channel::is_ignored_layout_nhwc,
             depthwise_conv2d_per_channel::get_examples_layout_nhwc());
 }
+TEST_AVAILABLE_SINCE(V1_2, depthwise_conv2d_per_channel_layout_nhwc, depthwise_conv2d_per_channel::CreateModel_layout_nhwc)
 
 TEST_F(GeneratedTests, depthwise_conv2d_per_channel_layout_nhwc_weight_as_input) {
     execute(depthwise_conv2d_per_channel::CreateModel_layout_nhwc_weight_as_input,
             depthwise_conv2d_per_channel::is_ignored_layout_nhwc_weight_as_input,
             depthwise_conv2d_per_channel::get_examples_layout_nhwc_weight_as_input());
 }
+TEST_AVAILABLE_SINCE(V1_2, depthwise_conv2d_per_channel_layout_nhwc_weight_as_input, depthwise_conv2d_per_channel::CreateModel_layout_nhwc_weight_as_input)
 
 TEST_F(GeneratedTests, depthwise_conv2d_per_channel_layout_nchw) {
     execute(depthwise_conv2d_per_channel::CreateModel_layout_nchw,
             depthwise_conv2d_per_channel::is_ignored_layout_nchw,
             depthwise_conv2d_per_channel::get_examples_layout_nchw());
 }
+TEST_AVAILABLE_SINCE(V1_2, depthwise_conv2d_per_channel_layout_nchw, depthwise_conv2d_per_channel::CreateModel_layout_nchw)
 
 TEST_F(GeneratedTests, depthwise_conv2d_per_channel_layout_nchw_weight_as_input) {
     execute(depthwise_conv2d_per_channel::CreateModel_layout_nchw_weight_as_input,
             depthwise_conv2d_per_channel::is_ignored_layout_nchw_weight_as_input,
             depthwise_conv2d_per_channel::get_examples_layout_nchw_weight_as_input());
 }
+TEST_AVAILABLE_SINCE(V1_2, depthwise_conv2d_per_channel_layout_nchw_weight_as_input, depthwise_conv2d_per_channel::CreateModel_layout_nchw_weight_as_input)
 
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_nhwc) {
     execute(depthwise_conv2d_per_channel::CreateModel_layout_dynamic_output_shape_nhwc,

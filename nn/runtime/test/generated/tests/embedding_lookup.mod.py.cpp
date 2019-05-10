@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, embedding_lookup) {
             embedding_lookup::is_ignored,
             embedding_lookup::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, embedding_lookup, embedding_lookup::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, embedding_lookup_dynamic_output_shape) {
     execute(embedding_lookup::CreateModel_dynamic_output_shape,

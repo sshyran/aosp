@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, neg) {
             neg::is_ignored,
             neg::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, neg, neg::CreateModel)
 
 TEST_F(GeneratedTests, neg_relaxed) {
     execute(neg::CreateModel_relaxed,
@@ -26,12 +27,14 @@ TEST_F(GeneratedTests, neg_float16) {
             neg::is_ignored_float16,
             neg::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, neg_float16, neg::CreateModel_float16)
 
 TEST_F(GeneratedTests, neg_int32) {
     execute(neg::CreateModel_int32,
             neg::is_ignored_int32,
             neg::get_examples_int32());
 }
+TEST_AVAILABLE_SINCE(V1_2, neg_int32, neg::CreateModel_int32)
 
 TEST_F(DynamicOutputShapeTest, neg_dynamic_output_shape) {
     execute(neg::CreateModel_dynamic_output_shape,

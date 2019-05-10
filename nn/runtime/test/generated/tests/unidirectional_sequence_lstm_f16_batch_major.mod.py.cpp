@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, unidirectional_sequence_lstm_f16_batch_major) {
             unidirectional_sequence_lstm_f16_batch_major::is_ignored,
             unidirectional_sequence_lstm_f16_batch_major::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_f16_batch_major, unidirectional_sequence_lstm_f16_batch_major::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_f16_batch_major_dynamic_output_shape) {
     execute(unidirectional_sequence_lstm_f16_batch_major::CreateModel_dynamic_output_shape,
