@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, l2_normalization_2) {
             l2_normalization_2::is_ignored,
             l2_normalization_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, l2_normalization_2, l2_normalization_2::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, l2_normalization_2_dynamic_output_shape) {
     execute(l2_normalization_2::CreateModel_dynamic_output_shape,

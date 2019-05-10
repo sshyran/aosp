@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, depthwise_conv2d_float_weights_as_inputs) {
             depthwise_conv2d_float_weights_as_inputs::is_ignored,
             depthwise_conv2d_float_weights_as_inputs::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, depthwise_conv2d_float_weights_as_inputs, depthwise_conv2d_float_weights_as_inputs::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_weights_as_inputs_dynamic_output_shape) {
     execute(depthwise_conv2d_float_weights_as_inputs::CreateModel_dynamic_output_shape,

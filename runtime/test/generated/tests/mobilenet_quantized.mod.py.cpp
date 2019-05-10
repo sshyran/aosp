@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, mobilenet_quantized) {
             mobilenet_quantized::is_ignored,
             mobilenet_quantized::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, mobilenet_quantized, mobilenet_quantized::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, mobilenet_quantized_dynamic_output_shape) {
     execute(mobilenet_quantized::CreateModel_dynamic_output_shape,

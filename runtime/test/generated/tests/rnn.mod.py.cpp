@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, rnn) {
             rnn::is_ignored,
             rnn::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, rnn, rnn::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, rnn_dynamic_output_shape) {
     execute(rnn::CreateModel_dynamic_output_shape,

@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, conv_quant8_channels) {
             conv_quant8_channels::is_ignored,
             conv_quant8_channels::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, conv_quant8_channels, conv_quant8_channels::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, conv_quant8_channels_dynamic_output_shape) {
     execute(conv_quant8_channels::CreateModel_dynamic_output_shape,
