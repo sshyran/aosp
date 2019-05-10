@@ -1,5 +1,5 @@
 // clang-format off
-// Generated file (from: pad_quant8.mod.py). Do not edit
+// Generated file (from: space_to_batch_quant8_nonzero.mod.py). Do not edit
 std::vector<MixedTypedExample>& get_examples() {
 static std::vector<MixedTypedExample> examples = {
 // Begin of an example
@@ -8,13 +8,13 @@ static std::vector<MixedTypedExample> examples = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 3, 1}}},
+  .operandDimensions = {{0, {1, 5, 2, 1}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {1, 2, 3, 4, 5, 6}}},
+  .quant8AsymmOperands = {{0, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -31,13 +31,13 @@ static std::vector<MixedTypedExample> examples = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {1, 4, 7, 1}}},
+  .operandDimensions = {{0, {6, 2, 2, 1}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 1, 2, 3, 0, 0, 0, 0, 4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}},
+  .quant8AsymmOperands = {{0, {9, 9, 9, 5, 9, 9, 9, 6, 9, 1, 9, 7, 9, 2, 9, 8, 9, 3, 9, 9, 9, 4, 9, 10}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -65,13 +65,13 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
 //Input(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 3, 1}}},
+  .operandDimensions = {{0, {1, 5, 2, 1}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {1, 2, 3, 4, 5, 6}}},
+  .quant8AsymmOperands = {{0, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -88,13 +88,13 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
 //Output(s)
 { // See tools/test_generator/include/TestHarness.h:MixedTyped
   // int -> Dimensions map
-  .operandDimensions = {{0, {1, 4, 7, 1}}},
+  .operandDimensions = {{0, {6, 2, 2, 1}}},
   // int -> FLOAT32 map
   .float32Operands = {},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {0, 1, 2, 3, 0, 0, 0, 0, 4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}},
+  .quant8AsymmOperands = {{0, {9, 9, 9, 5, 9, 9, 9, 6, 9, 1, 9, 7, 9, 2, 9, 8, 9, 3, 9, 9, 9, 4, 9, 10}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map

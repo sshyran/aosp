@@ -76,8 +76,8 @@ inline bool is_ignored_relaxed(int i) {
 
 void CreateModel_quant8(Model *model) {
   OperandType type1(Type::TENSOR_INT32, {4, 2});
-  OperandType type5(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 3}, 2.3f, 9);
-  OperandType type6(Type::TENSOR_QUANT8_ASYMM, {4, 8, 8, 6}, 2.3f, 9);
+  OperandType type5(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 3}, 2.3f, 0);
+  OperandType type6(Type::TENSOR_QUANT8_ASYMM, {4, 8, 8, 6}, 2.3f, 0);
   // Phase 1, operands
   auto input0 = model->addOperand(&type5);
   auto paddings = model->addOperand(&type1);
@@ -174,8 +174,8 @@ inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
 
 void CreateModel_dynamic_output_shape_quant8(Model *model) {
   OperandType type1(Type::TENSOR_INT32, {4, 2});
-  OperandType type5(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 3}, 2.3f, 9);
-  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 2.3f, 9);
+  OperandType type5(Type::TENSOR_QUANT8_ASYMM, {1, 1, 2, 3}, 2.3f, 0);
+  OperandType type9(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 2.3f, 0);
   // Phase 1, operands
   auto input0 = model->addOperand(&type5);
   auto paddings = model->addOperand(&type1);

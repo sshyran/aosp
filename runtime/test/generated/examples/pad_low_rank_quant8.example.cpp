@@ -37,7 +37,7 @@ static std::vector<MixedTypedExample> examples = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {9, 9, 9, 1, 2, 3, 9}}},
+  .quant8AsymmOperands = {{0, {0, 0, 0, 1, 2, 3, 0}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
@@ -94,7 +94,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{0, {9, 9, 9, 1, 2, 3, 9}}},
+  .quant8AsymmOperands = {{0, {0, 0, 0, 1, 2, 3, 0}}},
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
