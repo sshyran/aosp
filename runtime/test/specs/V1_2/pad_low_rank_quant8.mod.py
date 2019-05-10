@@ -14,13 +14,13 @@
 # limitations under the License.
 #
 
-input0 = Input("input0", "TENSOR_QUANT8_ASYMM", "{3}, 2.3, 9")
+input0 = Input("input0", "TENSOR_QUANT8_ASYMM", "{3}, 2.3, 0")
 paddings = Parameter("paddings", "TENSOR_INT32", "{1, 2}", [3, 1])
-output0 = Output("output0", "TENSOR_QUANT8_ASYMM", "{7}, 2.3, 9")
+output0 = Output("output0", "TENSOR_QUANT8_ASYMM", "{7}, 2.3, 0")
 
 model = Model().Operation("PAD", input0, paddings).To(output0)
 
 Example({
     input0: [1, 2, 3],
-    output0: [9, 9, 9, 1, 2, 3, 9],
+    output0: [0, 0, 0, 1, 2, 3, 0],
 })
