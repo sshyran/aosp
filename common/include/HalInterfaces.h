@@ -71,6 +71,7 @@ using ::android::hardware::neuralnetworks::V1_2::Operation;
 using ::android::hardware::neuralnetworks::V1_2::OperationType;
 using ::android::hardware::neuralnetworks::V1_2::OperationTypeRange;
 using ::android::hardware::neuralnetworks::V1_2::OutputShape;
+using ::android::hardware::neuralnetworks::V1_2::SymmPerChannelQuantParams;
 using ::android::hardware::neuralnetworks::V1_2::Timing;
 using ::android::hidl::allocator::V1_0::IAllocator;
 using ::android::hidl::memory::V1_0::IMemory;
