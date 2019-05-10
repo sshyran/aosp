@@ -595,7 +595,7 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
             VLOG(EXECUTION) << "ExecutionBuilder::compute (asynchronous API)";
             std::thread thread(asyncStartComputePartitioned, this, mPlan, controller, allowFallback,
                                executionCallback);
-            executionCallback->bind_thread(std::move(thread));
+            executionCallback->bindThread(std::move(thread));
         }
         *synchronizationCallback = executionCallback;
         return ANEURALNETWORKS_NO_ERROR;
@@ -1043,7 +1043,7 @@ int StepExecutor::startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallba
         // TODO: should model be moved with a std::cref?
         std::thread thread(computeOnCpu, model, std::move(request), std::move(modelPoolInfos),
                            std::move(requestPoolInfos), executionCallback);
-        executionCallback->bind_thread(std::move(thread));
+        executionCallback->bindThread(std::move(thread));
     }
 
     *synchronizationCallback = executionCallback;
