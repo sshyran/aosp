@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, local_response_norm_float_4) {
             local_response_norm_float_4::is_ignored,
             local_response_norm_float_4::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, local_response_norm_float_4, local_response_norm_float_4::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, local_response_norm_float_4_dynamic_output_shape) {
     execute(local_response_norm_float_4::CreateModel_dynamic_output_shape,

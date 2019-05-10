@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, l2_pool_float) {
             l2_pool_float::is_ignored,
             l2_pool_float::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, l2_pool_float, l2_pool_float::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, l2_pool_float_dynamic_output_shape) {
     execute(l2_pool_float::CreateModel_dynamic_output_shape,

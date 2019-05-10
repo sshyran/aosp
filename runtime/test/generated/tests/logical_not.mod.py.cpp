@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, logical_not) {
             logical_not::is_ignored,
             logical_not::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, logical_not, logical_not::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, logical_not_dynamic_output_shape) {
     execute(logical_not::CreateModel_dynamic_output_shape,

@@ -14,12 +14,14 @@ TEST_F(GeneratedTests, pad_v2_1_float) {
             pad_v2_1_float::is_ignored,
             pad_v2_1_float::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, pad_v2_1_float, pad_v2_1_float::CreateModel)
 
 TEST_F(GeneratedTests, pad_v2_1_float_float16) {
     execute(pad_v2_1_float::CreateModel_float16,
             pad_v2_1_float::is_ignored_float16,
             pad_v2_1_float::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, pad_v2_1_float_float16, pad_v2_1_float::CreateModel_float16)
 
 TEST_F(GeneratedTests, pad_v2_1_float_relaxed) {
     execute(pad_v2_1_float::CreateModel_relaxed,

@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, tanh) {
             tanh::is_ignored,
             tanh::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, tanh, tanh::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, tanh_dynamic_output_shape) {
     execute(tanh::CreateModel_dynamic_output_shape,

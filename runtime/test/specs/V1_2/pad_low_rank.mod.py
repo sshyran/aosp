@@ -24,3 +24,6 @@ Example({
     input0: [1.0, 2.0, 3.0],
     output0: [0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 0.0],
 }).AddVariations("float16")
+
+# PAD of TENSOR_FLOAT32 data type is introduced in V1_1.
+Example.SetVersion("V1_1", "pad_low_rank")

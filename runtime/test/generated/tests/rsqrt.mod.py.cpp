@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, rsqrt) {
             rsqrt::is_ignored,
             rsqrt::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, rsqrt, rsqrt::CreateModel)
 
 TEST_F(GeneratedTests, rsqrt_relaxed) {
     execute(rsqrt::CreateModel_relaxed,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, rsqrt_float16) {
             rsqrt::is_ignored_float16,
             rsqrt::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, rsqrt_float16, rsqrt::CreateModel_float16)
 
 TEST_F(DynamicOutputShapeTest, rsqrt_dynamic_output_shape) {
     execute(rsqrt::CreateModel_dynamic_output_shape,
