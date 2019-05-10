@@ -1,9 +1,9 @@
 // clang-format off
 // Generated file (from: pad_low_rank_quant8.mod.py). Do not edit
 void CreateModel(Model *model) {
-  OperandType type0(Type::TENSOR_QUANT8_ASYMM, {3}, 2.3f, 9);
+  OperandType type0(Type::TENSOR_QUANT8_ASYMM, {3}, 2.3f, 0);
   OperandType type1(Type::TENSOR_INT32, {1, 2});
-  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {7}, 2.3f, 9);
+  OperandType type2(Type::TENSOR_QUANT8_ASYMM, {7}, 2.3f, 0);
   // Phase 1, operands
   auto input0 = model->addOperand(&type0);
   auto paddings = model->addOperand(&type1);
@@ -25,9 +25,9 @@ inline bool is_ignored(int i) {
 }
 
 void CreateModel_dynamic_output_shape(Model *model) {
-  OperandType type0(Type::TENSOR_QUANT8_ASYMM, {3}, 2.3f, 9);
+  OperandType type0(Type::TENSOR_QUANT8_ASYMM, {3}, 2.3f, 0);
   OperandType type1(Type::TENSOR_INT32, {1, 2});
-  OperandType type3(Type::TENSOR_QUANT8_ASYMM, {0}, 2.3f, 9);
+  OperandType type3(Type::TENSOR_QUANT8_ASYMM, {0}, 2.3f, 0);
   // Phase 1, operands
   auto input0 = model->addOperand(&type0);
   auto paddings = model->addOperand(&type1);
