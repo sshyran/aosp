@@ -123,7 +123,15 @@ class DeviceManager {
     // Returns the singleton Cpu device.
     static std::shared_ptr<Device> getCpuDevice();
 
-    // The functions below are solely intended for use by unit tests.
+    // The forTest_* functions below are solely intended for use by unit tests.
+
+    // Returns all devices (ignores the cpu-only flags).
+    std::vector<std::shared_ptr<Device>> forTest_getDevices() const { return mDevices; }
+
+    // Sets the device list (does not affect cpu-only queries).
+    void forTest_setDevices(std::vector<std::shared_ptr<Device>> devices) {
+        mDevices = std::move(devices);
+    }
 
     // Register a test device.
     void forTest_registerDevice(const char* name, const sp<V1_0::IDevice>& device) {
