@@ -898,7 +898,10 @@ int StepExecutor::startComputeOnDevice(
     // in the design document.
     sp<ExecutionCallback> executionCallback = new ExecutionCallback();
 
-    if (burstController != nullptr) {
+    // compute using burst if present
+    const bool burstCompute = (burstController != nullptr);
+    bool burstFallback = false;
+    if (burstCompute) {
         std::vector<intptr_t> memoryIds;
         memoryIds.reserve(mMemories.size());
         for (const Memory* memory : mMemories) {
@@ -906,34 +909,46 @@ int StepExecutor::startComputeOnDevice(
             memoryIds.push_back(memory->getKey());
         }
 
-        VLOG(EXECUTION) << "Before ExecutionBurstController->compute() "
+        VLOG(EXECUTION) << "Before ExecutionBurstController->tryCompute() "
                         << SHOW_IF_DEBUG(toString(request));
-        auto burstExecuteResult =
-                burstController->compute(request, measureTiming(mExecutionBuilder), memoryIds);
-        executionCallback->notify(std::get<0>(burstExecuteResult), std::get<1>(burstExecuteResult),
-                                  std::get<2>(burstExecuteResult));
-    } else if (DeviceManager::get()->syncExecHal()) {
-        VLOG(EXECUTION) << "Before mPreparedModel->executeSynchronously() "
-                        << SHOW_IF_DEBUG(toString(request));
-        auto syncExecuteResult =
-                mPreparedModel->executeSynchronously(request, measureTiming(mExecutionBuilder));
-        executionCallback->notify(std::get<0>(syncExecuteResult), std::get<1>(syncExecuteResult),
-                                  std::get<2>(syncExecuteResult));
-    } else {
-        VLOG(EXECUTION) << "Before mPreparedModel->execute() " << SHOW_IF_DEBUG(toString(request));
-        // Execute.
-        // TODO: What happens to the Callback if the service dies abnormally
-        // -- won't that keep the Callback live forever, because the service
-        // never has the opportunity to bump the reference count down? Or
-        // maybe the HIDL infrastructure handles this magically? At worst,
-        // it seems like this is a small memory leak, if the Callback stays
-        // alive forever.
-        Return<ErrorStatus> executeStatus = mPreparedModel->execute(
-                request, measureTiming(mExecutionBuilder), executionCallback);
-        if (!executeStatus.isOk() || executeStatus != ErrorStatus::NONE) {
-            VLOG(EXECUTION) << "**Execute launch failed**";
-            return executeStatus.isOk() ? convertErrorStatusToResultCode(executeStatus)
-                                        : ANEURALNETWORKS_OP_FAILED;
+        auto [status, outputShapes, timing, fallback] =
+                burstController->tryCompute(request, measureTiming(mExecutionBuilder), memoryIds);
+
+        burstFallback = fallback;
+        if (!fallback) {
+            executionCallback->notify(status, outputShapes, timing);
+        }
+    }
+
+    // compute from IPreparedModel if either:
+    // (1) burst was not supplied, or
+    // (2) the burst execution failed and requested a fallback execution
+    if (!burstCompute || burstFallback) {
+        if (DeviceManager::get()->syncExecHal()) {
+            VLOG(EXECUTION) << "Before mPreparedModel->executeSynchronously() "
+                            << SHOW_IF_DEBUG(toString(request));
+            auto syncExecuteResult =
+                    mPreparedModel->executeSynchronously(request, measureTiming(mExecutionBuilder));
+            executionCallback->notify(std::get<0>(syncExecuteResult),
+                                      std::get<1>(syncExecuteResult),
+                                      std::get<2>(syncExecuteResult));
+        } else {
+            VLOG(EXECUTION) << "Before mPreparedModel->execute() "
+                            << SHOW_IF_DEBUG(toString(request));
+            // Execute.
+            // TODO: What happens to the Callback if the service dies abnormally
+            // -- won't that keep the Callback live forever, because the service
+            // never has the opportunity to bump the reference count down? Or
+            // maybe the HIDL infrastructure handles this magically? At worst,
+            // it seems like this is a small memory leak, if the Callback stays
+            // alive forever.
+            Return<ErrorStatus> executeStatus = mPreparedModel->execute(
+                    request, measureTiming(mExecutionBuilder), executionCallback);
+            if (!executeStatus.isOk() || executeStatus != ErrorStatus::NONE) {
+                VLOG(EXECUTION) << "**Execute launch failed**";
+                return executeStatus.isOk() ? convertErrorStatusToResultCode(executeStatus)
+                                            : ANEURALNETWORKS_OP_FAILED;
+            }
         }
     }
 
