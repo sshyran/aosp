@@ -33,6 +33,23 @@ using FmqResultDescriptor = MQDescriptorSync<FmqResultDatum>;
 constexpr Timing kNoTiming = {std::numeric_limits<uint64_t>::max(),
                               std::numeric_limits<uint64_t>::max()};
 
+class BurstContextDeathHandler : public hardware::hidl_death_recipient {
+   public:
+    using Callback = std::function<void()>;
+
+    BurstContextDeathHandler(const Callback& onDeathCallback) : mOnDeathCallback(onDeathCallback) {
+        CHECK(onDeathCallback != nullptr);
+    }
+
+    void serviceDied(uint64_t /*cookie*/, const wp<hidl::base::V1_0::IBase>& /*who*/) override {
+        LOG(ERROR) << "BurstContextDeathHandler::serviceDied -- service unexpectedly died!";
+        mOnDeathCallback();
+    }
+
+   private:
+    const Callback mOnDeathCallback;
+};
+
 }  // anonymous namespace
 
 // serialize a request into a packet
@@ -228,13 +245,13 @@ ResultChannelReceiver::getBlocking() {
 }
 
 void ResultChannelReceiver::invalidate() {
-    mTeardown = true;
+    mValid = false;
 
     // force unblock
-    // ExecutionBurstServer is by default waiting on a request packet. If the
-    // client process destroys its burst object, the server will still be
-    // waiting on the futex (assuming mBlocking is true). This force unblock
-    // wakes up any thread waiting on the futex.
+    // ExecutionBurstController waits on a result packet after sending a
+    // request. If the driver containing ExecutionBurstServer crashes, the
+    // controller will still be waiting on the futex (assuming mBlocking is
+    // true). This force unblock wakes up any thread waiting on the futex.
     if (mBlocking) {
         // TODO: look for a different/better way to signal/notify the futex to
         // wake up any thread waiting on it
@@ -248,7 +265,7 @@ void ResultChannelReceiver::invalidate() {
 std::optional<std::vector<FmqResultDatum>> ResultChannelReceiver::getPacketBlocking() {
     using discriminator = FmqResultDatum::hidl_discriminator;
 
-    if (mTeardown) {
+    if (!mValid) {
         return std::nullopt;
     }
 
@@ -258,7 +275,7 @@ std::optional<std::vector<FmqResultDatum>> ResultChannelReceiver::getPacketBlock
     if (mBlocking) {
         success = mFmqResultChannel->readBlocking(&datum, 1);
     } else {
-        while ((success = !mTeardown.load(std::memory_order_relaxed)) &&
+        while ((success = mValid.load(std::memory_order_relaxed)) &&
                !mFmqResultChannel->read(&datum, 1)) {
         }
     }
@@ -275,8 +292,7 @@ std::optional<std::vector<FmqResultDatum>> ResultChannelReceiver::getPacketBlock
     packet.front() = datum;
     success &= mFmqResultChannel->read(packet.data() + 1, count);
 
-    // terminate loop
-    if (mTeardown) {
+    if (!mValid) {
         return std::nullopt;
     }
 
@@ -314,6 +330,10 @@ bool RequestChannelSender::send(const Request& request, MeasureTiming measure,
 }
 
 bool RequestChannelSender::sendPacket(const std::vector<FmqRequestDatum>& packet) {
+    if (!mValid) {
+        return false;
+    }
+
     if (packet.size() > mFmqRequestChannel->availableToWrite()) {
         LOG(ERROR)
                 << "RequestChannelSender::sendPacket -- packet size exceeds size available in FMQ";
@@ -325,6 +345,10 @@ bool RequestChannelSender::sendPacket(const std::vector<FmqRequestDatum>& packet
     } else {
         return mFmqRequestChannel->write(packet.data(), packet.size());
     }
+}
+
+void RequestChannelSender::invalidate() {
+    mValid = false;
 }
 
 Return<void> ExecutionBurstController::ExecutionBurstCallback::getMemories(
@@ -419,19 +443,20 @@ std::unique_ptr<ExecutionBurstController> ExecutionBurstController::create(
 
     // create callback object
     sp<ExecutionBurstCallback> callback = new ExecutionBurstCallback();
-    if (callback == nullptr) {
-        LOG(ERROR) << "ExecutionBurstController::create failed to create callback";
-        return nullptr;
-    }
 
     // create FMQ objects
-    auto [fmqRequestChannel, fmqRequestDescriptor] =
+    auto [requestChannelSenderTemp, requestChannelDescriptor] =
             RequestChannelSender::create(kExecutionBurstChannelLength, blocking);
-    auto [fmqResultChannel, fmqResultDescriptor] =
+    auto [resultChannelReceiverTemp, resultChannelDescriptor] =
             ResultChannelReceiver::create(kExecutionBurstChannelLength, blocking);
+    std::shared_ptr<RequestChannelSender> requestChannelSender =
+            std::move(requestChannelSenderTemp);
+    std::shared_ptr<ResultChannelReceiver> resultChannelReceiver =
+            std::move(resultChannelReceiverTemp);
 
     // check FMQ objects
-    if (!fmqRequestChannel || !fmqResultChannel || !fmqRequestDescriptor || !fmqResultDescriptor) {
+    if (!requestChannelSender || !resultChannelReceiver || !requestChannelDescriptor ||
+        !resultChannelDescriptor) {
         LOG(ERROR) << "ExecutionBurstController::create failed to create FastMessageQueue";
         return nullptr;
     }
@@ -440,7 +465,7 @@ std::unique_ptr<ExecutionBurstController> ExecutionBurstController::create(
     ErrorStatus errorStatus;
     sp<IBurstContext> burstContext;
     const Return<void> ret = preparedModel->configureExecutionBurst(
-            callback, *fmqRequestDescriptor, *fmqResultDescriptor,
+            callback, *requestChannelDescriptor, *resultChannelDescriptor,
             [&errorStatus, &burstContext](ErrorStatus status, const sp<IBurstContext>& context) {
                 errorStatus = status;
                 burstContext = context;
@@ -462,22 +487,61 @@ std::unique_ptr<ExecutionBurstController> ExecutionBurstController::create(
         return nullptr;
     }
 
+    // create death handler object
+    BurstContextDeathHandler::Callback onDeathCallback = [requestChannelSender,
+                                                          resultChannelReceiver] {
+        requestChannelSender->invalidate();
+        resultChannelReceiver->invalidate();
+    };
+    const sp<BurstContextDeathHandler> deathHandler = new BurstContextDeathHandler(onDeathCallback);
+
+    // linkToDeath registers a callback that will be invoked on service death to
+    // proactively handle service crashes. If the linkToDeath call fails,
+    // asynchronous calls are susceptible to hangs if the service crashes before
+    // providing the response.
+    const Return<bool> deathHandlerRet = burstContext->linkToDeath(deathHandler, 0);
+    if (!deathHandlerRet.isOk() || deathHandlerRet != true) {
+        LOG(ERROR) << "ExecutionBurstController::create -- Failed to register a death recipient "
+                      "for the IBurstContext object.";
+        return nullptr;
+    }
+
     // make and return controller
-    return std::make_unique<ExecutionBurstController>(
-            std::move(fmqRequestChannel), std::move(fmqResultChannel), burstContext, callback);
+    return std::make_unique<ExecutionBurstController>(requestChannelSender, resultChannelReceiver,
+                                                      burstContext, callback, deathHandler);
 }
 
 ExecutionBurstController::ExecutionBurstController(
-        std::unique_ptr<RequestChannelSender> requestChannelSender,
-        std::unique_ptr<ResultChannelReceiver> resultChannelReceiver,
-        const sp<IBurstContext>& burstContext, const sp<ExecutionBurstCallback>& callback)
-    : mRequestChannelSender(std::move(requestChannelSender)),
-      mResultChannelReceiver(std::move(resultChannelReceiver)),
+        const std::shared_ptr<RequestChannelSender>& requestChannelSender,
+        const std::shared_ptr<ResultChannelReceiver>& resultChannelReceiver,
+        const sp<IBurstContext>& burstContext, const sp<ExecutionBurstCallback>& callback,
+        const sp<hardware::hidl_death_recipient>& deathHandler)
+    : mRequestChannelSender(requestChannelSender),
+      mResultChannelReceiver(resultChannelReceiver),
       mBurstContext(burstContext),
-      mMemoryCache(callback) {}
+      mMemoryCache(callback),
+      mDeathHandler(deathHandler) {}
+
+ExecutionBurstController::~ExecutionBurstController() {
+    // It is safe to ignore any errors resulting from this unlinkToDeath call
+    // because the ExecutionBurstController object is already being destroyed
+    // and its underlying IBurstContext object is no longer being used by the NN
+    // runtime.
+    if (mDeathHandler) {
+        mBurstContext->unlinkToDeath(mDeathHandler).isOk();
+    }
+}
 
 std::tuple<ErrorStatus, std::vector<OutputShape>, Timing> ExecutionBurstController::compute(
         const Request& request, MeasureTiming measure, const std::vector<intptr_t>& memoryIds) {
+    auto [status, outputShapes, timing, fallback] = tryCompute(request, measure, memoryIds);
+    (void)fallback;  // ignore fallback field
+    return {status, std::move(outputShapes), timing};
+}
+
+std::tuple<ErrorStatus, std::vector<OutputShape>, Timing, bool>
+ExecutionBurstController::tryCompute(const Request& request, MeasureTiming measure,
+                                     const std::vector<intptr_t>& memoryIds) {
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION, "ExecutionBurstController::compute");
 
     std::lock_guard<std::mutex> guard(mMutex);
@@ -487,16 +551,22 @@ std::tuple<ErrorStatus, std::vector<OutputShape>, Timing> ExecutionBurstControll
     const bool success = mRequestChannelSender->send(request, measure, slots);
     if (!success) {
         LOG(ERROR) << "Error sending FMQ packet";
-        return {ErrorStatus::GENERAL_FAILURE, {}, kNoTiming};
+        // only use fallback execution path if the packet could not be sent
+        return {ErrorStatus::GENERAL_FAILURE, {}, kNoTiming, /*fallback=*/true};
     }
 
     // get result packet
     const auto result = mResultChannelReceiver->getBlocking();
     if (!result) {
         LOG(ERROR) << "Error retrieving FMQ packet";
-        return {ErrorStatus::GENERAL_FAILURE, {}, kNoTiming};
+        // only use fallback execution path if the packet could not be sent
+        return {ErrorStatus::GENERAL_FAILURE, {}, kNoTiming, /*fallback=*/false};
     }
-    return *result;
+
+    // unpack results and return (only use fallback execution path if the
+    // packet could not be sent)
+    auto [status, outputShapes, timing] = std::move(*result);
+    return {status, std::move(outputShapes), timing, /*fallback=*/false};
 }
 
 void ExecutionBurstController::freeMemory(intptr_t key) {
