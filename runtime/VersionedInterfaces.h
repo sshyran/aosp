@@ -31,6 +31,7 @@ namespace nn {
 // forward declarations
 class ExecutionBurstController;
 class IDeviceDeathHandler;
+class IModelSlicer;
 class IPreparedModelDeathHandler;
 class VersionedIPreparedModel;
 
@@ -125,12 +126,17 @@ class VersionedIDevice {
     /**
      * Gets the supported operations in a model.
      *
-     * getSupportedSubgraph indicates which operations of a model are fully
+     * getSupportedOperations indicates which operations of a model are fully
      * supported by the vendor driver. If an operation may not be supported for
      * any reason, getSupportedOperations must return false for that operation.
      *
      * @param model A model whose operations--and their corresponding
      *              operands--are to be verified by the driver.
+     * @param slicer When the model is not compliant with the HAL version of the
+     *               vendor driver, the slicer (if any) is employed to query the
+     *               vendor driver about which of the subset of compliant
+     *               operations are supported.  See the IModelSlicer class in
+     *               Utils.h for more details.
      * @return status Error status of the call, must be:
      *                - NONE if successful
      *                - DEVICE_UNAVAILABLE if driver is offline or busy
@@ -143,7 +149,8 @@ class VersionedIDevice {
      *                             corresponds with the index of the operation
      *                             it is describing.
      */
-    std::pair<ErrorStatus, hidl_vec<bool>> getSupportedOperations(const Model& model);
+    std::pair<ErrorStatus, hidl_vec<bool>> getSupportedOperations(const Model& model,
+                                                                  IModelSlicer* slicer = nullptr);
 
     /**
      * Synchronously creates a prepared model for execution and optionally saves it
