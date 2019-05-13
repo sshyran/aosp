@@ -43,8 +43,23 @@ class Device {
     virtual int64_t getFeatureLevel() = 0;
     virtual int32_t getType() const = 0;
     virtual hidl_vec<Extension> getSupportedExtensions() const = 0;
-    virtual void getSupportedOperations(const Model& hidlModel,
+
+    // If hidlModel is not compliant with the HAL version of the driver device,
+    // then the behavior depends on whether or not a non-nullptr slicer is
+    // provided.
+    //
+    // If there is no slicer, then no operations are supported.
+    //
+    // If there is a slicer, and it successfully slices the model, then some
+    // operations may be supported.
+    //
+    // See the IModelSlicer class in Utils.h for more details.
+    virtual void getSupportedOperations(const Model& hidlModel, IModelSlicer* slicer,
                                         hidl_vec<bool>* supportedOperations) = 0;
+    void getSupportedOperations(const Model& hidlModel, hidl_vec<bool>* supportedOperations) {
+        return getSupportedOperations(hidlModel, nullptr, supportedOperations);
+    }
+
     virtual PerformanceInfo getPerformance(OperandType type) const = 0;
     virtual PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
     virtual PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const = 0;
@@ -99,6 +114,8 @@ class DeviceManager {
     static bool partitioningAllowsFallback(uint32_t partitioning) {
         return partitioning == kPartitioningWithFallback;
     }
+
+    bool strictSlicing() const { return mStrictSlicing; }
 
     // Returns the singleton manager.
     static DeviceManager* get();
@@ -158,6 +175,8 @@ class DeviceManager {
 
     static const uint32_t kPartitioningDefault = kPartitioningWithFallback;
     uint32_t mPartitioning = kPartitioningDefault;
+
+    bool mStrictSlicing = false;
 };
 
 } // namespace nn
