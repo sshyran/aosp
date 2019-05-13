@@ -58,7 +58,7 @@ class DriverDevice : public Device {
     int64_t getFeatureLevel() override { return mInterface->getFeatureLevel(); }
     int32_t getType() const override { return mInterface->getType(); }
     hidl_vec<Extension> getSupportedExtensions() const override;
-    void getSupportedOperations(const Model& hidlModel,
+    void getSupportedOperations(const Model& hidlModel, IModelSlicer* slicer,
                                 hidl_vec<bool>* supportedOperations) override;
     PerformanceInfo getPerformance(OperandType type) const override;
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const override {
@@ -157,12 +157,12 @@ hidl_vec<Extension> DriverDevice::getSupportedExtensions() const {
     return mSupportedExtensions;
 }
 
-void DriverDevice::getSupportedOperations(const Model& hidlModel,
+void DriverDevice::getSupportedOperations(const Model& hidlModel, IModelSlicer* slicer,
                                           hidl_vec<bool>* outSupportedOperations) {
     // Query the driver for what it can do.
     ErrorStatus status = ErrorStatus::GENERAL_FAILURE;
     hidl_vec<bool> supportedOperations;
-    std::tie(status, supportedOperations) = mInterface->getSupportedOperations(hidlModel);
+    std::tie(status, supportedOperations) = mInterface->getSupportedOperations(hidlModel, slicer);
 
     if (status != ErrorStatus::NONE) {
         LOG(ERROR) << "IDevice::getSupportedOperations returned the error " << toString(status);
@@ -291,7 +291,7 @@ class CpuDevice : public Device {
     int64_t getFeatureLevel() override { return kFeatureLevel; }
     int32_t getType() const override { return ANEURALNETWORKS_DEVICE_CPU; }
     hidl_vec<Extension> getSupportedExtensions() const override { return {/* No extensions. */}; }
-    void getSupportedOperations(const Model& hidlModel,
+    void getSupportedOperations(const Model& hidlModel, IModelSlicer* slicer,
                                 hidl_vec<bool>* supportedOperations) override;
     PerformanceInfo getPerformance(OperandType) const override { return kPerformance; }
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const override {
@@ -328,12 +328,14 @@ class CpuDevice : public Device {
                                                           /*numDataCache=*/0};
 };
 
-void CpuDevice::getSupportedOperations(const Model& hidlModel,
+void CpuDevice::getSupportedOperations(const Model& hidlModel, IModelSlicer*,
                                        hidl_vec<bool>* supportedOperations) {
     const size_t count = hidlModel.operations.size();
     hidl_vec<bool> result(count);
     for (size_t i = 0; i < count; i++) {
         // TODO(b/119870033): Decide whether and how post-P operations would be supported on CPU.
+        //                    We may want to use the slicer for CpuDevice just as we do for
+        //                    DriverDevice.
         OperationType operationType = hidlModel.operations[i].type;
         result[i] = !isExtensionOperationType(operationType) &&
                     operationType != OperationType::OEM_OPERATION;
@@ -408,6 +410,7 @@ DeviceManager::DeviceManager() {
     VLOG(MANAGER) << "DeviceManager::DeviceManager";
     findAvailableDevices();
 #ifdef NN_DEBUGGABLE
+    mStrictSlicing = (getProp("debug.nn.strict-slicing") != 0);
     mPartitioning = getProp("debug.nn.partition", kPartitioningDefault);
     mDebugNNCpuOnly = (getProp("debug.nn.cpuonly") != 0);
     mSyncExecCpu = (getProp("debug.nn.syncexec-cpu", 1) != 0);
