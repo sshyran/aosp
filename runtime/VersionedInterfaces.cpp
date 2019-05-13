@@ -312,9 +312,30 @@ std::pair<ErrorStatus, hidl_vec<Extension>> VersionedIDevice::getSupportedExtens
 }
 
 std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
-        const Model& model) {
+        const Model& model, IModelSlicer* slicer) {
     const std::pair<ErrorStatus, hidl_vec<bool>> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
     std::pair<ErrorStatus, hidl_vec<bool>> result;
+
+    auto noneSupported = [&model] {
+        hidl_vec<bool> supported(model.operations.size());
+        std::fill(supported.begin(), supported.end(), false);
+        return std::make_pair(ErrorStatus::NONE, std::move(supported));
+    };
+
+    auto remappedResult = [&model](const std::pair<ErrorStatus, hidl_vec<bool>>& result,
+                                   const std::function<uint32_t(uint32_t)>&
+                                           submodelOperationIndexToModelOperationIndex) {
+        const ErrorStatus status = result.first;
+        const hidl_vec<bool>& supported = result.second;
+        hidl_vec<bool> remappedSupported(model.operations.size());
+        std::fill(remappedSupported.begin(), remappedSupported.end(), false);
+        for (size_t i = 0; i < supported.size(); ++i) {
+            if (supported[i]) {
+                remappedSupported[submodelOperationIndexToModelOperationIndex(i)] = true;
+            }
+        }
+        return std::make_pair(status, std::move(remappedSupported));
+    };
 
     if (mDeviceV1_2 != nullptr) {
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_2");
@@ -326,36 +347,71 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
             LOG(ERROR) << "getSupportedOperations_1_2 failure: " << ret.description();
             return kFailure;
         }
-    } else if (mDeviceV1_1 != nullptr && compliantWithV1_1(model)) {
-        V1_1::Model model11 = convertToV1_1(model);
-        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_1");
-        Return<void> ret = mDeviceV1_1->getSupportedOperations_1_1(
-                model11, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
-                    result = std::make_pair(error, supported);
-                });
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getSupportedOperations_1_1 failure: " << ret.description();
-            return kFailure;
-        }
-    } else if (mDeviceV1_0 != nullptr && compliantWithV1_0(model)) {
-        V1_0::Model model10 = convertToV1_0(model);
-        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_0");
-        Return<void> ret = mDeviceV1_0->getSupportedOperations(
-                model10, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
-                    result = std::make_pair(error, supported);
-                });
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getSupportedOperations failure: " << ret.description();
-            return kFailure;
-        }
-    } else {
-        // TODO: partition the model such that v1.1 ops are not passed to v1.0
-        // device
-        LOG(ERROR) << "Could not handle getSupportedOperations!";
-        return kFailure;
+        return result;
     }
 
-    return result;
+    if (mDeviceV1_1 != nullptr) {
+        const bool compliant = compliantWithV1_1(model);
+        if (compliant || slicer) {
+            V1_1::Model model11;
+            std::function<uint32_t(uint32_t)> submodelOperationIndexToModelOperationIndex;
+            if (compliant) {
+                model11 = convertToV1_1(model);
+            } else {
+                const auto slice11 = slicer->getSliceV1_1();
+                if (!slice11.has_value()) {
+                    return noneSupported();
+                }
+                std::tie(model11, submodelOperationIndexToModelOperationIndex) = *slice11;
+            }
+            NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION,
+                         "getSupportedOperations_1_1");
+            Return<void> ret = mDeviceV1_1->getSupportedOperations_1_1(
+                    model11, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
+                        result = std::make_pair(error, supported);
+                    });
+            if (!ret.isOk()) {
+                LOG(ERROR) << "getSupportedOperations_1_1 failure: " << ret.description();
+                return kFailure;
+            }
+            if (!compliant) {
+                return remappedResult(result, submodelOperationIndexToModelOperationIndex);
+            }
+        }
+        return result;
+    }
+
+    if (mDeviceV1_0 != nullptr) {
+        const bool compliant = compliantWithV1_0(model);
+        if (compliant || slicer) {
+            V1_0::Model model10;
+            std::function<uint32_t(uint32_t)> submodelOperationIndexToModelOperationIndex;
+            if (compliant) {
+                model10 = convertToV1_0(model);
+            } else {
+                const auto slice10 = slicer->getSliceV1_0();
+                if (!slice10.has_value()) {
+                    return noneSupported();
+                }
+                std::tie(model10, submodelOperationIndexToModelOperationIndex) = *slice10;
+            }
+            NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations");
+            Return<void> ret = mDeviceV1_0->getSupportedOperations(
+                    model10, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
+                        result = std::make_pair(error, supported);
+                    });
+            if (!ret.isOk()) {
+                LOG(ERROR) << "getSupportedOperations failure: " << ret.description();
+                return kFailure;
+            }
+            if (!compliant) {
+                return remappedResult(result, submodelOperationIndexToModelOperationIndex);
+            }
+        }
+        return result;
+    }
+
+    return kFailure;
 }
 
 std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepareModel(
