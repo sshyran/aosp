@@ -57,6 +57,10 @@ static void roiConstructor(Type, uint32_t rank, RandomOperation* op) {
     } else {
         op->outputs[0]->dimensions = {outBatch, outHeight, outWidth, outDepth};
     }
+
+    if (op->opType == ANEURALNETWORKS_ROI_POOLING) {
+        setSameQuantization(op->outputs[0], op->inputs[0]);
+    }
 }
 
 template <typename T>
