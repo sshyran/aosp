@@ -117,11 +117,11 @@ class TypeManager {
     // and supplemental infomation.
     //
     // useOnProductImageEnabled - whether apps/binaries preinstalled on /product partition
-    //  can be whitelisted.
-    // whitelist - list of apps/binaries which are allowed to use extensions.
+    // can be enabled for extensions use.
+    // allowlist - list of apps/binaries which are allowed to use extensions.
     static bool isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
                                        bool useOnProductImageEnabled,
-                                       const std::vector<std::string>& whitelist);
+                                       const std::vector<std::string>& allowlist);
 
    private:
     TypeManager();
