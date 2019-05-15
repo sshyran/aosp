@@ -252,7 +252,7 @@ void CreateModel_zero_sized_quant8(Model *model) {
   OperandType type10(Type::BOOL, {});
   OperandType type14(Type::TENSOR_QUANT8_ASYMM, {0, 2, 2, 1}, 0.1f, 128);
   OperandType type15(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 1}, 0.1f, 128);
-  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {0, 2, 2, 1}, 0.00390625f, 128);
+  OperandType type16(Type::TENSOR_QUANT8_ASYMM, {0, 2, 2, 1}, 0.00390625f, 0);
   OperandType type17(Type::TENSOR_QUANT16_ASYMM, {1, 8}, 0.125f, 0);
   OperandType type18(Type::TENSOR_QUANT16_ASYMM, {0, 4}, 0.125f, 0);
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {1, 2}, 0.1f, 128);
@@ -597,7 +597,7 @@ void CreateModel_zero_sized_dynamic_output_shape_quant8(Model *model) {
   OperandType type18(Type::TENSOR_QUANT16_ASYMM, {0, 4}, 0.125f, 0);
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {1, 2}, 0.1f, 128);
   OperandType type20(Type::TENSOR_QUANT8_ASYMM, {0}, 0.1f, 128);
-  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.00390625f, 128);
+  OperandType type29(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.00390625f, 0);
   OperandType type5(Type::TENSOR_INT32, {0});
   OperandType type7(Type::TENSOR_INT32, {1});
   OperandType type8(Type::FLOAT32, {});
