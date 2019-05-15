@@ -2076,6 +2076,12 @@ static hidl_vec<V1_1::Operation> convertToV1_1(const hidl_vec<V1_0::Operation>& 
     return result;
 }
 
+bool compliantWithV1_0(const V1_2::Operand& operand) {
+    return validOperandType(static_cast<V1_0::OperandType>(operand.type)) &&
+           (nonExtensionOperandTypeIsScalar(static_cast<int>(operand.type)) ||
+            operand.dimensions.size() != 0);
+}
+
 V1_0::Model convertToV1_0(const V1_0::Model& model) {
     return model;
 }
@@ -2119,7 +2125,33 @@ void logModelToInfo(const V1_2::Model& model) {
 
 static bool compliantWith(HalVersion version, const V1_2::Model& model,
                           std::set<uint32_t>* noncompliantOperations) {
-    auto localValidateOperation = [&model, version](const V1_2::Operation& op) {
+    if (version >= HalVersion::V1_2) return true;
+
+    // A boolean vector indicating whether each pool is compliant with the target HAL version.
+    std::vector<bool> isPoolCompliant(model.pools.size(), false);
+    std::transform(model.pools.begin(), model.pools.end(), isPoolCompliant.begin(),
+                   [version](const hidl_memory& pool) { return validatePool(pool, version); });
+
+    // A boolean vector indicating whether each operand is compliant with the target HAL version.
+    std::vector<bool> isOperandCompliant(model.operands.size(), false);
+    std::transform(model.operands.begin(), model.operands.end(), isOperandCompliant.begin(),
+                   [&isPoolCompliant](const V1_2::Operand& op) {
+                       // There is no V1_1::Operand -- both V1_0::Model and V1_1::Model use
+                       // V1_0::Operand.
+                       return compliantWithV1_0(op) &&
+                              !(op.lifetime == OperandLifeTime::CONSTANT_REFERENCE &&
+                                !isPoolCompliant[op.location.poolIndex]);
+                   });
+
+    auto allOperandsCompliant = [&isOperandCompliant](const hidl_vec<uint32_t>& indices) {
+        return std::all_of(
+                indices.begin(), indices.end(),
+                [&isOperandCompliant](const uint32_t ind) { return isOperandCompliant[ind]; });
+    };
+
+    auto localValidateOperation = [&model, version,
+                                   &allOperandsCompliant](const V1_2::Operation& op) {
+        if (!allOperandsCompliant(op.inputs) || !allOperandsCompliant(op.outputs)) return false;
         int error = validateOperation(
                 static_cast<int32_t>(op.type), op.inputs.size(),
                 op.inputs.size() > 0 ? op.inputs.data() : nullptr, op.outputs.size(),
