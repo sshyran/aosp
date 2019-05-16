@@ -14,12 +14,14 @@ TEST_F(GeneratedTests, lsh_projection_float16) {
             lsh_projection_float16::is_ignored,
             lsh_projection_float16::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, lsh_projection_float16, lsh_projection_float16::CreateModel)
 
 TEST_F(GeneratedTests, lsh_projection_float16_float16) {
     execute(lsh_projection_float16::CreateModel_float16,
             lsh_projection_float16::is_ignored_float16,
             lsh_projection_float16::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, lsh_projection_float16_float16, lsh_projection_float16::CreateModel_float16)
 
 TEST_F(DynamicOutputShapeTest, lsh_projection_float16_dynamic_output_shape) {
     execute(lsh_projection_float16::CreateModel_dynamic_output_shape,

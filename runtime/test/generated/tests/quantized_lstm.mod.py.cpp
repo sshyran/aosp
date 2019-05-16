@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, quantized_lstm) {
             quantized_lstm::is_ignored,
             quantized_lstm::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, quantized_lstm, quantized_lstm::CreateModel)
 
 TEST_F(GeneratedTests, quantized_lstm_relaxed) {
     execute(quantized_lstm::CreateModel_relaxed,
@@ -38,6 +39,7 @@ TEST_F(GeneratedTests, quantized_lstm_constant_weights) {
             quantized_lstm::is_ignored_2,
             quantized_lstm::get_examples_constant_weights());
 }
+TEST_AVAILABLE_SINCE(V1_2, quantized_lstm_constant_weights, quantized_lstm::CreateModel_2)
 
 TEST_F(GeneratedTests, quantized_lstm_constant_weights_relaxed) {
     execute(quantized_lstm::CreateModel_relaxed_2,

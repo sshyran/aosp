@@ -14,12 +14,14 @@ TEST_F(GeneratedTests, pad_v2_low_rank) {
             pad_v2_low_rank::is_ignored,
             pad_v2_low_rank::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, pad_v2_low_rank, pad_v2_low_rank::CreateModel)
 
 TEST_F(GeneratedTests, pad_v2_low_rank_float16) {
     execute(pad_v2_low_rank::CreateModel_float16,
             pad_v2_low_rank::is_ignored_float16,
             pad_v2_low_rank::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, pad_v2_low_rank_float16, pad_v2_low_rank::CreateModel_float16)
 
 TEST_F(DynamicOutputShapeTest, pad_v2_low_rank_dynamic_output_shape) {
     execute(pad_v2_low_rank::CreateModel_dynamic_output_shape,

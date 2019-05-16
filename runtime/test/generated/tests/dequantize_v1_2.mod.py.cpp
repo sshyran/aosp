@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_1d_quant8_asymm) {
             dequantize_v1_2::is_ignored,
             dequantize_v1_2::get_examples_1d_quant8_asymm());
 }
+TEST_AVAILABLE_SINCE(V1_0, dequantize_v1_2_1d_quant8_asymm, dequantize_v1_2::CreateModel)
 
 TEST_F(GeneratedTests, dequantize_v1_2_1d_quant8_asymm_relaxed) {
     execute(dequantize_v1_2::CreateModel_relaxed,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_1d_quant8_asymm_float16) {
             dequantize_v1_2::is_ignored_float16,
             dequantize_v1_2::get_examples_1d_quant8_asymm_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_1d_quant8_asymm_float16, dequantize_v1_2::CreateModel_float16)
 
 TEST_F(DynamicOutputShapeTest, dequantize_v1_2_1d_quant8_asymm_dynamic_output_shape) {
     execute(dequantize_v1_2::CreateModel_dynamic_output_shape,
@@ -50,6 +52,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_2d_quant8_asymm) {
             dequantize_v1_2::is_ignored_2,
             dequantize_v1_2::get_examples_2d_quant8_asymm());
 }
+TEST_AVAILABLE_SINCE(V1_0, dequantize_v1_2_2d_quant8_asymm, dequantize_v1_2::CreateModel_2)
 
 TEST_F(GeneratedTests, dequantize_v1_2_2d_quant8_asymm_relaxed) {
     execute(dequantize_v1_2::CreateModel_relaxed_2,
@@ -62,6 +65,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_2d_quant8_asymm_float16) {
             dequantize_v1_2::is_ignored_float16_2,
             dequantize_v1_2::get_examples_2d_quant8_asymm_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_2d_quant8_asymm_float16, dequantize_v1_2::CreateModel_float16_2)
 
 TEST_F(DynamicOutputShapeTest, dequantize_v1_2_2d_quant8_asymm_dynamic_output_shape) {
     execute(dequantize_v1_2::CreateModel_dynamic_output_shape_2,
@@ -86,6 +90,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_3d_quant8_symm) {
             dequantize_v1_2::is_ignored_3,
             dequantize_v1_2::get_examples_3d_quant8_symm());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_3d_quant8_symm, dequantize_v1_2::CreateModel_3)
 
 TEST_F(GeneratedTests, dequantize_v1_2_3d_quant8_symm_relaxed) {
     execute(dequantize_v1_2::CreateModel_relaxed_3,
@@ -98,6 +103,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_3d_quant8_symm_float16) {
             dequantize_v1_2::is_ignored_float16_3,
             dequantize_v1_2::get_examples_3d_quant8_symm_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_3d_quant8_symm_float16, dequantize_v1_2::CreateModel_float16_3)
 
 TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_quant8_symm_dynamic_output_shape) {
     execute(dequantize_v1_2::CreateModel_dynamic_output_shape_3,
@@ -122,6 +128,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_4d_quant8_symm) {
             dequantize_v1_2::is_ignored_4,
             dequantize_v1_2::get_examples_4d_quant8_symm());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_4d_quant8_symm, dequantize_v1_2::CreateModel_4)
 
 TEST_F(GeneratedTests, dequantize_v1_2_4d_quant8_symm_relaxed) {
     execute(dequantize_v1_2::CreateModel_relaxed_4,
@@ -134,6 +141,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_4d_quant8_symm_float16) {
             dequantize_v1_2::is_ignored_float16_4,
             dequantize_v1_2::get_examples_4d_quant8_symm_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_4d_quant8_symm_float16, dequantize_v1_2::CreateModel_float16_4)
 
 TEST_F(DynamicOutputShapeTest, dequantize_v1_2_4d_quant8_symm_dynamic_output_shape) {
     execute(dequantize_v1_2::CreateModel_dynamic_output_shape_4,
@@ -158,6 +166,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_3d_per_channel_first_dim) {
             dequantize_v1_2::is_ignored_5,
             dequantize_v1_2::get_examples_3d_per_channel_first_dim());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_3d_per_channel_first_dim, dequantize_v1_2::CreateModel_5)
 
 TEST_F(GeneratedTests, dequantize_v1_2_3d_per_channel_first_dim_relaxed) {
     execute(dequantize_v1_2::CreateModel_relaxed_5,
@@ -170,6 +179,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_3d_per_channel_first_dim_float16) {
             dequantize_v1_2::is_ignored_float16_5,
             dequantize_v1_2::get_examples_3d_per_channel_first_dim_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_3d_per_channel_first_dim_float16, dequantize_v1_2::CreateModel_float16_5)
 
 TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_per_channel_first_dim_dynamic_output_shape) {
     execute(dequantize_v1_2::CreateModel_dynamic_output_shape_5,
@@ -194,6 +204,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_3d_per_channel_second_dim) {
             dequantize_v1_2::is_ignored_6,
             dequantize_v1_2::get_examples_3d_per_channel_second_dim());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_3d_per_channel_second_dim, dequantize_v1_2::CreateModel_6)
 
 TEST_F(GeneratedTests, dequantize_v1_2_3d_per_channel_second_dim_relaxed) {
     execute(dequantize_v1_2::CreateModel_relaxed_6,
@@ -206,6 +217,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_3d_per_channel_second_dim_float16) {
             dequantize_v1_2::is_ignored_float16_6,
             dequantize_v1_2::get_examples_3d_per_channel_second_dim_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_3d_per_channel_second_dim_float16, dequantize_v1_2::CreateModel_float16_6)
 
 TEST_F(DynamicOutputShapeTest, dequantize_v1_2_3d_per_channel_second_dim_dynamic_output_shape) {
     execute(dequantize_v1_2::CreateModel_dynamic_output_shape_6,
@@ -230,6 +242,7 @@ TEST_F(GeneratedTests, dequantize_v1_2) {
             dequantize_v1_2::is_ignored_7,
             dequantize_v1_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2, dequantize_v1_2::CreateModel_7)
 
 TEST_F(DynamicOutputShapeTest, dequantize_v1_2_dynamic_output_shape) {
     execute(dequantize_v1_2::CreateModel_dynamic_output_shape_7,
@@ -242,6 +255,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_zero_sized) {
             dequantize_v1_2::is_ignored_zero_sized,
             dequantize_v1_2::get_examples_zero_sized());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_zero_sized, dequantize_v1_2::CreateModel_zero_sized)
 
 TEST_F(GeneratedTests, dequantize_v1_2_zero_sized_relaxed) {
     execute(dequantize_v1_2::CreateModel_zero_sized_relaxed,
@@ -254,6 +268,7 @@ TEST_F(GeneratedTests, dequantize_v1_2_zero_sized_float16) {
             dequantize_v1_2::is_ignored_zero_sized_float16,
             dequantize_v1_2::get_examples_zero_sized_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, dequantize_v1_2_zero_sized_float16, dequantize_v1_2::CreateModel_zero_sized_float16)
 
 TEST_F(DynamicOutputShapeTest, dequantize_v1_2_zero_sized_dynamic_output_shape) {
     execute(dequantize_v1_2::CreateModel_zero_sized_dynamic_output_shape,

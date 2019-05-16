@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, mul_broadcast_quant8) {
             mul_broadcast_quant8::is_ignored,
             mul_broadcast_quant8::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, mul_broadcast_quant8, mul_broadcast_quant8::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, mul_broadcast_quant8_dynamic_output_shape) {
     execute(mul_broadcast_quant8::CreateModel_dynamic_output_shape,
