@@ -4928,14 +4928,21 @@ enum { ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN = 32 };
  * runtime and drivers the tensors that define a model. See
  * {@link ANeuralNetworksModel_setOperandValueFromMemory}. An application
  * should typically create one shared memory object that contains every constant tensor
- * needed to define a model. {@link ANeuralNetworksMemory_createFromFd} can be
- * used to create shared memory from a file handle.
+ * needed to define a model. {@link ANeuralNetworksMemory_createFromFd} can be used to
+ * create shared memory from a file handle.
  * {@link ANeuralNetworksMemory_createFromAHardwareBuffer} can be used to
  * create shared memory from an AHardwareBuffer handle.
  *
  * Memory objects can also be used to specify the input and output arguments of
  * an execution. See {@link ANeuralNetworksExecution_setInputFromMemory}
  * and {@link ANeuralNetworksExecution_setOutputFromMemory}.
+ *
+ * When calling {@link ANeuralNetworksModel_setOperandValueFromMemory},
+ * {@link ANeuralNetworksExecution_setInputFromMemory} and
+ * {@link ANeuralNetworksExecution_setOutputFromMemory}, each operand in the shared
+ * memory object must be aligned on a boundary of a byte size that is a multiple
+ * of the element type byte size, e.g., a tensor with
+ * {@link ANEURALNETWORKS_TENSOR_FLOAT32} type must be aligned on 4-byte boundary.
  *
  * Available since API level 27.
  */
