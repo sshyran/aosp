@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, floor) {
             floor::is_ignored,
             floor::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, floor, floor::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, floor_dynamic_output_shape) {
     execute(floor::CreateModel_dynamic_output_shape,

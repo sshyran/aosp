@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, mul_relu) {
             mul_relu::is_ignored,
             mul_relu::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, mul_relu, mul_relu::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, mul_relu_dynamic_output_shape) {
     execute(mul_relu::CreateModel_dynamic_output_shape,

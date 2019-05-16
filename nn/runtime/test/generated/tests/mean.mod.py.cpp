@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, mean) {
             mean::is_ignored,
             mean::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_1, mean, mean::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, mean_dynamic_output_shape) {
     execute(mean::CreateModel_dynamic_output_shape,

@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, div_v1_2) {
             div_v1_2::is_ignored,
             div_v1_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, div_v1_2, div_v1_2::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, div_v1_2_dynamic_output_shape) {
     execute(div_v1_2::CreateModel_dynamic_output_shape,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, div_v1_2_2) {
             div_v1_2::is_ignored_2,
             div_v1_2::get_examples_2());
 }
+TEST_AVAILABLE_SINCE(V1_2, div_v1_2_2, div_v1_2::CreateModel_2)
 
 TEST_F(DynamicOutputShapeTest, div_v1_2_dynamic_output_shape_2) {
     execute(div_v1_2::CreateModel_dynamic_output_shape_2,
@@ -38,6 +40,7 @@ TEST_F(GeneratedTests, div_v1_2_zero_sized) {
             div_v1_2::is_ignored_zero_sized,
             div_v1_2::get_examples_zero_sized());
 }
+TEST_AVAILABLE_SINCE(V1_2, div_v1_2_zero_sized, div_v1_2::CreateModel_zero_sized)
 
 TEST_F(GeneratedTests, div_v1_2_zero_sized_relaxed) {
     execute(div_v1_2::CreateModel_zero_sized_relaxed,
@@ -50,6 +53,7 @@ TEST_F(GeneratedTests, div_v1_2_zero_sized_float16) {
             div_v1_2::is_ignored_zero_sized_float16,
             div_v1_2::get_examples_zero_sized_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, div_v1_2_zero_sized_float16, div_v1_2::CreateModel_zero_sized_float16)
 
 TEST_F(DynamicOutputShapeTest, div_v1_2_zero_sized_dynamic_output_shape) {
     execute(div_v1_2::CreateModel_zero_sized_dynamic_output_shape,

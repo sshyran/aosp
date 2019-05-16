@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, fully_connected_quant8_large) {
             fully_connected_quant8_large::is_ignored,
             fully_connected_quant8_large::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, fully_connected_quant8_large, fully_connected_quant8_large::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, fully_connected_quant8_large_dynamic_output_shape) {
     execute(fully_connected_quant8_large::CreateModel_dynamic_output_shape,

@@ -35,6 +35,8 @@ void CreateModel(Model *model) {
   model->identifyInputsAndOutputs(
     {op2},
     {op3});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
   assert(model->isValid());
 }
 
@@ -79,6 +81,8 @@ void CreateModel_dynamic_output_shape(Model *model) {
   model->identifyInputsAndOutputs(
     {op2},
     {op3});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
   assert(model->isValid());
 }
 
@@ -122,6 +126,8 @@ void CreateModel_2(Model *model) {
   model->identifyInputsAndOutputs(
     {op2},
     {op3});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
   assert(model->isValid());
 }
 
@@ -166,6 +172,8 @@ void CreateModel_dynamic_output_shape_2(Model *model) {
   model->identifyInputsAndOutputs(
     {op2},
     {op3});
+  // Phase 4: set relaxed execution
+  model->relaxComputationFloat32toFloat16(true);
   assert(model->isValid());
 }
 

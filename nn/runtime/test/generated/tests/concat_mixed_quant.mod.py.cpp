@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, concat_mixed_quant_quant8) {
             concat_mixed_quant::is_ignored_quant8,
             concat_mixed_quant::get_examples_quant8());
 }
+TEST_AVAILABLE_SINCE(V1_2, concat_mixed_quant_quant8, concat_mixed_quant::CreateModel_quant8)
 
 TEST_F(DynamicOutputShapeTest, concat_mixed_quant_dynamic_output_shape_quant8) {
     execute(concat_mixed_quant::CreateModel_dynamic_output_shape_quant8,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, concat_mixed_quant_quant8_2) {
             concat_mixed_quant::is_ignored_quant8_2,
             concat_mixed_quant::get_examples_quant8_2());
 }
+TEST_AVAILABLE_SINCE(V1_2, concat_mixed_quant_quant8_2, concat_mixed_quant::CreateModel_quant8_2)
 
 TEST_F(DynamicOutputShapeTest, concat_mixed_quant_dynamic_output_shape_quant8_2) {
     execute(concat_mixed_quant::CreateModel_dynamic_output_shape_quant8_2,
