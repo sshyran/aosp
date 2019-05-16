@@ -82,7 +82,7 @@ quant8 = DataTypeConverter().Identify({
     tmp1: ("TENSOR_QUANT16_ASYMM", 0.125, 0),
     i1: ("TENSOR_QUANT8_ASYMM", 0.1, 128),
     zero_sized: ("TENSOR_QUANT8_ASYMM", 0.1, 128),
-    o3: ("TENSOR_QUANT8_ASYMM", 1.0 / 256, 128)
+    o3: ("TENSOR_QUANT8_ASYMM", 1.0 / 256, 0)
 })
 
 # Create test case with dummy values.

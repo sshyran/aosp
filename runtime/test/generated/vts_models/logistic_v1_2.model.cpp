@@ -915,7 +915,7 @@ Model createTestModel_zero_sized_quant8() {
             .dimensions = {0, 2, 2, 1},
             .numberOfConsumers = 0,
             .scale = 0.00390625f,
-            .zeroPoint = 128,
+            .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_OUTPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         }
@@ -1924,7 +1924,7 @@ Model createTestModel_zero_sized_dynamic_output_shape_quant8() {
             .dimensions = {0, 0, 0, 0},
             .numberOfConsumers = 0,
             .scale = 0.00390625f,
-            .zeroPoint = 128,
+            .zeroPoint = 0,
             .lifetime = OperandLifeTime::MODEL_OUTPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         }
