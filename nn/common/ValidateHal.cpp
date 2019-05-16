@@ -27,6 +27,21 @@
 namespace android {
 namespace nn {
 
+template <class T_Model>
+struct ModelToHalVersion;
+template <>
+struct ModelToHalVersion<V1_0::Model> {
+    static constexpr HalVersion version = HalVersion::V1_0;
+};
+template <>
+struct ModelToHalVersion<V1_1::Model> {
+    static constexpr HalVersion version = HalVersion::V1_1;
+};
+template <>
+struct ModelToHalVersion<V1_2::Model> {
+    static constexpr HalVersion version = HalVersion::V1_2;
+};
+
 class MemoryAccessVerifier {
 public:
     MemoryAccessVerifier(const hidl_vec<hidl_memory>& pools)
@@ -418,20 +433,24 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
     return true;
 }
 
-static bool validatePools(const hidl_vec<hidl_memory>& pools) {
-    for (const hidl_memory& memory : pools) {
-        const auto& name = memory.name();
-        if (name != "ashmem" && name != "mmap_fd" && name != "hardware_buffer_blob" &&
-            name != "hardware_buffer") {
-            LOG(ERROR) << "Unsupported memory type " << name;
-            return false;
-        }
-        if (memory.handle() == nullptr) {
-            LOG(ERROR) << "Memory of type " << name << " is null";
-            return false;
-        }
+bool validatePool(const hidl_memory& pool, HalVersion ver) {
+    const auto& name = pool.name();
+    if (name != "ashmem" && name != "mmap_fd" &&
+        ((ver < HalVersion::V1_2) ||
+         (name != "hardware_buffer_blob" && name != "hardware_buffer"))) {
+        LOG(ERROR) << "Unsupported memory type " << name;
+        return false;
+    }
+    if (pool.handle() == nullptr) {
+        LOG(ERROR) << "Memory of type " << name << " is null";
+        return false;
     }
     return true;
+}
+
+static bool validatePools(const hidl_vec<hidl_memory>& pools, HalVersion ver) {
+    return std::all_of(pools.begin(), pools.end(),
+                       [ver](const hidl_memory& pool) { return validatePool(pool, ver); });
 }
 
 static bool validateModelInputOutputs(const hidl_vec<uint32_t> indexes,
@@ -460,10 +479,10 @@ static bool validateModelInputOutputs(const hidl_vec<uint32_t> indexes,
     return true;
 }
 
-template <typename VersionedModel>
-static bool validateModelVersioned(const VersionedModel& model, bool allowUnspecifiedRank) {
-    NNTRACE_FULL(NNTRACE_LAYER_UTILITY, NNTRACE_PHASE_UNSPECIFIED,
-                 "validateModelVersioned");
+template <class T_Model>
+bool validateModel(const T_Model& model) {
+    NNTRACE_FULL(NNTRACE_LAYER_UTILITY, NNTRACE_PHASE_UNSPECIFIED, "validateModel");
+    HalVersion version = ModelToHalVersion<T_Model>::version;
     if (model.operations.size() == 0 || model.operands.size() == 0) {
         LOG(ERROR) << "Invalid empty model.";
         return false;
@@ -472,26 +491,18 @@ static bool validateModelVersioned(const VersionedModel& model, bool allowUnspec
     // validations we can use operands upcasted to the latest version.
     const hidl_vec<Operand> latestVersionOperands = convertToV1_2(model.operands);
     return (validateOperands(model.operands, model.operandValues, model.pools,
-                             allowUnspecifiedRank) &&
+                             /*allowUnspecifiedRank=*/version >= HalVersion::V1_2) &&
             validateOperations(model.operations, latestVersionOperands) &&
             validateModelInputOutputs(model.inputIndexes, latestVersionOperands,
                                       OperandLifeTime::MODEL_INPUT) &&
             validateModelInputOutputs(model.outputIndexes, latestVersionOperands,
                                       OperandLifeTime::MODEL_OUTPUT) &&
-            validatePools(model.pools));
+            validatePools(model.pools, version));
 }
 
-bool validateModel(const V1_0::Model& model) {
-    return validateModelVersioned(model, /*allowUnspecifiedRank=*/false);
-}
-
-bool validateModel(const V1_1::Model& model) {
-    return validateModelVersioned(model, /*allowUnspecifiedRank=*/false);
-}
-
-bool validateModel(const V1_2::Model& model) {
-    return validateModelVersioned(model, /*allowUnspecifiedRank=*/true);
-}
+template bool validateModel<V1_0::Model>(const V1_0::Model& model);
+template bool validateModel<V1_1::Model>(const V1_1::Model& model);
+template bool validateModel<V1_2::Model>(const V1_2::Model& model);
 
 // Validates the arguments of a request. type is either "input" or "output" and is used
 // for printing error messages. The operandIndexes is the appropriate array of input
@@ -572,29 +583,21 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
     return true;
 }
 
-template <typename VersionedModel>
-static bool validateRequestVersioned(const Request& request, const VersionedModel& model,
-                                     bool allowDynamicOutputShape) {
+template <class T_Model>
+bool validateRequest(const Request& request, const T_Model& model) {
+    HalVersion version = ModelToHalVersion<T_Model>::version;
     return (validateRequestArguments(request.inputs, model.inputIndexes,
                                      convertToV1_2(model.operands), request.pools,
                                      /*allowUnspecified=*/false, "input") &&
             validateRequestArguments(request.outputs, model.outputIndexes,
                                      convertToV1_2(model.operands), request.pools,
-                                     /*allowUnspecified=*/allowDynamicOutputShape, "output") &&
-            validatePools(request.pools));
+                                     /*allowUnspecified=*/version >= HalVersion::V1_2, "output") &&
+            validatePools(request.pools, version));
 }
 
-bool validateRequest(const Request& request, const V1_0::Model& model) {
-    return validateRequestVersioned(request, model, /*allowDynamicOutputShape=*/false);
-}
-
-bool validateRequest(const Request& request, const V1_1::Model& model) {
-    return validateRequestVersioned(request, model, /*allowDynamicOutputShape=*/false);
-}
-
-bool validateRequest(const Request& request, const V1_2::Model& model) {
-    return validateRequestVersioned(request, model, /*allowDynamicOutputShape=*/true);
-}
+template bool validateRequest<V1_0::Model>(const Request& request, const V1_0::Model& model);
+template bool validateRequest<V1_1::Model>(const Request& request, const V1_1::Model& model);
+template bool validateRequest<V1_2::Model>(const Request& request, const V1_2::Model& model);
 
 bool validateExecutionPreference(ExecutionPreference preference) {
     return preference == ExecutionPreference::LOW_POWER ||
