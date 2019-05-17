@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, lsh_projection) {
             lsh_projection::is_ignored,
             lsh_projection::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, lsh_projection, lsh_projection::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, lsh_projection_dynamic_output_shape) {
     execute(lsh_projection::CreateModel_dynamic_output_shape,

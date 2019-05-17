@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, avg_pool_float_3) {
             avg_pool_float_3::is_ignored,
             avg_pool_float_3::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, avg_pool_float_3, avg_pool_float_3::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, avg_pool_float_3_dynamic_output_shape) {
     execute(avg_pool_float_3::CreateModel_dynamic_output_shape,

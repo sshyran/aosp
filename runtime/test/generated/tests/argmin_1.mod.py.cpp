@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, argmin_1) {
             argmin_1::is_ignored,
             argmin_1::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, argmin_1, argmin_1::CreateModel)
 
 TEST_F(GeneratedTests, argmin_1_relaxed) {
     execute(argmin_1::CreateModel_relaxed,
@@ -26,18 +27,21 @@ TEST_F(GeneratedTests, argmin_1_float16) {
             argmin_1::is_ignored_float16,
             argmin_1::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, argmin_1_float16, argmin_1::CreateModel_float16)
 
 TEST_F(GeneratedTests, argmin_1_int32) {
     execute(argmin_1::CreateModel_int32,
             argmin_1::is_ignored_int32,
             argmin_1::get_examples_int32());
 }
+TEST_AVAILABLE_SINCE(V1_2, argmin_1_int32, argmin_1::CreateModel_int32)
 
 TEST_F(GeneratedTests, argmin_1_quant8) {
     execute(argmin_1::CreateModel_quant8,
             argmin_1::is_ignored_quant8,
             argmin_1::get_examples_quant8());
 }
+TEST_AVAILABLE_SINCE(V1_2, argmin_1_quant8, argmin_1::CreateModel_quant8)
 
 TEST_F(DynamicOutputShapeTest, argmin_1_dynamic_output_shape) {
     execute(argmin_1::CreateModel_dynamic_output_shape,

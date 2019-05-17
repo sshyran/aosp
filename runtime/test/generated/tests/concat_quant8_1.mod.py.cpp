@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, concat_quant8_1) {
             concat_quant8_1::is_ignored,
             concat_quant8_1::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, concat_quant8_1, concat_quant8_1::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, concat_quant8_1_dynamic_output_shape) {
     execute(concat_quant8_1::CreateModel_dynamic_output_shape,

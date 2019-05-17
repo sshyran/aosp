@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, abs) {
             abs::is_ignored,
             abs::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, abs, abs::CreateModel)
 
 TEST_F(GeneratedTests, abs_relaxed) {
     execute(abs::CreateModel_relaxed,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, abs_float16) {
             abs::is_ignored_float16,
             abs::get_examples_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, abs_float16, abs::CreateModel_float16)
 
 TEST_F(DynamicOutputShapeTest, abs_dynamic_output_shape) {
     execute(abs::CreateModel_dynamic_output_shape,

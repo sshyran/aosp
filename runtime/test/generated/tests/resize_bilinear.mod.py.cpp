@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, resize_bilinear) {
             resize_bilinear::is_ignored,
             resize_bilinear::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, resize_bilinear, resize_bilinear::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, resize_bilinear_dynamic_output_shape) {
     execute(resize_bilinear::CreateModel_dynamic_output_shape,
