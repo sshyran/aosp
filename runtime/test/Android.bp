@@ -74,6 +74,9 @@ cc_defaults {
     static_libs: [
         "libgmock",
     ],
+    cflags: [
+         "-UNDEBUG"
+    ],
 }
 
 cc_test {

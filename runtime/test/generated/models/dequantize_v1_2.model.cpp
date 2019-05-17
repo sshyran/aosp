@@ -497,7 +497,7 @@ inline bool is_ignored_dynamic_output_shape_float16_4(int i) {
 }
 
 void CreateModel_5(Model *model) {
-  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 0.5f},0));
+  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 0.5f},0));
   OperandType type9(Type::TENSOR_FLOAT32, {2, 3, 4});
   // Phase 1, operands
   auto input04 = model->addOperand(&type8);
@@ -517,7 +517,7 @@ inline bool is_ignored_5(int i) {
 }
 
 void CreateModel_relaxed_5(Model *model) {
-  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 0.5f},0));
+  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 0.5f},0));
   OperandType type9(Type::TENSOR_FLOAT32, {2, 3, 4});
   // Phase 1, operands
   auto input04 = model->addOperand(&type8);
@@ -540,7 +540,7 @@ inline bool is_ignored_relaxed_5(int i) {
 
 void CreateModel_float16_5(Model *model) {
   OperandType type37(Type::TENSOR_FLOAT16, {2, 3, 4});
-  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 0.5f},0));
+  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 0.5f},0));
   // Phase 1, operands
   auto input04 = model->addOperand(&type8);
   auto output04 = model->addOperand(&type37);
@@ -560,7 +560,7 @@ inline bool is_ignored_float16_5(int i) {
 
 void CreateModel_dynamic_output_shape_5(Model *model) {
   OperandType type32(Type::TENSOR_FLOAT32, {0, 0, 0});
-  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 0.5f},0));
+  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 0.5f},0));
   // Phase 1, operands
   auto input04 = model->addOperand(&type8);
   auto output04 = model->addOperand(&type32);
@@ -580,7 +580,7 @@ inline bool is_ignored_dynamic_output_shape_5(int i) {
 
 void CreateModel_dynamic_output_shape_relaxed_5(Model *model) {
   OperandType type32(Type::TENSOR_FLOAT32, {0, 0, 0});
-  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 0.5f},0));
+  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 0.5f},0));
   // Phase 1, operands
   auto input04 = model->addOperand(&type8);
   auto output04 = model->addOperand(&type32);
@@ -602,7 +602,7 @@ inline bool is_ignored_dynamic_output_shape_relaxed_5(int i) {
 
 void CreateModel_dynamic_output_shape_float16_5(Model *model) {
   OperandType type33(Type::TENSOR_FLOAT16, {0, 0, 0});
-  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 0.5f},0));
+  OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 0.5f},0));
   // Phase 1, operands
   auto input04 = model->addOperand(&type8);
   auto output04 = model->addOperand(&type33);
@@ -621,7 +621,7 @@ inline bool is_ignored_dynamic_output_shape_float16_5(int i) {
 }
 
 void CreateModel_6(Model *model) {
-  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
+  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
   OperandType type9(Type::TENSOR_FLOAT32, {2, 3, 4});
   // Phase 1, operands
   auto input05 = model->addOperand(&type10);
@@ -641,7 +641,7 @@ inline bool is_ignored_6(int i) {
 }
 
 void CreateModel_relaxed_6(Model *model) {
-  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
+  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
   OperandType type9(Type::TENSOR_FLOAT32, {2, 3, 4});
   // Phase 1, operands
   auto input05 = model->addOperand(&type10);
@@ -663,7 +663,7 @@ inline bool is_ignored_relaxed_6(int i) {
 }
 
 void CreateModel_float16_6(Model *model) {
-  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
+  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
   OperandType type37(Type::TENSOR_FLOAT16, {2, 3, 4});
   // Phase 1, operands
   auto input05 = model->addOperand(&type10);
@@ -683,7 +683,7 @@ inline bool is_ignored_float16_6(int i) {
 }
 
 void CreateModel_dynamic_output_shape_6(Model *model) {
-  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
+  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
   OperandType type32(Type::TENSOR_FLOAT32, {0, 0, 0});
   // Phase 1, operands
   auto input05 = model->addOperand(&type10);
@@ -703,7 +703,7 @@ inline bool is_ignored_dynamic_output_shape_6(int i) {
 }
 
 void CreateModel_dynamic_output_shape_relaxed_6(Model *model) {
-  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
+  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
   OperandType type32(Type::TENSOR_FLOAT32, {0, 0, 0});
   // Phase 1, operands
   auto input05 = model->addOperand(&type10);
@@ -725,7 +725,7 @@ inline bool is_ignored_dynamic_output_shape_relaxed_6(int i) {
 }
 
 void CreateModel_dynamic_output_shape_float16_6(Model *model) {
-  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, 0.0f, 0, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
+  OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
   OperandType type33(Type::TENSOR_FLOAT16, {0, 0, 0});
   // Phase 1, operands
   auto input05 = model->addOperand(&type10);
