@@ -1,27 +1,31 @@
 # NNAPI vendor extensions
 
 In Android Q, Neural Networks API introduced vendor extensions -- a better,
-more structured alternative to the OEM operation and data types. Extensions
-allow vendors to provide custom hardware-accellerated operations via NNAPI.
+more structured alternative to the OEM operation and data types.
+An extension is a collection of vendor-defined operations and data types.
+A driver can provide custom hardware-accelerated operations via NNAPI 1.2+
+by supporting corresponding vendor extensions.
+
+Note that extensions do not modify behavior of existing operations.
 
 TODO(pszczepaniak): Which apps can use vendor extensions?
 
 This document explains how to create and use extensions.
 
-## Extension definition
+## Vendor extension definition
 
 The vendor is expected to create and maintain a header file with the
-extension specification. A complete sample extension definition is provided in
+extension definition. A complete example is provided in
 `test_vendor/fibonacci/FibonacciExtension.h`.
 
 Each extension must have a unique name that starts with the reverse domain name
 of the vendor:
 ```c
-const char* const MY_EXTENSION_NAME = "com.example.my_extension";
+const char MY_EXTENSION_NAME[] = "com.example.my_extension";
 ```
 
-This name acts as a namespace for operation and operand types.
-The driver uses this name to distinguish between extensions.
+This name acts as a namespace for operations and data types.
+NNAPI uses this name to distinguish between extensions.
 
 Operations and data types are declared in a way similar to
 `../runtime/include/NeuralNetworks.h`:
@@ -54,6 +58,11 @@ enum {
 };
 ```
 
+An extension operation may use any operand types, including non-extension
+operand types and operand types from other extensions. In the latter case,
+the driver must support those other extensions in order to support the
+extension.
+
 Extensions may also declare custom structures to accompany extension operands:
 ```c
 /**
@@ -72,8 +81,8 @@ Runtime extension support is provided by
 `../runtime/include/NeuralNetworksWrapperExtensions.h` (C++ API).
 This section provides an overview of the former.
 
-Use `ANeuralNetworksDevice_getExtensionSupport` to check if a device supports
-an extension:
+Use `ANeuralNetworksDevice_getExtensionSupport` to check whether a device
+supports an extension:
 ```c
 bool isExtensionSupported;
 CHECK_EQ(ANeuralNetworksDevice_getExtensionSupport(device, MY_EXTENSION_NAME,
@@ -116,7 +125,7 @@ To build a model with an extension operation, use
 Then call `ANeuralNetworksModel_addOperation` as usual:
 ```c
 ANeuralNetworksOperationType type;
-CHECK_EQ(ANeuralNetworksModel_getExtensionOperationType(model, MY_EXTENSION_NAME, MY_OPERATION,
+CHECK_EQ(ANeuralNetworksModel_getExtensionOperationType(model, MY_EXTENSION_NAME, MY_FUNCTION,
                                                         &type),
          ANEURALNETWORKS_NO_ERROR);
 CHECK_EQ(ANeuralNetworksModel_addOperation(model, type, inputCount, inputs, outputCount, outputs),
@@ -155,6 +164,9 @@ whereas a non-zero prefix maps uniquely within a model to an extension name via
 The low `Model::ExtensionTypeEncoding::LOW_BITS_TYPE` bits of the type
 correspond to the type within the extension.
 
-The driver must validate operands and operations.
+The driver must validate extension operations and data types, as the NNAPI
+runtime does not know how to validate particular extension operations and data
+types.
 
-Extension operands may have associated data in `operand.extraParams.extension`.
+Extension operands may have associated data in `operand.extraParams.extension`,
+which the runtime treats as a raw data blob of arbitrary size.
