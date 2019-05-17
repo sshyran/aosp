@@ -519,7 +519,7 @@ class PartitioningModel : private WrapperModel {
             }
 
             case ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL: {
-                WrapperOperandType wrapperOperandType(wrapperType, {1}, 0.0f, 0,
+                WrapperOperandType wrapperOperandType(wrapperType, {1},
                                                       WrapperSymmPerChannelQuantParams({1.0f}, 0));
                 mWrapperOperandType.push_back(wrapperOperandType);
                 return WrapperModel::addOperand(&wrapperOperandType);
