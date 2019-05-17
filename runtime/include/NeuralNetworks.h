@@ -228,12 +228,16 @@ typedef enum {
      * * 0: A tensor.
      * * 1: A tensor of the same {@link OperandCode}, and compatible dimensions
      *      as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scales and zeroPoint can be different from input0 scale and zeroPoint.
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
      *
      * Outputs:
      * * 0: The sum, a tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 27.
      */
@@ -316,6 +320,8 @@ typedef enum {
      * Outputs:
      * * 0: The output 4-D tensor, of shape
      *      [batches, out_height, out_width, depth].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 27.
      */
@@ -348,6 +354,9 @@ typedef enum {
      * Outputs:
      * * 0: The output, a tensor of the same {@link OperandCode} as the input
      *      tensors. The output shape is [D0, D1, ..., sum(Daxis(i)), ..., Dm].
+     *      Since API level 29, for a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint values can be different from
+     *      input tensors. Before API level 29 they have to be the same as for the input tensors.
      *
      * Available since API level 27.
      */
@@ -686,6 +695,8 @@ typedef enum {
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batch, height*block_size,
      *      width*block_size, depth/(block_size*block_size)].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 27.
      */
@@ -756,6 +767,8 @@ typedef enum {
      * * 0: A n-D tensor with the same rank and shape as the Values
      *      tensor, except for the first dimension which has the same size
      *      as Lookups' only dimension.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input1.
      *
      * Available since API level 27.
      */
@@ -875,6 +888,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: Output. A tensor with shape [ k …].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input2.
      * * 1: Hits. A boolean tensor with shape [ k ] indicates whether the lookup
      *      hits (True) or not (False).
      *      Stored as {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} with offset 0
@@ -1441,6 +1456,8 @@ typedef enum {
      * Outputs:
      * * 0: The output 4-D tensor, of shape
      *      [batches, out_height, out_width, depth].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 27.
      */
@@ -1510,6 +1527,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 27.
      */
@@ -1534,7 +1553,9 @@ typedef enum {
      *      be zero-sized.
      *
      * Outputs:
-     * * 0: The output tensor of same shape as input0.
+     * * 0: The output tensor of the same shape as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 27.
      */
@@ -1560,6 +1581,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 27.
      */
@@ -1591,6 +1614,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output tensor, of shape specified by the input shape.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 27.
      */
@@ -1648,6 +1673,8 @@ typedef enum {
      * Outputs:
      * * 0: The output 4-D tensor, of shape
      *      [batches, new_height, new_width, depth].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 27.
      */
@@ -1790,6 +1817,8 @@ typedef enum {
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batches, height/block_size,
      *      width/block_size, depth_in*block_size*block_size].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 27.
      */
@@ -1935,6 +1964,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 28.
      */
@@ -2016,6 +2047,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be same as input0.
      *
      * Available since API level 28.
      */
@@ -2052,6 +2085,8 @@ typedef enum {
      *      of the padding:
      *          output0.dimension[i] =
      *              padding[i, 0] + input0.dimension[i] + padding[i, 1]
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      *      NOTE: Before API level 29, the pad value for
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} is undefined.
@@ -2103,6 +2138,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      *      NOTE: Before API level 29, the pad value for
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} is undefined.
@@ -2139,6 +2176,8 @@ typedef enum {
      * * 0: A tensor of the same {@link OperandCode} as input0. Contains the
      *      same data as input, but has one or more dimensions of size 1
      *      removed.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 28.
      */
@@ -2186,6 +2225,8 @@ typedef enum {
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0 and rank (n - k),
      *      where k is the number of bits set in shrink_axis_mask.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 28.
      */
@@ -2232,6 +2273,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 28.
      */
@@ -2261,6 +2304,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 28.
      */
@@ -2378,6 +2423,8 @@ typedef enum {
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
      *      [num_rois, num_classes * 4], specifying the coordinates of each
      *      output bounding box for each class, with format [x1, y1, x2, y2].
+     *      For type of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, the
+     *      scale must be 0.125 and the zero point must be 0.
      *
      * Available since API level 29.
      */
@@ -2837,6 +2884,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} and same shape as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
      */
@@ -2993,6 +3042,8 @@ typedef enum {
      * Outputs:
      * * 0: An (n + 1)-D tensor with the same {@link OperandCode} and data as
      *      input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
      */
@@ -3031,6 +3082,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: An (n + k - 1)-D tensor with the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
      */
@@ -3297,6 +3350,8 @@ typedef enum {
      * Outputs:
      * * 0: The output 4-D tensor, of shape
      *      [batches, out_height, out_width, depth_out].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 29.
      */
@@ -3339,10 +3394,14 @@ typedef enum {
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
      *      [num_boxes, num_keypoints], specifying score of the keypoints.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from input0 scale and zeroPoint.
      * * 1: A tensor of the same {@link OperandCode} as input1, with shape
      *      [num_boxes, num_keypoints, 2], specifying the location of
      *      the keypoints, the second dimension is organized as
      *      [keypoint_x, keypoint_y].
+     *      For type of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, the
+     *      scale must be 0.125 and the zero point must be 0.
      *
      * Available since API level 29.
      */
@@ -3582,9 +3641,13 @@ typedef enum {
      * * 0: A tensor.
      * * 1: A tensor of the same {@link OperandCode} and compatible dimensions
      *      with input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scales and zeroPoint can be different from input0 scale and zeroPoint.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 29.
      */
@@ -3605,9 +3668,13 @@ typedef enum {
      * * 0: A tensor.
      * * 1: A tensor of the same {@link OperandCode} and compatible dimensions
      *      with input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scales and zeroPoint can be different from input0 scale and zeroPoint.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 29.
      */
@@ -3696,6 +3763,8 @@ typedef enum {
      *      of the padding:
      *          output0.dimension[i] =
      *              padding[i, 0] + input0.dimension[i] + padding[i, 1]
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
      */
@@ -3767,6 +3836,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be diffent from the input0 scale and zeroPoint.
      *
      * Available since API level 29.
      */
@@ -4001,6 +4072,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
      */
@@ -4030,6 +4103,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
      */
@@ -4144,6 +4219,8 @@ typedef enum {
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0. The output
      *      shape is [num_rois, out_height, out_width, depth].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from the input0 scale and zeroPoint.
      *
      * Available since API level 29.
      */
@@ -4195,6 +4272,8 @@ typedef enum {
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0. The output
      *      shape is [num_rois, out_height, out_width, depth].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
      */
@@ -4240,9 +4319,13 @@ typedef enum {
      *      true) or input2 (if false).
      * * 1: An input tensor of the same shape as input0.
      * * 2: An input tensor of the same shape and type as input1.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scales and zeroPoint can be different from input1 scale and zeroPoint.
      *
      * Outputs:
      * * 0: A tensor of the same type and shape as input1 and input2.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      */
     ANEURALNETWORKS_SELECT = 84,
@@ -4295,6 +4378,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: An n-D tensor of the same type as the input containing the slice.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      its scale and zeroPoint has to be same as the input0 scale and zeroPoint.
      *
      * Available since API level 29.
      */
@@ -4320,6 +4405,8 @@ typedef enum {
      *
      * Outputs:
      * * 0 ~ (num_splits - 1): Resulting subtensors.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
      */
@@ -4368,6 +4455,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tiled tensor of the same {@link OperandCode} and rank as `input`.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
      */
@@ -4395,6 +4484,8 @@ typedef enum {
      * Outputs:
      * * 0: An n-D tensor of the same type as the input, containing the k
      *      largest elements along each last dimensional slice.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      * * 1: An n-D tensor of type {@link ANEURALNETWORKS_TENSOR_INT32}
      *      containing the indices of values within the last dimension of input.
      *
@@ -4513,6 +4604,8 @@ typedef enum {
      * Outputs:
      * * 0: The output 4-D tensor, of shape
      *      [batches, out_height, out_width, depth_out].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 29.
      */
@@ -4736,6 +4829,8 @@ typedef enum {
      * Outputs:
      * * 0: The output 4-D tensor, of shape
      *      [batches, new_height, new_width, depth].
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
      */
