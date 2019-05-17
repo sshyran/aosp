@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, split_int32_4) {
             split_int32_4::is_ignored,
             split_int32_4::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, split_int32_4, split_int32_4::CreateModel)
 
 TEST_F(GeneratedTests, split_int32_4_relaxed) {
     execute(split_int32_4::CreateModel_relaxed,

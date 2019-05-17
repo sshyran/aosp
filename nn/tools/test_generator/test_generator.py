@@ -483,6 +483,7 @@ class Model:
         self.compiled = False
         self.dumped = False
         self.hasDynamicOutputShape = False
+        self.version = FileNames.version
         Model.models.append(self)
 
     def WithSuffix(self, *args):
@@ -522,6 +523,11 @@ class Model:
 
     def TestDynamicOutputShape(self, hasDynamicOutputShape):
         self.hasDynamicOutputShape = hasDynamicOutputShape
+        return self
+
+    # Sets the version of the model in compliance tests. Set to None to disable the test.
+    def IntroducedIn(self, ver):
+        self.version = ver
         return self
 
     def GetTypes(self):
@@ -611,6 +617,9 @@ class Model:
         self.SetOperandInsAndOuts()
         self.TopologicalSort()
         self.SetOutputUnspecified()
+        # Do not check compliance for relaxed mode and dynamic output shape tests.
+        if self.isRelaxed or self.hasDynamicOutputShape:
+            self.IntroducedIn(None)
         self.compiled = True
         return self
 
@@ -963,6 +972,7 @@ class DynamicOutputShapeConverter(ModelVariation):
 # An example is always attached to a model, and could have multiple variations
 class Example:
     examples = []
+    versionOverrides = {}
 
     def __init__(self, *args, model=None, name=None):
         self.model = Model.models[-1] if model is None else model
@@ -984,6 +994,11 @@ class Example:
         else:
             self.variations = []
         Example.examples.append(self)
+
+    @staticmethod
+    def SetVersion(ver, *args):
+        for name in args:
+            Example.versionOverrides[name] = ver
 
     # Main entrance of test generator
     @staticmethod
@@ -1125,6 +1140,8 @@ class Example:
             varNames = [v.name for v in variationList]
             self.testName = NamedTest(FileNames.specName, self.model.name, self.name, *varNames)
             self.examplesName = GlobalVariable("examples", self.model.name, self.name, *varNames)
+            if str(self.testName) in Example.versionOverrides:
+                self.model.IntroducedIn(Example.versionOverrides[str(self.testName)])
             self.model.WithSuffix(*varNames).Compile()
             # Dump files
             if DumpModel is not None and model_fd is not None:
@@ -1204,6 +1221,7 @@ class FileNames:
     testFile = ""
     ctsFile = ""
     logFile = ""
+    version = ""
     fileIndex = 0
 
     @staticmethod
@@ -1253,6 +1271,13 @@ class FileNames:
         Model.models = list()
         Example.examples = list()
         Configuration.use_shm_for_weights = False
+
+        # Extract version from absolute file path.
+        versionMatch = re.findall(r"/V\d_\d/", FileNames.specFile)
+        if len(versionMatch) == 1:
+            FileNames.version = versionMatch[0].strip('/')
+        else:
+            FileNames.version = None
         return True
 
 class Configuration:

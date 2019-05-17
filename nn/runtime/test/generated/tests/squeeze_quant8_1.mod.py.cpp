@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, squeeze_quant8_1) {
             squeeze_quant8_1::is_ignored,
             squeeze_quant8_1::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_1, squeeze_quant8_1, squeeze_quant8_1::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, squeeze_quant8_1_dynamic_output_shape) {
     execute(squeeze_quant8_1::CreateModel_dynamic_output_shape,

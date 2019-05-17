@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, transpose_float16) {
             transpose_float16::is_ignored,
             transpose_float16::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_2, transpose_float16, transpose_float16::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, transpose_float16_dynamic_output_shape) {
     execute(transpose_float16::CreateModel_dynamic_output_shape,

@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, logistic_quant8_1) {
             logistic_quant8_1::is_ignored,
             logistic_quant8_1::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, logistic_quant8_1, logistic_quant8_1::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, logistic_quant8_1_dynamic_output_shape) {
     execute(logistic_quant8_1::CreateModel_dynamic_output_shape,

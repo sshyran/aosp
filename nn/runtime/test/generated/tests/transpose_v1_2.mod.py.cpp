@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, transpose_v1_2) {
             transpose_v1_2::is_ignored,
             transpose_v1_2::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_1, transpose_v1_2, transpose_v1_2::CreateModel)
 
 TEST_F(GeneratedTests, transpose_v1_2_relaxed) {
     execute(transpose_v1_2::CreateModel_relaxed,
@@ -26,6 +27,7 @@ TEST_F(GeneratedTests, transpose_v1_2_quant8) {
             transpose_v1_2::is_ignored_quant8,
             transpose_v1_2::get_examples_quant8());
 }
+TEST_AVAILABLE_SINCE(V1_1, transpose_v1_2_quant8, transpose_v1_2::CreateModel_quant8)
 
 TEST_F(DynamicOutputShapeTest, transpose_v1_2_dynamic_output_shape) {
     execute(transpose_v1_2::CreateModel_dynamic_output_shape,
@@ -50,6 +52,7 @@ TEST_F(GeneratedTests, transpose_v1_2_zero_sized) {
             transpose_v1_2::is_ignored_zero_sized,
             transpose_v1_2::get_examples_zero_sized());
 }
+TEST_AVAILABLE_SINCE(V1_2, transpose_v1_2_zero_sized, transpose_v1_2::CreateModel_zero_sized)
 
 TEST_F(GeneratedTests, transpose_v1_2_zero_sized_relaxed) {
     execute(transpose_v1_2::CreateModel_zero_sized_relaxed,
@@ -62,12 +65,14 @@ TEST_F(GeneratedTests, transpose_v1_2_zero_sized_quant8) {
             transpose_v1_2::is_ignored_zero_sized_quant8,
             transpose_v1_2::get_examples_zero_sized_quant8());
 }
+TEST_AVAILABLE_SINCE(V1_2, transpose_v1_2_zero_sized_quant8, transpose_v1_2::CreateModel_zero_sized_quant8)
 
 TEST_F(GeneratedTests, transpose_v1_2_zero_sized_float16) {
     execute(transpose_v1_2::CreateModel_zero_sized_float16,
             transpose_v1_2::is_ignored_zero_sized_float16,
             transpose_v1_2::get_examples_zero_sized_float16());
 }
+TEST_AVAILABLE_SINCE(V1_2, transpose_v1_2_zero_sized_float16, transpose_v1_2::CreateModel_zero_sized_float16)
 
 TEST_F(DynamicOutputShapeTest, transpose_v1_2_zero_sized_dynamic_output_shape) {
     execute(transpose_v1_2::CreateModel_zero_sized_dynamic_output_shape,

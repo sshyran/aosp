@@ -14,6 +14,7 @@ TEST_F(GeneratedTests, max_pool_float_1) {
             max_pool_float_1::is_ignored,
             max_pool_float_1::get_examples());
 }
+TEST_AVAILABLE_SINCE(V1_0, max_pool_float_1, max_pool_float_1::CreateModel)
 
 TEST_F(DynamicOutputShapeTest, max_pool_float_1_dynamic_output_shape) {
     execute(max_pool_float_1::CreateModel_dynamic_output_shape,
