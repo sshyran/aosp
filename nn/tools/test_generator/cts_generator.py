@@ -142,9 +142,13 @@ def DumpCtsModel(model, model_fd):
                 typeDef = "OperandType %s(Type::%s, %s, %s, %d);"%(
                     t, t.type, t.GetDimensionsString(), tg.PrettyPrintAsFloat(t.scale), t.zeroPoint)
             else:
-                typeDef = "OperandType %s(Type::%s, %s, %s, %d, %s);"%(
-                    t, t.type, t.GetDimensionsString(), tg.PrettyPrintAsFloat(t.scale), t.zeroPoint,
-                    t.extraParams.GetConstructor())
+                assert t.type == "TENSOR_QUANT8_SYMM_PER_CHANNEL", "Unexpected model configuration. " \
+                                                                   "Extra params are currently expected for " \
+                                                                   "TENSOR_QUANT8_SYMM_PER_CHANNEL operand type. "
+                assert t.scale == 0.0 and t.zeroPoint == 0, "Scale and zero point are always zero for " \
+                                                            "TENSOR_QUANT8_SYMM_PER_CHANNEL operands"
+                typeDef = "OperandType %s(Type::%s, %s, %s);"%(
+                    t, t.type, t.GetDimensionsString(), t.extraParams.GetConstructor())
 
         IndentedPrint(typeDef, file=model_fd)
 
