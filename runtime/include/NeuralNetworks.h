@@ -3584,7 +3584,7 @@ typedef enum {
      *      with input0.
      *
      * Outputs:
-     * * 0: The sum, a tensor of the same {@link OperandCode} as input0.
+     * * 0: A tensor of the same {@link OperandCode} as input0.
      *
      * Available since API level 29.
      */
@@ -3607,7 +3607,7 @@ typedef enum {
      *      with input0.
      *
      * Outputs:
-     * * 0: The sum, a tensor of the same {@link OperandCode} as input0.
+     * * 0: A tensor of the same {@link OperandCode} as input0.
      *
      * Available since API level 29.
      */
