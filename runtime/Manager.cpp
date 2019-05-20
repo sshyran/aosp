@@ -22,7 +22,7 @@
 #include "Tracing.h"
 #include "Utils.h"
 
-#include <android/hidl/manager/1.0/IServiceManager.h>
+#include <android/hidl/manager/1.2/IServiceManager.h>
 #include <build/version.h>
 #include <hidl/HidlTransportSupport.h>
 #include <hidl/ServiceManagement.h>
@@ -373,26 +373,27 @@ std::shared_ptr<Device> DeviceManager::forTest_makeDriverDevice(const std::strin
 }
 
 void DeviceManager::findAvailableDevices() {
-    using ::android::hidl::manager::V1_0::IServiceManager;
+    using ::android::hidl::manager::V1_2::IServiceManager;
     VLOG(MANAGER) << "findAvailableDevices";
 
-    sp<IServiceManager> manager = hardware::defaultServiceManager();
+    sp<IServiceManager> manager = hardware::defaultServiceManager1_2();
     if (manager == nullptr) {
         LOG(ERROR) << "Unable to open defaultServiceManager";
         return;
     }
 
-    manager->listByInterface(V1_0::IDevice::descriptor, [this](const hidl_vec<hidl_string>& names) {
-        for (const auto& name : names) {
-            VLOG(MANAGER) << "Found interface " << name.c_str();
-            sp<V1_0::IDevice> device = V1_0::IDevice::getService(name);
-            if (device == nullptr) {
-                LOG(ERROR) << "Got a null IDEVICE for " << name.c_str();
-                continue;
-            }
-            registerDevice(name.c_str(), device);
-        }
-    });
+    manager->listManifestByInterface(
+            V1_0::IDevice::descriptor, [this](const hidl_vec<hidl_string>& names) {
+                for (const auto& name : names) {
+                    VLOG(MANAGER) << "Found interface " << name.c_str();
+                    sp<V1_0::IDevice> device = V1_0::IDevice::getService(name);
+                    if (device == nullptr) {
+                        LOG(ERROR) << "Got a null IDEVICE for " << name.c_str();
+                        continue;
+                    }
+                    registerDevice(name.c_str(), device);
+                }
+            });
 
     // register CPU fallback device
     mDevices.push_back(CpuDevice::get());
