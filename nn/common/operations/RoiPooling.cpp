@@ -235,8 +235,7 @@ bool prepare(IOperationExecutionContext* context) {
         NN_RET_CHECK_EQ(roiShape.offset, 0);
     }
 
-    Shape output = context->getOutputShape(kOutputTensor);
-    output.type = input.type;
+    Shape output = input;
     if (useNchw) {
         output.dimensions = {numRois, inDepth, static_cast<uint32_t>(outputHeight),
                              static_cast<uint32_t>(outputWidth)};
