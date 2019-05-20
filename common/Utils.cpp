@@ -1224,6 +1224,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 };
                 outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+                if (operands[inputIndexes[0]].zeroPoint != 0) {
+                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+                }
                 inExpectedTypes = {
                         OperandType::TENSOR_QUANT8_ASYMM,
                         OperandType::TENSOR_INT32,
@@ -1270,7 +1273,11 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 };
                 outExpectedTypes = {OperandType::TENSOR_FLOAT16};
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
+                if (operands[inputIndexes[0]].zeroPoint == 0) {
+                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_1));
+                } else {
+                    NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+                }
                 inExpectedTypes = {
                         OperandType::TENSOR_QUANT8_ASYMM,
                         OperandType::TENSOR_INT32,
