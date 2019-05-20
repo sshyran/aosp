@@ -1,5 +1,5 @@
 // clang-format off
-// Generated file (from: pad_quant8.mod.py). Do not edit
+// Generated file (from: pad_quant8_nonzero.mod.py). Do not edit
 // Create the model
 Model createTestModel() {
     const std::vector<Operand> operands = {
@@ -8,7 +8,7 @@ Model createTestModel() {
             .dimensions = {1, 2, 3, 1},
             .numberOfConsumers = 1,
             .scale = 2.3f,
-            .zeroPoint = 0,
+            .zeroPoint = 9,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         },
@@ -26,7 +26,7 @@ Model createTestModel() {
             .dimensions = {1, 4, 7, 1},
             .numberOfConsumers = 0,
             .scale = 2.3f,
-            .zeroPoint = 0,
+            .zeroPoint = 9,
             .lifetime = OperandLifeTime::MODEL_OUTPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         }
@@ -70,7 +70,7 @@ Model createTestModel_dynamic_output_shape() {
             .dimensions = {1, 2, 3, 1},
             .numberOfConsumers = 1,
             .scale = 2.3f,
-            .zeroPoint = 0,
+            .zeroPoint = 9,
             .lifetime = OperandLifeTime::MODEL_INPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         },
@@ -88,7 +88,7 @@ Model createTestModel_dynamic_output_shape() {
             .dimensions = {0, 0, 0, 0},
             .numberOfConsumers = 0,
             .scale = 2.3f,
-            .zeroPoint = 0,
+            .zeroPoint = 9,
             .lifetime = OperandLifeTime::MODEL_OUTPUT,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
         }
