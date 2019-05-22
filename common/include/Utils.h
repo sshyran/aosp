@@ -220,11 +220,6 @@ bool tensorHasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimC
 bool tensorHasUnspecifiedDimensions(const Operand& operand);
 bool tensorHasUnspecifiedDimensions(const ANeuralNetworksOperandType* type);
 
-// Memory is unmapped.
-// Memory is reference counted by hidl_memory instances, and is deallocated
-// once there are no more references.
-hidl_memory allocateSharedMemory(int64_t size);
-
 // Returns the number of padding bytes needed to align data of the
 // specified length.  It aligns object of length:
 // 2, 3 on a 2 byte boundary,
