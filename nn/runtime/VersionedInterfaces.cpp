@@ -49,6 +49,10 @@ void sendFailureMessage(const sp<IExecutionCallback>& cb) {
     cb->notify(ErrorStatus::GENERAL_FAILURE);
 }
 
+void sendFailureMessage(const sp<ExecutionCallback>& cb) {
+    sendFailureMessage(static_cast<sp<IExecutionCallback>>(cb));
+}
+
 // This class is thread safe
 template <typename ICallback>
 class DeathHandler : public hardware::hidl_death_recipient {
@@ -138,21 +142,34 @@ ErrorStatus VersionedIPreparedModel::execute(const Request& request, MeasureTimi
 
     if (mPreparedModelV1_2 != nullptr) {
         Return<ErrorStatus> ret = mPreparedModelV1_2->execute_1_2(request, measure, callback);
-        callback->wait();
         if (!ret.isOk()) {
+            sendFailureMessage(callback);
             LOG(ERROR) << "execute_1_2 failure: " << ret.description();
             return ErrorStatus::GENERAL_FAILURE;
         }
+        if (ret != ErrorStatus::NONE) {
+            sendFailureMessage(callback);
+            LOG(ERROR) << "execute_1_2 returned " << toString(static_cast<ErrorStatus>(ret));
+            return static_cast<ErrorStatus>(ret);
+        }
+        callback->wait();
         return static_cast<ErrorStatus>(ret);
     } else if (mPreparedModelV1_0 != nullptr) {
         Return<ErrorStatus> ret = mPreparedModelV1_0->execute(request, callback);
-        callback->wait();
         if (!ret.isOk()) {
+            sendFailureMessage(callback);
             LOG(ERROR) << "execute failure: " << ret.description();
             return ErrorStatus::GENERAL_FAILURE;
         }
+        if (ret != ErrorStatus::NONE) {
+            sendFailureMessage(callback);
+            LOG(ERROR) << "execute returned " << toString(static_cast<ErrorStatus>(ret));
+            return static_cast<ErrorStatus>(ret);
+        }
+        callback->wait();
         return static_cast<ErrorStatus>(ret);
     } else {
+        sendFailureMessage(callback);
         LOG(ERROR) << "execute called with no preparedModel";
         return ErrorStatus::GENERAL_FAILURE;
     }
@@ -610,6 +627,7 @@ std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevic
             LOG(ERROR) << "prepareModel_1_2 returned " << toString(static_cast<ErrorStatus>(ret));
             return kFailure;
         }
+        callback->wait();
         return {callback->getStatus(), makeVersionedIPreparedModel(callback->getPreparedModel())};
     }
 
@@ -644,6 +662,7 @@ std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevic
                            << toString(static_cast<ErrorStatus>(ret));
                 return kFailure;
             }
+            callback->wait();
             return {callback->getStatus(),
                     makeVersionedIPreparedModel(callback->getPreparedModel())};
         }
@@ -682,6 +701,7 @@ std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevic
                 LOG(ERROR) << "prepareModel returned " << toString(static_cast<ErrorStatus>(ret));
                 return kFailure;
             }
+            callback->wait();
             return {callback->getStatus(),
                     makeVersionedIPreparedModel(callback->getPreparedModel())};
         }
@@ -724,6 +744,7 @@ VersionedIDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
                        << toString(static_cast<ErrorStatus>(ret));
             return kFailure;
         }
+        callback->wait();
         return {callback->getStatus(), makeVersionedIPreparedModel(callback->getPreparedModel())};
     }
 
