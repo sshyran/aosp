@@ -78,6 +78,20 @@ struct SymmPerChannelQuantParams {
                 .scales = scales.size() > 0 ? scales.data() : nullptr,
         };
     }
+
+    SymmPerChannelQuantParams(const SymmPerChannelQuantParams& other)
+        : params(other.params), scales(other.scales) {
+        params.scales = scales.size() > 0 ? scales.data() : nullptr;
+    }
+
+    SymmPerChannelQuantParams& operator=(const SymmPerChannelQuantParams& other) {
+        if (this != &other) {
+            params = other.params;
+            scales = other.scales;
+            params.scales = scales.size() > 0 ? scales.data() : nullptr;
+        }
+        return *this;
+    }
 };
 
 struct OperandType {
