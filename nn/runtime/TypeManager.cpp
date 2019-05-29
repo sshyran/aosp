@@ -63,22 +63,22 @@ bool isNNAPIVendorExtensionsUseAllowedInProductImage() {
     return vExtProductDeny.empty();
 }
 
-// The file containing list of Android apps and binaries whitelisted for vendor extensions
-// usage. Each line of the file contains new entry. If entry is prefixed by
+// The file containing the list of Android apps and binaries allowed to use vendor extensions.
+// Each line of the file contains new entry. If entry is prefixed by
 // '/' slash, then it's a native binary path (e.g. '/data/foo'). If not, it's a name
 // of Android app package (e.g. 'com.foo.bar').
-const char kAppWhitelistPath[] = "/vendor/etc/nnapi_extensions_app_whitelist";
-const char kCtsWhitelist[] = "/data/local/tmp/CTSNNAPITestCases";
-std::vector<std::string> getVendorExtensionWhitelistedApps() {
+const char kAppAllowlistPath[] = "/vendor/etc/nnapi_extensions_app_allowlist";
+const char kCtsAllowlist[] = "/data/local/tmp/CTSNNAPITestCases";
+std::vector<std::string> getVendorExtensionAllowlistedApps() {
     std::string data;
-    // Whitelist CTS by default.
-    std::vector<std::string> whitelist = {kCtsWhitelist};
+    // Allowlist CTS by default.
+    std::vector<std::string> allowlist = {kCtsAllowlist};
 
-    if (!android::base::ReadFileToString(kAppWhitelistPath, &data)) {
-        // Return default whitelist (no app can use extensions).
-        LOG(INFO) << "Failed to read " << kAppWhitelistPath
-                  << " ; No app whitelisted for vendor extensions use.";
-        return whitelist;
+    if (!android::base::ReadFileToString(kAppAllowlistPath, &data)) {
+        // Return default allowlist (no app can use extensions).
+        LOG(INFO) << "Failed to read " << kAppAllowlistPath
+                  << " ; No app allowlisted for vendor extensions use.";
+        return allowlist;
     }
 
     std::istringstream streamData(data);
@@ -87,12 +87,12 @@ std::vector<std::string> getVendorExtensionWhitelistedApps() {
         // Do some basic sanity check on entry, it's either
         // fs path or package name.
         if (StartsWith(line, "/") || line.find('.') != std::string::npos) {
-            whitelist.push_back(line);
+            allowlist.push_back(line);
         } else {
-            LOG(ERROR) << kAppWhitelistPath << " - Invalid entry: " << line;
+            LOG(ERROR) << kAppAllowlistPath << " - Invalid entry: " << line;
         }
     }
-    return whitelist;
+    return allowlist;
 }
 
 // Query PackageManagerNative service about Android app properties.
@@ -138,7 +138,7 @@ bool fetchAppPackageLocationInfo(uid_t uid, TypeManager::AppPackageInfo* appPack
 }
 
 // Check if this process is allowed to use NNAPI Vendor extensions.
-bool isNNAPIVendorExtensionsUseAllowed(const std::vector<std::string>& whitelist) {
+bool isNNAPIVendorExtensionsUseAllowed(const std::vector<std::string>& allowlist) {
     TypeManager::AppPackageInfo appPackageInfo = {
             .binaryPath = ::android::procpartition::getExe(getpid()),
             .appPackageName = "",
@@ -154,21 +154,21 @@ bool isNNAPIVendorExtensionsUseAllowed(const std::vector<std::string>& whitelist
         }
     }
     return TypeManager::isExtensionsUseAllowed(
-            appPackageInfo, isNNAPIVendorExtensionsUseAllowedInProductImage(), whitelist);
+            appPackageInfo, isNNAPIVendorExtensionsUseAllowedInProductImage(), allowlist);
 }
 
 }  // namespace
 
 TypeManager::TypeManager() {
     VLOG(MANAGER) << "TypeManager::TypeManager";
-    mExtensionsAllowed = isNNAPIVendorExtensionsUseAllowed(getVendorExtensionWhitelistedApps());
+    mExtensionsAllowed = isNNAPIVendorExtensionsUseAllowed(getVendorExtensionAllowlistedApps());
     VLOG(MANAGER) << "NNAPI Vendor extensions enabled: " << mExtensionsAllowed;
     findAvailableExtensions();
 }
 
 bool TypeManager::isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
                                          bool useOnProductImageEnabled,
-                                         const std::vector<std::string>& whitelist) {
+                                         const std::vector<std::string>& allowlist) {
     // Only selected partitions and user-installed apps (/data)
     // are allowed to use extensions.
     if (StartsWith(appPackageInfo.binaryPath, "/vendor/") ||
@@ -185,16 +185,16 @@ bool TypeManager::isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
         }
 #endif  // NN_DEBUGGABLE
 
-        return std::find(whitelist.begin(), whitelist.end(), appPackageInfo.binaryPath) !=
-               whitelist.end();
+        return std::find(allowlist.begin(), allowlist.end(), appPackageInfo.binaryPath) !=
+               allowlist.end();
     } else if (appPackageInfo.binaryPath == "/system/bin/app_process64" ||
                appPackageInfo.binaryPath == "/system/bin/app_process32") {
         // App is not system app OR vendor app OR (product app AND product enabled)
-        // AND app is on whitelist.
+        // AND app is on allowlist.
         return (!appPackageInfo.appIsSystemApp || appPackageInfo.appIsOnVendorImage ||
                 (appPackageInfo.appIsOnProductImage && useOnProductImageEnabled)) &&
-               std::find(whitelist.begin(), whitelist.end(), appPackageInfo.appPackageName) !=
-                       whitelist.end();
+               std::find(allowlist.begin(), allowlist.end(), appPackageInfo.appPackageName) !=
+                       allowlist.end();
     }
     return false;
 }
