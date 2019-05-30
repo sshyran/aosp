@@ -1522,11 +1522,13 @@ void PlanModelSlicer::initializeSlice(Slice<T_SlicedModel>* slice) {
             std::ostrstream fromName;
             fromName << "Slice: From " << ModelVersion<decltype(mHidlModel)>::name << std::ends;
             graphDump(fromName.str(), mHidlModel);
+            fromName.freeze(false);
         }
         {
             std::ostrstream toName;
             toName << "Slice: To " << ModelVersion<decltype(slice->mHidlModel)>::name << std::ends;
             graphDump(toName.str(), convertToV1_2(slice->mHidlModel));
+            toName.freeze(false);
         }
     }
 
