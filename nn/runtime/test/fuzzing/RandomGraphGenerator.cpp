@@ -277,6 +277,7 @@ constexpr uint32_t kMaxNumberOfPrintedErrors = 5;
 template <typename T>
 void expectNear(const RandomOperand& op, const OperandBuffer& test,
                 const AccuracyCriterion& criterion) {
+    constexpr uint32_t kMinNumberOfElementsToTestBiasMSE = 10;
     const T* actualBuffer = reinterpret_cast<const T*>(test.data());
     const T* expectedBuffer = reinterpret_cast<const T*>(op.buffer.data());
     uint32_t len = op.getNumberOfElements();
@@ -297,8 +298,11 @@ void expectNear(const RandomOperand& op, const OperandBuffer& test,
             continue;
         }
 
-        // Accumulate bias and MSE.
+        // Accumulate bias and MSE. Use relative bias and MSE for floating point values.
         double diff = actual - expected;
+        if constexpr (NN_IS_FLOAT(T)) {
+            diff /= std::max(1.0, std::abs(expected));
+        }
         bias += diff;
         mse += diff * diff;
 
@@ -309,7 +313,7 @@ void expectNear(const RandomOperand& op, const OperandBuffer& test,
     EXPECT_EQ(numErrors, 0u);
 
     // Test bias and MSE.
-    if (len == numSkip) return;
+    if (len < numSkip + kMinNumberOfElementsToTestBiasMSE) return;
     bias /= static_cast<double>(len - numSkip);
     mse /= static_cast<double>(len - numSkip);
     EXPECT_LE(std::fabs(bias), criterion.bias);
