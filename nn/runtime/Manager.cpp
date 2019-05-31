@@ -96,7 +96,7 @@ class DriverDevice : public Device {
 };
 
 DriverDevice::DriverDevice(std::string name, const sp<V1_0::IDevice>& device)
-    : mName(std::move(name)), mInterface(VersionedIDevice::create(device)) {}
+    : mName(std::move(name)), mInterface(VersionedIDevice::create(mName, device)) {}
 
 // TODO: handle errors from initialize correctly
 bool DriverDevice::initialize() {
