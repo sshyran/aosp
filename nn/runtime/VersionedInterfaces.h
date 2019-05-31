@@ -20,9 +20,14 @@
 #include "HalInterfaces.h"
 
 #include <android-base/macros.h>
+#include <cstddef>
+#include <functional>
 #include <memory>
+#include <optional>
+#include <shared_mutex>
 #include <string>
 #include <tuple>
+#include <utility>
 #include "Callbacks.h"
 
 namespace android {
@@ -53,6 +58,9 @@ class VersionedIPreparedModel;
 class VersionedIDevice {
     DISALLOW_IMPLICIT_CONSTRUCTORS(VersionedIDevice);
 
+    // forward declaration of nested class
+    class Core;
+
    public:
     /**
      * Create a VersionedIDevice object.
@@ -60,40 +68,26 @@ class VersionedIDevice {
      * Prefer using this function over the constructor, as it adds more
      * protections.
      *
-     * This call linksToDeath a hidl_death_recipient that can
-     * proactively handle the case when the service containing the IDevice
-     * object crashes.
-     *
+     * @param serviceName The name of the service that provides "device".
      * @param device A device object that is at least version 1.0 of the IDevice
      *               interface.
      * @return A valid VersionedIDevice object, otherwise nullptr.
      */
-    static std::shared_ptr<VersionedIDevice> create(sp<V1_0::IDevice> device);
+    static std::shared_ptr<VersionedIDevice> create(std::string serviceName,
+                                                    sp<V1_0::IDevice> device);
 
     /**
      * Constructor for the VersionedIDevice object.
      *
-     * VersionedIDevice is constructed with the V1_0::IDevice object, which
-     * represents a device that is at least v1.0 of the interface. The
-     * constructor downcasts to the latest version of the IDevice interface, and
-     * will default to using the latest version of all IDevice interface
-     * methods automatically.
+     * VersionedIDevice will default to using the latest version of all IDevice
+     * interface methods automatically.
      *
-     * @param device A device object that is at least version 1.0 of the IDevice
-     *               interface.
-     * @param deathHandler A hidl_death_recipient that will proactively handle
-     *                     the case when the service containing the IDevice
-     *                     object crashes.
+     * @param serviceName The name of the service that provides core.getDevice<V1_0::IDevice>().
+     * @param core An object that encapsulates a V1_0::IDevice, any appropriate downcasts to
+     *             newer interfaces, and a hidl_death_recipient that will proactively handle
+     *             the case when the service containing the IDevice object crashes.
      */
-    VersionedIDevice(sp<V1_0::IDevice> device, sp<IDeviceDeathHandler> deathHandler);
-
-    /**
-     * Destructor for the VersionedIDevice object.
-     *
-     * This destructor unlinksToDeath this object's hidl_death_recipient as it
-     * no longer needs to handle the case where the IDevice's service crashes.
-     */
-    ~VersionedIDevice();
+    VersionedIDevice(std::string serviceName, Core core);
 
     /**
      * Gets the capabilities of a driver.
@@ -426,6 +420,13 @@ class VersionedIDevice {
     std::tuple<ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeeded();
 
     /**
+     * Returns the name of the service that implements the driver
+     *
+     * @return serviceName The name of the service.
+     */
+    std::string getServiceName() const { return mServiceName; }
+
+    /**
      * Returns whether this handle to an IDevice object is valid or not.
      *
      * @return bool true if V1_0::IDevice (which could be V1_1::IDevice) is
@@ -443,33 +444,165 @@ class VersionedIDevice {
 
    private:
     /**
-     * All versions of IDevice are necessary because the driver could be v1.0,
-     * v1.1, or a later version. All these pointers logically represent the same
-     * object.
+     * This is a utility class for VersionedIDevice that encapsulates a
+     * V1_0::IDevice, any appropriate downcasts to newer interfaces, and a
+     * hidl_death_recipient that will proactively handle the case when the
+     * service containing the IDevice object crashes.
      *
-     * The general strategy is: HIDL returns a V1_0 device object, which
-     * (if not nullptr) could be v1.0, v1.1, or a greater version. The V1_0
-     * object is then "dynamically cast" to a V1_1 object. If successful,
-     * mDeviceV1_1 will point to the same object as mDeviceV1_0; otherwise,
-     * mDeviceV1_1 will be nullptr.
-     *
-     * In general:
-     * * If the device is truly v1.0, mDeviceV1_0 will point to a valid object
-     *   and mDeviceV1_1 will be nullptr.
-     * * If the device is truly v1.1 or later, both mDeviceV1_0 and mDeviceV1_1
-     *   will point to the same valid object.
-     *
-     * Idiomatic usage: if mDeviceV1_1 is non-null, do V1_1 dispatch; otherwise,
-     * do V1_0 dispatch.
+     * This is a convenience class to help VersionedIDevice recover from an
+     * IDevice object crash: It bundles together all the data that needs to
+     * change when recovering from a crash, and simplifies the process of
+     * instantiating that data (at VersionedIDevice creation time) and
+     * re-instantiating that data (at crash recovery time).
      */
-    sp<V1_0::IDevice> mDeviceV1_0;
-    sp<V1_1::IDevice> mDeviceV1_1;
-    sp<V1_2::IDevice> mDeviceV1_2;
+    class Core {
+       public:
+        /**
+         * Constructor for the Core object.
+         *
+         * Core is constructed with a V1_0::IDevice object, which represents a
+         * device that is at least v1.0 of the interface. The constructor
+         * downcasts to the latest version of the IDevice interface, allowing
+         * VersionedIDevice to default to using the latest version of all
+         * IDevice interface methods automatically.
+         *
+         * @param device A device object that is at least version 1.0 of the IDevice
+         *               interface.
+         * @param deathHandler A hidl_death_recipient that will proactively handle
+         *                     the case when the service containing the IDevice
+         *                     object crashes.
+         */
+        Core(sp<V1_0::IDevice> device, sp<IDeviceDeathHandler> deathHandler);
 
-    /**
-     * HIDL callback to be invoked if the service for mDeviceV1_0 crashes.
-     */
-    const sp<IDeviceDeathHandler> mDeathHandler;
+        /**
+         * Destructor for the Core object.
+         *
+         * This destructor unlinksToDeath this object's hidl_death_recipient as it
+         * no longer needs to handle the case where the IDevice's service crashes.
+         */
+        ~Core();
+
+        // Support move but not copy
+        Core(Core&&) noexcept;
+        Core& operator=(Core&&) noexcept;
+        Core(const Core&) = delete;
+        Core& operator=(const Core&) = delete;
+
+        /**
+         * Create a Core object.
+         *
+         * Prefer using this function over the constructor, as it adds more
+         * protections.
+         *
+         * This call linksToDeath a hidl_death_recipient that can
+         * proactively handle the case when the service containing the IDevice
+         * object crashes.
+         *
+         * @param device A device object that is at least version 1.0 of the IDevice
+         *               interface.
+         * @return A valid Core object, otherwise nullopt.
+         */
+        static std::optional<Core> create(sp<V1_0::IDevice> device);
+
+        /**
+         * Returns sp<*::IDevice> that is a downcast of the sp<V1_0::IDevice>
+         * passed to the constructor.  This will be nullptr if that IDevice is
+         * not actually of the specified downcast type.
+         */
+        template <typename T_IDevice>
+        sp<T_IDevice> getDevice() const;
+        template <>
+        sp<V1_0::IDevice> getDevice() const {
+            return mDeviceV1_0;
+        }
+        template <>
+        sp<V1_1::IDevice> getDevice() const {
+            return mDeviceV1_1;
+        }
+        template <>
+        sp<V1_2::IDevice> getDevice() const {
+            return mDeviceV1_2;
+        }
+
+        /**
+         * Returns sp<*::IDevice> (as per getDevice()) and the
+         * hidl_death_recipient that will proactively handle the case when the
+         * service containing the IDevice object crashes.
+         */
+        template <typename T_IDevice>
+        std::pair<sp<T_IDevice>, sp<IDeviceDeathHandler>> getDeviceAndDeathHandler() const;
+
+       private:
+        /**
+         * All versions of IDevice are necessary because the driver could be v1.0,
+         * v1.1, or a later version. All these pointers logically represent the same
+         * object.
+         *
+         * The general strategy is: HIDL returns a V1_0 device object, which
+         * (if not nullptr) could be v1.0, v1.1, or a greater version. The V1_0
+         * object is then "dynamically cast" to a V1_1 object. If successful,
+         * mDeviceV1_1 will point to the same object as mDeviceV1_0; otherwise,
+         * mDeviceV1_1 will be nullptr.
+         *
+         * In general:
+         * * If the device is truly v1.0, mDeviceV1_0 will point to a valid object
+         *   and mDeviceV1_1 will be nullptr.
+         * * If the device is truly v1.1 or later, both mDeviceV1_0 and mDeviceV1_1
+         *   will point to the same valid object.
+         *
+         * Idiomatic usage: if mDeviceV1_1 is non-null, do V1_1 dispatch; otherwise,
+         * do V1_0 dispatch.
+         */
+        sp<V1_0::IDevice> mDeviceV1_0;
+        sp<V1_1::IDevice> mDeviceV1_1;
+        sp<V1_2::IDevice> mDeviceV1_2;
+
+        /**
+         * HIDL callback to be invoked if the service for mDeviceV1_0 crashes.
+         *
+         * nullptr if this Core instance is a move victim and hence has no
+         * callback to be unlinked.
+         */
+        sp<IDeviceDeathHandler> mDeathHandler;
+    };
+
+    // This method retrieves the appropriate mCore.mDevice* field, under a read lock.
+    template <typename T_IDevice>
+    sp<T_IDevice> getDevice() const EXCLUDES(mMutex) {
+        std::shared_lock lock(mMutex);
+        return mCore.getDevice<T_IDevice>();
+    }
+
+    // This method retrieves the appropriate mCore.mDevice* fields, under a read lock.
+    template <typename T_IDevice>
+    auto getDeviceAndDeathHandler() const EXCLUDES(mMutex) {
+        std::shared_lock lock(mMutex);
+        return mCore.getDeviceAndDeathHandler<T_IDevice>();
+    }
+
+    // This method calls the function fn in a manner that supports recovering
+    // from a driver crash: If the driver implementation is dead because the
+    // driver crashed either before the call to fn or during the call to fn, we
+    // will attempt to obtain a new instance of the same driver and call fn
+    // again.
+    //
+    // If a callback is provided, this method protects it against driver death
+    // and waits for it (callback->wait()).
+    template <typename T_Return, typename T_IDevice, typename T_Callback = std::nullptr_t>
+    Return<T_Return> recoverable(const char* context,
+                                 const std::function<Return<T_Return>(const sp<T_IDevice>&)>& fn,
+                                 const T_Callback& callback = nullptr) const EXCLUDES(mMutex);
+
+    // The name of the service that implements the driver.
+    const std::string mServiceName;
+
+    // Guards access to mCore.
+    mutable std::shared_mutex mMutex;
+
+    // Data that can be rewritten during driver recovery.  Guarded againt
+    // synchronous access by a mutex: Any number of concurrent read accesses is
+    // permitted, but a write access excludes all other accesses.
+    mutable Core mCore GUARDED_BY(mMutex);
 };
 
 /** This class wraps an IPreparedModel object of any version. */
