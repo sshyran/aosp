@@ -80,7 +80,7 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
         const Return<void> ret = mpPreparedModel->executeSynchronously(fullRequest, measure, cb);
         if (!ret.isOk() || returnedStatus != ErrorStatus::NONE) {
             LOG(ERROR) << "IPreparedModelAdapter::execute -- Error executing";
-            return {ErrorStatus::GENERAL_FAILURE, {}, {}};
+            return {returnedStatus, {}, kNoTiming};
         }
 
         return std::make_tuple(returnedStatus, std::move(returnedOutputShapes), returnedTiming);
