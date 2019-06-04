@@ -153,6 +153,8 @@ class RandomGraph {
     // Dump the generated random graph to a spec file for debugging and visualization purpose.
     void dumpSpecFile(std::string filename, std::string testname);
 
+    const std::vector<RandomOperation>& getOperations() const { return mOperations; }
+
    private:
     // Generate the graph structure.
     bool generateGraph(uint32_t numOperations);
