@@ -103,11 +103,13 @@ struct RandomOperation {
 // TODO: Consider relative bias and mse on floating point data types?
 struct AccuracyCriterion {
     // We expect the driver results to be unbiased.
-    // Formula: abs(sum_{i}(actual - expected)) <= bias
+    // Formula: abs(sum_{i}(diff)) <= bias, where
+    // * fixed point: diff = actual - expected
+    // * floating point: diff = (actual - expected) / max(1, abs(expected))
     float bias = std::numeric_limits<float>::max();
 
     // Set the threshold on Mean Square Error (MSE).
-    // Formula: sum_{i}((actual - expected) ^ 2) / sum(1) <= mse
+    // Formula: sum_{i}(diff ^ 2) / sum(1) <= mse
     float mse = std::numeric_limits<float>::max();
 
     // We also set accuracy thresholds on each element to detect any particular edge cases that may
@@ -152,6 +154,8 @@ class RandomGraph {
 
     // Dump the generated random graph to a spec file for debugging and visualization purpose.
     void dumpSpecFile(std::string filename, std::string testname);
+
+    const std::vector<RandomOperation>& getOperations() const { return mOperations; }
 
    private:
     // Generate the graph structure.
