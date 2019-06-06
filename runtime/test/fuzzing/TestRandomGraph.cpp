@@ -188,8 +188,21 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         NN_FUZZER_LOG_CLOSE;
     }
 
+    bool shouldSkipTest(int64_t featureLevel) {
+        if (featureLevel >= __ANDROID_API_Q__) return false;
+        const auto& operations = mGraph.getOperations();
+        for (const auto& op : operations) {
+            // Skip if testing BATCH_TO_SPACE_ND with batch dimension == 1.
+            if (op.opType == ANEURALNETWORKS_BATCH_TO_SPACE_ND &&
+                op.inputs[0]->dimensions[0].getValue() == 1)
+                return true;
+        }
+        return false;
+    }
+
     // Compile and execute the generated graph on a device selected by name.
-    void compute(const test_wrapper::Model* model, uint32_t numOps, const std::string& name) {
+    void computeAndVerifyResultsForDevice(const test_wrapper::Model* model, uint32_t numOps,
+                                          const std::string& name) {
         SCOPED_TRACE("Device: " + name);
         ASSERT_TRUE(mDevices.find(name) != mDevices.end());
         const auto device = mDevices[name];
@@ -215,6 +228,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         int64_t featureLevel;
         ASSERT_EQ(ANeuralNetworksDevice_getFeatureLevel(device, &featureLevel),
                   ANEURALNETWORKS_NO_ERROR);
+        if (shouldSkipTest(featureLevel)) return;
 
         // Create compilation for device.
         CompilationForDevice compilation;
@@ -257,7 +271,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
 
     // Compile and execute the generated graph normally (i.e., allow runtime to
     // distribute across devices).
-    void compute(const test_wrapper::Model* model, bool checkResults) {
+    void computeAndVerifyResults(const test_wrapper::Model* model, bool checkResults) {
         // Because we're not using the introspection/control API, the CpuDevice
         // is available as a fallback, and hence we assume that compilation and
         // execution will succeed.
@@ -290,21 +304,21 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         ASSERT_EQ(model.finish(), Result::NO_ERROR);
 
         // Compute reference result.
-        compute(&model, numOperations, kRefDeviceName);
+        computeAndVerifyResultsForDevice(&model, numOperations, kRefDeviceName);
 
         // Compute on each available device.
         for (auto& pair : mDevices) {
             // Skip the nnapi reference device.
             if (pair.first.compare(kRefDeviceName) == 0) continue;
-            compute(&model, numOperations, pair.first);
+            computeAndVerifyResultsForDevice(&model, numOperations, pair.first);
         }
 
         if (numOperations > 1) {
-            {
+            if (!shouldSkipTest(mStandardDevicesFeatureLevel)) {
                 // Compute normally (i.e., allow runtime to distribute across
                 // devices).
                 SCOPED_TRACE("Compute normally");
-                compute(&model, mStandardDevicesFeatureLevel >= __ANDROID_API_Q__);
+                computeAndVerifyResults(&model, mStandardDevicesFeatureLevel >= __ANDROID_API_Q__);
             }
 
 #ifndef NNTEST_CTS
@@ -317,7 +331,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
                 // reliability, as we do with real devices.
                 SCOPED_TRACE("Compute across synthetic devices");
                 DeviceManager::get()->forTest_setDevices(mSyntheticDevices);
-                compute(&model, true);
+                computeAndVerifyResults(&model, true);
                 DeviceManager::get()->forTest_setDevices(mStandardDevices);
             }
 #endif
