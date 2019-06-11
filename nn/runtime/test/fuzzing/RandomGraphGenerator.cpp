@@ -52,7 +52,7 @@ std::vector<uint32_t> RandomOperand::getDimensions() const {
 bool RandomOperand::createEdgeIfValid(const RandomOperand& other) const {
     if (other.type != RandomOperandType::INPUT) return false;
     if (dataType != other.dataType || dimensions.size() != other.dimensions.size() ||
-        scale != other.scale || zeroPoint != other.zeroPoint)
+        scale != other.scale || zeroPoint != other.zeroPoint || doNotConnect || other.doNotConnect)
         return false;
     return RandomVariableNetwork::get()->setEqualIfCompatible(dimensions, other.dimensions);
 }
@@ -320,17 +320,26 @@ void expectNear(const RandomOperand& op, const OperandBuffer& test,
     EXPECT_LE(mse, criterion.mse);
 }
 
-void expectBooleanEqual(const RandomOperand& op, const OperandBuffer& test) {
+// For boolean values, we expect the number of mismatches does not exceed a certain ratio.
+void expectBooleanNearlyEqual(const RandomOperand& op, const OperandBuffer& test,
+                              float allowedErrorRatio) {
     const bool8* actual = reinterpret_cast<const bool8*>(test.data());
     const bool8* expected = reinterpret_cast<const bool8*>(op.buffer.data());
     uint32_t len = op.getNumberOfElements();
     uint32_t numErrors = 0;
+    std::stringstream errorMsg;
     for (uint32_t i = 0; i < len; i++) {
-        SCOPED_TRACE(testing::Message() << "When comparing element " << i);
-        if (numErrors < kMaxNumberOfPrintedErrors) EXPECT_EQ(expected[i], actual[i]);
-        if (expected[i] != actual[i]) numErrors++;
+        if (expected[i] != actual[i]) {
+            if (numErrors < kMaxNumberOfPrintedErrors)
+                errorMsg << "    Expected: " << expected[i] << ", actual: " << actual[i]
+                         << ", when comparing element " << i << "\n";
+            numErrors++;
+        }
     }
-    EXPECT_EQ(numErrors, 0u);
+    // When |len| is small, the allowedErrorCount will intentionally ceil at 1, which allows for
+    // greater tolerance.
+    uint32_t allowedErrorCount = static_cast<uint32_t>(std::ceil(allowedErrorRatio * len));
+    EXPECT_LE(numErrors, allowedErrorCount) << errorMsg.str();
 }
 
 void RandomGraph::checkResults(const std::vector<OperandBuffer>& buffers,
@@ -340,35 +349,38 @@ void RandomGraph::checkResults(const std::vector<OperandBuffer>& buffers,
     int i = 0;
     for (const auto& op : mOperands) {
         if (op->type == RandomOperandType::OUTPUT) {
-            SCOPED_TRACE(testing::Message() << "When comparing output " << op->ioIndex
-                                            << " of type " << toString(op->dataType));
-            switch (op->dataType) {
-                case Type::TENSOR_FLOAT32:
-                    expectNear<float>(*op, buffers[i], criteria.float32);
-                    break;
-                case Type::TENSOR_FLOAT16:
-                    expectNear<_Float16>(*op, buffers[i], criteria.float16);
-                    break;
-                case Type::TENSOR_INT32:
-                    expectNear<int32_t>(*op, buffers[i], criteria.int32);
-                    break;
-                case Type::TENSOR_QUANT8_ASYMM:
-                    expectNear<uint8_t>(*op, buffers[i], criteria.quant8Asymm);
-                    break;
-                case Type::TENSOR_QUANT8_SYMM:
-                    expectNear<int8_t>(*op, buffers[i], criteria.quant8Symm);
-                    break;
-                case Type::TENSOR_QUANT16_ASYMM:
-                    expectNear<uint16_t>(*op, buffers[i], criteria.quant16Asymm);
-                    break;
-                case Type::TENSOR_QUANT16_SYMM:
-                    expectNear<int16_t>(*op, buffers[i], criteria.quant16Symm);
-                    break;
-                case Type::TENSOR_BOOL8:
-                    expectBooleanEqual(*op, buffers[i]);
-                    break;
-                default:
-                    NN_FUZZER_CHECK(false) << "Data type not supported.";
+            SCOPED_TRACE(testing::Message()
+                         << "When comparing output " << op->ioIndex << " (op" << op->opIndex << ")"
+                         << " of type " << toString(op->dataType));
+            if (!op->doNotCheckAccuracy) {
+                switch (op->dataType) {
+                    case Type::TENSOR_FLOAT32:
+                        expectNear<float>(*op, buffers[i], criteria.float32);
+                        break;
+                    case Type::TENSOR_FLOAT16:
+                        expectNear<_Float16>(*op, buffers[i], criteria.float16);
+                        break;
+                    case Type::TENSOR_INT32:
+                        expectNear<int32_t>(*op, buffers[i], criteria.int32);
+                        break;
+                    case Type::TENSOR_QUANT8_ASYMM:
+                        expectNear<uint8_t>(*op, buffers[i], criteria.quant8Asymm);
+                        break;
+                    case Type::TENSOR_QUANT8_SYMM:
+                        expectNear<int8_t>(*op, buffers[i], criteria.quant8Symm);
+                        break;
+                    case Type::TENSOR_QUANT16_ASYMM:
+                        expectNear<uint16_t>(*op, buffers[i], criteria.quant16Asymm);
+                        break;
+                    case Type::TENSOR_QUANT16_SYMM:
+                        expectNear<int16_t>(*op, buffers[i], criteria.quant16Symm);
+                        break;
+                    case Type::TENSOR_BOOL8:
+                        expectBooleanNearlyEqual(*op, buffers[i], /*allowedErrorRatio=*/0.01);
+                        break;
+                    default:
+                        NN_FUZZER_CHECK(false) << "Data type not supported.";
+                }
             }
             i++;
         }
