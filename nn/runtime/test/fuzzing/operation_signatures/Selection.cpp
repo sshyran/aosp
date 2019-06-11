@@ -180,6 +180,10 @@ static void topKConstructor(Type, uint32_t rank, RandomOperation* op) {
     op->outputs[0]->dimensions.back() = k;
     op->outputs[1]->dimensions.back() = k;
     setSameQuantization(op->outputs[0], op->inputs[0]);
+
+    // As the sorting is not required to be stable, we should not check the second output (indices).
+    op->outputs[1]->doNotCheckAccuracy = true;
+    op->outputs[1]->doNotConnect = true;
 }
 
 DEFINE_OPERATION_SIGNATURE(TOPK_V2_V1_2){
