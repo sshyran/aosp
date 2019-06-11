@@ -51,13 +51,33 @@ DEFINE_ELEMENTWISE_SIGNATURE(RELU6, V1_2, Type::TENSOR_FLOAT16);
 
 DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(ABS, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(EXP, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16);
-DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(LOG, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(NEG, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16,
                                         Type::TENSOR_INT32);
-DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(RSQRT, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(SIN, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16);
-DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(SQRT, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(LOGICAL_NOT, V1_2, Type::TENSOR_BOOL8);
+
+// LOG, SQRT, and RSQRT may produce NaN output values. We should not connect the output tensor to
+// the input of another operation.
+static void elementwiseOpWithDisconnectedOutput(Type type, uint32_t rank, RandomOperation* op) {
+    sameShapeOpConstructor(type, rank, op);
+    op->outputs[0]->doNotConnect = true;
+}
+
+#define DEFINE_ELEMENTWISE_SIGNATURE_WITH_DISCONNECTED_OUTPUT(op, ver, ...)     \
+    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = ANEURALNETWORKS_##op,      \
+                                           .supportedDataTypes = {__VA_ARGS__}, \
+                                           .supportedRanks = {1, 2, 3, 4, 5},   \
+                                           .version = HalVersion::ver,          \
+                                           .inputs = {INPUT_DEFAULT},           \
+                                           .outputs = {OUTPUT_DEFAULT},         \
+                                           .constructor = elementwiseOpWithDisconnectedOutput};
+
+DEFINE_ELEMENTWISE_SIGNATURE_WITH_DISCONNECTED_OUTPUT(LOG, V1_2, Type::TENSOR_FLOAT32,
+                                                      Type::TENSOR_FLOAT16);
+DEFINE_ELEMENTWISE_SIGNATURE_WITH_DISCONNECTED_OUTPUT(RSQRT, V1_2, Type::TENSOR_FLOAT32,
+                                                      Type::TENSOR_FLOAT16);
+DEFINE_ELEMENTWISE_SIGNATURE_WITH_DISCONNECTED_OUTPUT(SQRT, V1_2, Type::TENSOR_FLOAT32,
+                                                      Type::TENSOR_FLOAT16);
 
 // Quantized operations with special output quantization parameters.
 #define DEFINE_ELEMENTWISE_WITH_QUANT_OUTPUT_SIGNATURE(op, ver, s, z, ...)      \

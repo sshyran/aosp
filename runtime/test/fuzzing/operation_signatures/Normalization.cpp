@@ -71,6 +71,9 @@ static void l2normConstructor(Type dataType, uint32_t rank, RandomOperation* op)
     if (op->inputs.size() > 1) {
         op->inputs[1]->setScalarValue<int32_t>(getUniform<int32_t>(-rank, rank - 1));
     }
+    // L2_NORMALIZATION may produce NaN output values with all zero inputs. We should not connect
+    // the output tensor to the input of another operation.
+    op->outputs[0]->doNotConnect = true;
 }
 
 DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_0){.opType = ANEURALNETWORKS_L2_NORMALIZATION,
