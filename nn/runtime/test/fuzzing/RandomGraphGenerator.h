@@ -54,6 +54,14 @@ struct RandomOperand {
     // The index of the input/output as specified in model->identifyInputsAndOutputs(...).
     int32_t ioIndex = -1;
 
+    // If set true, this operand will be ignored during the accuracy checking step.
+    bool doNotCheckAccuracy = false;
+
+    // If set true, this operand will not be connected to another operation, e.g. if this operand is
+    // an operation output, then it will not be used as an input to another operation, and will
+    // eventually end up being a model output.
+    bool doNotConnect = false;
+
     RandomOperand(const OperandSignature& op, Type dataType, uint32_t rank);
 
     // Resize the underlying operand buffer.
