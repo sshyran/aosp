@@ -413,10 +413,10 @@ const AccuracyCriteria kRelaxedCriteria = {
         .float32 = {.atol = 1e-3f, .rtol = 1e-3f, .bias = 2e-5f, .mse = 1e-7f},
         .float16 = {.atol = 1.0f, .rtol = 1.0f, .bias = 5e-3f, .mse = 1e-4f},
         .int32 = {.atol = 1},
-        .quant8Asymm = {.atol = 8, .bias = 1, .mse = 1},
-        .quant8Symm = {.atol = 8, .bias = 1, .mse = 1},
-        .quant16Asymm = {.atol = 8, .bias = 1, .mse = 1},
-        .quant16Symm = {.atol = 8, .bias = 1, .mse = 1}};
+        .quant8Asymm = {.atol = 10, .bias = 1.5, .mse = 1.5},
+        .quant8Symm = {.atol = 10, .bias = 1.5, .mse = 1.5},
+        .quant16Asymm = {.atol = 10, .bias = 1.5, .mse = 1.5},
+        .quant16Symm = {.atol = 10, .bias = 1.5, .mse = 1.5}};
 
 /*-- NNAPI 1.0 Operations ---------------------------------------------------*/
 
@@ -565,19 +565,19 @@ const AccuracyCriteria kSmallGraphCriteria = {
         .float32 = {.atol = 1e-2f, .rtol = 1e-2f, .bias = 2e-5f, .mse = 1e-7f},
         .float16 = {.atol = 1.0f, .rtol = 1.0f, .bias = 5e-3f, .mse = 1e-4f},
         .int32 = {.atol = 1},
-        .quant8Asymm = {.atol = 8, .bias = 1, .mse = 1},
-        .quant8Symm = {.atol = 8, .bias = 1, .mse = 1},
-        .quant16Asymm = {.atol = 8, .bias = 1, .mse = 1},
-        .quant16Symm = {.atol = 8, .bias = 1, .mse = 1}};
+        .quant8Asymm = {.atol = 12, .bias = 2, .mse = 2},
+        .quant8Symm = {.atol = 12, .bias = 2, .mse = 2},
+        .quant16Asymm = {.atol = 12, .bias = 2, .mse = 2},
+        .quant16Symm = {.atol = 12, .bias = 2, .mse = 2}};
 
 const AccuracyCriteria kLargeGraphCriteria = {
         .float32 = {.atol = 1e-1f, .rtol = 1e-1f, .bias = 1e-2f, .mse = 1e-4f},
         .float16 = {.atol = 1.0f, .rtol = 1.0f, .bias = 1e-1f, .mse = 5e-2f},
         .int32 = {.atol = 1},
-        .quant8Asymm = {.atol = 10, .bias = 2, .mse = 2},
-        .quant8Symm = {.atol = 10, .bias = 2, .mse = 2},
-        .quant16Asymm = {.atol = 10, .bias = 2, .mse = 2},
-        .quant16Symm = {.atol = 10, .bias = 2, .mse = 2}};
+        .quant8Asymm = {.atol = 12, .bias = 2, .mse = 2},
+        .quant8Symm = {.atol = 12, .bias = 2, .mse = 2},
+        .quant16Asymm = {.atol = 12, .bias = 2, .mse = 2},
+        .quant16Symm = {.atol = 12, .bias = 2, .mse = 2}};
 
 // Due to the limitation of the random graph generator, graphs generated with mixed-type or
 // mixed-rank operations are likely to result in a disconnected network. Thus, we filter the
