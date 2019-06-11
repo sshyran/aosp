@@ -189,6 +189,15 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
     }
 
     bool shouldSkipTest(int64_t featureLevel) {
+        static const std::set<std::string> kDisabledTests = {
+                // In this test, the RGG produces a non-sensible graph with extreme large output
+                // gain and highly clamped output range.
+                // TODO: Currently quantized buffer values are uniformly distributed within
+                //       [0, 255]. We should investigate on a better buffer value generation
+                //       algorithm that represents the real-world cases.
+                "TestRandomGraph_SingleOperationTest_CONV_2D_V1_2_12",
+        };
+        if (kDisabledTests.find(mTestName) != kDisabledTests.end()) return true;
         if (featureLevel >= __ANDROID_API_Q__) return false;
         const auto& operations = mGraph.getOperations();
         for (const auto& op : operations) {
