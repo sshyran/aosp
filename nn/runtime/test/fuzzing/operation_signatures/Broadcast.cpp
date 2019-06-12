@@ -45,6 +45,12 @@ static void broadcastOpConstructor(Type dataType, uint32_t rank, RandomOperation
         float minScale = op->inputs[0]->scale * op->inputs[1]->scale;
         op->outputs[0]->scale = getUniform(minScale, minScale * 5);
     }
+
+    // DIV and POW may produce Inf output values. We should not connect this output tensor to the
+    // input of another operation.
+    if (op->opType == ANEURALNETWORKS_DIV || op->opType == ANEURALNETWORKS_POW) {
+        op->outputs[0]->doNotConnect = true;
+    }
 }
 
 // For broadcast operations with fused activation.
