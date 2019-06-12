@@ -52,6 +52,12 @@ static void reduceOpConstructor(Type, uint32_t rank, RandomOperation* op) {
         }
     }
     setSameQuantization(op->outputs[0], op->inputs[0]);
+
+    // REDUCE_PROD may produce Inf output values. We should not connect the output tensor to the
+    // input of another operation.
+    if (op->opType == ANEURALNETWORKS_REDUCE_PROD) {
+        op->outputs[0]->doNotConnect = true;
+    }
 }
 
 #define DEFINE_MEAN_SIGNATURE(ver, ...)                                   \
