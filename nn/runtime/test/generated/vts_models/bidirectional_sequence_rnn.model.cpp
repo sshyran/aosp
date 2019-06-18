@@ -86,7 +86,7 @@ Model createTestModel() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -95,7 +95,7 @@ Model createTestModel() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -104,7 +104,7 @@ Model createTestModel() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -274,7 +274,7 @@ Model createTestModel_relaxed() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -283,7 +283,7 @@ Model createTestModel_relaxed() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -292,7 +292,7 @@ Model createTestModel_relaxed() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -463,7 +463,7 @@ Model createTestModel_float16() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -472,7 +472,7 @@ Model createTestModel_float16() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -481,7 +481,7 @@ Model createTestModel_float16() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -651,7 +651,7 @@ Model createTestModel_dynamic_output_shape() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -660,7 +660,7 @@ Model createTestModel_dynamic_output_shape() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -669,7 +669,7 @@ Model createTestModel_dynamic_output_shape() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -839,7 +839,7 @@ Model createTestModel_dynamic_output_shape_relaxed() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -848,7 +848,7 @@ Model createTestModel_dynamic_output_shape_relaxed() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -857,7 +857,7 @@ Model createTestModel_dynamic_output_shape_relaxed() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1028,7 +1028,7 @@ Model createTestModel_dynamic_output_shape_float16() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1037,7 +1037,7 @@ Model createTestModel_dynamic_output_shape_float16() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1046,7 +1046,7 @@ Model createTestModel_dynamic_output_shape_float16() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1216,7 +1216,7 @@ Model createTestModel_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1225,7 +1225,7 @@ Model createTestModel_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1234,7 +1234,7 @@ Model createTestModel_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1404,7 +1404,7 @@ Model createTestModel_relaxed_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1413,7 +1413,7 @@ Model createTestModel_relaxed_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1422,7 +1422,7 @@ Model createTestModel_relaxed_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1593,7 +1593,7 @@ Model createTestModel_float16_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1602,7 +1602,7 @@ Model createTestModel_float16_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1611,7 +1611,7 @@ Model createTestModel_float16_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1781,7 +1781,7 @@ Model createTestModel_dynamic_output_shape_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1790,7 +1790,7 @@ Model createTestModel_dynamic_output_shape_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1799,7 +1799,7 @@ Model createTestModel_dynamic_output_shape_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1969,7 +1969,7 @@ Model createTestModel_dynamic_output_shape_relaxed_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1978,7 +1978,7 @@ Model createTestModel_dynamic_output_shape_relaxed_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -1987,7 +1987,7 @@ Model createTestModel_dynamic_output_shape_relaxed_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2158,7 +2158,7 @@ Model createTestModel_dynamic_output_shape_float16_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2167,7 +2167,7 @@ Model createTestModel_dynamic_output_shape_float16_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2176,7 +2176,7 @@ Model createTestModel_dynamic_output_shape_float16_2() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2346,7 +2346,7 @@ Model createTestModel_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2355,7 +2355,7 @@ Model createTestModel_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2364,7 +2364,7 @@ Model createTestModel_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2525,7 +2525,7 @@ Model createTestModel_relaxed_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2534,7 +2534,7 @@ Model createTestModel_relaxed_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2543,7 +2543,7 @@ Model createTestModel_relaxed_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2705,7 +2705,7 @@ Model createTestModel_float16_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2714,7 +2714,7 @@ Model createTestModel_float16_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2723,7 +2723,7 @@ Model createTestModel_float16_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2884,7 +2884,7 @@ Model createTestModel_dynamic_output_shape_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2893,7 +2893,7 @@ Model createTestModel_dynamic_output_shape_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -2902,7 +2902,7 @@ Model createTestModel_dynamic_output_shape_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3063,7 +3063,7 @@ Model createTestModel_dynamic_output_shape_relaxed_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3072,7 +3072,7 @@ Model createTestModel_dynamic_output_shape_relaxed_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3081,7 +3081,7 @@ Model createTestModel_dynamic_output_shape_relaxed_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3243,7 +3243,7 @@ Model createTestModel_dynamic_output_shape_float16_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3252,7 +3252,7 @@ Model createTestModel_dynamic_output_shape_float16_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3261,7 +3261,7 @@ Model createTestModel_dynamic_output_shape_float16_3() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3422,7 +3422,7 @@ Model createTestModel_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3431,7 +3431,7 @@ Model createTestModel_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3440,7 +3440,7 @@ Model createTestModel_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3610,7 +3610,7 @@ Model createTestModel_relaxed_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3619,7 +3619,7 @@ Model createTestModel_relaxed_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3628,7 +3628,7 @@ Model createTestModel_relaxed_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3799,7 +3799,7 @@ Model createTestModel_float16_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3808,7 +3808,7 @@ Model createTestModel_float16_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3817,7 +3817,7 @@ Model createTestModel_float16_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3987,7 +3987,7 @@ Model createTestModel_dynamic_output_shape_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -3996,7 +3996,7 @@ Model createTestModel_dynamic_output_shape_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -4005,7 +4005,7 @@ Model createTestModel_dynamic_output_shape_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -4175,7 +4175,7 @@ Model createTestModel_dynamic_output_shape_relaxed_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -4184,7 +4184,7 @@ Model createTestModel_dynamic_output_shape_relaxed_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -4193,7 +4193,7 @@ Model createTestModel_dynamic_output_shape_relaxed_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT32,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -4364,7 +4364,7 @@ Model createTestModel_dynamic_output_shape_float16_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -4373,7 +4373,7 @@ Model createTestModel_dynamic_output_shape_float16_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
@@ -4382,7 +4382,7 @@ Model createTestModel_dynamic_output_shape_float16_4() {
         },
         {
             .type = OperandType::TENSOR_FLOAT16,
-            .dimensions = {0, 0},
+            .dimensions = {0},
             .numberOfConsumers = 1,
             .scale = 0.0f,
             .zeroPoint = 0,
