@@ -21,8 +21,8 @@
 #include "HalInterfaces.h"
 
 #include <android-base/logging.h>
-#include <set>
 #include <iostream>
+#include <map>
 #include <sstream>
 
 namespace android {
@@ -133,13 +133,13 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
     dump << "// " << name << Dumper::endl;
     dump << "digraph {" << Dumper::endl;
 
-    // model inputs and outputs
-    std::set<uint32_t> modelIO;
+    // model inputs and outputs (map from operand index to input or output index)
+    std::map<uint32_t, uint32_t> modelIO;
     for (unsigned i = 0, e = model.inputIndexes.size(); i < e; i++) {
-        modelIO.insert(model.inputIndexes[i]);
+        modelIO.emplace(model.inputIndexes[i], i);
     }
     for (unsigned i = 0, e = model.outputIndexes.size(); i < e; i++) {
-        modelIO.insert(model.outputIndexes[i]);
+        modelIO.emplace(model.outputIndexes[i], i);
     }
 
     // model operands
@@ -148,9 +148,10 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
         if (modelIO.count(i)) {
             dump << "style=filled fillcolor=black fontcolor=white ";
         }
-        dump << "label=\"" << i;
+        dump << "label=\"";
         const Operand& opnd = model.operands[i];
         const char* kind = nullptr;
+        const char* io = nullptr;
         switch (opnd.lifetime) {
             case OperandLifeTime::CONSTANT_COPY:
                 kind = "COPY";
@@ -158,12 +159,22 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
             case OperandLifeTime::CONSTANT_REFERENCE:
                 kind = "REF";
                 break;
+            case OperandLifeTime::MODEL_INPUT:
+                io = "input";
+                break;
+            case OperandLifeTime::MODEL_OUTPUT:
+                io = "output";
+                break;
             case OperandLifeTime::NO_VALUE:
                 kind = "NO";
                 break;
             default:
                 // nothing interesting
                 break;
+        }
+        dump << i;
+        if (io) {
+            dump << " = " << io << "[" << modelIO.at(i) << "]";
         }
         if (kind) {
             dump << ": " << kind;
