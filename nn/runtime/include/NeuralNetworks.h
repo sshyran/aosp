@@ -5069,9 +5069,10 @@ typedef struct ANeuralNetworksMemory ANeuralNetworksMemory;
  * modifies a model at a given time. It is however safe for more than one
  * thread to use the model once {@link ANeuralNetworksModel_finish} has returned.</p>
  *
- * <p>It is also the application's responsibility to ensure that there are no other
- * uses of the model after calling {@link ANeuralNetworksModel_free}.
- * This includes any compilation or execution object created using the model.</p>
+ * <p>It is also the application's responsibility to ensure that there are no
+ * other uses of the model after calling {@link ANeuralNetworksModel_free}.
+ * This includes any compilation, execution object or burst object created using
+ * the model.</p>
  *
  * Available since API level 27.
  */
@@ -5109,7 +5110,7 @@ typedef struct ANeuralNetworksModel ANeuralNetworksModel;
  *
  * <p>It is also the application's responsibility to ensure that there are no other
  * uses of the compilation after calling {@link ANeuralNetworksCompilation_free}.
- * This includes any execution object created using the compilation.</p>
+ * This includes any execution object or burst object created using the compilation.</p>
  *
  * Available since API level 27.
  */
@@ -5144,10 +5145,12 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  * ({@link ANeuralNetworksModel_setOperandValueFromMemory}).</p>
  *
  * <p>An execution cannot be modified once
+ * {@link ANeuralNetworksExecution_burstCompute},
  * {@link ANeuralNetworksExecution_compute} or
  * {@link ANeuralNetworksExecution_startCompute} has been called on it.</p>
  *
  * <p>An execution can be applied to a model with
+ * {@link ANeuralNetworksExecution_burstCompute},
  * {@link ANeuralNetworksExecution_compute} or
  * {@link ANeuralNetworksExecution_startCompute} only once. Create new
  * executions to do new evaluations of the model.</p>
@@ -5160,16 +5163,18 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  * uses of the execution after calling {@link ANeuralNetworksExecution_free}.</p>
  *
  * <p>Multiple executions can be scheduled and evaluated concurrently, either by
- * means of {@link ANeuralNetworksExecution_compute} (which is synchronous) in
- * different threads or by means of
- * {@link ANeuralNetworksExecution_startCompute} (which is asynchronous). The
- * runtime makes no guarantee on the ordering of completion of executions. If
- * it's important to the application, the application should enforce the
- * ordering by ensuring that one execution completes before the next is
- * scheduled (for example, by scheduling all executions synchronously within a
- * single thread, or by scheduling all executions asynchronously and using
- * {@link ANeuralNetworksEvent_wait} between calls to
- * {@link ANeuralNetworksExecution_startCompute}).</p>
+ * means of {@link ANeuralNetworksExecution_compute} or
+ * {@link ANeuralNetworksExecution_burstCompute} (which are synchronous) in
+ * different threads, or by means of
+ * {@link ANeuralNetworksExecution_startCompute} (which is asynchronous).
+ * (Concurrent uses of {@link ANeuralNetworksExecution_burstCompute} must be on
+ * different burst objects.) The runtime makes no guarantee on the ordering of
+ * completion of executions. If it's important to the application, the
+ * application should enforce the ordering by ensuring that one execution
+ * completes before the next is scheduled (for example, by scheduling all
+ * executions synchronously within a single thread, or by scheduling all
+ * executions asynchronously and using {@link ANeuralNetworksEvent_wait} between
+ * calls to {@link ANeuralNetworksExecution_startCompute}).</p>
  *
  * Available since API level 27.
  */
@@ -5492,7 +5497,7 @@ int ANeuralNetworksCompilation_createForDevices(ANeuralNetworksModel* model,
  *                 data. It is recommended to use the code cache directory provided
  *                 by the Android runtime. If not using the code cache directory, the
  *                 user should choose a directory local to the application, and is
- *                 responsible to managing the cache entries.
+ *                 responsible for managing the cache entries.
  * @param token The token provided by the user to specify a model must be of length
  *              ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN. The user should ensure that
  *              the token is unique to a model within the application. The NNAPI
@@ -5816,8 +5821,8 @@ void ANeuralNetworksModel_free(ANeuralNetworksModel* model) __INTRODUCED_IN(27);
  * calling {@link ANeuralNetworksCompilation_create} and
  * {@link ANeuralNetworksCompilation_createForDevices}.
  *
- * An application is responsible to make sure that no other thread uses
- * the model at the same time.
+ * An application must ensure that no other thread uses the model at the same
+ * time.
  *
  * This function must only be called once for a given model.
  *
@@ -5891,11 +5896,13 @@ int ANeuralNetworksModel_addOperand(ANeuralNetworksModel* model,
  * {@link ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES}
  * are immediately copied into the model.
  *
- * For values of length greater than {@link ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES},
- * a pointer to the buffer is stored within the model. The application is responsible
- * for not changing the content of this region until all executions using this model
- * have completed. As the data may be copied during processing, modifying the data
- * after this call yields undefined results.
+ * For values of length greater than
+ * {@link ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES}, a pointer to
+ * the buffer is stored within the model. The application must not change the
+ * content of this region until all executions using this model have
+ * completed. As the data may be copied during processing, modifying the data
+ * after this call yields undefined results. The provided buffer must outlive
+ * this model.
  *
  * For large tensors, using {@link ANeuralNetworksModel_setOperandValueFromMemory}
  * is likely to be more efficient.
@@ -5951,10 +5958,12 @@ int ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(
  * Sets an operand to a value stored in a memory object.
  *
  * The content of the memory is not copied. A reference to that memory is stored
- * inside the model. The application is responsible for not changing the content
- * of the memory region until all executions using this model have completed.
- * As the data may be copied during processing, modifying the data after this call
- * yields undefined results.
+ * inside the model. The application must not change the content of the memory
+ * region until all executions using this model have completed.  As the data may
+ * be copied during processing, modifying the data after this call yields
+ * undefined results.
+ *
+ * <p>The provided memory must outlive this model.</p>
  *
  * To indicate that an optional operand should be considered missing,
  * use {@link ANeuralNetworksModel_setOperandValue} instead, passing nullptr for buffer.
@@ -6138,8 +6147,8 @@ int ANeuralNetworksCompilation_setPreference(ANeuralNetworksCompilation* compila
  * Indicate that we have finished modifying a compilation. Required before
  * calling {@link ANeuralNetworksExecution_create}.
  *
- * An application is responsible to make sure that no other thread uses
- * the compilation at the same time.
+ * An application must ensure that no other thread uses the compilation at the
+ * same time.
  *
  * This function must only be called once for a given compilation.
  *
@@ -6196,7 +6205,10 @@ void ANeuralNetworksExecution_free(ANeuralNetworksExecution* execution) __INTROD
 /**
  * Associate a user buffer with an input of the model of the
  * {@link ANeuralNetworksExecution}. Evaluation of the execution must not have
- * been scheduled.
+ * been scheduled. Once evaluation of the execution has been scheduled, the
+ * application must not change the content of the buffer until the execution has
+ * completed. Evaluation of the execution will not change the content of the
+ * buffer.
  *
  * <p>The provided buffer must outlive the execution.</p>
  *
@@ -6234,9 +6246,12 @@ int ANeuralNetworksExecution_setInput(ANeuralNetworksExecution* execution, int32
                                       size_t length) __INTRODUCED_IN(27);
 
 /**
- * Associate part of a memory object with an input of the model of the
+ * Associate a region of a memory object with an input of the model of the
  * {@link ANeuralNetworksExecution}. Evaluation of the execution must not have
- * been scheduled.
+ * been scheduled. Once evaluation of the execution has been scheduled, the
+ * application must not change the content of the region until the execution has
+ * completed. Evaluation of the execution will not change the content of the
+ * region.
  *
  * <p>The provided memory must outlive the execution.</p>
  *
@@ -6280,7 +6295,9 @@ int ANeuralNetworksExecution_setInputFromMemory(ANeuralNetworksExecution* execut
 /**
  * Associate a user buffer with an output of the model of the
  * {@link ANeuralNetworksExecution}. Evaluation of the execution must not have
- * been scheduled.
+ * been scheduled. Once evaluation of the execution has been scheduled, the
+ * application must not change the content of the buffer until the execution has
+ * completed.
  *
  * If the output is optional, you can indicate that it is omitted by
  * passing nullptr for buffer and 0 for length.
@@ -6323,9 +6340,11 @@ int ANeuralNetworksExecution_setOutput(ANeuralNetworksExecution* execution, int3
                                        size_t length) __INTRODUCED_IN(27);
 
 /**
- * Associate part of a memory object with an output of the model of the
+ * Associate a region of a memory object with an output of the model of the
  * {@link ANeuralNetworksExecution}. Evaluation of the execution must not have
- * been scheduled.
+ * been scheduled. Once evaluation of the execution has been scheduled, the
+ * application must not change the content of the region until the execution has
+ * completed.
  *
  * If the output is optional, you can indicate that it is omitted by
  * using {@link ANeuralNetworksExecution_setOutput} instead, passing nullptr for
