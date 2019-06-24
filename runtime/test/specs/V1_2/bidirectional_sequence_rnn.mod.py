@@ -224,12 +224,11 @@ test(
     bw_bias=Input("bw_bias", "TENSOR_FLOAT32", "{{ {} }}".format(bw_num_units)),
     bw_hidden_state=Input("bw_hidden_state", "TENSOR_FLOAT32",
                           "{{ {}, {} }}".format(num_batches, bw_num_units)),
-    aux_input=Input("aux_input", "TENSOR_FLOAT32", "{{ {}, {}, {} }}".format(
-        0, 0, 0)),
+    aux_input=Input("aux_input", "TENSOR_FLOAT32", "{0}"),
     fw_aux_weights=Input("fw_aux_weights", "TENSOR_FLOAT32",
-                         "{{ {}, {} }}".format(0, 0)),
+                         "{0}"),
     bw_aux_weights=Input("bw_aux_weights", "TENSOR_FLOAT32",
-                         "{{ {}, {} }}".format(0, 0)),
+                         "{0}"),
     fw_output=Output(
         "fw_output", "TENSOR_FLOAT32", "{{ {}, {}, {} }}".format(
             num_batches, max_time, fw_num_units)),
@@ -275,12 +274,11 @@ test(
     bw_bias=Input("bw_bias", "TENSOR_FLOAT32", "{{ {} }}".format(bw_num_units)),
     bw_hidden_state=Input("bw_hidden_state", "TENSOR_FLOAT32",
                           "{{ {}, {} }}".format(num_batches, bw_num_units)),
-    aux_input=Input("aux_input", "TENSOR_FLOAT32", "{{ {}, {}, {} }}".format(
-        0, 0, 0)),
+    aux_input=Input("aux_input", "TENSOR_FLOAT32", "{0}"),
     fw_aux_weights=Input("fw_aux_weights", "TENSOR_FLOAT32",
-                         "{{ {}, {} }}".format(0, 0)),
+                         "{0}"),
     bw_aux_weights=Input("bw_aux_weights", "TENSOR_FLOAT32",
-                         "{{ {}, {} }}".format(0, 0)),
+                         "{0}"),
     fw_output=Output(
         "fw_output", "TENSOR_FLOAT32", "{{ {}, {}, {} }}".format(
             max_time, num_batches, fw_num_units)),
@@ -329,12 +327,11 @@ test(
     bw_bias=Input("bw_bias", "TENSOR_FLOAT32", "{{ {} }}".format(bw_num_units)),
     bw_hidden_state=Input("bw_hidden_state", "TENSOR_FLOAT32",
                           "{{ {}, {} }}".format(num_batches, bw_num_units)),
-    aux_input=Input("aux_input", "TENSOR_FLOAT32", "{{ {}, {}, {} }}".format(
-        0, 0, 0)),
+    aux_input=Input("aux_input", "TENSOR_FLOAT32", "{0}"),
     fw_aux_weights=Input("fw_aux_weights", "TENSOR_FLOAT32",
-                         "{{ {}, {} }}".format(0, 0)),
+                         "{0}"),
     bw_aux_weights=Input("bw_aux_weights", "TENSOR_FLOAT32",
-                         "{{ {}, {} }}".format(0, 0)),
+                         "{0}"),
     fw_output=Output(
         "fw_output", "TENSOR_FLOAT32", "{{ {}, {}, {} }}".format(
             max_time, num_batches, fw_num_units + bw_num_units)),
@@ -386,12 +383,9 @@ test(
     bw_bias=Input("bw_bias", "TENSOR_FLOAT32", "{{ {} }}".format(bw_num_units)),
     bw_hidden_state=Input("bw_hidden_state", "TENSOR_FLOAT32",
                           "{{ {}, {} }}".format(num_batches, bw_num_units)),
-    aux_input=Input("aux_input", "TENSOR_FLOAT32", "{{ {}, {}, {} }}".format(
-        0, 0, 0)),
-    fw_aux_weights=Input("fw_aux_weights", "TENSOR_FLOAT32",
-                         "{{ {}, {} }}".format(0, 0)),
-    bw_aux_weights=Input("bw_aux_weights", "TENSOR_FLOAT32",
-                         "{{ {}, {} }}".format(0, 0)),
+    aux_input=Input("aux_input", "TENSOR_FLOAT32", "{0}"),
+    fw_aux_weights=Input("fw_aux_weights", "TENSOR_FLOAT32", "{0}"),
+    bw_aux_weights=Input("bw_aux_weights", "TENSOR_FLOAT32", "{0}"),
     fw_output=Output(
         "fw_output", "TENSOR_FLOAT32", "{{ {}, {}, {} }}".format(
             num_batches, max_time, fw_num_units)),
