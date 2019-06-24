@@ -524,10 +524,10 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
             memoryIds.push_back(memory->getKey());
         }
 
-        VLOG(EXECUTION) << "Before ExecutionBurstController->tryCompute() "
+        VLOG(EXECUTION) << "Before ExecutionBurstController->compute() "
                         << SHOW_IF_DEBUG(toString(request));
         std::tie(n, outputShapes, timing, burstFallback) =
-                burstController->tryCompute(request, measure, memoryIds);
+                burstController->compute(request, measure, memoryIds);
     }
 
     // compute from IPreparedModel if either:
