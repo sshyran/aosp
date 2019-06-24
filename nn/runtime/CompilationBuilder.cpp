@@ -18,6 +18,11 @@
 
 #include "CompilationBuilder.h"
 
+#include <algorithm>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 #include "BurstBuilder.h"
 #include "ExecutionBuilder.h"
 #include "ExecutionBurstController.h"
@@ -156,7 +161,8 @@ int CompilationBuilder::createBurst(BurstBuilder** burst) {
         *burst = nullptr;
         return ANEURALNETWORKS_BAD_STATE;
     }
-    std::vector<std::shared_ptr<ExecutionBurstController>> burstControllers = mPlan.makeBursts();
+    std::vector<std::shared_ptr<ExecutionBurstController>> burstControllers =
+            mPlan.makeBursts(mPreference);
     *burst = new (std::nothrow) BurstBuilder(this, std::move(burstControllers));
     return (*burst ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_OUT_OF_MEMORY);
 }
