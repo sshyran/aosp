@@ -17,18 +17,21 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_EXECUTION_BURST_CONTROLLER_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_EXECUTION_BURST_CONTROLLER_H
 
-#include "HalInterfaces.h"
-
 #include <android-base/macros.h>
 #include <fmq/MessageQueue.h>
 #include <hidl/MQDescriptor.h>
 
 #include <atomic>
+#include <chrono>
 #include <map>
 #include <memory>
 #include <mutex>
 #include <stack>
 #include <tuple>
+#include <utility>
+#include <vector>
+
+#include "HalInterfaces.h"
 
 namespace android::nn {
 
@@ -70,10 +73,10 @@ std::optional<std::tuple<hal::ErrorStatus, std::vector<hal::OutputShape>, hal::T
  *
  * Because the receiver can wait on a packet that may never come (e.g., because
  * the sending side of the packet has been closed), this object can be
- * invalidating, unblocking the receiver.
+ * invalidated, unblocking the receiver.
  */
 class ResultChannelReceiver {
-    using FmqResultDescriptor = ::android::hardware::MQDescriptorSync<hal::FmqResultDatum>;
+    using FmqResultDescriptor = hardware::MQDescriptorSync<hal::FmqResultDatum>;
     using FmqResultChannel =
             hardware::MessageQueue<hal::FmqResultDatum, hardware::kSynchronizedReadWrite>;
 
@@ -84,13 +87,15 @@ class ResultChannelReceiver {
      * Prefer this call over the constructor.
      *
      * @param channelLength Number of elements in the FMQ.
-     * @param blocking 'true' if FMQ should use futex, 'false' if it should
-     *     spin-wait.
+     * @param pollingTimeWindow How much time (in microseconds) the
+     *     ResultChannelReceiver is allowed to poll the FMQ before waiting on
+     *     the blocking futex. Polling may result in lower latencies at the
+     *     potential cost of more power usage.
      * @return A pair of ResultChannelReceiver and the FMQ descriptor on
      *     successful creation, both nullptr otherwise.
      */
     static std::pair<std::unique_ptr<ResultChannelReceiver>, const FmqResultDescriptor*> create(
-            size_t channelLength, bool blocking);
+            size_t channelLength, std::chrono::microseconds pollingTimeWindow);
 
     /**
      * Get the result from the channel.
@@ -114,12 +119,13 @@ class ResultChannelReceiver {
     // prefer calling ResultChannelReceiver::getBlocking
     std::optional<std::vector<hal::FmqResultDatum>> getPacketBlocking();
 
-    ResultChannelReceiver(std::unique_ptr<FmqResultChannel> fmqResultChannel, bool blocking);
+    ResultChannelReceiver(std::unique_ptr<FmqResultChannel> fmqResultChannel,
+                          std::chrono::microseconds pollingTimeWindow);
 
    private:
     const std::unique_ptr<FmqResultChannel> mFmqResultChannel;
     std::atomic<bool> mValid{true};
-    const bool mBlocking;
+    const std::chrono::microseconds kPollingTimeWindow;
 };
 
 /**
@@ -128,7 +134,7 @@ class ResultChannelReceiver {
  * available.
  */
 class RequestChannelSender {
-    using FmqRequestDescriptor = ::android::hardware::MQDescriptorSync<hal::FmqRequestDatum>;
+    using FmqRequestDescriptor = hardware::MQDescriptorSync<hal::FmqRequestDatum>;
     using FmqRequestChannel =
             hardware::MessageQueue<hal::FmqRequestDatum, hardware::kSynchronizedReadWrite>;
 
@@ -139,13 +145,11 @@ class RequestChannelSender {
      * Prefer this call over the constructor.
      *
      * @param channelLength Number of elements in the FMQ.
-     * @param blocking 'true' if FMQ should use futex, 'false' if it should
-     *     spin-wait.
      * @return A pair of ResultChannelReceiver and the FMQ descriptor on
      *     successful creation, both nullptr otherwise.
      */
     static std::pair<std::unique_ptr<RequestChannelSender>, const FmqRequestDescriptor*> create(
-            size_t channelLength, bool blocking);
+            size_t channelLength);
 
     /**
      * Send the request to the channel.
@@ -169,12 +173,11 @@ class RequestChannelSender {
     // prefer calling RequestChannelSender::send
     bool sendPacket(const std::vector<hal::FmqRequestDatum>& packet);
 
-    RequestChannelSender(std::unique_ptr<FmqRequestChannel> fmqRequestChannel, bool blocking);
+    RequestChannelSender(std::unique_ptr<FmqRequestChannel> fmqRequestChannel);
 
    private:
     const std::unique_ptr<FmqRequestChannel> mFmqRequestChannel;
     std::atomic<bool> mValid{true};
-    const bool mBlocking;
 };
 
 /**
@@ -260,15 +263,15 @@ class ExecutionBurstController {
      * Prefer this over ExecutionBurstController's constructor.
      *
      * @param preparedModel Model prepared for execution to execute on.
-     * @param blocking 'true' if the FMQ should use a futex to perform blocking
-     *     until data is available in a less responsive, but more energy
-     *     efficient manner. 'false' if the FMQ should use spin-looping to
-     *     wait until data is available in a more responsive, but less energy
-     *     efficient manner.
+     * @param pollingTimeWindow How much time (in microseconds) the
+     *     ExecutionBurstController is allowed to poll the FMQ before waiting on
+     *     the blocking futex. Polling may result in lower latencies at the
+     *     potential cost of more power usage.
      * @return ExecutionBurstController Execution burst controller object.
      */
     static std::unique_ptr<ExecutionBurstController> create(
-            const sp<hal::IPreparedModel>& preparedModel, bool blocking);
+            const sp<hal::IPreparedModel>& preparedModel,
+            std::chrono::microseconds pollingTimeWindow);
 
     // prefer calling ExecutionBurstController::create
     ExecutionBurstController(const std::shared_ptr<RequestChannelSender>& requestChannelSender,
@@ -288,34 +291,13 @@ class ExecutionBurstController {
      * @param memoryIds Identifiers corresponding to each memory object in the
      *     request's pools.
      * @return A tuple of:
-     *     - status of the execution
-     *     - dynamic output shapes from the execution
-     *     - any execution time measurements of the execution
-     */
-    std::tuple<hal::ErrorStatus, std::vector<hal::OutputShape>, hal::Timing> compute(
-            const hal::Request& request, hal::MeasureTiming measure,
-            const std::vector<intptr_t>& memoryIds);
-
-    // TODO: combine "compute" and "tryCompute" back into a single function.
-    // "tryCompute" was created later to return the "fallback" boolean. This
-    // could not be done directly in "compute" because the VTS test cases (which
-    // test burst using "compute") had already been locked down and could not be
-    // changed.
-    /**
-     * Execute a request on a model.
-     *
-     * @param request Arguments to be executed on a model.
-     * @param measure Whether to collect timing measurements, either YES or NO
-     * @param memoryIds Identifiers corresponding to each memory object in the
-     *     request's pools.
-     * @return A tuple of:
      *     - result code of the execution
      *     - dynamic output shapes from the execution
      *     - any execution time measurements of the execution
      *     - whether or not a failed burst execution should be re-run using a
      *       different path (e.g., IPreparedModel::executeSynchronously)
      */
-    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing, bool> tryCompute(
+    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing, bool> compute(
             const hal::Request& request, hal::MeasureTiming measure,
             const std::vector<intptr_t>& memoryIds);
 
