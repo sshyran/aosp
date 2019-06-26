@@ -1181,12 +1181,31 @@ class PlanModelSlicer : public IModelSlicer {
         SliceState mState = SliceState::UNINITIALIZED;
         T_SlicedModel mHidlModel;
         std::vector<uint32_t> mSlicedOperationIndexToOrigIndex;
+
+        using Operand = typename decltype(mHidlModel.operands)::value_type;
+        using Operation = typename decltype(mHidlModel.operations)::value_type;
+        using OperationType = decltype(Operation::type);
     };
     Slice<V1_0::Model> mSliceV1_0;
     Slice<V1_1::Model> mSliceV1_1;
 
     template <class T_SlicedModel>
     void initializeSlice(Slice<T_SlicedModel>* slice);
+
+    // Utility class for initializeSlice().
+    template <typename T_SlicedOperand>
+    class OrigOperandToSlicedInputOperandIndex;
+
+    // Utility function for initializeSlice(): Walks operations of original
+    // model and populates sliced model accordingly.
+    template <class T_SlicedModel>
+    void processOperations(
+            Slice<T_SlicedModel>* slice,
+            std::map<uint32_t, uint32_t>* origOperandIndexToSlicedIndex,
+            OrigOperandToSlicedInputOperandIndex<typename Slice<T_SlicedModel>::Operand>*
+                    origOperandToSlicedInputOperandIndex,
+            const std::set<uint32_t>& noncompliantOperations,
+            const std::set<uint32_t>& inputOperandIndexesOfCompliantOperations);
 
     template <class T_SlicedModel>
     std::optional<std::pair<T_SlicedModel, std::function<uint32_t(uint32_t)>>> getSlice(
@@ -1243,18 +1262,230 @@ PlanModelSlicer::PlanModelSlicer(const ModelBuilder* model) {
     model->setHidlModel(&mHidlModel);
 }
 
+// Utility class for initializeSlice().
+//
+// For each output operand of a noncompliant operation that is the input
+// operand of at least one compliant operation, we will ensure that there is
+// a sliced model input whose "type" is that of the output operand.  This is
+// a map from operand "type" (in the original model) to model input
+// operand index (in the sliced model).  Unfortunately, there is no
+// representation of operand "type" defined in the HAL that we can use
+// naively here -- we want (OperandType, dimensions, scale, zeroPoint,
+// extraParams), but these fields exist in Operand along with other fields
+// that need to be excluded from the map key (numberOfConsumers, lifetime,
+// location).  There are several choices:
+// - Don't have a map -- each output identified above gets its own sliced
+//   model input (no sharing of sliced model inputs).
+// - Create an operand "type" representation solely for use as a map key.
+// - Write a tailored comparison function that ignores the excluded fields.
+// We choose to write a tailored comparison function.  If Treble were to
+// generate a comparison function for us (http://b/130567619) then it might
+// be better to instead reset the excluded fields to canonical values --
+// then we could use the Treble provided comparison function, and the
+// solution would be robust (in a correctness sense, not a sharing sense) if
+// more fields are added and we neglect to canonicalize them.
+//
+// We also use this map for model input operands of the original model that
+// become input operands of the sliced model.  This means that an original
+// model input operand might be commoned with other original model input
+// operands and/or with original model temporary operands.
+template <typename T_SlicedOperand>
+class PlanModelSlicer::OrigOperandToSlicedInputOperandIndex {
+   public:
+    OrigOperandToSlicedInputOperandIndex(hidl_vec<T_SlicedOperand>* slicedOperands,
+                                         hidl_vec<uint32_t>* slicedInputIndexes)
+        : mSlicedOperands(*slicedOperands), mSlicedInputIndexes(*slicedInputIndexes) {}
+
+    // Given an operand from the original model, return the index of the
+    // corresponding model input operand from the sliced model.  Creates a
+    // new operand in the sliced model if necessary.
+    uint32_t getIndex(Operand operand) {
+        // Lookup
+        auto it = mMap.find(operand);
+        if (it != mMap.end()) {
+            VLOG(COMPILATION) << "OrigOperandToSlicedInputOperandIndex::getIndex looked for "
+                              << toString(operand) << " and found " << it->second << ": "
+                              << toString(it->first);
+            return it->second;
+        }
+
+        // Create
+        operand.numberOfConsumers = 0;
+        operand.lifetime = OperandLifeTime::MODEL_INPUT;
+        operand.location = {};
+        uint32_t slicedOperandIndex =
+                extend(&mSlicedOperands, convertTo<T_SlicedOperand>(operand)).first;
+        mMap[operand] = slicedOperandIndex;
+        extend(&mSlicedInputIndexes, slicedOperandIndex);
+        VLOG(COMPILATION) << "OrigOperandToSlicedInputOperandIndex::getIndex created "
+                          << slicedOperandIndex << ": " << toString(operand);
+        return slicedOperandIndex;
+    }
+
+   private:
+    class Compare {
+       public:
+        bool operator()(const Operand& a, const Operand& b) const {
+            if (a.type != b.type) {
+                return a.type < b.type;
+            }
+            if (a.dimensions != b.dimensions) {
+                return a.dimensions < b.dimensions;
+            }
+            if (a.scale != b.scale) {
+                return a.scale < b.scale;
+            }
+            if (a.zeroPoint != b.zeroPoint) {
+                return a.zeroPoint < b.zeroPoint;
+            }
+            return compare(a.extraParams, b.extraParams);
+        }
+
+       private:
+        static bool compare(const SymmPerChannelQuantParams& a,
+                            const SymmPerChannelQuantParams& b) {
+            if (a.scales != b.scales) {
+                return a.scales < b.scales;
+            }
+            return a.channelDim < b.channelDim;
+        }
+
+        static bool compare(const Operand::ExtraParams& a, const Operand::ExtraParams& b) {
+            if (a.getDiscriminator() != b.getDiscriminator()) {
+                return a.getDiscriminator() < b.getDiscriminator();
+            }
+
+            switch (a.getDiscriminator()) {
+                case Operand::ExtraParams::hidl_discriminator::channelQuant:
+                    return compare(a.channelQuant(), b.channelQuant());
+
+                case Operand::ExtraParams::hidl_discriminator::extension:
+                    return a.extension() < b.extension();
+
+                case Operand::ExtraParams::hidl_discriminator::none:
+                    return false;
+
+                default:
+                    CHECK(false) << "Unexpected";
+                    return false;
+            }
+        }
+    };
+    std::map<Operand, uint32_t, Compare> mMap;
+    hidl_vec<T_SlicedOperand>& mSlicedOperands;
+    hidl_vec<uint32_t>& mSlicedInputIndexes;
+};
+
+template <class T_SlicedModel>
+void PlanModelSlicer::processOperations(
+        Slice<T_SlicedModel>* slice, std::map<uint32_t, uint32_t>* origOperandIndexToSlicedIndex,
+        OrigOperandToSlicedInputOperandIndex<typename Slice<T_SlicedModel>::Operand>*
+                origOperandToSlicedInputOperandIndex,
+        const std::set<uint32_t>& noncompliantOperations,
+        const std::set<uint32_t>& inputOperandIndexesOfCompliantOperations) {
+    using SlicedOperand = typename Slice<T_SlicedModel>::Operand;
+    using SlicedOperation = typename Slice<T_SlicedModel>::Operation;
+    using SlicedOperationType = typename Slice<T_SlicedModel>::OperationType;
+
+    const auto& origOperands = mHidlModel.operands;
+    const auto& origOperations = mHidlModel.operations;
+    auto& slicedOperands = slice->mHidlModel.operands;
+    auto& slicedOperations = slice->mHidlModel.operations;
+
+    for (uint32_t origOperationIndex = 0; origOperationIndex < origOperations.size();
+         ++origOperationIndex) {
+        const Operation& origOperation = origOperations[origOperationIndex];
+
+        if (noncompliantOperations.count(origOperationIndex)) {
+            for (uint32_t output : origOperation.outputs) {
+                if (!inputOperandIndexesOfCompliantOperations.count(output)) {
+                    continue;
+                }
+                const uint32_t slicedIndex =
+                        origOperandToSlicedInputOperandIndex->getIndex(origOperands[output]);
+                (*origOperandIndexToSlicedIndex)[output] = slicedIndex;
+                VLOG(COMPILATION)
+                        << "origOperandIndexToSlicedIndex noncompliant output processing created "
+                        << output << " -> " << slicedIndex << ": "
+                        << toString(slicedOperands[slicedIndex]);
+            }
+        } else {
+            slice->mSlicedOperationIndexToOrigIndex.push_back(origOperationIndex);
+            SlicedOperation& slicedOperation = *extend(&slicedOperations).second;
+            CHECK_EQ(slice->mSlicedOperationIndexToOrigIndex.size(), slicedOperations.size());
+
+            slicedOperation.type = uncheckedConvertTo<SlicedOperationType>(origOperation.type);
+
+            // Model is topologically sorted, so all operation inputs must be
+            // present in origOperandIndexToSlicedIndex, and no operation
+            // outputs may be.
+
+            // Operation inputs
+            // - Fill in slicedOperation.inputs
+            // - Update number of consumers for each input operand
+            slicedOperation.inputs.resize(origOperation.inputs.size());
+            std::transform(
+                    origOperation.inputs.begin(), origOperation.inputs.end(),
+                    slicedOperation.inputs.begin(),
+                    [&origOperandIndexToSlicedIndex, &slicedOperands](uint32_t origOperandIndex) {
+                        uint32_t slicedOperandIndex =
+                                origOperandIndexToSlicedIndex->at(origOperandIndex);
+                        slicedOperands[slicedOperandIndex].numberOfConsumers++;
+                        VLOG(COMPILATION) << "origOperandIndexToSlicedIndex compliant input "
+                                             "processing created "
+                                          << origOperandIndex << " -> " << slicedOperandIndex
+                                          << ": " << toString(slicedOperands[slicedOperandIndex]);
+                        return slicedOperandIndex;
+                    });
+
+            // Operation outputs
+            // - Add new operands to slicedOperands
+            // - Update origOperandIndexToSlicedIndex
+            // - Fill in slicedOperation.outputs
+            // - Record as a model output, if necessary
+            const uint32_t firstOutputSlicedOperandIndex = slicedOperands.size();
+            slicedOperands.resize(firstOutputSlicedOperandIndex + origOperation.outputs.size());
+            slicedOperation.outputs.resize(origOperation.outputs.size());
+            for (uint32_t outputNum = 0; outputNum < slicedOperation.outputs.size(); ++outputNum) {
+                uint32_t origOperandIndex = origOperation.outputs[outputNum];
+                uint32_t slicedOperandIndex = firstOutputSlicedOperandIndex + outputNum;
+                auto& slicedOperand = slicedOperands[slicedOperandIndex];
+                const auto& origOperand = origOperands[origOperandIndex];
+                slicedOperand = convertTo<SlicedOperand>(origOperand);
+                slicedOperand.numberOfConsumers = 0;
+
+                CHECK_EQ(origOperandIndexToSlicedIndex->count(origOperandIndex), size_t(0));
+                (*origOperandIndexToSlicedIndex)[origOperandIndex] = slicedOperandIndex;
+                slicedOperation.outputs[outputNum] = slicedOperandIndex;
+
+                if (!inputOperandIndexesOfCompliantOperations.count(origOperandIndex) &&
+                    origOperand.numberOfConsumers) {
+                    // Was consumed only by noncompliant operations; convert to
+                    // an output of the sliced model.
+                    slicedOperand.lifetime = OperandLifeTime::MODEL_OUTPUT;
+                }
+
+                VLOG(COMPILATION) << "origOperandIndexToSlicedIndex compliant output created "
+                                  << origOperandIndex << " -> " << slicedOperandIndex << ": "
+                                  << toString(slicedOperand);
+
+                if (slicedOperand.lifetime == OperandLifeTime::MODEL_OUTPUT) {
+                    extend(&slice->mHidlModel.outputIndexes, slicedOperandIndex);
+                }
+            }
+        }
+    }
+}
+
 template <class T_SlicedModel>
 void PlanModelSlicer::initializeSlice(Slice<T_SlicedModel>* slice) {
-    using SlicedOperand = std::remove_pointer_t<decltype(slice->mHidlModel.operands.data())>;
-    using SlicedOperation = std::remove_pointer_t<decltype(slice->mHidlModel.operations.data())>;
-    using SlicedOperationType = decltype(SlicedOperation::type);
+    using SlicedOperand = typename Slice<T_SlicedModel>::Operand;
 
     CHECK(slice->mState == SliceState::UNINITIALIZED);
 
     const auto& origOperands = mHidlModel.operands;
     const auto& origOperations = mHidlModel.operations;
     auto& slicedOperands = slice->mHidlModel.operands;
-    auto& slicedOperations = slice->mHidlModel.operations;
 
     // Indexes of elements of noncompliant origOperations
     std::set<uint32_t> noncompliantOperations;
@@ -1300,115 +1531,8 @@ void PlanModelSlicer::initializeSlice(Slice<T_SlicedModel>* slice) {
         }
     }
 
-    // For each output operand of a noncompliant operation that is the input
-    // operand of at least one compliant operation, we will ensure that there is
-    // a sliced model input whose "type" is that of the output operand.  This is
-    // a map from output operand "type" (in the original model) to model input
-    // operand index (in the sliced model).  Unfortunately, there is no
-    // representation of operand "type" defined in the HAL that we can use
-    // naively here -- we want (OperandType, dimensions, scale, zeroPoint,
-    // extraParams), but these fields exist in Operand along with other fields
-    // that need to be excluded from the map key (numberOfConsumers, lifetime,
-    // location).  There are several choices:
-    // - Don't have a map -- each output identified above gets its own sliced
-    //   model input (no sharing of sliced model inputs).
-    // - Create an operand "type" representation solely for use as a map key.
-    // - Write a tailored comparison function that ignores the excluded fields.
-    // We choose to write a tailored comparison function.  If Treble were to
-    // generate a comparison function for us (http://b/130567619) then it might
-    // be better to instead reset the excluded fields to canonical values --
-    // then we could use the Treble provided comparison function, and the
-    // solution would be robust (in a correctness sense, not a sharing sense) if
-    // more fields are added and we neglect to canonicalize them.
-    //
-    // We also use this map for model input operands of the original model that
-    // become input operands of the sliced model.  This means that an original
-    // model input operand might be coalesced with other original model input
-    // operands and/or with original model temporary operands.
-    class OrigOperandToSlicedInputOperandIndex {
-       public:
-        OrigOperandToSlicedInputOperandIndex(hidl_vec<SlicedOperand>* slicedOperands,
-                                             hidl_vec<uint32_t>* slicedInputIndexes)
-            : mSlicedOperands(*slicedOperands), mSlicedInputIndexes(*slicedInputIndexes) {}
-
-        // Given an operand from the original model, return the index of the
-        // corresponding model input operand from the sliced model.  Creates a
-        // new operand in the sliced model if necessary.
-        uint32_t getIndex(Operand operand) {
-            // Lookup
-            auto it = mMap.find(operand);
-            if (it != mMap.end()) {
-                VLOG(COMPILATION) << "OrigOperandToSlicedInputOperandIndex::getIndex looked for "
-                                  << toString(operand) << " and found " << it->second << ": "
-                                  << toString(it->first);
-                return it->second;
-            }
-
-            // Create
-            operand.numberOfConsumers = 0;
-            operand.lifetime = OperandLifeTime::MODEL_INPUT;
-            operand.location = {};
-            uint32_t slicedOperandIndex =
-                    extend(&mSlicedOperands, convertTo<SlicedOperand>(operand)).first;
-            mMap[operand] = slicedOperandIndex;
-            extend(&mSlicedInputIndexes, slicedOperandIndex);
-            VLOG(COMPILATION) << "OrigOperandToSlicedInputOperandIndex::getIndex created "
-                              << slicedOperandIndex << ": " << toString(operand);
-            return slicedOperandIndex;
-        }
-
-       private:
-        class Compare {
-           public:
-            bool operator()(const Operand& a, const Operand& b) const {
-                if (a.type != b.type) {
-                    return a.type < b.type;
-                }
-                if (a.dimensions != b.dimensions) {
-                    return a.dimensions < b.dimensions;
-                }
-                if (a.scale != b.scale) {
-                    return a.scale < b.scale;
-                }
-                if (a.zeroPoint != b.zeroPoint) {
-                    return a.zeroPoint < b.zeroPoint;
-                }
-                return compare(a.extraParams, b.extraParams);
-            }
-
-           private:
-            static bool compare(const SymmPerChannelQuantParams& a,
-                                const SymmPerChannelQuantParams& b) {
-                if (a.scales != b.scales) {
-                    return a.scales < b.scales;
-                }
-                return a.channelDim < b.channelDim;
-            }
-
-            static bool compare(const Operand::ExtraParams& a, const Operand::ExtraParams& b) {
-                if (a.getDiscriminator() != b.getDiscriminator()) {
-                    return a.getDiscriminator() < b.getDiscriminator();
-                }
-
-                switch (a.getDiscriminator()) {
-                    default:
-                        CHECK(false) << "Unexpected";
-                        FALLTHROUGH_INTENDED;
-                    case Operand::ExtraParams::hidl_discriminator::none:
-                        return false;
-
-                    case Operand::ExtraParams::hidl_discriminator::channelQuant:
-                        return compare(a.channelQuant(), b.channelQuant());
-
-                    case Operand::ExtraParams::hidl_discriminator::extension:
-                        return a.extension() < b.extension();
-                }
-            }
-        };
-        std::map<Operand, uint32_t, Compare> mMap;
-        hidl_vec<SlicedOperand>& mSlicedOperands;
-        hidl_vec<uint32_t>& mSlicedInputIndexes;
-    } origOperandToSlicedInputOperandIndex(&slicedOperands, &slice->mHidlModel.inputIndexes);
+    OrigOperandToSlicedInputOperandIndex origOperandToSlicedInputOperandIndex(
+            &slicedOperands, &slice->mHidlModel.inputIndexes);
 
     // An input of the original model is an input of the sliced model if and
     // only if it is consumed by at least one compliant operation.  Note that in
@@ -1426,88 +1550,8 @@ void PlanModelSlicer::initializeSlice(Slice<T_SlicedModel>* slice) {
     }
 
     // Main loop: Process each operation of the original model.
-    for (uint32_t origOperationIndex = 0; origOperationIndex < origOperations.size();
-         ++origOperationIndex) {
-        const Operation& origOperation = origOperations[origOperationIndex];
-
-        if (noncompliantOperations.count(origOperationIndex)) {
-            for (uint32_t output : origOperation.outputs) {
-                if (!inputOperandIndexesOfCompliantOperations.count(output)) {
-                    continue;
-                }
-                const uint32_t slicedIndex =
-                        origOperandToSlicedInputOperandIndex.getIndex(origOperands[output]);
-                origOperandIndexToSlicedIndex[output] = slicedIndex;
-                VLOG(COMPILATION)
-                        << "origOperandIndexToSlicedIndex noncompliant output processing created "
-                        << output << " -> " << slicedIndex << ": "
-                        << toString(slicedOperands[slicedIndex]);
-            }
-        } else {
-            slice->mSlicedOperationIndexToOrigIndex.push_back(origOperationIndex);
-            SlicedOperation& slicedOperation = *extend(&slicedOperations).second;
-            CHECK(slice->mSlicedOperationIndexToOrigIndex.size() == slicedOperations.size());
-
-            slicedOperation.type = uncheckedConvertTo<SlicedOperationType>(origOperation.type);
-
-            // Model is topologically sorted, so all inputs must be present in
-            // origOperandIndexToSlicedIndex, and no outputs may be.
-
-            // Operation inputs
-            // - Fill in slicedOperation.inputs
-            // - Update number of consumers for each input operand
-            slicedOperation.inputs.resize(origOperation.inputs.size());
-            std::transform(
-                    origOperation.inputs.begin(), origOperation.inputs.end(),
-                    slicedOperation.inputs.begin(),
-                    [&origOperandIndexToSlicedIndex, &slicedOperands](uint32_t origOperandIndex) {
-                        uint32_t slicedOperandIndex =
-                                origOperandIndexToSlicedIndex.at(origOperandIndex);
-                        slicedOperands[slicedOperandIndex].numberOfConsumers++;
-                        VLOG(COMPILATION) << "origOperandIndexToSlicedIndex compliant input "
-                                             "processing created "
-                                          << origOperandIndex << " -> " << slicedOperandIndex
-                                          << ": " << toString(slicedOperands[slicedOperandIndex]);
-                        return slicedOperandIndex;
-                    });
-
-            // Operation outputs
-            // - Add new operands to slicedOperands
-            // - Update origOperandIndexToSlicedIndex
-            // - Fill in slicedOperation.outputs
-            // - Record as a model output, if necessary
-            const uint32_t firstOutputSlicedOperandIndex = slicedOperands.size();
-            slicedOperands.resize(firstOutputSlicedOperandIndex + origOperation.outputs.size());
-            slicedOperation.outputs.resize(origOperation.outputs.size());
-            for (uint32_t outputNum = 0; outputNum < slicedOperation.outputs.size(); ++outputNum) {
-                uint32_t origOperandIndex = origOperation.outputs[outputNum];
-                uint32_t slicedOperandIndex = firstOutputSlicedOperandIndex + outputNum;
-                auto& slicedOperand = slicedOperands[slicedOperandIndex];
-                const auto& origOperand = origOperands[origOperandIndex];
-                slicedOperand = convertTo<SlicedOperand>(origOperand);
-                slicedOperand.numberOfConsumers = 0;
-
-                CHECK(origOperandIndexToSlicedIndex.count(origOperandIndex) == 0);
-                origOperandIndexToSlicedIndex[origOperandIndex] = slicedOperandIndex;
-                slicedOperation.outputs[outputNum] = slicedOperandIndex;
-
-                if (!inputOperandIndexesOfCompliantOperations.count(origOperandIndex) &&
-                    origOperand.numberOfConsumers) {
-                    // Was consumed only by noncompliant operations; convert to
-                    // an output of the sliced model.
-                    slicedOperand.lifetime = OperandLifeTime::MODEL_OUTPUT;
-                }
-
-                VLOG(COMPILATION) << "origOperandIndexToSlicedIndex compliant output created "
-                                  << origOperandIndex << " -> " << slicedOperandIndex << ": "
-                                  << toString(slicedOperand);
-
-                if (slicedOperand.lifetime == OperandLifeTime::MODEL_OUTPUT) {
-                    extend(&slice->mHidlModel.outputIndexes, slicedOperandIndex);
-                }
-            }
-        }
-    }
+    processOperations(slice, &origOperandIndexToSlicedIndex, &origOperandToSlicedInputOperandIndex,
+                      noncompliantOperations, inputOperandIndexesOfCompliantOperations);
 
     // To keep things simple, we copy over these fields as-is.  We could instead
     // opt to regenerate them based on the operands present in the sliced model:
