@@ -414,7 +414,7 @@ typedef enum {
      *      [depth_out, filter_height, filter_width, depth_in], specifying the
      *      filter. For tensor of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} the channel
-     *      dimension (extraParams.channelQuant.channelDim) must be set to 0.
+     *      dimension (ANeuralNetworksSymmPerChannelQuantParams::channelDim) must be set to 0.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
      *      {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the bias must be of the same
@@ -462,7 +462,7 @@ typedef enum {
      *      [depth_out, filter_height, filter_width, depth_in], specifying the
      *      filter. For tensor of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} the channel
-     *      dimension (extraParams.channelQuant.channelDim) must be set to 0.
+     *      dimension (ANeuralNetworksSymmPerChannelQuantParams::channelDim) must be set to 0.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
      *      {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the bias must be of the same
@@ -562,7 +562,7 @@ typedef enum {
      * * 1: A 4-D tensor, of shape [1, filter_height, filter_width, depth_out],
      *      specifying the filter. For tensor of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} the channel
-     *      dimension (extraParams.channelQuant.channelDim) must be set to 3.
+     *      dimension (ANeuralNetworksSymmPerChannelQuantParams::channelDim) must be set to 3.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
      *      {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the bias must be of the same
@@ -4536,7 +4536,7 @@ typedef enum {
      *      [depth_out, filter_height, filter_width, depth_in], specifying the
      *      filter. For tensor of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} the channel
-     *      dimension (extraParams.channelQuant.channelDim) must be set to 0.
+     *      dimension (ANeuralNetworksSymmPerChannelQuantParams::channelDim) must be set to 0.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
      *      {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the bias should be of the
@@ -4574,7 +4574,7 @@ typedef enum {
      *      [depth_out, filter_height, filter_width, depth_in], specifying the
      *      filter. For tensor of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} the channel
-     *      dimension (extraParams.channelQuant.channelDim) must be set to 0.
+     *      dimension (ANeuralNetworksSymmPerChannelQuantParams::channelDim) must be set to 0.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
      *      {@link ANEURALNETWORKS_TENSOR_FLOAT16}, the bias should be of the
