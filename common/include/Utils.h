@@ -136,6 +136,10 @@ void initVLogMask();
 #define NN_RET_CHECK_GE(x, y) NN_RET_CHECK_OP(x, y, >=)
 #define NN_RET_CHECK_GT(x, y) NN_RET_CHECK_OP(x, y, >)
 
+// Ensure that every user of FalseyErrorStream is linked to the
+// correct instance, using the correct LOG_TAG
+namespace {
+
 // A wrapper around LOG(ERROR) that can be implicitly converted to bool (always evaluates to false).
 // Used to implement stream logging in NN_RET_CHECK.
 class FalseyErrorStream {
@@ -157,6 +161,8 @@ class FalseyErrorStream {
    private:
     std::ostringstream mBuffer;
 };
+
+}  // namespace
 
 // Return a vector with one entry for each non extension OperandType, set to the
 // specified PerformanceInfo value.  The vector will be sorted by OperandType.

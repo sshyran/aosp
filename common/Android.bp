@@ -205,8 +205,8 @@ cc_library_static {
     ],
 }
 
-cc_test {
-    name: "NeuralNetworksTest_operations",
+cc_defaults {
+    name: "NeuralNetworksTest_common",
     shared_libs: [
         "libhidlmemory",
         "libnativewindow",
@@ -225,47 +225,46 @@ cc_test {
     ],
     cflags: [
         "-Wno-extern-c-compat",
-        "-Wno-unused-parameter",
-        "-Wno-invalid-partial-specialization",
     ],
+    local_include_dirs: [ "include" ],
+}
+
+cc_test {
+    name: "NeuralNetworksTest_operations",
+    defaults: [ "NeuralNetworksTest_common" ],
     srcs: [
         "operations/*Test.cpp",
     ],
-    local_include_dirs: [ "include" ],
     header_libs: [
         "libeigen",
         "philox_random_headers",
         "tensorflow_headers",
     ],
+    cflags: [
+        "-Wno-unused-parameter",
+        "-Wno-invalid-partial-specialization",
+    ],
 }
 
 cc_test {
     name: "NeuralNetworksTest_utils",
-    shared_libs: [
-        "libhidlmemory",
-        "libnativewindow",
-        "libneuralnetworks",
-        "android.hardware.neuralnetworks@1.0",
-        "android.hardware.neuralnetworks@1.1",
-        "android.hardware.neuralnetworks@1.2",
-        "android.hidl.allocator@1.0",
-        "android.hidl.memory@1.0",
-    ],
-    static_libs: [
-        "libbase",
-        "libgmock",
-        "liblog",
-        "libneuralnetworks_common",
-    ],
-    cflags: [
-        "-Wno-extern-c-compat",
-        "-Wno-unused-variable",
-    ],
+    defaults: [ "NeuralNetworksTest_common" ],
     srcs: [
         "UtilsTest.cpp",
     ],
-    local_include_dirs: [ "include" ],
     header_libs: [
         "tensorflow_headers",
+    ],
+    cflags: [
+        "-Wno-unused-variable",
+    ],
+}
+
+cc_test {
+    name: "NeuralNetworksTest_logtag",
+    defaults: [ "NeuralNetworksTest_common" ],
+    srcs: [
+        "LogTagTest.cpp",
+        "LogTagTestExtra.cpp"
     ],
 }
