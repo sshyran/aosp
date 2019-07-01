@@ -106,7 +106,7 @@ namespace {spec_name} {{
 #include "{model_file}"
 }} // namespace {spec_name}\n"""
     # This regex is to remove prefix and get relative path for #include
-    pathRegex = r".*frameworks/ml/nn/(runtime/test/)?"
+    pathRegex = r".*((frameworks/ml/nn/(runtime/test/)?)|(vendor/google/[a-z]*/test/))"
     specFileBase = os.path.basename(tg.FileNames.specFile)
     print(fileHeader.format(spec_file=specFileBase), file=model_fd)
     print(fileHeader.format(spec_file=specFileBase), file=example_fd)

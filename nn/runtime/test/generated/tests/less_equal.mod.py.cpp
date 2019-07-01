@@ -168,6 +168,7 @@ TEST_F(GeneratedTests, less_equal_boolean) {
             less_equal::is_ignored_7,
             less_equal::get_examples_boolean());
 }
+TEST_AVAILABLE_SINCE(V1_2, less_equal_boolean, less_equal::CreateModel_7)
 
 TEST_F(DynamicOutputShapeTest, less_equal_boolean_dynamic_output_shape) {
     execute(less_equal::CreateModel_dynamic_output_shape_7,
