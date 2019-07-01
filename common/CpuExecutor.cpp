@@ -363,7 +363,9 @@ std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
         graphicBuffer = new GraphicBuffer(handle, GraphicBuffer::HandleWrapMethod::CLONE_HANDLE,
                                           width, height, format, layers, usage, stride);
         void* gBuffer = nullptr;
-        status_t status = graphicBuffer->lock(usage, &gBuffer);
+        int32_t outBytesPerPixel, outBytesPerStride;
+        status_t status =
+                graphicBuffer->lock(usage, &gBuffer, &outBytesPerPixel, &outBytesPerStride);
         if (status != NO_ERROR) {
             LOG(ERROR) << "RunTimePoolInfo Can't lock the AHardwareBuffer.";
             return std::nullopt;

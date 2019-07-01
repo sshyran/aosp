@@ -168,6 +168,7 @@ TEST_F(GeneratedTests, greater_boolean) {
             greater::is_ignored_7,
             greater::get_examples_boolean());
 }
+TEST_AVAILABLE_SINCE(V1_2, greater_boolean, greater::CreateModel_7)
 
 TEST_F(DynamicOutputShapeTest, greater_boolean_dynamic_output_shape) {
     execute(greater::CreateModel_dynamic_output_shape_7,

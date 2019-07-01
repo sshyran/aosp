@@ -19,6 +19,7 @@
 #include "ExecutionBurstController.h"
 
 #include <android-base/logging.h>
+#include <cstring>
 #include <limits>
 #include <string>
 #include "Tracing.h"
@@ -289,7 +290,7 @@ std::optional<std::vector<FmqResultDatum>> ResultChannelReceiver::getPacketBlock
     // are also available.
     const size_t count = mFmqResultChannel->availableToRead();
     std::vector<FmqResultDatum> packet(count + 1);
-    packet.front() = datum;
+    std::memcpy(&packet.front(), &datum, sizeof(datum));
     success &= mFmqResultChannel->read(packet.data() + 1, count);
 
     if (!mValid) {
@@ -302,7 +303,7 @@ std::optional<std::vector<FmqResultDatum>> ResultChannelReceiver::getPacketBlock
         return std::nullopt;
     }
 
-    return packet;
+    return std::make_optional(std::move(packet));
 }
 
 std::pair<std::unique_ptr<RequestChannelSender>, const FmqRequestDescriptor*>

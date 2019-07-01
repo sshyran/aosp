@@ -241,7 +241,7 @@ class TestDriver12 : public SampleDriver {
                                 actualCallback);
     }
 
-   private:
+private:
     ErrorStatus mErrorStatus;
 };
 

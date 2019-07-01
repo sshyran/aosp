@@ -110,11 +110,12 @@ class ResultChannelReceiver {
      */
     void invalidate();
 
+    // prefer calling ResultChannelReceiver::getBlocking
+    std::optional<std::vector<FmqResultDatum>> getPacketBlocking();
+
     ResultChannelReceiver(std::unique_ptr<FmqResultChannel> fmqResultChannel, bool blocking);
 
    private:
-    std::optional<std::vector<FmqResultDatum>> getPacketBlocking();
-
     const std::unique_ptr<FmqResultChannel> mFmqResultChannel;
     std::atomic<bool> mValid{true};
     const bool mBlocking;

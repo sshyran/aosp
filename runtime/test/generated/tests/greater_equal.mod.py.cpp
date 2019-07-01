@@ -168,6 +168,7 @@ TEST_F(GeneratedTests, greater_equal_boolean) {
             greater_equal::is_ignored_7,
             greater_equal::get_examples_boolean());
 }
+TEST_AVAILABLE_SINCE(V1_2, greater_equal_boolean, greater_equal::CreateModel_7)
 
 TEST_F(DynamicOutputShapeTest, greater_equal_boolean_dynamic_output_shape) {
     execute(greater_equal::CreateModel_dynamic_output_shape_7,
