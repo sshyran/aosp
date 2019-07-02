@@ -190,8 +190,10 @@ class MemoryTracker {
     // Returns the ith memory.
     const Memory* operator[](size_t i) const { return mMemories[i]; }
     // Iteration
-    decltype(mMemories.begin()) begin() { return mMemories.begin(); }
-    decltype(mMemories.end()) end() { return mMemories.end(); }
+    auto begin() { return mMemories.begin(); }
+    auto end() { return mMemories.end(); }
+    auto cbegin() const { return mMemories.cbegin(); }
+    auto cend() const { return mMemories.cend(); }
 };
 
 }  // namespace nn
