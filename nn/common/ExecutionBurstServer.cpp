@@ -498,6 +498,7 @@ ExecutionBurstServer::~ExecutionBurstServer() {
 }
 
 Return<void> ExecutionBurstServer::freeMemory(int32_t slot) {
+    std::lock_guard<std::mutex> hold(mMutex);
     mExecutorWithCache->removeCacheEntry(slot);
     return Void();
 }
