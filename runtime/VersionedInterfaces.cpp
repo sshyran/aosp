@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#define LOG_TAG "VersionedInterfaces"
+
 #include "VersionedInterfaces.h"
 
 #include "Callbacks.h"
