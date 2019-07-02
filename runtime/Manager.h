@@ -17,39 +17,68 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H
 
-#include "HalInterfaces.h"
-#include "Utils.h"
-#include "VersionedInterfaces.h"
-
 #include <android-base/macros.h>
+
 #include <map>
+#include <memory>
+#include <string>
 #include <unordered_set>
+#include <utility>
 #include <vector>
+
+#include "Callbacks.h"
+#include "HalInterfaces.h"
+#include "Memory.h"
+#include "Utils.h"
 
 namespace android {
 namespace nn {
 
 // Forward declaration
 class MetaModel;
+class ExecutionBurstController;
+struct ModelArgumentInfo;
+
+// A unified interface for actual driver prepared model as well as the CPU.
+class PreparedModel {
+    DISALLOW_COPY_AND_ASSIGN(PreparedModel);
+
+   public:
+    PreparedModel() = default;
+    virtual ~PreparedModel() = default;
+
+    // Start computation with given input/output argument info and memory pools.
+    //
+    // When executed on an actual driver device, this method may append new memory pools to
+    // "memories" for inputs and outputs specified via pointers, and the data location for
+    // "inputs" and "outputs" may get updated.
+    virtual int execute(const std::shared_ptr<ExecutionBurstController>& burstController,
+                        MeasureTiming measure, std::vector<ModelArgumentInfo>* inputs,
+                        std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
+                        sp<ExecutionCallback>* synchronizationCallback) const = 0;
+
+    virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
+            bool blocking) const = 0;
+};
 
 // A unified interface for actual driver devices as well as the CPU
 class Device {
-   public:
-    virtual ~Device() {}
+    DISALLOW_COPY_AND_ASSIGN(Device);
 
-    // Get the handle of underlying VersionedIDevice, if any
-    virtual VersionedIDevice* getInterface() = 0;
+   public:
+    Device() = default;
+    virtual ~Device() = default;
 
     // Introspection methods returning device information
     virtual const char* getName() const = 0;
     virtual const char* getVersionString() const = 0;
-    virtual int64_t getFeatureLevel() = 0;
+    virtual int64_t getFeatureLevel() const = 0;
     virtual int32_t getType() const = 0;
     virtual hal::hidl_vec<hal::Extension> getSupportedExtensions() const = 0;
 
     // See the MetaModel class in MetaModel.h for more details.
     virtual void getSupportedOperations(const MetaModel& metaModel,
-                                        hal::hidl_vec<bool>* supportedOperations) = 0;
+                                        hal::hidl_vec<bool>* supportedOperations) const = 0;
 
     virtual hal::PerformanceInfo getPerformance(hal::OperandType type) const = 0;
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
@@ -62,12 +91,12 @@ class Device {
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
             const hal::hidl_vec<hal::hidl_handle>& dataCache,
             const hal::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>& token,
-            std::shared_ptr<VersionedIPreparedModel>* preparedModel) = 0;
+            std::shared_ptr<PreparedModel>* preparedModel) const = 0;
     virtual int prepareModelFromCache(
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
             const hal::hidl_vec<hal::hidl_handle>& dataCache,
             const hal::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>& token,
-            std::shared_ptr<VersionedIPreparedModel>* preparedModel) = 0;
+            std::shared_ptr<PreparedModel>* preparedModel) const = 0;
 };
 
 // Manages the NN HAL devices.  Only one instance of this class will exist.
