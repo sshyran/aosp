@@ -642,8 +642,7 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
         return ANEURALNETWORKS_BAD_STATE;
     }
 
-    Model hidlModel;
-    m->setHidlModel(&hidlModel);
+    const Model hidlModel = m->makeHidlModel();
     const std::vector<uint32_t>& opMap = m->getSortedOperationMapping();
     // init the output array to false for all the operations.
     std::fill(supportedOps, supportedOps + opMap.size(), false);
