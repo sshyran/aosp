@@ -22,6 +22,18 @@ cc_defaults {
         "-Werror",
         "-O3",
     ],
+    arch: {
+        x86: {
+            avx2: {
+                cflags: ["-mavx","-mavx2","-mfma"],
+            },
+        },
+        x86_64: {
+            avx2: {
+                cflags: ["-mavx","-mavx2","-mfma"],
+            },
+        },
+    },
     product_variables: {
         debuggable: {  // eng and userdebug builds
             cflags: ["-DNN_DEBUGGABLE"],
