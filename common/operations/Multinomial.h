@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_NN_MULTINOMIAL_H
-#define FRAMEWORKS_ML_NN_MULTINOMIAL_H
+#ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_MULTINOMIAL_H
+#define FRAMEWORKS_ML_COMMON_OPERATIONS_MULTINOMIAL_H
 
 #include "HalOperation.h"
 
@@ -58,4 +58,4 @@ class Multinomial {
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_NN_MULTINOMIAL_H
+#endif  // FRAMEWORKS_ML_COMMON_OPERATIONS_MULTINOMIAL_H

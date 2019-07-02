@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_TESTGENERATED_H
-#define ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_TESTGENERATED_H
+#ifndef FRAMEWORKS_ML_RUNTIME_TEST_TEST_GENERATED_H
+#define FRAMEWORKS_ML_RUNTIME_TEST_TEST_GENERATED_H
 
 #include <gtest/gtest.h>
 
@@ -96,4 +96,4 @@ class DynamicOutputShapeTest : public GeneratedTests {};
 
 using namespace generated_tests;
 
-#endif  // ANDROID_FRAMEWORK_ML_NN_RUNTIME_TEST_TESTGENERATED_H
+#endif  // FRAMEWORKS_ML_RUNTIME_TEST_TEST_GENERATED_H

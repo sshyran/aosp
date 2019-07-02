@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_COMMON_TRACING_H
-#define ANDROID_ML_NN_COMMON_TRACING_H
+#ifndef FRAMEWORKS_ML_COMMON_TRACING_H
+#define FRAMEWORKS_ML_COMMON_TRACING_H
 
 #define ATRACE_TAG ATRACE_TAG_NNAPI
 #include "utils/Trace.h"
@@ -171,4 +171,4 @@
 #undef ATRACE_NAME
 #undef ATRACE_CALL
 
-#endif // ANDROID_ML_NN_COMMON_TRACING_H
+#endif  // FRAMEWORKS_ML_COMMON_TRACING_H

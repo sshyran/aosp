@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_RUNTIME_VERSIONED_INTERFACES_H
-#define ANDROID_ML_NN_RUNTIME_VERSIONED_INTERFACES_H
+#ifndef FRAMEWORKS_ML_RUNTIME_VERSIONED_INTERFACES_H
+#define FRAMEWORKS_ML_RUNTIME_VERSIONED_INTERFACES_H
 
 #include "HalInterfaces.h"
 
@@ -798,4 +798,4 @@ class VersionedIPreparedModel {
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_ML_NN_RUNTIME_VERSIONED_INTERFACES_H
+#endif  // FRAMEWORKS_ML_RUNTIME_VERSIONED_INTERFACES_H

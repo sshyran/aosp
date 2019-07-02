@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_COMMON_TOKEN_HASHER_H
-#define ANDROID_ML_NN_COMMON_TOKEN_HASHER_H
+#ifndef FRAMEWORKS_ML_COMMON_TOKEN_HASHER_H
+#define FRAMEWORKS_ML_COMMON_TOKEN_HASHER_H
 
 #include <cstring>
 #include <vector>
@@ -68,4 +68,4 @@ class TokenHasher {
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_ML_NN_COMMON_TOKEN_HASHER_H
+#endif  // FRAMEWORKS_ML_COMMON_TOKEN_HASHER_H

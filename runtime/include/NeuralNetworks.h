@@ -23,8 +23,8 @@
  * @file NeuralNetworks.h
  */
 
-#ifndef ANDROID_ML_NN_RUNTIME_NEURAL_NETWORKS_H
-#define ANDROID_ML_NN_RUNTIME_NEURAL_NETWORKS_H
+#ifndef FRAMEWORKS_ML_RUNTIME_NEURAL_NETWORKS_H
+#define FRAMEWORKS_ML_RUNTIME_NEURAL_NETWORKS_H
 
 /******************************************************************
  *
@@ -6448,6 +6448,6 @@ void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) __INTRODUCED_IN(27);
 
 __END_DECLS
 
-#endif  // ANDROID_ML_NN_RUNTIME_NEURAL_NETWORKS_H
+#endif  // FRAMEWORKS_ML_RUNTIME_NEURAL_NETWORKS_H
 
 /** @} */

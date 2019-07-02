@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_NN_EMBEDDING_LOOKUP_H
-#define FRAMEWORKS_ML_NN_EMBEDDING_LOOKUP_H
+#ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_EMBEDDING_LOOKUP_H
+#define FRAMEWORKS_ML_COMMON_OPERATIONS_EMBEDDING_LOOKUP_H
 
 #include "HalOperation.h"
 
@@ -49,4 +49,4 @@ class EmbeddingLookup {
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_NN_EMBEDDING_LOOKUP_H
+#endif  // FRAMEWORKS_ML_COMMON_OPERATIONS_EMBEDDING_LOOKUP_H
