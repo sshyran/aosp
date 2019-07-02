@@ -984,8 +984,7 @@ int StepExecutor::startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallba
     // TODO(mikie): this could have NNTRACE so we could measure the overhead of
     //              spinning up a new thread.
 
-    Model model;
-    mModel->setHidlModel(&model);
+    const Model model = mModel->makeHidlModel();
 
     // Prepare the callback for asynchronous execution. sp<ExecutionCallback>
     // object is returned when the execution has been successfully launched,
