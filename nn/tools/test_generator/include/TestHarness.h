@@ -17,8 +17,8 @@
 /* Header-only library for various helpers of test harness
  * See frameworks/ml/nn/runtime/test/TestGenerated.cpp for how this is used.
  */
-#ifndef ANDROID_ML_NN_TOOLS_TEST_GENERATOR_TEST_HARNESS_H
-#define ANDROID_ML_NN_TOOLS_TEST_GENERATOR_TEST_HARNESS_H
+#ifndef FRAMEWORKS_ML_TOOLS_TEST_GENERATOR_TEST_HARNESS_H
+#define FRAMEWORKS_ML_TOOLS_TEST_GENERATOR_TEST_HARNESS_H
 
 #include <gmock/gmock-matchers.h>
 #include <gtest/gtest.h>
@@ -424,4 +424,4 @@ inline void expectMultinomialDistributionWithinTolerance(const MixedTyped& test,
 
 };  // namespace test_helper
 
-#endif  // ANDROID_ML_NN_TOOLS_TEST_GENERATOR_TEST_HARNESS_H
+#endif  // FRAMEWORKS_ML_TOOLS_TEST_GENERATOR_TEST_HARNESS_H

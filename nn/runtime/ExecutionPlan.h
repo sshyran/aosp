@@ -16,8 +16,8 @@
 
 // Classes used to plan how to execute a model across multiple devices.
 
-#ifndef ANDROID_ML_NN_RUNTIME_EXECUTION_PLAN_H
-#define ANDROID_ML_NN_RUNTIME_EXECUTION_PLAN_H
+#ifndef FRAMEWORKS_ML_RUNTIME_EXECUTION_PLAN_H
+#define FRAMEWORKS_ML_RUNTIME_EXECUTION_PLAN_H
 
 #include "HalInterfaces.h"
 #include "Memory.h"
@@ -340,4 +340,4 @@ inline std::ostream& operator<<(std::ostream& out, ExecutionPlan::Kind kind) {
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_ML_NN_RUNTIME_EXECUTION_PLAN_H
+#endif  // FRAMEWORKS_ML_RUNTIME_EXECUTION_PLAN_H

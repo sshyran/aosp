@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_RUNTIME_CALLBACKS_H
-#define ANDROID_ML_NN_RUNTIME_CALLBACKS_H
+#ifndef FRAMEWORKS_ML_RUNTIME_CALLBACKS_H
+#define FRAMEWORKS_ML_RUNTIME_CALLBACKS_H
 
 #include <android-base/thread_annotations.h>
 #include <android/hardware/neuralnetworks/1.0/IExecutionCallback.h>
@@ -383,4 +383,4 @@ using ::android::hardware::neuralnetworks::V1_2::implementation::PreparedModelCa
 
 }  // namespace android::nn
 
-#endif  // ANDROID_ML_NN_RUNTIME_CALLBACKS_H
+#endif  // FRAMEWORKS_ML_RUNTIME_CALLBACKS_H

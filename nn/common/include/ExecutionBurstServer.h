@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_COMMON_EXECUTION_BURST_SERVER_H
-#define ANDROID_ML_NN_COMMON_EXECUTION_BURST_SERVER_H
+#ifndef FRAMEWORKS_ML_COMMON_EXECUTION_BURST_SERVER_H
+#define FRAMEWORKS_ML_COMMON_EXECUTION_BURST_SERVER_H
 
 #include "HalInterfaces.h"
 
@@ -308,4 +308,4 @@ class ExecutionBurstServer : public IBurstContext {
 
 }  // namespace android::nn
 
-#endif  // ANDROID_ML_NN_COMMON_EXECUTION_BURST_SERVER_H
+#endif  // FRAMEWORKS_ML_COMMON_EXECUTION_BURST_SERVER_H

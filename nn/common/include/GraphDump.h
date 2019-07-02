@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_COMMON_GRAPH_DUMP_H
-#define ANDROID_ML_NN_COMMON_GRAPH_DUMP_H
+#ifndef FRAMEWORKS_ML_COMMON_GRAPH_DUMP_H
+#define FRAMEWORKS_ML_COMMON_GRAPH_DUMP_H
 
 #include <android/hardware/neuralnetworks/1.2/types.h>
 
@@ -52,4 +52,4 @@ void graphDump(const char* name,
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_ML_NN_COMMON_GRAPH_DUMP_H
+#endif  // FRAMEWORKS_ML_COMMON_GRAPH_DUMP_H

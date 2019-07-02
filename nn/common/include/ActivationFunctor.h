@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_ACTIVATION_FUNCTOR_H
-#define ANDROID_ML_NN_ACTIVATION_FUNCTOR_H
+#ifndef FRAMEWORKS_ML_COMMON_ACTIVATION_FUNCTOR_H
+#define FRAMEWORKS_ML_COMMON_ACTIVATION_FUNCTOR_H
 
 #include "android/log.h"
 
@@ -60,4 +60,4 @@ class ActivationFunctor {
   ActivationFn act_;
 };
 
-#endif  // ANDROID_ML_NN_ACTIVATION_FUNCTOR_H
+#endif  // FRAMEWORKS_ML_COMMON_ACTIVATION_FUNCTOR_H
