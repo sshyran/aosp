@@ -145,10 +145,9 @@ int compileModelAndCache(const std::shared_ptr<Device>& device, const ModelBuild
         modelCache.resize(0);
         dataCache.resize(0);
     }
-    Model hidlModel;
-    model->setHidlModel(&hidlModel);
-    return device->prepareModel(hidlModel, static_cast<ExecutionPreference>(executionPreference),
-                                modelCache, dataCache, cacheToken, preparedModel);
+    return device->prepareModel(model->makeHidlModel(),
+                                static_cast<ExecutionPreference>(executionPreference), modelCache,
+                                dataCache, cacheToken, preparedModel);
 }
 
 // Compiles the model on device.
@@ -580,11 +579,9 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
 }
 
 void ExecutionStep::dump() const {
-    Model model;
-    mSubModel.setHidlModel(&model);
     if (VLOG_IS_ON(COMPILATION)) {
         VLOG(COMPILATION) << "ExecutionStep#" << mIndex << " for " << mDevice->getName();
-        logModelToInfo(model);
+        logModelToInfo(mSubModel.makeHidlModel());
     }
 }
 
@@ -1042,10 +1039,8 @@ int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& d
 
     int n = plan->finish(this, preference);
     if (VLOG_IS_ON(COMPILATION)) {
-        Model model;
-        setHidlModel(&model);
         VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: original model: ";
-        logModelToInfo(model);
+        logModelToInfo(makeHidlModel());
         plan->dump();
     }
     return n;
@@ -1158,7 +1153,13 @@ void getNoncompliantOperations<V1_1::Model>(const V1_2::Model& model,
 
 class PlanModelSlicer : public IModelSlicer {
    public:
-    PlanModelSlicer(const ModelBuilder* model);
+    explicit PlanModelSlicer(const ModelBuilder* model);
+
+    // No copy or move
+    PlanModelSlicer(const PlanModelSlicer&) = delete;
+    PlanModelSlicer& operator=(const PlanModelSlicer&) = delete;
+    PlanModelSlicer(PlanModelSlicer&&) = delete;
+    PlanModelSlicer& operator=(PlanModelSlicer&&) = delete;
 
     std::optional<std::pair<V1_0::Model, std::function<uint32_t(uint32_t)>>> getSliceV1_0()
             override {
@@ -1223,7 +1224,7 @@ class PlanModelSlicer : public IModelSlicer {
                 });
     }
 
-    Model mHidlModel;
+    const Model mHidlModel;
 };
 
 template <class T_SlicedModel>
@@ -1258,9 +1259,7 @@ bool PlanModelSlicer::invalid(const T_SlicedModel& model) {
     return false;
 }
 
-PlanModelSlicer::PlanModelSlicer(const ModelBuilder* model) {
-    model->setHidlModel(&mHidlModel);
-}
+PlanModelSlicer::PlanModelSlicer(const ModelBuilder* model) : mHidlModel(model->makeHidlModel()) {}
 
 // Utility class for initializeSlice().
 //
@@ -1564,7 +1563,8 @@ void PlanModelSlicer::initializeSlice(Slice<T_SlicedModel>* slice) {
     if (VLOG_IS_ON(COMPILATION)) {
         {
             std::ostrstream fromName;
-            fromName << "Slice: From " << ModelVersion<decltype(mHidlModel)>::name << std::ends;
+            fromName << "Slice: From "
+                     << ModelVersion<std::remove_const_t<decltype(mHidlModel)>>::name << std::ends;
             graphDump(fromName.str(), mHidlModel);
             fromName.freeze(false);
         }
