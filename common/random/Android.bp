@@ -34,6 +34,7 @@ name:
     cflags: [
         "-Wno-unused-parameter",
         "-Wno-invalid-partial-specialization",
+        "-DLOG_TAG=\"Random\"",
     ],
     header_libs: [
         "libeigen",

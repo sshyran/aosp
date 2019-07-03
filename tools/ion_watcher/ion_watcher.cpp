@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#define LOG_TAG "IonWatcher"
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
