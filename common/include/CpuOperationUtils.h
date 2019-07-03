@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_COMMON_CPU_OPERATION_UTILS_H
-#define ANDROID_ML_NN_COMMON_CPU_OPERATION_UTILS_H
+#ifndef FRAMEWORKS_ML_COMMON_CPU_OPERATION_UTILS_H
+#define FRAMEWORKS_ML_COMMON_CPU_OPERATION_UTILS_H
 
 #include "OperationsUtils.h"
 
@@ -195,4 +195,4 @@ class OutputWithLayout {
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_ML_NN_COMMON_CPU_OPERATION_UTILS_H
+#endif  // FRAMEWORKS_ML_COMMON_CPU_OPERATION_UTILS_H

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_RUNTIME_EXTENSION_MANAGER_H
-#define ANDROID_ML_NN_RUNTIME_EXTENSION_MANAGER_H
+#ifndef FRAMEWORKS_ML_RUNTIME_TYPE_MANAGER_H
+#define FRAMEWORKS_ML_RUNTIME_TYPE_MANAGER_H
 
 #include "HalInterfaces.h"
 #include "Manager.h"
@@ -160,4 +160,4 @@ class TypeManager {
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_ML_NN_RUNTIME_EXTENSION_MANAGER_H
+#endif  // FRAMEWORKS_ML_RUNTIME_TYPE_MANAGER_H

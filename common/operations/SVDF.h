@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_NN_SVDF_H
-#define FRAMEWORKS_ML_NN_SVDF_H
+#ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_SVDF_H
+#define FRAMEWORKS_ML_COMMON_OPERATIONS_SVDF_H
 
 #include "HalOperation.h"
 #include "tensorflow/lite/kernels/internal/tensor_utils.h"

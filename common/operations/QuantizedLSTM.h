@@ -1,5 +1,5 @@
-#ifndef FRAMEWORKS_ML_NN_QUANTIZEDLSTM_H
-#define FRAMEWORKS_ML_NN_QUANTIZEDLSTM_H
+#ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_QUANTIZED_LSTM_H
+#define FRAMEWORKS_ML_COMMON_OPERATIONS_QUANTIZED_LSTM_H
 
 #include "HalOperation.h"
 #include "OperationsUtils.h"
@@ -79,4 +79,4 @@ class QuantizedLSTMCell {
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_NN_QUANTIZEDLSTM_H
+#endif  // FRAMEWORKS_ML_COMMON_OPERATIONS_QUANTIZED_LSTM_H
