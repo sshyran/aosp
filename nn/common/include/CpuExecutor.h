@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_COMMON_CPU_EXECUTOR_H
-#define ANDROID_ML_NN_COMMON_CPU_EXECUTOR_H
+#ifndef FRAMEWORKS_ML_COMMON_CPU_EXECUTOR_H
+#define FRAMEWORKS_ML_COMMON_CPU_EXECUTOR_H
 
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
@@ -275,4 +275,4 @@ inline RunTimeOperandInfo *GetOutput(const Operation &operation,
 } // namespace nn
 } // namespace android
 
-#endif // ANDROID_ML_NN_COMMON_CPU_EXECUTOR_H
+#endif  // FRAMEWORKS_ML_COMMON_CPU_EXECUTOR_H

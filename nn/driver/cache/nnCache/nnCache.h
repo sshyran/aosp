@@ -14,8 +14,8 @@
  ** limitations under the License.
  */
 
-#ifndef ANDROID_NN_CACHE_H
-#define ANDROID_NN_CACHE_H
+#ifndef FRAMEWORKS_ML_DRIVER_CACHE_NN_CACHE_NN_CACHE_H
+#define FRAMEWORKS_ML_DRIVER_CACHE_NN_CACHE_NN_CACHE_H
 
 #include "BlobCache.h"
 
@@ -156,4 +156,4 @@ private:
 }; // namespace android
 // ----------------------------------------------------------------------------
 
-#endif // ANDROID_NN_CACHE_H
+#endif  // FRAMEWORKS_ML_DRIVER_CACHE_NN_CACHE_NN_CACHE_H

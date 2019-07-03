@@ -16,8 +16,8 @@
 
 // Provides C++ classes to more easily use the Neural Networks API.
 
-#ifndef ANDROID_ML_NN_RUNTIME_NEURAL_NETWORKS_WRAPPER_H
-#define ANDROID_ML_NN_RUNTIME_NEURAL_NETWORKS_WRAPPER_H
+#ifndef FRAMEWORKS_ML_RUNTIME_NEURAL_NETWORKS_WRAPPER_H
+#define FRAMEWORKS_ML_RUNTIME_NEURAL_NETWORKS_WRAPPER_H
 
 #include "NeuralNetworks.h"
 
@@ -466,4 +466,4 @@ class Execution {
 }  // namespace nn
 }  // namespace android
 
-#endif  //  ANDROID_ML_NN_RUNTIME_NEURAL_NETWORKS_WRAPPER_H
+#endif  //  FRAMEWORKS_ML_RUNTIME_NEURAL_NETWORKS_WRAPPER_H

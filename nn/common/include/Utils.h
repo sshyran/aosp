@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_COMMON_UTILS_H
-#define ANDROID_ML_NN_COMMON_UTILS_H
+#ifndef FRAMEWORKS_ML_COMMON_UTILS_H
+#define FRAMEWORKS_ML_COMMON_UTILS_H
 
 #include "HalInterfaces.h"
 #include "NeuralNetworks.h"
@@ -412,4 +412,4 @@ uint32_t getProp(const char* str, uint32_t defaultValue = 0);
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_ML_NN_COMMON_UTILS_H
+#endif  // FRAMEWORKS_ML_COMMON_UTILS_H

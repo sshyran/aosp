@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_RUNTIME_EXECUTION_BUILDER_H
-#define ANDROID_ML_NN_RUNTIME_EXECUTION_BUILDER_H
+#ifndef FRAMEWORKS_ML_RUNTIME_EXECUTION_BUILDER_H
+#define FRAMEWORKS_ML_RUNTIME_EXECUTION_BUILDER_H
 
 #include "Callbacks.h"
 #include "HalInterfaces.h"
@@ -273,4 +273,4 @@ class StepExecutor {
 } // namespace nn
 } // namespace android
 
-#endif // ANDROID_ML_NN_RUNTIME_EXECUTION_BUILDER_H
+#endif  // FRAMEWORKS_ML_RUNTIME_EXECUTION_BUILDER_H

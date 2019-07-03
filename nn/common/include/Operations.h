@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_COMMON_OPERATIONS_H
-#define ANDROID_ML_NN_COMMON_OPERATIONS_H
+#ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_H
+#define FRAMEWORKS_ML_COMMON_OPERATIONS_H
 
 #include "operations/BidirectionalSequenceLSTM.h"
 #include "operations/Cast.h"
@@ -171,4 +171,4 @@ bool channelShuffleGeneric(const uint8_t* inputData, const Shape& inputShape, in
                            int32_t axis, uint8_t* outputData, const Shape& outputShape);
 }  // namespace nn
 }  // namespace android
-#endif  // ANDROID_ML_NN_COMMON_OPERATIONS_H
+#endif  // FRAMEWORKS_ML_COMMON_OPERATIONS_H
