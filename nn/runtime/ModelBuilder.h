@@ -68,7 +68,7 @@ class ModelBuilder {
                           const std::vector<std::shared_ptr<Device>>& devices,
                           bool explicitDeviceList = false);
 
-    void setHidlModel(Model* model) const;
+    Model makeHidlModel() const;
 
     uint32_t operandCount() const {
         // We don't allow more than uint32_t worth of operands

@@ -271,8 +271,7 @@ uint32_t lookupOperation(const HidlModel& model, uint32_t operationIndex) {
 #ifdef VERBOSE
 // This is a debugging utility function
 void dump(const char* name, const ModelBuilder* model) {
-    HidlModel hidlModel;
-    model->setHidlModel(&hidlModel);
+    const HidlModel hidlModel = model->makeHidlModel();
     std::cout << name << ": " << toString(hidlModel) << std::endl;
     std::cout << "inputs: " << toString(hidlModel.inputIndexes) << std::endl;
     std::cout << "outputs: " << toString(hidlModel.outputIndexes) << std::endl;
