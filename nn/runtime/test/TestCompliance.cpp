@@ -32,13 +32,11 @@ using WrapperType = test_wrapper::Type;
 
 // Creates a HIDL model from a creator of the wrapper model.
 static HidlModel createHidlModel(std::function<void(WrapperModel*)> createModel) {
-    HidlModel hidlModel;
     WrapperModel wrapperModel;
     createModel(&wrapperModel);
     EXPECT_EQ(wrapperModel.finish(), test_wrapper::Result::NO_ERROR);
     ModelBuilder* modelBuilder = reinterpret_cast<ModelBuilder*>(wrapperModel.getHandle());
-    modelBuilder->setHidlModel(&hidlModel);
-    return hidlModel;
+    return modelBuilder->makeHidlModel();
 }
 
 void ComplianceTest::testAvailableSinceV1_2(std::function<void(WrapperModel*)> createModel) {
