@@ -228,7 +228,7 @@ namespace {
 
 template <typename T>
 T getScalarData(const RunTimeOperandInfo& info) {
-    // TODO: Check buffer is at least as long as size of data.
+    CHECK_GE(info.length, sizeof(T)) << "Cannot get scalar data: buffer too short";
     T* data = reinterpret_cast<T*>(info.buffer);
     return data[0];
 }
