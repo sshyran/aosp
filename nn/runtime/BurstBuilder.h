@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_RUNTIME_BURST_BUILDER_H
-#define ANDROID_ML_NN_RUNTIME_BURST_BUILDER_H
+#ifndef FRAMEWORKS_ML_NN_RUNTIME_BURST_BUILDER_H
+#define FRAMEWORKS_ML_NN_RUNTIME_BURST_BUILDER_H
 
 #include <atomic>
 #include <memory>
@@ -57,4 +57,4 @@ class BurstBuilder {
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_ML_NN_RUNTIME_BURST_BUILDER_H
+#endif  // FRAMEWORKS_ML_NN_RUNTIME_BURST_BUILDER_H
