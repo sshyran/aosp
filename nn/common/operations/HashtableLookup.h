@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_NN_HASHTABLE_LOOKUP_H
-#define FRAMEWORKS_ML_NN_HASHTABLE_LOOKUP_H
+#ifndef FRAMEWORKS_ML_NN_COMMON_OPERATIONS_HASHTABLE_LOOKUP_H
+#define FRAMEWORKS_ML_NN_COMMON_OPERATIONS_HASHTABLE_LOOKUP_H
 
 #include "HalOperation.h"
 
@@ -53,4 +53,4 @@ class HashtableLookup {
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_NN_HASHTABLE_LOOKUP_H
+#endif  // FRAMEWORKS_ML_NN_COMMON_OPERATIONS_HASHTABLE_LOOKUP_H
