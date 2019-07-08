@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_ML_NN_COMMON_VALIDATEHAL_H
-#define ANDROID_ML_NN_COMMON_VALIDATEHAL_H
+#ifndef FRAMEWORKS_ML_NN_COMMON_VALIDATE_HAL_H
+#define FRAMEWORKS_ML_NN_COMMON_VALIDATE_HAL_H
 
 #include "HalInterfaces.h"
 
@@ -62,4 +62,4 @@ bool validatePool(const hidl_memory& pool, HalVersion ver = HalVersion::LATEST);
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_ML_NN_COMMON_VALIDATEHAL_H
+#endif  // FRAMEWORKS_ML_NN_COMMON_VALIDATE_HAL_H

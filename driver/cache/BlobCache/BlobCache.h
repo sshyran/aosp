@@ -14,8 +14,8 @@
  ** limitations under the License.
  */
 
-#ifndef ANDROID_BLOB_CACHE_H
-#define ANDROID_BLOB_CACHE_H
+#ifndef FRAMEWORKS_ML_NN_DRIVER_CACHE_BLOB_CACHE_BLOB_CACHE_H
+#define FRAMEWORKS_ML_NN_DRIVER_CACHE_BLOB_CACHE_BLOB_CACHE_H
 
 #include <stddef.h>
 
@@ -351,4 +351,4 @@ private:
 
 }
 
-#endif // ANDROID_BLOB_CACHE_H
+#endif  // FRAMEWORKS_ML_NN_DRIVER_CACHE_BLOB_CACHE_BLOB_CACHE_H
