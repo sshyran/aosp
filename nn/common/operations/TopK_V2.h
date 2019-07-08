@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_NN_TOPK_V2_H
-#define FRAMEWORKS_ML_NN_TOPK_V2_H
+#ifndef FRAMEWORKS_ML_NN_COMMON_OPERATIONS_TOP_K_V2_H
+#define FRAMEWORKS_ML_NN_COMMON_OPERATIONS_TOP_K_V2_H
 
 #include "CpuOperationUtils.h"
 
@@ -32,4 +32,4 @@ bool eval(const void* inputData, const Shape& inputShape, const int32_t k, void*
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_NN_TOPK_V2_H
+#endif  // FRAMEWORKS_ML_NN_COMMON_OPERATIONS_TOP_K_V2_H
