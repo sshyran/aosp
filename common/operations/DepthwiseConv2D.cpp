@@ -19,8 +19,8 @@
 #include "CpuOperationUtils.h"
 #include "Operations.h"
 
-#include "tensorflow/lite/kernels/internal/optimized/depthwiseconv_float.h"
-#include "tensorflow/lite/kernels/internal/optimized/depthwiseconv_uint8.h"
+#include <tensorflow/lite/kernels/internal/optimized/depthwiseconv_float.h>
+#include <tensorflow/lite/kernels/internal/optimized/depthwiseconv_uint8.h>
 
 #include "Tracing.h"
 

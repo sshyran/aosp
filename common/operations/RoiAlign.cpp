@@ -19,12 +19,11 @@
 #include "CpuOperationUtils.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
+#include "Tracing.h"
 
+#include <tensorflow/lite/kernels/internal/common.h>
 #include <cfloat>
 #include <cmath>
-
-#include "Tracing.h"
-#include "tensorflow/lite/kernels/internal/common.h"
 
 namespace android {
 namespace nn {

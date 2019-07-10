@@ -19,11 +19,10 @@
 #include "CpuOperationUtils.h"
 #include "OperationResolver.h"
 #include "Operations.h"
-
 #include "Utils.h"
-#include "tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h"
-
 #include "Tracing.h"
+
+#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 
 namespace android {
 namespace nn {

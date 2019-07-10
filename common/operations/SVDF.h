@@ -18,8 +18,8 @@
 #define FRAMEWORKS_ML_COMMON_OPERATIONS_SVDF_H
 
 #include "HalOperation.h"
-#include "tensorflow/lite/kernels/internal/tensor_utils.h"
 
+#include <tensorflow/lite/kernels/internal/tensor_utils.h>
 #include <algorithm>
 #include <cmath>
 
