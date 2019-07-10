@@ -124,12 +124,19 @@ Return<void> SampleDriver::getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeed
 
 static void notify(const sp<V1_0::IPreparedModelCallback>& callback, const ErrorStatus& status,
                    const sp<SamplePreparedModel>& preparedModel) {
-    callback->notify(status, preparedModel);
+    const auto ret = callback->notify(status, preparedModel);
+    if (!ret.isOk()) {
+        LOG(ERROR) << "Error when calling IPreparedModelCallback::notify: " << ret.description();
+    }
 }
 
 static void notify(const sp<V1_2::IPreparedModelCallback>& callback, const ErrorStatus& status,
                    const sp<SamplePreparedModel>& preparedModel) {
-    callback->notify_1_2(status, preparedModel);
+    const auto ret = callback->notify_1_2(status, preparedModel);
+    if (!ret.isOk()) {
+        LOG(ERROR) << "Error when calling IPreparedModelCallback::notify_1_2: "
+                   << ret.description();
+    }
 }
 
 template <typename T_Model, typename T_IPreparedModelCallback>
@@ -185,7 +192,7 @@ Return<ErrorStatus> SampleDriver::prepareModelFromCache(
         const sp<V1_2::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
                  "SampleDriver::prepareModelFromCache");
-    callback->notify_1_2(ErrorStatus::GENERAL_FAILURE, nullptr);
+    notify(callback, ErrorStatus::GENERAL_FAILURE, nullptr);
     return ErrorStatus::GENERAL_FAILURE;
 }
 
@@ -211,14 +218,20 @@ bool SamplePreparedModel::initialize() {
     return setRunTimePoolInfosFromHidlMemories(&mPoolInfos, mModel.pools);
 }
 
-static Return<void> notify(const sp<V1_0::IExecutionCallback>& callback, const ErrorStatus& status,
-                           const hidl_vec<OutputShape>&, Timing) {
-    return callback->notify(status);
+static void notify(const sp<V1_0::IExecutionCallback>& callback, const ErrorStatus& status,
+                   const hidl_vec<OutputShape>&, Timing) {
+    const auto ret = callback->notify(status);
+    if (!ret.isOk()) {
+        LOG(ERROR) << "Error when calling IExecutionCallback::notify: " << ret.description();
+    }
 }
 
-static Return<void> notify(const sp<V1_2::IExecutionCallback>& callback, const ErrorStatus& status,
-                           const hidl_vec<OutputShape>& outputShapes, Timing timing) {
-    return callback->notify_1_2(status, outputShapes, timing);
+static void notify(const sp<V1_2::IExecutionCallback>& callback, const ErrorStatus& status,
+                   const hidl_vec<OutputShape>& outputShapes, Timing timing) {
+    const auto ret = callback->notify_1_2(status, outputShapes, timing);
+    if (!ret.isOk()) {
+        LOG(ERROR) << "Error when calling IExecutionCallback::notify_1_2: " << ret.description();
+    }
 }
 
 // TODO(xusongw): Let callback notify actual output shape once dynamic output shape
@@ -246,18 +259,14 @@ void asyncExecute(const Request& request, MeasureTiming measure, time_point driv
     VLOG(DRIVER) << "executor.run returned " << n;
     ErrorStatus executionStatus = convertResultCodeToErrorStatus(n);
     hidl_vec<OutputShape> outputShapes = executor.getOutputShapes();
-    Return<void> returned;
     if (measure == MeasureTiming::YES && executionStatus == ErrorStatus::NONE) {
         driverEnd = now();
         Timing timing = {.timeOnDevice = uint64_t(microsecondsDuration(deviceEnd, deviceStart)),
                          .timeInDriver = uint64_t(microsecondsDuration(driverEnd, driverStart))};
         VLOG(DRIVER) << "SampleDriver::asyncExecute timing = " << toString(timing);
-        returned = notify(callback, executionStatus, outputShapes, timing);
+        notify(callback, executionStatus, outputShapes, timing);
     } else {
-        returned = notify(callback, executionStatus, outputShapes, kNoTiming);
-    }
-    if (!returned.isOk()) {
-        LOG(ERROR) << " hidl callback failed to return properly: " << returned.description();
+        notify(callback, executionStatus, outputShapes, kNoTiming);
     }
 }
 
