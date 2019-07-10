@@ -23,8 +23,8 @@
 
 #include "Tracing.h"
 
-#include "public/gemmlowp.h"
-#include "tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h"
+#include <public/gemmlowp.h>
+#include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
 
 namespace android {
 namespace nn {

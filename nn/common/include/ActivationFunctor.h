@@ -17,7 +17,7 @@
 #ifndef FRAMEWORKS_ML_COMMON_ACTIVATION_FUNCTOR_H
 #define FRAMEWORKS_ML_COMMON_ACTIVATION_FUNCTOR_H
 
-#include "android/log.h"
+#include <android/log.h>
 
 #include <algorithm>
 #include <cmath>

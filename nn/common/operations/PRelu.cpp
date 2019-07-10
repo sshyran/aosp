@@ -21,7 +21,8 @@
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
-#include "tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h"
+
+#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 
 namespace android {
 namespace nn {

@@ -25,7 +25,7 @@
 
 #include <android/log.h>
 #define ATRACE_TAG ATRACE_TAG_NNAPI
-#include "utils/Trace.h"
+#include <utils/Trace.h>
 
 int parseMemInfo(const char* name) {
     std::ifstream meminfoStream("/proc/meminfo");

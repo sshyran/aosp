@@ -18,12 +18,11 @@
 
 #include "CpuOperationUtils.h"
 #include "Operations.h"
+#include "Tracing.h"
 
+#include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
 #include <algorithm>
 #include <cmath>
-#include "tensorflow/lite/kernels/internal/optimized/optimized_ops.h"
-
-#include "Tracing.h"
 
 namespace android {
 namespace nn {
