@@ -30,6 +30,8 @@ namespace nn {
 
 namespace {
 
+using namespace hal;
+
 template <typename T>
 inline T* GetBuffer(RunTimeOperandInfo* operand) {
     return reinterpret_cast<T*>(operand->buffer);

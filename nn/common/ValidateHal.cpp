@@ -27,6 +27,8 @@
 namespace android {
 namespace nn {
 
+using namespace hal;
+
 template <class T_Model>
 struct ModelToHalVersion;
 template <>
