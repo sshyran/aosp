@@ -17,6 +17,7 @@
 #ifndef FRAMEWORKS_ML_RUNTIME_MEMORY_H
 #define FRAMEWORKS_ML_RUNTIME_MEMORY_H
 
+#include "HalInterfaces.h"
 #include "NeuralNetworks.h"
 #include "Utils.h"
 
@@ -47,7 +48,7 @@ class Memory {
     // Creates a shared memory object of the size specified in bytes.
     int create(uint32_t size);
 
-    hardware::hidl_memory getHidlMemory() const { return mHidlMemory; }
+    hal::hidl_memory getHidlMemory() const { return mHidlMemory; }
 
     // Returns a pointer to the underlying memory of this memory object.
     // The function will fail if the memory is not CPU accessible and nullptr
@@ -73,8 +74,8 @@ class Memory {
    protected:
     // The hidl_memory handle for this shared memory.  We will pass this value when
     // communicating with the drivers.
-    hardware::hidl_memory mHidlMemory;
-    sp<IMemory> mMemory;
+    hal::hidl_memory mHidlMemory;
+    sp<hal::IMemory> mMemory;
 
     mutable std::mutex mMutex;
     // mUsedBy is essentially a set of burst objects which use this Memory
@@ -129,10 +130,10 @@ class MemoryAHWB : public Memory {
         const native_handle_t* handle = AHardwareBuffer_getNativeHandle(ahwb);
         mHardwareBuffer = ahwb;
         if (mBufferDesc.format == AHARDWAREBUFFER_FORMAT_BLOB) {
-            mHidlMemory = hidl_memory("hardware_buffer_blob", handle, mBufferDesc.width);
+            mHidlMemory = hal::hidl_memory("hardware_buffer_blob", handle, mBufferDesc.width);
         } else {
             // memory size is not used.
-            mHidlMemory = hidl_memory("hardware_buffer", handle, 0);
+            mHidlMemory = hal::hidl_memory("hardware_buffer", handle, 0);
         }
         return ANEURALNETWORKS_NO_ERROR;
     };

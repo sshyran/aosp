@@ -37,6 +37,8 @@ namespace nn {
 
 namespace {
 
+using namespace hal;
+
 class OperationExecutionContext : public IOperationExecutionContext {
     DISALLOW_IMPLICIT_CONSTRUCTORS(OperationExecutionContext);
 

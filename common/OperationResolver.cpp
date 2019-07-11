@@ -23,6 +23,8 @@
 namespace android {
 namespace nn {
 
+using namespace hal;
+
 // TODO(b/119608412): Find a way to not reference every operation here.
 const OperationRegistration* register_ABS();
 const OperationRegistration* register_ADD();

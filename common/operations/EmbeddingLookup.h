@@ -28,9 +28,8 @@ struct RunTimeOperandInfo;
 
 class EmbeddingLookup {
  public:
-  EmbeddingLookup(
-      const Operation &operation,
-      std::vector<RunTimeOperandInfo> &operands);
+  EmbeddingLookup(const hardware::neuralnetworks::V1_2::Operation& operation,
+                  std::vector<RunTimeOperandInfo>& operands);
 
   bool Eval();
 

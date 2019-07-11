@@ -13,10 +13,10 @@ struct RunTimeOperandInfo;
 
 class QuantizedLSTMCell {
    public:
-    QuantizedLSTMCell(const android::hardware::neuralnetworks::V1_2::Operation& operation,
+    QuantizedLSTMCell(const hardware::neuralnetworks::V1_2::Operation& operation,
                       std::vector<RunTimeOperandInfo>& operands);
 
-    static bool prepare(const android::hardware::neuralnetworks::V1_2::Operation& operation,
+    static bool prepare(const hardware::neuralnetworks::V1_2::Operation& operation,
                         std::vector<RunTimeOperandInfo>& operands, Shape* cellStateShape,
                         Shape* outputShape);
     bool eval();

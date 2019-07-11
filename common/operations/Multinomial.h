@@ -32,7 +32,7 @@ struct Shape;
 
 class Multinomial {
    public:
-    Multinomial(const android::hardware::neuralnetworks::V1_2::Operation& operation,
+    Multinomial(const hardware::neuralnetworks::V1_2::Operation& operation,
                 std::vector<RunTimeOperandInfo>& operands);
 
     static bool Prepare(const hardware::neuralnetworks::V1_2::Operation& operation,
