@@ -254,7 +254,6 @@ inline PaddingScheme getPaddingScheme(int32_t inWidth, int32_t inHeight,
     }
 }
 
-// TODO: add more documentation from upstream.
 // Reverse order of bits in the mask to match the expected order in kernel
 inline int ReverseMaskBits(int mask, int num_dimensions) {
   int out = 0;
@@ -266,12 +265,12 @@ inline int ReverseMaskBits(int mask, int num_dimensions) {
   return out;
 }
 
-// TODO: add more documentation from upstream.
+// Compute the positive remainder.
 inline int32_t PositiveRemainder(int32_t dividend, int32_t divisor) {
   return (divisor + (dividend % divisor)) % divisor;
 }
 
-// TODO: add more documentation from upstream.
+// Compute clamped index.
 inline int32_t ClampedIndex(int32_t index, int dim, bool pos_stride) {
   return pos_stride
              ? (index >= dim ? dim
