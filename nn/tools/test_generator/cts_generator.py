@@ -71,15 +71,13 @@ def ParseCmdLine():
     parser.add_argument(
         "-t", "--test", help="the output test file/directory", default="-")
     parser.add_argument(
-        "-c", "--cts", help="the CTS TestGeneratedOneFile.cpp", default="-")
-    parser.add_argument(
         "-f", "--force", help="force to regenerate all spec files", action="store_true")
     # for slicing tool
     parser.add_argument(
         "-l", "--log", help="the optional log file", default="")
     args = parser.parse_args()
     tg.FileNames.InitializeFileLists(
-        args.spec, args.model, args.example, args.test, args.cts, args.log)
+        args.spec, args.model, args.example, args.test, args.log)
     Configuration.force_regenerate = args.force
 
 def NeedRegenerate():
@@ -305,6 +303,3 @@ if __name__ == '__main__':
                     DumpTest=DumpCtsTest, test_fd=test_fd)
         else:
             print("Skip file: %s" % tg.FileNames.specFile, file=sys.stderr)
-        with SmartOpen(tg.FileNames.ctsFile, mode="a") as cts_fd:
-            print("#include \"../generated/tests/%s.cpp\""%os.path.basename(tg.FileNames.specFile),
-                file=cts_fd)
