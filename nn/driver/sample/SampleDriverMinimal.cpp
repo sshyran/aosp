@@ -31,6 +31,8 @@ namespace android {
 namespace nn {
 namespace sample_driver {
 
+using namespace hal;
+
 class SampleDriverMinimal : public SampleDriver {
 public:
     SampleDriverMinimal() : SampleDriver("sample-minimal") {}

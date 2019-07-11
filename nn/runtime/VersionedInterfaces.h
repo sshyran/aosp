@@ -74,7 +74,7 @@ class VersionedIDevice {
      * @return A valid VersionedIDevice object, otherwise nullptr.
      */
     static std::shared_ptr<VersionedIDevice> create(std::string serviceName,
-                                                    sp<V1_0::IDevice> device);
+                                                    sp<hal::V1_0::IDevice> device);
 
     /**
      * Constructor for the VersionedIDevice object.
@@ -98,7 +98,7 @@ class VersionedIDevice {
      *                - GENERAL_FAILURE if there is an unspecified error
      * @return capabilities Capabilities of the driver.
      */
-    std::pair<ErrorStatus, Capabilities> getCapabilities();
+    std::pair<hal::ErrorStatus, hal::Capabilities> getCapabilities();
 
     /**
      * Gets information about extensions supported by the driver implementation.
@@ -115,7 +115,7 @@ class VersionedIDevice {
      *     - GENERAL_FAILURE if there is an unspecified error
      * @return extensions A list of supported extensions.
      */
-    std::pair<ErrorStatus, hidl_vec<Extension>> getSupportedExtensions();
+    std::pair<hal::ErrorStatus, hal::hidl_vec<hal::Extension>> getSupportedExtensions();
 
     /**
      * Gets the supported operations in a model.
@@ -143,8 +143,8 @@ class VersionedIDevice {
      *                             corresponds with the index of the operation
      *                             it is describing.
      */
-    std::pair<ErrorStatus, hidl_vec<bool>> getSupportedOperations(const Model& model,
-                                                                  IModelSlicer* slicer = nullptr);
+    std::pair<hal::ErrorStatus, hal::hidl_vec<bool>> getSupportedOperations(
+            const hal::Model& model, IModelSlicer* slicer = nullptr);
 
     /**
      * Synchronously creates a prepared model for execution and optionally saves it
@@ -236,10 +236,12 @@ class VersionedIDevice {
      *     - preparedModel A VersionedIPreparedModel object representing a model
      *         that has been prepared for execution, else nullptr.
      */
-    std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModel(
-            const Model& model, ExecutionPreference preference,
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
+    std::pair<hal::ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModel(
+            const hal::Model& model, hal::ExecutionPreference preference,
+            const hal::hidl_vec<hal::hidl_handle>& modelCache,
+            const hal::hidl_vec<hal::hidl_handle>& dataCache,
+            const hal::hidl_array<uint8_t,
+                                  static_cast<uint32_t>(hal::Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
                     token);
 
     /**
@@ -308,9 +310,11 @@ class VersionedIDevice {
      *     - preparedModel A VersionedIPreparedModel object representing a model
      *        that has been prepared for execution, else nullptr.
      */
-    std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCache(
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
+    std::pair<hal::ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCache(
+            const hal::hidl_vec<hal::hidl_handle>& modelCache,
+            const hal::hidl_vec<hal::hidl_handle>& dataCache,
+            const hal::hidl_array<uint8_t,
+                                  static_cast<uint32_t>(hal::Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
                     token);
 
     /**
@@ -322,7 +326,7 @@ class VersionedIDevice {
      *                - DeviceStatus::OFFLINE
      *                - DeviceStatus::UNKNOWN
      */
-    DeviceStatus getStatus();
+    hal::DeviceStatus getStatus();
 
     /**
      * Returns the feature level of a driver.
@@ -377,7 +381,7 @@ class VersionedIDevice {
      * @return version The version string of the device implementation.
      *     Must have nonzero length if the query is successful, and must be an empty string if not.
      */
-    std::pair<ErrorStatus, hidl_string> getVersionString();
+    std::pair<hal::ErrorStatus, hal::hidl_string> getVersionString();
 
     /**
      * Gets the caching requirements of the driver implementation.
@@ -417,7 +421,7 @@ class VersionedIDevice {
      *                      the driver needs to cache a single prepared model. It must
      *                      be less than or equal to Constant::MAX_NUMBER_OF_CACHE_FILES.
      */
-    std::tuple<ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeeded();
+    std::tuple<hal::ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeeded();
 
     /**
      * Returns the name of the service that implements the driver
@@ -472,7 +476,7 @@ class VersionedIDevice {
          *                     the case when the service containing the IDevice
          *                     object crashes.
          */
-        Core(sp<V1_0::IDevice> device, sp<IDeviceDeathHandler> deathHandler);
+        Core(sp<hal::V1_0::IDevice> device, sp<IDeviceDeathHandler> deathHandler);
 
         /**
          * Destructor for the Core object.
@@ -502,7 +506,7 @@ class VersionedIDevice {
          *               interface.
          * @return A valid Core object, otherwise nullopt.
          */
-        static std::optional<Core> create(sp<V1_0::IDevice> device);
+        static std::optional<Core> create(sp<hal::V1_0::IDevice> device);
 
         /**
          * Returns sp<*::IDevice> that is a downcast of the sp<V1_0::IDevice>
@@ -512,15 +516,15 @@ class VersionedIDevice {
         template <typename T_IDevice>
         sp<T_IDevice> getDevice() const;
         template <>
-        sp<V1_0::IDevice> getDevice() const {
+        sp<hal::V1_0::IDevice> getDevice() const {
             return mDeviceV1_0;
         }
         template <>
-        sp<V1_1::IDevice> getDevice() const {
+        sp<hal::V1_1::IDevice> getDevice() const {
             return mDeviceV1_1;
         }
         template <>
-        sp<V1_2::IDevice> getDevice() const {
+        sp<hal::V1_2::IDevice> getDevice() const {
             return mDeviceV1_2;
         }
 
@@ -553,9 +557,9 @@ class VersionedIDevice {
          * Idiomatic usage: if mDeviceV1_1 is non-null, do V1_1 dispatch; otherwise,
          * do V1_0 dispatch.
          */
-        sp<V1_0::IDevice> mDeviceV1_0;
-        sp<V1_1::IDevice> mDeviceV1_1;
-        sp<V1_2::IDevice> mDeviceV1_2;
+        sp<hal::V1_0::IDevice> mDeviceV1_0;
+        sp<hal::V1_1::IDevice> mDeviceV1_1;
+        sp<hal::V1_2::IDevice> mDeviceV1_2;
 
         /**
          * HIDL callback to be invoked if the service for mDeviceV1_0 crashes.
@@ -589,9 +593,10 @@ class VersionedIDevice {
     // If a callback is provided, this method protects it against driver death
     // and waits for it (callback->wait()).
     template <typename T_Return, typename T_IDevice, typename T_Callback = std::nullptr_t>
-    Return<T_Return> recoverable(const char* context,
-                                 const std::function<Return<T_Return>(const sp<T_IDevice>&)>& fn,
-                                 const T_Callback& callback = nullptr) const EXCLUDES(mMutex);
+    hal::Return<T_Return> recoverable(
+            const char* context,
+            const std::function<hal::Return<T_Return>(const sp<T_IDevice>&)>& fn,
+            const T_Callback& callback = nullptr) const EXCLUDES(mMutex);
 
     // The name of the service that implements the driver.
     const std::string mServiceName;
@@ -628,7 +633,7 @@ class VersionedIPreparedModel {
      *                     the case when the service containing the IDevice
      *                     object crashes.
      */
-    VersionedIPreparedModel(sp<V1_0::IPreparedModel> preparedModel,
+    VersionedIPreparedModel(sp<hal::V1_0::IPreparedModel> preparedModel,
                             sp<IPreparedModelDeathHandler> deathHandler);
 
     /**
@@ -685,8 +690,8 @@ class VersionedIPreparedModel {
      *                - INVALID_ARGUMENT if one of the input arguments is
      *                  invalid
      */
-    ErrorStatus execute(const Request& request, MeasureTiming timing,
-                        const sp<ExecutionCallback>& callback);
+    hal::ErrorStatus execute(const hal::Request& request, hal::MeasureTiming timing,
+                             const sp<ExecutionCallback>& callback);
 
     /**
      * Performs a synchronous execution on a prepared model.
@@ -737,8 +742,8 @@ class VersionedIPreparedModel {
      *                choose to report any time as UINT64_MAX, indicating that
      *                measurement is not available.
      */
-    std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronously(
-            const Request& request, MeasureTiming measure);
+    std::tuple<hal::ErrorStatus, hal::hidl_vec<hal::OutputShape>, hal::Timing> executeSynchronously(
+            const hal::Request& request, hal::MeasureTiming measure);
 
     /**
      * Creates a burst controller on a prepared model.
@@ -786,8 +791,8 @@ class VersionedIPreparedModel {
      * Idiomatic usage: if mPreparedModelV1_2 is non-null, do V1_2 dispatch; otherwise,
      * do V1_0 dispatch.
      */
-    sp<V1_0::IPreparedModel> mPreparedModelV1_0;
-    sp<V1_2::IPreparedModel> mPreparedModelV1_2;
+    sp<hal::V1_0::IPreparedModel> mPreparedModelV1_0;
+    sp<hal::V1_2::IPreparedModel> mPreparedModelV1_2;
 
     /**
      * HIDL callback to be invoked if the service for mPreparedModelV1_0 crashes.
