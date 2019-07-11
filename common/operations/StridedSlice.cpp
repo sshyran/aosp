@@ -21,7 +21,7 @@
 #include "CpuOperationUtils.h"
 #include "Operations.h"
 
-#include "tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h"
+#include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
 
 #include "Tracing.h"
 

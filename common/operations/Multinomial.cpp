@@ -27,7 +27,7 @@
 #include "philox_random.h"
 #include "simple_philox.h"
 
-#include "unsupported/Eigen/CXX11/Tensor"
+#include <unsupported/Eigen/CXX11/Tensor>
 
 namespace android {
 namespace nn {
