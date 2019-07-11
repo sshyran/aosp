@@ -22,7 +22,7 @@
 #include "Tracing.h"
 #include "Utils.h"
 
-#include "utils/hash/farmhash.h"
+#include <utils/hash/farmhash.h>
 
 namespace android {
 namespace nn {

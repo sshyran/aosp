@@ -18,7 +18,7 @@
 #define FRAMEWORKS_ML_COMMON_TRACING_H
 
 #define ATRACE_TAG ATRACE_TAG_NNAPI
-#include "utils/Trace.h"
+#include <utils/Trace.h>
 
 // Neural Networks API (NNAPI) systracing
 //
