@@ -150,7 +150,8 @@ class CpuExecutor {
     }
 
    private:
-    bool initializeRunTimeInfo(const std::vector<RunTimePoolInfo>& modelPoolInfos,
+    bool initializeRunTimeInfo(const Request& request,
+                               const std::vector<RunTimePoolInfo>& modelPoolInfos,
                                const std::vector<RunTimePoolInfo>& requestPoolInfos);
     // Runs one operation of the graph.
     int executeOperation(const Operation& entry);
