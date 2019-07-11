@@ -31,9 +31,9 @@
 
 namespace android::nn {
 
-using ::android::hardware::MQDescriptorSync;
-using FmqRequestDescriptor = MQDescriptorSync<FmqRequestDatum>;
-using FmqResultDescriptor = MQDescriptorSync<FmqResultDatum>;
+using hardware::MQDescriptorSync;
+using FmqRequestDescriptor = MQDescriptorSync<hal::FmqRequestDatum>;
+using FmqResultDescriptor = MQDescriptorSync<hal::FmqResultDatum>;
 
 /**
  * Function to serialize results.
@@ -45,8 +45,9 @@ using FmqResultDescriptor = MQDescriptorSync<FmqResultDatum>;
  * @param timing Timing information of the execution.
  * @return Serialized FMQ result data.
  */
-std::vector<FmqResultDatum> serialize(ErrorStatus errorStatus,
-                                      const std::vector<OutputShape>& outputShapes, Timing timing);
+std::vector<hal::FmqResultDatum> serialize(hal::ErrorStatus errorStatus,
+                                           const std::vector<hal::OutputShape>& outputShapes,
+                                           hal::Timing timing);
 
 /**
  * Deserialize the FMQ request data.
@@ -58,8 +59,8 @@ std::vector<FmqResultDatum> serialize(ErrorStatus errorStatus,
  * @param data Serialized FMQ request data.
  * @return Request object if successfully deserialized, std::nullopt otherwise.
  */
-std::optional<std::tuple<Request, std::vector<int32_t>, MeasureTiming>> deserialize(
-        const std::vector<FmqRequestDatum>& data);
+std::optional<std::tuple<hal::Request, std::vector<int32_t>, hal::MeasureTiming>> deserialize(
+        const std::vector<hal::FmqRequestDatum>& data);
 
 /**
  * RequestChannelReceiver is responsible for waiting on the channel until the
@@ -72,7 +73,7 @@ std::optional<std::tuple<Request, std::vector<int32_t>, MeasureTiming>> deserial
  */
 class RequestChannelReceiver {
     using FmqRequestChannel =
-            hardware::MessageQueue<FmqRequestDatum, hardware::kSynchronizedReadWrite>;
+            hardware::MessageQueue<hal::FmqRequestDatum, hardware::kSynchronizedReadWrite>;
 
    public:
     /**
@@ -96,7 +97,7 @@ class RequestChannelReceiver {
      * @return Request object if successfully received, std::nullopt if error or
      *     if the receiver object was invalidated.
      */
-    std::optional<std::tuple<Request, std::vector<int32_t>, MeasureTiming>> getBlocking();
+    std::optional<std::tuple<hal::Request, std::vector<int32_t>, hal::MeasureTiming>> getBlocking();
 
     /**
      * Method to mark the channel as invalid, unblocking any current or future
@@ -107,7 +108,7 @@ class RequestChannelReceiver {
     RequestChannelReceiver(std::unique_ptr<FmqRequestChannel> fmqRequestChannel, bool blocking);
 
    private:
-    std::optional<std::vector<FmqRequestDatum>> getPacketBlocking();
+    std::optional<std::vector<hal::FmqRequestDatum>> getPacketBlocking();
 
     const std::unique_ptr<FmqRequestChannel> mFmqRequestChannel;
     std::atomic<bool> mTeardown{false};
@@ -121,7 +122,7 @@ class RequestChannelReceiver {
  */
 class ResultChannelSender {
     using FmqResultChannel =
-            hardware::MessageQueue<FmqResultDatum, hardware::kSynchronizedReadWrite>;
+            hardware::MessageQueue<hal::FmqResultDatum, hardware::kSynchronizedReadWrite>;
 
    public:
     /**
@@ -142,10 +143,11 @@ class ResultChannelSender {
      * @param timing Timing information of the execution.
      * @return 'true' on successful send, 'false' otherwise.
      */
-    bool send(ErrorStatus errorStatus, const std::vector<OutputShape>& outputShapes, Timing timing);
+    bool send(hal::ErrorStatus errorStatus, const std::vector<hal::OutputShape>& outputShapes,
+              hal::Timing timing);
 
     // prefer calling ResultChannelSender::send
-    bool sendPacket(const std::vector<FmqResultDatum>& packet);
+    bool sendPacket(const std::vector<hal::FmqResultDatum>& packet);
 
     ResultChannelSender(std::unique_ptr<FmqResultChannel> fmqResultChannel, bool blocking);
 
@@ -159,7 +161,7 @@ class ResultChannelSender {
  * deserializing a request object from a FMQ, performing the inference, and
  * serializing the result back across another FMQ.
  */
-class ExecutionBurstServer : public IBurstContext {
+class ExecutionBurstServer : public hal::IBurstContext {
     DISALLOW_IMPLICIT_CONSTRUCTORS(ExecutionBurstServer);
 
    public:
@@ -199,7 +201,7 @@ class ExecutionBurstServer : public IBurstContext {
          * @param memory Memory resource to be cached.
          * @param slot Slot identifier corresponding to the memory resource.
          */
-        virtual void addCacheEntry(const hidl_memory& memory, int32_t slot) = 0;
+        virtual void addCacheEntry(const hal::hidl_memory& memory, int32_t slot) = 0;
 
         /**
          * Removes an entry specified by a slot from the cache.
@@ -224,9 +226,9 @@ class ExecutionBurstServer : public IBurstContext {
          * @return Result of the execution, including the status of the
          *     execution, dynamic output shapes, and any timing information.
          */
-        virtual std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> execute(
-                const Request& request, const std::vector<int32_t>& slots,
-                MeasureTiming measure) = 0;
+        virtual std::tuple<hal::ErrorStatus, hal::hidl_vec<hal::OutputShape>, hal::Timing> execute(
+                const hal::Request& request, const std::vector<int32_t>& slots,
+                hal::MeasureTiming measure) = 0;
     };
 
     /**
@@ -248,7 +250,7 @@ class ExecutionBurstServer : public IBurstContext {
      * @result IBurstContext Handle to the burst context.
      */
     static sp<ExecutionBurstServer> create(
-            const sp<IBurstCallback>& callback, const FmqRequestDescriptor& requestChannel,
+            const sp<hal::IBurstCallback>& callback, const FmqRequestDescriptor& requestChannel,
             const FmqResultDescriptor& resultChannel,
             std::shared_ptr<IBurstExecutorWithCache> executorWithCache);
 
@@ -271,19 +273,19 @@ class ExecutionBurstServer : public IBurstContext {
      *     execution.
      * @result IBurstContext Handle to the burst context.
      */
-    static sp<ExecutionBurstServer> create(const sp<IBurstCallback>& callback,
+    static sp<ExecutionBurstServer> create(const sp<hal::IBurstCallback>& callback,
                                            const FmqRequestDescriptor& requestChannel,
                                            const FmqResultDescriptor& resultChannel,
-                                           IPreparedModel* preparedModel);
+                                           hal::IPreparedModel* preparedModel);
 
-    ExecutionBurstServer(const sp<IBurstCallback>& callback,
+    ExecutionBurstServer(const sp<hal::IBurstCallback>& callback,
                          std::unique_ptr<RequestChannelReceiver> requestChannel,
                          std::unique_ptr<ResultChannelSender> resultChannel,
                          std::shared_ptr<IBurstExecutorWithCache> cachedExecutor);
     ~ExecutionBurstServer();
 
     // Used by the NN runtime to preemptively remove any stored memory.
-    Return<void> freeMemory(int32_t slot) override;
+    hal::Return<void> freeMemory(int32_t slot) override;
 
    private:
     // Ensures all cache entries contained in mExecutorWithCache are present in
@@ -300,7 +302,7 @@ class ExecutionBurstServer : public IBurstContext {
     std::thread mWorker;
     std::mutex mMutex;
     std::atomic<bool> mTeardown{false};
-    const sp<IBurstCallback> mCallback;
+    const sp<hal::IBurstCallback> mCallback;
     const std::unique_ptr<RequestChannelReceiver> mRequestChannelReceiver;
     const std::unique_ptr<ResultChannelSender> mResultChannelSender;
     const std::shared_ptr<IBurstExecutorWithCache> mExecutorWithCache;

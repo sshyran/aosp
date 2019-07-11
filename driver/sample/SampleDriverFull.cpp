@@ -18,13 +18,14 @@
 
 #include "SampleDriverFull.h"
 
-#include "HalInterfaces.h"
 #include "Utils.h"
 #include "ValidateHal.h"
 
 namespace android {
 namespace nn {
 namespace sample_driver {
+
+using namespace hal;
 
 Return<void> SampleDriverFull::getCapabilities_1_2(getCapabilities_1_2_cb cb) {
     android::nn::initVLogMask();
