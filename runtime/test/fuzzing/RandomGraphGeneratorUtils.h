@@ -138,7 +138,6 @@ inline std::string joinStr(const std::string& joint, int limit, const std::vecto
     }
 }
 
-// TODO: Currently only 1.0 operations and operand types.
 static const char* kOperationNames[] = {
         "ADD",
         "AVERAGE_POOL_2D",
