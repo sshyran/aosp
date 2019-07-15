@@ -231,9 +231,9 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
             return;
         }
 
-        // Since this test is introduced in Android Q, we only assert no compilation or execution
-        // failure if the device has feature level >= Q (API level 29). For pre-Q devices, we allow
-        // them to fail with OP_FAILED, but must not hang or crash.
+        // Since this test is introduced in Android Q, we only check the accuracy of output results
+        // if the device has feature level >= Q (API level 29). For pre-Q devices, we allow
+        // them to produce less accurate results, but must not hang or crash.
         int64_t featureLevel;
         ASSERT_EQ(ANeuralNetworksDevice_getFeatureLevel(device, &featureLevel),
                   ANEURALNETWORKS_NO_ERROR);
