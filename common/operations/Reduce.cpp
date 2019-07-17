@@ -16,7 +16,7 @@
 
 #define LOG_TAG "Operations"
 
-#include "tensorflow/lite/kernels/internal/reference/reference_ops.h"
+#include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
 
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
