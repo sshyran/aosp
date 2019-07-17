@@ -19,8 +19,8 @@
 
 #include "ActivationFunctor.h"
 #include "HalOperation.h"
-#include "tensorflow/lite/kernels/internal/tensor_utils.h"
 
+#include <tensorflow/lite/kernels/internal/tensor_utils.h>
 #include <algorithm>
 #include <cmath>
 
