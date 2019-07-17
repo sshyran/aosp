@@ -156,13 +156,17 @@ Return<ErrorStatus> prepareModelBase(const T_Model& model, const SampleDriver* d
         return ErrorStatus::INVALID_ARGUMENT;
     }
 
-    // TODO: make asynchronous later
-    sp<SamplePreparedModel> preparedModel = new SamplePreparedModel(convertToV1_2(model), driver);
-    if (!preparedModel->initialize()) {
-        notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
-        return ErrorStatus::INVALID_ARGUMENT;
-    }
-    notify(callback, ErrorStatus::NONE, preparedModel);
+    // asynchronously prepare the model from a new, detached thread
+    std::thread([model, driver, callback] {
+        sp<SamplePreparedModel> preparedModel =
+                new SamplePreparedModel(convertToV1_2(model), driver);
+        if (!preparedModel->initialize()) {
+            notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
+            return;
+        }
+        notify(callback, ErrorStatus::NONE, preparedModel);
+    }).detach();
+
     return ErrorStatus::NONE;
 }
 
