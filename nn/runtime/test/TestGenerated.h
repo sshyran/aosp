@@ -19,6 +19,8 @@
 
 #include <gtest/gtest.h>
 
+#include <optional>
+
 #include "TestCompliance.h"
 #include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
@@ -59,10 +61,12 @@ namespace generated_tests {
 
 class GeneratedTests : public GENERATED_TESTS_BASE {
    protected:
+    GeneratedTests(bool expectFailure = false) : mExpectFailure(expectFailure) {}
+
     virtual void SetUp() override;
     virtual void TearDown() override;
 
-    Compilation compileModel(const Model* model);
+    std::optional<Compilation> compileModel(const Model* model);
     void executeWithCompilation(const Model* model, Compilation* compilation,
                                 std::function<bool(int)> isIgnored,
                                 std::vector<MixedTypedExample>& examples, std::string dumpFile);
@@ -79,7 +83,8 @@ class GeneratedTests : public GENERATED_TESTS_BASE {
 
     std::string mCacheDir;
     std::vector<uint8_t> mToken;
-    bool mTestCompilationCaching;
+    bool mTestCompilationCaching = false;
+    bool mExpectFailure = false;
 #ifdef NNTEST_COMPUTE_MODE
     // SetUp() uses Execution::setComputeMode() to establish a new ComputeMode,
     // and saves off the previous ComputeMode here; TearDown() restores that
@@ -91,6 +96,12 @@ class GeneratedTests : public GENERATED_TESTS_BASE {
 
 // Tag for the dynamic output shape tests
 class DynamicOutputShapeTest : public GeneratedTests {};
+
+// Tag for the generated validation tests
+class GeneratedValidationTests : public GeneratedTests {
+   protected:
+    GeneratedValidationTests() : GeneratedTests(/*expectFailure=*/true) {}
+};
 
 }  // namespace generated_tests
 
