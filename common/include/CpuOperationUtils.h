@@ -23,7 +23,7 @@
 #include <cmath>
 #include <limits>
 
-#include "tensorflow/lite/kernels/internal/types.h"
+#include <tensorflow/lite/kernels/internal/types.h>
 
 namespace android {
 namespace nn {
