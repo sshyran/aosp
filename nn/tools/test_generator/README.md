@@ -336,6 +336,14 @@ Example.SetVersion(<version>, testName0, testName1, ...)
 
 This is useful when only a subset of variations has a different version.
 
+### Creating negative tests
+
+Negative test, also known as validation test, is a testing method that supplies invalid model or request, and expects the target framework or driver to fail gracefully. You can use `ExpectFailure` to tag a example as invalid.
+
+```Python
+Example.ExpectFailure()
+```
+
 ### A Complete Example
 
 ```Python
