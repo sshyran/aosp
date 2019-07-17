@@ -22,9 +22,9 @@
 
 #include <cutils/native_handle.h>
 #include <sys/mman.h>
+#include <vndk/hardware_buffer.h>
 #include <mutex>
 #include <unordered_map>
-#include "vndk/hardware_buffer.h"
 
 namespace android {
 namespace nn {
