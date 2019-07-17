@@ -17,7 +17,7 @@
 #include "CpuOperationUtils.h"
 #include "OperationResolver.h"
 
-#include "tensorflow/lite/kernels/internal/optimized/optimized_ops.h"
+#include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
 
 #include "Tracing.h"
 

@@ -34,7 +34,7 @@
 #include "Tracing.h"
 #include "Utils.h"
 
-#include "vndk/hardware_buffer.h"
+#include <vndk/hardware_buffer.h>
 
 #include <cstddef>
 #include <memory>
