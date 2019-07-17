@@ -24,7 +24,7 @@
 #include "OperationsUtils.h"
 #include "Tracing.h"
 
-#include "Eigen/Core"
+#include <Eigen/Core>
 // b/109953668, disable OpenMP
 #ifdef NNAPI_OPENMP
 #include <omp.h>
