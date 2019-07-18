@@ -108,10 +108,9 @@ struct RandomOperation {
     RandomOperation(const OperationSignature& operation);
 };
 
-// TODO: Consider relative bias and mse on floating point data types?
 struct AccuracyCriterion {
     // We expect the driver results to be unbiased.
-    // Formula: abs(sum_{i}(diff)) <= bias, where
+    // Formula: abs(sum_{i}(diff) / sum(1)) <= bias, where
     // * fixed point: diff = actual - expected
     // * floating point: diff = (actual - expected) / max(1, abs(expected))
     float bias = std::numeric_limits<float>::max();
