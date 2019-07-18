@@ -60,6 +60,8 @@ cc_defaults {
         // Changes to this list must be reflected in cts/tests/tests/neuralnetworks/Android.mk
         // to ensure CTS tests coverage.
         "generated/tests/*.cpp",
+        "generated/models/*.cpp",
+        "generated/examples/*.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
         "TestOperandExtraParams.cpp",
@@ -75,7 +77,7 @@ cc_defaults {
         "libgmock",
     ],
     cflags: [
-         "-UNDEBUG"
+        "-UNDEBUG",
     ],
 }
 
@@ -86,7 +88,7 @@ cc_test {
         "TestMain.cpp",
     ],
     cflags: [
-        "-DNNTEST_ONLY_PUBLIC_API"
+        "-DNNTEST_ONLY_PUBLIC_API",
     ],
     shared_libs: [
         "libneuralnetworks",
@@ -166,7 +168,7 @@ cc_test {
     name: "NeuralNetworksTest_static_asan",
     defaults: ["NeuralNetworksTest_static_defaults"],
     sanitize: {
-      address: true,
+        address: true,
     },
     // Declare explicit library dependency for continuous builds
     target: {
@@ -197,11 +199,11 @@ cc_test {
     name: "NeuralNetworksTest_static_ubsan",
     defaults: ["NeuralNetworksTest_static_defaults"],
     sanitize: {
-      undefined: true,
-      all_undefined: true,
-      diag: {
         undefined: true,
-      },
+        all_undefined: true,
+        diag: {
+            undefined: true,
+        },
     },
 }
 
@@ -212,10 +214,12 @@ cc_defaults {
         "TestNeuralNetworksWrapper.cpp",
         "TestMain.cpp",
         "generated/tests/*.cpp",
+        "generated/models/*.cpp",
+        "generated/examples/*.cpp",
         "TestGenerated.cpp",
     ],
     cflags: [
-        "-DNNTEST_MULTITHREADED"
+        "-DNNTEST_MULTITHREADED",
     ],
     static_libs: [
         "libgmock",
@@ -241,6 +245,69 @@ cc_test {
     name: "NeuralNetworksTest_mt_static_asan",
     defaults: ["NeuralNetworksTest_mt_defaults"],
     sanitize: {
-      address: true,
+        address: true,
     },
+}
+
+filegroup {
+    name: "VtsHalNeuralNetworksV1_0_all_generated_V1_0_tests",
+    srcs: [
+        "generated/vts/V1_0/tests/V1_0/*.cpp",
+        "generated/vts/V1_0/models/V1_0/*.cpp",
+        "generated/examples/*.cpp",
+    ],
+}
+
+filegroup {
+    name: "VtsHalNeuralNetworksV1_1_all_generated_V1_0_tests",
+    srcs: [
+        "generated/vts/V1_1/tests/V1_0/*.cpp",
+        "generated/vts/V1_1/models/V1_0/*.cpp",
+        "generated/examples/*.cpp",
+    ],
+}
+
+filegroup {
+    name: "VtsHalNeuralNetworksV1_1_all_generated_V1_1_tests",
+    srcs: [
+        "generated/vts/V1_1/tests/V1_1/*.cpp",
+        "generated/vts/V1_1/models/V1_1/*.cpp",
+        "generated/examples/*.cpp",
+    ],
+}
+
+filegroup {
+    name: "VtsHalNeuralNetworksV1_2_all_generated_V1_0_tests",
+    srcs: [
+        "generated/vts/V1_2/tests/V1_0/*.cpp",
+        "generated/vts/V1_2/models/V1_0/*.cpp",
+        "generated/examples/*.cpp",
+    ],
+}
+
+filegroup {
+    name: "VtsHalNeuralNetworksV1_2_all_generated_V1_1_tests",
+    srcs: [
+        "generated/vts/V1_2/tests/V1_1/*.cpp",
+        "generated/vts/V1_2/models/V1_1/*.cpp",
+        "generated/examples/*.cpp",
+    ],
+}
+
+filegroup {
+    name: "VtsHalNeuralNetworksV1_2_all_generated_V1_2_tests",
+    srcs: [
+        "generated/vts/V1_2/tests/V1_2/*.cpp",
+        "generated/vts/V1_2/models/V1_2/*.cpp",
+        "generated/examples/*.cpp",
+    ],
+}
+
+// CompilationCachingTests in VtsHalNeuralnetworksV1_2TargetTest depend on MobileNets.
+filegroup {
+    name: "VtsHalNeuralNetworksV1_2_mobilenets",
+    srcs: [
+        "generated/vts/V1_2/models/V1_0/mobilenet_224_gender_basic_fixed.model.cpp",
+        "generated/vts/V1_2/models/V1_0/mobilenet_quantized.model.cpp",
+    ],
 }

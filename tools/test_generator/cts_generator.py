@@ -94,32 +94,25 @@ def NeedRegenerate():
 
 # Write headers for generated files, which are boilerplate codes only related to filenames
 def InitializeFiles(model_fd, example_fd, test_fd):
-    fileHeader = "// clang-format off\n// Generated file (from: {spec_file}). Do not edit"
-    testFileHeader = """\
-#include "../../TestGenerated.h"\n
-namespace {spec_name} {{
-// Generated {spec_name} test
-#include "{example_file}"
-// Generated model constructor
-#include "{model_file}"
-}} // namespace {spec_name}\n"""
-    # This regex is to remove prefix and get relative path for #include
-    pathRegex = r".*((frameworks/ml/nn/(runtime/test/)?)|(vendor/google/[a-z]*/test/))"
     specFileBase = os.path.basename(tg.FileNames.specFile)
-    print(fileHeader.format(spec_file=specFileBase), file=model_fd)
-    print(fileHeader.format(spec_file=specFileBase), file=example_fd)
-    print(fileHeader.format(spec_file=specFileBase), file=test_fd)
-    print(testFileHeader.format(
-        model_file=re.sub(pathRegex, "", tg.FileNames.modelFile),
-        example_file=re.sub(pathRegex, "", tg.FileNames.exampleFile),
-        spec_name=tg.FileNames.specName), file=test_fd)
+    fileHeader = """\
+// Generated from {spec_file}
+// DO NOT EDIT
+// clang-format off
+#include "{header}"
+"""
+    print(fileHeader.format(spec_file=specFileBase, header="TestGenerated.h"), file=test_fd)
+    print(fileHeader.format(spec_file=specFileBase, header="TestGenerated.h"), file=model_fd)
+    print(fileHeader.format(spec_file=specFileBase, header="TestHarness.h"), file=example_fd)
 
 # Dump is_ignored function for IgnoredOutput
 def DumpCtsIsIgnored(model, model_fd):
     isIgnoredTemplate = """\
-inline bool {is_ignored_name}(int i) {{
+bool {is_ignored_name}(int i) {{
   static std::set<int> ignore = {{{ignored_index}}};
-  return ignore.find(i) != ignore.end();\n}}\n"""
+  return ignore.find(i) != ignore.end();
+}}
+"""
     print(isIgnoredTemplate.format(
         ignored_index=tg.GetJointStr(model.GetIgnoredOutputs(), method=lambda x: str(x.index)),
         is_ignored_name=str(model.isIgnoredFunctionName)), file=model_fd)
@@ -129,6 +122,8 @@ def DumpCtsModel(model, model_fd):
     assert model.compiled
     if model.dumped:
         return
+    namespace = "generated_tests::{spec_name}".format(spec_name=tg.FileNames.specName)
+    print("namespace {namespace} {{\n".format(namespace=namespace), file=model_fd)
     print("void %s(Model *model) {"%(model.createFunctionName), file=model_fd)
 
     # Phase 0: types
@@ -179,6 +174,7 @@ def DumpCtsModel(model, model_fd):
     print ("  assert(model->isValid());", file=model_fd)
     print ("}\n", file=model_fd)
     DumpCtsIsIgnored(model, model_fd)
+    print("}} // namespace {namespace}".format(namespace=namespace), file=model_fd)
     model.dumped = True
 
 def DumpMixedType(operands, feedDict):
@@ -245,8 +241,10 @@ def DumpMixedType(operands, feedDict):
 
 # Dump Example file for Cts tests
 def DumpCtsExample(example, example_fd):
-    print("std::vector<MixedTypedExample>& get_%s() {" % (example.examplesName), file=example_fd)
-    print("static std::vector<MixedTypedExample> %s = {" % (example.examplesName), file=example_fd)
+    namespace = "generated_tests::{spec_name}".format(spec_name=tg.FileNames.specName)
+    print("namespace {namespace} {{\n".format(namespace=namespace), file=example_fd)
+    print("std::vector<::test_helper::MixedTypedExample>& get_%s() {" % (example.examplesName), file=example_fd)
+    print("static std::vector<::test_helper::MixedTypedExample> %s = {" % (example.examplesName), file=example_fd)
     for inputFeedDict, outputFeedDict in example.feedDicts:
         print ('// Begin of an example', file = example_fd)
         print ('{\n.operands = {', file = example_fd)
@@ -261,15 +259,27 @@ def DumpCtsExample(example, example_fd):
         print ('}, // End of an example', file = example_fd)
     print("};", file=example_fd)
     print("return %s;" % (example.examplesName), file=example_fd)
-    print("};\n", file=example_fd)
+    print("};", file=example_fd)
+    print("\n}} // namespace {namespace}".format(namespace=namespace), file=example_fd)
 
 # Dump Test file for Cts tests
 def DumpCtsTest(example, test_fd):
+    namespace = "generated_tests::{spec_name}".format(spec_name=tg.FileNames.specName)
     testTemplate = """\
+namespace {namespace} {{
+
+void {create_model_name}(Model *model);
+bool {is_ignored_name}(int);
+std::vector<::test_helper::MixedTypedExample>& get_{examples_name}();
+
 TEST_F({test_case_name}, {test_name}) {{
-    execute({namespace}::{create_model_name},
-            {namespace}::{is_ignored_name},
-            {namespace}::get_{examples_name}(){log_file});\n}}\n"""
+    execute({create_model_name},
+            {is_ignored_name},
+            get_{examples_name}(){log_file});
+}}
+
+}} // namespace {namespace}
+"""
     if example.model.version is not None and not example.expectFailure:
         testTemplate += """\
 TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::{create_model_name})\n"""
@@ -284,7 +294,7 @@ TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::{create_model_name})\n
     print(testTemplate.format(
         test_case_name=testCaseName,
         test_name=str(example.testName),
-        namespace=tg.FileNames.specName,
+        namespace=namespace,
         create_model_name=str(example.model.createFunctionName),
         is_ignored_name=str(example.model.isIgnoredFunctionName),
         examples_name=str(example.examplesName),
@@ -295,11 +305,8 @@ if __name__ == '__main__':
     ParseCmdLine()
     while tg.FileNames.NextFile():
         if Configuration.force_regenerate or NeedRegenerate():
-            print("Generating test(s) from spec: %s" % tg.FileNames.specFile, file=sys.stderr)
+            print("Generating CTS tests from spec %s" % tg.FileNames.specFile, file=sys.stderr)
             exec(open(tg.FileNames.specFile, "r").read())
-            print("Output CTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
-            print("Output example: %s" % tg.FileNames.exampleFile, file=sys.stderr)
-            print("Output CTS test: %s" % tg.FileNames.testFile, file=sys.stderr)
             with SmartOpen(tg.FileNames.modelFile) as model_fd, \
                  SmartOpen(tg.FileNames.exampleFile) as example_fd, \
                  SmartOpen(tg.FileNames.testFile) as test_fd:
