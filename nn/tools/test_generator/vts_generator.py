@@ -276,11 +276,18 @@ Model {create_test_model_name}() {{
   print(model_fmt.format(**model_dict), file = model_file)
 
 def generate_vts(model, model_file):
-  assert model.compiled
-  generate_vts_model(model, model_file)
-  DumpCtsIsIgnored(model, model_file)
+    assert model.compiled
+    # Do not generate DynamicOutputShapeTest for pre-1.2 VTS.
+    if model.hasDynamicOutputShape and target_hal_version < "V1_2":
+        return
+    generate_vts_model(model, model_file)
+    DumpCtsIsIgnored(model, model_file)
 
 def generate_vts_test(example, test_file):
+    # Do not generate DynamicOutputShapeTest for pre-1.2 VTS.
+    if example.model.hasDynamicOutputShape and target_hal_version < "V1_2":
+        return
+
     testTemplate = """\
 TEST_F({test_case_name}, {test_name}) {{
   generated_tests::Execute(device,
@@ -294,8 +301,6 @@ TEST_F(ValidationTest, {test_name}) {{
   validateEverything(model, requests);
 }}\n
 """
-    if example.model.hasDynamicOutputShape:
-        print("#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE", file=test_fd)
     print(testTemplate.format(
             test_case_name="DynamicOutputShapeTest" if example.model.hasDynamicOutputShape \
                            else "NeuralnetworksHidlTest",
@@ -306,8 +311,6 @@ TEST_F(ValidationTest, {test_name}) {{
             examples_name=str(example.examplesName),
             test_dynamic_output_shape=", true" if example.model.hasDynamicOutputShape else ""
         ), file=test_fd)
-    if example.model.hasDynamicOutputShape:
-        print("#endif", file=test_fd)
 
 def InitializeFiles(model_fd, example_fd, test_fd):
     fileHeader = "// clang-format off\n// Generated file (from: {spec_file}). Do not edit"

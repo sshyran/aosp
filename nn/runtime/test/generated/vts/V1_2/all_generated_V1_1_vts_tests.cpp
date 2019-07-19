@@ -23,7 +23,6 @@ TEST_F(ValidationTest, add_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, add_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            add_relaxed::createTestModel_dynamic_output_shape,
@@ -38,7 +37,6 @@ TEST_F(ValidationTest, add_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: avg_pool_float_1_relaxed.mod.py.
 namespace avg_pool_float_1_relaxed {
 // Generated avg_pool_float_1_relaxed test
@@ -61,7 +59,6 @@ TEST_F(ValidationTest, avg_pool_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, avg_pool_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            avg_pool_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -76,7 +73,6 @@ TEST_F(ValidationTest, avg_pool_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: avg_pool_float_2_relaxed.mod.py.
 namespace avg_pool_float_2_relaxed {
 // Generated avg_pool_float_2_relaxed test
@@ -99,7 +95,6 @@ TEST_F(ValidationTest, avg_pool_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, avg_pool_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            avg_pool_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -114,7 +109,6 @@ TEST_F(ValidationTest, avg_pool_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: avg_pool_float_3_relaxed.mod.py.
 namespace avg_pool_float_3_relaxed {
 // Generated avg_pool_float_3_relaxed test
@@ -137,7 +131,6 @@ TEST_F(ValidationTest, avg_pool_float_3_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, avg_pool_float_3_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            avg_pool_float_3_relaxed::createTestModel_dynamic_output_shape,
@@ -152,7 +145,6 @@ TEST_F(ValidationTest, avg_pool_float_3_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: avg_pool_float_4_relaxed.mod.py.
 namespace avg_pool_float_4_relaxed {
 // Generated avg_pool_float_4_relaxed test
@@ -175,7 +167,6 @@ TEST_F(ValidationTest, avg_pool_float_4_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, avg_pool_float_4_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            avg_pool_float_4_relaxed::createTestModel_dynamic_output_shape,
@@ -190,7 +181,6 @@ TEST_F(ValidationTest, avg_pool_float_4_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: avg_pool_float_5_relaxed.mod.py.
 namespace avg_pool_float_5_relaxed {
 // Generated avg_pool_float_5_relaxed test
@@ -213,7 +203,6 @@ TEST_F(ValidationTest, avg_pool_float_5_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, avg_pool_float_5_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            avg_pool_float_5_relaxed::createTestModel_dynamic_output_shape,
@@ -228,7 +217,6 @@ TEST_F(ValidationTest, avg_pool_float_5_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: batch_to_space.mod.py.
 namespace batch_to_space {
 // Generated batch_to_space test
@@ -251,7 +239,6 @@ TEST_F(ValidationTest, batch_to_space) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, batch_to_space_dynamic_output_shape) {
   generated_tests::Execute(device,
                            batch_to_space::createTestModel_dynamic_output_shape,
@@ -266,7 +253,6 @@ TEST_F(ValidationTest, batch_to_space_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: batch_to_space_float_1.mod.py.
 namespace batch_to_space_float_1 {
 // Generated batch_to_space_float_1 test
@@ -289,7 +275,6 @@ TEST_F(ValidationTest, batch_to_space_float_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, batch_to_space_float_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            batch_to_space_float_1::createTestModel_dynamic_output_shape,
@@ -304,7 +289,6 @@ TEST_F(ValidationTest, batch_to_space_float_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: batch_to_space_float_1_relaxed.mod.py.
 namespace batch_to_space_float_1_relaxed {
 // Generated batch_to_space_float_1_relaxed test
@@ -327,7 +311,6 @@ TEST_F(ValidationTest, batch_to_space_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, batch_to_space_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            batch_to_space_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -342,7 +325,6 @@ TEST_F(ValidationTest, batch_to_space_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: batch_to_space_quant8_1.mod.py.
 namespace batch_to_space_quant8_1 {
 // Generated batch_to_space_quant8_1 test
@@ -365,7 +347,6 @@ TEST_F(ValidationTest, batch_to_space_quant8_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, batch_to_space_quant8_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            batch_to_space_quant8_1::createTestModel_dynamic_output_shape,
@@ -380,7 +361,6 @@ TEST_F(ValidationTest, batch_to_space_quant8_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: batch_to_space_relaxed.mod.py.
 namespace batch_to_space_relaxed {
 // Generated batch_to_space_relaxed test
@@ -403,7 +383,6 @@ TEST_F(ValidationTest, batch_to_space_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, batch_to_space_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            batch_to_space_relaxed::createTestModel_dynamic_output_shape,
@@ -418,7 +397,6 @@ TEST_F(ValidationTest, batch_to_space_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: concat_float_1_relaxed.mod.py.
 namespace concat_float_1_relaxed {
 // Generated concat_float_1_relaxed test
@@ -441,7 +419,6 @@ TEST_F(ValidationTest, concat_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, concat_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            concat_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -456,7 +433,6 @@ TEST_F(ValidationTest, concat_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: concat_float_2_relaxed.mod.py.
 namespace concat_float_2_relaxed {
 // Generated concat_float_2_relaxed test
@@ -479,7 +455,6 @@ TEST_F(ValidationTest, concat_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, concat_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            concat_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -494,7 +469,6 @@ TEST_F(ValidationTest, concat_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: concat_float_3_relaxed.mod.py.
 namespace concat_float_3_relaxed {
 // Generated concat_float_3_relaxed test
@@ -517,7 +491,6 @@ TEST_F(ValidationTest, concat_float_3_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, concat_float_3_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            concat_float_3_relaxed::createTestModel_dynamic_output_shape,
@@ -532,7 +505,6 @@ TEST_F(ValidationTest, concat_float_3_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: conv_1_h3_w2_SAME_relaxed.mod.py.
 namespace conv_1_h3_w2_SAME_relaxed {
 // Generated conv_1_h3_w2_SAME_relaxed test
@@ -555,7 +527,6 @@ TEST_F(ValidationTest, conv_1_h3_w2_SAME_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_1_h3_w2_SAME_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_1_h3_w2_SAME_relaxed::createTestModel_dynamic_output_shape,
@@ -570,7 +541,6 @@ TEST_F(ValidationTest, conv_1_h3_w2_SAME_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 TEST_F(NeuralnetworksHidlTest, conv_1_h3_w2_SAME_relaxed_2) {
   generated_tests::Execute(device,
                            conv_1_h3_w2_SAME_relaxed::createTestModel_2,
@@ -585,7 +555,6 @@ TEST_F(ValidationTest, conv_1_h3_w2_SAME_relaxed_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_1_h3_w2_SAME_relaxed_dynamic_output_shape_2) {
   generated_tests::Execute(device,
                            conv_1_h3_w2_SAME_relaxed::createTestModel_dynamic_output_shape_2,
@@ -600,7 +569,6 @@ TEST_F(ValidationTest, conv_1_h3_w2_SAME_relaxed_dynamic_output_shape_2) {
 }
 
 
-#endif
 // Generated from: conv_1_h3_w2_VALID_relaxed.mod.py.
 namespace conv_1_h3_w2_VALID_relaxed {
 // Generated conv_1_h3_w2_VALID_relaxed test
@@ -623,7 +591,6 @@ TEST_F(ValidationTest, conv_1_h3_w2_VALID_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_1_h3_w2_VALID_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_1_h3_w2_VALID_relaxed::createTestModel_dynamic_output_shape,
@@ -638,7 +605,6 @@ TEST_F(ValidationTest, conv_1_h3_w2_VALID_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 TEST_F(NeuralnetworksHidlTest, conv_1_h3_w2_VALID_relaxed_2) {
   generated_tests::Execute(device,
                            conv_1_h3_w2_VALID_relaxed::createTestModel_2,
@@ -653,7 +619,6 @@ TEST_F(ValidationTest, conv_1_h3_w2_VALID_relaxed_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_1_h3_w2_VALID_relaxed_dynamic_output_shape_2) {
   generated_tests::Execute(device,
                            conv_1_h3_w2_VALID_relaxed::createTestModel_dynamic_output_shape_2,
@@ -668,7 +633,6 @@ TEST_F(ValidationTest, conv_1_h3_w2_VALID_relaxed_dynamic_output_shape_2) {
 }
 
 
-#endif
 // Generated from: conv_3_h3_w2_SAME_relaxed.mod.py.
 namespace conv_3_h3_w2_SAME_relaxed {
 // Generated conv_3_h3_w2_SAME_relaxed test
@@ -691,7 +655,6 @@ TEST_F(ValidationTest, conv_3_h3_w2_SAME_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_3_h3_w2_SAME_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_3_h3_w2_SAME_relaxed::createTestModel_dynamic_output_shape,
@@ -706,7 +669,6 @@ TEST_F(ValidationTest, conv_3_h3_w2_SAME_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 TEST_F(NeuralnetworksHidlTest, conv_3_h3_w2_SAME_relaxed_2) {
   generated_tests::Execute(device,
                            conv_3_h3_w2_SAME_relaxed::createTestModel_2,
@@ -721,7 +683,6 @@ TEST_F(ValidationTest, conv_3_h3_w2_SAME_relaxed_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_3_h3_w2_SAME_relaxed_dynamic_output_shape_2) {
   generated_tests::Execute(device,
                            conv_3_h3_w2_SAME_relaxed::createTestModel_dynamic_output_shape_2,
@@ -736,7 +697,6 @@ TEST_F(ValidationTest, conv_3_h3_w2_SAME_relaxed_dynamic_output_shape_2) {
 }
 
 
-#endif
 // Generated from: conv_3_h3_w2_VALID_relaxed.mod.py.
 namespace conv_3_h3_w2_VALID_relaxed {
 // Generated conv_3_h3_w2_VALID_relaxed test
@@ -759,7 +719,6 @@ TEST_F(ValidationTest, conv_3_h3_w2_VALID_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_3_h3_w2_VALID_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_3_h3_w2_VALID_relaxed::createTestModel_dynamic_output_shape,
@@ -774,7 +733,6 @@ TEST_F(ValidationTest, conv_3_h3_w2_VALID_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 TEST_F(NeuralnetworksHidlTest, conv_3_h3_w2_VALID_relaxed_2) {
   generated_tests::Execute(device,
                            conv_3_h3_w2_VALID_relaxed::createTestModel_2,
@@ -789,7 +747,6 @@ TEST_F(ValidationTest, conv_3_h3_w2_VALID_relaxed_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_3_h3_w2_VALID_relaxed_dynamic_output_shape_2) {
   generated_tests::Execute(device,
                            conv_3_h3_w2_VALID_relaxed::createTestModel_dynamic_output_shape_2,
@@ -804,7 +761,6 @@ TEST_F(ValidationTest, conv_3_h3_w2_VALID_relaxed_dynamic_output_shape_2) {
 }
 
 
-#endif
 // Generated from: conv_float_2_relaxed.mod.py.
 namespace conv_float_2_relaxed {
 // Generated conv_float_2_relaxed test
@@ -827,7 +783,6 @@ TEST_F(ValidationTest, conv_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -842,7 +797,6 @@ TEST_F(ValidationTest, conv_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: conv_float_channels_relaxed.mod.py.
 namespace conv_float_channels_relaxed {
 // Generated conv_float_channels_relaxed test
@@ -865,7 +819,6 @@ TEST_F(ValidationTest, conv_float_channels_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_float_channels_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_float_channels_relaxed::createTestModel_dynamic_output_shape,
@@ -880,7 +833,6 @@ TEST_F(ValidationTest, conv_float_channels_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: conv_float_channels_weights_as_inputs_relaxed.mod.py.
 namespace conv_float_channels_weights_as_inputs_relaxed {
 // Generated conv_float_channels_weights_as_inputs_relaxed test
@@ -903,7 +855,6 @@ TEST_F(ValidationTest, conv_float_channels_weights_as_inputs_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_float_channels_weights_as_inputs_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_float_channels_weights_as_inputs_relaxed::createTestModel_dynamic_output_shape,
@@ -918,7 +869,6 @@ TEST_F(ValidationTest, conv_float_channels_weights_as_inputs_relaxed_dynamic_out
 }
 
 
-#endif
 // Generated from: conv_float_large_relaxed.mod.py.
 namespace conv_float_large_relaxed {
 // Generated conv_float_large_relaxed test
@@ -941,7 +891,6 @@ TEST_F(ValidationTest, conv_float_large_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_float_large_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_float_large_relaxed::createTestModel_dynamic_output_shape,
@@ -956,7 +905,6 @@ TEST_F(ValidationTest, conv_float_large_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: conv_float_large_weights_as_inputs_relaxed.mod.py.
 namespace conv_float_large_weights_as_inputs_relaxed {
 // Generated conv_float_large_weights_as_inputs_relaxed test
@@ -979,7 +927,6 @@ TEST_F(ValidationTest, conv_float_large_weights_as_inputs_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_float_large_weights_as_inputs_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_float_large_weights_as_inputs_relaxed::createTestModel_dynamic_output_shape,
@@ -994,7 +941,6 @@ TEST_F(ValidationTest, conv_float_large_weights_as_inputs_relaxed_dynamic_output
 }
 
 
-#endif
 // Generated from: conv_float_relaxed.mod.py.
 namespace conv_float_relaxed {
 // Generated conv_float_relaxed test
@@ -1017,7 +963,6 @@ TEST_F(ValidationTest, conv_float_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_float_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_float_relaxed::createTestModel_dynamic_output_shape,
@@ -1032,7 +977,6 @@ TEST_F(ValidationTest, conv_float_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: conv_float_weights_as_inputs_relaxed.mod.py.
 namespace conv_float_weights_as_inputs_relaxed {
 // Generated conv_float_weights_as_inputs_relaxed test
@@ -1055,7 +999,6 @@ TEST_F(ValidationTest, conv_float_weights_as_inputs_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, conv_float_weights_as_inputs_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            conv_float_weights_as_inputs_relaxed::createTestModel_dynamic_output_shape,
@@ -1070,7 +1013,6 @@ TEST_F(ValidationTest, conv_float_weights_as_inputs_relaxed_dynamic_output_shape
 }
 
 
-#endif
 // Generated from: depth_to_space_float_1_relaxed.mod.py.
 namespace depth_to_space_float_1_relaxed {
 // Generated depth_to_space_float_1_relaxed test
@@ -1093,7 +1035,6 @@ TEST_F(ValidationTest, depth_to_space_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depth_to_space_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depth_to_space_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -1108,7 +1049,6 @@ TEST_F(ValidationTest, depth_to_space_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: depth_to_space_float_2_relaxed.mod.py.
 namespace depth_to_space_float_2_relaxed {
 // Generated depth_to_space_float_2_relaxed test
@@ -1131,7 +1071,6 @@ TEST_F(ValidationTest, depth_to_space_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depth_to_space_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depth_to_space_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -1146,7 +1085,6 @@ TEST_F(ValidationTest, depth_to_space_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: depth_to_space_float_3_relaxed.mod.py.
 namespace depth_to_space_float_3_relaxed {
 // Generated depth_to_space_float_3_relaxed test
@@ -1169,7 +1107,6 @@ TEST_F(ValidationTest, depth_to_space_float_3_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depth_to_space_float_3_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depth_to_space_float_3_relaxed::createTestModel_dynamic_output_shape,
@@ -1184,7 +1121,6 @@ TEST_F(ValidationTest, depth_to_space_float_3_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: depthwise_conv2d_float_2_relaxed.mod.py.
 namespace depthwise_conv2d_float_2_relaxed {
 // Generated depthwise_conv2d_float_2_relaxed test
@@ -1207,7 +1143,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depthwise_conv2d_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -1222,7 +1157,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: depthwise_conv2d_float_large_2_relaxed.mod.py.
 namespace depthwise_conv2d_float_large_2_relaxed {
 // Generated depthwise_conv2d_float_large_2_relaxed test
@@ -1245,7 +1179,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_large_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_large_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depthwise_conv2d_float_large_2_relaxed::createTestModel_dynamic_output_shape,
@@ -1260,7 +1193,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_large_2_relaxed_dynamic_output_sha
 }
 
 
-#endif
 // Generated from: depthwise_conv2d_float_large_2_weights_as_inputs_relaxed.mod.py.
 namespace depthwise_conv2d_float_large_2_weights_as_inputs_relaxed {
 // Generated depthwise_conv2d_float_large_2_weights_as_inputs_relaxed test
@@ -1283,7 +1215,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_large_2_weights_as_inputs_relaxed)
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_large_2_weights_as_inputs_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depthwise_conv2d_float_large_2_weights_as_inputs_relaxed::createTestModel_dynamic_output_shape,
@@ -1298,7 +1229,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_large_2_weights_as_inputs_relaxed_
 }
 
 
-#endif
 // Generated from: depthwise_conv2d_float_large_relaxed.mod.py.
 namespace depthwise_conv2d_float_large_relaxed {
 // Generated depthwise_conv2d_float_large_relaxed test
@@ -1321,7 +1251,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_large_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_large_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depthwise_conv2d_float_large_relaxed::createTestModel_dynamic_output_shape,
@@ -1336,7 +1265,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_large_relaxed_dynamic_output_shape
 }
 
 
-#endif
 // Generated from: depthwise_conv2d_float_large_weights_as_inputs_relaxed.mod.py.
 namespace depthwise_conv2d_float_large_weights_as_inputs_relaxed {
 // Generated depthwise_conv2d_float_large_weights_as_inputs_relaxed test
@@ -1359,7 +1287,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_large_weights_as_inputs_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_large_weights_as_inputs_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depthwise_conv2d_float_large_weights_as_inputs_relaxed::createTestModel_dynamic_output_shape,
@@ -1374,7 +1301,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_large_weights_as_inputs_relaxed_dy
 }
 
 
-#endif
 // Generated from: depthwise_conv2d_float_relaxed.mod.py.
 namespace depthwise_conv2d_float_relaxed {
 // Generated depthwise_conv2d_float_relaxed test
@@ -1397,7 +1323,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depthwise_conv2d_float_relaxed::createTestModel_dynamic_output_shape,
@@ -1412,7 +1337,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: depthwise_conv2d_float_weights_as_inputs_relaxed.mod.py.
 namespace depthwise_conv2d_float_weights_as_inputs_relaxed {
 // Generated depthwise_conv2d_float_weights_as_inputs_relaxed test
@@ -1435,7 +1359,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_weights_as_inputs_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_weights_as_inputs_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depthwise_conv2d_float_weights_as_inputs_relaxed::createTestModel_dynamic_output_shape,
@@ -1450,7 +1373,6 @@ TEST_F(ValidationTest, depthwise_conv2d_float_weights_as_inputs_relaxed_dynamic_
 }
 
 
-#endif
 // Generated from: depthwise_conv_relaxed.mod.py.
 namespace depthwise_conv_relaxed {
 // Generated depthwise_conv_relaxed test
@@ -1473,7 +1395,6 @@ TEST_F(ValidationTest, depthwise_conv_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            depthwise_conv_relaxed::createTestModel_dynamic_output_shape,
@@ -1488,7 +1409,6 @@ TEST_F(ValidationTest, depthwise_conv_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 TEST_F(NeuralnetworksHidlTest, depthwise_conv_relaxed_2) {
   generated_tests::Execute(device,
                            depthwise_conv_relaxed::createTestModel_2,
@@ -1503,7 +1423,6 @@ TEST_F(ValidationTest, depthwise_conv_relaxed_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, depthwise_conv_relaxed_dynamic_output_shape_2) {
   generated_tests::Execute(device,
                            depthwise_conv_relaxed::createTestModel_dynamic_output_shape_2,
@@ -1518,7 +1437,6 @@ TEST_F(ValidationTest, depthwise_conv_relaxed_dynamic_output_shape_2) {
 }
 
 
-#endif
 // Generated from: dequantize_relaxed.mod.py.
 namespace dequantize_relaxed {
 // Generated dequantize_relaxed test
@@ -1541,7 +1459,6 @@ TEST_F(ValidationTest, dequantize_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, dequantize_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            dequantize_relaxed::createTestModel_dynamic_output_shape,
@@ -1556,7 +1473,6 @@ TEST_F(ValidationTest, dequantize_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: div.mod.py.
 namespace div {
 // Generated div test
@@ -1579,7 +1495,6 @@ TEST_F(ValidationTest, div) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, div_dynamic_output_shape) {
   generated_tests::Execute(device,
                            div::createTestModel_dynamic_output_shape,
@@ -1594,7 +1509,6 @@ TEST_F(ValidationTest, div_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: div_broadcast_float.mod.py.
 namespace div_broadcast_float {
 // Generated div_broadcast_float test
@@ -1617,7 +1531,6 @@ TEST_F(ValidationTest, div_broadcast_float) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, div_broadcast_float_dynamic_output_shape) {
   generated_tests::Execute(device,
                            div_broadcast_float::createTestModel_dynamic_output_shape,
@@ -1632,7 +1545,6 @@ TEST_F(ValidationTest, div_broadcast_float_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: div_broadcast_float_relaxed.mod.py.
 namespace div_broadcast_float_relaxed {
 // Generated div_broadcast_float_relaxed test
@@ -1655,7 +1567,6 @@ TEST_F(ValidationTest, div_broadcast_float_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, div_broadcast_float_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            div_broadcast_float_relaxed::createTestModel_dynamic_output_shape,
@@ -1670,7 +1581,6 @@ TEST_F(ValidationTest, div_broadcast_float_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: div_relaxed.mod.py.
 namespace div_relaxed {
 // Generated div_relaxed test
@@ -1693,7 +1603,6 @@ TEST_F(ValidationTest, div_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, div_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            div_relaxed::createTestModel_dynamic_output_shape,
@@ -1708,7 +1617,6 @@ TEST_F(ValidationTest, div_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: embedding_lookup_relaxed.mod.py.
 namespace embedding_lookup_relaxed {
 // Generated embedding_lookup_relaxed test
@@ -1731,7 +1639,6 @@ TEST_F(ValidationTest, embedding_lookup_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, embedding_lookup_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            embedding_lookup_relaxed::createTestModel_dynamic_output_shape,
@@ -1746,7 +1653,6 @@ TEST_F(ValidationTest, embedding_lookup_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: floor_relaxed.mod.py.
 namespace floor_relaxed {
 // Generated floor_relaxed test
@@ -1769,7 +1675,6 @@ TEST_F(ValidationTest, floor_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, floor_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            floor_relaxed::createTestModel_dynamic_output_shape,
@@ -1784,7 +1689,6 @@ TEST_F(ValidationTest, floor_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: fully_connected_float_2_relaxed.mod.py.
 namespace fully_connected_float_2_relaxed {
 // Generated fully_connected_float_2_relaxed test
@@ -1807,7 +1711,6 @@ TEST_F(ValidationTest, fully_connected_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, fully_connected_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            fully_connected_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -1822,7 +1725,6 @@ TEST_F(ValidationTest, fully_connected_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: fully_connected_float_4d_simple.mod.py.
 namespace fully_connected_float_4d_simple {
 // Generated fully_connected_float_4d_simple test
@@ -1845,7 +1747,6 @@ TEST_F(ValidationTest, fully_connected_float_4d_simple) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, fully_connected_float_4d_simple_dynamic_output_shape) {
   generated_tests::Execute(device,
                            fully_connected_float_4d_simple::createTestModel_dynamic_output_shape,
@@ -1860,7 +1761,6 @@ TEST_F(ValidationTest, fully_connected_float_4d_simple_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: fully_connected_float_4d_simple_relaxed.mod.py.
 namespace fully_connected_float_4d_simple_relaxed {
 // Generated fully_connected_float_4d_simple_relaxed test
@@ -1883,7 +1783,6 @@ TEST_F(ValidationTest, fully_connected_float_4d_simple_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, fully_connected_float_4d_simple_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            fully_connected_float_4d_simple_relaxed::createTestModel_dynamic_output_shape,
@@ -1898,7 +1797,6 @@ TEST_F(ValidationTest, fully_connected_float_4d_simple_relaxed_dynamic_output_sh
 }
 
 
-#endif
 // Generated from: fully_connected_float_large_relaxed.mod.py.
 namespace fully_connected_float_large_relaxed {
 // Generated fully_connected_float_large_relaxed test
@@ -1921,7 +1819,6 @@ TEST_F(ValidationTest, fully_connected_float_large_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, fully_connected_float_large_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            fully_connected_float_large_relaxed::createTestModel_dynamic_output_shape,
@@ -1936,7 +1833,6 @@ TEST_F(ValidationTest, fully_connected_float_large_relaxed_dynamic_output_shape)
 }
 
 
-#endif
 // Generated from: fully_connected_float_large_weights_as_inputs_relaxed.mod.py.
 namespace fully_connected_float_large_weights_as_inputs_relaxed {
 // Generated fully_connected_float_large_weights_as_inputs_relaxed test
@@ -1959,7 +1855,6 @@ TEST_F(ValidationTest, fully_connected_float_large_weights_as_inputs_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, fully_connected_float_large_weights_as_inputs_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            fully_connected_float_large_weights_as_inputs_relaxed::createTestModel_dynamic_output_shape,
@@ -1974,7 +1869,6 @@ TEST_F(ValidationTest, fully_connected_float_large_weights_as_inputs_relaxed_dyn
 }
 
 
-#endif
 // Generated from: fully_connected_float_relaxed.mod.py.
 namespace fully_connected_float_relaxed {
 // Generated fully_connected_float_relaxed test
@@ -1997,7 +1891,6 @@ TEST_F(ValidationTest, fully_connected_float_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, fully_connected_float_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            fully_connected_float_relaxed::createTestModel_dynamic_output_shape,
@@ -2012,7 +1905,6 @@ TEST_F(ValidationTest, fully_connected_float_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: fully_connected_float_weights_as_inputs_relaxed.mod.py.
 namespace fully_connected_float_weights_as_inputs_relaxed {
 // Generated fully_connected_float_weights_as_inputs_relaxed test
@@ -2035,7 +1927,6 @@ TEST_F(ValidationTest, fully_connected_float_weights_as_inputs_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, fully_connected_float_weights_as_inputs_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            fully_connected_float_weights_as_inputs_relaxed::createTestModel_dynamic_output_shape,
@@ -2050,7 +1941,6 @@ TEST_F(ValidationTest, fully_connected_float_weights_as_inputs_relaxed_dynamic_o
 }
 
 
-#endif
 // Generated from: hashtable_lookup_float_relaxed.mod.py.
 namespace hashtable_lookup_float_relaxed {
 // Generated hashtable_lookup_float_relaxed test
@@ -2073,7 +1963,6 @@ TEST_F(ValidationTest, hashtable_lookup_float_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, hashtable_lookup_float_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            hashtable_lookup_float_relaxed::createTestModel_dynamic_output_shape,
@@ -2088,7 +1977,6 @@ TEST_F(ValidationTest, hashtable_lookup_float_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: l2_normalization_2_relaxed.mod.py.
 namespace l2_normalization_2_relaxed {
 // Generated l2_normalization_2_relaxed test
@@ -2111,7 +1999,6 @@ TEST_F(ValidationTest, l2_normalization_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, l2_normalization_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            l2_normalization_2_relaxed::createTestModel_dynamic_output_shape,
@@ -2126,7 +2013,6 @@ TEST_F(ValidationTest, l2_normalization_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: l2_normalization_large_relaxed.mod.py.
 namespace l2_normalization_large_relaxed {
 // Generated l2_normalization_large_relaxed test
@@ -2149,7 +2035,6 @@ TEST_F(ValidationTest, l2_normalization_large_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, l2_normalization_large_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            l2_normalization_large_relaxed::createTestModel_dynamic_output_shape,
@@ -2164,7 +2049,6 @@ TEST_F(ValidationTest, l2_normalization_large_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: l2_normalization_relaxed.mod.py.
 namespace l2_normalization_relaxed {
 // Generated l2_normalization_relaxed test
@@ -2187,7 +2071,6 @@ TEST_F(ValidationTest, l2_normalization_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, l2_normalization_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            l2_normalization_relaxed::createTestModel_dynamic_output_shape,
@@ -2202,7 +2085,6 @@ TEST_F(ValidationTest, l2_normalization_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: l2_pool_float_2_relaxed.mod.py.
 namespace l2_pool_float_2_relaxed {
 // Generated l2_pool_float_2_relaxed test
@@ -2225,7 +2107,6 @@ TEST_F(ValidationTest, l2_pool_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, l2_pool_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            l2_pool_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -2240,7 +2121,6 @@ TEST_F(ValidationTest, l2_pool_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: l2_pool_float_large_relaxed.mod.py.
 namespace l2_pool_float_large_relaxed {
 // Generated l2_pool_float_large_relaxed test
@@ -2263,7 +2143,6 @@ TEST_F(ValidationTest, l2_pool_float_large_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, l2_pool_float_large_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            l2_pool_float_large_relaxed::createTestModel_dynamic_output_shape,
@@ -2278,7 +2157,6 @@ TEST_F(ValidationTest, l2_pool_float_large_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: l2_pool_float_relaxed.mod.py.
 namespace l2_pool_float_relaxed {
 // Generated l2_pool_float_relaxed test
@@ -2301,7 +2179,6 @@ TEST_F(ValidationTest, l2_pool_float_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, l2_pool_float_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            l2_pool_float_relaxed::createTestModel_dynamic_output_shape,
@@ -2316,7 +2193,6 @@ TEST_F(ValidationTest, l2_pool_float_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: local_response_norm_float_1_relaxed.mod.py.
 namespace local_response_norm_float_1_relaxed {
 // Generated local_response_norm_float_1_relaxed test
@@ -2339,7 +2215,6 @@ TEST_F(ValidationTest, local_response_norm_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, local_response_norm_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            local_response_norm_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -2354,7 +2229,6 @@ TEST_F(ValidationTest, local_response_norm_float_1_relaxed_dynamic_output_shape)
 }
 
 
-#endif
 // Generated from: local_response_norm_float_2_relaxed.mod.py.
 namespace local_response_norm_float_2_relaxed {
 // Generated local_response_norm_float_2_relaxed test
@@ -2377,7 +2251,6 @@ TEST_F(ValidationTest, local_response_norm_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, local_response_norm_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            local_response_norm_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -2392,7 +2265,6 @@ TEST_F(ValidationTest, local_response_norm_float_2_relaxed_dynamic_output_shape)
 }
 
 
-#endif
 // Generated from: local_response_norm_float_3_relaxed.mod.py.
 namespace local_response_norm_float_3_relaxed {
 // Generated local_response_norm_float_3_relaxed test
@@ -2415,7 +2287,6 @@ TEST_F(ValidationTest, local_response_norm_float_3_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, local_response_norm_float_3_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            local_response_norm_float_3_relaxed::createTestModel_dynamic_output_shape,
@@ -2430,7 +2301,6 @@ TEST_F(ValidationTest, local_response_norm_float_3_relaxed_dynamic_output_shape)
 }
 
 
-#endif
 // Generated from: local_response_norm_float_4_relaxed.mod.py.
 namespace local_response_norm_float_4_relaxed {
 // Generated local_response_norm_float_4_relaxed test
@@ -2453,7 +2323,6 @@ TEST_F(ValidationTest, local_response_norm_float_4_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, local_response_norm_float_4_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            local_response_norm_float_4_relaxed::createTestModel_dynamic_output_shape,
@@ -2468,7 +2337,6 @@ TEST_F(ValidationTest, local_response_norm_float_4_relaxed_dynamic_output_shape)
 }
 
 
-#endif
 // Generated from: logistic_float_1_relaxed.mod.py.
 namespace logistic_float_1_relaxed {
 // Generated logistic_float_1_relaxed test
@@ -2491,7 +2359,6 @@ TEST_F(ValidationTest, logistic_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, logistic_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            logistic_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -2506,7 +2373,6 @@ TEST_F(ValidationTest, logistic_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: logistic_float_2_relaxed.mod.py.
 namespace logistic_float_2_relaxed {
 // Generated logistic_float_2_relaxed test
@@ -2529,7 +2395,6 @@ TEST_F(ValidationTest, logistic_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, logistic_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            logistic_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -2544,7 +2409,6 @@ TEST_F(ValidationTest, logistic_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lsh_projection_2_relaxed.mod.py.
 namespace lsh_projection_2_relaxed {
 // Generated lsh_projection_2_relaxed test
@@ -2567,7 +2431,6 @@ TEST_F(ValidationTest, lsh_projection_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lsh_projection_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lsh_projection_2_relaxed::createTestModel_dynamic_output_shape,
@@ -2582,7 +2445,6 @@ TEST_F(ValidationTest, lsh_projection_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lsh_projection_relaxed.mod.py.
 namespace lsh_projection_relaxed {
 // Generated lsh_projection_relaxed test
@@ -2605,7 +2467,6 @@ TEST_F(ValidationTest, lsh_projection_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lsh_projection_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lsh_projection_relaxed::createTestModel_dynamic_output_shape,
@@ -2620,7 +2481,6 @@ TEST_F(ValidationTest, lsh_projection_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lsh_projection_weights_as_inputs_relaxed.mod.py.
 namespace lsh_projection_weights_as_inputs_relaxed {
 // Generated lsh_projection_weights_as_inputs_relaxed test
@@ -2643,7 +2503,6 @@ TEST_F(ValidationTest, lsh_projection_weights_as_inputs_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lsh_projection_weights_as_inputs_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lsh_projection_weights_as_inputs_relaxed::createTestModel_dynamic_output_shape,
@@ -2658,7 +2517,6 @@ TEST_F(ValidationTest, lsh_projection_weights_as_inputs_relaxed_dynamic_output_s
 }
 
 
-#endif
 // Generated from: lstm2_relaxed.mod.py.
 namespace lstm2_relaxed {
 // Generated lstm2_relaxed test
@@ -2681,7 +2539,6 @@ TEST_F(ValidationTest, lstm2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lstm2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lstm2_relaxed::createTestModel_dynamic_output_shape,
@@ -2696,7 +2553,6 @@ TEST_F(ValidationTest, lstm2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lstm2_state2_relaxed.mod.py.
 namespace lstm2_state2_relaxed {
 // Generated lstm2_state2_relaxed test
@@ -2719,7 +2575,6 @@ TEST_F(ValidationTest, lstm2_state2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lstm2_state2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lstm2_state2_relaxed::createTestModel_dynamic_output_shape,
@@ -2734,7 +2589,6 @@ TEST_F(ValidationTest, lstm2_state2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lstm2_state_relaxed.mod.py.
 namespace lstm2_state_relaxed {
 // Generated lstm2_state_relaxed test
@@ -2757,7 +2611,6 @@ TEST_F(ValidationTest, lstm2_state_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lstm2_state_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lstm2_state_relaxed::createTestModel_dynamic_output_shape,
@@ -2772,7 +2625,6 @@ TEST_F(ValidationTest, lstm2_state_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lstm3_relaxed.mod.py.
 namespace lstm3_relaxed {
 // Generated lstm3_relaxed test
@@ -2795,7 +2647,6 @@ TEST_F(ValidationTest, lstm3_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lstm3_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lstm3_relaxed::createTestModel_dynamic_output_shape,
@@ -2810,7 +2661,6 @@ TEST_F(ValidationTest, lstm3_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lstm3_state2_relaxed.mod.py.
 namespace lstm3_state2_relaxed {
 // Generated lstm3_state2_relaxed test
@@ -2833,7 +2683,6 @@ TEST_F(ValidationTest, lstm3_state2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lstm3_state2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lstm3_state2_relaxed::createTestModel_dynamic_output_shape,
@@ -2848,7 +2697,6 @@ TEST_F(ValidationTest, lstm3_state2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lstm3_state3_relaxed.mod.py.
 namespace lstm3_state3_relaxed {
 // Generated lstm3_state3_relaxed test
@@ -2871,7 +2719,6 @@ TEST_F(ValidationTest, lstm3_state3_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lstm3_state3_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lstm3_state3_relaxed::createTestModel_dynamic_output_shape,
@@ -2886,7 +2733,6 @@ TEST_F(ValidationTest, lstm3_state3_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lstm3_state_relaxed.mod.py.
 namespace lstm3_state_relaxed {
 // Generated lstm3_state_relaxed test
@@ -2909,7 +2755,6 @@ TEST_F(ValidationTest, lstm3_state_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lstm3_state_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lstm3_state_relaxed::createTestModel_dynamic_output_shape,
@@ -2924,7 +2769,6 @@ TEST_F(ValidationTest, lstm3_state_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lstm_relaxed.mod.py.
 namespace lstm_relaxed {
 // Generated lstm_relaxed test
@@ -2947,7 +2791,6 @@ TEST_F(ValidationTest, lstm_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lstm_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lstm_relaxed::createTestModel_dynamic_output_shape,
@@ -2962,7 +2805,6 @@ TEST_F(ValidationTest, lstm_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lstm_state2_relaxed.mod.py.
 namespace lstm_state2_relaxed {
 // Generated lstm_state2_relaxed test
@@ -2985,7 +2827,6 @@ TEST_F(ValidationTest, lstm_state2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lstm_state2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lstm_state2_relaxed::createTestModel_dynamic_output_shape,
@@ -3000,7 +2841,6 @@ TEST_F(ValidationTest, lstm_state2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: lstm_state_relaxed.mod.py.
 namespace lstm_state_relaxed {
 // Generated lstm_state_relaxed test
@@ -3023,7 +2863,6 @@ TEST_F(ValidationTest, lstm_state_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, lstm_state_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            lstm_state_relaxed::createTestModel_dynamic_output_shape,
@@ -3038,7 +2877,6 @@ TEST_F(ValidationTest, lstm_state_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: max_pool_float_1_relaxed.mod.py.
 namespace max_pool_float_1_relaxed {
 // Generated max_pool_float_1_relaxed test
@@ -3061,7 +2899,6 @@ TEST_F(ValidationTest, max_pool_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, max_pool_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            max_pool_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -3076,7 +2913,6 @@ TEST_F(ValidationTest, max_pool_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: max_pool_float_2_relaxed.mod.py.
 namespace max_pool_float_2_relaxed {
 // Generated max_pool_float_2_relaxed test
@@ -3099,7 +2935,6 @@ TEST_F(ValidationTest, max_pool_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, max_pool_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            max_pool_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -3114,7 +2949,6 @@ TEST_F(ValidationTest, max_pool_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: max_pool_float_3_relaxed.mod.py.
 namespace max_pool_float_3_relaxed {
 // Generated max_pool_float_3_relaxed test
@@ -3137,7 +2971,6 @@ TEST_F(ValidationTest, max_pool_float_3_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, max_pool_float_3_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            max_pool_float_3_relaxed::createTestModel_dynamic_output_shape,
@@ -3152,7 +2985,6 @@ TEST_F(ValidationTest, max_pool_float_3_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: max_pool_float_4_relaxed.mod.py.
 namespace max_pool_float_4_relaxed {
 // Generated max_pool_float_4_relaxed test
@@ -3175,7 +3007,6 @@ TEST_F(ValidationTest, max_pool_float_4_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, max_pool_float_4_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            max_pool_float_4_relaxed::createTestModel_dynamic_output_shape,
@@ -3190,7 +3021,6 @@ TEST_F(ValidationTest, max_pool_float_4_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: mean.mod.py.
 namespace mean {
 // Generated mean test
@@ -3213,7 +3043,6 @@ TEST_F(ValidationTest, mean) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mean_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mean::createTestModel_dynamic_output_shape,
@@ -3228,7 +3057,6 @@ TEST_F(ValidationTest, mean_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: mean_float_1.mod.py.
 namespace mean_float_1 {
 // Generated mean_float_1 test
@@ -3251,7 +3079,6 @@ TEST_F(ValidationTest, mean_float_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mean_float_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mean_float_1::createTestModel_dynamic_output_shape,
@@ -3266,7 +3093,6 @@ TEST_F(ValidationTest, mean_float_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: mean_float_1_relaxed.mod.py.
 namespace mean_float_1_relaxed {
 // Generated mean_float_1_relaxed test
@@ -3289,7 +3115,6 @@ TEST_F(ValidationTest, mean_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mean_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mean_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -3304,7 +3129,6 @@ TEST_F(ValidationTest, mean_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: mean_float_2.mod.py.
 namespace mean_float_2 {
 // Generated mean_float_2 test
@@ -3327,7 +3151,6 @@ TEST_F(ValidationTest, mean_float_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mean_float_2_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mean_float_2::createTestModel_dynamic_output_shape,
@@ -3342,7 +3165,6 @@ TEST_F(ValidationTest, mean_float_2_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: mean_float_2_relaxed.mod.py.
 namespace mean_float_2_relaxed {
 // Generated mean_float_2_relaxed test
@@ -3365,7 +3187,6 @@ TEST_F(ValidationTest, mean_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mean_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mean_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -3380,7 +3201,6 @@ TEST_F(ValidationTest, mean_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: mean_quant8_1.mod.py.
 namespace mean_quant8_1 {
 // Generated mean_quant8_1 test
@@ -3403,7 +3223,6 @@ TEST_F(ValidationTest, mean_quant8_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mean_quant8_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mean_quant8_1::createTestModel_dynamic_output_shape,
@@ -3418,7 +3237,6 @@ TEST_F(ValidationTest, mean_quant8_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: mean_quant8_2.mod.py.
 namespace mean_quant8_2 {
 // Generated mean_quant8_2 test
@@ -3441,7 +3259,6 @@ TEST_F(ValidationTest, mean_quant8_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mean_quant8_2_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mean_quant8_2::createTestModel_dynamic_output_shape,
@@ -3456,7 +3273,6 @@ TEST_F(ValidationTest, mean_quant8_2_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: mean_relaxed.mod.py.
 namespace mean_relaxed {
 // Generated mean_relaxed test
@@ -3479,7 +3295,6 @@ TEST_F(ValidationTest, mean_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mean_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mean_relaxed::createTestModel_dynamic_output_shape,
@@ -3494,7 +3309,6 @@ TEST_F(ValidationTest, mean_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: mobilenet_224_gender_basic_fixed_relaxed.mod.py.
 namespace mobilenet_224_gender_basic_fixed_relaxed {
 // Generated mobilenet_224_gender_basic_fixed_relaxed test
@@ -3517,7 +3331,6 @@ TEST_F(ValidationTest, mobilenet_224_gender_basic_fixed_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mobilenet_224_gender_basic_fixed_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mobilenet_224_gender_basic_fixed_relaxed::createTestModel_dynamic_output_shape,
@@ -3532,7 +3345,6 @@ TEST_F(ValidationTest, mobilenet_224_gender_basic_fixed_relaxed_dynamic_output_s
 }
 
 
-#endif
 // Generated from: mul_relaxed.mod.py.
 namespace mul_relaxed {
 // Generated mul_relaxed test
@@ -3555,7 +3367,6 @@ TEST_F(ValidationTest, mul_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mul_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mul_relaxed::createTestModel_dynamic_output_shape,
@@ -3570,7 +3381,6 @@ TEST_F(ValidationTest, mul_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: mul_relu_relaxed.mod.py.
 namespace mul_relu_relaxed {
 // Generated mul_relu_relaxed test
@@ -3593,7 +3403,6 @@ TEST_F(ValidationTest, mul_relu_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, mul_relu_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            mul_relu_relaxed::createTestModel_dynamic_output_shape,
@@ -3608,7 +3417,6 @@ TEST_F(ValidationTest, mul_relu_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: pad.mod.py.
 namespace pad {
 // Generated pad test
@@ -3631,7 +3439,6 @@ TEST_F(ValidationTest, pad) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, pad_dynamic_output_shape) {
   generated_tests::Execute(device,
                            pad::createTestModel_dynamic_output_shape,
@@ -3646,7 +3453,6 @@ TEST_F(ValidationTest, pad_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: pad_float_1.mod.py.
 namespace pad_float_1 {
 // Generated pad_float_1 test
@@ -3669,7 +3475,6 @@ TEST_F(ValidationTest, pad_float_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, pad_float_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            pad_float_1::createTestModel_dynamic_output_shape,
@@ -3684,7 +3489,6 @@ TEST_F(ValidationTest, pad_float_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: pad_float_1_relaxed.mod.py.
 namespace pad_float_1_relaxed {
 // Generated pad_float_1_relaxed test
@@ -3707,7 +3511,6 @@ TEST_F(ValidationTest, pad_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, pad_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            pad_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -3722,7 +3525,6 @@ TEST_F(ValidationTest, pad_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: pad_relaxed.mod.py.
 namespace pad_relaxed {
 // Generated pad_relaxed test
@@ -3745,7 +3547,6 @@ TEST_F(ValidationTest, pad_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, pad_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            pad_relaxed::createTestModel_dynamic_output_shape,
@@ -3760,7 +3561,6 @@ TEST_F(ValidationTest, pad_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: relu1_float_1_relaxed.mod.py.
 namespace relu1_float_1_relaxed {
 // Generated relu1_float_1_relaxed test
@@ -3783,7 +3583,6 @@ TEST_F(ValidationTest, relu1_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, relu1_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            relu1_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -3798,7 +3597,6 @@ TEST_F(ValidationTest, relu1_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: relu1_float_2_relaxed.mod.py.
 namespace relu1_float_2_relaxed {
 // Generated relu1_float_2_relaxed test
@@ -3821,7 +3619,6 @@ TEST_F(ValidationTest, relu1_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, relu1_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            relu1_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -3836,7 +3633,6 @@ TEST_F(ValidationTest, relu1_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: relu6_float_1_relaxed.mod.py.
 namespace relu6_float_1_relaxed {
 // Generated relu6_float_1_relaxed test
@@ -3859,7 +3655,6 @@ TEST_F(ValidationTest, relu6_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, relu6_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            relu6_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -3874,7 +3669,6 @@ TEST_F(ValidationTest, relu6_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: relu6_float_2_relaxed.mod.py.
 namespace relu6_float_2_relaxed {
 // Generated relu6_float_2_relaxed test
@@ -3897,7 +3691,6 @@ TEST_F(ValidationTest, relu6_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, relu6_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            relu6_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -3912,7 +3705,6 @@ TEST_F(ValidationTest, relu6_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: relu_float_1_relaxed.mod.py.
 namespace relu_float_1_relaxed {
 // Generated relu_float_1_relaxed test
@@ -3935,7 +3727,6 @@ TEST_F(ValidationTest, relu_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, relu_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            relu_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -3950,7 +3741,6 @@ TEST_F(ValidationTest, relu_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: relu_float_2_relaxed.mod.py.
 namespace relu_float_2_relaxed {
 // Generated relu_float_2_relaxed test
@@ -3973,7 +3763,6 @@ TEST_F(ValidationTest, relu_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, relu_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            relu_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -3988,7 +3777,6 @@ TEST_F(ValidationTest, relu_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: reshape_relaxed.mod.py.
 namespace reshape_relaxed {
 // Generated reshape_relaxed test
@@ -4011,7 +3799,6 @@ TEST_F(ValidationTest, reshape_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, reshape_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            reshape_relaxed::createTestModel_dynamic_output_shape,
@@ -4026,7 +3813,6 @@ TEST_F(ValidationTest, reshape_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: reshape_weights_as_inputs_relaxed.mod.py.
 namespace reshape_weights_as_inputs_relaxed {
 // Generated reshape_weights_as_inputs_relaxed test
@@ -4049,7 +3835,6 @@ TEST_F(ValidationTest, reshape_weights_as_inputs_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, reshape_weights_as_inputs_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            reshape_weights_as_inputs_relaxed::createTestModel_dynamic_output_shape,
@@ -4064,7 +3849,6 @@ TEST_F(ValidationTest, reshape_weights_as_inputs_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: resize_bilinear_2_relaxed.mod.py.
 namespace resize_bilinear_2_relaxed {
 // Generated resize_bilinear_2_relaxed test
@@ -4087,7 +3871,6 @@ TEST_F(ValidationTest, resize_bilinear_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, resize_bilinear_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            resize_bilinear_2_relaxed::createTestModel_dynamic_output_shape,
@@ -4102,7 +3885,6 @@ TEST_F(ValidationTest, resize_bilinear_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: resize_bilinear_relaxed.mod.py.
 namespace resize_bilinear_relaxed {
 // Generated resize_bilinear_relaxed test
@@ -4125,7 +3907,6 @@ TEST_F(ValidationTest, resize_bilinear_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, resize_bilinear_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            resize_bilinear_relaxed::createTestModel_dynamic_output_shape,
@@ -4140,7 +3921,6 @@ TEST_F(ValidationTest, resize_bilinear_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: rnn_relaxed.mod.py.
 namespace rnn_relaxed {
 // Generated rnn_relaxed test
@@ -4163,7 +3943,6 @@ TEST_F(ValidationTest, rnn_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, rnn_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            rnn_relaxed::createTestModel_dynamic_output_shape,
@@ -4178,7 +3957,6 @@ TEST_F(ValidationTest, rnn_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: rnn_state_relaxed.mod.py.
 namespace rnn_state_relaxed {
 // Generated rnn_state_relaxed test
@@ -4201,7 +3979,6 @@ TEST_F(ValidationTest, rnn_state_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, rnn_state_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            rnn_state_relaxed::createTestModel_dynamic_output_shape,
@@ -4216,7 +3993,6 @@ TEST_F(ValidationTest, rnn_state_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: softmax_float_1_relaxed.mod.py.
 namespace softmax_float_1_relaxed {
 // Generated softmax_float_1_relaxed test
@@ -4239,7 +4015,6 @@ TEST_F(ValidationTest, softmax_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, softmax_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            softmax_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -4254,7 +4029,6 @@ TEST_F(ValidationTest, softmax_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: softmax_float_2_relaxed.mod.py.
 namespace softmax_float_2_relaxed {
 // Generated softmax_float_2_relaxed test
@@ -4277,7 +4051,6 @@ TEST_F(ValidationTest, softmax_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, softmax_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            softmax_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -4292,7 +4065,6 @@ TEST_F(ValidationTest, softmax_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch.mod.py.
 namespace space_to_batch {
 // Generated space_to_batch test
@@ -4315,7 +4087,6 @@ TEST_F(ValidationTest, space_to_batch) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch::createTestModel_dynamic_output_shape,
@@ -4330,7 +4101,6 @@ TEST_F(ValidationTest, space_to_batch_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch_float_1.mod.py.
 namespace space_to_batch_float_1 {
 // Generated space_to_batch_float_1 test
@@ -4353,7 +4123,6 @@ TEST_F(ValidationTest, space_to_batch_float_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_float_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch_float_1::createTestModel_dynamic_output_shape,
@@ -4368,7 +4137,6 @@ TEST_F(ValidationTest, space_to_batch_float_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch_float_1_relaxed.mod.py.
 namespace space_to_batch_float_1_relaxed {
 // Generated space_to_batch_float_1_relaxed test
@@ -4391,7 +4159,6 @@ TEST_F(ValidationTest, space_to_batch_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -4406,7 +4173,6 @@ TEST_F(ValidationTest, space_to_batch_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch_float_2.mod.py.
 namespace space_to_batch_float_2 {
 // Generated space_to_batch_float_2 test
@@ -4429,7 +4195,6 @@ TEST_F(ValidationTest, space_to_batch_float_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_float_2_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch_float_2::createTestModel_dynamic_output_shape,
@@ -4444,7 +4209,6 @@ TEST_F(ValidationTest, space_to_batch_float_2_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch_float_2_relaxed.mod.py.
 namespace space_to_batch_float_2_relaxed {
 // Generated space_to_batch_float_2_relaxed test
@@ -4467,7 +4231,6 @@ TEST_F(ValidationTest, space_to_batch_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -4482,7 +4245,6 @@ TEST_F(ValidationTest, space_to_batch_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch_float_3.mod.py.
 namespace space_to_batch_float_3 {
 // Generated space_to_batch_float_3 test
@@ -4505,7 +4267,6 @@ TEST_F(ValidationTest, space_to_batch_float_3) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_float_3_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch_float_3::createTestModel_dynamic_output_shape,
@@ -4520,7 +4281,6 @@ TEST_F(ValidationTest, space_to_batch_float_3_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch_float_3_relaxed.mod.py.
 namespace space_to_batch_float_3_relaxed {
 // Generated space_to_batch_float_3_relaxed test
@@ -4543,7 +4303,6 @@ TEST_F(ValidationTest, space_to_batch_float_3_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_float_3_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch_float_3_relaxed::createTestModel_dynamic_output_shape,
@@ -4558,7 +4317,6 @@ TEST_F(ValidationTest, space_to_batch_float_3_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch_quant8_1.mod.py.
 namespace space_to_batch_quant8_1 {
 // Generated space_to_batch_quant8_1 test
@@ -4581,7 +4339,6 @@ TEST_F(ValidationTest, space_to_batch_quant8_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_quant8_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch_quant8_1::createTestModel_dynamic_output_shape,
@@ -4596,7 +4353,6 @@ TEST_F(ValidationTest, space_to_batch_quant8_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch_quant8_2.mod.py.
 namespace space_to_batch_quant8_2 {
 // Generated space_to_batch_quant8_2 test
@@ -4619,7 +4375,6 @@ TEST_F(ValidationTest, space_to_batch_quant8_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_quant8_2_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch_quant8_2::createTestModel_dynamic_output_shape,
@@ -4634,7 +4389,6 @@ TEST_F(ValidationTest, space_to_batch_quant8_2_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch_quant8_3.mod.py.
 namespace space_to_batch_quant8_3 {
 // Generated space_to_batch_quant8_3 test
@@ -4657,7 +4411,6 @@ TEST_F(ValidationTest, space_to_batch_quant8_3) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_quant8_3_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch_quant8_3::createTestModel_dynamic_output_shape,
@@ -4672,7 +4425,6 @@ TEST_F(ValidationTest, space_to_batch_quant8_3_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_batch_relaxed.mod.py.
 namespace space_to_batch_relaxed {
 // Generated space_to_batch_relaxed test
@@ -4695,7 +4447,6 @@ TEST_F(ValidationTest, space_to_batch_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_batch_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_batch_relaxed::createTestModel_dynamic_output_shape,
@@ -4710,7 +4461,6 @@ TEST_F(ValidationTest, space_to_batch_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_depth_float_1_relaxed.mod.py.
 namespace space_to_depth_float_1_relaxed {
 // Generated space_to_depth_float_1_relaxed test
@@ -4733,7 +4483,6 @@ TEST_F(ValidationTest, space_to_depth_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_depth_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_depth_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -4748,7 +4497,6 @@ TEST_F(ValidationTest, space_to_depth_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_depth_float_2_relaxed.mod.py.
 namespace space_to_depth_float_2_relaxed {
 // Generated space_to_depth_float_2_relaxed test
@@ -4771,7 +4519,6 @@ TEST_F(ValidationTest, space_to_depth_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_depth_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_depth_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -4786,7 +4533,6 @@ TEST_F(ValidationTest, space_to_depth_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: space_to_depth_float_3_relaxed.mod.py.
 namespace space_to_depth_float_3_relaxed {
 // Generated space_to_depth_float_3_relaxed test
@@ -4809,7 +4555,6 @@ TEST_F(ValidationTest, space_to_depth_float_3_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, space_to_depth_float_3_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            space_to_depth_float_3_relaxed::createTestModel_dynamic_output_shape,
@@ -4824,7 +4569,6 @@ TEST_F(ValidationTest, space_to_depth_float_3_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: squeeze.mod.py.
 namespace squeeze {
 // Generated squeeze test
@@ -4847,7 +4591,6 @@ TEST_F(ValidationTest, squeeze) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, squeeze_dynamic_output_shape) {
   generated_tests::Execute(device,
                            squeeze::createTestModel_dynamic_output_shape,
@@ -4862,7 +4605,6 @@ TEST_F(ValidationTest, squeeze_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: squeeze_float_1.mod.py.
 namespace squeeze_float_1 {
 // Generated squeeze_float_1 test
@@ -4885,7 +4627,6 @@ TEST_F(ValidationTest, squeeze_float_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, squeeze_float_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            squeeze_float_1::createTestModel_dynamic_output_shape,
@@ -4900,7 +4641,6 @@ TEST_F(ValidationTest, squeeze_float_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: squeeze_float_1_relaxed.mod.py.
 namespace squeeze_float_1_relaxed {
 // Generated squeeze_float_1_relaxed test
@@ -4923,7 +4663,6 @@ TEST_F(ValidationTest, squeeze_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, squeeze_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            squeeze_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -4938,7 +4677,6 @@ TEST_F(ValidationTest, squeeze_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: squeeze_quant8_1.mod.py.
 namespace squeeze_quant8_1 {
 // Generated squeeze_quant8_1 test
@@ -4961,7 +4699,6 @@ TEST_F(ValidationTest, squeeze_quant8_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, squeeze_quant8_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            squeeze_quant8_1::createTestModel_dynamic_output_shape,
@@ -4976,7 +4713,6 @@ TEST_F(ValidationTest, squeeze_quant8_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: squeeze_relaxed.mod.py.
 namespace squeeze_relaxed {
 // Generated squeeze_relaxed test
@@ -4999,7 +4735,6 @@ TEST_F(ValidationTest, squeeze_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, squeeze_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            squeeze_relaxed::createTestModel_dynamic_output_shape,
@@ -5014,7 +4749,6 @@ TEST_F(ValidationTest, squeeze_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice.mod.py.
 namespace strided_slice {
 // Generated strided_slice test
@@ -5037,7 +4771,6 @@ TEST_F(ValidationTest, strided_slice) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice::createTestModel_dynamic_output_shape,
@@ -5052,7 +4785,6 @@ TEST_F(ValidationTest, strided_slice_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_1.mod.py.
 namespace strided_slice_float_1 {
 // Generated strided_slice_float_1 test
@@ -5075,7 +4807,6 @@ TEST_F(ValidationTest, strided_slice_float_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_1::createTestModel_dynamic_output_shape,
@@ -5090,7 +4821,6 @@ TEST_F(ValidationTest, strided_slice_float_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_10.mod.py.
 namespace strided_slice_float_10 {
 // Generated strided_slice_float_10 test
@@ -5113,7 +4843,6 @@ TEST_F(ValidationTest, strided_slice_float_10) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_10_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_10::createTestModel_dynamic_output_shape,
@@ -5128,7 +4857,6 @@ TEST_F(ValidationTest, strided_slice_float_10_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_10_relaxed.mod.py.
 namespace strided_slice_float_10_relaxed {
 // Generated strided_slice_float_10_relaxed test
@@ -5151,7 +4879,6 @@ TEST_F(ValidationTest, strided_slice_float_10_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_10_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_10_relaxed::createTestModel_dynamic_output_shape,
@@ -5166,7 +4893,6 @@ TEST_F(ValidationTest, strided_slice_float_10_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_11.mod.py.
 namespace strided_slice_float_11 {
 // Generated strided_slice_float_11 test
@@ -5189,7 +4915,6 @@ TEST_F(ValidationTest, strided_slice_float_11) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_11_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_11::createTestModel_dynamic_output_shape,
@@ -5204,7 +4929,6 @@ TEST_F(ValidationTest, strided_slice_float_11_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_11_relaxed.mod.py.
 namespace strided_slice_float_11_relaxed {
 // Generated strided_slice_float_11_relaxed test
@@ -5227,7 +4951,6 @@ TEST_F(ValidationTest, strided_slice_float_11_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_11_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_11_relaxed::createTestModel_dynamic_output_shape,
@@ -5242,7 +4965,6 @@ TEST_F(ValidationTest, strided_slice_float_11_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_1_relaxed.mod.py.
 namespace strided_slice_float_1_relaxed {
 // Generated strided_slice_float_1_relaxed test
@@ -5265,7 +4987,6 @@ TEST_F(ValidationTest, strided_slice_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -5280,7 +5001,6 @@ TEST_F(ValidationTest, strided_slice_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_2.mod.py.
 namespace strided_slice_float_2 {
 // Generated strided_slice_float_2 test
@@ -5303,7 +5023,6 @@ TEST_F(ValidationTest, strided_slice_float_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_2_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_2::createTestModel_dynamic_output_shape,
@@ -5318,7 +5037,6 @@ TEST_F(ValidationTest, strided_slice_float_2_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_2_relaxed.mod.py.
 namespace strided_slice_float_2_relaxed {
 // Generated strided_slice_float_2_relaxed test
@@ -5341,7 +5059,6 @@ TEST_F(ValidationTest, strided_slice_float_2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_2_relaxed::createTestModel_dynamic_output_shape,
@@ -5356,7 +5073,6 @@ TEST_F(ValidationTest, strided_slice_float_2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_3.mod.py.
 namespace strided_slice_float_3 {
 // Generated strided_slice_float_3 test
@@ -5379,7 +5095,6 @@ TEST_F(ValidationTest, strided_slice_float_3) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_3_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_3::createTestModel_dynamic_output_shape,
@@ -5394,7 +5109,6 @@ TEST_F(ValidationTest, strided_slice_float_3_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_3_relaxed.mod.py.
 namespace strided_slice_float_3_relaxed {
 // Generated strided_slice_float_3_relaxed test
@@ -5417,7 +5131,6 @@ TEST_F(ValidationTest, strided_slice_float_3_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_3_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_3_relaxed::createTestModel_dynamic_output_shape,
@@ -5432,7 +5145,6 @@ TEST_F(ValidationTest, strided_slice_float_3_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_4.mod.py.
 namespace strided_slice_float_4 {
 // Generated strided_slice_float_4 test
@@ -5455,7 +5167,6 @@ TEST_F(ValidationTest, strided_slice_float_4) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_4_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_4::createTestModel_dynamic_output_shape,
@@ -5470,7 +5181,6 @@ TEST_F(ValidationTest, strided_slice_float_4_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_4_relaxed.mod.py.
 namespace strided_slice_float_4_relaxed {
 // Generated strided_slice_float_4_relaxed test
@@ -5493,7 +5203,6 @@ TEST_F(ValidationTest, strided_slice_float_4_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_4_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_4_relaxed::createTestModel_dynamic_output_shape,
@@ -5508,7 +5217,6 @@ TEST_F(ValidationTest, strided_slice_float_4_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_5.mod.py.
 namespace strided_slice_float_5 {
 // Generated strided_slice_float_5 test
@@ -5531,7 +5239,6 @@ TEST_F(ValidationTest, strided_slice_float_5) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_5_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_5::createTestModel_dynamic_output_shape,
@@ -5546,7 +5253,6 @@ TEST_F(ValidationTest, strided_slice_float_5_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_5_relaxed.mod.py.
 namespace strided_slice_float_5_relaxed {
 // Generated strided_slice_float_5_relaxed test
@@ -5569,7 +5275,6 @@ TEST_F(ValidationTest, strided_slice_float_5_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_5_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_5_relaxed::createTestModel_dynamic_output_shape,
@@ -5584,7 +5289,6 @@ TEST_F(ValidationTest, strided_slice_float_5_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_6.mod.py.
 namespace strided_slice_float_6 {
 // Generated strided_slice_float_6 test
@@ -5607,7 +5311,6 @@ TEST_F(ValidationTest, strided_slice_float_6) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_6_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_6::createTestModel_dynamic_output_shape,
@@ -5622,7 +5325,6 @@ TEST_F(ValidationTest, strided_slice_float_6_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_6_relaxed.mod.py.
 namespace strided_slice_float_6_relaxed {
 // Generated strided_slice_float_6_relaxed test
@@ -5645,7 +5347,6 @@ TEST_F(ValidationTest, strided_slice_float_6_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_6_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_6_relaxed::createTestModel_dynamic_output_shape,
@@ -5660,7 +5361,6 @@ TEST_F(ValidationTest, strided_slice_float_6_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_7.mod.py.
 namespace strided_slice_float_7 {
 // Generated strided_slice_float_7 test
@@ -5683,7 +5383,6 @@ TEST_F(ValidationTest, strided_slice_float_7) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_7_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_7::createTestModel_dynamic_output_shape,
@@ -5698,7 +5397,6 @@ TEST_F(ValidationTest, strided_slice_float_7_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_7_relaxed.mod.py.
 namespace strided_slice_float_7_relaxed {
 // Generated strided_slice_float_7_relaxed test
@@ -5721,7 +5419,6 @@ TEST_F(ValidationTest, strided_slice_float_7_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_7_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_7_relaxed::createTestModel_dynamic_output_shape,
@@ -5736,7 +5433,6 @@ TEST_F(ValidationTest, strided_slice_float_7_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_8.mod.py.
 namespace strided_slice_float_8 {
 // Generated strided_slice_float_8 test
@@ -5759,7 +5455,6 @@ TEST_F(ValidationTest, strided_slice_float_8) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_8_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_8::createTestModel_dynamic_output_shape,
@@ -5774,7 +5469,6 @@ TEST_F(ValidationTest, strided_slice_float_8_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_8_relaxed.mod.py.
 namespace strided_slice_float_8_relaxed {
 // Generated strided_slice_float_8_relaxed test
@@ -5797,7 +5491,6 @@ TEST_F(ValidationTest, strided_slice_float_8_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_8_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_8_relaxed::createTestModel_dynamic_output_shape,
@@ -5812,7 +5505,6 @@ TEST_F(ValidationTest, strided_slice_float_8_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_9.mod.py.
 namespace strided_slice_float_9 {
 // Generated strided_slice_float_9 test
@@ -5835,7 +5527,6 @@ TEST_F(ValidationTest, strided_slice_float_9) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_9_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_9::createTestModel_dynamic_output_shape,
@@ -5850,7 +5541,6 @@ TEST_F(ValidationTest, strided_slice_float_9_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_float_9_relaxed.mod.py.
 namespace strided_slice_float_9_relaxed {
 // Generated strided_slice_float_9_relaxed test
@@ -5873,7 +5563,6 @@ TEST_F(ValidationTest, strided_slice_float_9_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_float_9_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_float_9_relaxed::createTestModel_dynamic_output_shape,
@@ -5888,7 +5577,6 @@ TEST_F(ValidationTest, strided_slice_float_9_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_qaunt8_10.mod.py.
 namespace strided_slice_qaunt8_10 {
 // Generated strided_slice_qaunt8_10 test
@@ -5911,7 +5599,6 @@ TEST_F(ValidationTest, strided_slice_qaunt8_10) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_qaunt8_10_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_qaunt8_10::createTestModel_dynamic_output_shape,
@@ -5926,7 +5613,6 @@ TEST_F(ValidationTest, strided_slice_qaunt8_10_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_qaunt8_11.mod.py.
 namespace strided_slice_qaunt8_11 {
 // Generated strided_slice_qaunt8_11 test
@@ -5949,7 +5635,6 @@ TEST_F(ValidationTest, strided_slice_qaunt8_11) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_qaunt8_11_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_qaunt8_11::createTestModel_dynamic_output_shape,
@@ -5964,7 +5649,6 @@ TEST_F(ValidationTest, strided_slice_qaunt8_11_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_quant8_1.mod.py.
 namespace strided_slice_quant8_1 {
 // Generated strided_slice_quant8_1 test
@@ -5987,7 +5671,6 @@ TEST_F(ValidationTest, strided_slice_quant8_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_quant8_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_quant8_1::createTestModel_dynamic_output_shape,
@@ -6002,7 +5685,6 @@ TEST_F(ValidationTest, strided_slice_quant8_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_quant8_2.mod.py.
 namespace strided_slice_quant8_2 {
 // Generated strided_slice_quant8_2 test
@@ -6025,7 +5707,6 @@ TEST_F(ValidationTest, strided_slice_quant8_2) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_quant8_2_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_quant8_2::createTestModel_dynamic_output_shape,
@@ -6040,7 +5721,6 @@ TEST_F(ValidationTest, strided_slice_quant8_2_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_quant8_3.mod.py.
 namespace strided_slice_quant8_3 {
 // Generated strided_slice_quant8_3 test
@@ -6063,7 +5743,6 @@ TEST_F(ValidationTest, strided_slice_quant8_3) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_quant8_3_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_quant8_3::createTestModel_dynamic_output_shape,
@@ -6078,7 +5757,6 @@ TEST_F(ValidationTest, strided_slice_quant8_3_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_quant8_4.mod.py.
 namespace strided_slice_quant8_4 {
 // Generated strided_slice_quant8_4 test
@@ -6101,7 +5779,6 @@ TEST_F(ValidationTest, strided_slice_quant8_4) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_quant8_4_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_quant8_4::createTestModel_dynamic_output_shape,
@@ -6116,7 +5793,6 @@ TEST_F(ValidationTest, strided_slice_quant8_4_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_quant8_5.mod.py.
 namespace strided_slice_quant8_5 {
 // Generated strided_slice_quant8_5 test
@@ -6139,7 +5815,6 @@ TEST_F(ValidationTest, strided_slice_quant8_5) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_quant8_5_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_quant8_5::createTestModel_dynamic_output_shape,
@@ -6154,7 +5829,6 @@ TEST_F(ValidationTest, strided_slice_quant8_5_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_quant8_6.mod.py.
 namespace strided_slice_quant8_6 {
 // Generated strided_slice_quant8_6 test
@@ -6177,7 +5851,6 @@ TEST_F(ValidationTest, strided_slice_quant8_6) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_quant8_6_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_quant8_6::createTestModel_dynamic_output_shape,
@@ -6192,7 +5865,6 @@ TEST_F(ValidationTest, strided_slice_quant8_6_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_quant8_7.mod.py.
 namespace strided_slice_quant8_7 {
 // Generated strided_slice_quant8_7 test
@@ -6215,7 +5887,6 @@ TEST_F(ValidationTest, strided_slice_quant8_7) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_quant8_7_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_quant8_7::createTestModel_dynamic_output_shape,
@@ -6230,7 +5901,6 @@ TEST_F(ValidationTest, strided_slice_quant8_7_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_quant8_8.mod.py.
 namespace strided_slice_quant8_8 {
 // Generated strided_slice_quant8_8 test
@@ -6253,7 +5923,6 @@ TEST_F(ValidationTest, strided_slice_quant8_8) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_quant8_8_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_quant8_8::createTestModel_dynamic_output_shape,
@@ -6268,7 +5937,6 @@ TEST_F(ValidationTest, strided_slice_quant8_8_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_quant8_9.mod.py.
 namespace strided_slice_quant8_9 {
 // Generated strided_slice_quant8_9 test
@@ -6291,7 +5959,6 @@ TEST_F(ValidationTest, strided_slice_quant8_9) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_quant8_9_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_quant8_9::createTestModel_dynamic_output_shape,
@@ -6306,7 +5973,6 @@ TEST_F(ValidationTest, strided_slice_quant8_9_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: strided_slice_relaxed.mod.py.
 namespace strided_slice_relaxed {
 // Generated strided_slice_relaxed test
@@ -6329,7 +5995,6 @@ TEST_F(ValidationTest, strided_slice_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, strided_slice_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            strided_slice_relaxed::createTestModel_dynamic_output_shape,
@@ -6344,7 +6009,6 @@ TEST_F(ValidationTest, strided_slice_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: sub.mod.py.
 namespace sub {
 // Generated sub test
@@ -6367,7 +6031,6 @@ TEST_F(ValidationTest, sub) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, sub_dynamic_output_shape) {
   generated_tests::Execute(device,
                            sub::createTestModel_dynamic_output_shape,
@@ -6382,7 +6045,6 @@ TEST_F(ValidationTest, sub_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: sub_broadcast_float.mod.py.
 namespace sub_broadcast_float {
 // Generated sub_broadcast_float test
@@ -6405,7 +6067,6 @@ TEST_F(ValidationTest, sub_broadcast_float) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, sub_broadcast_float_dynamic_output_shape) {
   generated_tests::Execute(device,
                            sub_broadcast_float::createTestModel_dynamic_output_shape,
@@ -6420,7 +6081,6 @@ TEST_F(ValidationTest, sub_broadcast_float_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: sub_broadcast_float_relaxed.mod.py.
 namespace sub_broadcast_float_relaxed {
 // Generated sub_broadcast_float_relaxed test
@@ -6443,7 +6103,6 @@ TEST_F(ValidationTest, sub_broadcast_float_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, sub_broadcast_float_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            sub_broadcast_float_relaxed::createTestModel_dynamic_output_shape,
@@ -6458,7 +6117,6 @@ TEST_F(ValidationTest, sub_broadcast_float_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: sub_relaxed.mod.py.
 namespace sub_relaxed {
 // Generated sub_relaxed test
@@ -6481,7 +6139,6 @@ TEST_F(ValidationTest, sub_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, sub_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            sub_relaxed::createTestModel_dynamic_output_shape,
@@ -6496,7 +6153,6 @@ TEST_F(ValidationTest, sub_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: svdf2_relaxed.mod.py.
 namespace svdf2_relaxed {
 // Generated svdf2_relaxed test
@@ -6519,7 +6175,6 @@ TEST_F(ValidationTest, svdf2_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, svdf2_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            svdf2_relaxed::createTestModel_dynamic_output_shape,
@@ -6534,7 +6189,6 @@ TEST_F(ValidationTest, svdf2_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: svdf_bias_present_relaxed.mod.py.
 namespace svdf_bias_present_relaxed {
 // Generated svdf_bias_present_relaxed test
@@ -6557,7 +6211,6 @@ TEST_F(ValidationTest, svdf_bias_present_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, svdf_bias_present_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            svdf_bias_present_relaxed::createTestModel_dynamic_output_shape,
@@ -6572,7 +6225,6 @@ TEST_F(ValidationTest, svdf_bias_present_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: svdf_relaxed.mod.py.
 namespace svdf_relaxed {
 // Generated svdf_relaxed test
@@ -6595,7 +6247,6 @@ TEST_F(ValidationTest, svdf_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, svdf_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            svdf_relaxed::createTestModel_dynamic_output_shape,
@@ -6610,7 +6261,6 @@ TEST_F(ValidationTest, svdf_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: svdf_state_relaxed.mod.py.
 namespace svdf_state_relaxed {
 // Generated svdf_state_relaxed test
@@ -6633,7 +6283,6 @@ TEST_F(ValidationTest, svdf_state_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, svdf_state_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            svdf_state_relaxed::createTestModel_dynamic_output_shape,
@@ -6648,7 +6297,6 @@ TEST_F(ValidationTest, svdf_state_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: tanh_relaxed.mod.py.
 namespace tanh_relaxed {
 // Generated tanh_relaxed test
@@ -6671,7 +6319,6 @@ TEST_F(ValidationTest, tanh_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, tanh_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            tanh_relaxed::createTestModel_dynamic_output_shape,
@@ -6686,7 +6333,6 @@ TEST_F(ValidationTest, tanh_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: transpose.mod.py.
 namespace transpose {
 // Generated transpose test
@@ -6709,7 +6355,6 @@ TEST_F(ValidationTest, transpose) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, transpose_dynamic_output_shape) {
   generated_tests::Execute(device,
                            transpose::createTestModel_dynamic_output_shape,
@@ -6724,7 +6369,6 @@ TEST_F(ValidationTest, transpose_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: transpose_float_1.mod.py.
 namespace transpose_float_1 {
 // Generated transpose_float_1 test
@@ -6747,7 +6391,6 @@ TEST_F(ValidationTest, transpose_float_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, transpose_float_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            transpose_float_1::createTestModel_dynamic_output_shape,
@@ -6762,7 +6405,6 @@ TEST_F(ValidationTest, transpose_float_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: transpose_float_1_relaxed.mod.py.
 namespace transpose_float_1_relaxed {
 // Generated transpose_float_1_relaxed test
@@ -6785,7 +6427,6 @@ TEST_F(ValidationTest, transpose_float_1_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, transpose_float_1_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            transpose_float_1_relaxed::createTestModel_dynamic_output_shape,
@@ -6800,7 +6441,6 @@ TEST_F(ValidationTest, transpose_float_1_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: transpose_quant8_1.mod.py.
 namespace transpose_quant8_1 {
 // Generated transpose_quant8_1 test
@@ -6823,7 +6463,6 @@ TEST_F(ValidationTest, transpose_quant8_1) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, transpose_quant8_1_dynamic_output_shape) {
   generated_tests::Execute(device,
                            transpose_quant8_1::createTestModel_dynamic_output_shape,
@@ -6838,7 +6477,6 @@ TEST_F(ValidationTest, transpose_quant8_1_dynamic_output_shape) {
 }
 
 
-#endif
 // Generated from: transpose_relaxed.mod.py.
 namespace transpose_relaxed {
 // Generated transpose_relaxed test
@@ -6861,7 +6499,6 @@ TEST_F(ValidationTest, transpose_relaxed) {
 }
 
 
-#ifdef NN_TEST_DYNAMIC_OUTPUT_SHAPE
 TEST_F(DynamicOutputShapeTest, transpose_relaxed_dynamic_output_shape) {
   generated_tests::Execute(device,
                            transpose_relaxed::createTestModel_dynamic_output_shape,
@@ -6876,4 +6513,3 @@ TEST_F(ValidationTest, transpose_relaxed_dynamic_output_shape) {
 }
 
 
-#endif
