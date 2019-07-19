@@ -68,6 +68,7 @@ cc_library_static {
     export_include_dirs: ["include"],
     srcs: [
         "Utils.cpp",
+        "MemoryUtils.cpp",
         "ExecutionBurstController.cpp",
         "ExecutionBurstServer.cpp",
     ],
@@ -122,6 +123,7 @@ cc_library_static {
         "ExecutionBurstServer.cpp",
         "GraphDump.cpp",
         "IndexedShapeWrapper.cpp",
+        "MemoryUtils.cpp",
         "OperationsUtils.cpp",
         "TokenHasher.cpp",
         "Utils.cpp",
