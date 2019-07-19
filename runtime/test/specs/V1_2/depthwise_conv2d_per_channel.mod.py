@@ -15,7 +15,7 @@
 
 # TEST 1: Same scales, zeroPoint = 0
 i1 = Input("op1", "TENSOR_QUANT8_ASYMM", "{1, 2, 2, 2}, 0.5f, 0")
-f1 = Parameter("op2", "TENSOR_QUANT8_SYMM_PER_CHANNEL", "{1, 2, 2, 2}, 0.0f, 0",
+f1 = Parameter("op2", "TENSOR_QUANT8_SYMM_PER_CHANNEL", "{1, 2, 2, 2}",
                [2, 4,  2, 0,  2, 2,  2, 0],
                extraParams = SymmPerChannelQuantParams(channelDim=3, scales=[0.5, 0.5]))
 b1 = Parameter("op3", "TENSOR_INT32", "{2}", [0, 0])
@@ -31,7 +31,7 @@ Example({
 
 # TEST 2: Different scales, zeroPoint=128
 i2 = Input("op1", "TENSOR_QUANT8_ASYMM", "{1, 3, 3, 2}, 0.5f, 128")
-f2 = Parameter("op2", "TENSOR_QUANT8_SYMM_PER_CHANNEL", "{1, 2, 2, 4}, 0.0f, 0",
+f2 = Parameter("op2", "TENSOR_QUANT8_SYMM_PER_CHANNEL", "{1, 2, 2, 4}",
                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                extraParams = SymmPerChannelQuantParams(channelDim=3, scales=[1.0, 0.5, 1.0, 0.5]))
 b2 = Parameter("op3", "TENSOR_INT32", "{4}", [4, 4, 4, 4])
@@ -50,7 +50,7 @@ layout = BoolScalar("layout", False) # NHWC
 
 # TEST 3: With layout param
 i3 = Input("op1", "TENSOR_QUANT8_ASYMM", "{1, 3, 3, 2}, 0.5f, 128")
-f3 = Parameter("op2", "TENSOR_QUANT8_SYMM_PER_CHANNEL", "{1, 2, 2, 4}, 0.0f, 0",
+f3 = Parameter("op2", "TENSOR_QUANT8_SYMM_PER_CHANNEL", "{1, 2, 2, 4}",
                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                extraParams = SymmPerChannelQuantParams(channelDim=3, scales=[1.0, 0.5, 1.0, 0.5]))
 b3 = Parameter("op3", "TENSOR_INT32", "{4}", [4, 4, 4, 4])
