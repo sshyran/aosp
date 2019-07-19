@@ -1932,7 +1932,6 @@ typedef enum {
 
     // Operations below are available since API level 28.
 
-    // TODO: make the description easier to understand.
     /**
      * BatchToSpace for N-dimensional tensors.
      *
@@ -2096,7 +2095,6 @@ typedef enum {
      */
     ANEURALNETWORKS_PAD = 32,
 
-    // TODO: make the description easier to understand.
     /**
      * SpaceToBatch for N-Dimensional tensors.
      *
@@ -5657,8 +5655,6 @@ int ANeuralNetworksExecution_burstCompute(ANeuralNetworksExecution* execution,
  * Calling {@link ANeuralNetworksModel_setOperandValueFromMemory} with shared memory
  * backed by an AHardwareBuffer of a format other than AHARDWAREBUFFER_FORMAT_BLOB is
  * disallowed.
- *
- * TODO(miaowang): add documentation about intended usage with introspection API.
  *
  * Available since API level 29.
  *
