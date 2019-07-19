@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#define LOG_TAG "Callbacks"
+
 #include "Callbacks.h"
 
 #include <android-base/logging.h>
