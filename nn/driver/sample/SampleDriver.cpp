@@ -238,8 +238,6 @@ static void notify(const sp<V1_2::IExecutionCallback>& callback, const ErrorStat
     }
 }
 
-// TODO(xusongw): Let callback notify actual output shape once dynamic output shape
-//                is supported in CpuExecutor.
 template <typename T_IExecutionCallback>
 void asyncExecute(const Request& request, MeasureTiming measure, time_point driverStart,
                   const Model& model, const SampleDriver& driver,
