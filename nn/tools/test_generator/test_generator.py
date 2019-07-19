@@ -1219,13 +1219,12 @@ class FileNames:
     modelFile = ""
     exampleFile = ""
     testFile = ""
-    ctsFile = ""
     logFile = ""
     version = ""
     fileIndex = 0
 
     @staticmethod
-    def InitializeFileLists(spec, model, example, test, cts="-", log=""):
+    def InitializeFileLists(spec, model, example, test, log=""):
         # get all spec files and target files
         if os.path.isfile(spec):
             FileNames.specFiles = [os.path.abspath(spec)]
@@ -1239,7 +1238,6 @@ class FileNames:
         FileNames.modelFiles = FileNames.ParseTargetFiles(model, ".model.cpp")
         FileNames.exampleFiles = FileNames.ParseTargetFiles(example, ".example.cpp")
         FileNames.testFiles = FileNames.ParseTargetFiles(test, ".mod.py.cpp")
-        FileNames.ctsFile = os.path.abspath(cts) if cts != "-" else "-"
         FileNames.logFile = ", \"%s\""%log if log != "" else ""
 
     @staticmethod
