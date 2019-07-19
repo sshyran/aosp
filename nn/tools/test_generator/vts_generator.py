@@ -64,6 +64,11 @@ from test_generator import SymmPerChannelQuantParams
 from cts_generator import DumpCtsExample
 from cts_generator import DumpCtsIsIgnored
 
+
+# TODO: Make this part of tg.Configuration?
+target_hal_version = None
+
+
 # Take a model from command line
 def ParseCmdLine():
     parser = argparse.ArgumentParser()
@@ -74,9 +79,16 @@ def ParseCmdLine():
         "-e", "--example", help="the output example file", default="-")
     parser.add_argument(
         "-t", "--test", help="the output test file", default="-")
+    parser.add_argument(
+        "--target_hal_version",
+        help="the HAL version of the output",
+        required=True,
+        choices=["V1_0", "V1_1", "V1_2"])
     args = parser.parse_args()
     tg.FileNames.InitializeFileLists(
         args.spec, args.model, args.example, args.test)
+    global target_hal_version
+    target_hal_version = args.target_hal_version
 
 # Generate operands in VTS format
 def generate_vts_operands(model):
@@ -251,6 +263,7 @@ Model {create_test_model_name}() {{
 }}
 """
   model_dict = {
+      "hal_version": target_hal_version,
       "create_test_model_name": str(model.createTestFunctionName),
       "operations": generate_vts_operations(model),
       "operand_decls": generate_vts_operands(model),
@@ -323,7 +336,7 @@ if __name__ == "__main__":
         print("Generating test(s) from spec: %s" % tg.FileNames.specFile, file=sys.stderr)
         exec (open(tg.FileNames.specFile, "r").read())
         print("Output VTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
-        print("Output example:" + tg.FileNames.exampleFile, file=sys.stderr)
+        print("Output example: " + tg.FileNames.exampleFile, file=sys.stderr)
         with SmartOpen(tg.FileNames.modelFile) as model_fd, \
              SmartOpen(tg.FileNames.exampleFile) as example_fd, \
              SmartOpen(tg.FileNames.testFile, mode="a") as test_fd:
