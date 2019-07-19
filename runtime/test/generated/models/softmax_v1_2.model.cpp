@@ -1,5 +1,10 @@
+// Generated from softmax_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: softmax_v1_2.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::softmax_v1_2 {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
   OperandType type2(Type::FLOAT32, {});
@@ -18,10 +23,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dim1_axis0(Model *model) {
   OperandType type12(Type::TENSOR_FLOAT32, {5});
@@ -41,10 +49,13 @@ void CreateModel_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim1_axis0(int i) {
+bool is_ignored_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dim3_axis2(Model *model) {
   OperandType type13(Type::TENSOR_FLOAT32, {2, 2, 5});
@@ -64,10 +75,13 @@ void CreateModel_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim3_axis2(int i) {
+bool is_ignored_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -89,10 +103,13 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_relaxed_dim1_axis0(Model *model) {
   OperandType type12(Type::TENSOR_FLOAT32, {5});
@@ -114,10 +131,13 @@ void CreateModel_relaxed_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim1_axis0(int i) {
+bool is_ignored_relaxed_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_relaxed_dim3_axis2(Model *model) {
   OperandType type13(Type::TENSOR_FLOAT32, {2, 2, 5});
@@ -139,10 +159,13 @@ void CreateModel_relaxed_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim3_axis2(int i) {
+bool is_ignored_relaxed_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_float16(Model *model) {
   OperandType type14(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
@@ -162,10 +185,13 @@ void CreateModel_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16(int i) {
+bool is_ignored_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_float16_dim1_axis0(Model *model) {
   OperandType type15(Type::FLOAT16, {});
@@ -185,10 +211,13 @@ void CreateModel_float16_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim1_axis0(int i) {
+bool is_ignored_float16_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_float16_dim3_axis2(Model *model) {
   OperandType type15(Type::FLOAT16, {});
@@ -208,10 +237,13 @@ void CreateModel_float16_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim3_axis2(int i) {
+bool is_ignored_float16_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_quant8(Model *model) {
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
@@ -232,10 +264,13 @@ void CreateModel_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8(int i) {
+bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_quant8_dim1_axis0(Model *model) {
   OperandType type2(Type::FLOAT32, {});
@@ -256,10 +291,13 @@ void CreateModel_quant8_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim1_axis0(int i) {
+bool is_ignored_quant8_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_quant8_dim3_axis2(Model *model) {
   OperandType type2(Type::FLOAT32, {});
@@ -280,10 +318,13 @@ void CreateModel_quant8_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim3_axis2(int i) {
+bool is_ignored_quant8_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -304,10 +345,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_dim1_axis0(Model *model) {
   OperandType type12(Type::TENSOR_FLOAT32, {5});
@@ -328,10 +372,13 @@ void CreateModel_dynamic_output_shape_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim1_axis0(int i) {
+bool is_ignored_dynamic_output_shape_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_dim3_axis2(Model *model) {
   OperandType type13(Type::TENSOR_FLOAT32, {2, 2, 5});
@@ -352,10 +399,13 @@ void CreateModel_dynamic_output_shape_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim3_axis2(int i) {
+bool is_ignored_dynamic_output_shape_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -378,10 +428,13 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_dim1_axis0(Model *model) {
   OperandType type12(Type::TENSOR_FLOAT32, {5});
@@ -404,10 +457,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_dim3_axis2(Model *model) {
   OperandType type13(Type::TENSOR_FLOAT32, {2, 2, 5});
@@ -430,10 +486,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16(Model *model) {
   OperandType type14(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
@@ -454,10 +513,13 @@ void CreateModel_dynamic_output_shape_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16(int i) {
+bool is_ignored_dynamic_output_shape_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16_dim1_axis0(Model *model) {
   OperandType type15(Type::FLOAT16, {});
@@ -478,10 +540,13 @@ void CreateModel_dynamic_output_shape_float16_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim1_axis0(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16_dim3_axis2(Model *model) {
   OperandType type15(Type::FLOAT16, {});
@@ -502,10 +567,13 @@ void CreateModel_dynamic_output_shape_float16_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim3_axis2(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_quant8(Model *model) {
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
@@ -526,10 +594,13 @@ void CreateModel_dynamic_output_shape_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8(int i) {
+bool is_ignored_dynamic_output_shape_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_quant8_dim1_axis0(Model *model) {
   OperandType type2(Type::FLOAT32, {});
@@ -550,10 +621,13 @@ void CreateModel_dynamic_output_shape_quant8_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim1_axis0(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_quant8_dim3_axis2(Model *model) {
   OperandType type2(Type::FLOAT32, {});
@@ -574,10 +648,13 @@ void CreateModel_dynamic_output_shape_quant8_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim3_axis2(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -597,10 +674,13 @@ void CreateModel_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_2(int i) {
+bool is_ignored_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dim1_axis0_2(Model *model) {
   OperandType type12(Type::TENSOR_FLOAT32, {5});
@@ -620,10 +700,13 @@ void CreateModel_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim1_axis0_2(int i) {
+bool is_ignored_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dim3_axis2_2(Model *model) {
   OperandType type13(Type::TENSOR_FLOAT32, {2, 2, 5});
@@ -643,10 +726,13 @@ void CreateModel_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim3_axis2_2(int i) {
+bool is_ignored_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_relaxed_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -668,10 +754,13 @@ void CreateModel_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_2(int i) {
+bool is_ignored_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_relaxed_dim1_axis0_2(Model *model) {
   OperandType type12(Type::TENSOR_FLOAT32, {5});
@@ -693,10 +782,13 @@ void CreateModel_relaxed_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim1_axis0_2(int i) {
+bool is_ignored_relaxed_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_relaxed_dim3_axis2_2(Model *model) {
   OperandType type13(Type::TENSOR_FLOAT32, {2, 2, 5});
@@ -718,10 +810,13 @@ void CreateModel_relaxed_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim3_axis2_2(int i) {
+bool is_ignored_relaxed_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_float16_2(Model *model) {
   OperandType type14(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
@@ -741,10 +836,13 @@ void CreateModel_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_2(int i) {
+bool is_ignored_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_float16_dim1_axis0_2(Model *model) {
   OperandType type15(Type::FLOAT16, {});
@@ -764,10 +862,13 @@ void CreateModel_float16_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim1_axis0_2(int i) {
+bool is_ignored_float16_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_float16_dim3_axis2_2(Model *model) {
   OperandType type15(Type::FLOAT16, {});
@@ -787,10 +888,13 @@ void CreateModel_float16_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim3_axis2_2(int i) {
+bool is_ignored_float16_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_quant8_2(Model *model) {
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
@@ -811,10 +915,13 @@ void CreateModel_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_2(int i) {
+bool is_ignored_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_quant8_dim1_axis0_2(Model *model) {
   OperandType type2(Type::FLOAT32, {});
@@ -835,10 +942,13 @@ void CreateModel_quant8_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim1_axis0_2(int i) {
+bool is_ignored_quant8_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_quant8_dim3_axis2_2(Model *model) {
   OperandType type2(Type::FLOAT32, {});
@@ -859,10 +969,13 @@ void CreateModel_quant8_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim3_axis2_2(int i) {
+bool is_ignored_quant8_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -883,10 +996,13 @@ void CreateModel_dynamic_output_shape_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_2(int i) {
+bool is_ignored_dynamic_output_shape_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_dim1_axis0_2(Model *model) {
   OperandType type12(Type::TENSOR_FLOAT32, {5});
@@ -907,10 +1023,13 @@ void CreateModel_dynamic_output_shape_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim1_axis0_2(int i) {
+bool is_ignored_dynamic_output_shape_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_dim3_axis2_2(Model *model) {
   OperandType type13(Type::TENSOR_FLOAT32, {2, 2, 5});
@@ -931,10 +1050,13 @@ void CreateModel_dynamic_output_shape_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim3_axis2_2(int i) {
+bool is_ignored_dynamic_output_shape_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -957,10 +1079,13 @@ void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_dim1_axis0_2(Model *model) {
   OperandType type12(Type::TENSOR_FLOAT32, {5});
@@ -983,10 +1108,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0_2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_dim3_axis2_2(Model *model) {
   OperandType type13(Type::TENSOR_FLOAT32, {2, 2, 5});
@@ -1009,10 +1137,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2_2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16_2(Model *model) {
   OperandType type14(Type::TENSOR_FLOAT16, {2, 2, 2, 5});
@@ -1033,10 +1164,13 @@ void CreateModel_dynamic_output_shape_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_2(int i) {
+bool is_ignored_dynamic_output_shape_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16_dim1_axis0_2(Model *model) {
   OperandType type15(Type::FLOAT16, {});
@@ -1057,10 +1191,13 @@ void CreateModel_dynamic_output_shape_float16_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim1_axis0_2(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16_dim3_axis2_2(Model *model) {
   OperandType type15(Type::FLOAT16, {});
@@ -1081,10 +1218,13 @@ void CreateModel_dynamic_output_shape_float16_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim3_axis2_2(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_quant8_2(Model *model) {
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {2, 2, 2, 5}, 0.25f, 128);
@@ -1105,10 +1245,13 @@ void CreateModel_dynamic_output_shape_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_2(int i) {
+bool is_ignored_dynamic_output_shape_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_quant8_dim1_axis0_2(Model *model) {
   OperandType type2(Type::FLOAT32, {});
@@ -1129,10 +1272,13 @@ void CreateModel_dynamic_output_shape_quant8_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim1_axis0_2(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_dynamic_output_shape_quant8_dim3_axis2_2(Model *model) {
   OperandType type2(Type::FLOAT32, {});
@@ -1153,10 +1299,13 @@ void CreateModel_dynamic_output_shape_quant8_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim3_axis2_2(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1180,10 +1329,13 @@ void CreateModel_axis_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0(int i) {
+bool is_ignored_axis_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1207,10 +1359,13 @@ void CreateModel_axis_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_neg(int i) {
+bool is_ignored_axis_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1234,10 +1389,13 @@ void CreateModel_axis_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1(int i) {
+bool is_ignored_axis_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1261,10 +1419,13 @@ void CreateModel_axis_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_neg(int i) {
+bool is_ignored_axis_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1288,10 +1449,13 @@ void CreateModel_axis_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2(int i) {
+bool is_ignored_axis_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1315,10 +1479,13 @@ void CreateModel_axis_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_neg(int i) {
+bool is_ignored_axis_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -1342,10 +1509,13 @@ void CreateModel_axis_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3(int i) {
+bool is_ignored_axis_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -1369,10 +1539,13 @@ void CreateModel_axis_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_neg(int i) {
+bool is_ignored_axis_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1396,10 +1569,13 @@ void CreateModel_axis_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0(int i) {
+bool is_ignored_axis_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1423,10 +1599,13 @@ void CreateModel_axis_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_neg(int i) {
+bool is_ignored_axis_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1450,10 +1629,13 @@ void CreateModel_axis_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1(int i) {
+bool is_ignored_axis_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1477,10 +1659,13 @@ void CreateModel_axis_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_neg(int i) {
+bool is_ignored_axis_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1504,10 +1689,13 @@ void CreateModel_axis_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2(int i) {
+bool is_ignored_axis_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1531,10 +1719,13 @@ void CreateModel_axis_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_neg(int i) {
+bool is_ignored_axis_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1558,10 +1749,13 @@ void CreateModel_axis_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0(int i) {
+bool is_ignored_axis_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1585,10 +1779,13 @@ void CreateModel_axis_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_neg(int i) {
+bool is_ignored_axis_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1612,10 +1809,13 @@ void CreateModel_axis_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1(int i) {
+bool is_ignored_axis_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1639,10 +1839,13 @@ void CreateModel_axis_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_neg(int i) {
+bool is_ignored_axis_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1666,10 +1869,13 @@ void CreateModel_axis_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0(int i) {
+bool is_ignored_axis_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1693,10 +1899,13 @@ void CreateModel_axis_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_neg(int i) {
+bool is_ignored_axis_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1722,10 +1931,13 @@ void CreateModel_axis_relaxed_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1751,10 +1963,13 @@ void CreateModel_axis_relaxed_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_neg(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1780,10 +1995,13 @@ void CreateModel_axis_relaxed_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1809,10 +2027,13 @@ void CreateModel_axis_relaxed_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_neg(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1838,10 +2059,13 @@ void CreateModel_axis_relaxed_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1867,10 +2091,13 @@ void CreateModel_axis_relaxed_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_neg(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -1896,10 +2123,13 @@ void CreateModel_axis_relaxed_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -1925,10 +2155,13 @@ void CreateModel_axis_relaxed_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_neg(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1954,10 +2187,13 @@ void CreateModel_axis_relaxed_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1983,10 +2219,13 @@ void CreateModel_axis_relaxed_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_neg(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2012,10 +2251,13 @@ void CreateModel_axis_relaxed_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2041,10 +2283,13 @@ void CreateModel_axis_relaxed_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_neg(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2070,10 +2315,13 @@ void CreateModel_axis_relaxed_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2099,10 +2347,13 @@ void CreateModel_axis_relaxed_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_neg(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2128,10 +2379,13 @@ void CreateModel_axis_relaxed_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2157,10 +2411,13 @@ void CreateModel_axis_relaxed_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_neg(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2186,10 +2443,13 @@ void CreateModel_axis_relaxed_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2215,10 +2475,13 @@ void CreateModel_axis_relaxed_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_neg(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2244,10 +2507,13 @@ void CreateModel_axis_relaxed_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2273,10 +2539,13 @@ void CreateModel_axis_relaxed_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_neg(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2300,10 +2569,13 @@ void CreateModel_axis_float16_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis0(int i) {
+bool is_ignored_axis_float16_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2327,10 +2599,13 @@ void CreateModel_axis_float16_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis0_neg(int i) {
+bool is_ignored_axis_float16_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2354,10 +2629,13 @@ void CreateModel_axis_float16_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis1(int i) {
+bool is_ignored_axis_float16_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2381,10 +2659,13 @@ void CreateModel_axis_float16_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis1_neg(int i) {
+bool is_ignored_axis_float16_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2408,10 +2689,13 @@ void CreateModel_axis_float16_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis2(int i) {
+bool is_ignored_axis_float16_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2435,10 +2719,13 @@ void CreateModel_axis_float16_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis2_neg(int i) {
+bool is_ignored_axis_float16_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2462,10 +2749,13 @@ void CreateModel_axis_float16_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis3(int i) {
+bool is_ignored_axis_float16_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis3_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2489,10 +2779,13 @@ void CreateModel_axis_float16_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis3_neg(int i) {
+bool is_ignored_axis_float16_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2516,10 +2809,13 @@ void CreateModel_axis_float16_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis0(int i) {
+bool is_ignored_axis_float16_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2543,10 +2839,13 @@ void CreateModel_axis_float16_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis0_neg(int i) {
+bool is_ignored_axis_float16_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2570,10 +2869,13 @@ void CreateModel_axis_float16_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis1(int i) {
+bool is_ignored_axis_float16_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2597,10 +2899,13 @@ void CreateModel_axis_float16_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis1_neg(int i) {
+bool is_ignored_axis_float16_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2624,10 +2929,13 @@ void CreateModel_axis_float16_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis2(int i) {
+bool is_ignored_axis_float16_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2651,10 +2959,13 @@ void CreateModel_axis_float16_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis2_neg(int i) {
+bool is_ignored_axis_float16_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2678,10 +2989,13 @@ void CreateModel_axis_float16_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim2_axis0(int i) {
+bool is_ignored_axis_float16_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2705,10 +3019,13 @@ void CreateModel_axis_float16_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim2_axis0_neg(int i) {
+bool is_ignored_axis_float16_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2732,10 +3049,13 @@ void CreateModel_axis_float16_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim2_axis1(int i) {
+bool is_ignored_axis_float16_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2759,10 +3079,13 @@ void CreateModel_axis_float16_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim2_axis1_neg(int i) {
+bool is_ignored_axis_float16_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2786,10 +3109,13 @@ void CreateModel_axis_float16_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim1_axis0(int i) {
+bool is_ignored_axis_float16_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2813,10 +3139,13 @@ void CreateModel_axis_float16_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim1_axis0_neg(int i) {
+bool is_ignored_axis_float16_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2841,10 +3170,13 @@ void CreateModel_axis_quant8_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis0(int i) {
+bool is_ignored_axis_quant8_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2869,10 +3201,13 @@ void CreateModel_axis_quant8_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis0_neg(int i) {
+bool is_ignored_axis_quant8_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2897,10 +3232,13 @@ void CreateModel_axis_quant8_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis1(int i) {
+bool is_ignored_axis_quant8_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2925,10 +3263,13 @@ void CreateModel_axis_quant8_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis1_neg(int i) {
+bool is_ignored_axis_quant8_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2953,10 +3294,13 @@ void CreateModel_axis_quant8_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis2(int i) {
+bool is_ignored_axis_quant8_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2981,10 +3325,13 @@ void CreateModel_axis_quant8_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis2_neg(int i) {
+bool is_ignored_axis_quant8_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3009,10 +3356,13 @@ void CreateModel_axis_quant8_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis3(int i) {
+bool is_ignored_axis_quant8_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis3_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3037,10 +3387,13 @@ void CreateModel_axis_quant8_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis3_neg(int i) {
+bool is_ignored_axis_quant8_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3065,10 +3418,13 @@ void CreateModel_axis_quant8_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis0(int i) {
+bool is_ignored_axis_quant8_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3093,10 +3449,13 @@ void CreateModel_axis_quant8_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis0_neg(int i) {
+bool is_ignored_axis_quant8_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3121,10 +3480,13 @@ void CreateModel_axis_quant8_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis1(int i) {
+bool is_ignored_axis_quant8_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3149,10 +3511,13 @@ void CreateModel_axis_quant8_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis1_neg(int i) {
+bool is_ignored_axis_quant8_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3177,10 +3542,13 @@ void CreateModel_axis_quant8_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis2(int i) {
+bool is_ignored_axis_quant8_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3205,10 +3573,13 @@ void CreateModel_axis_quant8_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis2_neg(int i) {
+bool is_ignored_axis_quant8_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3233,10 +3604,13 @@ void CreateModel_axis_quant8_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim2_axis0(int i) {
+bool is_ignored_axis_quant8_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3261,10 +3635,13 @@ void CreateModel_axis_quant8_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim2_axis0_neg(int i) {
+bool is_ignored_axis_quant8_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3289,10 +3666,13 @@ void CreateModel_axis_quant8_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim2_axis1(int i) {
+bool is_ignored_axis_quant8_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3317,10 +3697,13 @@ void CreateModel_axis_quant8_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim2_axis1_neg(int i) {
+bool is_ignored_axis_quant8_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3345,10 +3728,13 @@ void CreateModel_axis_quant8_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim1_axis0(int i) {
+bool is_ignored_axis_quant8_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3373,10 +3759,13 @@ void CreateModel_axis_quant8_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim1_axis0_neg(int i) {
+bool is_ignored_axis_quant8_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3401,10 +3790,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3429,10 +3821,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3457,10 +3852,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3485,10 +3883,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3513,10 +3914,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3541,10 +3945,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -3569,10 +3976,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -3597,10 +4007,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3625,10 +4038,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3653,10 +4069,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3681,10 +4100,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3709,10 +4131,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3737,10 +4162,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3765,10 +4193,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3793,10 +4224,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3821,10 +4255,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3849,10 +4286,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3877,10 +4317,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3905,10 +4348,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3933,10 +4379,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3963,10 +4412,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3993,10 +4445,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4023,10 +4478,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4053,10 +4511,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4083,10 +4544,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4113,10 +4577,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -4143,10 +4610,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -4173,10 +4643,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4203,10 +4676,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4233,10 +4709,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4263,10 +4742,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4293,10 +4775,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4323,10 +4808,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4353,10 +4841,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4383,10 +4874,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4413,10 +4907,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4443,10 +4940,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4473,10 +4973,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4503,10 +5006,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4533,10 +5039,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4561,10 +5070,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4589,10 +5101,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4617,10 +5132,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4645,10 +5163,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis1_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4673,10 +5194,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4701,10 +5225,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis2_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4729,10 +5256,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis3(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis3_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4757,10 +5287,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis3_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis3_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4785,10 +5318,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4813,10 +5349,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4841,10 +5380,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4869,10 +5411,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis1_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4897,10 +5442,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4925,10 +5473,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis2_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4953,10 +5504,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4981,10 +5535,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim2_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5009,10 +5566,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5037,10 +5597,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim2_axis1_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5065,10 +5628,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim1_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5093,10 +5659,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim1_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim1_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5121,10 +5690,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5149,10 +5721,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5177,10 +5752,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5205,10 +5783,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5233,10 +5814,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5261,10 +5845,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5289,10 +5876,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5317,10 +5907,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5345,10 +5938,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5373,10 +5969,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5401,10 +6000,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5429,10 +6031,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5457,10 +6062,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5485,10 +6093,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5513,10 +6124,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5541,10 +6155,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5569,10 +6186,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5597,10 +6217,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5625,10 +6248,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5653,10 +6279,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5680,10 +6309,13 @@ void CreateModel_axis_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_2(int i) {
+bool is_ignored_axis_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5707,10 +6339,13 @@ void CreateModel_axis_dim4_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5734,10 +6369,13 @@ void CreateModel_axis_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_2(int i) {
+bool is_ignored_axis_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5761,10 +6399,13 @@ void CreateModel_axis_dim4_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5788,10 +6429,13 @@ void CreateModel_axis_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_2(int i) {
+bool is_ignored_axis_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5815,10 +6459,13 @@ void CreateModel_axis_dim4_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis3_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -5842,10 +6489,13 @@ void CreateModel_axis_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_2(int i) {
+bool is_ignored_axis_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim4_axis3_neg_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -5869,10 +6519,13 @@ void CreateModel_axis_dim4_axis3_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5896,10 +6549,13 @@ void CreateModel_axis_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_2(int i) {
+bool is_ignored_axis_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5923,10 +6579,13 @@ void CreateModel_axis_dim3_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5950,10 +6609,13 @@ void CreateModel_axis_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_2(int i) {
+bool is_ignored_axis_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5977,10 +6639,13 @@ void CreateModel_axis_dim3_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6004,10 +6669,13 @@ void CreateModel_axis_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_2(int i) {
+bool is_ignored_axis_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6031,10 +6699,13 @@ void CreateModel_axis_dim3_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6058,10 +6729,13 @@ void CreateModel_axis_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_2(int i) {
+bool is_ignored_axis_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6085,10 +6759,13 @@ void CreateModel_axis_dim2_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6112,10 +6789,13 @@ void CreateModel_axis_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_2(int i) {
+bool is_ignored_axis_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6139,10 +6819,13 @@ void CreateModel_axis_dim2_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6166,10 +6849,13 @@ void CreateModel_axis_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_2(int i) {
+bool is_ignored_axis_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6193,10 +6879,13 @@ void CreateModel_axis_dim1_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6222,10 +6911,13 @@ void CreateModel_axis_relaxed_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6251,10 +6943,13 @@ void CreateModel_axis_relaxed_dim4_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6280,10 +6975,13 @@ void CreateModel_axis_relaxed_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6309,10 +7007,13 @@ void CreateModel_axis_relaxed_dim4_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6338,10 +7039,13 @@ void CreateModel_axis_relaxed_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6367,10 +7071,13 @@ void CreateModel_axis_relaxed_dim4_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -6396,10 +7103,13 @@ void CreateModel_axis_relaxed_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_neg_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -6425,10 +7135,13 @@ void CreateModel_axis_relaxed_dim4_axis3_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6454,10 +7167,13 @@ void CreateModel_axis_relaxed_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6483,10 +7199,13 @@ void CreateModel_axis_relaxed_dim3_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6512,10 +7231,13 @@ void CreateModel_axis_relaxed_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6541,10 +7263,13 @@ void CreateModel_axis_relaxed_dim3_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6570,10 +7295,13 @@ void CreateModel_axis_relaxed_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6599,10 +7327,13 @@ void CreateModel_axis_relaxed_dim3_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6628,10 +7359,13 @@ void CreateModel_axis_relaxed_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6657,10 +7391,13 @@ void CreateModel_axis_relaxed_dim2_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6686,10 +7423,13 @@ void CreateModel_axis_relaxed_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6715,10 +7455,13 @@ void CreateModel_axis_relaxed_dim2_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6744,10 +7487,13 @@ void CreateModel_axis_relaxed_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_2(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6773,10 +7519,13 @@ void CreateModel_axis_relaxed_dim1_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6800,10 +7549,13 @@ void CreateModel_axis_float16_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis0_2(int i) {
+bool is_ignored_axis_float16_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6827,10 +7579,13 @@ void CreateModel_axis_float16_dim4_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_float16_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6854,10 +7609,13 @@ void CreateModel_axis_float16_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis1_2(int i) {
+bool is_ignored_axis_float16_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6881,10 +7639,13 @@ void CreateModel_axis_float16_dim4_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_float16_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6908,10 +7669,13 @@ void CreateModel_axis_float16_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis2_2(int i) {
+bool is_ignored_axis_float16_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6935,10 +7699,13 @@ void CreateModel_axis_float16_dim4_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_float16_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis3_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6962,10 +7729,13 @@ void CreateModel_axis_float16_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis3_2(int i) {
+bool is_ignored_axis_float16_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim4_axis3_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6989,10 +7759,13 @@ void CreateModel_axis_float16_dim4_axis3_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_float16_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7016,10 +7789,13 @@ void CreateModel_axis_float16_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis0_2(int i) {
+bool is_ignored_axis_float16_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7043,10 +7819,13 @@ void CreateModel_axis_float16_dim3_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_float16_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7070,10 +7849,13 @@ void CreateModel_axis_float16_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis1_2(int i) {
+bool is_ignored_axis_float16_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7097,10 +7879,13 @@ void CreateModel_axis_float16_dim3_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_float16_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7124,10 +7909,13 @@ void CreateModel_axis_float16_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis2_2(int i) {
+bool is_ignored_axis_float16_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7151,10 +7939,13 @@ void CreateModel_axis_float16_dim3_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_float16_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7178,10 +7969,13 @@ void CreateModel_axis_float16_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim2_axis0_2(int i) {
+bool is_ignored_axis_float16_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7205,10 +7999,13 @@ void CreateModel_axis_float16_dim2_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_float16_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7232,10 +8029,13 @@ void CreateModel_axis_float16_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim2_axis1_2(int i) {
+bool is_ignored_axis_float16_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7259,10 +8059,13 @@ void CreateModel_axis_float16_dim2_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_float16_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7286,10 +8089,13 @@ void CreateModel_axis_float16_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim1_axis0_2(int i) {
+bool is_ignored_axis_float16_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_float16_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7313,10 +8119,13 @@ void CreateModel_axis_float16_dim1_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_float16_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_float16_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7341,10 +8150,13 @@ void CreateModel_axis_quant8_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis0_2(int i) {
+bool is_ignored_axis_quant8_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7369,10 +8181,13 @@ void CreateModel_axis_quant8_dim4_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_quant8_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7397,10 +8212,13 @@ void CreateModel_axis_quant8_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis1_2(int i) {
+bool is_ignored_axis_quant8_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7425,10 +8243,13 @@ void CreateModel_axis_quant8_dim4_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_quant8_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7453,10 +8274,13 @@ void CreateModel_axis_quant8_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis2_2(int i) {
+bool is_ignored_axis_quant8_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7481,10 +8305,13 @@ void CreateModel_axis_quant8_dim4_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_quant8_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis3_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7509,10 +8336,13 @@ void CreateModel_axis_quant8_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis3_2(int i) {
+bool is_ignored_axis_quant8_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim4_axis3_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7537,10 +8367,13 @@ void CreateModel_axis_quant8_dim4_axis3_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_quant8_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7565,10 +8398,13 @@ void CreateModel_axis_quant8_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis0_2(int i) {
+bool is_ignored_axis_quant8_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7593,10 +8429,13 @@ void CreateModel_axis_quant8_dim3_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_quant8_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7621,10 +8460,13 @@ void CreateModel_axis_quant8_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis1_2(int i) {
+bool is_ignored_axis_quant8_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7649,10 +8491,13 @@ void CreateModel_axis_quant8_dim3_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_quant8_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7677,10 +8522,13 @@ void CreateModel_axis_quant8_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis2_2(int i) {
+bool is_ignored_axis_quant8_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7705,10 +8553,13 @@ void CreateModel_axis_quant8_dim3_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_quant8_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7733,10 +8584,13 @@ void CreateModel_axis_quant8_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim2_axis0_2(int i) {
+bool is_ignored_axis_quant8_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7761,10 +8615,13 @@ void CreateModel_axis_quant8_dim2_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_quant8_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7789,10 +8646,13 @@ void CreateModel_axis_quant8_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim2_axis1_2(int i) {
+bool is_ignored_axis_quant8_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7817,10 +8677,13 @@ void CreateModel_axis_quant8_dim2_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_quant8_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7845,10 +8708,13 @@ void CreateModel_axis_quant8_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim1_axis0_2(int i) {
+bool is_ignored_axis_quant8_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_quant8_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7873,10 +8739,13 @@ void CreateModel_axis_quant8_dim1_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_quant8_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_quant8_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7901,10 +8770,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7929,10 +8801,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7957,10 +8832,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7985,10 +8863,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8013,10 +8894,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8041,10 +8925,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -8069,10 +8956,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -8097,10 +8987,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8125,10 +9018,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8153,10 +9049,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8181,10 +9080,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8209,10 +9111,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8237,10 +9142,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8265,10 +9173,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8293,10 +9204,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8321,10 +9235,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8349,10 +9266,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8377,10 +9297,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8405,10 +9328,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8433,10 +9359,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8463,10 +9392,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8493,10 +9425,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8523,10 +9458,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8553,10 +9491,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8583,10 +9524,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8613,10 +9557,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -8643,10 +9590,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 5});
@@ -8673,10 +9623,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8703,10 +9656,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8733,10 +9689,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8763,10 +9722,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8793,10 +9755,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8823,10 +9788,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8853,10 +9821,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8883,10 +9854,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8913,10 +9887,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8943,10 +9920,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8973,10 +9953,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9003,10 +9986,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9033,10 +10019,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9061,10 +10050,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9089,10 +10081,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9117,10 +10112,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9145,10 +10143,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis1_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9173,10 +10174,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9201,10 +10205,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis2_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis3_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9229,10 +10236,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis3_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim4_axis3_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9257,10 +10267,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim4_axis3_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9285,10 +10298,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9313,10 +10329,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9341,10 +10360,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9369,10 +10391,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis1_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9397,10 +10422,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9425,10 +10453,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim3_axis2_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9453,10 +10484,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9481,10 +10515,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim2_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9509,10 +10546,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9537,10 +10577,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim2_axis1_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9565,10 +10608,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim1_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_float16_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9593,10 +10639,13 @@ void CreateModel_axis_dynamic_output_shape_float16_dim1_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_float16_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_float16_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9621,10 +10670,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9649,10 +10701,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis0_neg_2(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9677,10 +10732,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9705,10 +10763,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis1_neg_2(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9733,10 +10794,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9761,10 +10825,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis2_neg_2(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9789,10 +10856,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9817,10 +10887,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim4_axis3_neg_2(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9845,10 +10918,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9873,10 +10949,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis0_neg_2(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9901,10 +10980,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9929,10 +11011,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis1_neg_2(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9957,10 +11042,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9985,10 +11073,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim3_axis2_neg_2(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10013,10 +11104,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10041,10 +11135,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis0_neg_2(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10069,10 +11166,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10097,10 +11197,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim2_axis1_neg_2(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10125,10 +11228,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10153,10 +11259,13 @@ void CreateModel_axis_dynamic_output_shape_quant8_dim1_axis0_neg_2(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_quant8_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_zero_sized(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10240,10 +11349,13 @@ void CreateModel_zero_sized(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized(int i) {
+bool is_ignored_zero_sized(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_zero_sized_relaxed(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10329,10 +11441,13 @@ void CreateModel_zero_sized_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_relaxed(int i) {
+bool is_ignored_zero_sized_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_zero_sized_quant8(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10417,10 +11532,13 @@ void CreateModel_zero_sized_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_quant8(int i) {
+bool is_ignored_zero_sized_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_zero_sized_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10504,10 +11622,13 @@ void CreateModel_zero_sized_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_float16(int i) {
+bool is_ignored_zero_sized_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10592,10 +11713,13 @@ void CreateModel_zero_sized_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_relaxed(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10682,10 +11806,13 @@ void CreateModel_zero_sized_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_quant8(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10770,10 +11897,13 @@ void CreateModel_zero_sized_dynamic_output_shape_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_quant8(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::softmax_v1_2
+namespace generated_tests::softmax_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10858,8 +11988,9 @@ void CreateModel_zero_sized_dynamic_output_shape_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_float16(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::softmax_v1_2

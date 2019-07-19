@@ -1,24 +1,34 @@
+// Generated from mean.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: mean.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace mean {
-// Generated mean test
-#include "generated/examples/mean.example.cpp"
-// Generated model constructor
-#include "generated/models/mean.model.cpp"
-} // namespace mean
+namespace generated_tests::mean {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, mean) {
-    execute(mean::CreateModel,
-            mean::is_ignored,
-            mean::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_1, mean, mean::CreateModel)
+
+} // namespace generated_tests::mean
+TEST_AVAILABLE_SINCE(V1_1, mean, generated_tests::mean::CreateModel)
+
+namespace generated_tests::mean {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, mean_dynamic_output_shape) {
-    execute(mean::CreateModel_dynamic_output_shape,
-            mean::is_ignored_dynamic_output_shape,
-            mean::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::mean
 

@@ -1,5 +1,10 @@
+// Generated from channel_shuffle.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: channel_shuffle.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::channel_shuffle {
+
 void CreateModel_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::TENSOR_FLOAT32, {12, 2, 2, 3});
@@ -21,10 +26,13 @@ void CreateModel_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim4_axis0(int i) {
+bool is_ignored_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -47,10 +55,13 @@ void CreateModel_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim4_axis0_neg(int i) {
+bool is_ignored_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -73,10 +84,13 @@ void CreateModel_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim4_axis1(int i) {
+bool is_ignored_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -99,10 +113,13 @@ void CreateModel_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim4_axis1_neg(int i) {
+bool is_ignored_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -125,10 +142,13 @@ void CreateModel_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim4_axis2(int i) {
+bool is_ignored_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -151,10 +171,13 @@ void CreateModel_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim4_axis2_neg(int i) {
+bool is_ignored_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 3, 12});
@@ -177,10 +200,13 @@ void CreateModel_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim4_axis3(int i) {
+bool is_ignored_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 3, 12});
@@ -203,10 +229,13 @@ void CreateModel_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim4_axis3_neg(int i) {
+bool is_ignored_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -229,10 +258,13 @@ void CreateModel_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim3_axis0(int i) {
+bool is_ignored_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -255,10 +287,13 @@ void CreateModel_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim3_axis0_neg(int i) {
+bool is_ignored_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -281,10 +316,13 @@ void CreateModel_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim3_axis1(int i) {
+bool is_ignored_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -307,10 +345,13 @@ void CreateModel_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim3_axis1_neg(int i) {
+bool is_ignored_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -333,10 +374,13 @@ void CreateModel_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim3_axis2(int i) {
+bool is_ignored_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -359,10 +403,13 @@ void CreateModel_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim3_axis2_neg(int i) {
+bool is_ignored_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -385,10 +432,13 @@ void CreateModel_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim2_axis0(int i) {
+bool is_ignored_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -411,10 +461,13 @@ void CreateModel_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim2_axis0_neg(int i) {
+bool is_ignored_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -437,10 +490,13 @@ void CreateModel_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim2_axis1(int i) {
+bool is_ignored_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -463,10 +519,13 @@ void CreateModel_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim2_axis1_neg(int i) {
+bool is_ignored_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -489,10 +548,13 @@ void CreateModel_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim1_axis0(int i) {
+bool is_ignored_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -515,10 +577,13 @@ void CreateModel_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim1_axis0_neg(int i) {
+bool is_ignored_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -543,10 +608,13 @@ void CreateModel_relaxed_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim4_axis0(int i) {
+bool is_ignored_relaxed_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -571,10 +639,13 @@ void CreateModel_relaxed_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim4_axis0_neg(int i) {
+bool is_ignored_relaxed_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -599,10 +670,13 @@ void CreateModel_relaxed_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim4_axis1(int i) {
+bool is_ignored_relaxed_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -627,10 +701,13 @@ void CreateModel_relaxed_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim4_axis1_neg(int i) {
+bool is_ignored_relaxed_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -655,10 +732,13 @@ void CreateModel_relaxed_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim4_axis2(int i) {
+bool is_ignored_relaxed_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -683,10 +763,13 @@ void CreateModel_relaxed_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim4_axis2_neg(int i) {
+bool is_ignored_relaxed_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 3, 12});
@@ -711,10 +794,13 @@ void CreateModel_relaxed_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim4_axis3(int i) {
+bool is_ignored_relaxed_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 3, 12});
@@ -739,10 +825,13 @@ void CreateModel_relaxed_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim4_axis3_neg(int i) {
+bool is_ignored_relaxed_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -767,10 +856,13 @@ void CreateModel_relaxed_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim3_axis0(int i) {
+bool is_ignored_relaxed_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -795,10 +887,13 @@ void CreateModel_relaxed_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim3_axis0_neg(int i) {
+bool is_ignored_relaxed_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -823,10 +918,13 @@ void CreateModel_relaxed_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim3_axis1(int i) {
+bool is_ignored_relaxed_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -851,10 +949,13 @@ void CreateModel_relaxed_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim3_axis1_neg(int i) {
+bool is_ignored_relaxed_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -879,10 +980,13 @@ void CreateModel_relaxed_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim3_axis2(int i) {
+bool is_ignored_relaxed_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -907,10 +1011,13 @@ void CreateModel_relaxed_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim3_axis2_neg(int i) {
+bool is_ignored_relaxed_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -935,10 +1042,13 @@ void CreateModel_relaxed_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim2_axis0(int i) {
+bool is_ignored_relaxed_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -963,10 +1073,13 @@ void CreateModel_relaxed_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim2_axis0_neg(int i) {
+bool is_ignored_relaxed_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -991,10 +1104,13 @@ void CreateModel_relaxed_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim2_axis1(int i) {
+bool is_ignored_relaxed_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1019,10 +1135,13 @@ void CreateModel_relaxed_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim2_axis1_neg(int i) {
+bool is_ignored_relaxed_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1047,10 +1166,13 @@ void CreateModel_relaxed_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim1_axis0(int i) {
+bool is_ignored_relaxed_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_relaxed_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1075,10 +1197,13 @@ void CreateModel_relaxed_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim1_axis0_neg(int i) {
+bool is_ignored_relaxed_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1101,10 +1226,13 @@ void CreateModel_quant8_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim4_axis0(int i) {
+bool is_ignored_quant8_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1127,10 +1255,13 @@ void CreateModel_quant8_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim4_axis0_neg(int i) {
+bool is_ignored_quant8_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1153,10 +1284,13 @@ void CreateModel_quant8_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim4_axis1(int i) {
+bool is_ignored_quant8_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1179,10 +1313,13 @@ void CreateModel_quant8_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim4_axis1_neg(int i) {
+bool is_ignored_quant8_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1205,10 +1342,13 @@ void CreateModel_quant8_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim4_axis2(int i) {
+bool is_ignored_quant8_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1231,10 +1371,13 @@ void CreateModel_quant8_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim4_axis2_neg(int i) {
+bool is_ignored_quant8_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim4_axis3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1257,10 +1400,13 @@ void CreateModel_quant8_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim4_axis3(int i) {
+bool is_ignored_quant8_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim4_axis3_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1283,10 +1429,13 @@ void CreateModel_quant8_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim4_axis3_neg(int i) {
+bool is_ignored_quant8_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1309,10 +1458,13 @@ void CreateModel_quant8_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim3_axis0(int i) {
+bool is_ignored_quant8_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1335,10 +1487,13 @@ void CreateModel_quant8_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim3_axis0_neg(int i) {
+bool is_ignored_quant8_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1361,10 +1516,13 @@ void CreateModel_quant8_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim3_axis1(int i) {
+bool is_ignored_quant8_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1387,10 +1545,13 @@ void CreateModel_quant8_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim3_axis1_neg(int i) {
+bool is_ignored_quant8_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1413,10 +1574,13 @@ void CreateModel_quant8_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim3_axis2(int i) {
+bool is_ignored_quant8_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1439,10 +1603,13 @@ void CreateModel_quant8_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim3_axis2_neg(int i) {
+bool is_ignored_quant8_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1465,10 +1632,13 @@ void CreateModel_quant8_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim2_axis0(int i) {
+bool is_ignored_quant8_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1491,10 +1661,13 @@ void CreateModel_quant8_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim2_axis0_neg(int i) {
+bool is_ignored_quant8_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1517,10 +1690,13 @@ void CreateModel_quant8_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim2_axis1(int i) {
+bool is_ignored_quant8_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1543,10 +1719,13 @@ void CreateModel_quant8_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim2_axis1_neg(int i) {
+bool is_ignored_quant8_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1569,10 +1748,13 @@ void CreateModel_quant8_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim1_axis0(int i) {
+bool is_ignored_quant8_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_quant8_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1595,10 +1777,13 @@ void CreateModel_quant8_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dim1_axis0_neg(int i) {
+bool is_ignored_quant8_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1621,10 +1806,13 @@ void CreateModel_float16_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim4_axis0(int i) {
+bool is_ignored_float16_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1647,10 +1835,13 @@ void CreateModel_float16_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim4_axis0_neg(int i) {
+bool is_ignored_float16_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1673,10 +1864,13 @@ void CreateModel_float16_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim4_axis1(int i) {
+bool is_ignored_float16_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1699,10 +1893,13 @@ void CreateModel_float16_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim4_axis1_neg(int i) {
+bool is_ignored_float16_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1725,10 +1922,13 @@ void CreateModel_float16_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim4_axis2(int i) {
+bool is_ignored_float16_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1751,10 +1951,13 @@ void CreateModel_float16_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim4_axis2_neg(int i) {
+bool is_ignored_float16_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim4_axis3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1777,10 +1980,13 @@ void CreateModel_float16_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim4_axis3(int i) {
+bool is_ignored_float16_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim4_axis3_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1803,10 +2009,13 @@ void CreateModel_float16_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim4_axis3_neg(int i) {
+bool is_ignored_float16_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1829,10 +2038,13 @@ void CreateModel_float16_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim3_axis0(int i) {
+bool is_ignored_float16_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1855,10 +2067,13 @@ void CreateModel_float16_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim3_axis0_neg(int i) {
+bool is_ignored_float16_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1881,10 +2096,13 @@ void CreateModel_float16_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim3_axis1(int i) {
+bool is_ignored_float16_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1907,10 +2125,13 @@ void CreateModel_float16_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim3_axis1_neg(int i) {
+bool is_ignored_float16_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1933,10 +2154,13 @@ void CreateModel_float16_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim3_axis2(int i) {
+bool is_ignored_float16_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1959,10 +2183,13 @@ void CreateModel_float16_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim3_axis2_neg(int i) {
+bool is_ignored_float16_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1985,10 +2212,13 @@ void CreateModel_float16_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim2_axis0(int i) {
+bool is_ignored_float16_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2011,10 +2241,13 @@ void CreateModel_float16_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim2_axis0_neg(int i) {
+bool is_ignored_float16_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2037,10 +2270,13 @@ void CreateModel_float16_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim2_axis1(int i) {
+bool is_ignored_float16_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2063,10 +2299,13 @@ void CreateModel_float16_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim2_axis1_neg(int i) {
+bool is_ignored_float16_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2089,10 +2328,13 @@ void CreateModel_float16_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim1_axis0(int i) {
+bool is_ignored_float16_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_float16_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2115,10 +2357,13 @@ void CreateModel_float16_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_dim1_axis0_neg(int i) {
+bool is_ignored_float16_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2142,10 +2387,13 @@ void CreateModel_dynamic_output_shape_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim4_axis0(int i) {
+bool is_ignored_dynamic_output_shape_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2169,10 +2417,13 @@ void CreateModel_dynamic_output_shape_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim4_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2196,10 +2447,13 @@ void CreateModel_dynamic_output_shape_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim4_axis1(int i) {
+bool is_ignored_dynamic_output_shape_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2223,10 +2477,13 @@ void CreateModel_dynamic_output_shape_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim4_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2250,10 +2507,13 @@ void CreateModel_dynamic_output_shape_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim4_axis2(int i) {
+bool is_ignored_dynamic_output_shape_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2277,10 +2537,13 @@ void CreateModel_dynamic_output_shape_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim4_axis2_neg(int i) {
+bool is_ignored_dynamic_output_shape_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 3, 12});
@@ -2304,10 +2567,13 @@ void CreateModel_dynamic_output_shape_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim4_axis3(int i) {
+bool is_ignored_dynamic_output_shape_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 3, 12});
@@ -2331,10 +2597,13 @@ void CreateModel_dynamic_output_shape_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim4_axis3_neg(int i) {
+bool is_ignored_dynamic_output_shape_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2358,10 +2627,13 @@ void CreateModel_dynamic_output_shape_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim3_axis0(int i) {
+bool is_ignored_dynamic_output_shape_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2385,10 +2657,13 @@ void CreateModel_dynamic_output_shape_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim3_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2412,10 +2687,13 @@ void CreateModel_dynamic_output_shape_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim3_axis1(int i) {
+bool is_ignored_dynamic_output_shape_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2439,10 +2717,13 @@ void CreateModel_dynamic_output_shape_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim3_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2466,10 +2747,13 @@ void CreateModel_dynamic_output_shape_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim3_axis2(int i) {
+bool is_ignored_dynamic_output_shape_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2493,10 +2777,13 @@ void CreateModel_dynamic_output_shape_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim3_axis2_neg(int i) {
+bool is_ignored_dynamic_output_shape_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2520,10 +2807,13 @@ void CreateModel_dynamic_output_shape_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim2_axis0(int i) {
+bool is_ignored_dynamic_output_shape_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2547,10 +2837,13 @@ void CreateModel_dynamic_output_shape_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim2_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2574,10 +2867,13 @@ void CreateModel_dynamic_output_shape_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim2_axis1(int i) {
+bool is_ignored_dynamic_output_shape_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2601,10 +2897,13 @@ void CreateModel_dynamic_output_shape_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim2_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2628,10 +2927,13 @@ void CreateModel_dynamic_output_shape_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim1_axis0(int i) {
+bool is_ignored_dynamic_output_shape_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2655,10 +2957,13 @@ void CreateModel_dynamic_output_shape_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim1_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2684,10 +2989,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim4_axis0(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2713,10 +3021,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim4_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2742,10 +3053,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim4_axis1(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2771,10 +3085,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim4_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2800,10 +3117,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim4_axis2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2829,10 +3149,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim4_axis2_neg(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 3, 12});
@@ -2858,10 +3181,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim4_axis3(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 3, 12});
@@ -2887,10 +3213,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim4_axis3_neg(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2916,10 +3245,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim3_axis0(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2945,10 +3277,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim3_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2974,10 +3309,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim3_axis1(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3003,10 +3341,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim3_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3032,10 +3373,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3061,10 +3405,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2_neg(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3090,10 +3437,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim2_axis0(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3119,10 +3469,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim2_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3148,10 +3501,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim2_axis1(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3177,10 +3533,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim2_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3206,10 +3565,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_relaxed_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3235,10 +3597,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3262,10 +3627,13 @@ void CreateModel_dynamic_output_shape_quant8_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim4_axis0(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3289,10 +3657,13 @@ void CreateModel_dynamic_output_shape_quant8_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim4_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3316,10 +3687,13 @@ void CreateModel_dynamic_output_shape_quant8_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim4_axis1(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3343,10 +3717,13 @@ void CreateModel_dynamic_output_shape_quant8_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim4_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3370,10 +3747,13 @@ void CreateModel_dynamic_output_shape_quant8_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim4_axis2(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3397,10 +3777,13 @@ void CreateModel_dynamic_output_shape_quant8_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim4_axis2_neg(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim4_axis3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3424,10 +3807,13 @@ void CreateModel_dynamic_output_shape_quant8_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim4_axis3(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim4_axis3_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3451,10 +3837,13 @@ void CreateModel_dynamic_output_shape_quant8_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim4_axis3_neg(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3478,10 +3867,13 @@ void CreateModel_dynamic_output_shape_quant8_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim3_axis0(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3505,10 +3897,13 @@ void CreateModel_dynamic_output_shape_quant8_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim3_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3532,10 +3927,13 @@ void CreateModel_dynamic_output_shape_quant8_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim3_axis1(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3559,10 +3957,13 @@ void CreateModel_dynamic_output_shape_quant8_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim3_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3586,10 +3987,13 @@ void CreateModel_dynamic_output_shape_quant8_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim3_axis2(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3613,10 +4017,13 @@ void CreateModel_dynamic_output_shape_quant8_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim3_axis2_neg(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3640,10 +4047,13 @@ void CreateModel_dynamic_output_shape_quant8_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim2_axis0(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3667,10 +4077,13 @@ void CreateModel_dynamic_output_shape_quant8_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim2_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3694,10 +4107,13 @@ void CreateModel_dynamic_output_shape_quant8_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim2_axis1(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3721,10 +4137,13 @@ void CreateModel_dynamic_output_shape_quant8_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim2_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3748,10 +4167,13 @@ void CreateModel_dynamic_output_shape_quant8_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim1_axis0(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_quant8_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3775,10 +4197,13 @@ void CreateModel_dynamic_output_shape_quant8_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_dim1_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_quant8_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3802,10 +4227,13 @@ void CreateModel_dynamic_output_shape_float16_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim4_axis0(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3829,10 +4257,13 @@ void CreateModel_dynamic_output_shape_float16_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim4_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3856,10 +4287,13 @@ void CreateModel_dynamic_output_shape_float16_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim4_axis1(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3883,10 +4317,13 @@ void CreateModel_dynamic_output_shape_float16_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim4_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3910,10 +4347,13 @@ void CreateModel_dynamic_output_shape_float16_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim4_axis2(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3937,10 +4377,13 @@ void CreateModel_dynamic_output_shape_float16_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim4_axis2_neg(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim4_axis3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3964,10 +4407,13 @@ void CreateModel_dynamic_output_shape_float16_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim4_axis3(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim4_axis3_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3991,10 +4437,13 @@ void CreateModel_dynamic_output_shape_float16_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim4_axis3_neg(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4018,10 +4467,13 @@ void CreateModel_dynamic_output_shape_float16_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim3_axis0(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4045,10 +4497,13 @@ void CreateModel_dynamic_output_shape_float16_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim3_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4072,10 +4527,13 @@ void CreateModel_dynamic_output_shape_float16_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim3_axis1(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4099,10 +4557,13 @@ void CreateModel_dynamic_output_shape_float16_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim3_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4126,10 +4587,13 @@ void CreateModel_dynamic_output_shape_float16_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim3_axis2(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4153,10 +4617,13 @@ void CreateModel_dynamic_output_shape_float16_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim3_axis2_neg(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4180,10 +4647,13 @@ void CreateModel_dynamic_output_shape_float16_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim2_axis0(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4207,10 +4677,13 @@ void CreateModel_dynamic_output_shape_float16_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim2_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4234,10 +4707,13 @@ void CreateModel_dynamic_output_shape_float16_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim2_axis1(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4261,10 +4737,13 @@ void CreateModel_dynamic_output_shape_float16_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim2_axis1_neg(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4288,10 +4767,13 @@ void CreateModel_dynamic_output_shape_float16_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim1_axis0(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::channel_shuffle
+namespace generated_tests::channel_shuffle {
 
 void CreateModel_dynamic_output_shape_float16_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4315,8 +4797,9 @@ void CreateModel_dynamic_output_shape_float16_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_dim1_axis0_neg(int i) {
+bool is_ignored_dynamic_output_shape_float16_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::channel_shuffle

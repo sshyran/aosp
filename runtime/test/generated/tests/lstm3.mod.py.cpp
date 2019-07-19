@@ -1,24 +1,34 @@
+// Generated from lstm3.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: lstm3.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace lstm3 {
-// Generated lstm3 test
-#include "generated/examples/lstm3.example.cpp"
-// Generated model constructor
-#include "generated/models/lstm3.model.cpp"
-} // namespace lstm3
+namespace generated_tests::lstm3 {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, lstm3) {
-    execute(lstm3::CreateModel,
-            lstm3::is_ignored,
-            lstm3::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, lstm3, lstm3::CreateModel)
+
+} // namespace generated_tests::lstm3
+TEST_AVAILABLE_SINCE(V1_0, lstm3, generated_tests::lstm3::CreateModel)
+
+namespace generated_tests::lstm3 {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, lstm3_dynamic_output_shape) {
-    execute(lstm3::CreateModel_dynamic_output_shape,
-            lstm3::is_ignored_dynamic_output_shape,
-            lstm3::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::lstm3
 

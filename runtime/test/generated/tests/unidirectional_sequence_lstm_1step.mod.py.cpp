@@ -1,24 +1,34 @@
+// Generated from unidirectional_sequence_lstm_1step.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: unidirectional_sequence_lstm_1step.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace unidirectional_sequence_lstm_1step {
-// Generated unidirectional_sequence_lstm_1step test
-#include "generated/examples/unidirectional_sequence_lstm_1step.example.cpp"
-// Generated model constructor
-#include "generated/models/unidirectional_sequence_lstm_1step.model.cpp"
-} // namespace unidirectional_sequence_lstm_1step
+namespace generated_tests::unidirectional_sequence_lstm_1step {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, unidirectional_sequence_lstm_1step) {
-    execute(unidirectional_sequence_lstm_1step::CreateModel,
-            unidirectional_sequence_lstm_1step::is_ignored,
-            unidirectional_sequence_lstm_1step::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_1step, unidirectional_sequence_lstm_1step::CreateModel)
+
+} // namespace generated_tests::unidirectional_sequence_lstm_1step
+TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_1step, generated_tests::unidirectional_sequence_lstm_1step::CreateModel)
+
+namespace generated_tests::unidirectional_sequence_lstm_1step {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_1step_dynamic_output_shape) {
-    execute(unidirectional_sequence_lstm_1step::CreateModel_dynamic_output_shape,
-            unidirectional_sequence_lstm_1step::is_ignored_dynamic_output_shape,
-            unidirectional_sequence_lstm_1step::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::unidirectional_sequence_lstm_1step
 

@@ -1,23 +1,33 @@
+// Generated from conv_float_weights_as_inputs_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: conv_float_weights_as_inputs_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace conv_float_weights_as_inputs_relaxed {
-// Generated conv_float_weights_as_inputs_relaxed test
-#include "generated/examples/conv_float_weights_as_inputs_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/conv_float_weights_as_inputs_relaxed.model.cpp"
-} // namespace conv_float_weights_as_inputs_relaxed
+namespace generated_tests::conv_float_weights_as_inputs_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, conv_float_weights_as_inputs_relaxed) {
-    execute(conv_float_weights_as_inputs_relaxed::CreateModel,
-            conv_float_weights_as_inputs_relaxed::is_ignored,
-            conv_float_weights_as_inputs_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::conv_float_weights_as_inputs_relaxed
+
+namespace generated_tests::conv_float_weights_as_inputs_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, conv_float_weights_as_inputs_relaxed_dynamic_output_shape) {
-    execute(conv_float_weights_as_inputs_relaxed::CreateModel_dynamic_output_shape,
-            conv_float_weights_as_inputs_relaxed::is_ignored_dynamic_output_shape,
-            conv_float_weights_as_inputs_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::conv_float_weights_as_inputs_relaxed
 

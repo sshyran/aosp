@@ -1,23 +1,33 @@
+// Generated from div_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: div_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace div_relaxed {
-// Generated div_relaxed test
-#include "generated/examples/div_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/div_relaxed.model.cpp"
-} // namespace div_relaxed
+namespace generated_tests::div_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, div_relaxed) {
-    execute(div_relaxed::CreateModel,
-            div_relaxed::is_ignored,
-            div_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::div_relaxed
+
+namespace generated_tests::div_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, div_relaxed_dynamic_output_shape) {
-    execute(div_relaxed::CreateModel_dynamic_output_shape,
-            div_relaxed::is_ignored_dynamic_output_shape,
-            div_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::div_relaxed
 

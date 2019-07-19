@@ -1,23 +1,33 @@
+// Generated from embedding_lookup_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: embedding_lookup_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace embedding_lookup_relaxed {
-// Generated embedding_lookup_relaxed test
-#include "generated/examples/embedding_lookup_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/embedding_lookup_relaxed.model.cpp"
-} // namespace embedding_lookup_relaxed
+namespace generated_tests::embedding_lookup_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, embedding_lookup_relaxed) {
-    execute(embedding_lookup_relaxed::CreateModel,
-            embedding_lookup_relaxed::is_ignored,
-            embedding_lookup_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::embedding_lookup_relaxed
+
+namespace generated_tests::embedding_lookup_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, embedding_lookup_relaxed_dynamic_output_shape) {
-    execute(embedding_lookup_relaxed::CreateModel_dynamic_output_shape,
-            embedding_lookup_relaxed::is_ignored_dynamic_output_shape,
-            embedding_lookup_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::embedding_lookup_relaxed
 

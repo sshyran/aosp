@@ -1,5 +1,10 @@
+// Generated from fully_connected_float_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: fully_connected_float_relaxed.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::fully_connected_float_relaxed {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 1});
@@ -28,10 +33,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_float_relaxed
+namespace generated_tests::fully_connected_float_relaxed {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1});
@@ -62,8 +70,9 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::fully_connected_float_relaxed

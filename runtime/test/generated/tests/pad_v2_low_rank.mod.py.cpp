@@ -1,37 +1,63 @@
+// Generated from pad_v2_low_rank.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: pad_v2_low_rank.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace pad_v2_low_rank {
-// Generated pad_v2_low_rank test
-#include "generated/examples/pad_v2_low_rank.example.cpp"
-// Generated model constructor
-#include "generated/models/pad_v2_low_rank.model.cpp"
-} // namespace pad_v2_low_rank
+namespace generated_tests::pad_v2_low_rank {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, pad_v2_low_rank) {
-    execute(pad_v2_low_rank::CreateModel,
-            pad_v2_low_rank::is_ignored,
-            pad_v2_low_rank::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, pad_v2_low_rank, pad_v2_low_rank::CreateModel)
+
+} // namespace generated_tests::pad_v2_low_rank
+TEST_AVAILABLE_SINCE(V1_2, pad_v2_low_rank, generated_tests::pad_v2_low_rank::CreateModel)
+
+namespace generated_tests::pad_v2_low_rank {
+
+void CreateModel_float16(Model *model);
+bool is_ignored_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16();
 
 TEST_F(GeneratedTests, pad_v2_low_rank_float16) {
-    execute(pad_v2_low_rank::CreateModel_float16,
-            pad_v2_low_rank::is_ignored_float16,
-            pad_v2_low_rank::get_examples_float16());
+    execute(CreateModel_float16,
+            is_ignored_float16,
+            get_examples_float16());
 }
-TEST_AVAILABLE_SINCE(V1_2, pad_v2_low_rank_float16, pad_v2_low_rank::CreateModel_float16)
+
+} // namespace generated_tests::pad_v2_low_rank
+TEST_AVAILABLE_SINCE(V1_2, pad_v2_low_rank_float16, generated_tests::pad_v2_low_rank::CreateModel_float16)
+
+namespace generated_tests::pad_v2_low_rank {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, pad_v2_low_rank_dynamic_output_shape) {
-    execute(pad_v2_low_rank::CreateModel_dynamic_output_shape,
-            pad_v2_low_rank::is_ignored_dynamic_output_shape,
-            pad_v2_low_rank::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
 
+} // namespace generated_tests::pad_v2_low_rank
+
+namespace generated_tests::pad_v2_low_rank {
+
+void CreateModel_dynamic_output_shape_float16(Model *model);
+bool is_ignored_dynamic_output_shape_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16();
+
 TEST_F(DynamicOutputShapeTest, pad_v2_low_rank_dynamic_output_shape_float16) {
-    execute(pad_v2_low_rank::CreateModel_dynamic_output_shape_float16,
-            pad_v2_low_rank::is_ignored_dynamic_output_shape_float16,
-            pad_v2_low_rank::get_examples_dynamic_output_shape_float16());
+    execute(CreateModel_dynamic_output_shape_float16,
+            is_ignored_dynamic_output_shape_float16,
+            get_examples_dynamic_output_shape_float16());
 }
+
+} // namespace generated_tests::pad_v2_low_rank
 

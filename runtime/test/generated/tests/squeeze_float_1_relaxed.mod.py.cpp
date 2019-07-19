@@ -1,23 +1,33 @@
+// Generated from squeeze_float_1_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: squeeze_float_1_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace squeeze_float_1_relaxed {
-// Generated squeeze_float_1_relaxed test
-#include "generated/examples/squeeze_float_1_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/squeeze_float_1_relaxed.model.cpp"
-} // namespace squeeze_float_1_relaxed
+namespace generated_tests::squeeze_float_1_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, squeeze_float_1_relaxed) {
-    execute(squeeze_float_1_relaxed::CreateModel,
-            squeeze_float_1_relaxed::is_ignored,
-            squeeze_float_1_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::squeeze_float_1_relaxed
+
+namespace generated_tests::squeeze_float_1_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, squeeze_float_1_relaxed_dynamic_output_shape) {
-    execute(squeeze_float_1_relaxed::CreateModel_dynamic_output_shape,
-            squeeze_float_1_relaxed::is_ignored_dynamic_output_shape,
-            squeeze_float_1_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::squeeze_float_1_relaxed
 

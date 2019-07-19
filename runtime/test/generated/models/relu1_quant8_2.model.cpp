@@ -1,5 +1,10 @@
+// Generated from relu1_quant8_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: relu1_quant8_2.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::relu1_quant8_2 {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {2, 64, 64, 2}, 1.0f, 128);
   // Phase 1, operands
@@ -14,10 +19,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::relu1_quant8_2
+namespace generated_tests::relu1_quant8_2 {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {2, 64, 64, 2}, 1.0f, 128);
@@ -34,8 +42,9 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::relu1_quant8_2
