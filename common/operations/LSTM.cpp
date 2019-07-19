@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#define LOG_TAG "Operations"
+
 #include "LSTM.h"
 
 #include "CpuExecutor.h"

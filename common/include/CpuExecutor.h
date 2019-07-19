@@ -150,7 +150,8 @@ class CpuExecutor {
     }
 
    private:
-    bool initializeRunTimeInfo(const std::vector<RunTimePoolInfo>& modelPoolInfos,
+    bool initializeRunTimeInfo(const Request& request,
+                               const std::vector<RunTimePoolInfo>& modelPoolInfos,
                                const std::vector<RunTimePoolInfo>& requestPoolInfos);
     // Runs one operation of the graph.
     int executeOperation(const Operation& entry);
@@ -228,7 +229,7 @@ namespace {
 
 template <typename T>
 T getScalarData(const RunTimeOperandInfo& info) {
-    // TODO: Check buffer is at least as long as size of data.
+    CHECK_GE(info.length, sizeof(T)) << "Cannot get scalar data: buffer too short";
     T* data = reinterpret_cast<T*>(info.buffer);
     return data[0];
 }
