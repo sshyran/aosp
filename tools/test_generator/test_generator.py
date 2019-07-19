@@ -227,6 +227,9 @@ class Type(NamedVariable):
     def IsBool(self):
         return self.GetCppTypeString() == "bool8"
 
+    def IsScalar(self):
+        return not self.type.startswith("TENSOR_")
+
     def GetElementByteSize(self):
         cppTypeString = self.GetCppTypeString()
         if cppTypeString in ["uint8_t", "int8_t", "bool8"]:
@@ -305,6 +308,7 @@ class Operand(NamedVariable):
         self.SetValue(value)
         self.dimensions = self.type.dimensions
         self.lifetime = "TEMPORARY_VARIABLE"
+        self.model_index = None
         self.ins = []
         self.outs = []
 
@@ -562,11 +566,13 @@ class Model:
             self.operands[self.operands.index(t)] = t
         return self
 
-    def SetInputAndOutputIndex(self):
+    def SetOperandIndex(self):
         for ind, i in enumerate(self.GetInputs()):
             i.index = ind
         for ind, o in enumerate(self.GetOutputs()):
             o.index = ind
+        for ind, op in enumerate(self.operands):
+            op.model_index = ind
         return self
 
     def SetOperandInsAndOuts(self):
@@ -613,7 +619,7 @@ class Model:
     def Compile(self):
         if self.compiled:
             return self
-        self.SetInputAndOutputIndex()
+        self.SetOperandIndex()
         self.SetOperandInsAndOuts()
         self.TopologicalSort()
         self.SetOutputUnspecified()
