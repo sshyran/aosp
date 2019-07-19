@@ -293,7 +293,7 @@ if __name__ == '__main__':
             print("Generating test(s) from spec: %s" % tg.FileNames.specFile, file=sys.stderr)
             exec(open(tg.FileNames.specFile, "r").read())
             print("Output CTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
-            print("Output example:%s" % tg.FileNames.exampleFile, file=sys.stderr)
+            print("Output example: %s" % tg.FileNames.exampleFile, file=sys.stderr)
             print("Output CTS test: %s" % tg.FileNames.testFile, file=sys.stderr)
             with SmartOpen(tg.FileNames.modelFile) as model_fd, \
                  SmartOpen(tg.FileNames.exampleFile) as example_fd, \
