@@ -1,23 +1,33 @@
+// Generated from mean_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: mean_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace mean_relaxed {
-// Generated mean_relaxed test
-#include "generated/examples/mean_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/mean_relaxed.model.cpp"
-} // namespace mean_relaxed
+namespace generated_tests::mean_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, mean_relaxed) {
-    execute(mean_relaxed::CreateModel,
-            mean_relaxed::is_ignored,
-            mean_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::mean_relaxed
+
+namespace generated_tests::mean_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, mean_relaxed_dynamic_output_shape) {
-    execute(mean_relaxed::CreateModel_dynamic_output_shape,
-            mean_relaxed::is_ignored_dynamic_output_shape,
-            mean_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::mean_relaxed
 

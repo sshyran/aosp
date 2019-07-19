@@ -1,203 +1,437 @@
+// Generated from select_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: select_v1_2.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace select_v1_2 {
-// Generated select_v1_2 test
-#include "generated/examples/select_v1_2.example.cpp"
-// Generated model constructor
-#include "generated/models/select_v1_2.model.cpp"
-} // namespace select_v1_2
+namespace generated_tests::select_v1_2 {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim();
 
 TEST_F(GeneratedTests, select_v1_2_one_dim) {
-    execute(select_v1_2::CreateModel,
-            select_v1_2::is_ignored,
-            select_v1_2::get_examples_one_dim());
+    execute(CreateModel,
+            is_ignored,
+            get_examples_one_dim());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_one_dim, select_v1_2::CreateModel)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_one_dim, generated_tests::select_v1_2::CreateModel)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_int32(Model *model);
+bool is_ignored_int32(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_int32();
 
 TEST_F(GeneratedTests, select_v1_2_one_dim_int32) {
-    execute(select_v1_2::CreateModel_int32,
-            select_v1_2::is_ignored_int32,
-            select_v1_2::get_examples_one_dim_int32());
+    execute(CreateModel_int32,
+            is_ignored_int32,
+            get_examples_one_dim_int32());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_one_dim_int32, select_v1_2::CreateModel_int32)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_one_dim_int32, generated_tests::select_v1_2::CreateModel_int32)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_float16(Model *model);
+bool is_ignored_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_float16();
 
 TEST_F(GeneratedTests, select_v1_2_one_dim_float16) {
-    execute(select_v1_2::CreateModel_float16,
-            select_v1_2::is_ignored_float16,
-            select_v1_2::get_examples_one_dim_float16());
+    execute(CreateModel_float16,
+            is_ignored_float16,
+            get_examples_one_dim_float16());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_one_dim_float16, select_v1_2::CreateModel_float16)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_one_dim_float16, generated_tests::select_v1_2::CreateModel_float16)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_relaxed(Model *model);
+bool is_ignored_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_relaxed();
 
 TEST_F(GeneratedTests, select_v1_2_one_dim_relaxed) {
-    execute(select_v1_2::CreateModel_relaxed,
-            select_v1_2::is_ignored_relaxed,
-            select_v1_2::get_examples_one_dim_relaxed());
+    execute(CreateModel_relaxed,
+            is_ignored_relaxed,
+            get_examples_one_dim_relaxed());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_quant8(Model *model);
+bool is_ignored_quant8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_quant8();
 
 TEST_F(GeneratedTests, select_v1_2_one_dim_quant8) {
-    execute(select_v1_2::CreateModel_quant8,
-            select_v1_2::is_ignored_quant8,
-            select_v1_2::get_examples_one_dim_quant8());
+    execute(CreateModel_quant8,
+            is_ignored_quant8,
+            get_examples_one_dim_quant8());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_one_dim_quant8, select_v1_2::CreateModel_quant8)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_one_dim_quant8, generated_tests::select_v1_2::CreateModel_quant8)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_one_dim_dynamic_output_shape) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape,
-            select_v1_2::is_ignored_dynamic_output_shape,
-            select_v1_2::get_examples_one_dim_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_one_dim_dynamic_output_shape());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_int32(Model *model);
+bool is_ignored_dynamic_output_shape_int32(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_int32();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_one_dim_dynamic_output_shape_int32) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_int32,
-            select_v1_2::is_ignored_dynamic_output_shape_int32,
-            select_v1_2::get_examples_one_dim_dynamic_output_shape_int32());
+    execute(CreateModel_dynamic_output_shape_int32,
+            is_ignored_dynamic_output_shape_int32,
+            get_examples_one_dim_dynamic_output_shape_int32());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_float16(Model *model);
+bool is_ignored_dynamic_output_shape_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_float16();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_one_dim_dynamic_output_shape_float16) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_float16,
-            select_v1_2::is_ignored_dynamic_output_shape_float16,
-            select_v1_2::get_examples_one_dim_dynamic_output_shape_float16());
+    execute(CreateModel_dynamic_output_shape_float16,
+            is_ignored_dynamic_output_shape_float16,
+            get_examples_one_dim_dynamic_output_shape_float16());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_relaxed(Model *model);
+bool is_ignored_dynamic_output_shape_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_relaxed();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_one_dim_dynamic_output_shape_relaxed) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_relaxed,
-            select_v1_2::is_ignored_dynamic_output_shape_relaxed,
-            select_v1_2::get_examples_one_dim_dynamic_output_shape_relaxed());
+    execute(CreateModel_dynamic_output_shape_relaxed,
+            is_ignored_dynamic_output_shape_relaxed,
+            get_examples_one_dim_dynamic_output_shape_relaxed());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_quant8(Model *model);
+bool is_ignored_dynamic_output_shape_quant8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_quant8();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_one_dim_dynamic_output_shape_quant8) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_quant8,
-            select_v1_2::is_ignored_dynamic_output_shape_quant8,
-            select_v1_2::get_examples_one_dim_dynamic_output_shape_quant8());
+    execute(CreateModel_dynamic_output_shape_quant8,
+            is_ignored_dynamic_output_shape_quant8,
+            get_examples_one_dim_dynamic_output_shape_quant8());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_2(Model *model);
+bool is_ignored_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim();
 
 TEST_F(GeneratedTests, select_v1_2_two_dim) {
-    execute(select_v1_2::CreateModel_2,
-            select_v1_2::is_ignored_2,
-            select_v1_2::get_examples_two_dim());
+    execute(CreateModel_2,
+            is_ignored_2,
+            get_examples_two_dim());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_two_dim, select_v1_2::CreateModel_2)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_two_dim, generated_tests::select_v1_2::CreateModel_2)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_int32_2(Model *model);
+bool is_ignored_int32_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_int32();
 
 TEST_F(GeneratedTests, select_v1_2_two_dim_int32) {
-    execute(select_v1_2::CreateModel_int32_2,
-            select_v1_2::is_ignored_int32_2,
-            select_v1_2::get_examples_two_dim_int32());
+    execute(CreateModel_int32_2,
+            is_ignored_int32_2,
+            get_examples_two_dim_int32());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_two_dim_int32, select_v1_2::CreateModel_int32_2)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_two_dim_int32, generated_tests::select_v1_2::CreateModel_int32_2)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_float16_2(Model *model);
+bool is_ignored_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_float16();
 
 TEST_F(GeneratedTests, select_v1_2_two_dim_float16) {
-    execute(select_v1_2::CreateModel_float16_2,
-            select_v1_2::is_ignored_float16_2,
-            select_v1_2::get_examples_two_dim_float16());
+    execute(CreateModel_float16_2,
+            is_ignored_float16_2,
+            get_examples_two_dim_float16());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_two_dim_float16, select_v1_2::CreateModel_float16_2)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_two_dim_float16, generated_tests::select_v1_2::CreateModel_float16_2)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_relaxed_2(Model *model);
+bool is_ignored_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_relaxed();
 
 TEST_F(GeneratedTests, select_v1_2_two_dim_relaxed) {
-    execute(select_v1_2::CreateModel_relaxed_2,
-            select_v1_2::is_ignored_relaxed_2,
-            select_v1_2::get_examples_two_dim_relaxed());
+    execute(CreateModel_relaxed_2,
+            is_ignored_relaxed_2,
+            get_examples_two_dim_relaxed());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_quant8_2(Model *model);
+bool is_ignored_quant8_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_quant8();
 
 TEST_F(GeneratedTests, select_v1_2_two_dim_quant8) {
-    execute(select_v1_2::CreateModel_quant8_2,
-            select_v1_2::is_ignored_quant8_2,
-            select_v1_2::get_examples_two_dim_quant8());
+    execute(CreateModel_quant8_2,
+            is_ignored_quant8_2,
+            get_examples_two_dim_quant8());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_two_dim_quant8, select_v1_2::CreateModel_quant8_2)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_two_dim_quant8, generated_tests::select_v1_2::CreateModel_quant8_2)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_2(Model *model);
+bool is_ignored_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_two_dim_dynamic_output_shape) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_2,
-            select_v1_2::is_ignored_dynamic_output_shape_2,
-            select_v1_2::get_examples_two_dim_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape_2,
+            is_ignored_dynamic_output_shape_2,
+            get_examples_two_dim_dynamic_output_shape());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_int32_2(Model *model);
+bool is_ignored_dynamic_output_shape_int32_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_int32();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_two_dim_dynamic_output_shape_int32) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_int32_2,
-            select_v1_2::is_ignored_dynamic_output_shape_int32_2,
-            select_v1_2::get_examples_two_dim_dynamic_output_shape_int32());
+    execute(CreateModel_dynamic_output_shape_int32_2,
+            is_ignored_dynamic_output_shape_int32_2,
+            get_examples_two_dim_dynamic_output_shape_int32());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_float16_2(Model *model);
+bool is_ignored_dynamic_output_shape_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_float16();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_two_dim_dynamic_output_shape_float16) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_float16_2,
-            select_v1_2::is_ignored_dynamic_output_shape_float16_2,
-            select_v1_2::get_examples_two_dim_dynamic_output_shape_float16());
+    execute(CreateModel_dynamic_output_shape_float16_2,
+            is_ignored_dynamic_output_shape_float16_2,
+            get_examples_two_dim_dynamic_output_shape_float16());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_relaxed_2(Model *model);
+bool is_ignored_dynamic_output_shape_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_relaxed();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_two_dim_dynamic_output_shape_relaxed) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_relaxed_2,
-            select_v1_2::is_ignored_dynamic_output_shape_relaxed_2,
-            select_v1_2::get_examples_two_dim_dynamic_output_shape_relaxed());
+    execute(CreateModel_dynamic_output_shape_relaxed_2,
+            is_ignored_dynamic_output_shape_relaxed_2,
+            get_examples_two_dim_dynamic_output_shape_relaxed());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_quant8_2(Model *model);
+bool is_ignored_dynamic_output_shape_quant8_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_quant8();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_two_dim_dynamic_output_shape_quant8) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_quant8_2,
-            select_v1_2::is_ignored_dynamic_output_shape_quant8_2,
-            select_v1_2::get_examples_two_dim_dynamic_output_shape_quant8());
+    execute(CreateModel_dynamic_output_shape_quant8_2,
+            is_ignored_dynamic_output_shape_quant8_2,
+            get_examples_two_dim_dynamic_output_shape_quant8());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_3(Model *model);
+bool is_ignored_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim();
 
 TEST_F(GeneratedTests, select_v1_2_five_dim) {
-    execute(select_v1_2::CreateModel_3,
-            select_v1_2::is_ignored_3,
-            select_v1_2::get_examples_five_dim());
+    execute(CreateModel_3,
+            is_ignored_3,
+            get_examples_five_dim());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_five_dim, select_v1_2::CreateModel_3)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_five_dim, generated_tests::select_v1_2::CreateModel_3)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_int32_3(Model *model);
+bool is_ignored_int32_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_int32();
 
 TEST_F(GeneratedTests, select_v1_2_five_dim_int32) {
-    execute(select_v1_2::CreateModel_int32_3,
-            select_v1_2::is_ignored_int32_3,
-            select_v1_2::get_examples_five_dim_int32());
+    execute(CreateModel_int32_3,
+            is_ignored_int32_3,
+            get_examples_five_dim_int32());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_five_dim_int32, select_v1_2::CreateModel_int32_3)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_five_dim_int32, generated_tests::select_v1_2::CreateModel_int32_3)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_float16_3(Model *model);
+bool is_ignored_float16_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_float16();
 
 TEST_F(GeneratedTests, select_v1_2_five_dim_float16) {
-    execute(select_v1_2::CreateModel_float16_3,
-            select_v1_2::is_ignored_float16_3,
-            select_v1_2::get_examples_five_dim_float16());
+    execute(CreateModel_float16_3,
+            is_ignored_float16_3,
+            get_examples_five_dim_float16());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_five_dim_float16, select_v1_2::CreateModel_float16_3)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_five_dim_float16, generated_tests::select_v1_2::CreateModel_float16_3)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_relaxed_3(Model *model);
+bool is_ignored_relaxed_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_relaxed();
 
 TEST_F(GeneratedTests, select_v1_2_five_dim_relaxed) {
-    execute(select_v1_2::CreateModel_relaxed_3,
-            select_v1_2::is_ignored_relaxed_3,
-            select_v1_2::get_examples_five_dim_relaxed());
+    execute(CreateModel_relaxed_3,
+            is_ignored_relaxed_3,
+            get_examples_five_dim_relaxed());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_quant8_3(Model *model);
+bool is_ignored_quant8_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_quant8();
 
 TEST_F(GeneratedTests, select_v1_2_five_dim_quant8) {
-    execute(select_v1_2::CreateModel_quant8_3,
-            select_v1_2::is_ignored_quant8_3,
-            select_v1_2::get_examples_five_dim_quant8());
+    execute(CreateModel_quant8_3,
+            is_ignored_quant8_3,
+            get_examples_five_dim_quant8());
 }
-TEST_AVAILABLE_SINCE(V1_2, select_v1_2_five_dim_quant8, select_v1_2::CreateModel_quant8_3)
+
+} // namespace generated_tests::select_v1_2
+TEST_AVAILABLE_SINCE(V1_2, select_v1_2_five_dim_quant8, generated_tests::select_v1_2::CreateModel_quant8_3)
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_3(Model *model);
+bool is_ignored_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_five_dim_dynamic_output_shape) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_3,
-            select_v1_2::is_ignored_dynamic_output_shape_3,
-            select_v1_2::get_examples_five_dim_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape_3,
+            is_ignored_dynamic_output_shape_3,
+            get_examples_five_dim_dynamic_output_shape());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_int32_3(Model *model);
+bool is_ignored_dynamic_output_shape_int32_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_int32();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_five_dim_dynamic_output_shape_int32) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_int32_3,
-            select_v1_2::is_ignored_dynamic_output_shape_int32_3,
-            select_v1_2::get_examples_five_dim_dynamic_output_shape_int32());
+    execute(CreateModel_dynamic_output_shape_int32_3,
+            is_ignored_dynamic_output_shape_int32_3,
+            get_examples_five_dim_dynamic_output_shape_int32());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_float16_3(Model *model);
+bool is_ignored_dynamic_output_shape_float16_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_float16();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_five_dim_dynamic_output_shape_float16) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_float16_3,
-            select_v1_2::is_ignored_dynamic_output_shape_float16_3,
-            select_v1_2::get_examples_five_dim_dynamic_output_shape_float16());
+    execute(CreateModel_dynamic_output_shape_float16_3,
+            is_ignored_dynamic_output_shape_float16_3,
+            get_examples_five_dim_dynamic_output_shape_float16());
 }
+
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_relaxed_3(Model *model);
+bool is_ignored_dynamic_output_shape_relaxed_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_relaxed();
 
 TEST_F(DynamicOutputShapeTest, select_v1_2_five_dim_dynamic_output_shape_relaxed) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_relaxed_3,
-            select_v1_2::is_ignored_dynamic_output_shape_relaxed_3,
-            select_v1_2::get_examples_five_dim_dynamic_output_shape_relaxed());
+    execute(CreateModel_dynamic_output_shape_relaxed_3,
+            is_ignored_dynamic_output_shape_relaxed_3,
+            get_examples_five_dim_dynamic_output_shape_relaxed());
 }
 
+} // namespace generated_tests::select_v1_2
+
+namespace generated_tests::select_v1_2 {
+
+void CreateModel_dynamic_output_shape_quant8_3(Model *model);
+bool is_ignored_dynamic_output_shape_quant8_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_quant8();
+
 TEST_F(DynamicOutputShapeTest, select_v1_2_five_dim_dynamic_output_shape_quant8) {
-    execute(select_v1_2::CreateModel_dynamic_output_shape_quant8_3,
-            select_v1_2::is_ignored_dynamic_output_shape_quant8_3,
-            select_v1_2::get_examples_five_dim_dynamic_output_shape_quant8());
+    execute(CreateModel_dynamic_output_shape_quant8_3,
+            is_ignored_dynamic_output_shape_quant8_3,
+            get_examples_five_dim_dynamic_output_shape_quant8());
 }
+
+} // namespace generated_tests::select_v1_2
 

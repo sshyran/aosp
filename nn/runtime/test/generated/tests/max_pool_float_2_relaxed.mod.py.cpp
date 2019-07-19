@@ -1,23 +1,33 @@
+// Generated from max_pool_float_2_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: max_pool_float_2_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace max_pool_float_2_relaxed {
-// Generated max_pool_float_2_relaxed test
-#include "generated/examples/max_pool_float_2_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/max_pool_float_2_relaxed.model.cpp"
-} // namespace max_pool_float_2_relaxed
+namespace generated_tests::max_pool_float_2_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, max_pool_float_2_relaxed) {
-    execute(max_pool_float_2_relaxed::CreateModel,
-            max_pool_float_2_relaxed::is_ignored,
-            max_pool_float_2_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::max_pool_float_2_relaxed
+
+namespace generated_tests::max_pool_float_2_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, max_pool_float_2_relaxed_dynamic_output_shape) {
-    execute(max_pool_float_2_relaxed::CreateModel_dynamic_output_shape,
-            max_pool_float_2_relaxed::is_ignored_dynamic_output_shape,
-            max_pool_float_2_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::max_pool_float_2_relaxed
 

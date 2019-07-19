@@ -1,24 +1,34 @@
+// Generated from conv_float_channels.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: conv_float_channels.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace conv_float_channels {
-// Generated conv_float_channels test
-#include "generated/examples/conv_float_channels.example.cpp"
-// Generated model constructor
-#include "generated/models/conv_float_channels.model.cpp"
-} // namespace conv_float_channels
+namespace generated_tests::conv_float_channels {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, conv_float_channels) {
-    execute(conv_float_channels::CreateModel,
-            conv_float_channels::is_ignored,
-            conv_float_channels::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, conv_float_channels, conv_float_channels::CreateModel)
+
+} // namespace generated_tests::conv_float_channels
+TEST_AVAILABLE_SINCE(V1_0, conv_float_channels, generated_tests::conv_float_channels::CreateModel)
+
+namespace generated_tests::conv_float_channels {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, conv_float_channels_dynamic_output_shape) {
-    execute(conv_float_channels::CreateModel_dynamic_output_shape,
-            conv_float_channels::is_ignored_dynamic_output_shape,
-            conv_float_channels::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::conv_float_channels
 

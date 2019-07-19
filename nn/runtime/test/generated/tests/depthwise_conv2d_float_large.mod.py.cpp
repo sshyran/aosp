@@ -1,24 +1,34 @@
+// Generated from depthwise_conv2d_float_large.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: depthwise_conv2d_float_large.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace depthwise_conv2d_float_large {
-// Generated depthwise_conv2d_float_large test
-#include "generated/examples/depthwise_conv2d_float_large.example.cpp"
-// Generated model constructor
-#include "generated/models/depthwise_conv2d_float_large.model.cpp"
-} // namespace depthwise_conv2d_float_large
+namespace generated_tests::depthwise_conv2d_float_large {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, depthwise_conv2d_float_large) {
-    execute(depthwise_conv2d_float_large::CreateModel,
-            depthwise_conv2d_float_large::is_ignored,
-            depthwise_conv2d_float_large::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, depthwise_conv2d_float_large, depthwise_conv2d_float_large::CreateModel)
+
+} // namespace generated_tests::depthwise_conv2d_float_large
+TEST_AVAILABLE_SINCE(V1_0, depthwise_conv2d_float_large, generated_tests::depthwise_conv2d_float_large::CreateModel)
+
+namespace generated_tests::depthwise_conv2d_float_large {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, depthwise_conv2d_float_large_dynamic_output_shape) {
-    execute(depthwise_conv2d_float_large::CreateModel_dynamic_output_shape,
-            depthwise_conv2d_float_large::is_ignored_dynamic_output_shape,
-            depthwise_conv2d_float_large::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::depthwise_conv2d_float_large
 

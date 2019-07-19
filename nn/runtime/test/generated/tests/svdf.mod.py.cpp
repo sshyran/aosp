@@ -1,24 +1,34 @@
+// Generated from svdf.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: svdf.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace svdf {
-// Generated svdf test
-#include "generated/examples/svdf.example.cpp"
-// Generated model constructor
-#include "generated/models/svdf.model.cpp"
-} // namespace svdf
+namespace generated_tests::svdf {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, svdf) {
-    execute(svdf::CreateModel,
-            svdf::is_ignored,
-            svdf::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, svdf, svdf::CreateModel)
+
+} // namespace generated_tests::svdf
+TEST_AVAILABLE_SINCE(V1_0, svdf, generated_tests::svdf::CreateModel)
+
+namespace generated_tests::svdf {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, svdf_dynamic_output_shape) {
-    execute(svdf::CreateModel_dynamic_output_shape,
-            svdf::is_ignored_dynamic_output_shape,
-            svdf::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::svdf
 

@@ -1,5 +1,10 @@
+// Generated from topk_v2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: topk_v2.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::topk_v2 {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2});
   OperandType type1(Type::INT32, {});
@@ -20,10 +25,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2});
@@ -47,10 +55,13 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -72,10 +83,13 @@ void CreateModel_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16(int i) {
+bool is_ignored_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2});
@@ -98,10 +112,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2});
@@ -126,10 +143,13 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -152,10 +172,13 @@ void CreateModel_dynamic_output_shape_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16(int i) {
+bool is_ignored_dynamic_output_shape_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2});
@@ -178,10 +201,13 @@ void CreateModel_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_2(int i) {
+bool is_ignored_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_relaxed_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2});
@@ -206,10 +232,13 @@ void CreateModel_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_2(int i) {
+bool is_ignored_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -232,10 +261,13 @@ void CreateModel_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_2(int i) {
+bool is_ignored_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -258,10 +290,13 @@ void CreateModel_dynamic_output_shape_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_2(int i) {
+bool is_ignored_dynamic_output_shape_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -286,10 +321,13 @@ void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -312,10 +350,13 @@ void CreateModel_dynamic_output_shape_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_2(int i) {
+bool is_ignored_dynamic_output_shape_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2});
@@ -338,10 +379,13 @@ void CreateModel_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3(int i) {
+bool is_ignored_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_relaxed_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2});
@@ -366,10 +410,13 @@ void CreateModel_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_3(int i) {
+bool is_ignored_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -392,10 +439,13 @@ void CreateModel_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_3(int i) {
+bool is_ignored_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -418,10 +468,13 @@ void CreateModel_dynamic_output_shape_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_3(int i) {
+bool is_ignored_dynamic_output_shape_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_relaxed_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -446,10 +499,13 @@ void CreateModel_dynamic_output_shape_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_3(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -472,10 +528,13 @@ void CreateModel_dynamic_output_shape_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_3(int i) {
+bool is_ignored_dynamic_output_shape_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_4(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -498,10 +557,13 @@ void CreateModel_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_4(int i) {
+bool is_ignored_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_relaxed_4(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -526,10 +588,13 @@ void CreateModel_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_4(int i) {
+bool is_ignored_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_float16_4(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -552,10 +617,13 @@ void CreateModel_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_4(int i) {
+bool is_ignored_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_4(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -578,10 +646,13 @@ void CreateModel_dynamic_output_shape_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_4(int i) {
+bool is_ignored_dynamic_output_shape_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_relaxed_4(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -606,10 +677,13 @@ void CreateModel_dynamic_output_shape_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_4(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_float16_4(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -632,10 +706,13 @@ void CreateModel_dynamic_output_shape_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_4(int i) {
+bool is_ignored_dynamic_output_shape_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_5(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -658,10 +735,13 @@ void CreateModel_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_5(int i) {
+bool is_ignored_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_relaxed_5(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -686,10 +766,13 @@ void CreateModel_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_5(int i) {
+bool is_ignored_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_float16_5(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -712,10 +795,13 @@ void CreateModel_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_5(int i) {
+bool is_ignored_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_5(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -738,10 +824,13 @@ void CreateModel_dynamic_output_shape_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_5(int i) {
+bool is_ignored_dynamic_output_shape_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_relaxed_5(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -766,10 +855,13 @@ void CreateModel_dynamic_output_shape_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_5(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_float16_5(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -792,10 +884,13 @@ void CreateModel_dynamic_output_shape_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_5(int i) {
+bool is_ignored_dynamic_output_shape_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_6(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -817,10 +912,13 @@ void CreateModel_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_6(int i) {
+bool is_ignored_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_relaxed_6(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -844,10 +942,13 @@ void CreateModel_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_6(int i) {
+bool is_ignored_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_float16_6(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -869,10 +970,13 @@ void CreateModel_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_6(int i) {
+bool is_ignored_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_6(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -894,10 +998,13 @@ void CreateModel_dynamic_output_shape_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_6(int i) {
+bool is_ignored_dynamic_output_shape_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_relaxed_6(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -921,10 +1028,13 @@ void CreateModel_dynamic_output_shape_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_6(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::topk_v2
+namespace generated_tests::topk_v2 {
 
 void CreateModel_dynamic_output_shape_float16_6(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -946,8 +1056,9 @@ void CreateModel_dynamic_output_shape_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_6(int i) {
+bool is_ignored_dynamic_output_shape_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::topk_v2

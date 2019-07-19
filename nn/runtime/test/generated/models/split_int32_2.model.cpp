@@ -1,5 +1,10 @@
+// Generated from split_int32_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: split_int32_2.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::split_int32_2 {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_INT32, {2, 3});
   OperandType type1(Type::INT32, {});
@@ -23,10 +28,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::split_int32_2
+namespace generated_tests::split_int32_2 {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_INT32, {2, 3});
@@ -53,10 +61,13 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::split_int32_2
+namespace generated_tests::split_int32_2 {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_INT32, {2, 3});
@@ -81,10 +92,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::split_int32_2
+namespace generated_tests::split_int32_2 {
 
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_INT32, {2, 3});
@@ -111,8 +125,9 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::split_int32_2
