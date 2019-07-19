@@ -1,24 +1,34 @@
+// Generated from mobilenet_quantized.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: mobilenet_quantized.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace mobilenet_quantized {
-// Generated mobilenet_quantized test
-#include "generated/examples/mobilenet_quantized.example.cpp"
-// Generated model constructor
-#include "generated/models/mobilenet_quantized.model.cpp"
-} // namespace mobilenet_quantized
+namespace generated_tests::mobilenet_quantized {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, mobilenet_quantized) {
-    execute(mobilenet_quantized::CreateModel,
-            mobilenet_quantized::is_ignored,
-            mobilenet_quantized::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, mobilenet_quantized, mobilenet_quantized::CreateModel)
+
+} // namespace generated_tests::mobilenet_quantized
+TEST_AVAILABLE_SINCE(V1_0, mobilenet_quantized, generated_tests::mobilenet_quantized::CreateModel)
+
+namespace generated_tests::mobilenet_quantized {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, mobilenet_quantized_dynamic_output_shape) {
-    execute(mobilenet_quantized::CreateModel_dynamic_output_shape,
-            mobilenet_quantized::is_ignored_dynamic_output_shape,
-            mobilenet_quantized::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::mobilenet_quantized
 

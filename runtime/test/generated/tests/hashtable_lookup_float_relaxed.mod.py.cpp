@@ -1,23 +1,33 @@
+// Generated from hashtable_lookup_float_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: hashtable_lookup_float_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace hashtable_lookup_float_relaxed {
-// Generated hashtable_lookup_float_relaxed test
-#include "generated/examples/hashtable_lookup_float_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/hashtable_lookup_float_relaxed.model.cpp"
-} // namespace hashtable_lookup_float_relaxed
+namespace generated_tests::hashtable_lookup_float_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, hashtable_lookup_float_relaxed) {
-    execute(hashtable_lookup_float_relaxed::CreateModel,
-            hashtable_lookup_float_relaxed::is_ignored,
-            hashtable_lookup_float_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::hashtable_lookup_float_relaxed
+
+namespace generated_tests::hashtable_lookup_float_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, hashtable_lookup_float_relaxed_dynamic_output_shape) {
-    execute(hashtable_lookup_float_relaxed::CreateModel_dynamic_output_shape,
-            hashtable_lookup_float_relaxed::is_ignored_dynamic_output_shape,
-            hashtable_lookup_float_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::hashtable_lookup_float_relaxed
 

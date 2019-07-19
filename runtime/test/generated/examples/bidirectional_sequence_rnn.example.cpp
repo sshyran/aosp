@@ -1,7 +1,12 @@
+// Generated from bidirectional_sequence_rnn.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: bidirectional_sequence_rnn.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_blackbox() {
-static std::vector<MixedTypedExample> examples_blackbox = {
+#include "TestHarness.h"
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_blackbox = {
 return examples_blackbox;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_blackbox_relaxed = {
 return examples_blackbox_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_blackbox_float16 = {
 return examples_blackbox_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_blackbox_dynamic_output_shape = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_blackbox_dynamic_output_shape = {
 return examples_blackbox_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_blackbox_dynamic_output_shape_rel
 return examples_blackbox_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_dynamic_output_shape_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_blackbox_dynamic_output_shape_flo
 return examples_blackbox_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major = {
 return examples_blackbox_time_major;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -456,8 +482,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_relaxed = {
 return examples_blackbox_time_major_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -513,8 +542,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_float16 = {
 return examples_blackbox_time_major_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_dynamic_output_shape = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -570,8 +602,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_dynamic_outpu
 return examples_blackbox_time_major_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -627,8 +662,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_dynamic_outpu
 return examples_blackbox_time_major_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_dynamic_output_shape_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -684,8 +722,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_dynamic_outpu
 return examples_blackbox_time_major_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_merge_outputs = {
 // Begin of an example
 {
 .operands = {
@@ -741,8 +782,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs
 return examples_blackbox_time_major_merge_outputs;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_merge_outputs_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -798,8 +842,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs
 return examples_blackbox_time_major_merge_outputs_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_merge_outputs_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -855,8 +902,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs
 return examples_blackbox_time_major_merge_outputs_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs_dynamic_output_shape = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_merge_outputs_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -912,8 +962,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs
 return examples_blackbox_time_major_merge_outputs_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_merge_outputs_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -969,8 +1022,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs
 return examples_blackbox_time_major_merge_outputs_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs_dynamic_output_shape_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_time_major_merge_outputs_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1026,8 +1082,11 @@ static std::vector<MixedTypedExample> examples_blackbox_time_major_merge_outputs
 return examples_blackbox_time_major_merge_outputs_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_reversed_inputs() {
-static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_reversed_inputs = {
 // Begin of an example
 {
 .operands = {
@@ -1083,8 +1142,11 @@ static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs = {
 return examples_blackbox_reversed_inputs;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_reversed_inputs_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_reversed_inputs_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1140,8 +1202,11 @@ static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs_relaxed 
 return examples_blackbox_reversed_inputs_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_reversed_inputs_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_reversed_inputs_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1197,8 +1262,11 @@ static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs_float16 
 return examples_blackbox_reversed_inputs_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_reversed_inputs_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs_dynamic_output_shape = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_reversed_inputs_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -1254,8 +1322,11 @@ static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs_dynamic_
 return examples_blackbox_reversed_inputs_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_reversed_inputs_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_reversed_inputs_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1311,8 +1382,11 @@ static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs_dynamic_
 return examples_blackbox_reversed_inputs_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_reversed_inputs_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs_dynamic_output_shape_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_reversed_inputs_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1368,8 +1442,11 @@ static std::vector<MixedTypedExample> examples_blackbox_reversed_inputs_dynamic_
 return examples_blackbox_reversed_inputs_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_aux_input() {
-static std::vector<MixedTypedExample> examples_blackbox_aux_input = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_aux_input = {
 // Begin of an example
 {
 .operands = {
@@ -1425,8 +1502,11 @@ static std::vector<MixedTypedExample> examples_blackbox_aux_input = {
 return examples_blackbox_aux_input;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_aux_input_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_aux_input_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_aux_input_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1482,8 +1562,11 @@ static std::vector<MixedTypedExample> examples_blackbox_aux_input_relaxed = {
 return examples_blackbox_aux_input_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_aux_input_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_aux_input_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_aux_input_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1539,8 +1622,11 @@ static std::vector<MixedTypedExample> examples_blackbox_aux_input_float16 = {
 return examples_blackbox_aux_input_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_aux_input_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_blackbox_aux_input_dynamic_output_shape = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_aux_input_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -1596,8 +1682,11 @@ static std::vector<MixedTypedExample> examples_blackbox_aux_input_dynamic_output
 return examples_blackbox_aux_input_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_aux_input_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_aux_input_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_aux_input_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1653,8 +1742,11 @@ static std::vector<MixedTypedExample> examples_blackbox_aux_input_dynamic_output
 return examples_blackbox_aux_input_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_aux_input_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_aux_input_dynamic_output_shape_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_aux_input_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1710,8 +1802,11 @@ static std::vector<MixedTypedExample> examples_blackbox_aux_input_dynamic_output
 return examples_blackbox_aux_input_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_regular_and_aux_input() {
-static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_regular_and_aux_input = {
 // Begin of an example
 {
 .operands = {
@@ -1767,8 +1862,11 @@ static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input = 
 return examples_blackbox_regular_and_aux_input;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_regular_and_aux_input_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1824,8 +1922,11 @@ static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input_re
 return examples_blackbox_regular_and_aux_input_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_regular_and_aux_input_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1881,8 +1982,11 @@ static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input_fl
 return examples_blackbox_regular_and_aux_input_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input_dynamic_output_shape = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_regular_and_aux_input_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -1938,8 +2042,11 @@ static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input_dy
 return examples_blackbox_regular_and_aux_input_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_regular_and_aux_input_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1995,8 +2102,11 @@ static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input_dy
 return examples_blackbox_regular_and_aux_input_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input_dynamic_output_shape_float16 = {
+} // namespace generated_tests::bidirectional_sequence_rnn
+namespace generated_tests::bidirectional_sequence_rnn {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_regular_and_aux_input_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -2052,3 +2162,4 @@ static std::vector<MixedTypedExample> examples_blackbox_regular_and_aux_input_dy
 return examples_blackbox_regular_and_aux_input_dynamic_output_shape_float16;
 };
 
+} // namespace generated_tests::bidirectional_sequence_rnn

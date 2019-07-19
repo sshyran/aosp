@@ -1,24 +1,34 @@
+// Generated from floor.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: floor.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace floor {
-// Generated floor test
-#include "generated/examples/floor.example.cpp"
-// Generated model constructor
-#include "generated/models/floor.model.cpp"
-} // namespace floor
+namespace generated_tests::floor {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, floor) {
-    execute(floor::CreateModel,
-            floor::is_ignored,
-            floor::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, floor, floor::CreateModel)
+
+} // namespace generated_tests::floor
+TEST_AVAILABLE_SINCE(V1_0, floor, generated_tests::floor::CreateModel)
+
+namespace generated_tests::floor {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, floor_dynamic_output_shape) {
-    execute(floor::CreateModel_dynamic_output_shape,
-            floor::is_ignored_dynamic_output_shape,
-            floor::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::floor
 

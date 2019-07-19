@@ -1,5 +1,10 @@
+// Generated from resize_nearest_neighbor.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: resize_nearest_neighbor.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
@@ -26,10 +31,13 @@ void CreateModel_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc(int i) {
+bool is_ignored_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -59,10 +67,13 @@ void CreateModel_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_relaxed(int i) {
+bool is_ignored_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -90,10 +101,13 @@ void CreateModel_shape_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_quant8(int i) {
+bool is_ignored_shape_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -121,10 +135,13 @@ void CreateModel_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_float16(int i) {
+bool is_ignored_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -152,10 +169,13 @@ void CreateModel_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw(int i) {
+bool is_ignored_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -185,10 +205,13 @@ void CreateModel_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_relaxed(int i) {
+bool is_ignored_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -216,10 +239,13 @@ void CreateModel_shape_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_quant8(int i) {
+bool is_ignored_shape_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -247,10 +273,13 @@ void CreateModel_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_float16(int i) {
+bool is_ignored_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -278,10 +307,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -311,10 +343,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -342,10 +377,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_quant8(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -373,10 +411,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -404,10 +445,13 @@ void CreateModel_shape_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -437,10 +481,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -468,10 +515,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_quant8(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -499,10 +549,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -530,10 +583,13 @@ void CreateModel_scale_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc(int i) {
+bool is_ignored_scale_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -563,10 +619,13 @@ void CreateModel_scale_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_relaxed(int i) {
+bool is_ignored_scale_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -594,10 +653,13 @@ void CreateModel_scale_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_quant8(int i) {
+bool is_ignored_scale_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -625,10 +687,13 @@ void CreateModel_scale_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_float16(int i) {
+bool is_ignored_scale_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -656,10 +721,13 @@ void CreateModel_scale_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw(int i) {
+bool is_ignored_scale_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -689,10 +757,13 @@ void CreateModel_scale_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_relaxed(int i) {
+bool is_ignored_scale_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -720,10 +791,13 @@ void CreateModel_scale_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_quant8(int i) {
+bool is_ignored_scale_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -751,10 +825,13 @@ void CreateModel_scale_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_float16(int i) {
+bool is_ignored_scale_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -782,10 +859,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -815,10 +895,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -846,10 +929,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_quant8(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -877,10 +963,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -908,10 +997,13 @@ void CreateModel_scale_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -941,10 +1033,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -972,10 +1067,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_quant8(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1003,10 +1101,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1034,10 +1135,13 @@ void CreateModel_shape_nhwc_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_2(int i) {
+bool is_ignored_shape_nhwc_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1067,10 +1171,13 @@ void CreateModel_shape_nhwc_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_relaxed_2(int i) {
+bool is_ignored_shape_nhwc_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1098,10 +1205,13 @@ void CreateModel_shape_nhwc_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_quant8_2(int i) {
+bool is_ignored_shape_nhwc_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1129,10 +1239,13 @@ void CreateModel_shape_nhwc_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_float16_2(int i) {
+bool is_ignored_shape_nhwc_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1160,10 +1273,13 @@ void CreateModel_shape_nchw_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_2(int i) {
+bool is_ignored_shape_nchw_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1193,10 +1309,13 @@ void CreateModel_shape_nchw_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_relaxed_2(int i) {
+bool is_ignored_shape_nchw_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1224,10 +1343,13 @@ void CreateModel_shape_nchw_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_quant8_2(int i) {
+bool is_ignored_shape_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1255,10 +1377,13 @@ void CreateModel_shape_nchw_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_float16_2(int i) {
+bool is_ignored_shape_nchw_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1286,10 +1411,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_2(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1319,10 +1447,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_2(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1350,10 +1481,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_2(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1381,10 +1515,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_float16_2(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1412,10 +1549,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_2(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1445,10 +1585,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_2(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1476,10 +1619,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_quant8_2(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1507,10 +1653,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_float16_2(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1538,10 +1687,13 @@ void CreateModel_scale_nhwc_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_2(int i) {
+bool is_ignored_scale_nhwc_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1571,10 +1723,13 @@ void CreateModel_scale_nhwc_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_relaxed_2(int i) {
+bool is_ignored_scale_nhwc_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1602,10 +1757,13 @@ void CreateModel_scale_nhwc_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_quant8_2(int i) {
+bool is_ignored_scale_nhwc_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1633,10 +1791,13 @@ void CreateModel_scale_nhwc_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_float16_2(int i) {
+bool is_ignored_scale_nhwc_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1664,10 +1825,13 @@ void CreateModel_scale_nchw_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_2(int i) {
+bool is_ignored_scale_nchw_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1697,10 +1861,13 @@ void CreateModel_scale_nchw_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_relaxed_2(int i) {
+bool is_ignored_scale_nchw_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1728,10 +1895,13 @@ void CreateModel_scale_nchw_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_quant8_2(int i) {
+bool is_ignored_scale_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1759,10 +1929,13 @@ void CreateModel_scale_nchw_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_float16_2(int i) {
+bool is_ignored_scale_nchw_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1790,10 +1963,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_2(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1823,10 +1999,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_2(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1854,10 +2033,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_2(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1885,10 +2067,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_float16_2(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1916,10 +2101,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_2(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1949,10 +2137,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_2(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1980,10 +2171,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_quant8_2(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2011,10 +2205,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_float16_2(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2042,10 +2239,13 @@ void CreateModel_shape_nhwc_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_3(int i) {
+bool is_ignored_shape_nhwc_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2075,10 +2275,13 @@ void CreateModel_shape_nhwc_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_relaxed_3(int i) {
+bool is_ignored_shape_nhwc_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2106,10 +2309,13 @@ void CreateModel_shape_nhwc_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_quant8_3(int i) {
+bool is_ignored_shape_nhwc_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2137,10 +2343,13 @@ void CreateModel_shape_nhwc_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_float16_3(int i) {
+bool is_ignored_shape_nhwc_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2168,10 +2377,13 @@ void CreateModel_shape_nchw_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_3(int i) {
+bool is_ignored_shape_nchw_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2201,10 +2413,13 @@ void CreateModel_shape_nchw_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_relaxed_3(int i) {
+bool is_ignored_shape_nchw_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2232,10 +2447,13 @@ void CreateModel_shape_nchw_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_quant8_3(int i) {
+bool is_ignored_shape_nchw_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2263,10 +2481,13 @@ void CreateModel_shape_nchw_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_float16_3(int i) {
+bool is_ignored_shape_nchw_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2294,10 +2515,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_3(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2327,10 +2551,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_3(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2358,10 +2585,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_3(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2389,10 +2619,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_float16_3(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2420,10 +2653,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_3(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2453,10 +2689,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_3(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2484,10 +2723,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_quant8_3(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2515,10 +2757,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_float16_3(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2546,10 +2791,13 @@ void CreateModel_scale_nhwc_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_3(int i) {
+bool is_ignored_scale_nhwc_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2579,10 +2827,13 @@ void CreateModel_scale_nhwc_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_relaxed_3(int i) {
+bool is_ignored_scale_nhwc_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2610,10 +2861,13 @@ void CreateModel_scale_nhwc_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_quant8_3(int i) {
+bool is_ignored_scale_nhwc_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2641,10 +2895,13 @@ void CreateModel_scale_nhwc_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_float16_3(int i) {
+bool is_ignored_scale_nhwc_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2672,10 +2929,13 @@ void CreateModel_scale_nchw_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_3(int i) {
+bool is_ignored_scale_nchw_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2705,10 +2965,13 @@ void CreateModel_scale_nchw_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_relaxed_3(int i) {
+bool is_ignored_scale_nchw_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2736,10 +2999,13 @@ void CreateModel_scale_nchw_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_quant8_3(int i) {
+bool is_ignored_scale_nchw_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2767,10 +3033,13 @@ void CreateModel_scale_nchw_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_float16_3(int i) {
+bool is_ignored_scale_nchw_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2798,10 +3067,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_3(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2831,10 +3103,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_3(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2862,10 +3137,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_3(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2893,10 +3171,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_float16_3(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2924,10 +3205,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_3(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_relaxed_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2957,10 +3241,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_3(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_quant8_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2988,10 +3275,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_quant8_3(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_float16_3(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3019,10 +3309,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_float16_3(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3050,10 +3343,13 @@ void CreateModel_shape_nhwc_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_4(int i) {
+bool is_ignored_shape_nhwc_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_relaxed_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3083,10 +3379,13 @@ void CreateModel_shape_nhwc_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_relaxed_4(int i) {
+bool is_ignored_shape_nhwc_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_quant8_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3114,10 +3413,13 @@ void CreateModel_shape_nhwc_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_quant8_4(int i) {
+bool is_ignored_shape_nhwc_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_float16_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3145,10 +3447,13 @@ void CreateModel_shape_nhwc_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_float16_4(int i) {
+bool is_ignored_shape_nhwc_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3176,10 +3481,13 @@ void CreateModel_shape_nchw_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_4(int i) {
+bool is_ignored_shape_nchw_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_relaxed_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3209,10 +3517,13 @@ void CreateModel_shape_nchw_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_relaxed_4(int i) {
+bool is_ignored_shape_nchw_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_quant8_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3240,10 +3551,13 @@ void CreateModel_shape_nchw_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_quant8_4(int i) {
+bool is_ignored_shape_nchw_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_float16_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3271,10 +3585,13 @@ void CreateModel_shape_nchw_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_float16_4(int i) {
+bool is_ignored_shape_nchw_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3302,10 +3619,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_4(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3335,10 +3655,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_4(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_quant8_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3366,10 +3689,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_4(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_float16_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3397,10 +3723,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_float16_4(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3428,10 +3757,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_4(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_relaxed_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3461,10 +3793,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_4(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_quant8_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3492,10 +3827,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_quant8_4(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_float16_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3523,10 +3861,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_float16_4(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3554,10 +3895,13 @@ void CreateModel_scale_nhwc_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_4(int i) {
+bool is_ignored_scale_nhwc_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_relaxed_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3587,10 +3931,13 @@ void CreateModel_scale_nhwc_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_relaxed_4(int i) {
+bool is_ignored_scale_nhwc_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_quant8_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3618,10 +3965,13 @@ void CreateModel_scale_nhwc_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_quant8_4(int i) {
+bool is_ignored_scale_nhwc_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_float16_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3649,10 +3999,13 @@ void CreateModel_scale_nhwc_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_float16_4(int i) {
+bool is_ignored_scale_nhwc_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3680,10 +4033,13 @@ void CreateModel_scale_nchw_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_4(int i) {
+bool is_ignored_scale_nchw_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_relaxed_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3713,10 +4069,13 @@ void CreateModel_scale_nchw_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_relaxed_4(int i) {
+bool is_ignored_scale_nchw_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_quant8_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3744,10 +4103,13 @@ void CreateModel_scale_nchw_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_quant8_4(int i) {
+bool is_ignored_scale_nchw_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_float16_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3775,10 +4137,13 @@ void CreateModel_scale_nchw_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_float16_4(int i) {
+bool is_ignored_scale_nchw_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3806,10 +4171,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_4(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3839,10 +4207,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_4(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_quant8_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3870,10 +4241,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_4(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_float16_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3901,10 +4275,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_float16_4(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3932,10 +4309,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_4(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_relaxed_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3965,10 +4345,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_4(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_quant8_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3996,10 +4379,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_quant8_4(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_float16_4(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4027,10 +4413,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_float16_4(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4058,10 +4447,13 @@ void CreateModel_shape_nhwc_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_5(int i) {
+bool is_ignored_shape_nhwc_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_relaxed_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4091,10 +4483,13 @@ void CreateModel_shape_nhwc_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_relaxed_5(int i) {
+bool is_ignored_shape_nhwc_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_quant8_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4122,10 +4517,13 @@ void CreateModel_shape_nhwc_quant8_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_quant8_5(int i) {
+bool is_ignored_shape_nhwc_quant8_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_float16_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4153,10 +4551,13 @@ void CreateModel_shape_nhwc_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_float16_5(int i) {
+bool is_ignored_shape_nhwc_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4184,10 +4585,13 @@ void CreateModel_shape_nchw_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_5(int i) {
+bool is_ignored_shape_nchw_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_relaxed_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4217,10 +4621,13 @@ void CreateModel_shape_nchw_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_relaxed_5(int i) {
+bool is_ignored_shape_nchw_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_quant8_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4248,10 +4655,13 @@ void CreateModel_shape_nchw_quant8_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_quant8_5(int i) {
+bool is_ignored_shape_nchw_quant8_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_float16_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4279,10 +4689,13 @@ void CreateModel_shape_nchw_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_float16_5(int i) {
+bool is_ignored_shape_nchw_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4310,10 +4723,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_5(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4343,10 +4759,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_5(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_quant8_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4374,10 +4793,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_quant8_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_5(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_float16_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4405,10 +4827,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_float16_5(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4436,10 +4861,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_5(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_relaxed_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4469,10 +4897,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_5(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_quant8_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4500,10 +4931,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_quant8_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_quant8_5(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_quant8_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_float16_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4531,10 +4965,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_float16_5(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4562,10 +4999,13 @@ void CreateModel_scale_nhwc_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_5(int i) {
+bool is_ignored_scale_nhwc_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_relaxed_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4595,10 +5035,13 @@ void CreateModel_scale_nhwc_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_relaxed_5(int i) {
+bool is_ignored_scale_nhwc_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_quant8_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4626,10 +5069,13 @@ void CreateModel_scale_nhwc_quant8_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_quant8_5(int i) {
+bool is_ignored_scale_nhwc_quant8_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_float16_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4657,10 +5103,13 @@ void CreateModel_scale_nhwc_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_float16_5(int i) {
+bool is_ignored_scale_nhwc_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4688,10 +5137,13 @@ void CreateModel_scale_nchw_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_5(int i) {
+bool is_ignored_scale_nchw_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_relaxed_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4721,10 +5173,13 @@ void CreateModel_scale_nchw_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_relaxed_5(int i) {
+bool is_ignored_scale_nchw_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_quant8_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4752,10 +5207,13 @@ void CreateModel_scale_nchw_quant8_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_quant8_5(int i) {
+bool is_ignored_scale_nchw_quant8_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_float16_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4783,10 +5241,13 @@ void CreateModel_scale_nchw_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_float16_5(int i) {
+bool is_ignored_scale_nchw_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4814,10 +5275,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_5(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4847,10 +5311,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_5(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_quant8_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4878,10 +5345,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_quant8_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_5(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_float16_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4909,10 +5379,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_float16_5(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4940,10 +5413,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_5(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_relaxed_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4973,10 +5449,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_5(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_quant8_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5004,10 +5483,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_quant8_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_quant8_5(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_quant8_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_float16_5(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5035,10 +5517,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_float16_5(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5066,10 +5551,13 @@ void CreateModel_shape_nhwc_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_6(int i) {
+bool is_ignored_shape_nhwc_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_relaxed_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5099,10 +5587,13 @@ void CreateModel_shape_nhwc_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_relaxed_6(int i) {
+bool is_ignored_shape_nhwc_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_quant8_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5130,10 +5621,13 @@ void CreateModel_shape_nhwc_quant8_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_quant8_6(int i) {
+bool is_ignored_shape_nhwc_quant8_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_float16_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5161,10 +5655,13 @@ void CreateModel_shape_nhwc_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_float16_6(int i) {
+bool is_ignored_shape_nhwc_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5192,10 +5689,13 @@ void CreateModel_shape_nchw_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_6(int i) {
+bool is_ignored_shape_nchw_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_relaxed_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5225,10 +5725,13 @@ void CreateModel_shape_nchw_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_relaxed_6(int i) {
+bool is_ignored_shape_nchw_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_quant8_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5256,10 +5759,13 @@ void CreateModel_shape_nchw_quant8_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_quant8_6(int i) {
+bool is_ignored_shape_nchw_quant8_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_float16_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5287,10 +5793,13 @@ void CreateModel_shape_nchw_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_float16_6(int i) {
+bool is_ignored_shape_nchw_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5318,10 +5827,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_6(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5351,10 +5863,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_6(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_quant8_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5382,10 +5897,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_quant8_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_6(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_float16_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5413,10 +5931,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_float16_6(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5444,10 +5965,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_6(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_relaxed_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5477,10 +6001,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_6(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_quant8_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5508,10 +6035,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_quant8_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_quant8_6(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_quant8_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_float16_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5539,10 +6069,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_float16_6(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5570,10 +6103,13 @@ void CreateModel_scale_nhwc_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_6(int i) {
+bool is_ignored_scale_nhwc_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_relaxed_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5603,10 +6139,13 @@ void CreateModel_scale_nhwc_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_relaxed_6(int i) {
+bool is_ignored_scale_nhwc_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_quant8_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5634,10 +6173,13 @@ void CreateModel_scale_nhwc_quant8_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_quant8_6(int i) {
+bool is_ignored_scale_nhwc_quant8_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_float16_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5665,10 +6207,13 @@ void CreateModel_scale_nhwc_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_float16_6(int i) {
+bool is_ignored_scale_nhwc_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5696,10 +6241,13 @@ void CreateModel_scale_nchw_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_6(int i) {
+bool is_ignored_scale_nchw_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_relaxed_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5729,10 +6277,13 @@ void CreateModel_scale_nchw_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_relaxed_6(int i) {
+bool is_ignored_scale_nchw_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_quant8_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5760,10 +6311,13 @@ void CreateModel_scale_nchw_quant8_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_quant8_6(int i) {
+bool is_ignored_scale_nchw_quant8_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_float16_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5791,10 +6345,13 @@ void CreateModel_scale_nchw_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_float16_6(int i) {
+bool is_ignored_scale_nchw_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5822,10 +6379,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_6(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5855,10 +6415,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_6(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_quant8_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5886,10 +6449,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_quant8_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_6(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_float16_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5917,10 +6483,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_float16_6(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5948,10 +6517,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_6(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_relaxed_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5981,10 +6553,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_6(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_quant8_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6012,10 +6587,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_quant8_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_quant8_6(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_quant8_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_float16_6(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6043,10 +6621,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_float16_6(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6074,10 +6655,13 @@ void CreateModel_shape_nhwc_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_7(int i) {
+bool is_ignored_shape_nhwc_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_relaxed_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6107,10 +6691,13 @@ void CreateModel_shape_nhwc_relaxed_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_relaxed_7(int i) {
+bool is_ignored_shape_nhwc_relaxed_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_quant8_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6138,10 +6725,13 @@ void CreateModel_shape_nhwc_quant8_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_quant8_7(int i) {
+bool is_ignored_shape_nhwc_quant8_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_float16_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6169,10 +6759,13 @@ void CreateModel_shape_nhwc_float16_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_float16_7(int i) {
+bool is_ignored_shape_nhwc_float16_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6200,10 +6793,13 @@ void CreateModel_shape_nchw_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_7(int i) {
+bool is_ignored_shape_nchw_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_relaxed_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6233,10 +6829,13 @@ void CreateModel_shape_nchw_relaxed_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_relaxed_7(int i) {
+bool is_ignored_shape_nchw_relaxed_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_quant8_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6264,10 +6863,13 @@ void CreateModel_shape_nchw_quant8_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_quant8_7(int i) {
+bool is_ignored_shape_nchw_quant8_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_float16_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6295,10 +6897,13 @@ void CreateModel_shape_nchw_float16_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_float16_7(int i) {
+bool is_ignored_shape_nchw_float16_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6326,10 +6931,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_7(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6359,10 +6967,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_7(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_quant8_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6390,10 +7001,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_quant8_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_7(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_float16_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6421,10 +7035,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_float16_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_float16_7(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_float16_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6452,10 +7069,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_7(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_relaxed_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6485,10 +7105,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_relaxed_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_7(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_quant8_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6516,10 +7139,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_quant8_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_quant8_7(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_quant8_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_float16_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6547,10 +7173,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_float16_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_float16_7(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_float16_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6578,10 +7207,13 @@ void CreateModel_scale_nhwc_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_7(int i) {
+bool is_ignored_scale_nhwc_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_relaxed_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6611,10 +7243,13 @@ void CreateModel_scale_nhwc_relaxed_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_relaxed_7(int i) {
+bool is_ignored_scale_nhwc_relaxed_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_quant8_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6642,10 +7277,13 @@ void CreateModel_scale_nhwc_quant8_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_quant8_7(int i) {
+bool is_ignored_scale_nhwc_quant8_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_float16_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6673,10 +7311,13 @@ void CreateModel_scale_nhwc_float16_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_float16_7(int i) {
+bool is_ignored_scale_nhwc_float16_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6704,10 +7345,13 @@ void CreateModel_scale_nchw_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_7(int i) {
+bool is_ignored_scale_nchw_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_relaxed_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6737,10 +7381,13 @@ void CreateModel_scale_nchw_relaxed_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_relaxed_7(int i) {
+bool is_ignored_scale_nchw_relaxed_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_quant8_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6768,10 +7415,13 @@ void CreateModel_scale_nchw_quant8_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_quant8_7(int i) {
+bool is_ignored_scale_nchw_quant8_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_float16_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6799,10 +7449,13 @@ void CreateModel_scale_nchw_float16_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_float16_7(int i) {
+bool is_ignored_scale_nchw_float16_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6830,10 +7483,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_7(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6863,10 +7519,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_7(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_quant8_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6894,10 +7553,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_quant8_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_7(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_float16_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6925,10 +7587,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_float16_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_float16_7(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_float16_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6956,10 +7621,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_7(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_relaxed_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6989,10 +7657,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_relaxed_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_7(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_quant8_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7020,10 +7691,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_quant8_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_quant8_7(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_quant8_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_float16_7(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7051,10 +7725,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_float16_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_float16_7(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_float16_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7082,10 +7759,13 @@ void CreateModel_shape_nhwc_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_8(int i) {
+bool is_ignored_shape_nhwc_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_relaxed_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7115,10 +7795,13 @@ void CreateModel_shape_nhwc_relaxed_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_relaxed_8(int i) {
+bool is_ignored_shape_nhwc_relaxed_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_quant8_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7146,10 +7829,13 @@ void CreateModel_shape_nhwc_quant8_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_quant8_8(int i) {
+bool is_ignored_shape_nhwc_quant8_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nhwc_float16_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7177,10 +7863,13 @@ void CreateModel_shape_nhwc_float16_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nhwc_float16_8(int i) {
+bool is_ignored_shape_nhwc_float16_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7208,10 +7897,13 @@ void CreateModel_shape_nchw_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_8(int i) {
+bool is_ignored_shape_nchw_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_relaxed_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7241,10 +7933,13 @@ void CreateModel_shape_nchw_relaxed_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_relaxed_8(int i) {
+bool is_ignored_shape_nchw_relaxed_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_quant8_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7272,10 +7967,13 @@ void CreateModel_shape_nchw_quant8_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_quant8_8(int i) {
+bool is_ignored_shape_nchw_quant8_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_nchw_float16_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7303,10 +8001,13 @@ void CreateModel_shape_nchw_float16_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_nchw_float16_8(int i) {
+bool is_ignored_shape_nchw_float16_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7334,10 +8035,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_8(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7367,10 +8071,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_8(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_quant8_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7398,10 +8105,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_quant8_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_8(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nhwc_float16_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7429,10 +8139,13 @@ void CreateModel_shape_dynamic_output_shape_nhwc_float16_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nhwc_float16_8(int i) {
+bool is_ignored_shape_dynamic_output_shape_nhwc_float16_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7460,10 +8173,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_8(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_relaxed_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7493,10 +8209,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_relaxed_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_8(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_quant8_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7524,10 +8243,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_quant8_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_quant8_8(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_quant8_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_shape_dynamic_output_shape_nchw_float16_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7555,10 +8277,13 @@ void CreateModel_shape_dynamic_output_shape_nchw_float16_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_shape_dynamic_output_shape_nchw_float16_8(int i) {
+bool is_ignored_shape_dynamic_output_shape_nchw_float16_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7586,10 +8311,13 @@ void CreateModel_scale_nhwc_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_8(int i) {
+bool is_ignored_scale_nhwc_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_relaxed_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7619,10 +8347,13 @@ void CreateModel_scale_nhwc_relaxed_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_relaxed_8(int i) {
+bool is_ignored_scale_nhwc_relaxed_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_quant8_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7650,10 +8381,13 @@ void CreateModel_scale_nhwc_quant8_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_quant8_8(int i) {
+bool is_ignored_scale_nhwc_quant8_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nhwc_float16_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7681,10 +8415,13 @@ void CreateModel_scale_nhwc_float16_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nhwc_float16_8(int i) {
+bool is_ignored_scale_nhwc_float16_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7712,10 +8449,13 @@ void CreateModel_scale_nchw_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_8(int i) {
+bool is_ignored_scale_nchw_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_relaxed_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7745,10 +8485,13 @@ void CreateModel_scale_nchw_relaxed_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_relaxed_8(int i) {
+bool is_ignored_scale_nchw_relaxed_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_quant8_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7776,10 +8519,13 @@ void CreateModel_scale_nchw_quant8_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_quant8_8(int i) {
+bool is_ignored_scale_nchw_quant8_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_nchw_float16_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7807,10 +8553,13 @@ void CreateModel_scale_nchw_float16_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_nchw_float16_8(int i) {
+bool is_ignored_scale_nchw_float16_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7838,10 +8587,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_8(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7871,10 +8623,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_8(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_quant8_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7902,10 +8657,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_quant8_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_8(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nhwc_float16_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7933,10 +8691,13 @@ void CreateModel_scale_dynamic_output_shape_nhwc_float16_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nhwc_float16_8(int i) {
+bool is_ignored_scale_dynamic_output_shape_nhwc_float16_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7964,10 +8725,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_8(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_relaxed_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7997,10 +8761,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_relaxed_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_8(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_quant8_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8028,10 +8795,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_quant8_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_quant8_8(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_quant8_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_scale_dynamic_output_shape_nchw_float16_8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8059,10 +8829,13 @@ void CreateModel_scale_dynamic_output_shape_nchw_float16_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_scale_dynamic_output_shape_nchw_float16_8(int i) {
+bool is_ignored_scale_dynamic_output_shape_nchw_float16_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8150,10 +8923,13 @@ void CreateModel_zero_sized_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc(int i) {
+bool is_ignored_zero_sized_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8243,10 +9019,13 @@ void CreateModel_zero_sized_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_relaxed(int i) {
+bool is_ignored_zero_sized_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8334,10 +9113,13 @@ void CreateModel_zero_sized_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_quant8(int i) {
+bool is_ignored_zero_sized_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8425,10 +9207,13 @@ void CreateModel_zero_sized_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_float16(int i) {
+bool is_ignored_zero_sized_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8516,10 +9301,13 @@ void CreateModel_zero_sized_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw(int i) {
+bool is_ignored_zero_sized_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8609,10 +9397,13 @@ void CreateModel_zero_sized_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_relaxed(int i) {
+bool is_ignored_zero_sized_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8700,10 +9491,13 @@ void CreateModel_zero_sized_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_quant8(int i) {
+bool is_ignored_zero_sized_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8791,10 +9585,13 @@ void CreateModel_zero_sized_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_float16(int i) {
+bool is_ignored_zero_sized_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8882,10 +9679,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8975,10 +9775,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9066,10 +9869,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9157,10 +9963,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9248,10 +10057,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9341,10 +10153,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9432,10 +10247,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9523,10 +10341,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9614,10 +10435,13 @@ void CreateModel_zero_sized_nhwc_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_2(int i) {
+bool is_ignored_zero_sized_nhwc_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9707,10 +10531,13 @@ void CreateModel_zero_sized_nhwc_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_relaxed_2(int i) {
+bool is_ignored_zero_sized_nhwc_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9798,10 +10625,13 @@ void CreateModel_zero_sized_nhwc_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_quant8_2(int i) {
+bool is_ignored_zero_sized_nhwc_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9889,10 +10719,13 @@ void CreateModel_zero_sized_nhwc_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_float16_2(int i) {
+bool is_ignored_zero_sized_nhwc_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9980,10 +10813,13 @@ void CreateModel_zero_sized_nchw_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_2(int i) {
+bool is_ignored_zero_sized_nchw_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10073,10 +10909,13 @@ void CreateModel_zero_sized_nchw_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_relaxed_2(int i) {
+bool is_ignored_zero_sized_nchw_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10164,10 +11003,13 @@ void CreateModel_zero_sized_nchw_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_quant8_2(int i) {
+bool is_ignored_zero_sized_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10255,10 +11097,13 @@ void CreateModel_zero_sized_nchw_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_float16_2(int i) {
+bool is_ignored_zero_sized_nchw_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10346,10 +11191,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10439,10 +11287,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10530,10 +11381,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10621,10 +11475,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10712,10 +11569,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10805,10 +11665,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10896,10 +11759,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::resize_nearest_neighbor
+namespace generated_tests::resize_nearest_neighbor {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10987,8 +11853,9 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::resize_nearest_neighbor

@@ -1,23 +1,33 @@
+// Generated from svdf_bias_present_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: svdf_bias_present_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace svdf_bias_present_relaxed {
-// Generated svdf_bias_present_relaxed test
-#include "generated/examples/svdf_bias_present_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/svdf_bias_present_relaxed.model.cpp"
-} // namespace svdf_bias_present_relaxed
+namespace generated_tests::svdf_bias_present_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, svdf_bias_present_relaxed) {
-    execute(svdf_bias_present_relaxed::CreateModel,
-            svdf_bias_present_relaxed::is_ignored,
-            svdf_bias_present_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::svdf_bias_present_relaxed
+
+namespace generated_tests::svdf_bias_present_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, svdf_bias_present_relaxed_dynamic_output_shape) {
-    execute(svdf_bias_present_relaxed::CreateModel_dynamic_output_shape,
-            svdf_bias_present_relaxed::is_ignored_dynamic_output_shape,
-            svdf_bias_present_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::svdf_bias_present_relaxed
 

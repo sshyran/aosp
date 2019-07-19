@@ -1,7 +1,12 @@
+// Generated from l2_pool_float_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: l2_pool_float_relaxed.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples() {
-static std::vector<MixedTypedExample> examples = {
+#include "TestHarness.h"
+
+namespace generated_tests::l2_pool_float_relaxed {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples() {
+static std::vector<::test_helper::MixedTypedExample> examples = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples = {
 return examples;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
+} // namespace generated_tests::l2_pool_float_relaxed
+namespace generated_tests::l2_pool_float_relaxed {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -114,3 +122,4 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
 return examples_dynamic_output_shape;
 };
 
+} // namespace generated_tests::l2_pool_float_relaxed

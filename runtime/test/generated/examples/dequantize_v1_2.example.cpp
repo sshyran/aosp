@@ -1,7 +1,12 @@
+// Generated from dequantize_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: dequantize_v1_2.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_1d_quant8_asymm() {
-static std::vector<MixedTypedExample> examples_1d_quant8_asymm = {
+#include "TestHarness.h"
+
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_1d_quant8_asymm() {
+static std::vector<::test_helper::MixedTypedExample> examples_1d_quant8_asymm = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_1d_quant8_asymm = {
 return examples_1d_quant8_asymm;
 };
 
-std::vector<MixedTypedExample>& get_examples_1d_quant8_asymm_relaxed() {
-static std::vector<MixedTypedExample> examples_1d_quant8_asymm_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_1d_quant8_asymm_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_1d_quant8_asymm_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_1d_quant8_asymm_relaxed = {
 return examples_1d_quant8_asymm_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_1d_quant8_asymm_float16() {
-static std::vector<MixedTypedExample> examples_1d_quant8_asymm_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_1d_quant8_asymm_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_1d_quant8_asymm_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_1d_quant8_asymm_float16 = {
 return examples_1d_quant8_asymm_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_1d_quant8_asymm_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_1d_quant8_asymm_dynamic_output_shape = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_1d_quant8_asymm_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_1d_quant8_asymm_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_1d_quant8_asymm_dynamic_output_sh
 return examples_1d_quant8_asymm_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_1d_quant8_asymm_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_1d_quant8_asymm_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_1d_quant8_asymm_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_1d_quant8_asymm_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_1d_quant8_asymm_dynamic_output_sh
 return examples_1d_quant8_asymm_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_1d_quant8_asymm_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_1d_quant8_asymm_dynamic_output_shape_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_1d_quant8_asymm_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_1d_quant8_asymm_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_1d_quant8_asymm_dynamic_output_sh
 return examples_1d_quant8_asymm_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_2d_quant8_asymm() {
-static std::vector<MixedTypedExample> examples_2d_quant8_asymm = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_2d_quant8_asymm() {
+static std::vector<::test_helper::MixedTypedExample> examples_2d_quant8_asymm = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_2d_quant8_asymm = {
 return examples_2d_quant8_asymm;
 };
 
-std::vector<MixedTypedExample>& get_examples_2d_quant8_asymm_relaxed() {
-static std::vector<MixedTypedExample> examples_2d_quant8_asymm_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_2d_quant8_asymm_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_2d_quant8_asymm_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -456,8 +482,11 @@ static std::vector<MixedTypedExample> examples_2d_quant8_asymm_relaxed = {
 return examples_2d_quant8_asymm_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_2d_quant8_asymm_float16() {
-static std::vector<MixedTypedExample> examples_2d_quant8_asymm_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_2d_quant8_asymm_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_2d_quant8_asymm_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -513,8 +542,11 @@ static std::vector<MixedTypedExample> examples_2d_quant8_asymm_float16 = {
 return examples_2d_quant8_asymm_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_2d_quant8_asymm_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_2d_quant8_asymm_dynamic_output_shape = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_2d_quant8_asymm_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_2d_quant8_asymm_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -570,8 +602,11 @@ static std::vector<MixedTypedExample> examples_2d_quant8_asymm_dynamic_output_sh
 return examples_2d_quant8_asymm_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_2d_quant8_asymm_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_2d_quant8_asymm_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_2d_quant8_asymm_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_2d_quant8_asymm_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -627,8 +662,11 @@ static std::vector<MixedTypedExample> examples_2d_quant8_asymm_dynamic_output_sh
 return examples_2d_quant8_asymm_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_2d_quant8_asymm_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_2d_quant8_asymm_dynamic_output_shape_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_2d_quant8_asymm_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_2d_quant8_asymm_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -684,8 +722,11 @@ static std::vector<MixedTypedExample> examples_2d_quant8_asymm_dynamic_output_sh
 return examples_2d_quant8_asymm_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_quant8_symm() {
-static std::vector<MixedTypedExample> examples_3d_quant8_symm = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_quant8_symm() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_quant8_symm = {
 // Begin of an example
 {
 .operands = {
@@ -741,8 +782,11 @@ static std::vector<MixedTypedExample> examples_3d_quant8_symm = {
 return examples_3d_quant8_symm;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_quant8_symm_relaxed() {
-static std::vector<MixedTypedExample> examples_3d_quant8_symm_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_quant8_symm_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_quant8_symm_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -798,8 +842,11 @@ static std::vector<MixedTypedExample> examples_3d_quant8_symm_relaxed = {
 return examples_3d_quant8_symm_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_quant8_symm_float16() {
-static std::vector<MixedTypedExample> examples_3d_quant8_symm_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_quant8_symm_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_quant8_symm_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -855,8 +902,11 @@ static std::vector<MixedTypedExample> examples_3d_quant8_symm_float16 = {
 return examples_3d_quant8_symm_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_quant8_symm_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_3d_quant8_symm_dynamic_output_shape = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_quant8_symm_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_quant8_symm_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -912,8 +962,11 @@ static std::vector<MixedTypedExample> examples_3d_quant8_symm_dynamic_output_sha
 return examples_3d_quant8_symm_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_quant8_symm_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_3d_quant8_symm_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_quant8_symm_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_quant8_symm_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -969,8 +1022,11 @@ static std::vector<MixedTypedExample> examples_3d_quant8_symm_dynamic_output_sha
 return examples_3d_quant8_symm_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_quant8_symm_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_3d_quant8_symm_dynamic_output_shape_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_quant8_symm_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_quant8_symm_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1026,8 +1082,11 @@ static std::vector<MixedTypedExample> examples_3d_quant8_symm_dynamic_output_sha
 return examples_3d_quant8_symm_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_4d_quant8_symm() {
-static std::vector<MixedTypedExample> examples_4d_quant8_symm = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_4d_quant8_symm() {
+static std::vector<::test_helper::MixedTypedExample> examples_4d_quant8_symm = {
 // Begin of an example
 {
 .operands = {
@@ -1083,8 +1142,11 @@ static std::vector<MixedTypedExample> examples_4d_quant8_symm = {
 return examples_4d_quant8_symm;
 };
 
-std::vector<MixedTypedExample>& get_examples_4d_quant8_symm_relaxed() {
-static std::vector<MixedTypedExample> examples_4d_quant8_symm_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_4d_quant8_symm_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_4d_quant8_symm_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1140,8 +1202,11 @@ static std::vector<MixedTypedExample> examples_4d_quant8_symm_relaxed = {
 return examples_4d_quant8_symm_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_4d_quant8_symm_float16() {
-static std::vector<MixedTypedExample> examples_4d_quant8_symm_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_4d_quant8_symm_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_4d_quant8_symm_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1197,8 +1262,11 @@ static std::vector<MixedTypedExample> examples_4d_quant8_symm_float16 = {
 return examples_4d_quant8_symm_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_4d_quant8_symm_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_4d_quant8_symm_dynamic_output_shape = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_4d_quant8_symm_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_4d_quant8_symm_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -1254,8 +1322,11 @@ static std::vector<MixedTypedExample> examples_4d_quant8_symm_dynamic_output_sha
 return examples_4d_quant8_symm_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_4d_quant8_symm_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_4d_quant8_symm_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_4d_quant8_symm_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_4d_quant8_symm_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1311,8 +1382,11 @@ static std::vector<MixedTypedExample> examples_4d_quant8_symm_dynamic_output_sha
 return examples_4d_quant8_symm_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_4d_quant8_symm_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_4d_quant8_symm_dynamic_output_shape_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_4d_quant8_symm_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_4d_quant8_symm_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1368,8 +1442,11 @@ static std::vector<MixedTypedExample> examples_4d_quant8_symm_dynamic_output_sha
 return examples_4d_quant8_symm_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_first_dim() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_first_dim() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_first_dim = {
 // Begin of an example
 {
 .operands = {
@@ -1425,8 +1502,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim = {
 return examples_3d_per_channel_first_dim;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_first_dim_relaxed() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_first_dim_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_first_dim_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1482,8 +1562,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim_relaxed 
 return examples_3d_per_channel_first_dim_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_first_dim_float16() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_first_dim_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_first_dim_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1539,8 +1622,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim_float16 
 return examples_3d_per_channel_first_dim_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_first_dim_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim_dynamic_output_shape = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_first_dim_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_first_dim_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -1596,8 +1682,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim_dynamic_
 return examples_3d_per_channel_first_dim_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_first_dim_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_first_dim_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_first_dim_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1653,8 +1742,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim_dynamic_
 return examples_3d_per_channel_first_dim_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_first_dim_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim_dynamic_output_shape_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_first_dim_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_first_dim_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1710,8 +1802,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_first_dim_dynamic_
 return examples_3d_per_channel_first_dim_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_second_dim() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_second_dim() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_second_dim = {
 // Begin of an example
 {
 .operands = {
@@ -1767,8 +1862,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim = {
 return examples_3d_per_channel_second_dim;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_second_dim_relaxed() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_second_dim_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_second_dim_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1824,8 +1922,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim_relaxed
 return examples_3d_per_channel_second_dim_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_second_dim_float16() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_second_dim_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_second_dim_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1881,8 +1982,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim_float16
 return examples_3d_per_channel_second_dim_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_second_dim_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim_dynamic_output_shape = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_second_dim_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_second_dim_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -1938,8 +2042,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim_dynamic
 return examples_3d_per_channel_second_dim_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_second_dim_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_second_dim_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_second_dim_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1995,8 +2102,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim_dynamic
 return examples_3d_per_channel_second_dim_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_3d_per_channel_second_dim_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim_dynamic_output_shape_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_3d_per_channel_second_dim_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_3d_per_channel_second_dim_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -2052,8 +2162,11 @@ static std::vector<MixedTypedExample> examples_3d_per_channel_second_dim_dynamic
 return examples_3d_per_channel_second_dim_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples() {
-static std::vector<MixedTypedExample> examples = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples() {
+static std::vector<::test_helper::MixedTypedExample> examples = {
 // Begin of an example
 {
 .operands = {
@@ -2109,8 +2222,11 @@ static std::vector<MixedTypedExample> examples = {
 return examples;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -2166,8 +2282,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
 return examples_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized() {
-static std::vector<MixedTypedExample> examples_zero_sized = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized = {
 // Begin of an example
 {
 .operands = {
@@ -2223,8 +2342,11 @@ static std::vector<MixedTypedExample> examples_zero_sized = {
 return examples_zero_sized;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_relaxed() {
-static std::vector<MixedTypedExample> examples_zero_sized_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -2280,8 +2402,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_relaxed = {
 return examples_zero_sized_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_float16() {
-static std::vector<MixedTypedExample> examples_zero_sized_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -2337,8 +2462,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_float16 = {
 return examples_zero_sized_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -2394,8 +2522,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape =
 return examples_zero_sized_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -2451,8 +2582,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_r
 return examples_zero_sized_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_float16 = {
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -2508,3 +2642,4 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_f
 return examples_zero_sized_dynamic_output_shape_float16;
 };
 
+} // namespace generated_tests::dequantize_v1_2

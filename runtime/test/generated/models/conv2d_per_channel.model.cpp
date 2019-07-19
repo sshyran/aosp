@@ -1,5 +1,10 @@
+// Generated from conv2d_per_channel.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: conv2d_per_channel.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::conv2d_per_channel {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
   OperandType type1(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
@@ -45,10 +50,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
@@ -91,10 +99,13 @@ void CreateModel_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_weight_as_input(int i) {
+bool is_ignored_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
@@ -141,10 +152,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_dynamic_output_shape_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
@@ -187,10 +201,13 @@ void CreateModel_dynamic_output_shape_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input(int i) {
+bool is_ignored_dynamic_output_shape_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_layouts_nhwc(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
@@ -241,10 +258,13 @@ void CreateModel_layouts_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_layouts_nhwc(int i) {
+bool is_ignored_layouts_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_layouts_nhwc_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
@@ -291,10 +311,13 @@ void CreateModel_layouts_nhwc_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_layouts_nhwc_weight_as_input(int i) {
+bool is_ignored_layouts_nhwc_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_layouts_nchw(Model *model) {
   OperandType type2(Type::TENSOR_INT32, {3});
@@ -345,10 +368,13 @@ void CreateModel_layouts_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_layouts_nchw(int i) {
+bool is_ignored_layouts_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_layouts_nchw_weight_as_input(Model *model) {
   OperandType type2(Type::TENSOR_INT32, {3});
@@ -395,10 +421,13 @@ void CreateModel_layouts_nchw_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_layouts_nchw_weight_as_input(int i) {
+bool is_ignored_layouts_nchw_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_layouts_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
@@ -449,10 +478,13 @@ void CreateModel_layouts_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_layouts_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_layouts_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_layouts_dynamic_output_shape_nhwc_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
@@ -499,10 +531,13 @@ void CreateModel_layouts_dynamic_output_shape_nhwc_weight_as_input(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_layouts_dynamic_output_shape_nhwc_weight_as_input(int i) {
+bool is_ignored_layouts_dynamic_output_shape_nhwc_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_layouts_dynamic_output_shape_nchw(Model *model) {
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 1.0f, 128);
@@ -553,10 +588,13 @@ void CreateModel_layouts_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_layouts_dynamic_output_shape_nchw(int i) {
+bool is_ignored_layouts_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_layouts_dynamic_output_shape_nchw_weight_as_input(Model *model) {
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 1.0f, 128);
@@ -603,10 +641,13 @@ void CreateModel_layouts_dynamic_output_shape_nchw_weight_as_input(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_layouts_dynamic_output_shape_nchw_weight_as_input(int i) {
+bool is_ignored_layouts_dynamic_output_shape_nchw_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_zero_sized_nhwc(Model *model) {
   OperandType type10(Type::TENSOR_INT32, {0});
@@ -717,10 +758,13 @@ void CreateModel_zero_sized_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc(int i) {
+bool is_ignored_zero_sized_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_zero_sized_nchw(Model *model) {
   OperandType type10(Type::TENSOR_INT32, {0});
@@ -831,10 +875,13 @@ void CreateModel_zero_sized_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw(int i) {
+bool is_ignored_zero_sized_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model) {
   OperandType type10(Type::TENSOR_INT32, {0});
@@ -945,10 +992,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model) {
   OperandType type10(Type::TENSOR_INT32, {0});
@@ -1059,8 +1109,9 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::conv2d_per_channel

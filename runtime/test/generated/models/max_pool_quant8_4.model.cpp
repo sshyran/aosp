@@ -1,5 +1,10 @@
+// Generated from max_pool_quant8_4.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: max_pool_quant8_4.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::max_pool_quant8_4 {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 2, 4, 1}, 0.0625f, 0);
   OperandType type1(Type::INT32, {});
@@ -25,10 +30,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::max_pool_quant8_4
+namespace generated_tests::max_pool_quant8_4 {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 2, 4, 1}, 0.0625f, 0);
@@ -55,8 +63,9 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::max_pool_quant8_4

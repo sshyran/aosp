@@ -1,7 +1,12 @@
+// Generated from logical_or.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: logical_or.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_simple() {
-static std::vector<MixedTypedExample> examples_simple = {
+#include "TestHarness.h"
+
+namespace generated_tests::logical_or {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_simple() {
+static std::vector<::test_helper::MixedTypedExample> examples_simple = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_simple = {
 return examples_simple;
 };
 
-std::vector<MixedTypedExample>& get_examples_simple_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_simple_dynamic_output_shape = {
+} // namespace generated_tests::logical_or
+namespace generated_tests::logical_or {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_simple_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_simple_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_simple_dynamic_output_shape = {
 return examples_simple_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_broadcast() {
-static std::vector<MixedTypedExample> examples_broadcast = {
+} // namespace generated_tests::logical_or
+namespace generated_tests::logical_or {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast() {
+static std::vector<::test_helper::MixedTypedExample> examples_broadcast = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_broadcast = {
 return examples_broadcast;
 };
 
-std::vector<MixedTypedExample>& get_examples_broadcast_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_broadcast_dynamic_output_shape = {
+} // namespace generated_tests::logical_or
+namespace generated_tests::logical_or {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_broadcast_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -228,3 +242,4 @@ static std::vector<MixedTypedExample> examples_broadcast_dynamic_output_shape = 
 return examples_broadcast_dynamic_output_shape;
 };
 
+} // namespace generated_tests::logical_or

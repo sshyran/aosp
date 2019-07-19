@@ -1,24 +1,34 @@
+// Generated from l2_normalization.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: l2_normalization.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace l2_normalization {
-// Generated l2_normalization test
-#include "generated/examples/l2_normalization.example.cpp"
-// Generated model constructor
-#include "generated/models/l2_normalization.model.cpp"
-} // namespace l2_normalization
+namespace generated_tests::l2_normalization {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, l2_normalization) {
-    execute(l2_normalization::CreateModel,
-            l2_normalization::is_ignored,
-            l2_normalization::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, l2_normalization, l2_normalization::CreateModel)
+
+} // namespace generated_tests::l2_normalization
+TEST_AVAILABLE_SINCE(V1_0, l2_normalization, generated_tests::l2_normalization::CreateModel)
+
+namespace generated_tests::l2_normalization {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, l2_normalization_dynamic_output_shape) {
-    execute(l2_normalization::CreateModel_dynamic_output_shape,
-            l2_normalization::is_ignored_dynamic_output_shape,
-            l2_normalization::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::l2_normalization
 

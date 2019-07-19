@@ -1,7 +1,12 @@
+// Generated from bidirectional_sequence_lstm_float16_batch_major_aux_input.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: bidirectional_sequence_lstm_float16_batch_major_aux_input.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_blackbox() {
-static std::vector<MixedTypedExample> examples_blackbox = {
+#include "TestHarness.h"
+
+namespace generated_tests::bidirectional_sequence_lstm_float16_batch_major_aux_input {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_blackbox = {
 return examples_blackbox;
 };
 
-std::vector<MixedTypedExample>& get_examples_blackbox_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_blackbox_dynamic_output_shape = {
+} // namespace generated_tests::bidirectional_sequence_lstm_float16_batch_major_aux_input
+namespace generated_tests::bidirectional_sequence_lstm_float16_batch_major_aux_input {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -114,3 +122,4 @@ static std::vector<MixedTypedExample> examples_blackbox_dynamic_output_shape = {
 return examples_blackbox_dynamic_output_shape;
 };
 
+} // namespace generated_tests::bidirectional_sequence_lstm_float16_batch_major_aux_input

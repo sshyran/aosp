@@ -1,5 +1,10 @@
+// Generated from quantized_lstm.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: quantized_lstm.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::quantized_lstm {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {2, 2}, 0.0078125f, 128);
   OperandType type1(Type::TENSOR_QUANT8_ASYMM, {4, 2}, 0.00408021f, 100);
@@ -34,10 +39,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::quantized_lstm
+namespace generated_tests::quantized_lstm {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {2, 2}, 0.0078125f, 128);
@@ -75,10 +83,13 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::quantized_lstm
+namespace generated_tests::quantized_lstm {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {2, 2}, 0.0078125f, 128);
@@ -116,10 +127,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::quantized_lstm
+namespace generated_tests::quantized_lstm {
 
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {2, 2}, 0.0078125f, 128);
@@ -159,10 +173,13 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::quantized_lstm
+namespace generated_tests::quantized_lstm {
 
 void CreateModel_2(Model *model) {
   OperandType type1(Type::TENSOR_QUANT8_ASYMM, {4, 2}, 0.00408021f, 100);
@@ -222,10 +239,13 @@ void CreateModel_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_2(int i) {
+bool is_ignored_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::quantized_lstm
+namespace generated_tests::quantized_lstm {
 
 void CreateModel_relaxed_2(Model *model) {
   OperandType type1(Type::TENSOR_QUANT8_ASYMM, {4, 2}, 0.00408021f, 100);
@@ -287,10 +307,13 @@ void CreateModel_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_2(int i) {
+bool is_ignored_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::quantized_lstm
+namespace generated_tests::quantized_lstm {
 
 void CreateModel_dynamic_output_shape_2(Model *model) {
   OperandType type1(Type::TENSOR_QUANT8_ASYMM, {4, 2}, 0.00408021f, 100);
@@ -352,10 +375,13 @@ void CreateModel_dynamic_output_shape_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_2(int i) {
+bool is_ignored_dynamic_output_shape_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::quantized_lstm
+namespace generated_tests::quantized_lstm {
 
 void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   OperandType type1(Type::TENSOR_QUANT8_ASYMM, {4, 2}, 0.00408021f, 100);
@@ -419,8 +445,9 @@ void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::quantized_lstm

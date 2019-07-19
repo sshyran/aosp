@@ -1,24 +1,34 @@
+// Generated from squeeze.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: squeeze.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace squeeze {
-// Generated squeeze test
-#include "generated/examples/squeeze.example.cpp"
-// Generated model constructor
-#include "generated/models/squeeze.model.cpp"
-} // namespace squeeze
+namespace generated_tests::squeeze {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, squeeze) {
-    execute(squeeze::CreateModel,
-            squeeze::is_ignored,
-            squeeze::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_1, squeeze, squeeze::CreateModel)
+
+} // namespace generated_tests::squeeze
+TEST_AVAILABLE_SINCE(V1_1, squeeze, generated_tests::squeeze::CreateModel)
+
+namespace generated_tests::squeeze {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, squeeze_dynamic_output_shape) {
-    execute(squeeze::CreateModel_dynamic_output_shape,
-            squeeze::is_ignored_dynamic_output_shape,
-            squeeze::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::squeeze
 
