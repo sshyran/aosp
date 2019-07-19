@@ -2,7 +2,7 @@
 // Generated file (from: conv2d_per_channel.mod.py). Do not edit
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
-  OperandType type1(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type1(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type2(Type::TENSOR_INT32, {3});
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 3}, 1.0f, 128);
   OperandType type4(Type::INT32, {});
@@ -52,7 +52,7 @@ inline bool is_ignored(int i) {
 
 void CreateModel_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
-  OperandType type18(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type18(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type2(Type::TENSOR_INT32, {3});
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 3}, 1.0f, 128);
   OperandType type4(Type::INT32, {});
@@ -98,7 +98,7 @@ inline bool is_ignored_weight_as_input(int i) {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
-  OperandType type1(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type1(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 1.0f, 128);
   OperandType type2(Type::TENSOR_INT32, {3});
   OperandType type4(Type::INT32, {});
@@ -150,7 +150,7 @@ void CreateModel_dynamic_output_shape_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 1.0f, 128);
   OperandType type2(Type::TENSOR_INT32, {3});
-  OperandType type20(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type20(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type4(Type::INT32, {});
   // Phase 1, operands
   auto op1 = model->addOperand(&type0);
@@ -198,7 +198,7 @@ void CreateModel_layouts_nhwc(Model *model) {
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 3}, 1.0f, 128);
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::BOOL, {});
-  OperandType type6(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type6(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   // Phase 1, operands
   auto op11 = model->addOperand(&type0);
   auto op21 = model->addOperand(&type6);
@@ -249,7 +249,7 @@ inline bool is_ignored_layouts_nhwc(int i) {
 void CreateModel_layouts_nhwc_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
   OperandType type2(Type::TENSOR_INT32, {3});
-  OperandType type21(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type21(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 3}, 1.0f, 128);
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::BOOL, {});
@@ -302,7 +302,7 @@ void CreateModel_layouts_nchw(Model *model) {
   OperandType type23(Type::TENSOR_QUANT8_ASYMM, {1, 3, 3, 1}, 1.0f, 128);
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::BOOL, {});
-  OperandType type6(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type6(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   // Phase 1, operands
   auto op11 = model->addOperand(&type22);
   auto op21 = model->addOperand(&type6);
@@ -354,7 +354,7 @@ void CreateModel_layouts_nchw_weight_as_input(Model *model) {
   OperandType type2(Type::TENSOR_INT32, {3});
   OperandType type22(Type::TENSOR_QUANT8_ASYMM, {1, 2, 3, 1}, 0.5f, 128);
   OperandType type23(Type::TENSOR_QUANT8_ASYMM, {1, 3, 3, 1}, 1.0f, 128);
-  OperandType type24(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type24(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::BOOL, {});
   // Phase 1, operands
@@ -406,7 +406,7 @@ void CreateModel_layouts_dynamic_output_shape_nhwc(Model *model) {
   OperandType type2(Type::TENSOR_INT32, {3});
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::BOOL, {});
-  OperandType type6(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type6(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   // Phase 1, operands
   auto op11 = model->addOperand(&type0);
   auto op21 = model->addOperand(&type6);
@@ -458,7 +458,7 @@ void CreateModel_layouts_dynamic_output_shape_nhwc_weight_as_input(Model *model)
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 3, 1, 2}, 0.5f, 128);
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 1.0f, 128);
   OperandType type2(Type::TENSOR_INT32, {3});
-  OperandType type25(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type25(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::BOOL, {});
   // Phase 1, operands
@@ -510,7 +510,7 @@ void CreateModel_layouts_dynamic_output_shape_nchw(Model *model) {
   OperandType type22(Type::TENSOR_QUANT8_ASYMM, {1, 2, 3, 1}, 0.5f, 128);
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::BOOL, {});
-  OperandType type6(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type6(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   // Phase 1, operands
   auto op11 = model->addOperand(&type22);
   auto op21 = model->addOperand(&type6);
@@ -562,7 +562,7 @@ void CreateModel_layouts_dynamic_output_shape_nchw_weight_as_input(Model *model)
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 1.0f, 128);
   OperandType type2(Type::TENSOR_INT32, {3});
   OperandType type22(Type::TENSOR_QUANT8_ASYMM, {1, 2, 3, 1}, 0.5f, 128);
-  OperandType type26(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type26(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type4(Type::INT32, {});
   OperandType type5(Type::BOOL, {});
   // Phase 1, operands
@@ -615,7 +615,7 @@ void CreateModel_zero_sized_nhwc(Model *model) {
   OperandType type13(Type::FLOAT32, {});
   OperandType type14(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 2}, 0.5f, 128);
   OperandType type15(Type::TENSOR_QUANT8_ASYMM, {0, 2, 2, 2}, 0.5f, 128);
-  OperandType type16(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type16(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type17(Type::TENSOR_QUANT8_ASYMM, {0, 2, 2, 3}, 1.0f, 128);
   OperandType type2(Type::TENSOR_INT32, {3});
   OperandType type4(Type::INT32, {});
@@ -728,7 +728,7 @@ void CreateModel_zero_sized_nchw(Model *model) {
   OperandType type12(Type::TENSOR_INT32, {1});
   OperandType type13(Type::FLOAT32, {});
   OperandType type15(Type::TENSOR_QUANT8_ASYMM, {0, 2, 2, 2}, 0.5f, 128);
-  OperandType type16(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type16(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type2(Type::TENSOR_INT32, {3});
   OperandType type27(Type::TENSOR_QUANT8_ASYMM, {1, 2, 1, 1}, 0.5f, 128);
   OperandType type28(Type::TENSOR_QUANT8_ASYMM, {0, 3, 2, 2}, 1.0f, 128);
@@ -843,7 +843,7 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model) {
   OperandType type13(Type::FLOAT32, {});
   OperandType type14(Type::TENSOR_QUANT8_ASYMM, {1, 1, 1, 2}, 0.5f, 128);
   OperandType type15(Type::TENSOR_QUANT8_ASYMM, {0, 2, 2, 2}, 0.5f, 128);
-  OperandType type16(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type16(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 1.0f, 128);
   OperandType type2(Type::TENSOR_INT32, {3});
   OperandType type4(Type::INT32, {});
@@ -956,7 +956,7 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model) {
   OperandType type12(Type::TENSOR_INT32, {1});
   OperandType type13(Type::FLOAT32, {});
   OperandType type15(Type::TENSOR_QUANT8_ASYMM, {0, 2, 2, 2}, 0.5f, 128);
-  OperandType type16(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, 0.0f, 0, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
+  OperandType type16(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {3, 1, 1, 2}, SymmPerChannelQuantParams({0.5f, 0.75f, 1.0f},0));
   OperandType type19(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 1.0f, 128);
   OperandType type2(Type::TENSOR_INT32, {3});
   OperandType type27(Type::TENSOR_QUANT8_ASYMM, {1, 2, 1, 1}, 0.5f, 128);
