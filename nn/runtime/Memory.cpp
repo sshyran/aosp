@@ -20,6 +20,7 @@
 
 #include "ExecutionBurstController.h"
 #include "HalInterfaces.h"
+#include "MemoryUtils.h"
 #include "Utils.h"
 
 namespace android {
