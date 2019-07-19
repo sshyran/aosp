@@ -4868,10 +4868,11 @@ typedef enum {
      * the same; for odd number of padding, padding to the ending is bigger
      * than the padding to the beginning by 1.
      *
-     * total_padding is a function of input, stride and filter size.
+     * total_padding is a function of input, stride, dilation and filter size.
      * It could be computed as follows:
-     *    out_size = (input + stride - 1) / stride;
-     *    needed_input = (out_size - 1) * stride + filter_size
+     *    out_size = (input + stride - 1) / stride
+     *    effective_filter_size = (filter_size - 1) * dilation + 1
+     *    needed_input = (out_size - 1) * stride + effective_filter_size
      *    total_padding = max(0, needed_input - input_size)
      *  The computation is the same for the horizontal and vertical directions.
      */
