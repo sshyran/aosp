@@ -30,8 +30,6 @@
 #include <algorithm>
 #include <unordered_map>
 
-using ::android::hidl::allocator::V1_0::IAllocator;
-
 namespace android {
 namespace nn {
 
@@ -308,24 +306,6 @@ bool tensorHasUnspecifiedDimensions(const ANeuralNetworksOperandType* type) {
 bool tensorHasUnspecifiedDimensions(const Operand& operand) {
     return tensorHasUnspecifiedDimensions(static_cast<int>(operand.type), operand.dimensions.data(),
                                           operand.dimensions.size());
-}
-
-hidl_memory allocateSharedMemory(int64_t size) {
-    static const std::string type = "ashmem";
-    static sp<IAllocator> allocator = IAllocator::getService(type);
-
-    hidl_memory memory;
-
-    // TODO: should we align memory size to nearest page? doesn't seem necessary...
-    allocator->allocate(size, [&](bool success, const hidl_memory& mem) {
-        if (!success) {
-            LOG(ERROR) << "unable to allocate " << size << " bytes of " << type;
-        } else {
-            memory = mem;
-        }
-    });
-
-    return memory;
 }
 
 uint32_t alignBytesNeeded(uint32_t index, size_t length) {
