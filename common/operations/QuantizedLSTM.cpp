@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#define LOG_TAG "Operations"
+
 #include "QuantizedLSTM.h"
 
 #include "CpuExecutor.h"
