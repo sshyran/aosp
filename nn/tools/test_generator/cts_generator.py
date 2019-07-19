@@ -71,15 +71,13 @@ def ParseCmdLine():
     parser.add_argument(
         "-t", "--test", help="the output test file/directory", default="-")
     parser.add_argument(
-        "-c", "--cts", help="the CTS TestGeneratedOneFile.cpp", default="-")
-    parser.add_argument(
         "-f", "--force", help="force to regenerate all spec files", action="store_true")
     # for slicing tool
     parser.add_argument(
         "-l", "--log", help="the optional log file", default="")
     args = parser.parse_args()
     tg.FileNames.InitializeFileLists(
-        args.spec, args.model, args.example, args.test, args.cts, args.log)
+        args.spec, args.model, args.example, args.test, args.log)
     Configuration.force_regenerate = args.force
 
 def NeedRegenerate():
@@ -142,9 +140,13 @@ def DumpCtsModel(model, model_fd):
                 typeDef = "OperandType %s(Type::%s, %s, %s, %d);"%(
                     t, t.type, t.GetDimensionsString(), tg.PrettyPrintAsFloat(t.scale), t.zeroPoint)
             else:
-                typeDef = "OperandType %s(Type::%s, %s, %s, %d, %s);"%(
-                    t, t.type, t.GetDimensionsString(), tg.PrettyPrintAsFloat(t.scale), t.zeroPoint,
-                    t.extraParams.GetConstructor())
+                assert t.type == "TENSOR_QUANT8_SYMM_PER_CHANNEL", "Unexpected model configuration. " \
+                                                                   "Extra params are currently expected for " \
+                                                                   "TENSOR_QUANT8_SYMM_PER_CHANNEL operand type. "
+                assert t.scale == 0.0 and t.zeroPoint == 0, "Scale and zero point are always zero for " \
+                                                            "TENSOR_QUANT8_SYMM_PER_CHANNEL operands"
+                typeDef = "OperandType %s(Type::%s, %s, %s);"%(
+                    t, t.type, t.GetDimensionsString(), t.extraParams.GetConstructor())
 
         IndentedPrint(typeDef, file=model_fd)
 
@@ -289,7 +291,7 @@ if __name__ == '__main__':
             print("Generating test(s) from spec: %s" % tg.FileNames.specFile, file=sys.stderr)
             exec(open(tg.FileNames.specFile, "r").read())
             print("Output CTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
-            print("Output example:%s" % tg.FileNames.exampleFile, file=sys.stderr)
+            print("Output example: %s" % tg.FileNames.exampleFile, file=sys.stderr)
             print("Output CTS test: %s" % tg.FileNames.testFile, file=sys.stderr)
             with SmartOpen(tg.FileNames.modelFile) as model_fd, \
                  SmartOpen(tg.FileNames.exampleFile) as example_fd, \
@@ -301,6 +303,3 @@ if __name__ == '__main__':
                     DumpTest=DumpCtsTest, test_fd=test_fd)
         else:
             print("Skip file: %s" % tg.FileNames.specFile, file=sys.stderr)
-        with SmartOpen(tg.FileNames.ctsFile, mode="a") as cts_fd:
-            print("#include \"../generated/tests/%s.cpp\""%os.path.basename(tg.FileNames.specFile),
-                file=cts_fd)
