@@ -1,178 +1,380 @@
+// Generated from equal.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: equal.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace equal {
-// Generated equal test
-#include "generated/examples/equal.example.cpp"
-// Generated model constructor
-#include "generated/models/equal.model.cpp"
-} // namespace equal
+namespace generated_tests::equal {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_simple();
 
 TEST_F(GeneratedTests, equal_simple) {
-    execute(equal::CreateModel,
-            equal::is_ignored,
-            equal::get_examples_simple());
+    execute(CreateModel,
+            is_ignored,
+            get_examples_simple());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_simple, equal::CreateModel)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_simple, generated_tests::equal::CreateModel)
+
+namespace generated_tests::equal {
+
+void CreateModel_int32(Model *model);
+bool is_ignored_int32(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_simple_int32();
 
 TEST_F(GeneratedTests, equal_simple_int32) {
-    execute(equal::CreateModel_int32,
-            equal::is_ignored_int32,
-            equal::get_examples_simple_int32());
+    execute(CreateModel_int32,
+            is_ignored_int32,
+            get_examples_simple_int32());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_simple_int32, equal::CreateModel_int32)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_simple_int32, generated_tests::equal::CreateModel_int32)
+
+namespace generated_tests::equal {
+
+void CreateModel_float16(Model *model);
+bool is_ignored_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_simple_float16();
 
 TEST_F(GeneratedTests, equal_simple_float16) {
-    execute(equal::CreateModel_float16,
-            equal::is_ignored_float16,
-            equal::get_examples_simple_float16());
+    execute(CreateModel_float16,
+            is_ignored_float16,
+            get_examples_simple_float16());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_simple_float16, equal::CreateModel_float16)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_simple_float16, generated_tests::equal::CreateModel_float16)
+
+namespace generated_tests::equal {
+
+void CreateModel_relaxed(Model *model);
+bool is_ignored_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_simple_relaxed();
 
 TEST_F(GeneratedTests, equal_simple_relaxed) {
-    execute(equal::CreateModel_relaxed,
-            equal::is_ignored_relaxed,
-            equal::get_examples_simple_relaxed());
+    execute(CreateModel_relaxed,
+            is_ignored_relaxed,
+            get_examples_simple_relaxed());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_simple_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, equal_simple_dynamic_output_shape) {
-    execute(equal::CreateModel_dynamic_output_shape,
-            equal::is_ignored_dynamic_output_shape,
-            equal::get_examples_simple_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_simple_dynamic_output_shape());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_int32(Model *model);
+bool is_ignored_dynamic_output_shape_int32(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_simple_dynamic_output_shape_int32();
 
 TEST_F(DynamicOutputShapeTest, equal_simple_dynamic_output_shape_int32) {
-    execute(equal::CreateModel_dynamic_output_shape_int32,
-            equal::is_ignored_dynamic_output_shape_int32,
-            equal::get_examples_simple_dynamic_output_shape_int32());
+    execute(CreateModel_dynamic_output_shape_int32,
+            is_ignored_dynamic_output_shape_int32,
+            get_examples_simple_dynamic_output_shape_int32());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_float16(Model *model);
+bool is_ignored_dynamic_output_shape_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_simple_dynamic_output_shape_float16();
 
 TEST_F(DynamicOutputShapeTest, equal_simple_dynamic_output_shape_float16) {
-    execute(equal::CreateModel_dynamic_output_shape_float16,
-            equal::is_ignored_dynamic_output_shape_float16,
-            equal::get_examples_simple_dynamic_output_shape_float16());
+    execute(CreateModel_dynamic_output_shape_float16,
+            is_ignored_dynamic_output_shape_float16,
+            get_examples_simple_dynamic_output_shape_float16());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_relaxed(Model *model);
+bool is_ignored_dynamic_output_shape_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_simple_dynamic_output_shape_relaxed();
 
 TEST_F(DynamicOutputShapeTest, equal_simple_dynamic_output_shape_relaxed) {
-    execute(equal::CreateModel_dynamic_output_shape_relaxed,
-            equal::is_ignored_dynamic_output_shape_relaxed,
-            equal::get_examples_simple_dynamic_output_shape_relaxed());
+    execute(CreateModel_dynamic_output_shape_relaxed,
+            is_ignored_dynamic_output_shape_relaxed,
+            get_examples_simple_dynamic_output_shape_relaxed());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_2(Model *model);
+bool is_ignored_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast();
 
 TEST_F(GeneratedTests, equal_broadcast) {
-    execute(equal::CreateModel_2,
-            equal::is_ignored_2,
-            equal::get_examples_broadcast());
+    execute(CreateModel_2,
+            is_ignored_2,
+            get_examples_broadcast());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_broadcast, equal::CreateModel_2)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_broadcast, generated_tests::equal::CreateModel_2)
+
+namespace generated_tests::equal {
+
+void CreateModel_int32_2(Model *model);
+bool is_ignored_int32_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast_int32();
 
 TEST_F(GeneratedTests, equal_broadcast_int32) {
-    execute(equal::CreateModel_int32_2,
-            equal::is_ignored_int32_2,
-            equal::get_examples_broadcast_int32());
+    execute(CreateModel_int32_2,
+            is_ignored_int32_2,
+            get_examples_broadcast_int32());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_broadcast_int32, equal::CreateModel_int32_2)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_broadcast_int32, generated_tests::equal::CreateModel_int32_2)
+
+namespace generated_tests::equal {
+
+void CreateModel_float16_2(Model *model);
+bool is_ignored_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast_float16();
 
 TEST_F(GeneratedTests, equal_broadcast_float16) {
-    execute(equal::CreateModel_float16_2,
-            equal::is_ignored_float16_2,
-            equal::get_examples_broadcast_float16());
+    execute(CreateModel_float16_2,
+            is_ignored_float16_2,
+            get_examples_broadcast_float16());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_broadcast_float16, equal::CreateModel_float16_2)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_broadcast_float16, generated_tests::equal::CreateModel_float16_2)
+
+namespace generated_tests::equal {
+
+void CreateModel_relaxed_2(Model *model);
+bool is_ignored_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast_relaxed();
 
 TEST_F(GeneratedTests, equal_broadcast_relaxed) {
-    execute(equal::CreateModel_relaxed_2,
-            equal::is_ignored_relaxed_2,
-            equal::get_examples_broadcast_relaxed());
+    execute(CreateModel_relaxed_2,
+            is_ignored_relaxed_2,
+            get_examples_broadcast_relaxed());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_2(Model *model);
+bool is_ignored_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, equal_broadcast_dynamic_output_shape) {
-    execute(equal::CreateModel_dynamic_output_shape_2,
-            equal::is_ignored_dynamic_output_shape_2,
-            equal::get_examples_broadcast_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape_2,
+            is_ignored_dynamic_output_shape_2,
+            get_examples_broadcast_dynamic_output_shape());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_int32_2(Model *model);
+bool is_ignored_dynamic_output_shape_int32_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast_dynamic_output_shape_int32();
 
 TEST_F(DynamicOutputShapeTest, equal_broadcast_dynamic_output_shape_int32) {
-    execute(equal::CreateModel_dynamic_output_shape_int32_2,
-            equal::is_ignored_dynamic_output_shape_int32_2,
-            equal::get_examples_broadcast_dynamic_output_shape_int32());
+    execute(CreateModel_dynamic_output_shape_int32_2,
+            is_ignored_dynamic_output_shape_int32_2,
+            get_examples_broadcast_dynamic_output_shape_int32());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_float16_2(Model *model);
+bool is_ignored_dynamic_output_shape_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast_dynamic_output_shape_float16();
 
 TEST_F(DynamicOutputShapeTest, equal_broadcast_dynamic_output_shape_float16) {
-    execute(equal::CreateModel_dynamic_output_shape_float16_2,
-            equal::is_ignored_dynamic_output_shape_float16_2,
-            equal::get_examples_broadcast_dynamic_output_shape_float16());
+    execute(CreateModel_dynamic_output_shape_float16_2,
+            is_ignored_dynamic_output_shape_float16_2,
+            get_examples_broadcast_dynamic_output_shape_float16());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_relaxed_2(Model *model);
+bool is_ignored_dynamic_output_shape_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast_dynamic_output_shape_relaxed();
 
 TEST_F(DynamicOutputShapeTest, equal_broadcast_dynamic_output_shape_relaxed) {
-    execute(equal::CreateModel_dynamic_output_shape_relaxed_2,
-            equal::is_ignored_dynamic_output_shape_relaxed_2,
-            equal::get_examples_broadcast_dynamic_output_shape_relaxed());
+    execute(CreateModel_dynamic_output_shape_relaxed_2,
+            is_ignored_dynamic_output_shape_relaxed_2,
+            get_examples_broadcast_dynamic_output_shape_relaxed());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_3(Model *model);
+bool is_ignored_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quantized_different_scale();
 
 TEST_F(GeneratedTests, equal_quantized_different_scale) {
-    execute(equal::CreateModel_3,
-            equal::is_ignored_3,
-            equal::get_examples_quantized_different_scale());
+    execute(CreateModel_3,
+            is_ignored_3,
+            get_examples_quantized_different_scale());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_quantized_different_scale, equal::CreateModel_3)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_quantized_different_scale, generated_tests::equal::CreateModel_3)
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_3(Model *model);
+bool is_ignored_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quantized_different_scale_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, equal_quantized_different_scale_dynamic_output_shape) {
-    execute(equal::CreateModel_dynamic_output_shape_3,
-            equal::is_ignored_dynamic_output_shape_3,
-            equal::get_examples_quantized_different_scale_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape_3,
+            is_ignored_dynamic_output_shape_3,
+            get_examples_quantized_different_scale_dynamic_output_shape());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_4(Model *model);
+bool is_ignored_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quantized_different_zero_point();
 
 TEST_F(GeneratedTests, equal_quantized_different_zero_point) {
-    execute(equal::CreateModel_4,
-            equal::is_ignored_4,
-            equal::get_examples_quantized_different_zero_point());
+    execute(CreateModel_4,
+            is_ignored_4,
+            get_examples_quantized_different_zero_point());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_quantized_different_zero_point, equal::CreateModel_4)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_quantized_different_zero_point, generated_tests::equal::CreateModel_4)
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_4(Model *model);
+bool is_ignored_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quantized_different_zero_point_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, equal_quantized_different_zero_point_dynamic_output_shape) {
-    execute(equal::CreateModel_dynamic_output_shape_4,
-            equal::is_ignored_dynamic_output_shape_4,
-            equal::get_examples_quantized_different_zero_point_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape_4,
+            is_ignored_dynamic_output_shape_4,
+            get_examples_quantized_different_zero_point_dynamic_output_shape());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_5(Model *model);
+bool is_ignored_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quantized_overflow_second_input_if_requantized();
 
 TEST_F(GeneratedTests, equal_quantized_overflow_second_input_if_requantized) {
-    execute(equal::CreateModel_5,
-            equal::is_ignored_5,
-            equal::get_examples_quantized_overflow_second_input_if_requantized());
+    execute(CreateModel_5,
+            is_ignored_5,
+            get_examples_quantized_overflow_second_input_if_requantized());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_quantized_overflow_second_input_if_requantized, equal::CreateModel_5)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_quantized_overflow_second_input_if_requantized, generated_tests::equal::CreateModel_5)
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_5(Model *model);
+bool is_ignored_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quantized_overflow_second_input_if_requantized_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, equal_quantized_overflow_second_input_if_requantized_dynamic_output_shape) {
-    execute(equal::CreateModel_dynamic_output_shape_5,
-            equal::is_ignored_dynamic_output_shape_5,
-            equal::get_examples_quantized_overflow_second_input_if_requantized_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape_5,
+            is_ignored_dynamic_output_shape_5,
+            get_examples_quantized_overflow_second_input_if_requantized_dynamic_output_shape());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_6(Model *model);
+bool is_ignored_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quantized_overflow_first_input_if_requantized();
 
 TEST_F(GeneratedTests, equal_quantized_overflow_first_input_if_requantized) {
-    execute(equal::CreateModel_6,
-            equal::is_ignored_6,
-            equal::get_examples_quantized_overflow_first_input_if_requantized());
+    execute(CreateModel_6,
+            is_ignored_6,
+            get_examples_quantized_overflow_first_input_if_requantized());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_quantized_overflow_first_input_if_requantized, equal::CreateModel_6)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_quantized_overflow_first_input_if_requantized, generated_tests::equal::CreateModel_6)
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_6(Model *model);
+bool is_ignored_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quantized_overflow_first_input_if_requantized_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, equal_quantized_overflow_first_input_if_requantized_dynamic_output_shape) {
-    execute(equal::CreateModel_dynamic_output_shape_6,
-            equal::is_ignored_dynamic_output_shape_6,
-            equal::get_examples_quantized_overflow_first_input_if_requantized_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape_6,
+            is_ignored_dynamic_output_shape_6,
+            get_examples_quantized_overflow_first_input_if_requantized_dynamic_output_shape());
 }
+
+} // namespace generated_tests::equal
+
+namespace generated_tests::equal {
+
+void CreateModel_7(Model *model);
+bool is_ignored_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_boolean();
 
 TEST_F(GeneratedTests, equal_boolean) {
-    execute(equal::CreateModel_7,
-            equal::is_ignored_7,
-            equal::get_examples_boolean());
+    execute(CreateModel_7,
+            is_ignored_7,
+            get_examples_boolean());
 }
-TEST_AVAILABLE_SINCE(V1_2, equal_boolean, equal::CreateModel_7)
+
+} // namespace generated_tests::equal
+TEST_AVAILABLE_SINCE(V1_2, equal_boolean, generated_tests::equal::CreateModel_7)
+
+namespace generated_tests::equal {
+
+void CreateModel_dynamic_output_shape_7(Model *model);
+bool is_ignored_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_boolean_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, equal_boolean_dynamic_output_shape) {
-    execute(equal::CreateModel_dynamic_output_shape_7,
-            equal::is_ignored_dynamic_output_shape_7,
-            equal::get_examples_boolean_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape_7,
+            is_ignored_dynamic_output_shape_7,
+            get_examples_boolean_dynamic_output_shape());
 }
+
+} // namespace generated_tests::equal
 

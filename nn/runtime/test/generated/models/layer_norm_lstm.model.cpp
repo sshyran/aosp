@@ -1,5 +1,10 @@
+// Generated from layer_norm_lstm.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: layer_norm_lstm.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::layer_norm_lstm {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
   OperandType type1(Type::TENSOR_FLOAT32, {4, 5});
@@ -59,10 +64,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -123,10 +131,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -187,10 +198,13 @@ void CreateModel_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_2(int i) {
+bool is_ignored_2(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_dynamic_output_shape_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -251,10 +265,13 @@ void CreateModel_dynamic_output_shape_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_2(int i) {
+bool is_ignored_dynamic_output_shape_2(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -315,10 +332,13 @@ void CreateModel_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3(int i) {
+bool is_ignored_3(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_dynamic_output_shape_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -379,10 +399,13 @@ void CreateModel_dynamic_output_shape_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_3(int i) {
+bool is_ignored_dynamic_output_shape_3(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_4(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -444,10 +467,13 @@ void CreateModel_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_4(int i) {
+bool is_ignored_4(int i) {
   static std::set<int> ignore = {0, 1};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_dynamic_output_shape_4(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -508,10 +534,13 @@ void CreateModel_dynamic_output_shape_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_4(int i) {
+bool is_ignored_dynamic_output_shape_4(int i) {
   static std::set<int> ignore = {0, 1};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_5(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -573,10 +602,13 @@ void CreateModel_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_5(int i) {
+bool is_ignored_5(int i) {
   static std::set<int> ignore = {0, 1};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_dynamic_output_shape_5(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -637,10 +669,13 @@ void CreateModel_dynamic_output_shape_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_5(int i) {
+bool is_ignored_dynamic_output_shape_5(int i) {
   static std::set<int> ignore = {0, 1};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_6(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -702,10 +737,13 @@ void CreateModel_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_6(int i) {
+bool is_ignored_6(int i) {
   static std::set<int> ignore = {0, 1};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
 
 void CreateModel_dynamic_output_shape_6(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 5});
@@ -766,8 +804,9 @@ void CreateModel_dynamic_output_shape_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_6(int i) {
+bool is_ignored_dynamic_output_shape_6(int i) {
   static std::set<int> ignore = {0, 1};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::layer_norm_lstm

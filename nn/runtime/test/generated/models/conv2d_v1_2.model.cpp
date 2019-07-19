@@ -1,5 +1,10 @@
+// Generated from conv2d_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: conv2d_v1_2.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 3, 3, 1});
@@ -48,10 +53,13 @@ void CreateModel_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc(int i) {
+bool is_ignored_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -103,10 +111,13 @@ void CreateModel_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_relaxed(int i) {
+bool is_ignored_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -156,10 +167,13 @@ void CreateModel_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_quant8(int i) {
+bool is_ignored_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -210,10 +224,13 @@ void CreateModel_nhwc_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_channelQuant8(int i) {
+bool is_ignored_nhwc_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -263,10 +280,13 @@ void CreateModel_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_float16(int i) {
+bool is_ignored_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -312,10 +332,13 @@ void CreateModel_nhwc_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_weight_as_input(int i) {
+bool is_ignored_nhwc_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -363,10 +386,13 @@ void CreateModel_nhwc_weight_as_input_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_weight_as_input_relaxed(int i) {
+bool is_ignored_nhwc_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -412,10 +438,13 @@ void CreateModel_nhwc_weight_as_input_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_weight_as_input_quant8(int i) {
+bool is_ignored_nhwc_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -462,10 +491,13 @@ void CreateModel_nhwc_weight_as_input_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_weight_as_input_channelQuant8(int i) {
+bool is_ignored_nhwc_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -511,10 +543,13 @@ void CreateModel_nhwc_weight_as_input_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_weight_as_input_float16(int i) {
+bool is_ignored_nhwc_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -565,10 +600,13 @@ void CreateModel_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw(int i) {
+bool is_ignored_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -621,10 +659,13 @@ void CreateModel_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_relaxed(int i) {
+bool is_ignored_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -675,10 +716,13 @@ void CreateModel_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_quant8(int i) {
+bool is_ignored_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -729,10 +773,13 @@ void CreateModel_nchw_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_channelQuant8(int i) {
+bool is_ignored_nchw_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -783,10 +830,13 @@ void CreateModel_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_float16(int i) {
+bool is_ignored_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -833,10 +883,13 @@ void CreateModel_nchw_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_weight_as_input(int i) {
+bool is_ignored_nchw_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -885,10 +938,13 @@ void CreateModel_nchw_weight_as_input_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_weight_as_input_relaxed(int i) {
+bool is_ignored_nchw_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -935,10 +991,13 @@ void CreateModel_nchw_weight_as_input_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_weight_as_input_quant8(int i) {
+bool is_ignored_nchw_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -985,10 +1044,13 @@ void CreateModel_nchw_weight_as_input_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_weight_as_input_channelQuant8(int i) {
+bool is_ignored_nchw_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1035,10 +1097,13 @@ void CreateModel_nchw_weight_as_input_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_weight_as_input_float16(int i) {
+bool is_ignored_nchw_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1089,10 +1154,13 @@ void CreateModel_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1145,10 +1213,13 @@ void CreateModel_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1199,10 +1270,13 @@ void CreateModel_dynamic_output_shape_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_quant8(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1253,10 +1327,13 @@ void CreateModel_dynamic_output_shape_nhwc_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_channelQuant8(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1307,10 +1384,13 @@ void CreateModel_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1357,10 +1437,13 @@ void CreateModel_dynamic_output_shape_nhwc_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1409,10 +1492,13 @@ void CreateModel_dynamic_output_shape_nhwc_weight_as_input_relaxed(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1459,10 +1545,13 @@ void CreateModel_dynamic_output_shape_nhwc_weight_as_input_quant8(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_quant8(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1509,10 +1598,13 @@ void CreateModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(Model *
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1559,10 +1651,13 @@ void CreateModel_dynamic_output_shape_nhwc_weight_as_input_float16(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_float16(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1613,10 +1708,13 @@ void CreateModel_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw(int i) {
+bool is_ignored_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1669,10 +1767,13 @@ void CreateModel_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1723,10 +1824,13 @@ void CreateModel_dynamic_output_shape_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_quant8(int i) {
+bool is_ignored_dynamic_output_shape_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1777,10 +1881,13 @@ void CreateModel_dynamic_output_shape_nchw_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_channelQuant8(int i) {
+bool is_ignored_dynamic_output_shape_nchw_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1831,10 +1938,13 @@ void CreateModel_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1881,10 +1991,13 @@ void CreateModel_dynamic_output_shape_nchw_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input(int i) {
+bool is_ignored_dynamic_output_shape_nchw_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1933,10 +2046,13 @@ void CreateModel_dynamic_output_shape_nchw_weight_as_input_relaxed(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_nchw_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1983,10 +2099,13 @@ void CreateModel_dynamic_output_shape_nchw_weight_as_input_quant8(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input_quant8(int i) {
+bool is_ignored_dynamic_output_shape_nchw_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2033,10 +2152,13 @@ void CreateModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8(Model *
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8(int i) {
+bool is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2083,10 +2205,13 @@ void CreateModel_dynamic_output_shape_nchw_weight_as_input_float16(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input_float16(int i) {
+bool is_ignored_dynamic_output_shape_nchw_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2127,10 +2252,13 @@ void CreateModel_nhwc_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_2(int i) {
+bool is_ignored_nhwc_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2173,10 +2301,13 @@ void CreateModel_nhwc_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_relaxed_2(int i) {
+bool is_ignored_nhwc_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2218,10 +2349,13 @@ void CreateModel_nhwc_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_quant8_2(int i) {
+bool is_ignored_nhwc_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2263,10 +2397,13 @@ void CreateModel_nhwc_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_channelQuant8_2(int i) {
+bool is_ignored_nhwc_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2307,10 +2444,13 @@ void CreateModel_nhwc_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_float16_2(int i) {
+bool is_ignored_nhwc_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_weight_as_input_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2347,10 +2487,13 @@ void CreateModel_nhwc_weight_as_input_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_weight_as_input_2(int i) {
+bool is_ignored_nhwc_weight_as_input_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_weight_as_input_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2389,10 +2532,13 @@ void CreateModel_nhwc_weight_as_input_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_weight_as_input_relaxed_2(int i) {
+bool is_ignored_nhwc_weight_as_input_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_weight_as_input_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2430,10 +2576,13 @@ void CreateModel_nhwc_weight_as_input_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_weight_as_input_quant8_2(int i) {
+bool is_ignored_nhwc_weight_as_input_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_weight_as_input_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2471,10 +2620,13 @@ void CreateModel_nhwc_weight_as_input_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_weight_as_input_channelQuant8_2(int i) {
+bool is_ignored_nhwc_weight_as_input_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nhwc_weight_as_input_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2511,10 +2663,13 @@ void CreateModel_nhwc_weight_as_input_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nhwc_weight_as_input_float16_2(int i) {
+bool is_ignored_nhwc_weight_as_input_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2555,10 +2710,13 @@ void CreateModel_nchw_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_2(int i) {
+bool is_ignored_nchw_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2601,10 +2759,13 @@ void CreateModel_nchw_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_relaxed_2(int i) {
+bool is_ignored_nchw_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2646,10 +2807,13 @@ void CreateModel_nchw_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_quant8_2(int i) {
+bool is_ignored_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2691,10 +2855,13 @@ void CreateModel_nchw_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_channelQuant8_2(int i) {
+bool is_ignored_nchw_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2735,10 +2902,13 @@ void CreateModel_nchw_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_float16_2(int i) {
+bool is_ignored_nchw_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_weight_as_input_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2775,10 +2945,13 @@ void CreateModel_nchw_weight_as_input_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_weight_as_input_2(int i) {
+bool is_ignored_nchw_weight_as_input_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_weight_as_input_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2817,10 +2990,13 @@ void CreateModel_nchw_weight_as_input_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_weight_as_input_relaxed_2(int i) {
+bool is_ignored_nchw_weight_as_input_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_weight_as_input_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2858,10 +3034,13 @@ void CreateModel_nchw_weight_as_input_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_weight_as_input_quant8_2(int i) {
+bool is_ignored_nchw_weight_as_input_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_weight_as_input_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2899,10 +3078,13 @@ void CreateModel_nchw_weight_as_input_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_weight_as_input_channelQuant8_2(int i) {
+bool is_ignored_nchw_weight_as_input_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_nchw_weight_as_input_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2939,10 +3121,13 @@ void CreateModel_nchw_weight_as_input_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_nchw_weight_as_input_float16_2(int i) {
+bool is_ignored_nchw_weight_as_input_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -2984,10 +3169,13 @@ void CreateModel_dynamic_output_shape_nhwc_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_2(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3031,10 +3219,13 @@ void CreateModel_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_relaxed_2(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3076,10 +3267,13 @@ void CreateModel_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_quant8_2(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3121,10 +3315,13 @@ void CreateModel_dynamic_output_shape_nhwc_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_channelQuant8_2(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3166,10 +3363,13 @@ void CreateModel_dynamic_output_shape_nhwc_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_float16_2(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_weight_as_input_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3207,10 +3407,13 @@ void CreateModel_dynamic_output_shape_nhwc_weight_as_input_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_2(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_weight_as_input_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3250,10 +3453,13 @@ void CreateModel_dynamic_output_shape_nhwc_weight_as_input_relaxed_2(Model *mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_relaxed_2(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_weight_as_input_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3291,10 +3497,13 @@ void CreateModel_dynamic_output_shape_nhwc_weight_as_input_quant8_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_quant8_2(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3332,10 +3541,13 @@ void CreateModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(Model
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nhwc_weight_as_input_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3373,10 +3585,13 @@ void CreateModel_dynamic_output_shape_nhwc_weight_as_input_float16_2(Model *mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_float16_2(int i) {
+bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3418,10 +3633,13 @@ void CreateModel_dynamic_output_shape_nchw_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_2(int i) {
+bool is_ignored_dynamic_output_shape_nchw_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3465,10 +3683,13 @@ void CreateModel_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_relaxed_2(int i) {
+bool is_ignored_dynamic_output_shape_nchw_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3510,10 +3731,13 @@ void CreateModel_dynamic_output_shape_nchw_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_quant8_2(int i) {
+bool is_ignored_dynamic_output_shape_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3555,10 +3779,13 @@ void CreateModel_dynamic_output_shape_nchw_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_channelQuant8_2(int i) {
+bool is_ignored_dynamic_output_shape_nchw_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3600,10 +3827,13 @@ void CreateModel_dynamic_output_shape_nchw_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_float16_2(int i) {
+bool is_ignored_dynamic_output_shape_nchw_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_weight_as_input_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3641,10 +3871,13 @@ void CreateModel_dynamic_output_shape_nchw_weight_as_input_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input_2(int i) {
+bool is_ignored_dynamic_output_shape_nchw_weight_as_input_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_weight_as_input_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3684,10 +3917,13 @@ void CreateModel_dynamic_output_shape_nchw_weight_as_input_relaxed_2(Model *mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input_relaxed_2(int i) {
+bool is_ignored_dynamic_output_shape_nchw_weight_as_input_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_weight_as_input_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3725,10 +3961,13 @@ void CreateModel_dynamic_output_shape_nchw_weight_as_input_quant8_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input_quant8_2(int i) {
+bool is_ignored_dynamic_output_shape_nchw_weight_as_input_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3766,10 +4005,13 @@ void CreateModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(Model
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(int i) {
+bool is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_dynamic_output_shape_nchw_weight_as_input_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3807,10 +4049,13 @@ void CreateModel_dynamic_output_shape_nchw_weight_as_input_float16_2(Model *mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_nchw_weight_as_input_float16_2(int i) {
+bool is_ignored_dynamic_output_shape_nchw_weight_as_input_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3860,10 +4105,13 @@ void CreateModel_channel_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nhwc(int i) {
+bool is_ignored_channel_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3915,10 +4163,13 @@ void CreateModel_channel_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nhwc_relaxed(int i) {
+bool is_ignored_channel_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -3968,10 +4219,13 @@ void CreateModel_channel_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nhwc_quant8(int i) {
+bool is_ignored_channel_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nhwc_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4021,10 +4275,13 @@ void CreateModel_channel_nhwc_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nhwc_channelQuant8(int i) {
+bool is_ignored_channel_nhwc_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4074,10 +4331,13 @@ void CreateModel_channel_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nhwc_float16(int i) {
+bool is_ignored_channel_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nhwc_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4123,10 +4383,13 @@ void CreateModel_channel_nhwc_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nhwc_weight_as_input(int i) {
+bool is_ignored_channel_nhwc_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nhwc_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4174,10 +4437,13 @@ void CreateModel_channel_nhwc_weight_as_input_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nhwc_weight_as_input_relaxed(int i) {
+bool is_ignored_channel_nhwc_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nhwc_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4223,10 +4489,13 @@ void CreateModel_channel_nhwc_weight_as_input_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nhwc_weight_as_input_quant8(int i) {
+bool is_ignored_channel_nhwc_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nhwc_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4272,10 +4541,13 @@ void CreateModel_channel_nhwc_weight_as_input_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nhwc_weight_as_input_channelQuant8(int i) {
+bool is_ignored_channel_nhwc_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nhwc_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4321,10 +4593,13 @@ void CreateModel_channel_nhwc_weight_as_input_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nhwc_weight_as_input_float16(int i) {
+bool is_ignored_channel_nhwc_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4374,10 +4649,13 @@ void CreateModel_channel_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nchw(int i) {
+bool is_ignored_channel_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4429,10 +4707,13 @@ void CreateModel_channel_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nchw_relaxed(int i) {
+bool is_ignored_channel_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4482,10 +4763,13 @@ void CreateModel_channel_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nchw_quant8(int i) {
+bool is_ignored_channel_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nchw_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4535,10 +4819,13 @@ void CreateModel_channel_nchw_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nchw_channelQuant8(int i) {
+bool is_ignored_channel_nchw_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4588,10 +4875,13 @@ void CreateModel_channel_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nchw_float16(int i) {
+bool is_ignored_channel_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nchw_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4637,10 +4927,13 @@ void CreateModel_channel_nchw_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nchw_weight_as_input(int i) {
+bool is_ignored_channel_nchw_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nchw_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4688,10 +4981,13 @@ void CreateModel_channel_nchw_weight_as_input_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nchw_weight_as_input_relaxed(int i) {
+bool is_ignored_channel_nchw_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nchw_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4737,10 +5033,13 @@ void CreateModel_channel_nchw_weight_as_input_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nchw_weight_as_input_quant8(int i) {
+bool is_ignored_channel_nchw_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nchw_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4786,10 +5085,13 @@ void CreateModel_channel_nchw_weight_as_input_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nchw_weight_as_input_channelQuant8(int i) {
+bool is_ignored_channel_nchw_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_nchw_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4835,10 +5137,13 @@ void CreateModel_channel_nchw_weight_as_input_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_nchw_weight_as_input_float16(int i) {
+bool is_ignored_channel_nchw_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4889,10 +5194,13 @@ void CreateModel_channel_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_channel_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4945,10 +5253,13 @@ void CreateModel_channel_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_channel_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -4999,10 +5310,13 @@ void CreateModel_channel_dynamic_output_shape_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nhwc_quant8(int i) {
+bool is_ignored_channel_dynamic_output_shape_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nhwc_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5053,10 +5367,13 @@ void CreateModel_channel_dynamic_output_shape_nhwc_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nhwc_channelQuant8(int i) {
+bool is_ignored_channel_dynamic_output_shape_nhwc_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5107,10 +5424,13 @@ void CreateModel_channel_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_channel_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5157,10 +5477,13 @@ void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input(int i) {
+bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5209,10 +5532,13 @@ void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed(Model
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed(int i) {
+bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5259,10 +5585,13 @@ void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_quant8(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_quant8(int i) {
+bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5309,10 +5638,13 @@ void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(int i) {
+bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5359,10 +5691,13 @@ void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_float16(Model
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_float16(int i) {
+bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5413,10 +5748,13 @@ void CreateModel_channel_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nchw(int i) {
+bool is_ignored_channel_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5469,10 +5807,13 @@ void CreateModel_channel_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_channel_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5523,10 +5864,13 @@ void CreateModel_channel_dynamic_output_shape_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nchw_quant8(int i) {
+bool is_ignored_channel_dynamic_output_shape_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nchw_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5577,10 +5921,13 @@ void CreateModel_channel_dynamic_output_shape_nchw_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nchw_channelQuant8(int i) {
+bool is_ignored_channel_dynamic_output_shape_nchw_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5631,10 +5978,13 @@ void CreateModel_channel_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_channel_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5681,10 +6031,13 @@ void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input(int i) {
+bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5733,10 +6086,13 @@ void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_relaxed(Model
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_relaxed(int i) {
+bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5783,10 +6139,13 @@ void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_quant8(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_quant8(int i) {
+bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5833,10 +6192,13 @@ void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8(int i) {
+bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5883,10 +6245,13 @@ void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_float16(Model
   assert(model->isValid());
 }
 
-inline bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_float16(int i) {
+bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5936,10 +6301,13 @@ void CreateModel_large_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc(int i) {
+bool is_ignored_large_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -5991,10 +6359,13 @@ void CreateModel_large_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_relaxed(int i) {
+bool is_ignored_large_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6045,10 +6416,13 @@ void CreateModel_large_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_quant8(int i) {
+bool is_ignored_large_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6099,10 +6473,13 @@ void CreateModel_large_nhwc_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_channelQuant8(int i) {
+bool is_ignored_large_nhwc_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6152,10 +6529,13 @@ void CreateModel_large_nhwc_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_channelQuant8_2(int i) {
+bool is_ignored_large_nhwc_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6205,10 +6585,13 @@ void CreateModel_large_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_float16(int i) {
+bool is_ignored_large_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6254,10 +6637,13 @@ void CreateModel_large_nhwc_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_weight_as_input(int i) {
+bool is_ignored_large_nhwc_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6305,10 +6691,13 @@ void CreateModel_large_nhwc_weight_as_input_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_weight_as_input_relaxed(int i) {
+bool is_ignored_large_nhwc_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6355,10 +6744,13 @@ void CreateModel_large_nhwc_weight_as_input_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_weight_as_input_quant8(int i) {
+bool is_ignored_large_nhwc_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6405,10 +6797,13 @@ void CreateModel_large_nhwc_weight_as_input_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_weight_as_input_channelQuant8(int i) {
+bool is_ignored_large_nhwc_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_weight_as_input_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6454,10 +6849,13 @@ void CreateModel_large_nhwc_weight_as_input_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_weight_as_input_channelQuant8_2(int i) {
+bool is_ignored_large_nhwc_weight_as_input_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nhwc_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6503,10 +6901,13 @@ void CreateModel_large_nhwc_weight_as_input_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nhwc_weight_as_input_float16(int i) {
+bool is_ignored_large_nhwc_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6556,10 +6957,13 @@ void CreateModel_large_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw(int i) {
+bool is_ignored_large_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6611,10 +7015,13 @@ void CreateModel_large_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_relaxed(int i) {
+bool is_ignored_large_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6665,10 +7072,13 @@ void CreateModel_large_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_quant8(int i) {
+bool is_ignored_large_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6719,10 +7129,13 @@ void CreateModel_large_nchw_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_channelQuant8(int i) {
+bool is_ignored_large_nchw_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6772,10 +7185,13 @@ void CreateModel_large_nchw_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_channelQuant8_2(int i) {
+bool is_ignored_large_nchw_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6825,10 +7241,13 @@ void CreateModel_large_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_float16(int i) {
+bool is_ignored_large_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6874,10 +7293,13 @@ void CreateModel_large_nchw_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_weight_as_input(int i) {
+bool is_ignored_large_nchw_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6925,10 +7347,13 @@ void CreateModel_large_nchw_weight_as_input_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_weight_as_input_relaxed(int i) {
+bool is_ignored_large_nchw_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -6975,10 +7400,13 @@ void CreateModel_large_nchw_weight_as_input_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_weight_as_input_quant8(int i) {
+bool is_ignored_large_nchw_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7025,10 +7453,13 @@ void CreateModel_large_nchw_weight_as_input_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_weight_as_input_channelQuant8(int i) {
+bool is_ignored_large_nchw_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_weight_as_input_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7074,10 +7505,13 @@ void CreateModel_large_nchw_weight_as_input_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_weight_as_input_channelQuant8_2(int i) {
+bool is_ignored_large_nchw_weight_as_input_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_nchw_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7123,10 +7557,13 @@ void CreateModel_large_nchw_weight_as_input_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_nchw_weight_as_input_float16(int i) {
+bool is_ignored_large_nchw_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7177,10 +7614,13 @@ void CreateModel_large_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7233,10 +7673,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7287,10 +7730,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_quant8(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7341,10 +7787,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_channelQuant8(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7395,10 +7844,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_channelQuant8_2(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7449,10 +7901,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7499,10 +7954,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7551,10 +8009,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_relaxed(Model *
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_relaxed(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7601,10 +8062,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_quant8(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_quant8(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7651,10 +8115,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(M
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7701,10 +8168,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7751,10 +8221,13 @@ void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_float16(Model *
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_float16(int i) {
+bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7805,10 +8278,13 @@ void CreateModel_large_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7861,10 +8337,13 @@ void CreateModel_large_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7915,10 +8394,13 @@ void CreateModel_large_dynamic_output_shape_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_quant8(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -7969,10 +8451,13 @@ void CreateModel_large_dynamic_output_shape_nchw_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_channelQuant8(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8023,10 +8508,13 @@ void CreateModel_large_dynamic_output_shape_nchw_channelQuant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_channelQuant8_2(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8077,10 +8565,13 @@ void CreateModel_large_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_weight_as_input(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8127,10 +8618,13 @@ void CreateModel_large_dynamic_output_shape_nchw_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8179,10 +8673,13 @@ void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_relaxed(Model *
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_relaxed(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8229,10 +8726,13 @@ void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_quant8(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_quant8(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8279,10 +8779,13 @@ void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8(M
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8329,10 +8832,13 @@ void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8379,10 +8885,13 @@ void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_float16(Model *
   assert(model->isValid());
 }
 
-inline bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_float16(int i) {
+bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8424,10 +8933,13 @@ void CreateModel_1_H3_W2_SAME_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_nhwc(int i) {
+bool is_ignored_1_H3_W2_SAME_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8471,10 +8983,13 @@ void CreateModel_1_H3_W2_SAME_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_nhwc_relaxed(int i) {
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8516,10 +9031,13 @@ void CreateModel_1_H3_W2_SAME_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_nhwc_float16(int i) {
+bool is_ignored_1_H3_W2_SAME_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8561,10 +9079,13 @@ void CreateModel_1_H3_W2_SAME_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_nchw(int i) {
+bool is_ignored_1_H3_W2_SAME_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8608,10 +9129,13 @@ void CreateModel_1_H3_W2_SAME_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_nchw_relaxed(int i) {
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8653,10 +9177,13 @@ void CreateModel_1_H3_W2_SAME_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_nchw_float16(int i) {
+bool is_ignored_1_H3_W2_SAME_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8698,10 +9225,13 @@ void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8745,10 +9275,13 @@ void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8790,10 +9323,13 @@ void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8835,10 +9371,13 @@ void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw(int i) {
+bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8882,10 +9421,13 @@ void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8927,10 +9469,13 @@ void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -8972,10 +9517,13 @@ void CreateModel_1_H3_W2_VALID_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_nhwc(int i) {
+bool is_ignored_1_H3_W2_VALID_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9019,10 +9567,13 @@ void CreateModel_1_H3_W2_VALID_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_nhwc_relaxed(int i) {
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9064,10 +9615,13 @@ void CreateModel_1_H3_W2_VALID_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_nhwc_float16(int i) {
+bool is_ignored_1_H3_W2_VALID_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9109,10 +9663,13 @@ void CreateModel_1_H3_W2_VALID_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_nchw(int i) {
+bool is_ignored_1_H3_W2_VALID_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9156,10 +9713,13 @@ void CreateModel_1_H3_W2_VALID_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_nchw_relaxed(int i) {
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9201,10 +9761,13 @@ void CreateModel_1_H3_W2_VALID_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_nchw_float16(int i) {
+bool is_ignored_1_H3_W2_VALID_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9246,10 +9809,13 @@ void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9293,10 +9859,13 @@ void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9338,10 +9907,13 @@ void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9383,10 +9955,13 @@ void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw(int i) {
+bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9430,10 +10005,13 @@ void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9475,10 +10053,13 @@ void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9519,10 +10100,13 @@ void CreateModel_3_H3_W2_SAME_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_nhwc(int i) {
+bool is_ignored_3_H3_W2_SAME_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9565,10 +10149,13 @@ void CreateModel_3_H3_W2_SAME_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_nhwc_relaxed(int i) {
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9609,10 +10196,13 @@ void CreateModel_3_H3_W2_SAME_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_nhwc_float16(int i) {
+bool is_ignored_3_H3_W2_SAME_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9653,10 +10243,13 @@ void CreateModel_3_H3_W2_SAME_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_nchw(int i) {
+bool is_ignored_3_H3_W2_SAME_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9699,10 +10292,13 @@ void CreateModel_3_H3_W2_SAME_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_nchw_relaxed(int i) {
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9743,10 +10339,13 @@ void CreateModel_3_H3_W2_SAME_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_nchw_float16(int i) {
+bool is_ignored_3_H3_W2_SAME_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9788,10 +10387,13 @@ void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9835,10 +10437,13 @@ void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9880,10 +10485,13 @@ void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9925,10 +10533,13 @@ void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw(int i) {
+bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -9972,10 +10583,13 @@ void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10017,10 +10631,13 @@ void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10062,10 +10679,13 @@ void CreateModel_3_H3_W2_VALID_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_nhwc(int i) {
+bool is_ignored_3_H3_W2_VALID_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10109,10 +10729,13 @@ void CreateModel_3_H3_W2_VALID_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_nhwc_relaxed(int i) {
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10154,10 +10777,13 @@ void CreateModel_3_H3_W2_VALID_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_nhwc_float16(int i) {
+bool is_ignored_3_H3_W2_VALID_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10199,10 +10825,13 @@ void CreateModel_3_H3_W2_VALID_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_nchw(int i) {
+bool is_ignored_3_H3_W2_VALID_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10246,10 +10875,13 @@ void CreateModel_3_H3_W2_VALID_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_nchw_relaxed(int i) {
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10291,10 +10923,13 @@ void CreateModel_3_H3_W2_VALID_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_nchw_float16(int i) {
+bool is_ignored_3_H3_W2_VALID_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10336,10 +10971,13 @@ void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10383,10 +11021,13 @@ void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10428,10 +11069,13 @@ void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10473,10 +11117,13 @@ void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw(int i) {
+bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10520,10 +11167,13 @@ void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10565,10 +11215,13 @@ void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_quant_output_multiplier_gt_1(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
@@ -10606,10 +11259,13 @@ void CreateModel_quant_output_multiplier_gt_1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant_output_multiplier_gt_1(int i) {
+bool is_ignored_quant_output_multiplier_gt_1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_quant_output_multiplier_gt_1_relaxed(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
@@ -10649,10 +11305,13 @@ void CreateModel_quant_output_multiplier_gt_1_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant_output_multiplier_gt_1_relaxed(int i) {
+bool is_ignored_quant_output_multiplier_gt_1_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_quant_output_multiplier_gt_1_weight_as_input(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
@@ -10686,10 +11345,13 @@ void CreateModel_quant_output_multiplier_gt_1_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant_output_multiplier_gt_1_weight_as_input(int i) {
+bool is_ignored_quant_output_multiplier_gt_1_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_quant_output_multiplier_gt_1_weight_as_input_relaxed(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
@@ -10725,10 +11387,13 @@ void CreateModel_quant_output_multiplier_gt_1_weight_as_input_relaxed(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant_output_multiplier_gt_1_weight_as_input_relaxed(int i) {
+bool is_ignored_quant_output_multiplier_gt_1_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
@@ -10766,10 +11431,13 @@ void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape(Model *model)
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape(int i) {
+bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
@@ -10809,10 +11477,13 @@ void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(Model
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
@@ -10846,10 +11517,13 @@ void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_inp
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input(int i) {
+bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {2, 2, 4, 1}, 1.0058823529411764f, 128);
@@ -10885,10 +11559,13 @@ void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_inp
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed(int i) {
+bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -10999,10 +11676,13 @@ void CreateModel_zero_sized_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc(int i) {
+bool is_ignored_zero_sized_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -11115,10 +11795,13 @@ void CreateModel_zero_sized_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_relaxed(int i) {
+bool is_ignored_zero_sized_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -11229,10 +11912,13 @@ void CreateModel_zero_sized_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_quant8(int i) {
+bool is_ignored_zero_sized_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -11343,10 +12029,13 @@ void CreateModel_zero_sized_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_float16(int i) {
+bool is_ignored_zero_sized_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -11457,10 +12146,13 @@ void CreateModel_zero_sized_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw(int i) {
+bool is_ignored_zero_sized_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -11573,10 +12265,13 @@ void CreateModel_zero_sized_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_relaxed(int i) {
+bool is_ignored_zero_sized_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -11687,10 +12382,13 @@ void CreateModel_zero_sized_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_quant8(int i) {
+bool is_ignored_zero_sized_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -11801,10 +12499,13 @@ void CreateModel_zero_sized_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_float16(int i) {
+bool is_ignored_zero_sized_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -11915,10 +12616,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -12031,10 +12735,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -12145,10 +12852,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -12259,10 +12969,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -12373,10 +13086,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -12489,10 +13205,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -12603,10 +13322,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -12717,10 +13439,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -12822,10 +13547,13 @@ void CreateModel_zero_sized_nhwc_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_2(int i) {
+bool is_ignored_zero_sized_nhwc_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -12929,10 +13657,13 @@ void CreateModel_zero_sized_nhwc_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_relaxed_2(int i) {
+bool is_ignored_zero_sized_nhwc_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -13034,10 +13765,13 @@ void CreateModel_zero_sized_nhwc_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_quant8_2(int i) {
+bool is_ignored_zero_sized_nhwc_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -13139,10 +13873,13 @@ void CreateModel_zero_sized_nhwc_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_float16_2(int i) {
+bool is_ignored_zero_sized_nhwc_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -13244,10 +13981,13 @@ void CreateModel_zero_sized_nchw_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_2(int i) {
+bool is_ignored_zero_sized_nchw_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -13351,10 +14091,13 @@ void CreateModel_zero_sized_nchw_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_relaxed_2(int i) {
+bool is_ignored_zero_sized_nchw_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -13456,10 +14199,13 @@ void CreateModel_zero_sized_nchw_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_quant8_2(int i) {
+bool is_ignored_zero_sized_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -13561,10 +14307,13 @@ void CreateModel_zero_sized_nchw_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_float16_2(int i) {
+bool is_ignored_zero_sized_nchw_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -13666,10 +14415,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -13773,10 +14525,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -13878,10 +14633,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -13983,10 +14741,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -14088,10 +14849,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -14195,10 +14959,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -14300,10 +15067,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv2d_v1_2
+namespace generated_tests::conv2d_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_float16_2(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -14405,8 +15175,9 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::conv2d_v1_2

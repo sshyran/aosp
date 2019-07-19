@@ -1,23 +1,33 @@
+// Generated from dequantize_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: dequantize_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace dequantize_relaxed {
-// Generated dequantize_relaxed test
-#include "generated/examples/dequantize_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/dequantize_relaxed.model.cpp"
-} // namespace dequantize_relaxed
+namespace generated_tests::dequantize_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, dequantize_relaxed) {
-    execute(dequantize_relaxed::CreateModel,
-            dequantize_relaxed::is_ignored,
-            dequantize_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::dequantize_relaxed
+
+namespace generated_tests::dequantize_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, dequantize_relaxed_dynamic_output_shape) {
-    execute(dequantize_relaxed::CreateModel_dynamic_output_shape,
-            dequantize_relaxed::is_ignored_dynamic_output_shape,
-            dequantize_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::dequantize_relaxed
 

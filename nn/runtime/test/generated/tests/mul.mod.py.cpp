@@ -1,24 +1,34 @@
+// Generated from mul.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: mul.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace mul {
-// Generated mul test
-#include "generated/examples/mul.example.cpp"
-// Generated model constructor
-#include "generated/models/mul.model.cpp"
-} // namespace mul
+namespace generated_tests::mul {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, mul) {
-    execute(mul::CreateModel,
-            mul::is_ignored,
-            mul::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, mul, mul::CreateModel)
+
+} // namespace generated_tests::mul
+TEST_AVAILABLE_SINCE(V1_0, mul, generated_tests::mul::CreateModel)
+
+namespace generated_tests::mul {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, mul_dynamic_output_shape) {
-    execute(mul::CreateModel_dynamic_output_shape,
-            mul::is_ignored_dynamic_output_shape,
-            mul::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::mul
 

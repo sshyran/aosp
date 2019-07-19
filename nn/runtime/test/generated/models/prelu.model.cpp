@@ -1,5 +1,10 @@
+// Generated from prelu.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: prelu.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::prelu {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 1, 3});
@@ -18,10 +23,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
@@ -43,10 +51,13 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_quant8(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {1, 1, 3}, 0.25f, 50);
@@ -67,10 +78,13 @@ void CreateModel_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8(int i) {
+bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_quant8_2(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {1, 1, 3}, 0.25f, 50);
@@ -91,10 +105,13 @@ void CreateModel_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_2(int i) {
+bool is_ignored_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_quant8_3(Model *model) {
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.25f, 128);
@@ -115,10 +132,13 @@ void CreateModel_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_3(int i) {
+bool is_ignored_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_quant8_4(Model *model) {
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.25f, 128);
@@ -139,10 +159,13 @@ void CreateModel_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_4(int i) {
+bool is_ignored_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_float16(Model *model) {
   OperandType type10(Type::TENSOR_FLOAT16, {1, 2, 2, 3});
@@ -162,10 +185,13 @@ void CreateModel_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16(int i) {
+bool is_ignored_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
@@ -183,10 +209,13 @@ void CreateModel_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_weight_as_input(int i) {
+bool is_ignored_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
@@ -206,10 +235,13 @@ void CreateModel_weight_as_input_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_weight_as_input_relaxed(int i) {
+bool is_ignored_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_weight_as_input_quant8(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {1, 1, 3}, 0.25f, 50);
@@ -228,10 +260,13 @@ void CreateModel_weight_as_input_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_weight_as_input_quant8(int i) {
+bool is_ignored_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_weight_as_input_quant8_2(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {1, 1, 3}, 0.25f, 50);
@@ -250,10 +285,13 @@ void CreateModel_weight_as_input_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_weight_as_input_quant8_2(int i) {
+bool is_ignored_weight_as_input_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_weight_as_input_quant8_3(Model *model) {
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.25f, 128);
@@ -272,10 +310,13 @@ void CreateModel_weight_as_input_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_weight_as_input_quant8_3(int i) {
+bool is_ignored_weight_as_input_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_weight_as_input_quant8_4(Model *model) {
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 3}, 0.25f, 128);
@@ -294,10 +335,13 @@ void CreateModel_weight_as_input_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_weight_as_input_quant8_4(int i) {
+bool is_ignored_weight_as_input_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_weight_as_input_float16(Model *model) {
   OperandType type10(Type::TENSOR_FLOAT16, {1, 2, 2, 3});
@@ -315,10 +359,13 @@ void CreateModel_weight_as_input_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_weight_as_input_float16(int i) {
+bool is_ignored_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
@@ -339,10 +386,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
@@ -365,10 +415,13 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_quant8(Model *model) {
   OperandType type12(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.5f, 120);
@@ -389,10 +442,13 @@ void CreateModel_dynamic_output_shape_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8(int i) {
+bool is_ignored_dynamic_output_shape_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_quant8_2(Model *model) {
   OperandType type13(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.25f, 120);
@@ -413,10 +469,13 @@ void CreateModel_dynamic_output_shape_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_2(int i) {
+bool is_ignored_dynamic_output_shape_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_quant8_3(Model *model) {
   OperandType type14(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.125f, 120);
@@ -437,10 +496,13 @@ void CreateModel_dynamic_output_shape_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_3(int i) {
+bool is_ignored_dynamic_output_shape_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_quant8_4(Model *model) {
   OperandType type15(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.1f, 120);
@@ -461,10 +523,13 @@ void CreateModel_dynamic_output_shape_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_4(int i) {
+bool is_ignored_dynamic_output_shape_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_float16(Model *model) {
   OperandType type10(Type::TENSOR_FLOAT16, {1, 2, 2, 3});
@@ -485,10 +550,13 @@ void CreateModel_dynamic_output_shape_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16(int i) {
+bool is_ignored_dynamic_output_shape_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_weight_as_input(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
@@ -507,10 +575,13 @@ void CreateModel_dynamic_output_shape_weight_as_input(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input(int i) {
+bool is_ignored_dynamic_output_shape_weight_as_input(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_weight_as_input_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 3});
@@ -531,10 +602,13 @@ void CreateModel_dynamic_output_shape_weight_as_input_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_weight_as_input_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_weight_as_input_quant8(Model *model) {
   OperandType type12(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.5f, 120);
@@ -553,10 +627,13 @@ void CreateModel_dynamic_output_shape_weight_as_input_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input_quant8(int i) {
+bool is_ignored_dynamic_output_shape_weight_as_input_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_weight_as_input_quant8_2(Model *model) {
   OperandType type13(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.25f, 120);
@@ -575,10 +652,13 @@ void CreateModel_dynamic_output_shape_weight_as_input_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input_quant8_2(int i) {
+bool is_ignored_dynamic_output_shape_weight_as_input_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_weight_as_input_quant8_3(Model *model) {
   OperandType type14(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.125f, 120);
@@ -597,10 +677,13 @@ void CreateModel_dynamic_output_shape_weight_as_input_quant8_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input_quant8_3(int i) {
+bool is_ignored_dynamic_output_shape_weight_as_input_quant8_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_weight_as_input_quant8_4(Model *model) {
   OperandType type15(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0, 0}, 0.1f, 120);
@@ -619,10 +702,13 @@ void CreateModel_dynamic_output_shape_weight_as_input_quant8_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input_quant8_4(int i) {
+bool is_ignored_dynamic_output_shape_weight_as_input_quant8_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::prelu
+namespace generated_tests::prelu {
 
 void CreateModel_dynamic_output_shape_weight_as_input_float16(Model *model) {
   OperandType type10(Type::TENSOR_FLOAT16, {1, 2, 2, 3});
@@ -641,8 +727,9 @@ void CreateModel_dynamic_output_shape_weight_as_input_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_weight_as_input_float16(int i) {
+bool is_ignored_dynamic_output_shape_weight_as_input_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::prelu

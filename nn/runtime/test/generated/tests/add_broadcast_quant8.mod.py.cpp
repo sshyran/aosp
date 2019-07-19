@@ -1,24 +1,34 @@
+// Generated from add_broadcast_quant8.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: add_broadcast_quant8.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace add_broadcast_quant8 {
-// Generated add_broadcast_quant8 test
-#include "generated/examples/add_broadcast_quant8.example.cpp"
-// Generated model constructor
-#include "generated/models/add_broadcast_quant8.model.cpp"
-} // namespace add_broadcast_quant8
+namespace generated_tests::add_broadcast_quant8 {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, add_broadcast_quant8) {
-    execute(add_broadcast_quant8::CreateModel,
-            add_broadcast_quant8::is_ignored,
-            add_broadcast_quant8::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, add_broadcast_quant8, add_broadcast_quant8::CreateModel)
+
+} // namespace generated_tests::add_broadcast_quant8
+TEST_AVAILABLE_SINCE(V1_0, add_broadcast_quant8, generated_tests::add_broadcast_quant8::CreateModel)
+
+namespace generated_tests::add_broadcast_quant8 {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, add_broadcast_quant8_dynamic_output_shape) {
-    execute(add_broadcast_quant8::CreateModel_dynamic_output_shape,
-            add_broadcast_quant8::is_ignored_dynamic_output_shape,
-            add_broadcast_quant8::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::add_broadcast_quant8
 
