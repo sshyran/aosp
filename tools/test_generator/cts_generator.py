@@ -270,12 +270,19 @@ TEST_F({test_case_name}, {test_name}) {{
     execute({namespace}::{create_model_name},
             {namespace}::{is_ignored_name},
             {namespace}::get_{examples_name}(){log_file});\n}}\n"""
-    if example.model.version is not None:
+    if example.model.version is not None and not example.expectFailure:
         testTemplate += """\
 TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::{create_model_name})\n"""
+
+    if example.expectFailure:
+        testCaseName = "GeneratedValidationTests"
+    elif example.model.hasDynamicOutputShape:
+        testCaseName = "DynamicOutputShapeTest"
+    else:
+        testCaseName = "GeneratedTests"
+
     print(testTemplate.format(
-        test_case_name="DynamicOutputShapeTest" if example.model.hasDynamicOutputShape \
-                       else "GeneratedTests",
+        test_case_name=testCaseName,
         test_name=str(example.testName),
         namespace=tg.FileNames.specName,
         create_model_name=str(example.model.createFunctionName),
