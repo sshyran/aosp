@@ -33,57 +33,64 @@
 #include <android/hidl/memory/1.0/IMemory.h>
 #include <hidlmemory/mapping.h>
 
-using ::android::sp;
-using ::android::hardware::hidl_array;
-using ::android::hardware::hidl_handle;
-using ::android::hardware::hidl_memory;
-using ::android::hardware::hidl_string;
-using ::android::hardware::hidl_vec;
-using ::android::hardware::Return;
-using ::android::hardware::Void;
-using ::android::hardware::neuralnetworks::V1_0::DataLocation;
-using ::android::hardware::neuralnetworks::V1_0::DeviceStatus;
+namespace android::nn::hal {
+
+using android::sp;
+using hardware::hidl_array;
+using hardware::hidl_death_recipient;
+using hardware::hidl_enum_range;
+using hardware::hidl_handle;
+using hardware::hidl_memory;
+using hardware::hidl_string;
+using hardware::hidl_vec;
+using hardware::Return;
+using hardware::Void;
+using hardware::neuralnetworks::V1_0::DataLocation;
+using hardware::neuralnetworks::V1_0::DeviceStatus;
+using hardware::neuralnetworks::V1_0::ErrorStatus;
+using hardware::neuralnetworks::V1_0::FusedActivationFunc;
+using hardware::neuralnetworks::V1_0::OperandLifeTime;
+using hardware::neuralnetworks::V1_0::PerformanceInfo;
+using hardware::neuralnetworks::V1_0::Request;
+using hardware::neuralnetworks::V1_0::RequestArgument;
+using hardware::neuralnetworks::V1_1::ExecutionPreference;
+using hardware::neuralnetworks::V1_2::Capabilities;
+using hardware::neuralnetworks::V1_2::Constant;
+using hardware::neuralnetworks::V1_2::DeviceType;
+using hardware::neuralnetworks::V1_2::Extension;
+using hardware::neuralnetworks::V1_2::FmqRequestDatum;
+using hardware::neuralnetworks::V1_2::FmqResultDatum;
+using hardware::neuralnetworks::V1_2::IBurstCallback;
+using hardware::neuralnetworks::V1_2::IBurstContext;
+using hardware::neuralnetworks::V1_2::IDevice;
+using hardware::neuralnetworks::V1_2::IExecutionCallback;
+using hardware::neuralnetworks::V1_2::IPreparedModel;
+using hardware::neuralnetworks::V1_2::IPreparedModelCallback;
+using hardware::neuralnetworks::V1_2::MeasureTiming;
+using hardware::neuralnetworks::V1_2::Model;
+using hardware::neuralnetworks::V1_2::Operand;
+using hardware::neuralnetworks::V1_2::OperandType;
+using hardware::neuralnetworks::V1_2::OperandTypeRange;
+using hardware::neuralnetworks::V1_2::Operation;
+using hardware::neuralnetworks::V1_2::OperationType;
+using hardware::neuralnetworks::V1_2::OperationTypeRange;
+using hardware::neuralnetworks::V1_2::OutputShape;
+using hardware::neuralnetworks::V1_2::SymmPerChannelQuantParams;
+using hardware::neuralnetworks::V1_2::Timing;
+using hidl::allocator::V1_0::IAllocator;
+using hidl::memory::V1_0::IMemory;
+
+namespace V1_0 = hardware::neuralnetworks::V1_0;
+namespace V1_1 = hardware::neuralnetworks::V1_1;
+namespace V1_2 = hardware::neuralnetworks::V1_2;
+
+}  // namespace android::nn::hal
+
+// TODO: remove after b/137663811 is addressed
+namespace android::nn {
+using namespace hal;
+}
 using ::android::hardware::neuralnetworks::V1_0::ErrorStatus;
-using ::android::hardware::neuralnetworks::V1_0::FusedActivationFunc;
-using ::android::hardware::neuralnetworks::V1_0::OperandLifeTime;
-using ::android::hardware::neuralnetworks::V1_0::PerformanceInfo;
-using ::android::hardware::neuralnetworks::V1_0::Request;
-using ::android::hardware::neuralnetworks::V1_0::RequestArgument;
 using ::android::hardware::neuralnetworks::V1_1::ExecutionPreference;
-using ::android::hardware::neuralnetworks::V1_2::Capabilities;
-using ::android::hardware::neuralnetworks::V1_2::Constant;
-using ::android::hardware::neuralnetworks::V1_2::DeviceType;
-using ::android::hardware::neuralnetworks::V1_2::Extension;
-using ::android::hardware::neuralnetworks::V1_2::FmqRequestDatum;
-using ::android::hardware::neuralnetworks::V1_2::FmqResultDatum;
-using ::android::hardware::neuralnetworks::V1_2::IBurstCallback;
-using ::android::hardware::neuralnetworks::V1_2::IBurstContext;
-using ::android::hardware::neuralnetworks::V1_2::IDevice;
-using ::android::hardware::neuralnetworks::V1_2::IExecutionCallback;
-using ::android::hardware::neuralnetworks::V1_2::IPreparedModel;
-using ::android::hardware::neuralnetworks::V1_2::IPreparedModelCallback;
-using ::android::hardware::neuralnetworks::V1_2::MeasureTiming;
-using ::android::hardware::neuralnetworks::V1_2::Model;
-using ::android::hardware::neuralnetworks::V1_2::Operand;
-using ::android::hardware::neuralnetworks::V1_2::OperandType;
-using ::android::hardware::neuralnetworks::V1_2::OperandTypeRange;
-using ::android::hardware::neuralnetworks::V1_2::Operation;
-using ::android::hardware::neuralnetworks::V1_2::OperationType;
-using ::android::hardware::neuralnetworks::V1_2::OperationTypeRange;
-using ::android::hardware::neuralnetworks::V1_2::OutputShape;
-using ::android::hardware::neuralnetworks::V1_2::SymmPerChannelQuantParams;
-using ::android::hardware::neuralnetworks::V1_2::Timing;
-using ::android::hidl::allocator::V1_0::IAllocator;
-using ::android::hidl::memory::V1_0::IMemory;
-
-namespace V1_0 = ::android::hardware::neuralnetworks::V1_0;
-namespace V1_1 = ::android::hardware::neuralnetworks::V1_1;
-namespace V1_2 = ::android::hardware::neuralnetworks::V1_2;
-
-namespace android {
-namespace nn {
-
-} // namespace nn
-} // namespace android
 
 #endif  // FRAMEWORKS_ML_COMMON_HAL_INTERFACES_H

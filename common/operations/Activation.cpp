@@ -18,6 +18,7 @@
 
 #include "ActivationFunctor.h"
 #include "CpuOperationUtils.h"
+#include "HalInterfaces.h"
 #include "OperationResolver.h"
 
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
@@ -27,6 +28,8 @@
 
 namespace android {
 namespace nn {
+
+using namespace hal;
 
 namespace activation {
 

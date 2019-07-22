@@ -18,13 +18,15 @@
 
 #include <gtest/gtest.h>
 
+#include "HalInterfaces.h"
 #include "ModelBuilder.h"
 #include "TestNeuralNetworksWrapper.h"
 #include "Utils.h"
 
 namespace compliance_test {
 
-using namespace ::android::nn;
+using namespace android::nn;
+using namespace hal;
 using HidlModel = V1_2::Model;
 using WrapperModel = test_wrapper::Model;
 using WrapperOperandType = test_wrapper::OperandType;

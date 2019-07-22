@@ -17,21 +17,13 @@
 #ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_HAL_OPERATION_H
 #define FRAMEWORKS_ML_COMMON_OPERATIONS_HAL_OPERATION_H
 
-namespace android {
-namespace hardware {
-namespace neuralnetworks {
-namespace V1_2 {
+namespace android::hardware::neuralnetworks::V1_2 {
 
 // Individual operation implementations should not depend on the HAL interface,
 // but we have some that do. We use a forward declaration instead of an explicit
 // blueprint dependency to hide this fact.
 struct Operation;
 
-}  // namespace V1_2
-}  // namespace neuralnetworks
-}  // namespace hardware
-}  // namespace android
-
-using ::android::hardware::neuralnetworks::V1_2::Operation;
+}  // namespace android::hardware::neuralnetworks::V1_2
 
 #endif  // FRAMEWORKS_ML_COMMON_OPERATIONS_HAL_OPERATION_H

@@ -17,6 +17,7 @@
 #ifndef FRAMEWORKS_ML_RUNTIME_TEST_FIBONACCI_EXTENSION_FIBONACCI_DRIVER_H
 #define FRAMEWORKS_ML_RUNTIME_TEST_FIBONACCI_EXTENSION_FIBONACCI_DRIVER_H
 
+#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "SampleDriver.h"
 
@@ -33,7 +34,7 @@ class FibonacciOperationResolver : public IOperationResolver {
         return &instance;
     }
 
-    const OperationRegistration* findOperation(OperationType operationType) const override;
+    const OperationRegistration* findOperation(hal::OperationType operationType) const override;
 
    private:
     FibonacciOperationResolver() {}
@@ -44,10 +45,10 @@ class FibonacciOperationResolver : public IOperationResolver {
 class FibonacciDriver : public SampleDriver {
    public:
     FibonacciDriver() : SampleDriver(kDriverName, FibonacciOperationResolver::get()) {}
-    Return<void> getSupportedExtensions(getSupportedExtensions_cb cb) override;
-    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
-    Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
-                                            getSupportedOperations_1_2_cb cb) override;
+    hal::Return<void> getSupportedExtensions(getSupportedExtensions_cb cb) override;
+    hal::Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
+    hal::Return<void> getSupportedOperations_1_2(const hal::V1_2::Model& model,
+                                                 getSupportedOperations_1_2_cb cb) override;
 
     static constexpr char kDriverName[] = "sample-driver-fibonacci-extension";
 };
