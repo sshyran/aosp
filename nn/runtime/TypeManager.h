@@ -47,25 +47,25 @@ class TypeManager {
     // Looks up information about the extension corresponding to the given prefix
     //
     // Returns false if no extension corresponds to the given prefix.
-    bool getExtensionInfo(uint16_t prefix, const Extension** extension) const;
+    bool getExtensionInfo(uint16_t prefix, const hal::Extension** extension) const;
 
     // Looks up information about an extension operand type
     //
     // Returns false if the extension or type is unknown.
-    bool getExtensionOperandTypeInfo(OperandType type,
-                                     const Extension::OperandTypeInformation** info) const;
+    bool getExtensionOperandTypeInfo(hal::OperandType type,
+                                     const hal::Extension::OperandTypeInformation** info) const;
 
     // Returns true if an operand type is a tensor type.
     //
     // Aborts if the type is an unknown extension type.
-    bool isTensorType(OperandType type) const;
+    bool isTensorType(hal::OperandType type) const;
 
     // Returns the amount of space needed to store a value of the dimensions and
     // type of this operand. For a tensor with unspecified rank or at least one
     // unspecified dimension, returns zero.
     //
     // Aborts if the type is an unknown extension type.
-    uint32_t getSizeOfData(const Operand& operand) const {
+    uint32_t getSizeOfData(const hal::Operand& operand) const {
         return getSizeOfData(operand.type, operand.dimensions);
     }
 
@@ -74,7 +74,7 @@ class TypeManager {
     // unspecified dimension, returns zero.
     //
     // Aborts if the type is an unknown extension type.
-    uint32_t getSizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) const;
+    uint32_t getSizeOfData(hal::OperandType type, const std::vector<uint32_t>& dimensions) const;
 
     // Returns true if extensions usage is allowed in current process.
     bool areExtensionsAllowed() const { return mExtensionsAllowed; }
@@ -84,7 +84,7 @@ class TypeManager {
     // Registers an extension.
     //
     // Returns true if the registration was successful.
-    bool forTest_registerExtension(const Extension& extension) {
+    bool forTest_registerExtension(const hal::Extension& extension) {
         return registerExtension(extension, "INTERNAL TEST");
     }
 
@@ -126,7 +126,7 @@ class TypeManager {
    private:
     TypeManager();
     void findAvailableExtensions();
-    bool registerExtension(Extension extension, const std::string& deviceName);
+    bool registerExtension(hal::Extension extension, const std::string& deviceName);
 
     // Returns the numeric "prefix" value corresponding to an extension.
     //
@@ -136,7 +136,7 @@ class TypeManager {
     const DeviceManager* mDeviceManager = DeviceManager::get();
 
     // Contains all registered extensions.
-    std::map<std::string, Extension> mExtensionNameToExtension;
+    std::map<std::string, hal::Extension> mExtensionNameToExtension;
 
     // Contains the name of the first discovered device that supports an
     // extension. Used for error reporting.
@@ -151,7 +151,7 @@ class TypeManager {
     std::map<std::string, uint16_t> mExtensionNameToPrefix;
     // Entries of mPrefixToExtension point into mExtensionNameToExtension.
     // prefix=0 corresponds to no extension and should never be looked up.
-    std::vector<Extension*> mPrefixToExtension = {nullptr};
+    std::vector<hal::Extension*> mPrefixToExtension = {nullptr};
 
     // True if Extensions can be used in current process.
     bool mExtensionsAllowed = false;

@@ -19,12 +19,13 @@
 #include "Memory.h"
 
 #include "ExecutionBurstController.h"
-#include "HalInterfaces.h"
 #include "MemoryUtils.h"
 #include "Utils.h"
 
 namespace android {
 namespace nn {
+
+using namespace hal;
 
 Memory::~Memory() {
     for (const auto [ptr, weakBurst] : mUsedBy) {

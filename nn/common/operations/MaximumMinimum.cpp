@@ -17,6 +17,7 @@
 #define LOG_TAG "Operations"
 
 #include "MaximumMinimum.h"
+#include "HalInterfaces.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
@@ -26,6 +27,8 @@ namespace nn {
 namespace maximum_minimum {
 
 namespace {
+
+using namespace hal;
 
 template <typename T>
 bool evalGeneric(const T* aData, const Shape& aShape, const T* bData, const Shape& bShape,

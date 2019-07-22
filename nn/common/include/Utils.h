@@ -160,25 +160,27 @@ class FalseyErrorStream {
 
 // Return a vector with one entry for each non extension OperandType, set to the
 // specified PerformanceInfo value.  The vector will be sorted by OperandType.
-hidl_vec<Capabilities::OperandPerformance> nonExtensionOperandPerformance(PerformanceInfo perf);
+hal::hidl_vec<hal::Capabilities::OperandPerformance> nonExtensionOperandPerformance(
+        hal::PerformanceInfo perf);
 
 // Update the vector entry corresponding to the specified OperandType with the
 // specified PerformanceInfo value.  The vector must already have an entry for
 // that OperandType, and must be sorted by OperandType.
-void update(hidl_vec<Capabilities::OperandPerformance>* operandPerformance, OperandType type,
-            PerformanceInfo perf);
+void update(hal::hidl_vec<hal::Capabilities::OperandPerformance>* operandPerformance,
+            hal::OperandType type, hal::PerformanceInfo perf);
 
 // Look for a vector entry corresponding to the specified OperandType.  If
 // found, return the associated PerformanceInfo.  If not, return a pessimistic
 // PerformanceInfo (FLT_MAX).  The vector must be sorted by OperandType.
-PerformanceInfo lookup(const hidl_vec<Capabilities::OperandPerformance>& operandPerformance,
-                       OperandType type);
+hal::PerformanceInfo lookup(
+        const hal::hidl_vec<hal::Capabilities::OperandPerformance>& operandPerformance,
+        hal::OperandType type);
 
 // Returns true if an operand type is an extension type.
-bool isExtensionOperandType(OperandType type);
+bool isExtensionOperandType(hal::OperandType type);
 
 // Returns true if an operation type is an extension type.
-bool isExtensionOperationType(OperationType type);
+bool isExtensionOperationType(hal::OperationType type);
 
 // Returns the amount of space needed to store a value of the specified
 // dimensions and type. For a tensor with unspecified rank or at least one
@@ -187,7 +189,8 @@ bool isExtensionOperationType(OperationType type);
 // Aborts if the specified type is an extension type.
 //
 // See also TypeManager::getSizeOfData(OperandType, const std::vector<uint32_t>&).
-uint32_t nonExtensionOperandSizeOfData(OperandType type, const std::vector<uint32_t>& dimensions);
+uint32_t nonExtensionOperandSizeOfData(hal::OperandType type,
+                                       const std::vector<uint32_t>& dimensions);
 
 // Returns the amount of space needed to store a value of the dimensions and
 // type of this operand. For a tensor with unspecified rank or at least one
@@ -196,7 +199,7 @@ uint32_t nonExtensionOperandSizeOfData(OperandType type, const std::vector<uint3
 // Aborts if the specified type is an extension type.
 //
 // See also TypeManager::getSizeOfData(const Operand&).
-inline uint32_t nonExtensionOperandSizeOfData(const Operand& operand) {
+inline uint32_t nonExtensionOperandSizeOfData(const hal::Operand& operand) {
     return nonExtensionOperandSizeOfData(operand.type, operand.dimensions);
 }
 
@@ -208,16 +211,16 @@ inline uint32_t nonExtensionOperandSizeOfData(const Operand& operand) {
 bool nonExtensionOperandTypeIsScalar(int type);
 
 // Returns the name of the operation type in ASCII.
-std::string getOperationName(OperationType opCode);
+std::string getOperationName(hal::OperationType opCode);
 
 // Returns the name of the operand type in ASCII.
-std::string getOperandTypeName(OperandType type);
+std::string getOperandTypeName(hal::OperandType type);
 
 // Whether an operand of tensor type has unspecified dimensions.
 //
 // Undefined behavior if the operand type is a scalar type.
 bool tensorHasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimCount);
-bool tensorHasUnspecifiedDimensions(const Operand& operand);
+bool tensorHasUnspecifiedDimensions(const hal::Operand& operand);
 bool tensorHasUnspecifiedDimensions(const ANeuralNetworksOperandType* type);
 
 // Returns the number of padding bytes needed to align data of the
@@ -230,9 +233,9 @@ bool tensorHasUnspecifiedDimensions(const ANeuralNetworksOperandType* type);
 uint32_t alignBytesNeeded(uint32_t index, size_t length);
 
 // Does a detailed LOG(INFO) of the model
-void logModelToInfo(const V1_0::Model& model);
-void logModelToInfo(const V1_1::Model& model);
-void logModelToInfo(const V1_2::Model& model);
+void logModelToInfo(const hal::V1_0::Model& model);
+void logModelToInfo(const hal::V1_1::Model& model);
+void logModelToInfo(const hal::V1_2::Model& model);
 
 inline std::string toString(uint32_t obj) {
     return std::to_string(obj);
@@ -265,17 +268,18 @@ inline bool validCode(uint32_t codeCount, uint32_t codeCountOEM, uint32_t code) 
 }
 
 bool validateOperandSymmPerChannelQuantParams(
-        const Operand& halOperand, const ANeuralNetworksSymmPerChannelQuantParams& channelQuant,
-        const char* tag);
+        const hal::Operand& halOperand,
+        const ANeuralNetworksSymmPerChannelQuantParams& channelQuant, const char* tag);
 
 // Validates an operand type.
 //
 // extensionOperandTypeInfo must be nullptr iff the type is not an extension type.
 //
 // If allowPartial is true, the dimensions may be underspecified.
-int validateOperandType(const ANeuralNetworksOperandType& type,
-                        const Extension::OperandTypeInformation* const extensionOperandTypeInfo,
-                        const char* tag, bool allowPartial);
+int validateOperandType(
+        const ANeuralNetworksOperandType& type,
+        const hal::Extension::OperandTypeInformation* const extensionOperandTypeInfo,
+        const char* tag, bool allowPartial);
 int validateOperandList(uint32_t count, const uint32_t* list, uint32_t operandCount,
                         const char* tag);
 
@@ -283,7 +287,7 @@ int validateOperandList(uint32_t count, const uint32_t* list, uint32_t operandCo
 // provided operand types in the given HAL version, otherwise returns ANEURALNETWORKS_BAD_DATA.
 int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                       const uint32_t* inputIndexes, uint32_t outputCount,
-                      const uint32_t* outputIndexes, const std::vector<Operand>& operands,
+                      const uint32_t* outputIndexes, const std::vector<hal::Operand>& operands,
                       HalVersion halVersion);
 
 inline size_t getSizeFromInts(int lower, int higher) {
@@ -292,25 +296,25 @@ inline size_t getSizeFromInts(int lower, int higher) {
 
 // Convert ANEURALNETWORKS_* result code to ErrorStatus.
 // Not guaranteed to be a 1-to-1 mapping.
-ErrorStatus convertResultCodeToErrorStatus(int resultCode);
+hal::ErrorStatus convertResultCodeToErrorStatus(int resultCode);
 
 // Convert ErrorStatus to ANEURALNETWORKS_* result code.
 // Not guaranteed to be a 1-to-1 mapping.
-int convertErrorStatusToResultCode(ErrorStatus status);
+int convertErrorStatusToResultCode(hal::ErrorStatus status);
 
 // Versioning
 
-bool compliantWithV1_0(const V1_0::Capabilities& capabilities);
-bool compliantWithV1_0(const V1_1::Capabilities& capabilities);
-bool compliantWithV1_0(const V1_2::Capabilities& capabilities);
-bool compliantWithV1_1(const V1_0::Capabilities& capabilities);
-bool compliantWithV1_1(const V1_1::Capabilities& capabilities);
-bool compliantWithV1_1(const V1_2::Capabilities& capabilities);
-bool compliantWithV1_2(const V1_0::Capabilities& capabilities);
-bool compliantWithV1_2(const V1_1::Capabilities& capabilities);
-bool compliantWithV1_2(const V1_2::Capabilities& capabilities);
+bool compliantWithV1_0(const hal::V1_0::Capabilities& capabilities);
+bool compliantWithV1_0(const hal::V1_1::Capabilities& capabilities);
+bool compliantWithV1_0(const hal::V1_2::Capabilities& capabilities);
+bool compliantWithV1_1(const hal::V1_0::Capabilities& capabilities);
+bool compliantWithV1_1(const hal::V1_1::Capabilities& capabilities);
+bool compliantWithV1_1(const hal::V1_2::Capabilities& capabilities);
+bool compliantWithV1_2(const hal::V1_0::Capabilities& capabilities);
+bool compliantWithV1_2(const hal::V1_1::Capabilities& capabilities);
+bool compliantWithV1_2(const hal::V1_2::Capabilities& capabilities);
 
-bool compliantWithV1_0(const V1_2::Operand& operand);
+bool compliantWithV1_0(const hal::V1_2::Operand& operand);
 
 // If noncompliantOperations != nullptr, then
 //     precondition: noncompliantOperations->empty()
@@ -318,34 +322,34 @@ bool compliantWithV1_0(const V1_2::Operand& operand);
 //                    operations; if the compliance check fails for some reason
 //                    other than a noncompliant operation,
 //                    *noncompliantOperations consists of the indices of all operations
-bool compliantWithV1_0(const V1_0::Model& model);
-bool compliantWithV1_0(const V1_1::Model& model);
-bool compliantWithV1_0(const V1_2::Model& model,
+bool compliantWithV1_0(const hal::V1_0::Model& model);
+bool compliantWithV1_0(const hal::V1_1::Model& model);
+bool compliantWithV1_0(const hal::V1_2::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
-bool compliantWithV1_1(const V1_0::Model& model);
-bool compliantWithV1_1(const V1_1::Model& model);
-bool compliantWithV1_1(const V1_2::Model& model,
+bool compliantWithV1_1(const hal::V1_0::Model& model);
+bool compliantWithV1_1(const hal::V1_1::Model& model);
+bool compliantWithV1_1(const hal::V1_2::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
 
-V1_0::Capabilities convertToV1_0(const V1_0::Capabilities& capabilities);
-V1_0::Capabilities convertToV1_0(const V1_1::Capabilities& capabilities);
-V1_0::Capabilities convertToV1_0(const V1_2::Capabilities& capabilities);
-V1_1::Capabilities convertToV1_1(const V1_0::Capabilities& capabilities);
-V1_1::Capabilities convertToV1_1(const V1_1::Capabilities& capabilities);
-V1_1::Capabilities convertToV1_1(const V1_2::Capabilities& capabilities);
-V1_2::Capabilities convertToV1_2(const V1_0::Capabilities& capabilities);
-V1_2::Capabilities convertToV1_2(const V1_1::Capabilities& capabilities);
-V1_2::Capabilities convertToV1_2(const V1_2::Capabilities& capabilities);
+hal::V1_0::Capabilities convertToV1_0(const hal::V1_0::Capabilities& capabilities);
+hal::V1_0::Capabilities convertToV1_0(const hal::V1_1::Capabilities& capabilities);
+hal::V1_0::Capabilities convertToV1_0(const hal::V1_2::Capabilities& capabilities);
+hal::V1_1::Capabilities convertToV1_1(const hal::V1_0::Capabilities& capabilities);
+hal::V1_1::Capabilities convertToV1_1(const hal::V1_1::Capabilities& capabilities);
+hal::V1_1::Capabilities convertToV1_1(const hal::V1_2::Capabilities& capabilities);
+hal::V1_2::Capabilities convertToV1_2(const hal::V1_0::Capabilities& capabilities);
+hal::V1_2::Capabilities convertToV1_2(const hal::V1_1::Capabilities& capabilities);
+hal::V1_2::Capabilities convertToV1_2(const hal::V1_2::Capabilities& capabilities);
 
-V1_0::Model convertToV1_0(const V1_0::Model& model);
-V1_0::Model convertToV1_0(const V1_1::Model& model);
-V1_0::Model convertToV1_0(const V1_2::Model& model);
-V1_1::Model convertToV1_1(const V1_0::Model& model);
-V1_1::Model convertToV1_1(const V1_1::Model& model);
-V1_1::Model convertToV1_1(const V1_2::Model& model);
-V1_2::Model convertToV1_2(const V1_0::Model& model);
-V1_2::Model convertToV1_2(const V1_1::Model& model);
-V1_2::Model convertToV1_2(const V1_2::Model& model);
+hal::V1_0::Model convertToV1_0(const hal::V1_0::Model& model);
+hal::V1_0::Model convertToV1_0(const hal::V1_1::Model& model);
+hal::V1_0::Model convertToV1_0(const hal::V1_2::Model& model);
+hal::V1_1::Model convertToV1_1(const hal::V1_0::Model& model);
+hal::V1_1::Model convertToV1_1(const hal::V1_1::Model& model);
+hal::V1_1::Model convertToV1_1(const hal::V1_2::Model& model);
+hal::V1_2::Model convertToV1_2(const hal::V1_0::Model& model);
+hal::V1_2::Model convertToV1_2(const hal::V1_1::Model& model);
+hal::V1_2::Model convertToV1_2(const hal::V1_2::Model& model);
 
 // The IModelSlicer abstract class provides methods to create from an original
 // model a "slice" of that model consisting of the subset of operations that is
@@ -381,24 +385,24 @@ V1_2::Model convertToV1_2(const V1_2::Model& model);
 //
 class IModelSlicer {
    public:
-    virtual std::optional<std::pair<V1_0::Model, std::function<uint32_t(uint32_t)>>>
+    virtual std::optional<std::pair<hal::V1_0::Model, std::function<uint32_t(uint32_t)>>>
     getSliceV1_0() = 0;
-    virtual std::optional<std::pair<V1_1::Model, std::function<uint32_t(uint32_t)>>>
+    virtual std::optional<std::pair<hal::V1_1::Model, std::function<uint32_t(uint32_t)>>>
     getSliceV1_1() = 0;
 
     virtual ~IModelSlicer() = default;
 };
 
-V1_0::OperationType uncheckedConvertToV1_0(V1_2::OperationType type);
-V1_1::OperationType uncheckedConvertToV1_1(V1_2::OperationType type);
+hal::V1_0::OperationType uncheckedConvertToV1_0(hal::V1_2::OperationType type);
+hal::V1_1::OperationType uncheckedConvertToV1_1(hal::V1_2::OperationType type);
 
-V1_0::Operand convertToV1_0(const V1_2::Operand& operand);
+hal::V1_0::Operand convertToV1_0(const hal::V1_2::Operand& operand);
 
-V1_2::Operand convertToV1_2(const V1_0::Operand& operand);
-V1_2::Operand convertToV1_2(const V1_2::Operand& operand);
+hal::V1_2::Operand convertToV1_2(const hal::V1_0::Operand& operand);
+hal::V1_2::Operand convertToV1_2(const hal::V1_2::Operand& operand);
 
-hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_0::Operand>& operands);
-hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_2::Operand>& operands);
+hal::hidl_vec<hal::V1_2::Operand> convertToV1_2(const hal::hidl_vec<hal::V1_0::Operand>& operands);
+hal::hidl_vec<hal::V1_2::Operand> convertToV1_2(const hal::hidl_vec<hal::V1_2::Operand>& operands);
 
 #ifdef NN_DEBUGGABLE
 uint32_t getProp(const char* str, uint32_t defaultValue = 0);

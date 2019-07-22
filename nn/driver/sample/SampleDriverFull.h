@@ -17,6 +17,7 @@
 #ifndef FRAMEWORKS_ML_DRIVER_SAMPLE_SAMPLE_DRIVER_FULL_H
 #define FRAMEWORKS_ML_DRIVER_SAMPLE_SAMPLE_DRIVER_FULL_H
 
+#include "HalInterfaces.h"
 #include "SampleDriver.h"
 
 namespace android {
@@ -25,13 +26,14 @@ namespace sample_driver {
 
 class SampleDriverFull : public SampleDriver {
    public:
-    SampleDriverFull(const char* name, PerformanceInfo perf) : SampleDriver(name), mPerf(perf) {}
-    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
-    Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
-                                            getSupportedOperations_1_2_cb cb) override;
+    SampleDriverFull(const char* name, hal::PerformanceInfo perf)
+        : SampleDriver(name), mPerf(perf) {}
+    hal::Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
+    hal::Return<void> getSupportedOperations_1_2(const hal::V1_2::Model& model,
+                                                 getSupportedOperations_1_2_cb cb) override;
 
    private:
-    PerformanceInfo mPerf;
+    hal::PerformanceInfo mPerf;
 };
 
 }  // namespace sample_driver
