@@ -86,11 +86,4 @@ namespace V1_2 = hardware::neuralnetworks::V1_2;
 
 }  // namespace android::nn::hal
 
-// TODO: remove after b/137663811 is addressed
-namespace android::nn {
-using namespace hal;
-}
-using ::android::hardware::neuralnetworks::V1_0::ErrorStatus;
-using ::android::hardware::neuralnetworks::V1_1::ExecutionPreference;
-
 #endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_HAL_INTERFACES_H
