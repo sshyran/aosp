@@ -33,7 +33,7 @@ namespace sample_driver {
 using namespace hal;
 
 class SampleDriverQuant : public SampleDriver {
-public:
+   public:
     SampleDriverQuant() : SampleDriver("sample-quant") {}
     Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
     Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
@@ -74,12 +74,12 @@ Return<void> SampleDriverQuant::getSupportedOperations_1_2(const V1_2::Model& mo
     return Void();
 }
 
-} // namespace sample_driver
-} // namespace nn
-} // namespace android
+}  // namespace sample_driver
+}  // namespace nn
+}  // namespace android
 
-using android::nn::sample_driver::SampleDriverQuant;
 using android::sp;
+using android::nn::sample_driver::SampleDriverQuant;
 
 int main() {
     sp<SampleDriverQuant> driver(new SampleDriverQuant());

@@ -199,7 +199,7 @@ void DriverDevice::getSupportedOperations(const MetaModel& metaModel,
         }
 
         uint32_t accumulator = baseAccumulator;
-        const Operation &operation = hidlModel.operations[operationIndex];
+        const Operation& operation = hidlModel.operations[operationIndex];
         accumulator ^= static_cast<uint32_t>(operation.type);
         auto accumulateOperands = [&hidlModel, &accumulator](const hidl_vec<uint32_t>& operands) {
             for (uint32_t operandIndex : operands) {

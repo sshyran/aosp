@@ -161,5 +161,5 @@ uint32_t MemoryTracker::add(const Memory* memory) {
     return idx;
 }
 
-} // namespace nn
-} // namespace android
+}  // namespace nn
+}  // namespace android
