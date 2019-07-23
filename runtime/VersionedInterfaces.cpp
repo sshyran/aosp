@@ -76,7 +76,8 @@ class DeathHandler : public hidl_death_recipient {
                 [this, callback] { unregisterCallback(callback); });
     }
 
-    private : void registerCallback(const sp<ICallback>& callback) {
+   private:
+    void registerCallback(const sp<ICallback>& callback) {
         std::lock_guard<std::mutex> hold(mMutex);
         mCallbacks.push_back(callback);
     }

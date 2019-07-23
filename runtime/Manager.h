@@ -98,11 +98,7 @@ class DeviceManager {
     // 1 - Do graph partitioning; but fall back to non-partitioned
     //     execution if there is a partitioning failure.
     // 2 - Do graph partitioning, and rely on it; there is no fallback.
-    enum {
-        kPartitioningNo              = 0,
-        kPartitioningWithFallback    = 1,
-        kPartitioningWithoutFallback = 2
-    };
+    enum { kPartitioningNo = 0, kPartitioningWithFallback = 1, kPartitioningWithoutFallback = 2 };
     uint32_t getPartitioning() const { return mPartitioning; }
     static bool partitioningAllowsFallback(uint32_t partitioning) {
         return partitioning == kPartitioningWithFallback;
@@ -180,7 +176,7 @@ class DeviceManager {
     bool mStrictSlicing = false;
 };
 
-} // namespace nn
-} // namespace android
+}  // namespace nn
+}  // namespace android
 
 #endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H

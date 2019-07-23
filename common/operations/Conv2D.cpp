@@ -120,49 +120,49 @@ struct Conv2dParam {
     }
 };
 
-#define ANDROID_NN_CONV_PARAMETERS(Type)                                        \
-    uint32_t height       = getSizeOfDimension(inputShape, 1);                  \
-    uint32_t width        = getSizeOfDimension(inputShape, 2);                  \
-    uint32_t filterHeight = getSizeOfDimension(filterShape, 1);                 \
-    uint32_t filterWidth  = getSizeOfDimension(filterShape, 2);                 \
-    uint32_t outHeight    = getSizeOfDimension(outputShape, 1);                 \
-    uint32_t outWidth     = getSizeOfDimension(outputShape, 2);                 \
-    uint32_t inDepth      = getSizeOfDimension(inputShape, 3);                  \
-                                                                                \
-    uint32_t paddingHeight = (uint32_t)padding_top;                             \
-    uint32_t paddingWidth = (uint32_t)padding_left;                             \
-                                                                                \
-    tflite::Dims<4> im2colDim;                                                  \
-    im2colDim.sizes[3] = (int)getSizeOfDimension(outputShape, 0);               \
-    im2colDim.sizes[2] = (int)getSizeOfDimension(outputShape, 1);               \
-    im2colDim.sizes[1] = (int)getSizeOfDimension(outputShape, 2);               \
-    im2colDim.sizes[0] = (int)inDepth * filterHeight * filterWidth;             \
-                                                                                \
-    im2colDim.strides[0] = 1;                                                   \
-    for (int i=1; i<4; i++) {                                                   \
-        im2colDim.strides[i] = im2colDim.strides[i-1] * im2colDim.sizes[i-1];   \
-    }                                                                           \
-                                                                                \
-    Type* im2colData = nullptr;                                                 \
-    uint64_t im2colByteSize = sizeof(Type);                                     \
-    std::unique_ptr<Type[]> im2colGuard;                                        \
-    for (int i=0; i<4; i++) {                                                   \
-        im2colByteSize *= im2colDim.sizes[i];                                   \
-    }                                                                           \
-    /* http://b/77982879, tflite::optimized_ops::Conv uses int for offsets */   \
-    if (im2colByteSize >= 0x7fffffff)  {                                        \
-        LOG(ERROR) << "Conv size is too large, not enough memory";              \
-        return false;                                                           \
-    }                                                                           \
-    if (im2colByteSize <= kStaticBufferSize) {                                  \
-        im2colData = reinterpret_cast<Type *>(static_scratch_buffer);           \
-    } else {                                                                    \
-        im2colData = new (std::nothrow) Type[im2colByteSize / sizeof(Type)];    \
-        if (im2colData == nullptr) {                                            \
-            LOG(ERROR) << "Conv size is too large, not enough memory";          \
-            return false;                                                       \
-        }                                                                       \
-        im2colGuard.reset(im2colData);                                          \
+#define ANDROID_NN_CONV_PARAMETERS(Type)                                          \
+    uint32_t height = getSizeOfDimension(inputShape, 1);                          \
+    uint32_t width = getSizeOfDimension(inputShape, 2);                           \
+    uint32_t filterHeight = getSizeOfDimension(filterShape, 1);                   \
+    uint32_t filterWidth = getSizeOfDimension(filterShape, 2);                    \
+    uint32_t outHeight = getSizeOfDimension(outputShape, 1);                      \
+    uint32_t outWidth = getSizeOfDimension(outputShape, 2);                       \
+    uint32_t inDepth = getSizeOfDimension(inputShape, 3);                         \
+                                                                                  \
+    uint32_t paddingHeight = (uint32_t)padding_top;                               \
+    uint32_t paddingWidth = (uint32_t)padding_left;                               \
+                                                                                  \
+    tflite::Dims<4> im2colDim;                                                    \
+    im2colDim.sizes[3] = (int)getSizeOfDimension(outputShape, 0);                 \
+    im2colDim.sizes[2] = (int)getSizeOfDimension(outputShape, 1);                 \
+    im2colDim.sizes[1] = (int)getSizeOfDimension(outputShape, 2);                 \
+    im2colDim.sizes[0] = (int)inDepth * filterHeight * filterWidth;               \
+                                                                                  \
+    im2colDim.strides[0] = 1;                                                     \
+    for (int i = 1; i < 4; i++) {                                                 \
+        im2colDim.strides[i] = im2colDim.strides[i - 1] * im2colDim.sizes[i - 1]; \
+    }                                                                             \
+                                                                                  \
+    Type* im2colData = nullptr;                                                   \
+    uint64_t im2colByteSize = sizeof(Type);                                       \
+    std::unique_ptr<Type[]> im2colGuard;                                          \
+    for (int i = 0; i < 4; i++) {                                                 \
+        im2colByteSize *= im2colDim.sizes[i];                                     \
+    }                                                                             \
+    /* http://b/77982879, tflite::optimized_ops::Conv uses int for offsets */     \
+    if (im2colByteSize >= 0x7fffffff) {                                           \
+        LOG(ERROR) << "Conv size is too large, not enough memory";                \
+        return false;                                                             \
+    }                                                                             \
+    if (im2colByteSize <= kStaticBufferSize) {                                    \
+        im2colData = reinterpret_cast<Type*>(static_scratch_buffer);              \
+    } else {                                                                      \
+        im2colData = new (std::nothrow) Type[im2colByteSize / sizeof(Type)];      \
+        if (im2colData == nullptr) {                                              \
+            LOG(ERROR) << "Conv size is too large, not enough memory";            \
+            return false;                                                         \
+        }                                                                         \
+        im2colGuard.reset(im2colData);                                            \
     }
 
 bool convNhwc(const float* inputData, const Shape& inputShape, const float* filterData,
