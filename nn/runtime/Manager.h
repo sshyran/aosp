@@ -53,7 +53,7 @@ class PreparedModel {
     // "memories" for inputs and outputs specified via pointers, and the data location for
     // "inputs" and "outputs" may get updated.
     virtual int execute(const std::shared_ptr<ExecutionBurstController>& burstController,
-                        MeasureTiming measure, std::vector<ModelArgumentInfo>* inputs,
+                        hal::MeasureTiming measure, std::vector<ModelArgumentInfo>* inputs,
                         std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
                         sp<ExecutionCallback>* synchronizationCallback) const = 0;
 

@@ -25,6 +25,7 @@
 #include <android-base/macros.h>
 #include <ui/GraphicBuffer.h>
 #include <algorithm>
+#include <memory>
 #include <optional>
 #include <vector>
 
@@ -150,7 +151,7 @@ class CpuExecutor {
     }
 
    private:
-    bool initializeRunTimeInfo(const Request& request,
+    bool initializeRunTimeInfo(const hal::Request& request,
                                const std::vector<RunTimePoolInfo>& modelPoolInfos,
                                const std::vector<RunTimePoolInfo>& requestPoolInfos);
     // Runs one operation of the graph.
