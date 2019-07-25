@@ -65,6 +65,66 @@ return examples;
 } // namespace generated_tests::rsqrt
 namespace generated_tests::rsqrt {
 
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f, 1.7f, 1.8f, 1.9f, 2.0f, 2.1f, 2.2f, 2.3f, 2.4f, 2.5f, 2.6f, 2.7f, 2.8f, 2.9f, 3.0f, 3.1f, 3.2f, 3.3f, 3.4f, 3.5f, 3.6f, 3.7f, 3.8f, 3.9f, 4.0f, 4.1f, 4.2f, 4.3f, 4.4f, 4.5f, 4.6f, 4.7f, 4.8f, 4.9f, 5.0f, 5.1f, 5.2f, 5.3f, 5.4f, 5.5f, 5.6f, 5.7f, 5.8f, 5.9f, 6.0f, 6.1f, 6.2f, 6.3f, 6.4f, 6.5f, 6.6f, 6.7f, 6.8f, 6.9f, 7.0f, 7.1f, 7.2f, 7.3f, 7.4f, 7.5f, 7.6f, 7.7f, 7.8f, 7.9f, 8.0f, 8.1f, 8.2f, 8.3f, 8.4f, 8.5f, 8.6f, 8.7f, 8.8f, 8.9f, 9.0f, 9.1f, 9.2f, 9.3f, 9.4f, 9.5f, 9.6f, 9.7f, 9.8f, 9.9f, 10.0f, 10.1f, 10.2f, 10.3f, 10.4f, 10.5f, 10.6f, 10.7f, 10.8f, 10.9f, 11.0f, 11.1f, 11.2f, 11.3f, 11.4f, 11.5f, 11.6f, 11.7f, 11.8f, 11.9f, 12.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {3.162277660168379f, 2.23606797749979f, 1.8257418583505538f, 1.5811388300841895f, 1.414213562373095f, 1.2909944487358056f, 1.1952286093343936f, 1.118033988749895f, 1.0540925533894598f, 1.0f, 0.9534625892455922f, 0.9128709291752769f, 0.8770580193070292f, 0.8451542547285166f, 0.8164965809277261f, 0.7905694150420948f, 0.7669649888473704f, 0.7453559924999299f, 0.7254762501100117f, 0.7071067811865475f, 0.6900655593423541f, 0.674199862463242f, 0.6593804733957871f, 0.6454972243679028f, 0.6324555320336759f, 0.6201736729460422f, 0.6085806194501845f, 0.5976143046671968f, 0.5872202195147035f, 0.5773502691896258f, 0.5679618342470648f, 0.5590169943749475f, 0.5504818825631803f, 0.5423261445466404f, 0.5345224838248488f, 0.5270462766947299f, 0.5198752449100363f, 0.5129891760425771f, 0.5063696835418333f, 0.5f, 0.49386479832479485f, 0.48795003647426655f, 0.48224282217041214f, 0.4767312946227961f, 0.47140452079103173f, 0.4662524041201569f, 0.46126560401444255f, 0.45643546458763845f, 0.45175395145262565f, 0.4472135954999579f, 0.4428074427700477f, 0.4385290096535146f, 0.4343722427630694f, 0.4303314829119352f, 0.42640143271122083f, 0.4225771273642583f, 0.4188539082916955f, 0.41522739926869984f, 0.41169348479630913f, 0.4082482904638631f, 0.404888165089458f, 0.40160966445124946f, 0.3984095364447979f, 0.3952847075210474f, 0.3922322702763681f, 0.3892494720807615f, 0.3863337046431279f, 0.3834824944236852f, 0.3806934938134405f, 0.3779644730092272f, 0.37529331252040077f, 0.37267799624996495f, 0.3701166050988026f, 0.3676073110469039f, 0.3651483716701107f, 0.36273812505500586f, 0.3603749850782236f, 0.35805743701971643f, 0.35578403348241f, 0.35355339059327373f, 0.35136418446315326f, 0.34921514788478913f, 0.34710506725031165f, 0.34503277967117707f, 0.34299717028501764f, 0.34099716973523675f, 0.33903175181040524f, 0.337099931231621f, 0.33520076157699547f, 0.3333333333333333f, 0.33149677206589795f, 0.32969023669789355f, 0.32791291789197646f, 0.3261640365267211f, 0.3244428422615251f, 0.3227486121839514f, 0.3210806495339678f, 0.31943828249996997f, 0.3178208630818641f, 0.31622776601683794f, 0.3146583877637763f, 0.31311214554257477f, 0.3115884764248779f, 0.3100868364730211f, 0.3086066999241838f, 0.3071475584169756f, 0.30570892025787155f, 0.30429030972509225f, 0.3028912664076913f, 0.30151134457776363f, 0.3001501125938321f, 0.2988071523335984f, 0.2974820586543648f, 0.29617443887954614f, 0.29488391230979427f, 0.29361010975735174f, 0.2923526731023431f, 0.291111254869791f, 0.28988551782622424f, 0.2886751345948129f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_dynamic_output_shape;
+};
+
+} // namespace generated_tests::rsqrt
+namespace generated_tests::rsqrt {
+
 std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed() {
 static std::vector<::test_helper::MixedTypedExample> examples_relaxed = {
 // Begin of an example
@@ -120,6 +180,66 @@ static std::vector<::test_helper::MixedTypedExample> examples_relaxed = {
 }, // End of an example
 };
 return examples_relaxed;
+};
+
+} // namespace generated_tests::rsqrt
+namespace generated_tests::rsqrt {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dynamic_output_shape = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f, 1.7f, 1.8f, 1.9f, 2.0f, 2.1f, 2.2f, 2.3f, 2.4f, 2.5f, 2.6f, 2.7f, 2.8f, 2.9f, 3.0f, 3.1f, 3.2f, 3.3f, 3.4f, 3.5f, 3.6f, 3.7f, 3.8f, 3.9f, 4.0f, 4.1f, 4.2f, 4.3f, 4.4f, 4.5f, 4.6f, 4.7f, 4.8f, 4.9f, 5.0f, 5.1f, 5.2f, 5.3f, 5.4f, 5.5f, 5.6f, 5.7f, 5.8f, 5.9f, 6.0f, 6.1f, 6.2f, 6.3f, 6.4f, 6.5f, 6.6f, 6.7f, 6.8f, 6.9f, 7.0f, 7.1f, 7.2f, 7.3f, 7.4f, 7.5f, 7.6f, 7.7f, 7.8f, 7.9f, 8.0f, 8.1f, 8.2f, 8.3f, 8.4f, 8.5f, 8.6f, 8.7f, 8.8f, 8.9f, 9.0f, 9.1f, 9.2f, 9.3f, 9.4f, 9.5f, 9.6f, 9.7f, 9.8f, 9.9f, 10.0f, 10.1f, 10.2f, 10.3f, 10.4f, 10.5f, 10.6f, 10.7f, 10.8f, 10.9f, 11.0f, 11.1f, 11.2f, 11.3f, 11.4f, 11.5f, 11.6f, 11.7f, 11.8f, 11.9f, 12.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {3.162277660168379f, 2.23606797749979f, 1.8257418583505538f, 1.5811388300841895f, 1.414213562373095f, 1.2909944487358056f, 1.1952286093343936f, 1.118033988749895f, 1.0540925533894598f, 1.0f, 0.9534625892455922f, 0.9128709291752769f, 0.8770580193070292f, 0.8451542547285166f, 0.8164965809277261f, 0.7905694150420948f, 0.7669649888473704f, 0.7453559924999299f, 0.7254762501100117f, 0.7071067811865475f, 0.6900655593423541f, 0.674199862463242f, 0.6593804733957871f, 0.6454972243679028f, 0.6324555320336759f, 0.6201736729460422f, 0.6085806194501845f, 0.5976143046671968f, 0.5872202195147035f, 0.5773502691896258f, 0.5679618342470648f, 0.5590169943749475f, 0.5504818825631803f, 0.5423261445466404f, 0.5345224838248488f, 0.5270462766947299f, 0.5198752449100363f, 0.5129891760425771f, 0.5063696835418333f, 0.5f, 0.49386479832479485f, 0.48795003647426655f, 0.48224282217041214f, 0.4767312946227961f, 0.47140452079103173f, 0.4662524041201569f, 0.46126560401444255f, 0.45643546458763845f, 0.45175395145262565f, 0.4472135954999579f, 0.4428074427700477f, 0.4385290096535146f, 0.4343722427630694f, 0.4303314829119352f, 0.42640143271122083f, 0.4225771273642583f, 0.4188539082916955f, 0.41522739926869984f, 0.41169348479630913f, 0.4082482904638631f, 0.404888165089458f, 0.40160966445124946f, 0.3984095364447979f, 0.3952847075210474f, 0.3922322702763681f, 0.3892494720807615f, 0.3863337046431279f, 0.3834824944236852f, 0.3806934938134405f, 0.3779644730092272f, 0.37529331252040077f, 0.37267799624996495f, 0.3701166050988026f, 0.3676073110469039f, 0.3651483716701107f, 0.36273812505500586f, 0.3603749850782236f, 0.35805743701971643f, 0.35578403348241f, 0.35355339059327373f, 0.35136418446315326f, 0.34921514788478913f, 0.34710506725031165f, 0.34503277967117707f, 0.34299717028501764f, 0.34099716973523675f, 0.33903175181040524f, 0.337099931231621f, 0.33520076157699547f, 0.3333333333333333f, 0.33149677206589795f, 0.32969023669789355f, 0.32791291789197646f, 0.3261640365267211f, 0.3244428422615251f, 0.3227486121839514f, 0.3210806495339678f, 0.31943828249996997f, 0.3178208630818641f, 0.31622776601683794f, 0.3146583877637763f, 0.31311214554257477f, 0.3115884764248779f, 0.3100868364730211f, 0.3086066999241838f, 0.3071475584169756f, 0.30570892025787155f, 0.30429030972509225f, 0.3028912664076913f, 0.30151134457776363f, 0.3001501125938321f, 0.2988071523335984f, 0.2974820586543648f, 0.29617443887954614f, 0.29488391230979427f, 0.29361010975735174f, 0.2923526731023431f, 0.291111254869791f, 0.28988551782622424f, 0.2886751345948129f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_relaxed_dynamic_output_shape;
 };
 
 } // namespace generated_tests::rsqrt
@@ -185,128 +305,8 @@ return examples_float16;
 } // namespace generated_tests::rsqrt
 namespace generated_tests::rsqrt {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f, 1.7f, 1.8f, 1.9f, 2.0f, 2.1f, 2.2f, 2.3f, 2.4f, 2.5f, 2.6f, 2.7f, 2.8f, 2.9f, 3.0f, 3.1f, 3.2f, 3.3f, 3.4f, 3.5f, 3.6f, 3.7f, 3.8f, 3.9f, 4.0f, 4.1f, 4.2f, 4.3f, 4.4f, 4.5f, 4.6f, 4.7f, 4.8f, 4.9f, 5.0f, 5.1f, 5.2f, 5.3f, 5.4f, 5.5f, 5.6f, 5.7f, 5.8f, 5.9f, 6.0f, 6.1f, 6.2f, 6.3f, 6.4f, 6.5f, 6.6f, 6.7f, 6.8f, 6.9f, 7.0f, 7.1f, 7.2f, 7.3f, 7.4f, 7.5f, 7.6f, 7.7f, 7.8f, 7.9f, 8.0f, 8.1f, 8.2f, 8.3f, 8.4f, 8.5f, 8.6f, 8.7f, 8.8f, 8.9f, 9.0f, 9.1f, 9.2f, 9.3f, 9.4f, 9.5f, 9.6f, 9.7f, 9.8f, 9.9f, 10.0f, 10.1f, 10.2f, 10.3f, 10.4f, 10.5f, 10.6f, 10.7f, 10.8f, 10.9f, 11.0f, 11.1f, 11.2f, 11.3f, 11.4f, 11.5f, 11.6f, 11.7f, 11.8f, 11.9f, 12.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {3.162277660168379f, 2.23606797749979f, 1.8257418583505538f, 1.5811388300841895f, 1.414213562373095f, 1.2909944487358056f, 1.1952286093343936f, 1.118033988749895f, 1.0540925533894598f, 1.0f, 0.9534625892455922f, 0.9128709291752769f, 0.8770580193070292f, 0.8451542547285166f, 0.8164965809277261f, 0.7905694150420948f, 0.7669649888473704f, 0.7453559924999299f, 0.7254762501100117f, 0.7071067811865475f, 0.6900655593423541f, 0.674199862463242f, 0.6593804733957871f, 0.6454972243679028f, 0.6324555320336759f, 0.6201736729460422f, 0.6085806194501845f, 0.5976143046671968f, 0.5872202195147035f, 0.5773502691896258f, 0.5679618342470648f, 0.5590169943749475f, 0.5504818825631803f, 0.5423261445466404f, 0.5345224838248488f, 0.5270462766947299f, 0.5198752449100363f, 0.5129891760425771f, 0.5063696835418333f, 0.5f, 0.49386479832479485f, 0.48795003647426655f, 0.48224282217041214f, 0.4767312946227961f, 0.47140452079103173f, 0.4662524041201569f, 0.46126560401444255f, 0.45643546458763845f, 0.45175395145262565f, 0.4472135954999579f, 0.4428074427700477f, 0.4385290096535146f, 0.4343722427630694f, 0.4303314829119352f, 0.42640143271122083f, 0.4225771273642583f, 0.4188539082916955f, 0.41522739926869984f, 0.41169348479630913f, 0.4082482904638631f, 0.404888165089458f, 0.40160966445124946f, 0.3984095364447979f, 0.3952847075210474f, 0.3922322702763681f, 0.3892494720807615f, 0.3863337046431279f, 0.3834824944236852f, 0.3806934938134405f, 0.3779644730092272f, 0.37529331252040077f, 0.37267799624996495f, 0.3701166050988026f, 0.3676073110469039f, 0.3651483716701107f, 0.36273812505500586f, 0.3603749850782236f, 0.35805743701971643f, 0.35578403348241f, 0.35355339059327373f, 0.35136418446315326f, 0.34921514788478913f, 0.34710506725031165f, 0.34503277967117707f, 0.34299717028501764f, 0.34099716973523675f, 0.33903175181040524f, 0.337099931231621f, 0.33520076157699547f, 0.3333333333333333f, 0.33149677206589795f, 0.32969023669789355f, 0.32791291789197646f, 0.3261640365267211f, 0.3244428422615251f, 0.3227486121839514f, 0.3210806495339678f, 0.31943828249996997f, 0.3178208630818641f, 0.31622776601683794f, 0.3146583877637763f, 0.31311214554257477f, 0.3115884764248779f, 0.3100868364730211f, 0.3086066999241838f, 0.3071475584169756f, 0.30570892025787155f, 0.30429030972509225f, 0.3028912664076913f, 0.30151134457776363f, 0.3001501125938321f, 0.2988071523335984f, 0.2974820586543648f, 0.29617443887954614f, 0.29488391230979427f, 0.29361010975735174f, 0.2923526731023431f, 0.291111254869791f, 0.28988551782622424f, 0.2886751345948129f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape;
-};
-
-} // namespace generated_tests::rsqrt
-namespace generated_tests::rsqrt {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f, 1.7f, 1.8f, 1.9f, 2.0f, 2.1f, 2.2f, 2.3f, 2.4f, 2.5f, 2.6f, 2.7f, 2.8f, 2.9f, 3.0f, 3.1f, 3.2f, 3.3f, 3.4f, 3.5f, 3.6f, 3.7f, 3.8f, 3.9f, 4.0f, 4.1f, 4.2f, 4.3f, 4.4f, 4.5f, 4.6f, 4.7f, 4.8f, 4.9f, 5.0f, 5.1f, 5.2f, 5.3f, 5.4f, 5.5f, 5.6f, 5.7f, 5.8f, 5.9f, 6.0f, 6.1f, 6.2f, 6.3f, 6.4f, 6.5f, 6.6f, 6.7f, 6.8f, 6.9f, 7.0f, 7.1f, 7.2f, 7.3f, 7.4f, 7.5f, 7.6f, 7.7f, 7.8f, 7.9f, 8.0f, 8.1f, 8.2f, 8.3f, 8.4f, 8.5f, 8.6f, 8.7f, 8.8f, 8.9f, 9.0f, 9.1f, 9.2f, 9.3f, 9.4f, 9.5f, 9.6f, 9.7f, 9.8f, 9.9f, 10.0f, 10.1f, 10.2f, 10.3f, 10.4f, 10.5f, 10.6f, 10.7f, 10.8f, 10.9f, 11.0f, 11.1f, 11.2f, 11.3f, 11.4f, 11.5f, 11.6f, 11.7f, 11.8f, 11.9f, 12.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {3.162277660168379f, 2.23606797749979f, 1.8257418583505538f, 1.5811388300841895f, 1.414213562373095f, 1.2909944487358056f, 1.1952286093343936f, 1.118033988749895f, 1.0540925533894598f, 1.0f, 0.9534625892455922f, 0.9128709291752769f, 0.8770580193070292f, 0.8451542547285166f, 0.8164965809277261f, 0.7905694150420948f, 0.7669649888473704f, 0.7453559924999299f, 0.7254762501100117f, 0.7071067811865475f, 0.6900655593423541f, 0.674199862463242f, 0.6593804733957871f, 0.6454972243679028f, 0.6324555320336759f, 0.6201736729460422f, 0.6085806194501845f, 0.5976143046671968f, 0.5872202195147035f, 0.5773502691896258f, 0.5679618342470648f, 0.5590169943749475f, 0.5504818825631803f, 0.5423261445466404f, 0.5345224838248488f, 0.5270462766947299f, 0.5198752449100363f, 0.5129891760425771f, 0.5063696835418333f, 0.5f, 0.49386479832479485f, 0.48795003647426655f, 0.48224282217041214f, 0.4767312946227961f, 0.47140452079103173f, 0.4662524041201569f, 0.46126560401444255f, 0.45643546458763845f, 0.45175395145262565f, 0.4472135954999579f, 0.4428074427700477f, 0.4385290096535146f, 0.4343722427630694f, 0.4303314829119352f, 0.42640143271122083f, 0.4225771273642583f, 0.4188539082916955f, 0.41522739926869984f, 0.41169348479630913f, 0.4082482904638631f, 0.404888165089458f, 0.40160966445124946f, 0.3984095364447979f, 0.3952847075210474f, 0.3922322702763681f, 0.3892494720807615f, 0.3863337046431279f, 0.3834824944236852f, 0.3806934938134405f, 0.3779644730092272f, 0.37529331252040077f, 0.37267799624996495f, 0.3701166050988026f, 0.3676073110469039f, 0.3651483716701107f, 0.36273812505500586f, 0.3603749850782236f, 0.35805743701971643f, 0.35578403348241f, 0.35355339059327373f, 0.35136418446315326f, 0.34921514788478913f, 0.34710506725031165f, 0.34503277967117707f, 0.34299717028501764f, 0.34099716973523675f, 0.33903175181040524f, 0.337099931231621f, 0.33520076157699547f, 0.3333333333333333f, 0.33149677206589795f, 0.32969023669789355f, 0.32791291789197646f, 0.3261640365267211f, 0.3244428422615251f, 0.3227486121839514f, 0.3210806495339678f, 0.31943828249996997f, 0.3178208630818641f, 0.31622776601683794f, 0.3146583877637763f, 0.31311214554257477f, 0.3115884764248779f, 0.3100868364730211f, 0.3086066999241838f, 0.3071475584169756f, 0.30570892025787155f, 0.30429030972509225f, 0.3028912664076913f, 0.30151134457776363f, 0.3001501125938321f, 0.2988071523335984f, 0.2974820586543648f, 0.29617443887954614f, 0.29488391230979427f, 0.29361010975735174f, 0.2923526731023431f, 0.291111254869791f, 0.28988551782622424f, 0.2886751345948129f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_relaxed;
-};
-
-} // namespace generated_tests::rsqrt
-namespace generated_tests::rsqrt {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_float16 = {
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_float16_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -359,7 +359,7 @@ static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_sha
 },
 }, // End of an example
 };
-return examples_dynamic_output_shape_float16;
+return examples_float16_dynamic_output_shape;
 };
 
 } // namespace generated_tests::rsqrt
