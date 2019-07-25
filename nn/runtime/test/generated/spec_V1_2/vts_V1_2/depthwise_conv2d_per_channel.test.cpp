@@ -31,32 +31,6 @@ TEST_F(ValidationTest, depthwise_conv2d_per_channel_same) {
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_same_weight_as_input();
-
-} // namespace generated_tests::depthwise_conv2d_per_channel
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
-
-Model createTestModel_same_weight_as_input();
-bool is_ignored_same_weight_as_input(int);
-
-TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_same_weight_as_input) {
-  Execute(device,
-          createTestModel_same_weight_as_input,
-          is_ignored_same_weight_as_input,
-          ::generated_tests::depthwise_conv2d_per_channel::get_examples_same_weight_as_input());
-}
-
-TEST_F(ValidationTest, depthwise_conv2d_per_channel_same_weight_as_input) {
-  const Model model = createTestModel_same_weight_as_input();
-  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_same_weight_as_input());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
-
-namespace generated_tests::depthwise_conv2d_per_channel {
-
 std::vector<::test_helper::MixedTypedExample>& get_examples_same_dynamic_output_shape();
 
 } // namespace generated_tests::depthwise_conv2d_per_channel
@@ -83,25 +57,155 @@ TEST_F(ValidationTest, depthwise_conv2d_per_channel_same_dynamic_output_shape) {
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_same_dynamic_output_shape_weight_as_input();
+std::vector<::test_helper::MixedTypedExample>& get_examples_same_all_inputs_as_internal();
 
 } // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
 
-Model createTestModel_same_dynamic_output_shape_weight_as_input();
-bool is_ignored_same_dynamic_output_shape_weight_as_input(int);
+Model createTestModel_same_all_inputs_as_internal();
+bool is_ignored_same_all_inputs_as_internal(int);
 
-TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_same_dynamic_output_shape_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_same_all_inputs_as_internal) {
   Execute(device,
-          createTestModel_same_dynamic_output_shape_weight_as_input,
-          is_ignored_same_dynamic_output_shape_weight_as_input,
-          ::generated_tests::depthwise_conv2d_per_channel::get_examples_same_dynamic_output_shape_weight_as_input(), true);
+          createTestModel_same_all_inputs_as_internal,
+          is_ignored_same_all_inputs_as_internal,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_per_channel_same_dynamic_output_shape_weight_as_input) {
-  const Model model = createTestModel_same_dynamic_output_shape_weight_as_input();
-  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_same_dynamic_output_shape_weight_as_input());
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_same_all_inputs_as_internal) {
+  const Model model = createTestModel_same_all_inputs_as_internal();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_inputs_as_internal());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_same_all_inputs_as_internal_dynamic_output_shape();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_same_all_inputs_as_internal_dynamic_output_shape();
+bool is_ignored_same_all_inputs_as_internal_dynamic_output_shape(int);
+
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_same_all_inputs_as_internal_dynamic_output_shape) {
+  Execute(device,
+          createTestModel_same_all_inputs_as_internal_dynamic_output_shape,
+          is_ignored_same_all_inputs_as_internal_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_inputs_as_internal_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_same_all_inputs_as_internal_dynamic_output_shape) {
+  const Model model = createTestModel_same_all_inputs_as_internal_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_inputs_as_internal_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_same_all_tensors_as_inputs();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_same_all_tensors_as_inputs();
+bool is_ignored_same_all_tensors_as_inputs(int);
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_same_all_tensors_as_inputs) {
+  Execute(device,
+          createTestModel_same_all_tensors_as_inputs,
+          is_ignored_same_all_tensors_as_inputs,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_tensors_as_inputs());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_same_all_tensors_as_inputs) {
+  const Model model = createTestModel_same_all_tensors_as_inputs();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_tensors_as_inputs());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_same_all_tensors_as_inputs_dynamic_output_shape();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_same_all_tensors_as_inputs_dynamic_output_shape();
+bool is_ignored_same_all_tensors_as_inputs_dynamic_output_shape(int);
+
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_same_all_tensors_as_inputs_dynamic_output_shape) {
+  Execute(device,
+          createTestModel_same_all_tensors_as_inputs_dynamic_output_shape,
+          is_ignored_same_all_tensors_as_inputs_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_tensors_as_inputs_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_same_all_tensors_as_inputs_dynamic_output_shape) {
+  const Model model = createTestModel_same_all_tensors_as_inputs_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_tensors_as_inputs_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_same_all_tensors_as_inputs_all_inputs_as_internal();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_same_all_tensors_as_inputs_all_inputs_as_internal();
+bool is_ignored_same_all_tensors_as_inputs_all_inputs_as_internal(int);
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_same_all_tensors_as_inputs_all_inputs_as_internal) {
+  Execute(device,
+          createTestModel_same_all_tensors_as_inputs_all_inputs_as_internal,
+          is_ignored_same_all_tensors_as_inputs_all_inputs_as_internal,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_same_all_tensors_as_inputs_all_inputs_as_internal) {
+  const Model model = createTestModel_same_all_tensors_as_inputs_all_inputs_as_internal();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_tensors_as_inputs_all_inputs_as_internal());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_same_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_same_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+bool is_ignored_same_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_same_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+  Execute(device,
+          createTestModel_same_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+          is_ignored_same_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_same_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+  const Model model = createTestModel_same_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_same_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
   validateEverything(model, requests);
 }
 
@@ -135,32 +239,6 @@ TEST_F(ValidationTest, depthwise_conv2d_per_channel_different) {
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_different_weight_as_input();
-
-} // namespace generated_tests::depthwise_conv2d_per_channel
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
-
-Model createTestModel_different_weight_as_input();
-bool is_ignored_different_weight_as_input(int);
-
-TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_different_weight_as_input) {
-  Execute(device,
-          createTestModel_different_weight_as_input,
-          is_ignored_different_weight_as_input,
-          ::generated_tests::depthwise_conv2d_per_channel::get_examples_different_weight_as_input());
-}
-
-TEST_F(ValidationTest, depthwise_conv2d_per_channel_different_weight_as_input) {
-  const Model model = createTestModel_different_weight_as_input();
-  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_different_weight_as_input());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
-
-namespace generated_tests::depthwise_conv2d_per_channel {
-
 std::vector<::test_helper::MixedTypedExample>& get_examples_different_dynamic_output_shape();
 
 } // namespace generated_tests::depthwise_conv2d_per_channel
@@ -187,25 +265,155 @@ TEST_F(ValidationTest, depthwise_conv2d_per_channel_different_dynamic_output_sha
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_different_dynamic_output_shape_weight_as_input();
+std::vector<::test_helper::MixedTypedExample>& get_examples_different_all_inputs_as_internal();
 
 } // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
 
-Model createTestModel_different_dynamic_output_shape_weight_as_input();
-bool is_ignored_different_dynamic_output_shape_weight_as_input(int);
+Model createTestModel_different_all_inputs_as_internal();
+bool is_ignored_different_all_inputs_as_internal(int);
 
-TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_different_dynamic_output_shape_weight_as_input) {
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_different_all_inputs_as_internal) {
   Execute(device,
-          createTestModel_different_dynamic_output_shape_weight_as_input,
-          is_ignored_different_dynamic_output_shape_weight_as_input,
-          ::generated_tests::depthwise_conv2d_per_channel::get_examples_different_dynamic_output_shape_weight_as_input(), true);
+          createTestModel_different_all_inputs_as_internal,
+          is_ignored_different_all_inputs_as_internal,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_per_channel_different_dynamic_output_shape_weight_as_input) {
-  const Model model = createTestModel_different_dynamic_output_shape_weight_as_input();
-  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_different_dynamic_output_shape_weight_as_input());
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_different_all_inputs_as_internal) {
+  const Model model = createTestModel_different_all_inputs_as_internal();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_inputs_as_internal());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_different_all_inputs_as_internal_dynamic_output_shape();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_different_all_inputs_as_internal_dynamic_output_shape();
+bool is_ignored_different_all_inputs_as_internal_dynamic_output_shape(int);
+
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_different_all_inputs_as_internal_dynamic_output_shape) {
+  Execute(device,
+          createTestModel_different_all_inputs_as_internal_dynamic_output_shape,
+          is_ignored_different_all_inputs_as_internal_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_inputs_as_internal_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_different_all_inputs_as_internal_dynamic_output_shape) {
+  const Model model = createTestModel_different_all_inputs_as_internal_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_inputs_as_internal_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_different_all_tensors_as_inputs();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_different_all_tensors_as_inputs();
+bool is_ignored_different_all_tensors_as_inputs(int);
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_different_all_tensors_as_inputs) {
+  Execute(device,
+          createTestModel_different_all_tensors_as_inputs,
+          is_ignored_different_all_tensors_as_inputs,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_tensors_as_inputs());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_different_all_tensors_as_inputs) {
+  const Model model = createTestModel_different_all_tensors_as_inputs();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_tensors_as_inputs());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_different_all_tensors_as_inputs_dynamic_output_shape();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_different_all_tensors_as_inputs_dynamic_output_shape();
+bool is_ignored_different_all_tensors_as_inputs_dynamic_output_shape(int);
+
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_different_all_tensors_as_inputs_dynamic_output_shape) {
+  Execute(device,
+          createTestModel_different_all_tensors_as_inputs_dynamic_output_shape,
+          is_ignored_different_all_tensors_as_inputs_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_tensors_as_inputs_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_different_all_tensors_as_inputs_dynamic_output_shape) {
+  const Model model = createTestModel_different_all_tensors_as_inputs_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_tensors_as_inputs_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_different_all_tensors_as_inputs_all_inputs_as_internal();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_different_all_tensors_as_inputs_all_inputs_as_internal();
+bool is_ignored_different_all_tensors_as_inputs_all_inputs_as_internal(int);
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_different_all_tensors_as_inputs_all_inputs_as_internal) {
+  Execute(device,
+          createTestModel_different_all_tensors_as_inputs_all_inputs_as_internal,
+          is_ignored_different_all_tensors_as_inputs_all_inputs_as_internal,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_different_all_tensors_as_inputs_all_inputs_as_internal) {
+  const Model model = createTestModel_different_all_tensors_as_inputs_all_inputs_as_internal();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_tensors_as_inputs_all_inputs_as_internal());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_different_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_different_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+bool is_ignored_different_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_different_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+  Execute(device,
+          createTestModel_different_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+          is_ignored_different_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_different_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+  const Model model = createTestModel_different_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_different_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
   validateEverything(model, requests);
 }
 
@@ -239,25 +447,181 @@ TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc) {
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nhwc_weight_as_input();
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nhwc_dynamic_output_shape();
 
 } // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
 
-Model createTestModel_layout_nhwc_weight_as_input();
-bool is_ignored_layout_nhwc_weight_as_input(int);
+Model createTestModel_layout_nhwc_dynamic_output_shape();
+bool is_ignored_layout_nhwc_dynamic_output_shape(int);
 
-TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nhwc_weight_as_input) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_nhwc_dynamic_output_shape) {
   Execute(device,
-          createTestModel_layout_nhwc_weight_as_input,
-          is_ignored_layout_nhwc_weight_as_input,
-          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_weight_as_input());
+          createTestModel_layout_nhwc_dynamic_output_shape,
+          is_ignored_layout_nhwc_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_dynamic_output_shape(), true);
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc_weight_as_input) {
-  const Model model = createTestModel_layout_nhwc_weight_as_input();
-  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_weight_as_input());
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc_dynamic_output_shape) {
+  const Model model = createTestModel_layout_nhwc_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nhwc_all_inputs_as_internal();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_layout_nhwc_all_inputs_as_internal();
+bool is_ignored_layout_nhwc_all_inputs_as_internal(int);
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nhwc_all_inputs_as_internal) {
+  Execute(device,
+          createTestModel_layout_nhwc_all_inputs_as_internal,
+          is_ignored_layout_nhwc_all_inputs_as_internal,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_inputs_as_internal());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc_all_inputs_as_internal) {
+  const Model model = createTestModel_layout_nhwc_all_inputs_as_internal();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_inputs_as_internal());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nhwc_all_inputs_as_internal_dynamic_output_shape();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_layout_nhwc_all_inputs_as_internal_dynamic_output_shape();
+bool is_ignored_layout_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
+
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+  Execute(device,
+          createTestModel_layout_nhwc_all_inputs_as_internal_dynamic_output_shape,
+          is_ignored_layout_nhwc_all_inputs_as_internal_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_inputs_as_internal_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+  const Model model = createTestModel_layout_nhwc_all_inputs_as_internal_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_inputs_as_internal_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nhwc_all_tensors_as_inputs();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_layout_nhwc_all_tensors_as_inputs();
+bool is_ignored_layout_nhwc_all_tensors_as_inputs(int);
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nhwc_all_tensors_as_inputs) {
+  Execute(device,
+          createTestModel_layout_nhwc_all_tensors_as_inputs,
+          is_ignored_layout_nhwc_all_tensors_as_inputs,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_tensors_as_inputs());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc_all_tensors_as_inputs) {
+  const Model model = createTestModel_layout_nhwc_all_tensors_as_inputs();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_tensors_as_inputs());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nhwc_all_tensors_as_inputs_dynamic_output_shape();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_layout_nhwc_all_tensors_as_inputs_dynamic_output_shape();
+bool is_ignored_layout_nhwc_all_tensors_as_inputs_dynamic_output_shape(int);
+
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_nhwc_all_tensors_as_inputs_dynamic_output_shape) {
+  Execute(device,
+          createTestModel_layout_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+          is_ignored_layout_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_tensors_as_inputs_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc_all_tensors_as_inputs_dynamic_output_shape) {
+  const Model model = createTestModel_layout_nhwc_all_tensors_as_inputs_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_tensors_as_inputs_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal();
+bool is_ignored_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal(int);
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal) {
+  Execute(device,
+          createTestModel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+          is_ignored_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal) {
+  const Model model = createTestModel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+bool is_ignored_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+  Execute(device,
+          createTestModel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+          is_ignored_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+  const Model model = createTestModel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
   validateEverything(model, requests);
 }
 
@@ -291,25 +655,25 @@ TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw) {
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nchw_weight_as_input();
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nchw_dynamic_output_shape();
 
 } // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
 
-Model createTestModel_layout_nchw_weight_as_input();
-bool is_ignored_layout_nchw_weight_as_input(int);
+Model createTestModel_layout_nchw_dynamic_output_shape();
+bool is_ignored_layout_nchw_dynamic_output_shape(int);
 
-TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nchw_weight_as_input) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_nchw_dynamic_output_shape) {
   Execute(device,
-          createTestModel_layout_nchw_weight_as_input,
-          is_ignored_layout_nchw_weight_as_input,
-          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_weight_as_input());
+          createTestModel_layout_nchw_dynamic_output_shape,
+          is_ignored_layout_nchw_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_dynamic_output_shape(), true);
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw_weight_as_input) {
-  const Model model = createTestModel_layout_nchw_weight_as_input();
-  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_weight_as_input());
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw_dynamic_output_shape) {
+  const Model model = createTestModel_layout_nchw_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_dynamic_output_shape());
   validateEverything(model, requests);
 }
 
@@ -317,25 +681,25 @@ TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw_weight_as_input)
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_layout_dynamic_output_shape_nhwc();
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nchw_all_inputs_as_internal();
 
 } // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
 
-Model createTestModel_layout_dynamic_output_shape_nhwc();
-bool is_ignored_layout_dynamic_output_shape_nhwc(int);
+Model createTestModel_layout_nchw_all_inputs_as_internal();
+bool is_ignored_layout_nchw_all_inputs_as_internal(int);
 
-TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_nhwc) {
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nchw_all_inputs_as_internal) {
   Execute(device,
-          createTestModel_layout_dynamic_output_shape_nhwc,
-          is_ignored_layout_dynamic_output_shape_nhwc,
-          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_dynamic_output_shape_nhwc(), true);
+          createTestModel_layout_nchw_all_inputs_as_internal,
+          is_ignored_layout_nchw_all_inputs_as_internal,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_nhwc) {
-  const Model model = createTestModel_layout_dynamic_output_shape_nhwc();
-  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_dynamic_output_shape_nhwc());
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw_all_inputs_as_internal) {
+  const Model model = createTestModel_layout_nchw_all_inputs_as_internal();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_inputs_as_internal());
   validateEverything(model, requests);
 }
 
@@ -343,25 +707,25 @@ TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_layout_dynamic_output_shape_nhwc_weight_as_input();
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nchw_all_inputs_as_internal_dynamic_output_shape();
 
 } // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
 
-Model createTestModel_layout_dynamic_output_shape_nhwc_weight_as_input();
-bool is_ignored_layout_dynamic_output_shape_nhwc_weight_as_input(int);
+Model createTestModel_layout_nchw_all_inputs_as_internal_dynamic_output_shape();
+bool is_ignored_layout_nchw_all_inputs_as_internal_dynamic_output_shape(int);
 
-TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_nhwc_weight_as_input) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_nchw_all_inputs_as_internal_dynamic_output_shape) {
   Execute(device,
-          createTestModel_layout_dynamic_output_shape_nhwc_weight_as_input,
-          is_ignored_layout_dynamic_output_shape_nhwc_weight_as_input,
-          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_dynamic_output_shape_nhwc_weight_as_input(), true);
+          createTestModel_layout_nchw_all_inputs_as_internal_dynamic_output_shape,
+          is_ignored_layout_nchw_all_inputs_as_internal_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_inputs_as_internal_dynamic_output_shape(), true);
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_nhwc_weight_as_input) {
-  const Model model = createTestModel_layout_dynamic_output_shape_nhwc_weight_as_input();
-  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_dynamic_output_shape_nhwc_weight_as_input());
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw_all_inputs_as_internal_dynamic_output_shape) {
+  const Model model = createTestModel_layout_nchw_all_inputs_as_internal_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_inputs_as_internal_dynamic_output_shape());
   validateEverything(model, requests);
 }
 
@@ -369,25 +733,25 @@ TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_layout_dynamic_output_shape_nchw();
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nchw_all_tensors_as_inputs();
 
 } // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
 
-Model createTestModel_layout_dynamic_output_shape_nchw();
-bool is_ignored_layout_dynamic_output_shape_nchw(int);
+Model createTestModel_layout_nchw_all_tensors_as_inputs();
+bool is_ignored_layout_nchw_all_tensors_as_inputs(int);
 
-TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_nchw) {
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nchw_all_tensors_as_inputs) {
   Execute(device,
-          createTestModel_layout_dynamic_output_shape_nchw,
-          is_ignored_layout_dynamic_output_shape_nchw,
-          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_dynamic_output_shape_nchw(), true);
+          createTestModel_layout_nchw_all_tensors_as_inputs,
+          is_ignored_layout_nchw_all_tensors_as_inputs,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_tensors_as_inputs());
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_nchw) {
-  const Model model = createTestModel_layout_dynamic_output_shape_nchw();
-  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_dynamic_output_shape_nchw());
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw_all_tensors_as_inputs) {
+  const Model model = createTestModel_layout_nchw_all_tensors_as_inputs();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_tensors_as_inputs());
   validateEverything(model, requests);
 }
 
@@ -395,25 +759,77 @@ TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_layout_dynamic_output_shape_nchw_weight_as_input();
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nchw_all_tensors_as_inputs_dynamic_output_shape();
 
 } // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
 
-Model createTestModel_layout_dynamic_output_shape_nchw_weight_as_input();
-bool is_ignored_layout_dynamic_output_shape_nchw_weight_as_input(int);
+Model createTestModel_layout_nchw_all_tensors_as_inputs_dynamic_output_shape();
+bool is_ignored_layout_nchw_all_tensors_as_inputs_dynamic_output_shape(int);
 
-TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_nchw_weight_as_input) {
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_nchw_all_tensors_as_inputs_dynamic_output_shape) {
   Execute(device,
-          createTestModel_layout_dynamic_output_shape_nchw_weight_as_input,
-          is_ignored_layout_dynamic_output_shape_nchw_weight_as_input,
-          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_dynamic_output_shape_nchw_weight_as_input(), true);
+          createTestModel_layout_nchw_all_tensors_as_inputs_dynamic_output_shape,
+          is_ignored_layout_nchw_all_tensors_as_inputs_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_tensors_as_inputs_dynamic_output_shape(), true);
 }
 
-TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_dynamic_output_shape_nchw_weight_as_input) {
-  const Model model = createTestModel_layout_dynamic_output_shape_nchw_weight_as_input();
-  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_dynamic_output_shape_nchw_weight_as_input());
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw_all_tensors_as_inputs_dynamic_output_shape) {
+  const Model model = createTestModel_layout_nchw_all_tensors_as_inputs_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_tensors_as_inputs_dynamic_output_shape());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal();
+bool is_ignored_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal(int);
+
+TEST_F(NeuralnetworksHidlTest, depthwise_conv2d_per_channel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal) {
+  Execute(device,
+          createTestModel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+          is_ignored_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal) {
+  const Model model = createTestModel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel
+
+namespace generated_tests::depthwise_conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+} // namespace generated_tests::depthwise_conv2d_per_channel
+
+namespace android::hardware::neuralnetworks::V1_2::generated_tests::depthwise_conv2d_per_channel {
+
+Model createTestModel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+bool is_ignored_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+
+TEST_F(DynamicOutputShapeTest, depthwise_conv2d_per_channel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+  Execute(device,
+          createTestModel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+          is_ignored_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+          ::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(), true);
+}
+
+TEST_F(ValidationTest, depthwise_conv2d_per_channel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+  const Model model = createTestModel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(::generated_tests::depthwise_conv2d_per_channel::get_examples_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
   validateEverything(model, requests);
 }
 

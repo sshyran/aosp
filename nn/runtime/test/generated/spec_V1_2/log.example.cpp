@@ -65,6 +65,66 @@ return examples;
 } // namespace generated_tests::log
 namespace generated_tests::log {
 
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f, 1.7f, 1.8f, 1.9f, 2.0f, 2.1f, 2.2f, 2.3f, 2.4f, 2.5f, 2.6f, 2.7f, 2.8f, 2.9f, 3.0f, 3.1f, 3.2f, 3.3f, 3.4f, 3.5f, 3.6f, 3.7f, 3.8f, 3.9f, 4.0f, 4.1f, 4.2f, 4.3f, 4.4f, 4.5f, 4.6f, 4.7f, 4.8f, 4.9f, 5.0f, 5.1f, 5.2f, 5.3f, 5.4f, 5.5f, 5.6f, 5.7f, 5.8f, 5.9f, 6.0f, 6.1f, 6.2f, 6.3f, 6.4f, 6.5f, 6.6f, 6.7f, 6.8f, 6.9f, 7.0f, 7.1f, 7.2f, 7.3f, 7.4f, 7.5f, 7.6f, 7.7f, 7.8f, 7.9f, 8.0f, 8.1f, 8.2f, 8.3f, 8.4f, 8.5f, 8.6f, 8.7f, 8.8f, 8.9f, 9.0f, 9.1f, 9.2f, 9.3f, 9.4f, 9.5f, 9.6f, 9.7f, 9.8f, 9.9f, 10.0f, 10.1f, 10.2f, 10.3f, 10.4f, 10.5f, 10.6f, 10.7f, 10.8f, 10.9f, 11.0f, 11.1f, 11.2f, 11.3f, 11.4f, 11.5f, 11.6f, 11.7f, 11.8f, 11.9f, 12.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {-2.3025850929940455f, -1.6094379124341003f, -1.2039728043259361f, -0.916290731874155f, -0.6931471805599453f, -0.5108256237659907f, -0.35667494393873245f, -0.2231435513142097f, -0.10536051565782628f, 0.0f, 0.09531017980432493f, 0.1823215567939546f, 0.26236426446749106f, 0.3364722366212129f, 0.4054651081081644f, 0.47000362924573563f, 0.5306282510621704f, 0.5877866649021191f, 0.6418538861723947f, 0.6931471805599453f, 0.7419373447293773f, 0.7884573603642703f, 0.8329091229351039f, 0.8754687373538999f, 0.9162907318741551f, 0.9555114450274363f, 0.9932517730102834f, 1.0296194171811581f, 1.0647107369924282f, 1.0986122886681098f, 1.1314021114911006f, 1.1631508098056809f, 1.1939224684724346f, 1.2237754316221157f, 1.252762968495368f, 1.2809338454620642f, 1.308332819650179f, 1.33500106673234f, 1.3609765531356006f, 1.3862943611198906f, 1.410986973710262f, 1.4350845252893227f, 1.4586150226995167f, 1.4816045409242156f, 1.5040773967762742f, 1.5260563034950492f, 1.547562508716013f, 1.5686159179138452f, 1.589235205116581f, 1.6094379124341003f, 1.62924053973028f, 1.6486586255873816f, 1.667706820558076f, 1.6863989535702288f, 1.7047480922384253f, 1.7227665977411035f, 1.7404661748405046f, 1.7578579175523736f, 1.7749523509116738f, 1.791759469228055f, 1.8082887711792655f, 1.824549292051046f, 1.840549633397487f, 1.8562979903656263f, 1.8718021769015913f, 1.8870696490323797f, 1.9021075263969205f, 1.916922612182061f, 1.9315214116032138f, 1.9459101490553132f, 1.9600947840472698f, 1.9740810260220096f, 1.9878743481543455f, 2.0014800002101243f, 2.0149030205422647f, 2.028148247292285f, 2.0412203288596382f, 2.0541237336955462f, 2.066862759472976f, 2.0794415416798357f, 2.0918640616783932f, 2.1041341542702074f, 2.1162555148025524f, 2.128231705849268f, 2.1400661634962708f, 2.151762203259462f, 2.163323025660538f, 2.174751721484161f, 2.186051276738094f, 2.1972245773362196f, 2.2082744135228043f, 2.2192034840549946f, 2.2300144001592104f, 2.2407096892759584f, 2.2512917986064953f, 2.2617630984737906f, 2.272125885509337f, 2.2823823856765264f, 2.2925347571405443f, 2.302585092994046f, 2.312535423847214f, 2.322387720290225f, 2.33214389523559f, 2.341805806147327f, 2.3513752571634776f, 2.3608540011180215f, 2.3702437414678603f, 2.379546134130174f, 2.388762789235098f, 2.3978952727983707f, 2.4069451083182885f, 2.4159137783010487f, 2.424802725718295f, 2.4336133554004498f, 2.4423470353692043f, 2.451005098112319f, 2.4595888418037104f, 2.468099531471619f, 2.4765384001174837f, 2.4849066497880004f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_dynamic_output_shape;
+};
+
+} // namespace generated_tests::log
+namespace generated_tests::log {
+
 std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed() {
 static std::vector<::test_helper::MixedTypedExample> examples_relaxed = {
 // Begin of an example
@@ -120,6 +180,66 @@ static std::vector<::test_helper::MixedTypedExample> examples_relaxed = {
 }, // End of an example
 };
 return examples_relaxed;
+};
+
+} // namespace generated_tests::log
+namespace generated_tests::log {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dynamic_output_shape = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f, 1.7f, 1.8f, 1.9f, 2.0f, 2.1f, 2.2f, 2.3f, 2.4f, 2.5f, 2.6f, 2.7f, 2.8f, 2.9f, 3.0f, 3.1f, 3.2f, 3.3f, 3.4f, 3.5f, 3.6f, 3.7f, 3.8f, 3.9f, 4.0f, 4.1f, 4.2f, 4.3f, 4.4f, 4.5f, 4.6f, 4.7f, 4.8f, 4.9f, 5.0f, 5.1f, 5.2f, 5.3f, 5.4f, 5.5f, 5.6f, 5.7f, 5.8f, 5.9f, 6.0f, 6.1f, 6.2f, 6.3f, 6.4f, 6.5f, 6.6f, 6.7f, 6.8f, 6.9f, 7.0f, 7.1f, 7.2f, 7.3f, 7.4f, 7.5f, 7.6f, 7.7f, 7.8f, 7.9f, 8.0f, 8.1f, 8.2f, 8.3f, 8.4f, 8.5f, 8.6f, 8.7f, 8.8f, 8.9f, 9.0f, 9.1f, 9.2f, 9.3f, 9.4f, 9.5f, 9.6f, 9.7f, 9.8f, 9.9f, 10.0f, 10.1f, 10.2f, 10.3f, 10.4f, 10.5f, 10.6f, 10.7f, 10.8f, 10.9f, 11.0f, 11.1f, 11.2f, 11.3f, 11.4f, 11.5f, 11.6f, 11.7f, 11.8f, 11.9f, 12.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {-2.3025850929940455f, -1.6094379124341003f, -1.2039728043259361f, -0.916290731874155f, -0.6931471805599453f, -0.5108256237659907f, -0.35667494393873245f, -0.2231435513142097f, -0.10536051565782628f, 0.0f, 0.09531017980432493f, 0.1823215567939546f, 0.26236426446749106f, 0.3364722366212129f, 0.4054651081081644f, 0.47000362924573563f, 0.5306282510621704f, 0.5877866649021191f, 0.6418538861723947f, 0.6931471805599453f, 0.7419373447293773f, 0.7884573603642703f, 0.8329091229351039f, 0.8754687373538999f, 0.9162907318741551f, 0.9555114450274363f, 0.9932517730102834f, 1.0296194171811581f, 1.0647107369924282f, 1.0986122886681098f, 1.1314021114911006f, 1.1631508098056809f, 1.1939224684724346f, 1.2237754316221157f, 1.252762968495368f, 1.2809338454620642f, 1.308332819650179f, 1.33500106673234f, 1.3609765531356006f, 1.3862943611198906f, 1.410986973710262f, 1.4350845252893227f, 1.4586150226995167f, 1.4816045409242156f, 1.5040773967762742f, 1.5260563034950492f, 1.547562508716013f, 1.5686159179138452f, 1.589235205116581f, 1.6094379124341003f, 1.62924053973028f, 1.6486586255873816f, 1.667706820558076f, 1.6863989535702288f, 1.7047480922384253f, 1.7227665977411035f, 1.7404661748405046f, 1.7578579175523736f, 1.7749523509116738f, 1.791759469228055f, 1.8082887711792655f, 1.824549292051046f, 1.840549633397487f, 1.8562979903656263f, 1.8718021769015913f, 1.8870696490323797f, 1.9021075263969205f, 1.916922612182061f, 1.9315214116032138f, 1.9459101490553132f, 1.9600947840472698f, 1.9740810260220096f, 1.9878743481543455f, 2.0014800002101243f, 2.0149030205422647f, 2.028148247292285f, 2.0412203288596382f, 2.0541237336955462f, 2.066862759472976f, 2.0794415416798357f, 2.0918640616783932f, 2.1041341542702074f, 2.1162555148025524f, 2.128231705849268f, 2.1400661634962708f, 2.151762203259462f, 2.163323025660538f, 2.174751721484161f, 2.186051276738094f, 2.1972245773362196f, 2.2082744135228043f, 2.2192034840549946f, 2.2300144001592104f, 2.2407096892759584f, 2.2512917986064953f, 2.2617630984737906f, 2.272125885509337f, 2.2823823856765264f, 2.2925347571405443f, 2.302585092994046f, 2.312535423847214f, 2.322387720290225f, 2.33214389523559f, 2.341805806147327f, 2.3513752571634776f, 2.3608540011180215f, 2.3702437414678603f, 2.379546134130174f, 2.388762789235098f, 2.3978952727983707f, 2.4069451083182885f, 2.4159137783010487f, 2.424802725718295f, 2.4336133554004498f, 2.4423470353692043f, 2.451005098112319f, 2.4595888418037104f, 2.468099531471619f, 2.4765384001174837f, 2.4849066497880004f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_relaxed_dynamic_output_shape;
 };
 
 } // namespace generated_tests::log
@@ -185,128 +305,8 @@ return examples_float16;
 } // namespace generated_tests::log
 namespace generated_tests::log {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f, 1.7f, 1.8f, 1.9f, 2.0f, 2.1f, 2.2f, 2.3f, 2.4f, 2.5f, 2.6f, 2.7f, 2.8f, 2.9f, 3.0f, 3.1f, 3.2f, 3.3f, 3.4f, 3.5f, 3.6f, 3.7f, 3.8f, 3.9f, 4.0f, 4.1f, 4.2f, 4.3f, 4.4f, 4.5f, 4.6f, 4.7f, 4.8f, 4.9f, 5.0f, 5.1f, 5.2f, 5.3f, 5.4f, 5.5f, 5.6f, 5.7f, 5.8f, 5.9f, 6.0f, 6.1f, 6.2f, 6.3f, 6.4f, 6.5f, 6.6f, 6.7f, 6.8f, 6.9f, 7.0f, 7.1f, 7.2f, 7.3f, 7.4f, 7.5f, 7.6f, 7.7f, 7.8f, 7.9f, 8.0f, 8.1f, 8.2f, 8.3f, 8.4f, 8.5f, 8.6f, 8.7f, 8.8f, 8.9f, 9.0f, 9.1f, 9.2f, 9.3f, 9.4f, 9.5f, 9.6f, 9.7f, 9.8f, 9.9f, 10.0f, 10.1f, 10.2f, 10.3f, 10.4f, 10.5f, 10.6f, 10.7f, 10.8f, 10.9f, 11.0f, 11.1f, 11.2f, 11.3f, 11.4f, 11.5f, 11.6f, 11.7f, 11.8f, 11.9f, 12.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {-2.3025850929940455f, -1.6094379124341003f, -1.2039728043259361f, -0.916290731874155f, -0.6931471805599453f, -0.5108256237659907f, -0.35667494393873245f, -0.2231435513142097f, -0.10536051565782628f, 0.0f, 0.09531017980432493f, 0.1823215567939546f, 0.26236426446749106f, 0.3364722366212129f, 0.4054651081081644f, 0.47000362924573563f, 0.5306282510621704f, 0.5877866649021191f, 0.6418538861723947f, 0.6931471805599453f, 0.7419373447293773f, 0.7884573603642703f, 0.8329091229351039f, 0.8754687373538999f, 0.9162907318741551f, 0.9555114450274363f, 0.9932517730102834f, 1.0296194171811581f, 1.0647107369924282f, 1.0986122886681098f, 1.1314021114911006f, 1.1631508098056809f, 1.1939224684724346f, 1.2237754316221157f, 1.252762968495368f, 1.2809338454620642f, 1.308332819650179f, 1.33500106673234f, 1.3609765531356006f, 1.3862943611198906f, 1.410986973710262f, 1.4350845252893227f, 1.4586150226995167f, 1.4816045409242156f, 1.5040773967762742f, 1.5260563034950492f, 1.547562508716013f, 1.5686159179138452f, 1.589235205116581f, 1.6094379124341003f, 1.62924053973028f, 1.6486586255873816f, 1.667706820558076f, 1.6863989535702288f, 1.7047480922384253f, 1.7227665977411035f, 1.7404661748405046f, 1.7578579175523736f, 1.7749523509116738f, 1.791759469228055f, 1.8082887711792655f, 1.824549292051046f, 1.840549633397487f, 1.8562979903656263f, 1.8718021769015913f, 1.8870696490323797f, 1.9021075263969205f, 1.916922612182061f, 1.9315214116032138f, 1.9459101490553132f, 1.9600947840472698f, 1.9740810260220096f, 1.9878743481543455f, 2.0014800002101243f, 2.0149030205422647f, 2.028148247292285f, 2.0412203288596382f, 2.0541237336955462f, 2.066862759472976f, 2.0794415416798357f, 2.0918640616783932f, 2.1041341542702074f, 2.1162555148025524f, 2.128231705849268f, 2.1400661634962708f, 2.151762203259462f, 2.163323025660538f, 2.174751721484161f, 2.186051276738094f, 2.1972245773362196f, 2.2082744135228043f, 2.2192034840549946f, 2.2300144001592104f, 2.2407096892759584f, 2.2512917986064953f, 2.2617630984737906f, 2.272125885509337f, 2.2823823856765264f, 2.2925347571405443f, 2.302585092994046f, 2.312535423847214f, 2.322387720290225f, 2.33214389523559f, 2.341805806147327f, 2.3513752571634776f, 2.3608540011180215f, 2.3702437414678603f, 2.379546134130174f, 2.388762789235098f, 2.3978952727983707f, 2.4069451083182885f, 2.4159137783010487f, 2.424802725718295f, 2.4336133554004498f, 2.4423470353692043f, 2.451005098112319f, 2.4595888418037104f, 2.468099531471619f, 2.4765384001174837f, 2.4849066497880004f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape;
-};
-
-} // namespace generated_tests::log
-namespace generated_tests::log {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f, 1.7f, 1.8f, 1.9f, 2.0f, 2.1f, 2.2f, 2.3f, 2.4f, 2.5f, 2.6f, 2.7f, 2.8f, 2.9f, 3.0f, 3.1f, 3.2f, 3.3f, 3.4f, 3.5f, 3.6f, 3.7f, 3.8f, 3.9f, 4.0f, 4.1f, 4.2f, 4.3f, 4.4f, 4.5f, 4.6f, 4.7f, 4.8f, 4.9f, 5.0f, 5.1f, 5.2f, 5.3f, 5.4f, 5.5f, 5.6f, 5.7f, 5.8f, 5.9f, 6.0f, 6.1f, 6.2f, 6.3f, 6.4f, 6.5f, 6.6f, 6.7f, 6.8f, 6.9f, 7.0f, 7.1f, 7.2f, 7.3f, 7.4f, 7.5f, 7.6f, 7.7f, 7.8f, 7.9f, 8.0f, 8.1f, 8.2f, 8.3f, 8.4f, 8.5f, 8.6f, 8.7f, 8.8f, 8.9f, 9.0f, 9.1f, 9.2f, 9.3f, 9.4f, 9.5f, 9.6f, 9.7f, 9.8f, 9.9f, 10.0f, 10.1f, 10.2f, 10.3f, 10.4f, 10.5f, 10.6f, 10.7f, 10.8f, 10.9f, 11.0f, 11.1f, 11.2f, 11.3f, 11.4f, 11.5f, 11.6f, 11.7f, 11.8f, 11.9f, 12.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 3, 4, 5}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {-2.3025850929940455f, -1.6094379124341003f, -1.2039728043259361f, -0.916290731874155f, -0.6931471805599453f, -0.5108256237659907f, -0.35667494393873245f, -0.2231435513142097f, -0.10536051565782628f, 0.0f, 0.09531017980432493f, 0.1823215567939546f, 0.26236426446749106f, 0.3364722366212129f, 0.4054651081081644f, 0.47000362924573563f, 0.5306282510621704f, 0.5877866649021191f, 0.6418538861723947f, 0.6931471805599453f, 0.7419373447293773f, 0.7884573603642703f, 0.8329091229351039f, 0.8754687373538999f, 0.9162907318741551f, 0.9555114450274363f, 0.9932517730102834f, 1.0296194171811581f, 1.0647107369924282f, 1.0986122886681098f, 1.1314021114911006f, 1.1631508098056809f, 1.1939224684724346f, 1.2237754316221157f, 1.252762968495368f, 1.2809338454620642f, 1.308332819650179f, 1.33500106673234f, 1.3609765531356006f, 1.3862943611198906f, 1.410986973710262f, 1.4350845252893227f, 1.4586150226995167f, 1.4816045409242156f, 1.5040773967762742f, 1.5260563034950492f, 1.547562508716013f, 1.5686159179138452f, 1.589235205116581f, 1.6094379124341003f, 1.62924053973028f, 1.6486586255873816f, 1.667706820558076f, 1.6863989535702288f, 1.7047480922384253f, 1.7227665977411035f, 1.7404661748405046f, 1.7578579175523736f, 1.7749523509116738f, 1.791759469228055f, 1.8082887711792655f, 1.824549292051046f, 1.840549633397487f, 1.8562979903656263f, 1.8718021769015913f, 1.8870696490323797f, 1.9021075263969205f, 1.916922612182061f, 1.9315214116032138f, 1.9459101490553132f, 1.9600947840472698f, 1.9740810260220096f, 1.9878743481543455f, 2.0014800002101243f, 2.0149030205422647f, 2.028148247292285f, 2.0412203288596382f, 2.0541237336955462f, 2.066862759472976f, 2.0794415416798357f, 2.0918640616783932f, 2.1041341542702074f, 2.1162555148025524f, 2.128231705849268f, 2.1400661634962708f, 2.151762203259462f, 2.163323025660538f, 2.174751721484161f, 2.186051276738094f, 2.1972245773362196f, 2.2082744135228043f, 2.2192034840549946f, 2.2300144001592104f, 2.2407096892759584f, 2.2512917986064953f, 2.2617630984737906f, 2.272125885509337f, 2.2823823856765264f, 2.2925347571405443f, 2.302585092994046f, 2.312535423847214f, 2.322387720290225f, 2.33214389523559f, 2.341805806147327f, 2.3513752571634776f, 2.3608540011180215f, 2.3702437414678603f, 2.379546134130174f, 2.388762789235098f, 2.3978952727983707f, 2.4069451083182885f, 2.4159137783010487f, 2.424802725718295f, 2.4336133554004498f, 2.4423470353692043f, 2.451005098112319f, 2.4595888418037104f, 2.468099531471619f, 2.4765384001174837f, 2.4849066497880004f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_relaxed;
-};
-
-} // namespace generated_tests::log
-namespace generated_tests::log {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_float16 = {
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_float16_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -359,7 +359,7 @@ static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_sha
 },
 }, // End of an example
 };
-return examples_dynamic_output_shape_float16;
+return examples_float16_dynamic_output_shape;
 };
 
 } // namespace generated_tests::log

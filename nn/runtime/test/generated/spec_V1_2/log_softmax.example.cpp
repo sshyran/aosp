@@ -65,6 +65,66 @@ return examples;
 } // namespace generated_tests::log_softmax
 namespace generated_tests::log_softmax {
 
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.0f, -6.0f, 2.0f, 4.0f, 3.0f, -2.0f, 10.0f, 1.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {-4.14297f, -10.14297f, -2.14297f, -0.142971f, -7.00104f, -12.00104f, -0.00104087f, -9.00104f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_dynamic_output_shape;
+};
+
+} // namespace generated_tests::log_softmax
+namespace generated_tests::log_softmax {
+
 std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed() {
 static std::vector<::test_helper::MixedTypedExample> examples_relaxed = {
 // Begin of an example
@@ -120,6 +180,66 @@ static std::vector<::test_helper::MixedTypedExample> examples_relaxed = {
 }, // End of an example
 };
 return examples_relaxed;
+};
+
+} // namespace generated_tests::log_softmax
+namespace generated_tests::log_softmax {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dynamic_output_shape = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.0f, -6.0f, 2.0f, 4.0f, 3.0f, -2.0f, 10.0f, 1.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {-4.14297f, -10.14297f, -2.14297f, -0.142971f, -7.00104f, -12.00104f, -0.00104087f, -9.00104f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_relaxed_dynamic_output_shape;
 };
 
 } // namespace generated_tests::log_softmax
@@ -185,128 +305,8 @@ return examples_float16;
 } // namespace generated_tests::log_softmax
 namespace generated_tests::log_softmax {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, -6.0f, 2.0f, 4.0f, 3.0f, -2.0f, 10.0f, 1.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {-4.14297f, -10.14297f, -2.14297f, -0.142971f, -7.00104f, -12.00104f, -0.00104087f, -9.00104f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape;
-};
-
-} // namespace generated_tests::log_softmax
-namespace generated_tests::log_softmax {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, -6.0f, 2.0f, 4.0f, 3.0f, -2.0f, 10.0f, 1.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {-4.14297f, -10.14297f, -2.14297f, -0.142971f, -7.00104f, -12.00104f, -0.00104087f, -9.00104f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_relaxed;
-};
-
-} // namespace generated_tests::log_softmax
-namespace generated_tests::log_softmax {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_float16 = {
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_float16_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -359,7 +359,7 @@ static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_sha
 },
 }, // End of an example
 };
-return examples_dynamic_output_shape_float16;
+return examples_float16_dynamic_output_shape;
 };
 
 } // namespace generated_tests::log_softmax
@@ -425,6 +425,66 @@ return examples_2;
 } // namespace generated_tests::log_softmax
 namespace generated_tests::log_softmax {
 
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_2 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 4, 2}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.0f, -6.0f, 2.0f, 4.0f, 3.0f, -2.0f, 10.0f, 1.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 4, 2}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {-0.00247565f, -6.00247f, -2.12692f, -0.126928f, -0.00671534f, -5.00671f, -0.000123374f, -9.00012f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_dynamic_output_shape_2;
+};
+
+} // namespace generated_tests::log_softmax
+namespace generated_tests::log_softmax {
+
 std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_2() {
 static std::vector<::test_helper::MixedTypedExample> examples_relaxed_2 = {
 // Begin of an example
@@ -480,6 +540,66 @@ static std::vector<::test_helper::MixedTypedExample> examples_relaxed_2 = {
 }, // End of an example
 };
 return examples_relaxed_2;
+};
+
+} // namespace generated_tests::log_softmax
+namespace generated_tests::log_softmax {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dynamic_output_shape_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dynamic_output_shape_2 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 4, 2}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.0f, -6.0f, 2.0f, 4.0f, 3.0f, -2.0f, 10.0f, 1.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 4, 2}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {-0.00247565f, -6.00247f, -2.12692f, -0.126928f, -0.00671534f, -5.00671f, -0.000123374f, -9.00012f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_relaxed_dynamic_output_shape_2;
 };
 
 } // namespace generated_tests::log_softmax
@@ -545,128 +665,8 @@ return examples_float16_2;
 } // namespace generated_tests::log_softmax
 namespace generated_tests::log_softmax {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_2() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_2 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 4, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, -6.0f, 2.0f, 4.0f, 3.0f, -2.0f, 10.0f, 1.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 4, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {-0.00247565f, -6.00247f, -2.12692f, -0.126928f, -0.00671534f, -5.00671f, -0.000123374f, -9.00012f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_2;
-};
-
-} // namespace generated_tests::log_softmax
-namespace generated_tests::log_softmax {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_2() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_2 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 4, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, -6.0f, 2.0f, 4.0f, 3.0f, -2.0f, 10.0f, 1.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 4, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {-0.00247565f, -6.00247f, -2.12692f, -0.126928f, -0.00671534f, -5.00671f, -0.000123374f, -9.00012f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_relaxed_2;
-};
-
-} // namespace generated_tests::log_softmax
-namespace generated_tests::log_softmax {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16_2() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_float16_2 = {
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16_dynamic_output_shape_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_float16_dynamic_output_shape_2 = {
 // Begin of an example
 {
 .operands = {
@@ -719,7 +719,7 @@ static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_sha
 },
 }, // End of an example
 };
-return examples_dynamic_output_shape_float16_2;
+return examples_float16_dynamic_output_shape_2;
 };
 
 } // namespace generated_tests::log_softmax
@@ -785,6 +785,66 @@ return examples_3;
 } // namespace generated_tests::log_softmax
 namespace generated_tests::log_softmax {
 
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_3() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_3 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 2, 4, 1}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.0f, 2.0f, 3.0f, 10.0f, -6.0f, 4.0f, -2.0f, 1.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 2, 4, 1}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {-0.00247565f, -2.12692f, -0.00671534f, -0.000123374f, -6.00247f, -0.126928f, -5.00671f, -9.00012f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_dynamic_output_shape_3;
+};
+
+} // namespace generated_tests::log_softmax
+namespace generated_tests::log_softmax {
+
 std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_3() {
 static std::vector<::test_helper::MixedTypedExample> examples_relaxed_3 = {
 // Begin of an example
@@ -840,6 +900,66 @@ static std::vector<::test_helper::MixedTypedExample> examples_relaxed_3 = {
 }, // End of an example
 };
 return examples_relaxed_3;
+};
+
+} // namespace generated_tests::log_softmax
+namespace generated_tests::log_softmax {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dynamic_output_shape_3() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dynamic_output_shape_3 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 2, 4, 1}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.0f, 2.0f, 3.0f, 10.0f, -6.0f, 4.0f, -2.0f, 1.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 2, 4, 1}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {-0.00247565f, -2.12692f, -0.00671534f, -0.000123374f, -6.00247f, -0.126928f, -5.00671f, -9.00012f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_relaxed_dynamic_output_shape_3;
 };
 
 } // namespace generated_tests::log_softmax
@@ -905,128 +1025,8 @@ return examples_float16_3;
 } // namespace generated_tests::log_softmax
 namespace generated_tests::log_softmax {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_3() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_3 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 2, 4, 1}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, 2.0f, 3.0f, 10.0f, -6.0f, 4.0f, -2.0f, 1.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 2, 4, 1}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {-0.00247565f, -2.12692f, -0.00671534f, -0.000123374f, -6.00247f, -0.126928f, -5.00671f, -9.00012f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_3;
-};
-
-} // namespace generated_tests::log_softmax
-namespace generated_tests::log_softmax {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_3() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_3 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 2, 4, 1}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, 2.0f, 3.0f, 10.0f, -6.0f, 4.0f, -2.0f, 1.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 2, 4, 1}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {-0.00247565f, -2.12692f, -0.00671534f, -0.000123374f, -6.00247f, -0.126928f, -5.00671f, -9.00012f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_relaxed_3;
-};
-
-} // namespace generated_tests::log_softmax
-namespace generated_tests::log_softmax {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16_3() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_float16_3 = {
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16_dynamic_output_shape_3() {
+static std::vector<::test_helper::MixedTypedExample> examples_float16_dynamic_output_shape_3 = {
 // Begin of an example
 {
 .operands = {
@@ -1079,7 +1079,7 @@ static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_sha
 },
 }, // End of an example
 };
-return examples_dynamic_output_shape_float16_3;
+return examples_float16_dynamic_output_shape_3;
 };
 
 } // namespace generated_tests::log_softmax
@@ -1145,6 +1145,66 @@ return examples_4;
 } // namespace generated_tests::log_softmax
 namespace generated_tests::log_softmax {
 
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_4() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_4 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.0f, -0.6f, 0.2f, 0.4f, 0.3f, -0.2f, 1.0f, 0.1f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {-4.14297f, -10.14297f, -2.14297f, -0.142971f, -7.00104f, -12.00104f, -0.00104087f, -9.00104f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_dynamic_output_shape_4;
+};
+
+} // namespace generated_tests::log_softmax
+namespace generated_tests::log_softmax {
+
 std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_4() {
 static std::vector<::test_helper::MixedTypedExample> examples_relaxed_4 = {
 // Begin of an example
@@ -1200,6 +1260,66 @@ static std::vector<::test_helper::MixedTypedExample> examples_relaxed_4 = {
 }, // End of an example
 };
 return examples_relaxed_4;
+};
+
+} // namespace generated_tests::log_softmax
+namespace generated_tests::log_softmax {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dynamic_output_shape_4() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dynamic_output_shape_4 = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.0f, -0.6f, 0.2f, 0.4f, 0.3f, -0.2f, 1.0f, 0.1f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {-4.14297f, -10.14297f, -2.14297f, -0.142971f, -7.00104f, -12.00104f, -0.00104087f, -9.00104f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_relaxed_dynamic_output_shape_4;
 };
 
 } // namespace generated_tests::log_softmax
@@ -1265,128 +1385,8 @@ return examples_float16_4;
 } // namespace generated_tests::log_softmax
 namespace generated_tests::log_softmax {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_4() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_4 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, -0.6f, 0.2f, 0.4f, 0.3f, -0.2f, 1.0f, 0.1f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {-4.14297f, -10.14297f, -2.14297f, -0.142971f, -7.00104f, -12.00104f, -0.00104087f, -9.00104f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_4;
-};
-
-} // namespace generated_tests::log_softmax
-namespace generated_tests::log_softmax {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_4() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_4 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, -0.6f, 0.2f, 0.4f, 0.3f, -0.2f, 1.0f, 0.1f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 1, 1, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {-4.14297f, -10.14297f, -2.14297f, -0.142971f, -7.00104f, -12.00104f, -0.00104087f, -9.00104f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_relaxed_4;
-};
-
-} // namespace generated_tests::log_softmax
-namespace generated_tests::log_softmax {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16_4() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_float16_4 = {
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16_dynamic_output_shape_4() {
+static std::vector<::test_helper::MixedTypedExample> examples_float16_dynamic_output_shape_4 = {
 // Begin of an example
 {
 .operands = {
@@ -1439,7 +1439,7 @@ static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_sha
 },
 }, // End of an example
 };
-return examples_dynamic_output_shape_float16_4;
+return examples_float16_dynamic_output_shape_4;
 };
 
 } // namespace generated_tests::log_softmax
