@@ -20,6 +20,49 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox, generated_tests:
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_dynamic_output_shape) {
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_blackbox_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal(Model *model);
+bool is_ignored_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_all_inputs_as_internal) {
+    execute(CreateModel_all_inputs_as_internal,
+            is_ignored_all_inputs_as_internal,
+            get_examples_blackbox_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_all_inputs_as_internal)
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_blackbox_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
 void CreateModel_relaxed(Model *model);
 bool is_ignored_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_relaxed();
@@ -28,6 +71,48 @@ TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_relaxed) {
     execute(CreateModel_relaxed,
             is_ignored_relaxed,
             get_examples_blackbox_relaxed());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_relaxed_dynamic_output_shape) {
+    execute(CreateModel_relaxed_dynamic_output_shape,
+            is_ignored_relaxed_dynamic_output_shape,
+            get_examples_blackbox_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_relaxed_all_inputs_as_internal,
+            is_ignored_relaxed_all_inputs_as_internal,
+            get_examples_blackbox_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_blackbox_relaxed_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -49,42 +134,43 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_float16, generate
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape(Model *model);
-bool is_ignored_dynamic_output_shape(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_dynamic_output_shape();
+void CreateModel_float16_dynamic_output_shape(Model *model);
+bool is_ignored_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_dynamic_output_shape) {
-    execute(CreateModel_dynamic_output_shape,
-            is_ignored_dynamic_output_shape,
-            get_examples_blackbox_dynamic_output_shape());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_float16_dynamic_output_shape) {
+    execute(CreateModel_float16_dynamic_output_shape,
+            is_ignored_float16_dynamic_output_shape,
+            get_examples_blackbox_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_relaxed(Model *model);
-bool is_ignored_dynamic_output_shape_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_dynamic_output_shape_relaxed();
+void CreateModel_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_dynamic_output_shape_relaxed) {
-    execute(CreateModel_dynamic_output_shape_relaxed,
-            is_ignored_dynamic_output_shape_relaxed,
-            get_examples_blackbox_dynamic_output_shape_relaxed());
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_float16_all_inputs_as_internal) {
+    execute(CreateModel_float16_all_inputs_as_internal,
+            is_ignored_float16_all_inputs_as_internal,
+            get_examples_blackbox_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_float16_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_float16_all_inputs_as_internal)
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_float16(Model *model);
-bool is_ignored_dynamic_output_shape_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_dynamic_output_shape_float16();
+void CreateModel_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_dynamic_output_shape_float16) {
-    execute(CreateModel_dynamic_output_shape_float16,
-            is_ignored_dynamic_output_shape_float16,
-            get_examples_blackbox_dynamic_output_shape_float16());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_blackbox_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -106,6 +192,49 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_time_major, gener
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
+void CreateModel_dynamic_output_shape_2(Model *model);
+bool is_ignored_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_dynamic_output_shape) {
+    execute(CreateModel_dynamic_output_shape_2,
+            is_ignored_dynamic_output_shape_2,
+            get_examples_blackbox_time_major_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_2(Model *model);
+bool is_ignored_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_time_major_all_inputs_as_internal) {
+    execute(CreateModel_all_inputs_as_internal_2,
+            is_ignored_all_inputs_as_internal_2,
+            get_examples_blackbox_time_major_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_time_major_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_all_inputs_as_internal_2)
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_blackbox_time_major_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
 void CreateModel_relaxed_2(Model *model);
 bool is_ignored_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_relaxed();
@@ -114,6 +243,48 @@ TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_time_major_relaxed) {
     execute(CreateModel_relaxed_2,
             is_ignored_relaxed_2,
             get_examples_blackbox_time_major_relaxed());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_relaxed_dynamic_output_shape) {
+    execute(CreateModel_relaxed_dynamic_output_shape_2,
+            is_ignored_relaxed_dynamic_output_shape_2,
+            get_examples_blackbox_time_major_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_time_major_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_2,
+            is_ignored_relaxed_all_inputs_as_internal_2,
+            get_examples_blackbox_time_major_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_blackbox_time_major_relaxed_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -135,42 +306,43 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_time_major_float1
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_2(Model *model);
-bool is_ignored_dynamic_output_shape_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_dynamic_output_shape();
+void CreateModel_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_dynamic_output_shape) {
-    execute(CreateModel_dynamic_output_shape_2,
-            is_ignored_dynamic_output_shape_2,
-            get_examples_blackbox_time_major_dynamic_output_shape());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_float16_dynamic_output_shape) {
+    execute(CreateModel_float16_dynamic_output_shape_2,
+            is_ignored_float16_dynamic_output_shape_2,
+            get_examples_blackbox_time_major_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_relaxed_2(Model *model);
-bool is_ignored_dynamic_output_shape_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_dynamic_output_shape_relaxed();
+void CreateModel_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_dynamic_output_shape_relaxed) {
-    execute(CreateModel_dynamic_output_shape_relaxed_2,
-            is_ignored_dynamic_output_shape_relaxed_2,
-            get_examples_blackbox_time_major_dynamic_output_shape_relaxed());
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_time_major_float16_all_inputs_as_internal) {
+    execute(CreateModel_float16_all_inputs_as_internal_2,
+            is_ignored_float16_all_inputs_as_internal_2,
+            get_examples_blackbox_time_major_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_time_major_float16_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_float16_all_inputs_as_internal_2)
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_float16_2(Model *model);
-bool is_ignored_dynamic_output_shape_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_dynamic_output_shape_float16();
+void CreateModel_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_dynamic_output_shape_float16) {
-    execute(CreateModel_dynamic_output_shape_float16_2,
-            is_ignored_dynamic_output_shape_float16_2,
-            get_examples_blackbox_time_major_dynamic_output_shape_float16());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_blackbox_time_major_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -192,6 +364,49 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_time_major_merge_
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
+void CreateModel_dynamic_output_shape_3(Model *model);
+bool is_ignored_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_dynamic_output_shape) {
+    execute(CreateModel_dynamic_output_shape_3,
+            is_ignored_dynamic_output_shape_3,
+            get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_3(Model *model);
+bool is_ignored_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_all_inputs_as_internal) {
+    execute(CreateModel_all_inputs_as_internal_3,
+            is_ignored_all_inputs_as_internal_3,
+            get_examples_blackbox_time_major_merge_outputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_all_inputs_as_internal_3)
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_blackbox_time_major_merge_outputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
 void CreateModel_relaxed_3(Model *model);
 bool is_ignored_relaxed_3(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_relaxed();
@@ -200,6 +415,48 @@ TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_time_major_merge_outp
     execute(CreateModel_relaxed_3,
             is_ignored_relaxed_3,
             get_examples_blackbox_time_major_merge_outputs_relaxed());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_dynamic_output_shape_3(Model *model);
+bool is_ignored_relaxed_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_relaxed_dynamic_output_shape) {
+    execute(CreateModel_relaxed_dynamic_output_shape_3,
+            is_ignored_relaxed_dynamic_output_shape_3,
+            get_examples_blackbox_time_major_merge_outputs_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_3(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_3,
+            is_ignored_relaxed_all_inputs_as_internal_3,
+            get_examples_blackbox_time_major_merge_outputs_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_blackbox_time_major_merge_outputs_relaxed_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -221,42 +478,43 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_time_major_merge_
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_3(Model *model);
-bool is_ignored_dynamic_output_shape_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape();
+void CreateModel_float16_dynamic_output_shape_3(Model *model);
+bool is_ignored_float16_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_dynamic_output_shape) {
-    execute(CreateModel_dynamic_output_shape_3,
-            is_ignored_dynamic_output_shape_3,
-            get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_float16_dynamic_output_shape) {
+    execute(CreateModel_float16_dynamic_output_shape_3,
+            is_ignored_float16_dynamic_output_shape_3,
+            get_examples_blackbox_time_major_merge_outputs_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_relaxed_3(Model *model);
-bool is_ignored_dynamic_output_shape_relaxed_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape_relaxed();
+void CreateModel_float16_all_inputs_as_internal_3(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_dynamic_output_shape_relaxed) {
-    execute(CreateModel_dynamic_output_shape_relaxed_3,
-            is_ignored_dynamic_output_shape_relaxed_3,
-            get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape_relaxed());
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_float16_all_inputs_as_internal) {
+    execute(CreateModel_float16_all_inputs_as_internal_3,
+            is_ignored_float16_all_inputs_as_internal_3,
+            get_examples_blackbox_time_major_merge_outputs_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_float16_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_float16_all_inputs_as_internal_3)
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_float16_3(Model *model);
-bool is_ignored_dynamic_output_shape_float16_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape_float16();
+void CreateModel_float16_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_time_major_merge_outputs_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_dynamic_output_shape_float16) {
-    execute(CreateModel_dynamic_output_shape_float16_3,
-            is_ignored_dynamic_output_shape_float16_3,
-            get_examples_blackbox_time_major_merge_outputs_dynamic_output_shape_float16());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_time_major_merge_outputs_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_float16_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_float16_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_blackbox_time_major_merge_outputs_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -278,6 +536,49 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_reversed_inputs, 
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
+void CreateModel_dynamic_output_shape_4(Model *model);
+bool is_ignored_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_reversed_inputs_dynamic_output_shape) {
+    execute(CreateModel_dynamic_output_shape_4,
+            is_ignored_dynamic_output_shape_4,
+            get_examples_blackbox_reversed_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_4(Model *model);
+bool is_ignored_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_reversed_inputs_all_inputs_as_internal) {
+    execute(CreateModel_all_inputs_as_internal_4,
+            is_ignored_all_inputs_as_internal_4,
+            get_examples_blackbox_reversed_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_reversed_inputs_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_all_inputs_as_internal_4)
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_reversed_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_blackbox_reversed_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
 void CreateModel_relaxed_4(Model *model);
 bool is_ignored_relaxed_4(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_relaxed();
@@ -286,6 +587,48 @@ TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_reversed_inputs_relax
     execute(CreateModel_relaxed_4,
             is_ignored_relaxed_4,
             get_examples_blackbox_reversed_inputs_relaxed());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_dynamic_output_shape_4(Model *model);
+bool is_ignored_relaxed_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_reversed_inputs_relaxed_dynamic_output_shape) {
+    execute(CreateModel_relaxed_dynamic_output_shape_4,
+            is_ignored_relaxed_dynamic_output_shape_4,
+            get_examples_blackbox_reversed_inputs_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_4(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_reversed_inputs_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_4,
+            is_ignored_relaxed_all_inputs_as_internal_4,
+            get_examples_blackbox_reversed_inputs_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_reversed_inputs_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_blackbox_reversed_inputs_relaxed_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -307,42 +650,43 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_reversed_inputs_f
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_4(Model *model);
-bool is_ignored_dynamic_output_shape_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_dynamic_output_shape();
+void CreateModel_float16_dynamic_output_shape_4(Model *model);
+bool is_ignored_float16_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_reversed_inputs_dynamic_output_shape) {
-    execute(CreateModel_dynamic_output_shape_4,
-            is_ignored_dynamic_output_shape_4,
-            get_examples_blackbox_reversed_inputs_dynamic_output_shape());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_reversed_inputs_float16_dynamic_output_shape) {
+    execute(CreateModel_float16_dynamic_output_shape_4,
+            is_ignored_float16_dynamic_output_shape_4,
+            get_examples_blackbox_reversed_inputs_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_relaxed_4(Model *model);
-bool is_ignored_dynamic_output_shape_relaxed_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_dynamic_output_shape_relaxed();
+void CreateModel_float16_all_inputs_as_internal_4(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_reversed_inputs_dynamic_output_shape_relaxed) {
-    execute(CreateModel_dynamic_output_shape_relaxed_4,
-            is_ignored_dynamic_output_shape_relaxed_4,
-            get_examples_blackbox_reversed_inputs_dynamic_output_shape_relaxed());
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_reversed_inputs_float16_all_inputs_as_internal) {
+    execute(CreateModel_float16_all_inputs_as_internal_4,
+            is_ignored_float16_all_inputs_as_internal_4,
+            get_examples_blackbox_reversed_inputs_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_reversed_inputs_float16_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_float16_all_inputs_as_internal_4)
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_float16_4(Model *model);
-bool is_ignored_dynamic_output_shape_float16_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_dynamic_output_shape_float16();
+void CreateModel_float16_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_reversed_inputs_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_reversed_inputs_dynamic_output_shape_float16) {
-    execute(CreateModel_dynamic_output_shape_float16_4,
-            is_ignored_dynamic_output_shape_float16_4,
-            get_examples_blackbox_reversed_inputs_dynamic_output_shape_float16());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_reversed_inputs_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_float16_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_float16_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_blackbox_reversed_inputs_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -364,6 +708,49 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_aux_input, genera
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
+void CreateModel_dynamic_output_shape_5(Model *model);
+bool is_ignored_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_dynamic_output_shape) {
+    execute(CreateModel_dynamic_output_shape_5,
+            is_ignored_dynamic_output_shape_5,
+            get_examples_blackbox_aux_input_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_5(Model *model);
+bool is_ignored_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_aux_input_all_inputs_as_internal) {
+    execute(CreateModel_all_inputs_as_internal_5,
+            is_ignored_all_inputs_as_internal_5,
+            get_examples_blackbox_aux_input_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_aux_input_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_all_inputs_as_internal_5)
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_blackbox_aux_input_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
 void CreateModel_relaxed_5(Model *model);
 bool is_ignored_relaxed_5(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_relaxed();
@@ -372,6 +759,48 @@ TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_aux_input_relaxed) {
     execute(CreateModel_relaxed_5,
             is_ignored_relaxed_5,
             get_examples_blackbox_aux_input_relaxed());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_dynamic_output_shape_5(Model *model);
+bool is_ignored_relaxed_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_relaxed_dynamic_output_shape) {
+    execute(CreateModel_relaxed_dynamic_output_shape_5,
+            is_ignored_relaxed_dynamic_output_shape_5,
+            get_examples_blackbox_aux_input_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_5(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_aux_input_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_5,
+            is_ignored_relaxed_all_inputs_as_internal_5,
+            get_examples_blackbox_aux_input_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_blackbox_aux_input_relaxed_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -393,42 +822,43 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_aux_input_float16
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_5(Model *model);
-bool is_ignored_dynamic_output_shape_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_dynamic_output_shape();
+void CreateModel_float16_dynamic_output_shape_5(Model *model);
+bool is_ignored_float16_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_dynamic_output_shape) {
-    execute(CreateModel_dynamic_output_shape_5,
-            is_ignored_dynamic_output_shape_5,
-            get_examples_blackbox_aux_input_dynamic_output_shape());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_float16_dynamic_output_shape) {
+    execute(CreateModel_float16_dynamic_output_shape_5,
+            is_ignored_float16_dynamic_output_shape_5,
+            get_examples_blackbox_aux_input_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_relaxed_5(Model *model);
-bool is_ignored_dynamic_output_shape_relaxed_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_dynamic_output_shape_relaxed();
+void CreateModel_float16_all_inputs_as_internal_5(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_dynamic_output_shape_relaxed) {
-    execute(CreateModel_dynamic_output_shape_relaxed_5,
-            is_ignored_dynamic_output_shape_relaxed_5,
-            get_examples_blackbox_aux_input_dynamic_output_shape_relaxed());
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_aux_input_float16_all_inputs_as_internal) {
+    execute(CreateModel_float16_all_inputs_as_internal_5,
+            is_ignored_float16_all_inputs_as_internal_5,
+            get_examples_blackbox_aux_input_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_aux_input_float16_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_float16_all_inputs_as_internal_5)
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_float16_5(Model *model);
-bool is_ignored_dynamic_output_shape_float16_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_dynamic_output_shape_float16();
+void CreateModel_float16_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_aux_input_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_dynamic_output_shape_float16) {
-    execute(CreateModel_dynamic_output_shape_float16_5,
-            is_ignored_dynamic_output_shape_float16_5,
-            get_examples_blackbox_aux_input_dynamic_output_shape_float16());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_aux_input_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_float16_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_float16_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_blackbox_aux_input_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -450,6 +880,49 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_regular_and_aux_i
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
+void CreateModel_dynamic_output_shape_6(Model *model);
+bool is_ignored_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_dynamic_output_shape) {
+    execute(CreateModel_dynamic_output_shape_6,
+            is_ignored_dynamic_output_shape_6,
+            get_examples_blackbox_regular_and_aux_input_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_6(Model *model);
+bool is_ignored_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_all_inputs_as_internal) {
+    execute(CreateModel_all_inputs_as_internal_6,
+            is_ignored_all_inputs_as_internal_6,
+            get_examples_blackbox_regular_and_aux_input_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_all_inputs_as_internal_6)
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_blackbox_regular_and_aux_input_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
 void CreateModel_relaxed_6(Model *model);
 bool is_ignored_relaxed_6(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_relaxed();
@@ -458,6 +931,48 @@ TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_regular_and_aux_input
     execute(CreateModel_relaxed_6,
             is_ignored_relaxed_6,
             get_examples_blackbox_regular_and_aux_input_relaxed());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_dynamic_output_shape_6(Model *model);
+bool is_ignored_relaxed_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_relaxed_dynamic_output_shape) {
+    execute(CreateModel_relaxed_dynamic_output_shape_6,
+            is_ignored_relaxed_dynamic_output_shape_6,
+            get_examples_blackbox_regular_and_aux_input_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_6(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_6,
+            is_ignored_relaxed_all_inputs_as_internal_6,
+            get_examples_blackbox_regular_and_aux_input_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::bidirectional_sequence_rnn
+
+namespace generated_tests::bidirectional_sequence_rnn {
+
+void CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_relaxed_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_relaxed_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_blackbox_regular_and_aux_input_relaxed_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
@@ -479,42 +994,43 @@ TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_regular_and_aux_i
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_6(Model *model);
-bool is_ignored_dynamic_output_shape_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_dynamic_output_shape();
+void CreateModel_float16_dynamic_output_shape_6(Model *model);
+bool is_ignored_float16_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_dynamic_output_shape) {
-    execute(CreateModel_dynamic_output_shape_6,
-            is_ignored_dynamic_output_shape_6,
-            get_examples_blackbox_regular_and_aux_input_dynamic_output_shape());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_float16_dynamic_output_shape) {
+    execute(CreateModel_float16_dynamic_output_shape_6,
+            is_ignored_float16_dynamic_output_shape_6,
+            get_examples_blackbox_regular_and_aux_input_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_relaxed_6(Model *model);
-bool is_ignored_dynamic_output_shape_relaxed_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_dynamic_output_shape_relaxed();
+void CreateModel_float16_all_inputs_as_internal_6(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_dynamic_output_shape_relaxed) {
-    execute(CreateModel_dynamic_output_shape_relaxed_6,
-            is_ignored_dynamic_output_shape_relaxed_6,
-            get_examples_blackbox_regular_and_aux_input_dynamic_output_shape_relaxed());
+TEST_F(GeneratedTests, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_float16_all_inputs_as_internal) {
+    execute(CreateModel_float16_all_inputs_as_internal_6,
+            is_ignored_float16_all_inputs_as_internal_6,
+            get_examples_blackbox_regular_and_aux_input_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
+TEST_AVAILABLE_SINCE(V1_2, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_float16_all_inputs_as_internal, generated_tests::bidirectional_sequence_rnn::CreateModel_float16_all_inputs_as_internal_6)
 
 namespace generated_tests::bidirectional_sequence_rnn {
 
-void CreateModel_dynamic_output_shape_float16_6(Model *model);
-bool is_ignored_dynamic_output_shape_float16_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_dynamic_output_shape_float16();
+void CreateModel_float16_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_float16_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_regular_and_aux_input_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_dynamic_output_shape_float16) {
-    execute(CreateModel_dynamic_output_shape_float16_6,
-            is_ignored_dynamic_output_shape_float16_6,
-            get_examples_blackbox_regular_and_aux_input_dynamic_output_shape_float16());
+TEST_F(DynamicOutputShapeTest, bidirectional_sequence_rnn_blackbox_regular_and_aux_input_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_float16_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_float16_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_blackbox_regular_and_aux_input_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::bidirectional_sequence_rnn
