@@ -128,7 +128,7 @@ def DumpCtsModel(model, model_fd):
     print("}} // namespace {namespace}".format(namespace=namespace), file=model_fd)
     model.dumped = True
 
-def DumpMixedType(operands, feedDict):
+def DumpMixedType(operands):
     supportedTensors = [
         "DIMENSIONS",
         "TENSOR_FLOAT32",
@@ -143,11 +143,10 @@ def DumpMixedType(operands, feedDict):
         "TENSOR_QUANT8_SYMM",
     ]
     typedMap = {t: [] for t in supportedTensors}
-    FeedAndGet = lambda op, d: op.Feed(d).GetListInitialization()
     # group the operands by type
     for operand in operands:
         try:
-            typedMap[operand.type.type].append(FeedAndGet(operand, feedDict))
+            typedMap[operand.type.type].append(operand.GetListInitialization())
             typedMap["DIMENSIONS"].append("{%d, {%s}}"%(
                 operand.index, tg.GetJointStr(operand.dimensions)))
         except KeyError as e:
@@ -196,18 +195,17 @@ def DumpCtsExample(example, example_fd):
     print("namespace {namespace} {{\n".format(namespace=namespace), file=example_fd)
     print("std::vector<::test_helper::MixedTypedExample>& get_%s() {" % (example.examplesName), file=example_fd)
     print("static std::vector<::test_helper::MixedTypedExample> %s = {" % (example.examplesName), file=example_fd)
-    for inputFeedDict, outputFeedDict in example.feedDicts:
-        print ('// Begin of an example', file = example_fd)
-        print ('{\n.operands = {', file = example_fd)
-        inputs = DumpMixedType(example.model.GetInputs(), inputFeedDict)
-        outputs = DumpMixedType(example.model.GetOutputs(), outputFeedDict)
-        print ('//Input(s)\n%s,' % inputs , file = example_fd)
-        print ('//Output(s)\n%s' % outputs, file = example_fd)
-        print ('},', file = example_fd)
-        if example.expectedMultinomialDistributionTolerance is not None:
-          print ('.expectedMultinomialDistributionTolerance = %f' %
-                 example.expectedMultinomialDistributionTolerance, file = example_fd)
-        print ('}, // End of an example', file = example_fd)
+    print ('// Begin of an example', file = example_fd)
+    print ('{\n.operands = {', file = example_fd)
+    inputs = DumpMixedType(example.model.GetInputs())
+    outputs = DumpMixedType(example.model.GetOutputs())
+    print ('//Input(s)\n%s,' % inputs , file = example_fd)
+    print ('//Output(s)\n%s' % outputs, file = example_fd)
+    print ('},', file = example_fd)
+    if example.expectedMultinomialDistributionTolerance is not None:
+        print ('.expectedMultinomialDistributionTolerance = %f' %
+                example.expectedMultinomialDistributionTolerance, file = example_fd)
+    print ('}, // End of an example', file = example_fd)
     print("};", file=example_fd)
     print("return %s;" % (example.examplesName), file=example_fd)
     print("};", file=example_fd)

@@ -25,7 +25,7 @@ Model().Operation("CONV_2D", i1, f1, b1, 0, 0, 0, 0, 1, 1, 0).To(o1)
 Example({
     i1: [138, 138, 138, 138, 138, 138],
     o1: [137, 141, 145, 137, 141, 145, 137, 141, 145]
-}).AddInput(f1, b1)
+})
 
 # TEST 2: layout param, NHWC/NCHW layouts
 layout = BoolScalar("layout", False) # NHWC
@@ -40,7 +40,7 @@ Model("layouts").Operation("CONV_2D", i2, f2, b2, 0, 0, 0, 0, 1, 1, 0, layout).T
 Example({
     i2: [138, 108, 138, 108, 138, 108],
     o2: [121, 118, 115, 121, 118, 115, 121, 118, 115]
-}).AddNchw(i2, o2, layout).AddInput(f2, b2)
+}).AddNchw(i2, o2, layout)
 
 # TEST 3: zero-sized input
 
