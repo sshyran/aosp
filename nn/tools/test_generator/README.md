@@ -116,7 +116,6 @@ You can add variations to the example so that the test generator can automatical
 - DataLayoutConverter
 - AxisConverter
 - RelaxedModeConverter
-- ParameterAsInputConverter
 - ActivationConverter
 
 #### DataTypeConverter
@@ -183,16 +182,6 @@ Convert the model to enable/disable relaxed computation.
 converter = RelaxedModeConverter(is_relaxed, name="variation_name")
 ```
 
-#### ParameterAsInputConverter
-
-Convert a certain parameter to model input, e.g. weight in CONV_2D. The caller need to provide a list of target operands to convert.
-
-```Python
-converter = ParameterAsInputConverter(name="variation_name").Identify(
-    [op1, op2, ...]
-)
-```
-
 #### ActivationConverter
 
 Convert the output by certain activation, the original activation is assumed to be NONE. The caller need to provide a list of target operands to transform,  and also the activation parameter to set.
@@ -228,6 +217,26 @@ example.AddVariations(nchw, includeDefault=False).AddVariations(relaxed, quant8)
 ```
 
 The example above will result in 3 examples: `[nchw, default], [nchw, relaxed], [nchw, quant8]`.
+
+#### Default variations
+
+By default, the test generator will apply the following variations automatically.
+
+- **AllTensorsAsInputsConverter:** Convert all constant tensors in the model to model inputs. Will skip if the model does not have any constant tensor, or if the model has more than one operations. If not explicitly disabled, this variation will be automatically applied to all tests.
+
+- **AllInputsAsInternalCoverter:** Add a dummy ADD operation before each model input to make it as an internal operand. Will skip if the model does not have any input tensor that is compatible to the ADD operation, or if the model has more than one operations. If not explicitly disabled, this variation will be automatically applied to all tests.
+
+- **DynamicOutputShapeConverter:** Convert the model to enable dynamic output shape test. If not explicitly disabled, this variation will be automatically applied to all tests introduce in HAL version 1.2 or later.
+
+You can opt-out by invoking the corresponding methods on examples.
+
+```Python
+# Disable AllTensorsAsInputsConverter and AllInputsAsInternalCoverter.
+example.DisableLifeTimeVariation()
+
+# Disable DynamicOutputShapeConverter.
+example.DisableDynamicOutputShapeVariation()
+```
 
 #### Some helper functions
 
@@ -284,11 +293,6 @@ example.AddVariations(*[
                 for i in range(dim) for j in range(i, dim) for k in [j, j - dim]
     ], includeDefault=False)
 example.AddAllDimsAndAxis(dims, *op_list)
-
-# ParameterAsInputConverter
-example.AddVariations(ParameterAsInputConverter().Identify(op_list))
-example.AddVariations(("as_input", op_list))
-example.AddInput(*op_list)
 
 # RelaxedModeConverter
 example.Addvariations(RelaxedModeConverter(True))
@@ -377,9 +381,16 @@ example.AddNchw(i1, f1, o1, layout, includeDefault=False)
 
 # Add two more groups of variations
 example.AddInput(f1, b1).AddVariations("relaxed", quant8).AddAllActivations(o1, act)
+
+# The following variations are added implicitly.
+# example.AddVariations(AllTensorsAsInputsConverter())
+# example.AddVariations(AllInputsAsInternalCoverter())
+
+# The following variation is added implicitly if this test is introduced in v1.2 or later.
+# example.AddVariations(DynamicOutputShapeConverter())
 ```
 
-The spec above will result in 24 tests.
+The spec above will result in 96 tests if introduced in v1.0 or v1.1, and 192 tests if introduced in v1.2 or later.
 
 ## Generate Tests
 
