@@ -31,3 +31,31 @@ TEST_F(DynamicOutputShapeTest, embedding_lookup_relaxed_dynamic_output_shape) {
 
 } // namespace generated_tests::embedding_lookup_relaxed
 
+namespace generated_tests::embedding_lookup_relaxed {
+
+void CreateModel_all_inputs_as_internal(Model *model);
+bool is_ignored_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, embedding_lookup_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_all_inputs_as_internal,
+            is_ignored_all_inputs_as_internal,
+            get_examples_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::embedding_lookup_relaxed
+
+namespace generated_tests::embedding_lookup_relaxed {
+
+void CreateModel_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, embedding_lookup_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::embedding_lookup_relaxed
+
