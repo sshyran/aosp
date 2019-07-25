@@ -55,8 +55,15 @@ Model("axis").Operation("SOFTMAX", i, 0.000001, axis).To(o)
 Example(example2).AddVariations("relaxed", "float16", quant8).AddAllDimsAndAxis(i, o, axis)
 
 # SOFTMAX of rank 4 and TENSOR_FLOAT32 and TENSOR_QUANT8_ASYMM data type is introduced in V1_0.
-Example.SetVersion("V1_0", "softmax_v1_2", "softmax_v1_2_quant8", \
-                           "softmax_v1_2_2", "softmax_v1_2_quant8_2")
+Example.SetVersion("V1_0",
+                   "softmax_v1_2",
+                   "softmax_v1_2_all_inputs_as_internal",
+                   "softmax_v1_2_quant8",
+                   "softmax_v1_2_quant8_all_inputs_as_internal",
+                   "softmax_v1_2_2",
+                   "softmax_v1_2_all_inputs_as_internal_2",
+                   "softmax_v1_2_quant8_2",
+                   "softmax_v1_2_quant8_all_inputs_as_internal_2")
 
 
 # TEST 3: zero-sized input
