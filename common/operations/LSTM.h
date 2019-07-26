@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_LSTM_H
-#define FRAMEWORKS_ML_COMMON_OPERATIONS_LSTM_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSTM_H
+#define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSTM_H
 
 #include "ActivationFunctor.h"
 #include "HalOperation.h"
@@ -247,4 +247,4 @@ class LSTMCell {
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_COMMON_OPERATIONS_LSTM_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSTM_H

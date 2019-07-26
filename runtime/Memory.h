@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_RUNTIME_MEMORY_H
-#define FRAMEWORKS_ML_RUNTIME_MEMORY_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MEMORY_H
+#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MEMORY_H
 
 #include "HalInterfaces.h"
 #include "NeuralNetworks.h"
@@ -200,4 +200,4 @@ class MemoryTracker {
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_RUNTIME_MEMORY_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MEMORY_H

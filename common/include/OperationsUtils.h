@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_UTILS_H
-#define FRAMEWORKS_ML_COMMON_OPERATIONS_UTILS_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_UTILS_H
+#define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_UTILS_H
 
 #include "HalInterfaces.h"
 #include "Utils.h"
@@ -431,4 +431,4 @@ inline bool mergeThirdDimension(const T* bufferA, const std::vector<uint32_t>& d
 } // namespace nn
 } // namespace android
 
-#endif  // FRAMEWORKS_ML_COMMON_OPERATIONS_UTILS_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_UTILS_H

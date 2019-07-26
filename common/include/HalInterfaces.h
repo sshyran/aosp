@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_COMMON_HAL_INTERFACES_H
-#define FRAMEWORKS_ML_COMMON_HAL_INTERFACES_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_HAL_INTERFACES_H
+#define ANDROID_FRAMEWORKS_ML_NN_COMMON_HAL_INTERFACES_H
 
 #include <android/hardware/neuralnetworks/1.0/IDevice.h>
 #include <android/hardware/neuralnetworks/1.0/IExecutionCallback.h>
@@ -93,4 +93,4 @@ using namespace hal;
 using ::android::hardware::neuralnetworks::V1_0::ErrorStatus;
 using ::android::hardware::neuralnetworks::V1_1::ExecutionPreference;
 
-#endif  // FRAMEWORKS_ML_COMMON_HAL_INTERFACES_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_HAL_INTERFACES_H

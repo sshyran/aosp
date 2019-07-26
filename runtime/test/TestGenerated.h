@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_RUNTIME_TEST_TEST_GENERATED_H
-#define FRAMEWORKS_ML_RUNTIME_TEST_TEST_GENERATED_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TEST_GENERATED_H
+#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TEST_GENERATED_H
 
 #include <gtest/gtest.h>
 
@@ -107,4 +107,4 @@ class GeneratedValidationTests : public GeneratedTests {
 
 }  // namespace generated_tests
 
-#endif  // FRAMEWORKS_ML_RUNTIME_TEST_TEST_GENERATED_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TEST_GENERATED_H

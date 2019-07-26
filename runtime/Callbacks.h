@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_RUNTIME_CALLBACKS_H
-#define FRAMEWORKS_ML_RUNTIME_CALLBACKS_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_CALLBACKS_H
+#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_CALLBACKS_H
 
 #include "HalInterfaces.h"
 
@@ -374,4 +374,4 @@ class ExecutionCallback : public hal::IExecutionCallback {
 
 }  // namespace android::nn
 
-#endif  // FRAMEWORKS_ML_RUNTIME_CALLBACKS_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_CALLBACKS_H

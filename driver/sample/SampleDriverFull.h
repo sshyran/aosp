@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_DRIVER_SAMPLE_SAMPLE_DRIVER_FULL_H
-#define FRAMEWORKS_ML_DRIVER_SAMPLE_SAMPLE_DRIVER_FULL_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_FULL_H
+#define ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_FULL_H
 
 #include "HalInterfaces.h"
 #include "SampleDriver.h"
@@ -40,4 +40,4 @@ class SampleDriverFull : public SampleDriver {
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_DRIVER_SAMPLE_SAMPLE_DRIVER_FULL_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_FULL_H
