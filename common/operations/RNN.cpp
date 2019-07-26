@@ -27,6 +27,8 @@
 namespace android {
 namespace nn {
 
+using namespace hal;
+
 RNN::RNN(const Operation& operation,
          std::vector<RunTimeOperandInfo>& operands) {
   NNTRACE_TRANS("RNN::RNN");

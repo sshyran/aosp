@@ -37,6 +37,8 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
+using namespace hal;
+
 template <typename T>
 inline bool eval(const T* inputData, const Shape& inputShape, int32_t axis,
                  const int32_t* indicesData, const Shape& indicesShape, T* outputData) {

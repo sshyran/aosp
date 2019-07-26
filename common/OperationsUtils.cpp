@@ -27,6 +27,8 @@ namespace nn {
 
 namespace {
 
+using namespace hal;
+
 bool validateOperandTypes(const std::vector<OperandType>& expectedTypes, const char* tag,
                           uint32_t operandCount,
                           std::function<OperandType(uint32_t)> getOperandType) {
