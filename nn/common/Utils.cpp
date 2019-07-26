@@ -33,6 +33,8 @@
 namespace android {
 namespace nn {
 
+using namespace hal;
+
 const char kVLogPropKey[] = "debug.nn.vlog";
 int vLogMask = ~0;
 
@@ -1781,7 +1783,7 @@ hidl_vec<Capabilities::OperandPerformance> nonExtensionOperandPerformance(Perfor
     using OpPerf = Capabilities::OperandPerformance;
 
     // Note: range presents enumerators in declaration order, not in numerical order.
-    static constexpr ::android::hardware::hidl_enum_range<OperandType> kOperandTypeRange;
+    static constexpr hidl_enum_range<OperandType> kOperandTypeRange;
 
     hidl_vec<OpPerf> ret(kOperandTypeRange.end() - kOperandTypeRange.begin());
 

@@ -36,6 +36,8 @@ namespace sample_driver {
 
 namespace {
 
+using namespace hal;
+
 using time_point = std::chrono::steady_clock::time_point;
 
 auto now() {

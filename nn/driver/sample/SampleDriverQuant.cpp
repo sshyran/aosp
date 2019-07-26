@@ -30,6 +30,8 @@ namespace android {
 namespace nn {
 namespace sample_driver {
 
+using namespace hal;
+
 class SampleDriverQuant : public SampleDriver {
 public:
     SampleDriverQuant() : SampleDriver("sample-quant") {}

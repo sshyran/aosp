@@ -130,8 +130,7 @@
 
 namespace {
 
-const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
-
+using namespace android::nn::hal;
 using CompilationBuilder = ::android::nn::CompilationBuilder;
 using Device = ::android::nn::Device;
 using DeviceManager = ::android::nn::DeviceManager;
@@ -139,21 +138,21 @@ using ExecutePreference = ::android::nn::test_wrapper::ExecutePreference;
 using ExecutionPlan = ::android::nn::ExecutionPlan;
 using ExecutionStep = ::android::nn::ExecutionStep;
 using HalVersion = ::android::nn::HalVersion;
-using HidlModel = ::android::hardware::neuralnetworks::V1_2::Model;
-using HidlToken =
-        ::android::hardware::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
+using HidlModel = V1_2::Model;
+using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 using ModelBuilder = ::android::nn::ModelBuilder;
 using Result = ::android::nn::test_wrapper::Result;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
-using WrapperSymmPerChannelQuantParams = ::android::nn::test_wrapper::SymmPerChannelQuantParams;
 using WrapperCompilation = ::android::nn::test_wrapper::Compilation;
 using WrapperModel = ::android::nn::test_wrapper::Model;
 using WrapperOperandType = ::android::nn::test_wrapper::OperandType;
+using WrapperSymmPerChannelQuantParams = ::android::nn::test_wrapper::SymmPerChannelQuantParams;
 using WrapperType = ::android::nn::test_wrapper::Type;
 
-template <typename T> using sp = ::android::sp<T>;
 template <typename T>
 using MQDescriptorSync = ::android::hardware::MQDescriptorSync<T>;
+
+const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
 Capabilities makeCapabilities(float perf) {
     PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};

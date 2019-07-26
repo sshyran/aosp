@@ -27,14 +27,16 @@
 namespace android::nn {
 namespace {
 
-using ::android::hardware::MQDescriptorSync;
+using namespace hal;
+
+using hardware::MQDescriptorSync;
 using FmqRequestDescriptor = MQDescriptorSync<FmqRequestDatum>;
 using FmqResultDescriptor = MQDescriptorSync<FmqResultDatum>;
 
 constexpr Timing kNoTiming = {std::numeric_limits<uint64_t>::max(),
                               std::numeric_limits<uint64_t>::max()};
 
-class BurstContextDeathHandler : public hardware::hidl_death_recipient {
+class BurstContextDeathHandler : public hidl_death_recipient {
    public:
     using Callback = std::function<void()>;
 
@@ -516,7 +518,7 @@ ExecutionBurstController::ExecutionBurstController(
         const std::shared_ptr<RequestChannelSender>& requestChannelSender,
         const std::shared_ptr<ResultChannelReceiver>& resultChannelReceiver,
         const sp<IBurstContext>& burstContext, const sp<ExecutionBurstCallback>& callback,
-        const sp<hardware::hidl_death_recipient>& deathHandler)
+        const sp<hidl_death_recipient>& deathHandler)
     : mRequestChannelSender(requestChannelSender),
       mResultChannelReceiver(resultChannelReceiver),
       mBurstContext(burstContext),

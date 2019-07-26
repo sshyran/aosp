@@ -33,6 +33,8 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
+using namespace hal;
+
 template <typename InputType, typename OutputType>
 bool compute(const InputType* inputData, const Shape& inputShape, OutputType* outputData) {
     const int numElements = getNumberOfElements(inputShape);
