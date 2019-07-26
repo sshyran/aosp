@@ -42,6 +42,8 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
+using namespace hal;
+
 template <typename T>
 inline bool instanceNormNhwc(const T* inputData, const Shape& inputShape, T gamma, T beta,
                              T epsilon, T* outputData, const Shape& outputShape) {

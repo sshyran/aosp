@@ -17,6 +17,7 @@
 #define LOG_TAG "Operations"
 
 #include "CpuOperationUtils.h"
+#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
@@ -31,6 +32,8 @@ namespace nn {
 namespace bbox_ops {
 
 namespace {
+
+using namespace hal;
 
 struct BoxEncodingCorner {
     float x1, y1, x2, y2;

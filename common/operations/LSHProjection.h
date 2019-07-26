@@ -36,10 +36,11 @@ struct Shape;
 
 class LSHProjection {
    public:
-    LSHProjection(const Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    LSHProjection(const hardware::neuralnetworks::V1_2::Operation& operation,
+                  std::vector<RunTimeOperandInfo>& operands);
 
-    static bool Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
-                        Shape* outputShape);
+    static bool Prepare(const hardware::neuralnetworks::V1_2::Operation& operation,
+                        std::vector<RunTimeOperandInfo>& operands, Shape* outputShape);
     template <typename T>
     bool Eval();
 

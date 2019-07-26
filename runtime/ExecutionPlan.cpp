@@ -47,12 +47,14 @@
 #include <utility>
 #include <vector>
 
-using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
-
 namespace android {
 namespace nn {
 
 namespace {
+
+using namespace hal;
+
+using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 
 // Opens cache file by filename and sets the handle to the opened fd. Returns false on fail. The
 // handle is expected to come in as empty, and is only set to a fd when the function returns true.

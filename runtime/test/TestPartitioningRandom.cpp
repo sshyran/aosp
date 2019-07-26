@@ -17,6 +17,7 @@
 #undef NDEBUG
 
 #include "CompilationBuilder.h"
+#include "HalInterfaces.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
@@ -89,14 +90,14 @@
 
 namespace android {
 
+using namespace nn::hal;
 using CompilationBuilder = nn::CompilationBuilder;
 using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
 using ExecutionPlan = nn::ExecutionPlan;
 using HalVersion = nn::HalVersion;
-using HidlModel = hardware::neuralnetworks::V1_2::Model;
-using HidlToken =
-        ::android::hardware::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
+using HidlModel = V1_2::Model;
+using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 using MemoryBuilder = nn::Memory;
 using ModelBuilder = nn::ModelBuilder;
 using Result = nn::test_wrapper::Result;

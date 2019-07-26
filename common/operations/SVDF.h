@@ -36,10 +36,12 @@ struct Shape;
 
 class SVDF {
    public:
-    SVDF(const Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    SVDF(const hardware::neuralnetworks::V1_2::Operation& operation,
+         std::vector<RunTimeOperandInfo>& operands);
 
-    static bool Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
-                        Shape* stateShape, Shape* outputShape);
+    static bool Prepare(const hardware::neuralnetworks::V1_2::Operation& operation,
+                        std::vector<RunTimeOperandInfo>& operands, Shape* stateShape,
+                        Shape* outputShape);
     bool Eval();
 
     static constexpr int kInputTensor = 0;
