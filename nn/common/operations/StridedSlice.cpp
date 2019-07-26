@@ -19,6 +19,7 @@
 #define LOG_TAG "Operations"
 
 #include "CpuOperationUtils.h"
+#include "HalInterfaces.h"
 #include "Operations.h"
 
 #include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
@@ -27,6 +28,8 @@
 
 namespace android {
 namespace nn {
+
+using namespace hal;
 
 bool stridedSliceGeneric(const uint8_t* inputData, const Shape& inputShape,
                          const int32_t* beginData, const int32_t* endData,

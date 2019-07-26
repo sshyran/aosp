@@ -29,6 +29,8 @@ using DeviceManager = ::android::nn::DeviceManager;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
 using TypeManager = ::android::nn::TypeManager;
 
+using namespace android::nn::hal;
+
 const char* kTestDriverName = "extensions-test-driver";
 const char* kTestExtension1 = "vendor.test.one";
 const char* kTestExtension2 = "vendor.test.two";

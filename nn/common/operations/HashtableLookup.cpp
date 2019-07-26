@@ -19,6 +19,7 @@
 #include "HashtableLookup.h"
 
 #include "CpuExecutor.h"
+#include "HalInterfaces.h"
 #include "Operations.h"
 
 #include "Tracing.h"
@@ -27,6 +28,8 @@ namespace android {
 namespace nn {
 
 namespace {
+
+using namespace hal;
 
 int greater(const void* a, const void* b) {
   return *static_cast<const int*>(a) - *static_cast<const int*>(b);

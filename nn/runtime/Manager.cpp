@@ -30,11 +30,12 @@
 #include <algorithm>
 #include <functional>
 
-using ::android::hardware::neuralnetworks::V1_2::implementation::ExecutionCallback;
-using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
-
 namespace android {
 namespace nn {
+
+using namespace hal;
+
+using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 
 bool Device::isCachingSupported() const {
     auto pair = getNumberOfCacheFilesNeeded();

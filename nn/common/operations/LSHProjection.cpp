@@ -19,6 +19,7 @@
 #include "LSHProjection.h"
 
 #include "CpuExecutor.h"
+#include "HalInterfaces.h"
 #include "Tracing.h"
 #include "Utils.h"
 
@@ -26,6 +27,8 @@
 
 namespace android {
 namespace nn {
+
+using namespace hal;
 
 LSHProjection::LSHProjection(const Operation& operation,
                              std::vector<RunTimeOperandInfo>& operands) {

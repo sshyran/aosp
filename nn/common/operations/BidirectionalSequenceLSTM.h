@@ -33,11 +33,12 @@ struct RunTimeOperandInfo;
 
 class BidirectionalSequenceLSTM {
    public:
-    BidirectionalSequenceLSTM(const Operation& operation,
+    BidirectionalSequenceLSTM(const hardware::neuralnetworks::V1_2::Operation& operation,
                               std::vector<RunTimeOperandInfo>& operands);
 
-    bool Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
-                 Shape* fwOutputShape, Shape* bwOutputShape);
+    bool Prepare(const hardware::neuralnetworks::V1_2::Operation& operation,
+                 std::vector<RunTimeOperandInfo>& operands, Shape* fwOutputShape,
+                 Shape* bwOutputShape);
     bool Eval();
 
     // Input Tensors of size {max_time, n_batch, n_input}

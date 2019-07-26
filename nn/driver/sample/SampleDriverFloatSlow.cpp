@@ -30,6 +30,8 @@ namespace android {
 namespace nn {
 namespace sample_driver {
 
+using namespace hal;
+
 class SampleDriverFloatSlow : public SampleDriver {
 public:
     SampleDriverFloatSlow() : SampleDriver("sample-float-slow") {}

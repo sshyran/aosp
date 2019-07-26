@@ -42,6 +42,8 @@ constexpr _Float16 kFloat16Lowest = -kFloat16Max;
 
 namespace {
 
+using namespace hal;
+
 template <typename T>
 inline bool compute(IOperationExecutionContext* context, T init, T func(T, T)) {
     const Shape inputShape = context->getInputShape(kInputTensor);
