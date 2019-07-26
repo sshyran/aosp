@@ -18,6 +18,7 @@
 
 #include "TopK_V2.h"
 
+#include "HalInterfaces.h"
 #include "OperationsUtils.h"
 
 #include <algorithm>
@@ -27,6 +28,8 @@ namespace nn {
 namespace topk_v2 {
 
 namespace {
+
+using namespace hal;
 
 template <typename T>
 bool evalGeneric(const T* inputData, const Shape& inputShape, const int32_t k, T* valuesData,

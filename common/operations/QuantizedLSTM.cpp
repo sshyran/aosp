@@ -20,6 +20,7 @@
 
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
+#include "HalInterfaces.h"
 
 #include "Tracing.h"
 
@@ -30,6 +31,8 @@ namespace android {
 namespace nn {
 
 namespace {
+
+using namespace hal;
 
 template <typename T>
 inline T* GetBuffer(RunTimeOperandInfo* operand) {

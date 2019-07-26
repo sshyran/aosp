@@ -28,6 +28,8 @@
 namespace android {
 namespace nn {
 
+using namespace hal;
+
 // class Dumper is a wrapper around an std::ostream (if instantiated
 // with a pointer to a stream) or around LOG(INFO) (otherwise).
 //
