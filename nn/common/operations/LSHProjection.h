@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_LSHPROJECTION_H
-#define FRAMEWORKS_ML_COMMON_OPERATIONS_LSHPROJECTION_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSHPROJECTION_H
+#define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSHPROJECTION_H
 
 #include "HalOperation.h"
 
@@ -77,4 +77,4 @@ void DenseLshProjection(const RunTimeOperandInfo* hash, const RunTimeOperandInfo
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_COMMON_OPERATIONS_LSHPROJECTION_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSHPROJECTION_H

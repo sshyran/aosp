@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_SVDF_H
-#define FRAMEWORKS_ML_COMMON_OPERATIONS_SVDF_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_SVDF_H
+#define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_SVDF_H
 
 #include "HalOperation.h"
 
@@ -75,4 +75,4 @@ class SVDF {
 }  // namespace nn
 }  // namespace android
 
-#endif
+#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_SVDF_H

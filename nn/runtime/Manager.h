@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_RUNTIME_MANAGER_H
-#define FRAMEWORKS_ML_RUNTIME_MANAGER_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H
+#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H
 
 #include "HalInterfaces.h"
 #include "Utils.h"
@@ -193,4 +193,4 @@ class DeviceManager {
 } // namespace nn
 } // namespace android
 
-#endif  // FRAMEWORKS_ML_RUNTIME_MANAGER_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H

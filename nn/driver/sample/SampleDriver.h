@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_DRIVER_SAMPLE_SAMPLE_DRIVER_H
-#define FRAMEWORKS_ML_DRIVER_SAMPLE_SAMPLE_DRIVER_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_H
+#define ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_H
 
 #include "CpuExecutor.h"
 #include "HalInterfaces.h"
@@ -111,4 +111,4 @@ class SamplePreparedModel : public hal::IPreparedModel {
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_DRIVER_SAMPLE_SAMPLE_DRIVER_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_H
