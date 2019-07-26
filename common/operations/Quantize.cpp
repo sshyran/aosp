@@ -36,6 +36,8 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
+using namespace hal;
+
 bool quantizeFloat32ToQuant8(const float* inputData, uint8_t* outputData,
                              const Shape& outputShape) {
     NNTRACE_COMP("quantizeFloat32ToQuant8");

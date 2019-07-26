@@ -29,6 +29,8 @@
 namespace android::nn {
 namespace {
 
+using namespace hal;
+
 constexpr Timing kNoTiming = {std::numeric_limits<uint64_t>::max(),
                               std::numeric_limits<uint64_t>::max()};
 

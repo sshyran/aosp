@@ -31,6 +31,8 @@
 namespace android {
 namespace nn {
 
+using namespace hal;
+
 // The maximum number of operands and operations that a model may have.
 const uint32_t MAX_NUMBER_OF_OPERANDS = 0xFFFFFFFE;
 const uint32_t MAX_NUMBER_OF_OPERATIONS = 0xFFFFFFFE;

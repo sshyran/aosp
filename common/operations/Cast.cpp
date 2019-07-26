@@ -17,6 +17,7 @@
 #define LOG_TAG "Operations"
 
 #include "Cast.h"
+#include "HalInterfaces.h"
 #include "Tracing.h"
 
 namespace android {
@@ -24,6 +25,8 @@ namespace nn {
 namespace cast {
 
 namespace {
+
+using namespace hal;
 
 template <typename FromT, typename ToT>
 void copyCast(const FromT* in, ToT* out, int numElements) {

@@ -34,6 +34,8 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
+using namespace hal;
+
 template <typename DataType, typename ComparisonType>
 bool compute(const std::function<bool(ComparisonType, ComparisonType)>& func, const DataType* aData,
              const Shape& aShape, const DataType* bData, const Shape& bShape, bool8* outputData,

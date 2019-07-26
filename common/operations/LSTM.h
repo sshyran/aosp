@@ -45,11 +45,12 @@ struct Shape;
 
 class LSTMCell {
    public:
-    LSTMCell(const Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    LSTMCell(const hardware::neuralnetworks::V1_2::Operation& operation,
+             std::vector<RunTimeOperandInfo>& operands);
 
-    bool Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
-                 Shape* scratchShape, Shape* outputStateShape, Shape* cellStateShape,
-                 Shape* outputShape);
+    bool Prepare(const hardware::neuralnetworks::V1_2::Operation& operation,
+                 std::vector<RunTimeOperandInfo>& operands, Shape* scratchShape,
+                 Shape* outputStateShape, Shape* cellStateShape, Shape* outputShape);
     bool Eval();
 
     // Input Tensors of size {n_batch, n_input}
