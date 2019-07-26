@@ -28,9 +28,8 @@ struct RunTimeOperandInfo;
 
 class HashtableLookup {
  public:
-  HashtableLookup(
-      const Operation &operation,
-      std::vector<RunTimeOperandInfo> &operands);
+  HashtableLookup(const hardware::neuralnetworks::V1_2::Operation& operation,
+                  std::vector<RunTimeOperandInfo>& operands);
 
   bool Eval();
 

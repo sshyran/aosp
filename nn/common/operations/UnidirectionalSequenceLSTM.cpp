@@ -83,6 +83,8 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
+using namespace hal;
+
 inline bool hasTensor(IOperationExecutionContext* context, const uint32_t tensor) {
     return context->getInputBuffer(tensor) != nullptr;
 }

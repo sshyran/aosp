@@ -19,6 +19,7 @@
 #define LOG_TAG "Operations"
 
 #include "CpuOperationUtils.h"
+#include "HalInterfaces.h"
 #include "OperationResolver.h"
 
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
@@ -30,6 +31,9 @@
 
 namespace android {
 namespace nn {
+
+using namespace hal;
+
 namespace broadcast {
 
 constexpr uint32_t kNumInputs = 3;

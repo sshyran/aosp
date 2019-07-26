@@ -28,6 +28,8 @@ namespace android {
 namespace nn {
 namespace prelu {
 
+using namespace hal;
+
 constexpr char kOperationName[] = "PRELU";
 
 constexpr uint32_t kNumInputs = 2;

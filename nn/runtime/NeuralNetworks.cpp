@@ -26,6 +26,7 @@
 #include "Callbacks.h"
 #include "CompilationBuilder.h"
 #include "ExecutionBuilder.h"
+#include "HalInterfaces.h"
 #include "Manager.h"
 #include "Memory.h"
 #include "ModelBuilder.h"
@@ -39,6 +40,8 @@
 #include <cstddef>
 #include <memory>
 #include <vector>
+
+using namespace android::nn::hal;
 
 // Make sure the constants defined in the header files have not changed values.
 // IMPORTANT: When adding new values, update kNumberOfDataTypes or kNumberOfDataTypesOEM
@@ -547,7 +550,6 @@ static_assert(static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN) ==
                       ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN,
               "Constant::BYTE_SIZE_OF_CACHE_TOKEN != ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN");
 
-using android::sp;
 using namespace android::nn;
 
 int ANeuralNetworks_getDeviceCount(uint32_t* numDevices) {
