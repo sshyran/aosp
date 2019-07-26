@@ -17,6 +17,7 @@
 #define LOG_TAG "Operations"
 
 #include "CpuOperationUtils.h"
+#include "HalInterfaces.h"
 #include "OperationResolver.h"
 
 #include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
@@ -37,6 +38,8 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
+
+using namespace hal;
 
 inline bool l2normFloat32Impl(const float* inputData, const Shape& inputShape, int32_t axis,
                               float* outputData, const Shape& outputShape) {

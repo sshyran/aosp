@@ -16,6 +16,7 @@
 
 #define LOG_TAG "Operations"
 
+#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "RNN.h"
 
@@ -48,6 +49,8 @@ constexpr uint32_t kFwOutputTensor = 0;
 constexpr uint32_t kBwOutputTensor = 1;  // Only if mergeOutputs parameter is false
 
 namespace {
+
+using namespace hal;
 
 template <typename T>
 void transposeFirstTwoDims(const T* input, const Shape& inputShape, T* output) {

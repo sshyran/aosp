@@ -27,10 +27,12 @@
 #ifndef NNTEST_CTS
 #include <android-base/properties.h>
 #include <vector>
+#include "HalInterfaces.h"
 #include "Manager.h"
 #include "SampleDriverFull.h"
 
 using android::nn::sample_driver::SampleDriverFull;
+using namespace android::nn::hal;
 
 #endif
 

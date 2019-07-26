@@ -17,6 +17,7 @@
 #define LOG_TAG "Operations"
 
 #include "CpuOperationUtils.h"
+#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
@@ -41,6 +42,8 @@ constexpr uint32_t kOutputScoreTensor = 0;
 constexpr uint32_t kOutputKeypointTensor = 1;
 
 namespace {
+
+using namespace hal;
 
 // This function uses Taylor expansion up to the quatratic term to approximate bicubic
 // upscaling result.
