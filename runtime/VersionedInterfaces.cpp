@@ -35,6 +35,8 @@ namespace nn {
 // anonymous namespace
 namespace {
 
+using namespace hal;
+
 using HidlToken = hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>;
 
 const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
@@ -57,7 +59,7 @@ void sendFailureMessage(const sp<ExecutionCallback>& cb) {
 
 // This class is thread safe
 template <typename ICallback>
-class DeathHandler : public hardware::hidl_death_recipient {
+class DeathHandler : public hidl_death_recipient {
    public:
     void serviceDied(uint64_t /*cookie*/, const wp<hidl::base::V1_0::IBase>& /*who*/) override {
         LOG(ERROR) << "DeathHandler::serviceDied -- service unexpectedly died!";

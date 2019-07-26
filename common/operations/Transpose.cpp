@@ -17,6 +17,7 @@
 #define LOG_TAG "Operations"
 
 #include "CpuOperationUtils.h"
+#include "HalInterfaces.h"
 #include "OperationResolver.h"
 
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
@@ -38,6 +39,8 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
+
+using namespace hal;
 
 template <typename T>
 bool transposeGeneric(const T* inputData, const Shape& inputShape, const int32_t* perm,

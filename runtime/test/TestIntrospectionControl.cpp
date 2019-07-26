@@ -35,15 +35,16 @@
 namespace {
 
 using namespace ::android;
+using namespace nn::hal;
 
 using CompilationBuilder = nn::CompilationBuilder;
 using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
 using ExecutePreference = nn::test_wrapper::ExecutePreference;
 using ExecutionBurstServer = nn::ExecutionBurstServer;
-using HidlModel = hardware::neuralnetworks::V1_2::Model;
-using HidlToken = hardware::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
-using PreparedModelCallback = hardware::neuralnetworks::V1_2::implementation::PreparedModelCallback;
+using HidlModel = V1_2::Model;
+using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
+using PreparedModelCallback = nn::PreparedModelCallback;
 using Result = nn::test_wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
 using SamplePreparedModel = nn::sample_driver::SamplePreparedModel;

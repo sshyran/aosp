@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include "HalInterfaces.h"
 #include "Manager.h"
 #include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
@@ -24,6 +25,7 @@
 #include <numeric>
 
 using namespace android::nn;
+using namespace hal;
 using Result = test_wrapper::Result;
 using Type = test_wrapper::Type;
 using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
@@ -389,4 +391,4 @@ INSTANTIATE_TEST_CASE_P(TestCompilationCaching, CompilationCachingTest,
                         testing::Combine(kErrorStatusGetNumCacheFilesChoices, kNumCacheChoices,
                                          kNumCacheChoices, kErrorStatusPrepareFromCacheChoices));
 
-}  // end namespace
+}  // namespace
