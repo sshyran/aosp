@@ -17,25 +17,31 @@
 cc_defaults {
     name: "neuralnetworks_defaults",
     cflags: [
-        "-Wall",
-        "-Wextra",
-        "-Werror",
         "-O3",
+        "-Wall",
+        "-Werror",
+        "-Wextra",
     ],
     arch: {
         x86: {
             avx2: {
-                cflags: ["-mavx2","-mfma"],
+                cflags: [
+                    "-mavx2",
+                    "-mfma",
+                ],
             },
         },
         x86_64: {
             avx2: {
-                cflags: ["-mavx2","-mfma"],
+                cflags: [
+                    "-mavx2",
+                    "-mfma",
+                ],
             },
         },
     },
     product_variables: {
-        debuggable: {  // eng and userdebug builds
+        debuggable: { // eng and userdebug builds
             cflags: ["-DNN_DEBUGGABLE"],
         },
     },
