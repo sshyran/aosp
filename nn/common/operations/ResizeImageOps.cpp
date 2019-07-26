@@ -29,6 +29,8 @@
 namespace android {
 namespace nn {
 
+using namespace hal;
+
 namespace resize_image {
 
 constexpr uint32_t kNumInputs = 4;
