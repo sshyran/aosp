@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_COMMON_OPERATION_RESOLVER_H
-#define FRAMEWORKS_ML_COMMON_OPERATION_RESOLVER_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATION_RESOLVER_H
+#define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATION_RESOLVER_H
 
 #include "HalInterfaces.h"
 #include "OperationsUtils.h"
@@ -138,4 +138,4 @@ class BuiltinOperationResolver : public IOperationResolver {
 }  // namespace nn
 }  // namespace android
 
-#endif  // FRAMEWORKS_ML_COMMON_OPERATION_RESOLVER_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATION_RESOLVER_H
