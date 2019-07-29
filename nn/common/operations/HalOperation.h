@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_COMMON_OPERATIONS_HAL_OPERATION_H
-#define FRAMEWORKS_ML_COMMON_OPERATIONS_HAL_OPERATION_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_HAL_OPERATION_H
+#define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_HAL_OPERATION_H
 
 namespace android::hardware::neuralnetworks::V1_2 {
 
@@ -26,4 +26,4 @@ struct Operation;
 
 }  // namespace android::hardware::neuralnetworks::V1_2
 
-#endif  // FRAMEWORKS_ML_COMMON_OPERATIONS_HAL_OPERATION_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_HAL_OPERATION_H
