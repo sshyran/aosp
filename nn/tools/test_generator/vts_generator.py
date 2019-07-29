@@ -31,7 +31,6 @@ import numpy as np
 import os
 import re
 import struct
-import sys
 import contextlib
 import pprint
 
@@ -336,13 +335,11 @@ namespace {spec_name} {{
 if __name__ == "__main__":
     ParseCmdLine()
     while tg.FileNames.NextFile():
-        print("Generating test(s) from spec: %s" % tg.FileNames.specFile, file=sys.stderr)
+        print("Generating tests from %s" % tg.FileNames.specFile)
         exec (open(tg.FileNames.specFile, "r").read())
-        print("Output VTS model: %s" % tg.FileNames.modelFile, file=sys.stderr)
-        print("Output example: " + tg.FileNames.exampleFile, file=sys.stderr)
         with SmartOpen(tg.FileNames.modelFile) as model_fd, \
              SmartOpen(tg.FileNames.exampleFile) as example_fd, \
-             SmartOpen(tg.FileNames.testFile, mode="a") as test_fd:
+             SmartOpen(tg.FileNames.testFile) as test_fd:
             InitializeFiles(model_fd, example_fd, test_fd)
             Example.DumpAllExamples(
                 DumpModel=generate_vts, model_fd=model_fd,
