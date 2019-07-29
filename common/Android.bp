@@ -124,6 +124,7 @@ cc_library_static {
         "GraphDump.cpp",
         "IndexedShapeWrapper.cpp",
         "MemoryUtils.cpp",
+        "MetaModel.cpp",
         "OperationsUtils.cpp",
         "TokenHasher.cpp",
         "Utils.cpp",
