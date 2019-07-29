@@ -29,6 +29,9 @@
 namespace android {
 namespace nn {
 
+// Forward declaration
+class MetaModel;
+
 // A unified interface for actual driver devices as well as the CPU
 class Device {
    public:
@@ -44,22 +47,9 @@ class Device {
     virtual int32_t getType() const = 0;
     virtual hal::hidl_vec<hal::Extension> getSupportedExtensions() const = 0;
 
-    // If hidlModel is not compliant with the HAL version of the driver device,
-    // then the behavior depends on whether or not a non-nullptr slicer is
-    // provided.
-    //
-    // If there is no slicer, then no operations are supported.
-    //
-    // If there is a slicer, and it successfully slices the model, then some
-    // operations may be supported.
-    //
-    // See the IModelSlicer class in Utils.h for more details.
-    virtual void getSupportedOperations(const hal::Model& hidlModel, IModelSlicer* slicer,
+    // See the MetaModel class in MetaModel.h for more details.
+    virtual void getSupportedOperations(const MetaModel& metaModel,
                                         hal::hidl_vec<bool>* supportedOperations) = 0;
-    void getSupportedOperations(const hal::Model& hidlModel,
-                                hal::hidl_vec<bool>* supportedOperations) {
-        return getSupportedOperations(hidlModel, nullptr, supportedOperations);
-    }
 
     virtual hal::PerformanceInfo getPerformance(hal::OperandType type) const = 0;
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;

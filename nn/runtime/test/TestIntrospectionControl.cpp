@@ -55,7 +55,8 @@ using WrapperType = nn::test_wrapper::Type;
 template <typename T>
 using MQDescriptorSync = hardware::MQDescriptorSync<T>;
 
-const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+constexpr Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+constexpr Timing kGoodTiming = {.timeOnDevice = 123, .timeInDriver = 456};
 
 // This is an IDevice for testing purposes. The test driver has customized
 // getCapabilities_1_1 and getSupportedOperations_1_2.
@@ -256,24 +257,9 @@ TEST_F(IntrospectionControlTest, SimpleAddModel) {
     }
 }
 
-/*-- Begin timing tests -------------------------------------------------------------------------*/
+/*-- Begin test drivers -------------------------------------------------------------------------*/
 
-namespace timing_tests {
-
-constexpr Timing kGoodTiming = {.timeOnDevice = 123, .timeInDriver = 456};
-
-enum class DriverKind {
-    CPU,
-    OLD,  // too old to support timing (1.1 or earlier)
-    NEW   // new enough to support timing (1.2 or later)
-};
-
-std::ostream& operator<<(std::ostream& os, DriverKind kind) {
-    const char* names[] = {"CPU", "OLD", "NEW"};
-    const uint32_t index = static_cast<uint32_t>(kind);
-    CHECK(index < std::size(names));
-    return os << names[index];
-}
+namespace test_drivers {
 
 enum class Success {
     // ASYNC: Return ErrorStatus::NONE; notify ErrorStatus::NONE and timing
@@ -313,15 +299,6 @@ std::map<Success, Timing> expectedTimingMap = {
 
 std::set<Success> expectedPassSet = {Success::PASS_NEITHER, Success::PASS_DEVICE,
                                      Success::PASS_DRIVER, Success::PASS_BOTH, Success::PASS_CPU};
-
-enum class Compute { ASYNC, SYNC, BURST };
-
-std::ostream& operator<<(std::ostream& os, Compute compute) {
-    const char* names[] = {"ASYNC", "SYNC", "BURST"};
-    const uint32_t index = static_cast<uint32_t>(compute);
-    CHECK(index < std::size(names));
-    return os << names[index];
-}
 
 // For these tests we don't care about actually running an inference -- we
 // just want to dummy up execution status and timing results.
@@ -518,6 +495,38 @@ class TestDriver11 : public V1_1::IDevice {
    private:
     const sp<V1_2::IDevice> m12Driver;
 };
+
+}  // namespace test_drivers
+
+/*-- End   test drivers -------------------------------------------------------------------------*/
+
+/*-- Begin timing tests -------------------------------------------------------------------------*/
+
+namespace timing_tests {
+
+using namespace test_drivers;
+
+enum class DriverKind {
+    CPU,
+    OLD,  // too old to support timing (1.1 or earlier)
+    NEW   // new enough to support timing (1.2 or later)
+};
+
+std::ostream& operator<<(std::ostream& os, DriverKind kind) {
+    const char* names[] = {"CPU", "OLD", "NEW"};
+    const uint32_t index = static_cast<uint32_t>(kind);
+    CHECK(index < std::size(names));
+    return os << names[index];
+}
+
+enum class Compute { ASYNC, SYNC, BURST };
+
+std::ostream& operator<<(std::ostream& os, Compute compute) {
+    const char* names[] = {"ASYNC", "SYNC", "BURST"};
+    const uint32_t index = static_cast<uint32_t>(compute);
+    CHECK(index < std::size(names));
+    return os << names[index];
+}
 
 class TimingTest : public IntrospectionControlTest,
                    public ::testing::WithParamInterface<std::tuple<DriverKind, Success, Compute>> {
@@ -719,6 +728,71 @@ INSTANTIATE_TEST_CASE_P(Flavor, TimingTest, kTimingTestValues);
 }  // namespace timing_tests
 
 /*-- End   timing tests -------------------------------------------------------------------------*/
+
+const float kSimpleCeiling = 2.0f;
+
+void createAddMaxModel(WrapperModel* model, bool reverseOrder) {
+    WrapperOperandType type0(WrapperType::TENSOR_FLOAT32, {2});
+    WrapperOperandType type1(WrapperType::INT32, {});
+    // Phase 1, operands
+    auto op1 = model->addOperand(&type0);
+    auto op2 = model->addOperand(&type0);
+    auto act = model->addOperand(&type1);
+    auto op3 = model->addOperand(&type0);
+    auto op4 = model->addOperand(&type0);
+    auto op5 = model->addOperand(&type0);
+    // Phase 2, operations
+    static int32_t act_init[] = {0};
+    model->setOperandValue(act, act_init, sizeof(act_init));
+    static float ceiling[] = {kSimpleCeiling, kSimpleCeiling};
+    model->setOperandValue(op4, ceiling, sizeof(ceiling));
+    if (reverseOrder) {
+        // In this case, add MAXIMUM first, but the execution order is still ADD -> MAXIMUM.
+        model->addOperation(ANEURALNETWORKS_MAXIMUM, {op3, op4}, {op5});
+        model->addOperation(ANEURALNETWORKS_ADD, {op1, op2, act}, {op3});
+    } else {
+        model->addOperation(ANEURALNETWORKS_ADD, {op1, op2, act}, {op3});
+        model->addOperation(ANEURALNETWORKS_MAXIMUM, {op3, op4}, {op5});
+    }
+    // Phase 3, inputs and outputs
+    model->identifyInputsAndOutputs({op1, op2}, {op5});
+    model->finish();
+    ASSERT_TRUE(model->isValid());
+}
+
+TEST_F(IntrospectionControlTest, SlicingAddMax) {
+    // This is needed before we have the CPU fallback path being treated as a Device.
+    // TODO(dgross): remove once b/72506261 is fixed.
+    if (DeviceManager::get()->getUseCpuOnly()) {
+        GTEST_SKIP();
+    }
+
+    using namespace test_drivers;
+
+    static const char name[] = "driver11";
+    DeviceManager::get()->forTest_registerDevice(name, new TestDriver11(name, Success::PASS_BOTH));
+    ASSERT_TRUE(selectDeviceByName(name));
+
+    createAddMaxModel(&mModel, false);
+    EXPECT_TRUE(isSupportedOpListExpected({true, false}));
+}
+
+TEST_F(IntrospectionControlTest, SlicingMaxAdd) {
+    // This is needed before we have the CPU fallback path being treated as a Device.
+    // TODO(dgross): remove once b/72506261 is fixed.
+    if (DeviceManager::get()->getUseCpuOnly()) {
+        GTEST_SKIP();
+    }
+
+    using namespace test_drivers;
+
+    static const char name[] = "driver11";
+    DeviceManager::get()->forTest_registerDevice(name, new TestDriver11(name, Success::PASS_BOTH));
+    ASSERT_TRUE(selectDeviceByName(name));
+
+    createAddMaxModel(&mModel, true);
+    EXPECT_TRUE(isSupportedOpListExpected({false, true}));
+}
 
 const float kSimpleMultiplier = 2.0f;
 

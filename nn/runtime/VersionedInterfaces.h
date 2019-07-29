@@ -36,8 +36,8 @@ namespace nn {
 // forward declarations
 class ExecutionBurstController;
 class IDeviceDeathHandler;
-class IModelSlicer;
 class IPreparedModelDeathHandler;
+class MetaModel;
 class VersionedIPreparedModel;
 
 /**
@@ -118,19 +118,21 @@ class VersionedIDevice {
     std::pair<hal::ErrorStatus, hal::hidl_vec<hal::Extension>> getSupportedExtensions();
 
     /**
-     * Gets the supported operations in a model.
+     * Gets the supported operations in a MetaModel.
      *
-     * getSupportedOperations indicates which operations of a model are fully
-     * supported by the vendor driver. If an operation may not be supported for
-     * any reason, getSupportedOperations must return false for that operation.
+     * getSupportedOperations indicates which operations of
+     * MetaModel::getModel() are fully supported by the vendor driver. If an
+     * operation may not be supported for any reason, getSupportedOperations
+     * must return false for that operation.
      *
-     * @param model A model whose operations--and their corresponding
-     *              operands--are to be verified by the driver.
-     * @param slicer When the model is not compliant with the HAL version of the
-     *               vendor driver, the slicer (if any) is employed to query the
-     *               vendor driver about which of the subset of compliant
-     *               operations are supported.  See the IModelSlicer class in
-     *               Utils.h for more details.
+     * @param metaModel A MetaModel whose operations--and their corresponding
+     *                  operands--are to be verified by the driver.  When
+     *                  metaModel.getModel() is not compliant with the HAL
+     *                  version of the vendor driver, the MetaModel's slicing
+     *                  functionality (MetaModel::getSlice*()) is employed
+     *                  to query the vendor driver about which of the subset of
+     *                  compliant operations are supported.  See the MetaModel
+     *                  class in MetaModel.h for more details.
      * @return status Error status of the call, must be:
      *                - NONE if successful
      *                - DEVICE_UNAVAILABLE if driver is offline or busy
@@ -144,7 +146,7 @@ class VersionedIDevice {
      *                             it is describing.
      */
     std::pair<hal::ErrorStatus, hal::hidl_vec<bool>> getSupportedOperations(
-            const hal::Model& model, IModelSlicer* slicer = nullptr);
+            const MetaModel& metaModel);
 
     /**
      * Synchronously creates a prepared model for execution and optionally saves it
