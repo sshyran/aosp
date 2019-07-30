@@ -29,6 +29,7 @@
 #include "HalInterfaces.h"
 #include "Manager.h"
 #include "Memory.h"
+#include "MetaModel.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworksExtensions.h"
 #include "NeuralNetworksOEM.h"
@@ -663,8 +664,9 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
         }
 
         Device* d = reinterpret_cast<Device*>(const_cast<ANeuralNetworksDevice*>(devices[i]));
+        const MetaModel metaModel(hidlModel, DeviceManager::get()->strictSlicing());
         hidl_vec<bool> supportsByDevice;
-        d->getSupportedOperations(hidlModel, &supportsByDevice);
+        d->getSupportedOperations(metaModel, &supportsByDevice);
         for (uint32_t j = 0; j < supportsByDevice.size(); j++) {
             uint32_t originalIdx = opMap[j];
             supportedOps[originalIdx] |= supportsByDevice[j];
