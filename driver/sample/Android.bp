@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 cc_defaults {
     name: "NeuralNetworksSampleDriver_defaults",
     defaults: ["neuralnetworks_defaults"],
@@ -28,6 +27,11 @@ cc_defaults {
         "libneuralnetworks_headers",
     ],
     shared_libs: [
+        "android.hardware.neuralnetworks@1.0",
+        "android.hardware.neuralnetworks@1.1",
+        "android.hardware.neuralnetworks@1.2",
+        "android.hidl.allocator@1.0",
+        "android.hidl.memory@1.0",
         "libbase",
         "libcutils",
         "libdl",
@@ -36,16 +40,11 @@ cc_defaults {
         "libhidlbase",
         "libhidlmemory",
         "libhidltransport",
+        "liblog",
         "libnativewindow",
         "libtextclassifier_hash",
-        "liblog",
         "libui",
         "libutils",
-        "android.hardware.neuralnetworks@1.0",
-        "android.hardware.neuralnetworks@1.1",
-        "android.hardware.neuralnetworks@1.2",
-        "android.hidl.allocator@1.0",
-        "android.hidl.memory@1.0",
     ],
     static_libs: [
         "libneuralnetworks_common",
