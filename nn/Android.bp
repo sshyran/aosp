@@ -25,12 +25,12 @@ cc_defaults {
     arch: {
         x86: {
             avx2: {
-                cflags: ["-mavx","-mavx2","-mfma"],
+                cflags: ["-mavx2","-mfma"],
             },
         },
         x86_64: {
             avx2: {
-                cflags: ["-mavx","-mavx2","-mfma"],
+                cflags: ["-mavx2","-mfma"],
             },
         },
     },
