@@ -20,6 +20,7 @@
 
 #include "Callbacks.h"
 #include "ExecutionBurstController.h"
+#include "MetaModel.h"
 #include "Tracing.h"
 #include "Utils.h"
 
@@ -488,9 +489,11 @@ std::pair<ErrorStatus, hidl_vec<Extension>> VersionedIDevice::getSupportedExtens
 }
 
 std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
-        const Model& model, IModelSlicer* slicer) {
+        const MetaModel& metaModel) {
     const std::pair<ErrorStatus, hidl_vec<bool>> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
     std::pair<ErrorStatus, hidl_vec<bool>> result;
+
+    const Model& model = metaModel.getModel();
 
     auto noneSupported = [&model] {
         hidl_vec<bool> supported(model.operations.size());
@@ -531,69 +534,62 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
 
     if (getDevice<V1_1::IDevice>() != nullptr) {
         const bool compliant = compliantWithV1_1(model);
-        if (compliant || slicer) {
-            V1_1::Model model11;
-            std::function<uint32_t(uint32_t)> submodelOperationIndexToModelOperationIndex;
-            if (compliant) {
-                model11 = convertToV1_1(model);
-            } else {
-                const auto slice11 = slicer->getSliceV1_1();
-                if (!slice11.has_value()) {
-                    return noneSupported();
-                }
-                std::tie(model11, submodelOperationIndexToModelOperationIndex) = *slice11;
+        V1_1::Model model11;
+        std::function<uint32_t(uint32_t)> submodelOperationIndexToModelOperationIndex;
+        if (compliant) {
+            model11 = convertToV1_1(model);
+        } else {
+            const auto slice11 = metaModel.getSliceV1_1();
+            if (!slice11.has_value()) {
+                return noneSupported();
             }
-            NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION,
-                         "getSupportedOperations_1_1");
-            Return<void> ret = recoverable<void, V1_1::IDevice>(
-                    __FUNCTION__, [&model11, &result](const sp<V1_1::IDevice>& device) {
-                        return device->getSupportedOperations_1_1(
-                                model11,
-                                [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
-                                    result = std::make_pair(error, supported);
-                                });
-                    });
-            if (!ret.isOk()) {
-                LOG(ERROR) << "getSupportedOperations_1_1 failure: " << ret.description();
-                return kFailure;
-            }
-            if (!compliant) {
-                return remappedResult(result, submodelOperationIndexToModelOperationIndex);
-            }
+            std::tie(model11, submodelOperationIndexToModelOperationIndex) = *slice11;
+        }
+        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_1");
+        Return<void> ret = recoverable<void, V1_1::IDevice>(
+                __FUNCTION__, [&model11, &result](const sp<V1_1::IDevice>& device) {
+                    return device->getSupportedOperations_1_1(
+                            model11, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
+                                result = std::make_pair(error, supported);
+                            });
+                });
+        if (!ret.isOk()) {
+            LOG(ERROR) << "getSupportedOperations_1_1 failure: " << ret.description();
+            return kFailure;
+        }
+        if (!compliant) {
+            return remappedResult(result, submodelOperationIndexToModelOperationIndex);
         }
         return result;
     }
 
     if (getDevice<V1_0::IDevice>() != nullptr) {
         const bool compliant = compliantWithV1_0(model);
-        if (compliant || slicer) {
-            V1_0::Model model10;
-            std::function<uint32_t(uint32_t)> submodelOperationIndexToModelOperationIndex;
-            if (compliant) {
-                model10 = convertToV1_0(model);
-            } else {
-                const auto slice10 = slicer->getSliceV1_0();
-                if (!slice10.has_value()) {
-                    return noneSupported();
-                }
-                std::tie(model10, submodelOperationIndexToModelOperationIndex) = *slice10;
+        V1_0::Model model10;
+        std::function<uint32_t(uint32_t)> submodelOperationIndexToModelOperationIndex;
+        if (compliant) {
+            model10 = convertToV1_0(model);
+        } else {
+            const auto slice10 = metaModel.getSliceV1_0();
+            if (!slice10.has_value()) {
+                return noneSupported();
             }
-            NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations");
-            Return<void> ret = recoverable<void, V1_0::IDevice>(
-                    __FUNCTION__, [&model10, &result](const sp<V1_0::IDevice>& device) {
-                        return device->getSupportedOperations(
-                                model10,
-                                [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
-                                    result = std::make_pair(error, supported);
-                                });
-                    });
-            if (!ret.isOk()) {
-                LOG(ERROR) << "getSupportedOperations failure: " << ret.description();
-                return kFailure;
-            }
-            if (!compliant) {
-                return remappedResult(result, submodelOperationIndexToModelOperationIndex);
-            }
+            std::tie(model10, submodelOperationIndexToModelOperationIndex) = *slice10;
+        }
+        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations");
+        Return<void> ret = recoverable<void, V1_0::IDevice>(
+                __FUNCTION__, [&model10, &result](const sp<V1_0::IDevice>& device) {
+                    return device->getSupportedOperations(
+                            model10, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
+                                result = std::make_pair(error, supported);
+                            });
+                });
+        if (!ret.isOk()) {
+            LOG(ERROR) << "getSupportedOperations failure: " << ret.description();
+            return kFailure;
+        }
+        if (!compliant) {
+            return remappedResult(result, submodelOperationIndexToModelOperationIndex);
         }
         return result;
     }
