@@ -22,7 +22,6 @@
 #include "ValidateHal.h"
 
 #include <android-base/logging.h>
-#include <optional>
 #include <set>
 #include <vector>
 
@@ -350,48 +349,6 @@ hal::V1_1::Model convertToV1_1(const hal::V1_2::Model& model);
 hal::V1_2::Model convertToV1_2(const hal::V1_0::Model& model);
 hal::V1_2::Model convertToV1_2(const hal::V1_1::Model& model);
 hal::V1_2::Model convertToV1_2(const hal::V1_2::Model& model);
-
-// The IModelSlicer abstract class provides methods to create from an original
-// model a "slice" of that model consisting of the subset of operations that is
-// compliant with a particular HAL version, and a mechanism for mapping
-// operations from the slice back to operations of the original model.  The
-// slice is intended to be passed to getSupportedOperations*(), with the mapping
-// used to translate the results of that call from the slice's operations to the
-// original model's operations.  The slice has no other purpose (for example, it
-// is not guaranteed to have the same topology as a subgraph of the original
-// model).
-//
-// Note that the original model is not part of the ModelSlicer specification --
-// an instance of a class derived from ModelSlicer is responsible for knowing
-// the original model.  getSlice*() methods may be called multiple times on a
-// given instance; the intention is that the instance cache slices internally.
-//
-// The meaning of the return value of the getSlice*() methods is explained by
-// the following example:
-//
-//     IModelSlicer* slicer = ...;
-//     auto ret = slicer->getSliceV1_0();  // getSliceV1_1() is similar
-//     if (ret.has_value()) {
-//         const V1_0::Model model = ret->first;  // the slice
-//         auto mapper = ret->second;
-//         // mapper is a functor that takes an operation index in the
-//         // slice and returns the corresponding operation index in the
-//         // original model.  The functor must remain valid for the lifetime
-//         // of *slicer.
-//     } else {
-//         // Could not obtain a slice.  For example, perhaps none of the
-//         // original model's operations are compliant with V1_0.
-//     }
-//
-class IModelSlicer {
-   public:
-    virtual std::optional<std::pair<hal::V1_0::Model, std::function<uint32_t(uint32_t)>>>
-    getSliceV1_0() = 0;
-    virtual std::optional<std::pair<hal::V1_1::Model, std::function<uint32_t(uint32_t)>>>
-    getSliceV1_1() = 0;
-
-    virtual ~IModelSlicer() = default;
-};
 
 hal::V1_0::OperationType uncheckedConvertToV1_0(hal::V1_2::OperationType type);
 hal::V1_1::OperationType uncheckedConvertToV1_1(hal::V1_2::OperationType type);
