@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_NN_RUNTIME_NEURAL_NETWORKS_OEM_H
-#define FRAMEWORKS_ML_NN_RUNTIME_NEURAL_NETWORKS_OEM_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_NEURAL_NETWORKS_OEM_H
+#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_NEURAL_NETWORKS_OEM_H
 
 /******************************************************************
  *
@@ -70,4 +70,4 @@ enum {
 
 #endif  //  __ANDROID_API__ >= 27
 
-#endif  // FRAMEWORKS_ML_NN_RUNTIME_NEURAL_NETWORKS_OEM_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_NEURAL_NETWORKS_OEM_H
