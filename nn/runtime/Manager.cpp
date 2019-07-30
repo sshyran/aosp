@@ -19,6 +19,7 @@
 #include "Manager.h"
 #include "Callbacks.h"
 #include "HalInterfaces.h"
+#include "MetaModel.h"
 #include "Tracing.h"
 #include "Utils.h"
 
@@ -59,7 +60,7 @@ class DriverDevice : public Device {
     int64_t getFeatureLevel() override { return mInterface->getFeatureLevel(); }
     int32_t getType() const override { return mInterface->getType(); }
     hidl_vec<Extension> getSupportedExtensions() const override;
-    void getSupportedOperations(const Model& hidlModel, IModelSlicer* slicer,
+    void getSupportedOperations(const MetaModel& metaModel,
                                 hidl_vec<bool>* supportedOperations) override;
     PerformanceInfo getPerformance(OperandType type) const override;
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const override {
@@ -158,13 +159,14 @@ hidl_vec<Extension> DriverDevice::getSupportedExtensions() const {
     return mSupportedExtensions;
 }
 
-void DriverDevice::getSupportedOperations(const Model& hidlModel, IModelSlicer* slicer,
+void DriverDevice::getSupportedOperations(const MetaModel& metaModel,
                                           hidl_vec<bool>* outSupportedOperations) {
     // Query the driver for what it can do.
     ErrorStatus status = ErrorStatus::GENERAL_FAILURE;
     hidl_vec<bool> supportedOperations;
-    std::tie(status, supportedOperations) = mInterface->getSupportedOperations(hidlModel, slicer);
+    std::tie(status, supportedOperations) = mInterface->getSupportedOperations(metaModel);
 
+    const Model& hidlModel = metaModel.getModel();
     if (status != ErrorStatus::NONE) {
         LOG(ERROR) << "IDevice::getSupportedOperations returned the error " << toString(status);
         // Set the supported operation vectors to all false, so we won't use this driver.
@@ -292,7 +294,7 @@ class CpuDevice : public Device {
     int64_t getFeatureLevel() override { return kFeatureLevel; }
     int32_t getType() const override { return ANEURALNETWORKS_DEVICE_CPU; }
     hidl_vec<Extension> getSupportedExtensions() const override { return {/* No extensions. */}; }
-    void getSupportedOperations(const Model& hidlModel, IModelSlicer* slicer,
+    void getSupportedOperations(const MetaModel& metaModel,
                                 hidl_vec<bool>* supportedOperations) override;
     PerformanceInfo getPerformance(OperandType) const override { return kPerformance; }
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const override {
@@ -329,8 +331,9 @@ class CpuDevice : public Device {
                                                           /*numDataCache=*/0};
 };
 
-void CpuDevice::getSupportedOperations(const Model& hidlModel, IModelSlicer*,
+void CpuDevice::getSupportedOperations(const MetaModel& metaModel,
                                        hidl_vec<bool>* supportedOperations) {
+    const Model& hidlModel = metaModel.getModel();
     const size_t count = hidlModel.operations.size();
     hidl_vec<bool> result(count);
     for (size_t i = 0; i < count; i++) {
