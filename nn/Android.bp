@@ -26,7 +26,6 @@ cc_defaults {
         x86: {
             avx2: {
                 cflags: [
-                    "-mavx",
                     "-mavx2",
                     "-mfma",
                 ],
@@ -35,7 +34,6 @@ cc_defaults {
         x86_64: {
             avx2: {
                 cflags: [
-                    "-mavx",
                     "-mavx2",
                     "-mfma",
                 ],
