@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FRAMEWORKS_ML_NN_COMMON_META_MODEL_H
-#define FRAMEWORKS_ML_NN_COMMON_META_MODEL_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_META_MODEL_H
+#define ANDROID_FRAMEWORKS_ML_NN_COMMON_META_MODEL_H
 
 #include "HalInterfaces.h"
 
@@ -140,4 +140,4 @@ class MetaModel {
 
 }  // namespace android::nn
 
-#endif  // FRAMEWORKS_ML_NN_COMMON_META_MODEL_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_META_MODEL_H
