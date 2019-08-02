@@ -18,7 +18,10 @@
 
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <cmath>
+#include <memory>
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -342,6 +345,8 @@ void expectBooleanNearlyEqual(const RandomOperand& op, const OperandBuffer& test
     EXPECT_LE(numErrors, allowedErrorCount) << errorMsg.str();
 }
 
+// TODO(b/139442221): Reduce code duplication with
+//                    nn/tools/test_generator/test_harness/TestHarness.cpp.
 void RandomGraph::checkResults(const std::vector<OperandBuffer>& buffers,
                                const AccuracyCriteria& criteria) const {
     NN_FUZZER_LOG << "Check Results";
