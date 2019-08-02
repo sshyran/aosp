@@ -30,18 +30,15 @@ import traceback
 
 import test_generator as tg
 
-def IndentedPrint(s, indent=2, *args, **kwargs):
-    print('\n'.join([" " * indent + i for i in s.split('\n')]), *args, **kwargs)
-
 # Take a model from command line
 def ParseCmdLine():
     parser = tg.ArgumentParser()
     parser.add_argument("-e", "--example", help="the output example file or directory")
     args = tg.ParseArgs(parser)
-    tg.FileNames.InitializeFileLists(args.spec, args.model, args.example, args.test)
+    tg.FileNames.InitializeFileLists(args.spec, args.example, args.test)
 
 # Write headers for generated files, which are boilerplate codes only related to filenames
-def InitializeFiles(model_fd, example_fd, test_fd):
+def InitializeFiles(example_fd, test_fd):
     specFileBase = os.path.basename(tg.FileNames.specFile)
     fileHeader = """\
 // Generated from {spec_file}
@@ -51,165 +48,105 @@ def InitializeFiles(model_fd, example_fd, test_fd):
 """
     if test_fd is not None:
         print(fileHeader.format(spec_file=specFileBase, header="TestGenerated.h"), file=test_fd)
-    if model_fd is not None:
-        print(fileHeader.format(spec_file=specFileBase, header="TestGenerated.h"), file=model_fd)
     if example_fd is not None:
         print(fileHeader.format(spec_file=specFileBase, header="TestHarness.h"), file=example_fd)
+        print("using namespace test_helper;\n", file=example_fd)
 
-# Dump is_ignored function for IgnoredOutput
-def DumpCtsIsIgnored(model, model_fd):
-    isIgnoredTemplate = """\
-bool {is_ignored_name}(int i) {{
-  static std::set<int> ignore = {{{ignored_index}}};
-  return ignore.find(i) != ignore.end();
-}}
-"""
-    print(isIgnoredTemplate.format(
-        ignored_index=tg.GetJointStr(model.GetIgnoredOutputs(), method=lambda x: str(x.index)),
-        is_ignored_name=str(model.isIgnoredFunctionName)), file=model_fd)
+def IndentedStr(s, indent):
+    return ("\n" + " " * indent).join(s.split('\n'))
 
-# Dump Model file for Cts tests
-def DumpCtsModel(model, model_fd):
-    assert model.compiled
-    if model.dumped:
-        return
-    namespace = "generated_tests::{spec_name}".format(spec_name=tg.FileNames.specName)
-    print("namespace {namespace} {{\n".format(namespace=namespace), file=model_fd)
-    print("void %s(Model *model) {"%(model.createFunctionName), file=model_fd)
+def ToCpp(var, indent=0):
+    """Get the C++-style representation of a Python object.
 
-    # Phase 0: types
-    for t in model.GetTypes():
-        if t.scale == 0.0 and t.zeroPoint == 0 and t.extraParams is None:
-            typeDef = "OperandType %s(Type::%s, %s);"%(t, t.type, t.GetDimensionsString())
-        else:
-            if t.extraParams is None or t.extraParams.hide:
-                typeDef = "OperandType %s(Type::%s, %s, %s, %d);"%(
-                    t, t.type, t.GetDimensionsString(), tg.PrettyPrintAsFloat(t.scale), t.zeroPoint)
-            else:
-                assert t.type == "TENSOR_QUANT8_SYMM_PER_CHANNEL", "Unexpected model configuration. " \
-                                                                   "Extra params are currently expected for " \
-                                                                   "TENSOR_QUANT8_SYMM_PER_CHANNEL operand type. "
-                assert t.scale == 0.0 and t.zeroPoint == 0, "Scale and zero point are always zero for " \
-                                                            "TENSOR_QUANT8_SYMM_PER_CHANNEL operands"
-                typeDef = "OperandType %s(Type::%s, %s, %s);"%(
-                    t, t.type, t.GetDimensionsString(), t.extraParams.GetConstructor())
+    For Python dictionary, it will be mapped to C++ struct aggregate initialization:
+        {
+            .key0 = value0,
+            .key1 = value1,
+            ...
+        }
 
-        IndentedPrint(typeDef, file=model_fd)
+    For Python list, it will be mapped to C++ list initalization:
+        {value0, value1, ...}
 
-    # Phase 1: add operands
-    print("  // Phase 1, operands", file=model_fd)
-    for op in model.operands:
-        IndentedPrint("auto %s = model->addOperand(&%s);"%(op, op.type), file=model_fd)
+    In both cases, value0, value1, ... are stringified by invoking this method recursively.
+    """
+    if isinstance(var, dict):
+        if not var:
+            return "{}"
+        str_pair = lambda k, v: "    .%s = %s" % (k, ToCpp(v, indent + 4))
+        agg_init = "{\n%s\n}" % (",\n".join(str_pair(k, var[k]) for k in sorted(var.keys())))
+        return IndentedStr(agg_init, indent)
+    elif isinstance(var, (list, tuple)):
+        return "{%s}" % (", ".join(ToCpp(i, indent) for i in var))
+    elif type(var) is bool:
+        return "true" if var else "false"
+    elif type(var) is float:
+        return tg.PrettyPrintAsFloat(var)
+    else:
+        return str(var)
 
-    # Phase 2: operations
-    print("  // Phase 2, operations", file=model_fd)
-    for p in model.GetParameters():
-        paramDef = "static %s %s[] = %s;\nmodel->setOperandValue(%s, %s, sizeof(%s) * %d);"%(
-            p.type.GetCppTypeString(), p.initializer, p.GetListInitialization(), p,
-            p.initializer, p.type.GetCppTypeString(), p.type.GetNumberOfElements())
-        IndentedPrint(paramDef, file=model_fd)
-    for op in model.operations:
-        IndentedPrint("model->addOperation(ANEURALNETWORKS_%s, {%s}, {%s});"%(
-            op.optype, tg.GetJointStr(op.ins), tg.GetJointStr(op.outs)), file=model_fd)
+def GetSymmPerChannelQuantParams(extraParams):
+    """Get the dictionary that corresponds to test_helper::TestSymmPerChannelQuantParams."""
+    if extraParams is None or extraParams.hide:
+        return {}
+    else:
+        return {"scales": extraParams.scales, "channelDim": extraParams.channelDim}
 
-    # Phase 3: add inputs and outputs
-    print ("  // Phase 3, inputs and outputs", file=model_fd)
-    IndentedPrint("model->identifyInputsAndOutputs(\n  {%s},\n  {%s});"%(
-        tg.GetJointStr(model.GetInputs()), tg.GetJointStr(model.GetOutputs())), file=model_fd)
+def GetOperandStruct(operand):
+    """Get the dictionary that corresponds to test_helper::TestOperand."""
+    return {
+        "type": "TestOperandType::" + operand.type.type,
+        "dimensions": operand.type.dimensions,
+        "scale": operand.type.scale,
+        "zeroPoint": operand.type.zeroPoint,
+        "numberOfConsumers": len(operand.outs),
+        "lifetime": "TestOperandLifeTime::" + operand.lifetime,
+        "channelQuant": GetSymmPerChannelQuantParams(operand.type.extraParams),
+        "isIgnored": isinstance(operand, tg.IgnoredOutput),
+        "data": "TestBuffer::createFromVector<{cpp_type}>({data})".format(
+            cpp_type=operand.type.GetCppTypeString(),
+            data=operand.GetListInitialization(),
+        )
+    }
 
-    # Phase 4: set relaxed execution if needed
-    if (model.isRelaxed):
-        print ("  // Phase 4: set relaxed execution", file=model_fd)
-        print ("  model->relaxComputationFloat32toFloat16(true);", file=model_fd)
+def GetOperationStruct(operation):
+    """Get the dictionary that corresponds to test_helper::TestOperation."""
+    return {
+        "type": "TestOperationType::" + operation.optype,
+        "inputs": [op.model_index for op in operation.ins],
+        "outputs": [op.model_index for op in operation.outs],
+    }
 
-    print ("  assert(model->isValid());", file=model_fd)
-    print ("}\n", file=model_fd)
-    DumpCtsIsIgnored(model, model_fd)
-    print("}} // namespace {namespace}".format(namespace=namespace), file=model_fd)
-    model.dumped = True
-
-def DumpMixedType(operands):
-    supportedTensors = [
-        "DIMENSIONS",
-        "TENSOR_FLOAT32",
-        "TENSOR_INT32",
-        "TENSOR_QUANT8_ASYMM",
-        "TENSOR_OEM_BYTE",
-        "TENSOR_QUANT16_SYMM",
-        "TENSOR_FLOAT16",
-        "TENSOR_BOOL8",
-        "TENSOR_QUANT8_SYMM_PER_CHANNEL",
-        "TENSOR_QUANT16_ASYMM",
-        "TENSOR_QUANT8_SYMM",
-    ]
-    typedMap = {t: [] for t in supportedTensors}
-    # group the operands by type
-    for operand in operands:
-        try:
-            typedMap[operand.type.type].append(operand.GetListInitialization())
-            typedMap["DIMENSIONS"].append("{%d, {%s}}"%(
-                operand.index, tg.GetJointStr(operand.dimensions)))
-        except KeyError as e:
-            traceback.print_exc()
-            sys.exit("Cannot dump tensor of type {}".format(operand.type.type))
-    mixedTypeTemplate = """\
-{{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{{dimensions_map}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{{float32_map}}},
-  // int -> INT32 map
-  .int32Operands = {{{int32_map}}},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {{{uint8_map}}},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {{{int16_map}}},
-  // int -> FLOAT16 map
-  .float16Operands = {{{float16_map}}},
-  // int -> BOOL8 map
-  .bool8Operands = {{{bool8_map}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {{{int8_map}}},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {{{uint16_map}}},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {{{quant8_symm_map}}},
-}}"""
-    return mixedTypeTemplate.format(
-        dimensions_map=tg.GetJointStr(typedMap.get("DIMENSIONS", [])),
-        float32_map=tg.GetJointStr(typedMap.get("TENSOR_FLOAT32", [])),
-        int32_map=tg.GetJointStr(typedMap.get("TENSOR_INT32", [])),
-        uint8_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT8_ASYMM", []) +
-                                 typedMap.get("TENSOR_OEM_BYTE", [])),
-        int16_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT16_SYMM", [])),
-        float16_map=tg.GetJointStr(typedMap.get("TENSOR_FLOAT16", [])),
-        int8_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT8_SYMM_PER_CHANNEL", [])),
-        bool8_map=tg.GetJointStr(typedMap.get("TENSOR_BOOL8", [])),
-        uint16_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT16_ASYMM", [])),
-        quant8_symm_map=tg.GetJointStr(typedMap.get("TENSOR_QUANT8_SYMM", []))
-    )
+def GetModelStruct(example):
+    """Get the dictionary that corresponds to test_helper::TestModel."""
+    return {
+        "operands": [GetOperandStruct(op) for op in example.model.operands],
+        "operations": [GetOperationStruct(op) for op in example.model.operations],
+        "inputIndexes": [op.model_index for op in example.model.GetInputs()],
+        "outputIndexes": [op.model_index for op in example.model.GetOutputs()],
+        "isRelaxed": example.model.isRelaxed,
+        "expectedMultinomialDistributionTolerance": example.expectedMultinomialDistributionTolerance
+    }
 
 # Dump Example file for Cts tests
 def DumpCtsExample(example, example_fd):
-    namespace = "generated_tests::{spec_name}".format(spec_name=tg.FileNames.specName)
-    print("namespace {namespace} {{\n".format(namespace=namespace), file=example_fd)
-    print("std::vector<::test_helper::MixedTypedExample>& get_%s() {" % (example.examplesName), file=example_fd)
-    print("static std::vector<::test_helper::MixedTypedExample> %s = {" % (example.examplesName), file=example_fd)
-    print ('// Begin of an example', file = example_fd)
-    print ('{\n.operands = {', file = example_fd)
-    inputs = DumpMixedType(example.model.GetInputs())
-    outputs = DumpMixedType(example.model.GetOutputs())
-    print ('//Input(s)\n%s,' % inputs , file = example_fd)
-    print ('//Output(s)\n%s' % outputs, file = example_fd)
-    print ('},', file = example_fd)
-    if example.expectedMultinomialDistributionTolerance is not None:
-        print ('.expectedMultinomialDistributionTolerance = %f' %
-                example.expectedMultinomialDistributionTolerance, file = example_fd)
-    print ('}, // End of an example', file = example_fd)
-    print("};", file=example_fd)
-    print("return %s;" % (example.examplesName), file=example_fd)
-    print("};", file=example_fd)
-    print("\n}} // namespace {namespace}".format(namespace=namespace), file=example_fd)
+    assert example.model.compiled
+    template = """\
+namespace generated_tests::{spec_name} {{
+
+const TestModel& get_{example_name}() {{
+    static TestModel model = {aggregate_init};
+    return model;
+}}
+
+}}  // namespace generated_tests::{spec_name}
+"""
+    print(template.format(
+            spec_name=tg.FileNames.specName,
+            example_name=str(example.examplesName),
+            aggregate_init=ToCpp(GetModelStruct(example), indent=4),
+        ), file=example_fd)
+
 
 # Dump Test file for Cts tests
 def DumpCtsTest(example, test_fd):
@@ -217,21 +154,17 @@ def DumpCtsTest(example, test_fd):
     testTemplate = """\
 namespace {namespace} {{
 
-void {create_model_name}(Model *model);
-bool {is_ignored_name}(int);
-std::vector<::test_helper::MixedTypedExample>& get_{examples_name}();
+const ::test_helper::TestModel& get_{examples_name}();
 
 TEST_F({test_case_name}, {test_name}) {{
-    execute({create_model_name},
-            {is_ignored_name},
-            get_{examples_name}());
+    execute(get_{examples_name}());
 }}
 
 }} // namespace {namespace}
 """
     if example.model.version is not None and not example.expectFailure:
         testTemplate += """\
-TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::{create_model_name})\n"""
+TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::get_{examples_name}())\n"""
 
     if example.expectFailure:
         testCaseName = "GeneratedValidationTests"
@@ -252,6 +185,5 @@ TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::{create_model_name})\n
 if __name__ == '__main__':
     ParseCmdLine()
     tg.Run(InitializeFiles=InitializeFiles,
-           DumpModel=DumpCtsModel,
            DumpExample=DumpCtsExample,
            DumpTest=DumpCtsTest)
