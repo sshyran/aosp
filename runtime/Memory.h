@@ -21,11 +21,15 @@
 #include "NeuralNetworks.h"
 #include "Utils.h"
 
+#include <android-base/macros.h>
 #include <cutils/native_handle.h>
 #include <sys/mman.h>
 #include <vndk/hardware_buffer.h>
+#include <memory>
 #include <mutex>
 #include <unordered_map>
+#include <utility>
+#include <vector>
 
 namespace android {
 namespace nn {
@@ -35,31 +39,15 @@ class ModelBuilder;
 
 // Represents a memory region.
 class Memory {
+    // Disallow copy and assign to prevent slicing
+    DISALLOW_COPY_AND_ASSIGN(Memory);
+
    public:
-    Memory() {}
+    // Custom destructor to notify any ExecutionBurstControllers currently using
+    // this memory that it is being freed.
     virtual ~Memory();
 
-    // Disallow copy semantics to ensure the runtime object can only be freed
-    // once. Copy semantics could be enabled if some sort of reference counting
-    // or deep-copy system for runtime objects is added later.
-    Memory(const Memory&) = delete;
-    Memory& operator=(const Memory&) = delete;
-
-    // Creates a shared memory object of the size specified in bytes.
-    int create(uint32_t size);
-
-    hal::hidl_memory getHidlMemory() const { return mHidlMemory; }
-
-    // Returns a pointer to the underlying memory of this memory object.
-    // The function will fail if the memory is not CPU accessible and nullptr
-    // will be returned.
-    virtual int getPointer(uint8_t** buffer) const {
-        *buffer = static_cast<uint8_t*>(static_cast<void*>(mMemory->getPointer()));
-        if (*buffer == nullptr) {
-            return ANEURALNETWORKS_BAD_DATA;
-        }
-        return ANEURALNETWORKS_NO_ERROR;
-    }
+    const hal::hidl_memory& getHidlMemory() const { return kHidlMemory; }
 
     virtual bool validateSize(uint32_t offset, uint32_t length) const;
 
@@ -72,11 +60,13 @@ class Memory {
     void usedBy(const std::shared_ptr<ExecutionBurstController>& burst) const;
 
    protected:
+    Memory(hal::hidl_memory memory);
+
     // The hidl_memory handle for this shared memory.  We will pass this value when
     // communicating with the drivers.
-    hal::hidl_memory mHidlMemory;
-    sp<hal::IMemory> mMemory;
+    const hal::hidl_memory kHidlMemory;
 
+   private:
     mutable std::mutex mMutex;
     // mUsedBy is essentially a set of burst objects which use this Memory
     // object. However, std::weak_ptr does not have comparison operations nor a
@@ -89,85 +79,63 @@ class Memory {
             mUsedBy;
 };
 
-class MemoryFd : public Memory {
+class MemoryAshmem : public Memory {
    public:
-    MemoryFd() {}
-    ~MemoryFd() override;
+    // Creates a memory object containing a new android shared memory ("ashmem")
+    // object of the size specified in bytes. Because this ashmem region can be
+    // shared with and accessed by one or more driver processes, MemoryAshmem
+    // has shared ownership over the ashmem region.
+    //
+    // On success, returns ANEURALNETWORKS_NO_ERROR and a memory object.
+    // On error, returns the appropriate NNAPI error code and nullptr.
+    static std::pair<int, std::unique_ptr<MemoryAshmem>> create(uint32_t size);
 
-    // Disallow copy semantics to ensure the runtime object can only be freed
-    // once. Copy semantics could be enabled if some sort of reference counting
-    // or deep-copy system for runtime objects is added later.
-    MemoryFd(const MemoryFd&) = delete;
-    MemoryFd& operator=(const MemoryFd&) = delete;
+    // Get a pointer to the ashmem region of memory. The returned pointer is
+    // valid for the lifetime of the MemoryAshmem object. This call always
+    // returns non-null because it was validated during MemoryAshmem::create.
+    uint8_t* getPointer() const;
 
-    // Create the native_handle based on input size, prot, and fd.
-    // Existing native_handle will be deleted, and mHidlMemory will wrap
-    // the newly created native_handle.
-    int set(size_t size, int prot, int fd, size_t offset);
-
-    int getPointer(uint8_t** buffer) const override;
+    // prefer using MemoryAshmem::create
+    MemoryAshmem(sp<hal::IMemory> mapped, hal::hidl_memory memory);
 
    private:
-    native_handle_t* mHandle = nullptr;
-    mutable uint8_t* mMapping = nullptr;
+    const sp<hal::IMemory> kMappedMemory;
 };
 
-// TODO(miaowang): move function definitions to Memory.cpp
+class MemoryFd : public Memory {
+   public:
+    // Create a memory object based on input size, prot, and fd that can be sent
+    // across HIDL. This function duplicates the provided fd, and owns the
+    // duplicate.
+    //
+    // On success, returns ANEURALNETWORKS_NO_ERROR and a memory object.
+    // On error, returns the appropriate NNAPI error code and nullptr.
+    static std::pair<int, std::unique_ptr<MemoryFd>> create(size_t size, int prot, int fd,
+                                                            size_t offset);
+
+    // prefer using MemoryFd::create
+    MemoryFd(hal::hidl_memory memory);
+};
+
 class MemoryAHWB : public Memory {
    public:
-    MemoryAHWB() {}
-    ~MemoryAHWB() override{};
-
-    // Disallow copy semantics to ensure the runtime object can only be freed
-    // once. Copy semantics could be enabled if some sort of reference counting
-    // or deep-copy system for runtime objects is added later.
-    MemoryAHWB(const MemoryAHWB&) = delete;
-    MemoryAHWB& operator=(const MemoryAHWB&) = delete;
-
-    // Keep track of the provided AHardwareBuffer handle.
-    int set(const AHardwareBuffer* ahwb) {
-        AHardwareBuffer_describe(ahwb, &mBufferDesc);
-        const native_handle_t* handle = AHardwareBuffer_getNativeHandle(ahwb);
-        mHardwareBuffer = ahwb;
-        if (mBufferDesc.format == AHARDWAREBUFFER_FORMAT_BLOB) {
-            mHidlMemory = hal::hidl_memory("hardware_buffer_blob", handle, mBufferDesc.width);
-        } else {
-            // memory size is not used.
-            mHidlMemory = hal::hidl_memory("hardware_buffer", handle, 0);
-        }
-        return ANEURALNETWORKS_NO_ERROR;
-    };
-
-    int getPointer(uint8_t** buffer) const override {
-        *buffer = nullptr;
-        return ANEURALNETWORKS_BAD_DATA;
-    };
+    // Create a memory object to keep track of (but not take ownership of) the
+    // provided AHardwareBuffer handle.
+    //
+    // On success, returns ANEURALNETWORKS_NO_ERROR and a memory object.
+    // On error, returns the appropriate NNAPI error code and nullptr.
+    static std::pair<int, std::unique_ptr<MemoryAHWB>> create(const AHardwareBuffer& ahwb);
 
     // validateSize should only be called for blob mode AHardwareBuffer.
     // Calling it on non-blob mode AHardwareBuffer will result in an error.
     // TODO(miaowang): consider separate blob and non-blob into different classes.
-    bool validateSize(uint32_t offset, uint32_t length) const override {
-        if (mHardwareBuffer == nullptr) {
-            LOG(ERROR) << "MemoryAHWB has not been initialized.";
-            return false;
-        }
-        // validateSize should only be called on BLOB mode buffer.
-        if (mBufferDesc.format == AHARDWAREBUFFER_FORMAT_BLOB) {
-            if (offset + length > mBufferDesc.width) {
-                LOG(ERROR) << "Request size larger than the memory size.";
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            LOG(ERROR) << "Invalid AHARDWAREBUFFER_FORMAT, must be AHARDWAREBUFFER_FORMAT_BLOB.";
-            return false;
-        }
-    }
+    bool validateSize(uint32_t offset, uint32_t length) const override;
+
+    // prefer using MemoryAHWB::create
+    MemoryAHWB(const AHardwareBuffer_Desc& desc, hal::hidl_memory memory);
 
    private:
-    const AHardwareBuffer* mHardwareBuffer = nullptr;
-    AHardwareBuffer_Desc mBufferDesc;
+    const bool kBlobMode;
 };
 
 // A utility class to accumulate mulitple Memory objects and assign each

@@ -178,54 +178,6 @@ TEST_F(MemoryLeakTest, TestASharedMemory) {
     close(outputFd);
 }
 
-// Regression test for http://b/69621433 "MemoryFd leaks shared memory regions".
-TEST_F(MemoryLeakTest, GetPointer) {
-    static const size_t size = 1;
-
-    int fd = ASharedMemory_create(nullptr, size);
-    ASSERT_GE(fd, 0);
-
-    uint8_t* buf = (uint8_t*)mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-    ASSERT_NE(buf, nullptr);
-    *buf = 0;
-
-    {
-        // Scope "mem" in such a way that any shared memory regions it
-        // owns will be released before we check the value of *buf: We
-        // want to verify that the explicit mmap() above is not
-        // perturbed by any mmap()/munmap() that results from methods
-        // invoked on "mem".
-
-        WrapperMemory mem(size, PROT_READ | PROT_WRITE, fd, 0);
-        ASSERT_TRUE(mem.isValid());
-
-        auto internalMem = reinterpret_cast<::android::nn::Memory*>(mem.get());
-        uint8_t* dummy;
-        ASSERT_EQ(internalMem->getPointer(&dummy), ANEURALNETWORKS_NO_ERROR);
-        (*dummy)++;
-    }
-
-    ASSERT_EQ(*buf, (uint8_t)1);
-    ASSERT_EQ(munmap(buf, size), 0);
-
-    close(fd);
-}
-
-// Regression test for http://b/69621433 "MemoryFd leaks shared memory regions".
-TEST_F(MemoryLeakTest, Instantiate) {
-    static const size_t size = 1;
-    int fd = ASharedMemory_create(nullptr, size);
-    ASSERT_GE(fd, 0);
-    WrapperMemory mem(size, PROT_READ | PROT_WRITE, fd, 0);
-    ASSERT_TRUE(mem.isValid());
-
-    auto internalMem = reinterpret_cast<::android::nn::Memory*>(mem.get());
-    uint8_t* dummy;
-    ASSERT_EQ(internalMem->getPointer(&dummy), ANEURALNETWORKS_NO_ERROR);
-
-    close(fd);
-}
-
 #ifndef NNTEST_ONLY_PUBLIC_API
 // Regression test for http://b/73663843, conv_2d trying to allocate too much memory.
 TEST_F(MemoryLeakTest, convTooLarge) {
