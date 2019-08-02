@@ -19,7 +19,7 @@
 Contain classes definition and utilify functions for compiling models and
 examples into NDK-based CTS and VTS unit tests.
 
-Used by cts_generator.py, vts_generator.py, and slicing.py
+Used by cts_generator.py, vts_generator.py, and spec_visualizer.py
 """
 
 from __future__ import absolute_import
@@ -248,13 +248,6 @@ class Type(NamedVariable):
     def GetSignatureTuple(self):
         return (self.type, self.dimensions, self.scale, self.zeroPoint)
 
-    # For backward-compatibility with slicing.py
-    def GetRawShape(self):
-        if self.scale == 0 and self.zeroPoint == 0:
-            return self.GetDimensionsString()
-        else:
-            return GetJointStr([self.GetDimensionsString(), self.scale, self.zeroPoint])
-
     def ToUnspecifiedDim(self):
         return Type.GetType(self.type, [0] * len(self.dimensions), self.scale, self.zeroPoint)
 
@@ -463,17 +456,6 @@ class Operation:
     def SetOutputs(self, outs):
         self.outs = list(outs)
         return self
-
-    # For backward-compatibility with slicing.py
-    # Get Python-ish dump for the op
-    def PyDefinition(self):
-        py_op_string = """Operation("{optype}", {inputs}).To({outputs})"""
-        inputs = [str(x) for x in self.ins]
-        inputs = ", ".join(inputs)
-        assert len(self.outs) <= 1
-        outputs = str(self.outs[0])
-        ops = {"optype": self.optype, "inputs": inputs, "outputs": outputs}
-        return py_op_string.format(**ops)
 
 # Main interface
 class Model:
@@ -1176,52 +1158,6 @@ class Example:
       self.expectFailure = True
       return self
 
-    # For backward-compatibility with slicing.py
-    # Similar to dump_dict, but in python. Used by the slicing tool
-    # if referenced is not None, only print operands that are present there
-    @staticmethod
-    def py_dump_dict(d, referenced):
-        ret = []
-        for k, v in d.items():
-            if referenced != None and k not in referenced:
-                continue
-            key = str(k)
-            init = pprint.pformat(v)
-            ret.append("%s: %s" % (key, init))
-        return ", ".join(ret)
-
-    # For backward-compatibility with slicing.py
-    # similar to dump, but in python. Used by the slicing tool
-    # if referenced is not None, only print operands that are present there
-    @staticmethod
-    def py_dump(example_file, override, referenced):
-        Example.CombineAllExamples()
-        if len(Example.examples[0].feedDicts) > 0:
-            example_no = 0
-            example_template = """\
-input{no} = {{{inputs}}}
-# Only executed during data collection phase
-if collecting_data is True:
-  Example((input{no}, {{{outputs}}}))
-"""
-        for i, o in Example.examples[0].feedDicts:
-            print ('# Begin of an example', file = example_file)
-            inputs = Example.py_dump_dict(i, referenced)
-            output_list = []
-            for k, v in override.items():
-                output_list.append("%s: [0] * %d" % (k, v))
-            outputs = ",".join(output_list)
-
-            # TODO: handle >1 outputs
-            for k, v in o.items():
-                assert k.index == 0
-            example_contents = {
-                'no': example_no,
-                'inputs': inputs,
-                'outputs': outputs
-            }
-            print (example_template.format(**example_contents), file = example_file)
-
 class FileNames:
     specFiles = []
     specNames = []
@@ -1233,12 +1169,11 @@ class FileNames:
     modelFile = ""
     exampleFile = ""
     testFile = ""
-    logFile = ""
     version = ""
     fileIndex = 0
 
     @staticmethod
-    def InitializeFileLists(spec, model, example, test, log=""):
+    def InitializeFileLists(spec, model, example, test):
         # get all spec files and target files
         if os.path.isfile(spec):
             FileNames.specFiles = [os.path.abspath(spec)]
@@ -1252,7 +1187,6 @@ class FileNames:
         FileNames.modelFiles = FileNames.ParseTargetFiles(model, ".model.cpp")
         FileNames.exampleFiles = FileNames.ParseTargetFiles(example, ".example.cpp")
         FileNames.testFiles = FileNames.ParseTargetFiles(test, ".mod.py.cpp")
-        FileNames.logFile = ", \"%s\""%log if log != "" else ""
 
     @staticmethod
     def ParseTargetFiles(arg, ext):
