@@ -319,14 +319,15 @@ static void setRequestArgumentArray(const std::vector<ModelArgumentInfo>& argume
     }
 }
 
-// Figures out how to place each of the input or outputs in a buffer. This just does the layout,
-// it does not copy data.  Aligns each input a bit.
-static int allocatePointerArgumentsToPool(MemoryTracker* memories,
-                                          std::vector<ModelArgumentInfo>* args, Memory* memory) {
+// Figures out how to place each of the input or outputs in a buffer. This just
+// does the layout and memory allocation, it does not copy data.  Aligns each
+// input a bit.
+static std::pair<int, std::unique_ptr<MemoryAshmem>> allocatePointerArgumentsToPool(
+        MemoryTracker* memories, std::vector<ModelArgumentInfo>* args) {
     CHECK(memories != nullptr);
     CHECK(args != nullptr);
-    CHECK(memory != nullptr);
-    uint32_t nextPoolIndex = memories->size();
+
+    const uint32_t nextPoolIndex = memories->size();
     int64_t total = 0;
     for (auto& info : *args) {
         if (info.state == ModelArgumentInfo::POINTER) {
@@ -339,15 +340,19 @@ static int allocatePointerArgumentsToPool(MemoryTracker* memories,
         }
     };
     if (total > 0xFFFFFFFF) {
-        LOG(ERROR) << "allocatePointerArgumentsToPool: ANeuralNetworksExecution: "
-                      "Size of all inputs or outputs exceeds 2^32.";
-        return ANEURALNETWORKS_BAD_DATA;
+        LOG(ERROR) << "allocatePointerArgumentsToPool: ANeuralNetworksExecution: Size of all "
+                      "inputs or outputs exceeds 2^32.";
+        return {ANEURALNETWORKS_BAD_DATA, nullptr};
     }
-    if (total > 0) {
-        memory->create(total);  // TODO check error
-        memories->add(memory);
+    if (total <= 0) {
+        return {ANEURALNETWORKS_NO_ERROR, nullptr};
     }
-    return ANEURALNETWORKS_NO_ERROR;
+    auto [n, memory] = MemoryAshmem::create(total);
+    if (n != ANEURALNETWORKS_NO_ERROR) {
+        return {n, nullptr};
+    }
+    memories->add(memory.get());
+    return {ANEURALNETWORKS_NO_ERROR, std::move(memory)};
 }
 
 // Start compute on an actual HIDL driver.
@@ -370,23 +375,25 @@ int DriverPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>
     *synchronizationCallback = nullptr;
 
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::execute");
+
     // We separate the input & output pools so accelerators only need to copy
     // the contents of the input pools. We could also use it to set protection
     // on read only memory but that's not currently done.
-    Memory inputPointerArguments;
-    Memory outputPointerArguments;
 
     // Layout the input and output data
-    NN_RETURN_IF_ERROR(allocatePointerArgumentsToPool(memories, inputs, &inputPointerArguments));
-    NN_RETURN_IF_ERROR(allocatePointerArgumentsToPool(memories, outputs, &outputPointerArguments));
+    const auto [n1, inputPointerArguments] = allocatePointerArgumentsToPool(memories, inputs);
+    NN_RETURN_IF_ERROR(n1);
+    const auto [n2, outputPointerArguments] = allocatePointerArgumentsToPool(memories, outputs);
+    NN_RETURN_IF_ERROR(n2);
 
     // Copy the input data that was specified via a pointer.
-    for (auto& info : *inputs) {
-        if (info.state == ModelArgumentInfo::POINTER) {
-            DataLocation& loc = info.locationAndLength;
-            uint8_t* data = nullptr;
-            NN_RETURN_IF_ERROR(inputPointerArguments.getPointer(&data));
-            memcpy(data + loc.offset, info.buffer, loc.length);
+    if (inputPointerArguments != nullptr) {
+        for (const auto& info : *inputs) {
+            if (info.state == ModelArgumentInfo::POINTER) {
+                const DataLocation& loc = info.locationAndLength;
+                uint8_t* const data = inputPointerArguments->getPointer();
+                memcpy(data + loc.offset, info.buffer, loc.length);
+            }
         }
     }
 
@@ -486,12 +493,13 @@ int DriverPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>
     // TODO: Move this block of code somewhere else. It should not be in the
     // startCompute function.
     NNTRACE_RT_SWITCH(NNTRACE_PHASE_RESULTS, "DriverPreparedModel::execute");
-    for (auto& info : *outputs) {
-        if (info.state == ModelArgumentInfo::POINTER) {
-            DataLocation& loc = info.locationAndLength;
-            uint8_t* data = nullptr;
-            NN_RETURN_IF_ERROR(outputPointerArguments.getPointer(&data));
-            memcpy(info.buffer, data + loc.offset, loc.length);
+    if (outputPointerArguments != nullptr) {
+        for (const auto& info : *outputs) {
+            if (info.state == ModelArgumentInfo::POINTER) {
+                const DataLocation& loc = info.locationAndLength;
+                const uint8_t* const data = outputPointerArguments->getPointer();
+                memcpy(info.buffer, data + loc.offset, loc.length);
+            }
         }
     }
     VLOG(EXECUTION) << "DriverPreparedModel::execute completed";

@@ -20,6 +20,7 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MODEL_BUILDER_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MODEL_BUILDER_H
 
+#include <memory>
 #include "HalInterfaces.h"
 #include "Memory.h"
 #include "NeuralNetworks.h"
@@ -160,7 +161,7 @@ class ModelBuilder {
     // Operand index and buffer pointer for all the large operand values of this model.
     std::vector<LargeValue> mLargeOperandValues;
     // The shared memory region that will contain the large values.
-    Memory mLargeValueMemory;
+    std::unique_ptr<MemoryAshmem> mLargeValueMemory;
 
     // Once the model has been finished, we should not allow further
     // modifications to the model.

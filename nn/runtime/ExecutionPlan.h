@@ -204,7 +204,7 @@ class ExecutionPlan {
         const BurstBuilder* mBurstBuilder;
         std::shared_ptr<const SubModelInputsAndOutputsType>
                 mSubModelInputsAndOutputs;  // may be nullptr
-        Memory mTemporaries;
+        std::unique_ptr<MemoryAshmem> mTemporaries;
         size_t mNextStepIndex;
     };
 

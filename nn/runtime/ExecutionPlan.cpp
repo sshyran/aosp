@@ -634,7 +634,9 @@ ExecutionPlan::Controller::Controller(
       mSubModelInputsAndOutputs(subModelInputsAndOutputs),
       mNextStepIndex(0) {
     if (totalSizeOfTemporaries) {
-        if (mTemporaries.create(totalSizeOfTemporaries) != ANEURALNETWORKS_NO_ERROR) {
+        int n;
+        std::tie(n, mTemporaries) = MemoryAshmem::create(totalSizeOfTemporaries);
+        if (n != ANEURALNETWORKS_NO_ERROR) {
             LOG(ERROR) << "ExecutionPlan::Controller failed to allocate temporaries";
             mNextStepIndex = kBadStepIndex;
         }
@@ -831,7 +833,7 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
                 const uint32_t offsetOfTemporary =
                         controller->mSubModelInputsAndOutputs->at(fromModelOperandIndex);
                 int n = (*executor)->setOutputFromTemporaryMemory(firstSubModelOutputIndex + idx,
-                                                                  &controller->mTemporaries,
+                                                                  controller->mTemporaries.get(),
                                                                   offsetOfTemporary);
                 if (n != ANEURALNETWORKS_NO_ERROR) {
                     controller->mNextStepIndex = Controller::kBadStepIndex;
@@ -851,7 +853,7 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
                 const uint32_t offsetOfTemporary =
                         controller->mSubModelInputsAndOutputs->at(fromModelOperandIndex);
                 int n = (*executor)->setInputFromTemporaryMemory(firstSubModelInputIndex + idx,
-                                                                 &controller->mTemporaries,
+                                                                 controller->mTemporaries.get(),
                                                                  offsetOfTemporary);
                 if (n != ANEURALNETWORKS_NO_ERROR) {
                     controller->mNextStepIndex = Controller::kBadStepIndex;
