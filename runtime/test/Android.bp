@@ -251,6 +251,53 @@ cc_test {
     },
 }
 
+cc_library_static {
+    name: "CtsNNAPITests_static",
+    srcs: [
+        "TestGenerated.cpp",
+        "TestMemory.cpp",
+        "TestNeuralNetworksWrapper.cpp",
+        "TestTrivialModel.cpp",
+        "TestUnknownDimensions.cpp",
+        "TestValidateModel.cpp",
+        "TestValidateOperations.cpp",
+        "TestValidation.cpp",
+        "TestWrapper.cpp",
+        "fuzzing/OperationManager.cpp",
+        "fuzzing/RandomGraphGenerator.cpp",
+        "fuzzing/RandomGraphGeneratorUtils.cpp",
+        "fuzzing/RandomVariable.cpp",
+        "fuzzing/TestRandomGraph.cpp",
+        "fuzzing/operation_signatures/*.cpp",
+        "generated/examples/*.cpp",
+        "generated/models/*.cpp",
+        "generated/tests/*.cpp",
+    ],
+    include_dirs: [
+        "frameworks/ml/nn/common/include",
+        "frameworks/ml/nn/runtime/",
+        "frameworks/ml/nn/runtime/include/",
+        "frameworks/ml/nn/tools/test_generator/include",
+    ],
+    cflags: [
+        "-DNNTEST_CTS",
+        "-DNNTEST_ONLY_PUBLIC_API",
+        "-Wall",
+        "-Werror",
+    ],
+    shared_libs: [
+        "libandroid",
+        "liblog",
+        "libneuralnetworks",
+    ],
+    static_libs: [
+        "libgmock_ndk",
+        "libgtest_ndk_c++",
+    ],
+    sdk_version: "current",
+    stl: "c++_static",
+}
+
 filegroup {
     name: "VtsHalNeuralNetworksV1_0_all_generated_V1_0_tests",
     srcs: [
