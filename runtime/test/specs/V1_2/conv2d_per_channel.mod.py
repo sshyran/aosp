@@ -65,10 +65,9 @@ b = Parameter("bias", "TENSOR_INT32", "{3}", [4, 4, 4])
 o3 = Output("out", "TENSOR_QUANT8_ASYMM", "{0, 2, 2, 3}, 1.f, 128") # out
 model = model.Operation("CONV_2D", zero_sized, w, b, 0, 0, 0, 0, 1, 1, 0, layout).To(o3)
 
-# Create test case with dummy values.
 Example({
     i1: [130, 130],
-    o1: [0],
-    o2: [0],
-    o3: [0],
+    o1: [],
+    o2: [],
+    o3: [],
 }).AddNchw(i1, zero_sized, o3, layout)
