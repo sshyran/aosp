@@ -128,7 +128,6 @@ def GetModelStruct(example):
         "expectedMultinomialDistributionTolerance": example.expectedMultinomialDistributionTolerance
     }
 
-# Dump Example file for Cts tests
 def DumpCtsExample(example, example_fd):
     assert example.model.compiled
     template = """\
@@ -148,37 +147,52 @@ const TestModel& get_{example_name}() {{
         ), file=example_fd)
 
 
-# Dump Test file for Cts tests
-def DumpCtsTest(example, test_fd):
-    namespace = "generated_tests::{spec_name}".format(spec_name=tg.FileNames.specName)
-    testTemplate = """\
+CTS_TEST_TEMPLATE_HEAD = """
 namespace {namespace} {{
 
 const ::test_helper::TestModel& get_{examples_name}();
+"""
 
-TEST_F({test_case_name}, {test_name}) {{
-    execute(get_{examples_name}());
-}}
+GENERATED_TEST_DEF = """
+TEST_F(GeneratedTests, {test_name}) {{ execute(get_{examples_name}()); }}
+"""
 
+DYNAMIC_OUTPUT_SHAPE_TEST_DEF = """
+TEST_F(DynamicOutputShapeTest, {test_name}) {{ execute(get_{examples_name}()); }}
+"""
+
+GENERATED_VALIDATION_TEST_DEF = """
+TEST_F(GeneratedValidationTests, {test_name}) {{ execute(get_{examples_name}()); }}
+"""
+
+COMPLIANCE_TEST_DEF = """
+TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::get_{examples_name}());
+"""
+
+CTS_TEST_TEMPLATE_TAIL = """
 }} // namespace {namespace}
 """
-    if example.model.version is not None and not example.expectFailure:
-        testTemplate += """\
-TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::get_{examples_name}())\n"""
+
+def DumpCtsTest(example, test_fd):
+    namespace = "generated_tests::{spec_name}".format(spec_name=tg.FileNames.specName)
+
+    test_template = CTS_TEST_TEMPLATE_HEAD
 
     if example.expectFailure:
-        testCaseName = "GeneratedValidationTests"
-    elif example.model.hasDynamicOutputShape:
-        testCaseName = "DynamicOutputShapeTest"
+        test_template += GENERATED_VALIDATION_TEST_DEF
     else:
-        testCaseName = "GeneratedTests"
+        test_template += GENERATED_TEST_DEF
+        if example.testDynamicOutputShape:
+            test_template += DYNAMIC_OUTPUT_SHAPE_TEST_DEF
 
-    print(testTemplate.format(
-        test_case_name=testCaseName,
+    test_template += CTS_TEST_TEMPLATE_TAIL
+
+    if example.model.version is not None and not example.expectFailure:
+        test_template += COMPLIANCE_TEST_DEF
+
+    print(test_template.format(
         test_name=str(example.testName),
         namespace=namespace,
-        create_model_name=str(example.model.createFunctionName),
-        is_ignored_name=str(example.model.isIgnoredFunctionName),
         examples_name=str(example.examplesName),
         version=example.model.version), file=test_fd)
 
