@@ -24,69 +24,21 @@ See that script for details on how this script is used.
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-import argparse
-import math
 import os
-import re
 import sys
 import traceback
 
-# Stuff from test generator
 import test_generator as tg
-from test_generator import ActivationConverter
-from test_generator import BoolScalar
-from test_generator import Configuration
-from test_generator import DataTypeConverter
-from test_generator import DataLayoutConverter
-from test_generator import Example
-from test_generator import Float16Scalar
-from test_generator import Float32Scalar
-from test_generator import Float32Vector
-from test_generator import GetJointStr
-from test_generator import IgnoredOutput
-from test_generator import Input
-from test_generator import Int32Scalar
-from test_generator import Int32Vector
-from test_generator import Internal
-from test_generator import Model
-from test_generator import Operand
-from test_generator import Output
-from test_generator import Parameter
-from test_generator import ParameterAsInputConverter
-from test_generator import RelaxedModeConverter
-from test_generator import SmartOpen
-from test_generator import SymmPerChannelQuantParams
 
 def IndentedPrint(s, indent=2, *args, **kwargs):
     print('\n'.join([" " * indent + i for i in s.split('\n')]), *args, **kwargs)
 
 # Take a model from command line
 def ParseCmdLine():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("spec", help="the spec file/directory")
-    parser.add_argument(
-        "-m", "--model", help="the output model file/directory", default="-")
-    parser.add_argument(
-        "-e", "--example", help="the output example file/directory", default="-")
-    parser.add_argument(
-        "-t", "--test", help="the output test file/directory", default="-")
-    parser.add_argument(
-        "-f", "--force", help="force to regenerate all spec files", action="store_true")
-    args = parser.parse_args()
+    parser = tg.ArgumentParser()
+    parser.add_argument("-e", "--example", help="the output example file or directory")
+    args = tg.ParseArgs(parser)
     tg.FileNames.InitializeFileLists(args.spec, args.model, args.example, args.test)
-    Configuration.force_regenerate = args.force
-
-def NeedRegenerate():
-    if not all(os.path.exists(f) for f in \
-        [tg.FileNames.modelFile, tg.FileNames.exampleFile, tg.FileNames.testFile]):
-        return True
-    specTime = os.path.getmtime(tg.FileNames.specFile) + 10
-    modelTime = os.path.getmtime(tg.FileNames.modelFile)
-    exampleTime = os.path.getmtime(tg.FileNames.exampleFile)
-    testTime = os.path.getmtime(tg.FileNames.testFile)
-    if all(t > specTime for t in [modelTime, exampleTime, testTime]):
-        return False
-    return True
 
 # Write headers for generated files, which are boilerplate codes only related to filenames
 def InitializeFiles(model_fd, example_fd, test_fd):
@@ -97,9 +49,12 @@ def InitializeFiles(model_fd, example_fd, test_fd):
 // clang-format off
 #include "{header}"
 """
-    print(fileHeader.format(spec_file=specFileBase, header="TestGenerated.h"), file=test_fd)
-    print(fileHeader.format(spec_file=specFileBase, header="TestGenerated.h"), file=model_fd)
-    print(fileHeader.format(spec_file=specFileBase, header="TestHarness.h"), file=example_fd)
+    if test_fd is not None:
+        print(fileHeader.format(spec_file=specFileBase, header="TestGenerated.h"), file=test_fd)
+    if model_fd is not None:
+        print(fileHeader.format(spec_file=specFileBase, header="TestGenerated.h"), file=model_fd)
+    if example_fd is not None:
+        print(fileHeader.format(spec_file=specFileBase, header="TestHarness.h"), file=example_fd)
 
 # Dump is_ignored function for IgnoredOutput
 def DumpCtsIsIgnored(model, model_fd):
@@ -194,7 +149,7 @@ def DumpMixedType(operands, feedDict):
         try:
             typedMap[operand.type.type].append(FeedAndGet(operand, feedDict))
             typedMap["DIMENSIONS"].append("{%d, {%s}}"%(
-                operand.index, GetJointStr(operand.dimensions)))
+                operand.index, tg.GetJointStr(operand.dimensions)))
         except KeyError as e:
             traceback.print_exc()
             sys.exit("Cannot dump tensor of type {}".format(operand.type.type))
@@ -298,17 +253,7 @@ TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::{create_model_name})\n
 
 if __name__ == '__main__':
     ParseCmdLine()
-    while tg.FileNames.NextFile():
-        if Configuration.force_regenerate or NeedRegenerate():
-            print("Generating CTS tests from spec %s" % tg.FileNames.specFile, file=sys.stderr)
-            exec(open(tg.FileNames.specFile, "r").read())
-            with SmartOpen(tg.FileNames.modelFile) as model_fd, \
-                 SmartOpen(tg.FileNames.exampleFile) as example_fd, \
-                 SmartOpen(tg.FileNames.testFile) as test_fd:
-                InitializeFiles(model_fd, example_fd, test_fd)
-                Example.DumpAllExamples(
-                    DumpModel=DumpCtsModel, model_fd=model_fd,
-                    DumpExample=DumpCtsExample, example_fd=example_fd,
-                    DumpTest=DumpCtsTest, test_fd=test_fd)
-        else:
-            print("Skip file: %s" % tg.FileNames.specFile, file=sys.stderr)
+    tg.Run(InitializeFiles=InitializeFiles,
+           DumpModel=DumpCtsModel,
+           DumpExample=DumpCtsExample,
+           DumpTest=DumpCtsTest)
