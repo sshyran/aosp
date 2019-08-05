@@ -60,6 +60,7 @@ cc_defaults {
         "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
+        "TestNeuralNetworksWrapper.cpp",
         "TestOperandExtraParams.cpp",
         "TestTrivialModel.cpp",
         "TestUnknownDimensions.cpp",
@@ -68,11 +69,9 @@ cc_defaults {
         "TestValidateOperations.cpp",
         "TestValidation.cpp",
         "TestWrapper.cpp",
-        "generated/examples/*.cpp",
-        "generated/models/*.cpp",
-        "generated/tests/*.cpp",
-
-        "TestNeuralNetworksWrapper.cpp",
+        "generated/spec_V1_*/*.example.cpp",
+        "generated/spec_V1_*/cts/*.model.cpp",
+        "generated/spec_V1_*/cts/*.test.cpp",
     ],
     static_libs: [
         "libgmock",
@@ -217,9 +216,9 @@ cc_defaults {
         "TestGenerated.cpp",
         "TestMain.cpp",
         "TestNeuralNetworksWrapper.cpp",
-        "generated/examples/*.cpp",
-        "generated/models/*.cpp",
-        "generated/tests/*.cpp",
+        "generated/spec_V1_*/*.example.cpp",
+        "generated/spec_V1_*/cts/*.model.cpp",
+        "generated/spec_V1_*/cts/*.test.cpp",
     ],
     cflags: [
         "-DNNTEST_MULTITHREADED",
@@ -271,9 +270,9 @@ cc_library_static {
         "fuzzing/RandomVariable.cpp",
         "fuzzing/TestRandomGraph.cpp",
         "fuzzing/operation_signatures/*.cpp",
-        "generated/examples/*.cpp",
-        "generated/models/*.cpp",
-        "generated/tests/*.cpp",
+        "generated/spec_V1_*/*.example.cpp",
+        "generated/spec_V1_*/cts/*.model.cpp",
+        "generated/spec_V1_*/cts/*.test.cpp",
     ],
     include_dirs: [
         "frameworks/ml/nn/common/include",
@@ -303,54 +302,54 @@ cc_library_static {
 filegroup {
     name: "VtsHalNeuralNetworksV1_0_all_generated_V1_0_tests",
     srcs: [
-        "generated/examples/*.cpp",
-        "generated/vts/V1_0/models/V1_0/*.cpp",
-        "generated/vts/V1_0/tests/V1_0/*.cpp",
+        "generated/spec_V1_0/*.example.cpp",
+        "generated/spec_V1_0/vts_V1_0/*.model.cpp",
+        "generated/spec_V1_0/vts_V1_0/*.test.cpp",
     ],
 }
 
 filegroup {
     name: "VtsHalNeuralNetworksV1_1_all_generated_V1_0_tests",
     srcs: [
-        "generated/examples/*.cpp",
-        "generated/vts/V1_1/models/V1_0/*.cpp",
-        "generated/vts/V1_1/tests/V1_0/*.cpp",
+        "generated/spec_V1_0/*.example.cpp",
+        "generated/spec_V1_0/vts_V1_1/*.model.cpp",
+        "generated/spec_V1_0/vts_V1_1/*.test.cpp",
     ],
 }
 
 filegroup {
     name: "VtsHalNeuralNetworksV1_1_all_generated_V1_1_tests",
     srcs: [
-        "generated/examples/*.cpp",
-        "generated/vts/V1_1/models/V1_1/*.cpp",
-        "generated/vts/V1_1/tests/V1_1/*.cpp",
+        "generated/spec_V1_1/*.example.cpp",
+        "generated/spec_V1_1/vts_V1_1/*.model.cpp",
+        "generated/spec_V1_1/vts_V1_1/*.test.cpp",
     ],
 }
 
 filegroup {
     name: "VtsHalNeuralNetworksV1_2_all_generated_V1_0_tests",
     srcs: [
-        "generated/examples/*.cpp",
-        "generated/vts/V1_2/models/V1_0/*.cpp",
-        "generated/vts/V1_2/tests/V1_0/*.cpp",
+        "generated/spec_V1_0/*.example.cpp",
+        "generated/spec_V1_0/vts_V1_2/*.model.cpp",
+        "generated/spec_V1_0/vts_V1_2/*.test.cpp",
     ],
 }
 
 filegroup {
     name: "VtsHalNeuralNetworksV1_2_all_generated_V1_1_tests",
     srcs: [
-        "generated/examples/*.cpp",
-        "generated/vts/V1_2/models/V1_1/*.cpp",
-        "generated/vts/V1_2/tests/V1_1/*.cpp",
+        "generated/spec_V1_1/*.example.cpp",
+        "generated/spec_V1_1/vts_V1_2/*.model.cpp",
+        "generated/spec_V1_1/vts_V1_2/*.test.cpp",
     ],
 }
 
 filegroup {
     name: "VtsHalNeuralNetworksV1_2_all_generated_V1_2_tests",
     srcs: [
-        "generated/examples/*.cpp",
-        "generated/vts/V1_2/models/V1_2/*.cpp",
-        "generated/vts/V1_2/tests/V1_2/*.cpp",
+        "generated/spec_V1_2/*.example.cpp",
+        "generated/spec_V1_2/vts_V1_2/*.model.cpp",
+        "generated/spec_V1_2/vts_V1_2/*.test.cpp",
     ],
 }
 
@@ -358,7 +357,9 @@ filegroup {
 filegroup {
     name: "VtsHalNeuralNetworksV1_2_mobilenets",
     srcs: [
-        "generated/vts/V1_2/models/V1_0/mobilenet_224_gender_basic_fixed.model.cpp",
-        "generated/vts/V1_2/models/V1_0/mobilenet_quantized.model.cpp",
+        "generated/spec_V1_0/mobilenet_224_gender_basic_fixed.example.cpp",
+        "generated/spec_V1_0/mobilenet_quantized.example.cpp",
+        "generated/spec_V1_0/vts_V1_2/mobilenet_224_gender_basic_fixed.model.cpp",
+        "generated/spec_V1_0/vts_V1_2/mobilenet_quantized.model.cpp",
     ],
 }

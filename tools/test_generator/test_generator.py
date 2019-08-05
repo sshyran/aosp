@@ -25,17 +25,15 @@ Used by cts_generator.py, vts_generator.py, and spec_visualizer.py
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-import argparse
 import copy
 from functools import reduce
+import argparse
+import io
 import itertools
-import math
 import os
 import re
-import struct
 import sys
-import contextlib
-import pprint
+import traceback
 import numpy as np
 
 def GetJointStr(l, sep=", ", method=str):
@@ -77,19 +75,6 @@ def Quantize(v, ty):
     elif ty.type == "UINT32":
         v = np.maximum(v, 0)
     return v
-
-@contextlib.contextmanager
-def SmartOpen(filename=None, mode="w"):
-    if filename and filename != '-':
-        fh = open(filename, mode)
-    else:
-        fh = sys.stdout
-
-    try:
-        yield fh
-    finally:
-        if fh is not sys.stdout:
-            fh.close()
 
 # Tracking objects inside a model with a unique name
 class NamedObject:
@@ -1186,11 +1171,13 @@ class FileNames:
             for f in FileNames.specFiles]
         FileNames.modelFiles = FileNames.ParseTargetFiles(model, ".model.cpp")
         FileNames.exampleFiles = FileNames.ParseTargetFiles(example, ".example.cpp")
-        FileNames.testFiles = FileNames.ParseTargetFiles(test, ".mod.py.cpp")
+        FileNames.testFiles = FileNames.ParseTargetFiles(test, ".test.cpp")
 
     @staticmethod
     def ParseTargetFiles(arg, ext):
         numFiles = len(FileNames.specFiles)
+        if arg is None:
+            return [None] * numFiles
         absPath = os.path.abspath(arg)
         if os.path.isdir(arg):
             target = [os.path.join(absPath, f + ext) for f in FileNames.specNames]
@@ -1228,9 +1215,114 @@ class FileNames:
 
 class Configuration:
     use_shm_for_weights = False
-    force_regenerate = False
     test_dynamic_output_shape = True
+    hook_mode = False
 
     @staticmethod
     def useSHM():
         return Configuration.use_shm_for_weights
+
+def GetTestGeneratorMTime():
+    tgFiles = ['test_generator.py', 'cts_generator.py', 'vts_generator.py']
+    tgDir = os.path.dirname(__file__)
+    return max(os.path.getmtime(os.path.join(tgDir, filename))
+               for filename in tgFiles)
+
+def MightNeedRegeneration():
+    specTime = os.path.getmtime(FileNames.specFile)
+    tgTime = GetTestGeneratorMTime()
+    return any(not os.path.exists(filename) or os.path.getmtime(filename) <= max(specTime, tgTime)
+               for filename in [FileNames.modelFile, FileNames.exampleFile, FileNames.testFile]
+               if filename is not None)
+
+def Read(filename):
+    with open(filename) as reader:
+        return reader.read()
+
+def AtomicWrite(filename, data):
+    # os.replace(src, dest) may fail if src and dest are on diffrent
+    # filesystems.
+    tempFile = filename + '.tmp'
+    try:
+        with open(tempFile, 'w') as writer:
+            writer.write(data)
+        os.replace(tempFile, filename)
+        tempFile = None
+    finally:
+        if tempFile is not None and os.path.exists(tempFile):
+            os.remove(tempFile)
+
+def GetExecScope():
+    return dict(
+        ActivationConverter=ActivationConverter,
+        BoolScalar=BoolScalar,
+        Configuration=Configuration,
+        DataLayoutConverter=DataLayoutConverter,
+        DataTypeConverter=DataTypeConverter,
+        Example=Example,
+        Float16Scalar=Float16Scalar,
+        Float32Scalar=Float32Scalar,
+        Float32Vector=Float32Vector,
+        IgnoredOutput=IgnoredOutput,
+        Input=Input,
+        Int32Scalar=Int32Scalar,
+        Int32Vector=Int32Vector,
+        Internal=Internal,
+        Model=Model,
+        Operand=Operand,
+        Output=Output,
+        ParameterAsInputConverter=ParameterAsInputConverter,
+        Parameter=Parameter,
+        RelaxedModeConverter=RelaxedModeConverter,
+        SymmPerChannelQuantParams=SymmPerChannelQuantParams)
+
+def ArgumentParser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("spec", help="the spec file or directory")
+    parser.add_argument("--hook", help="hook mode", action='store_true')
+    parser.add_argument("-m", "--model", help="the output model file or directory")
+    parser.add_argument("-t", "--test", help="the output test file or directory")
+    return parser
+
+def ParseArgs(parser):
+    args = parser.parse_args()
+    Configuration.hook_mode = args.hook
+    return args
+
+def Run(InitializeFiles=None, DumpModel=None, DumpExample=None, DumpTest=None):
+    exec_scope = GetExecScope()
+    while FileNames.NextFile():
+        try:
+            if not MightNeedRegeneration():
+                continue
+            exec(Read(FileNames.specFile), exec_scope)
+            model_buf = io.StringIO() if FileNames.modelFile else None
+            example_buf = io.StringIO() if FileNames.exampleFile else None
+            test_buf = io.StringIO() if FileNames.testFile else None
+            InitializeFiles(model_fd=model_buf,
+                            example_fd=example_buf,
+                            test_fd=test_buf)
+            Example.DumpAllExamples(
+                DumpModel=DumpModel, model_fd=model_buf,
+                DumpExample=DumpExample, example_fd=example_buf,
+                DumpTest=DumpTest, test_fd=test_buf)
+            for buf, filename in [
+                    (model_buf, FileNames.modelFile),
+                    (example_buf, FileNames.exampleFile),
+                    (test_buf, FileNames.testFile),
+            ]:
+                if filename is None:
+                    continue
+                if Configuration.hook_mode and (not os.path.exists(filename) or
+                                                Read(filename) != buf.getvalue()):
+                    print(('\n{filename} is out of date. '
+                           'Please run {generate_all_tests_sh} before uploading.\n').format(
+                                   filename=filename,
+                                   generate_all_tests_sh=os.path.abspath(os.path.join(
+                                           os.path.dirname(__file__), '..', '..', 'runtime', 'test',
+                                           'specs', 'generate_all_tests.sh'))))
+                    sys.exit(1)
+                AtomicWrite(filename, buf.getvalue())
+        except Exception:
+            traceback.print_exc()
+            sys.exit("Exception raised when processing {}".format(FileNames.specFile))

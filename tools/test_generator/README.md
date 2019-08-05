@@ -386,10 +386,9 @@ The spec above will result in 24 tests.
 Once you have your model ready, run
 
 ```
-$ANDROID_BUILD_TOP/frameworks/ml/nn/runtime/test/specs/generate_test.sh
-$ANDROID_BUILD_TOP/frameworks/ml/nn/runtime/test/specs/generate_vts_test.sh
+$ANDROID_BUILD_TOP/frameworks/ml/nn/runtime/test/specs/generate_all_tests.sh
 ```
 
-It will read and generate all CTS/VTS unit tests based on spec files in `nn/runtime/test/specs/V1_*/*` if needed. CTS test generator is able to identify which spec files are modified since last generation and only regenerate those files to reduce compilation time. To force a regeneration, use `-f` flag. The VTS test generator will regenerate tests targeting the latest HAL version by default. Pass the `all` positional argument to override.
+It will update all CTS and VTS tests based on spec files in `nn/runtime/test/specs/V1_*/*`.
 
-Rebuild with mm afterwards.
+Rebuild with mma afterwards.
