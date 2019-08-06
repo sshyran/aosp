@@ -287,19 +287,24 @@ def generate_vts_test(example, test_file):
     if example.model.hasDynamicOutputShape and target_hal_version < "V1_2":
         return
 
-    testTemplate = """\
+    generatedTestTemplate = """\
 TEST_F({test_case_name}, {test_name}) {{
   generated_tests::Execute(device,
                            {namespace}::{create_model_name},
                            {namespace}::{is_ignored_name},
-                           {namespace}::get_{examples_name}(){test_dynamic_output_shape});\n}}
-
+                           {namespace}::get_{examples_name}(){test_dynamic_output_shape});\n}}\n
+"""
+    validationTestTemplate = """\
 TEST_F(ValidationTest, {test_name}) {{
   const Model model = {namespace}::{create_model_name}();
   const std::vector<Request> requests = createRequests({namespace}::get_{examples_name}());
-  validateEverything(model, requests);
+  {validation_method}(model, requests);
 }}\n
 """
+
+    testTemplate = validationTestTemplate if example.expectFailure \
+                   else generatedTestTemplate + validationTestTemplate
+
     print(testTemplate.format(
             test_case_name="DynamicOutputShapeTest" if example.model.hasDynamicOutputShape \
                            else "NeuralnetworksHidlTest",
@@ -308,7 +313,8 @@ TEST_F(ValidationTest, {test_name}) {{
             create_model_name=str(example.model.createTestFunctionName),
             is_ignored_name=str(example.model.isIgnoredFunctionName),
             examples_name=str(example.examplesName),
-            test_dynamic_output_shape=", true" if example.model.hasDynamicOutputShape else ""
+            test_dynamic_output_shape=", true" if example.model.hasDynamicOutputShape else "",
+            validation_method="validateFailure" if example.expectFailure else "validateEverything"
         ), file=test_fd)
 
 def InitializeFiles(model_fd, example_fd, test_fd):

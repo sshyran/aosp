@@ -69061,6 +69061,28 @@ TEST_F(ValidationTest, strided_slice_float16_dynamic_output_shape) {
 }
 
 
+// Generated from: strided_slice_invalid_output_dims.mod.py.
+namespace strided_slice_invalid_output_dims {
+// Generated strided_slice_invalid_output_dims test
+#include "examples/strided_slice_invalid_output_dims.example.cpp"
+// Generated model constructor
+#include "vts/V1_2/models/strided_slice_invalid_output_dims.model.cpp"
+} // namespace strided_slice_invalid_output_dims
+
+TEST_F(ValidationTest, strided_slice_invalid_output_dims) {
+  const Model model = strided_slice_invalid_output_dims::createTestModel();
+  const std::vector<Request> requests = createRequests(strided_slice_invalid_output_dims::get_examples());
+  validateFailure(model, requests);
+}
+
+
+TEST_F(ValidationTest, strided_slice_invalid_output_dims_dynamic_output_shape) {
+  const Model model = strided_slice_invalid_output_dims::createTestModel_dynamic_output_shape();
+  const std::vector<Request> requests = createRequests(strided_slice_invalid_output_dims::get_examples_dynamic_output_shape());
+  validateFailure(model, requests);
+}
+
+
 // Generated from: sub_quantized_different_scales.mod.py.
 namespace sub_quantized_different_scales {
 // Generated sub_quantized_different_scales test
