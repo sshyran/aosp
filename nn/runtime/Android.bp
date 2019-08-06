@@ -43,6 +43,7 @@ cc_library {
         "ExecutionPlan.cpp",
         "Manager.cpp",
         "Memory.cpp",
+        "ModelArgumentInfo.cpp",
         "ModelBuilder.cpp",
         "NeuralNetworks.cpp",
         "TypeManager.cpp",

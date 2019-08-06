@@ -18,20 +18,25 @@
 
 #include "ExecutionBuilder.h"
 
+#include <algorithm>
+#include <memory>
+#include <mutex>
+#include <optional>
+#include <string>
+#include <thread>
+#include <utility>
+#include <vector>
+
 #include "CompilationBuilder.h"
 #include "CpuExecutor.h"
 #include "ExecutionBurstController.h"
 #include "HalInterfaces.h"
 #include "Manager.h"
+#include "ModelArgumentInfo.h"
 #include "ModelBuilder.h"
 #include "Tracing.h"
 #include "TypeManager.h"
 #include "Utils.h"
-
-#include <mutex>
-#include <optional>
-#include <thread>
-#include <vector>
 
 namespace android {
 namespace nn {
@@ -79,86 +84,6 @@ static bool checkDimensionInfo(const Operand& operand, const ANeuralNetworksOper
         }
     }
     return true;
-}
-
-int ModelArgumentInfo::setFromPointer(const Operand& operand,
-                                      const ANeuralNetworksOperandType* type, void* data,
-                                      uint32_t length) {
-    if ((data == nullptr) != (length == 0)) {
-        const char* dataPtrMsg = data ? "NOT_NULLPTR" : "NULLPTR";
-        LOG(ERROR) << "Data pointer must be nullptr if and only if length is zero (data = "
-                   << dataPtrMsg << ", length = " << length << ")";
-        return ANEURALNETWORKS_BAD_DATA;
-    }
-    if (data == nullptr) {
-        state = ModelArgumentInfo::HAS_NO_VALUE;
-    } else {
-        NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
-        if (operand.type != OperandType::OEM) {
-            uint32_t neededLength = TypeManager::get()->getSizeOfData(operand.type, dimensions);
-            if (neededLength != length && neededLength != 0) {
-                LOG(ERROR) << "Setting argument with invalid length: " << length
-                           << ", expected length: " << neededLength;
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-        }
-        state = ModelArgumentInfo::POINTER;
-    }
-    buffer = data;
-    locationAndLength = {.poolIndex = 0, .offset = 0, .length = length};
-    return ANEURALNETWORKS_NO_ERROR;
-}
-
-int ModelArgumentInfo::setFromMemory(const Operand& operand, const ANeuralNetworksOperandType* type,
-                                     uint32_t poolIndex, uint32_t offset, uint32_t length) {
-    NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
-    if (operand.type != OperandType::OEM) {
-        uint32_t neededLength = TypeManager::get()->getSizeOfData(operand.type, dimensions);
-        if (neededLength != length && neededLength != 0) {
-            LOG(ERROR) << "Setting argument with invalid length: " << length
-                       << ", expected length: " << neededLength;
-            return ANEURALNETWORKS_BAD_DATA;
-        }
-    }
-
-    state = ModelArgumentInfo::MEMORY;
-    locationAndLength = {.poolIndex = poolIndex, .offset = offset, .length = length};
-    buffer = nullptr;
-    return ANEURALNETWORKS_NO_ERROR;
-}
-
-int ModelArgumentInfo::setFromTemporaryMemory(const Operand& operand, uint32_t poolIndex,
-                                              uint32_t offset, uint32_t length) {
-    NN_RETURN_IF_ERROR(updateDimensionInfo(operand, nullptr));
-    if (operand.type != OperandType::OEM) {
-        uint32_t neededLength = TypeManager::get()->getSizeOfData(operand.type, dimensions);
-        if (neededLength != length) {
-            LOG(ERROR) << "Setting argument with invalid length: " << length
-                       << ", expected length: " << neededLength;
-            return ANEURALNETWORKS_BAD_DATA;
-        }
-    }
-
-    state = ModelArgumentInfo::MEMORY;
-    locationAndLength = {
-            .poolIndex = poolIndex,
-            .offset = offset,
-            .length = length,
-    };
-    buffer = nullptr;
-    return ANEURALNETWORKS_NO_ERROR;
-}
-
-int ModelArgumentInfo::updateDimensionInfo(const Operand& operand,
-                                           const ANeuralNetworksOperandType* newType) {
-    if (newType == nullptr) {
-        dimensions = operand.dimensions;
-    } else {
-        const uint32_t count = newType->dimensionCount;
-        dimensions = hidl_vec<uint32_t>(count);
-        std::copy(&newType->dimensions[0], &newType->dimensions[count], dimensions.begin());
-    }
-    return ANEURALNETWORKS_NO_ERROR;
 }
 
 ExecutionBuilder::ExecutionBuilder(const CompilationBuilder* compilation)
@@ -389,7 +314,7 @@ static void cpuFallbackFull(ExecutionBuilder* executionBuilder,
                           DeviceManager::getCpuDevice(), /*preparedModel=*/nullptr);
     executor.mapInputsAndOutputsTrivially();
     sp<ExecutionCallback> fallbackCallback;
-    int n = executor.startCompute(&fallbackCallback);
+    int n = executor.startComputeOnCpuFallback(&fallbackCallback);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         executionCallback->notify(convertResultCodeToErrorStatus(n), {}, kNoTiming);
         return;
@@ -422,7 +347,7 @@ static bool cpuFallbackPartial(ExecutionBuilder* executionBuilder, const Executi
         return false;
     }
     sp<ExecutionCallback> fallbackCallback;
-    if (executor->startComputeOnCpu(&fallbackCallback) != ANEURALNETWORKS_NO_ERROR) {
+    if (executor->startComputeOnCpuFallback(&fallbackCallback) != ANEURALNETWORKS_NO_ERROR) {
         cpuFallbackFull(executionBuilder, executionCallback);
         return false;
     }
@@ -564,7 +489,7 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
 
     // TODO: For asynchronous execution, entire plan-based-path should run in an
     // asynchronous thread -- take the asynchronous thread logic out of
-    // startComputeOnCpu() and use it to wrap the plan-based-path.
+    // CpuPreparedModel::execute() and use it to wrap the plan-based-path.
     mStarted = true;
     const bool allowFallback = DeviceManager::partitioningAllowsFallback(mPartitioning);
     std::shared_ptr<ExecutionPlan::Controller> controller =
@@ -672,52 +597,9 @@ bool StepExecutor::updateOutputShapes(const std::vector<OutputShape>& from,
     return true;
 }
 
-// Figures out how to place each of the input or outputs in a buffer. This just does the layout,
-// it does not copy data.  Aligns each input a bit.
-int StepExecutor::allocatePointerArgumentsToPool(std::vector<ModelArgumentInfo>* args,
-                                                 Memory* memory) {
-    uint32_t nextPoolIndex = mMemories.size();
-    int64_t total = 0;
-    for (auto& info : *args) {
-        if (info.state == ModelArgumentInfo::POINTER) {
-            DataLocation& loc = info.locationAndLength;
-            // TODO Good enough alignment?
-            total += alignBytesNeeded(static_cast<uint32_t>(total), loc.length);
-            loc.poolIndex = nextPoolIndex;
-            loc.offset = static_cast<uint32_t>(total);
-            total += loc.length;
-        }
-    };
-    if (total > 0xFFFFFFFF) {
-        LOG(ERROR) << "StepExecutor::allocatePointerArgumentsToPool: ANeuralNetworksExecution: "
-                      "Size of all inputs or outputs exceeds 2^32.";
-        return ANEURALNETWORKS_BAD_DATA;
-    }
-    hidl_memory hidlMemory;
-    if (total > 0) {
-        memory->create(total);  // TODO check error
-        mMemories.add(memory);
-    }
-    return ANEURALNETWORKS_NO_ERROR;
-}
-
-static void setRequestArgumentArray(const std::vector<ModelArgumentInfo>& argumentInfos,
-                                    hidl_vec<RequestArgument>* ioInfos) {
-    size_t count = argumentInfos.size();
-    ioInfos->resize(count);
-    for (size_t i = 0; i < count; i++) {
-        const auto& info = argumentInfos[i];
-        (*ioInfos)[i] = {
-                .hasNoValue = info.state == ModelArgumentInfo::HAS_NO_VALUE,
-                .location = info.locationAndLength,
-                .dimensions = info.dimensions,
-        };
-    }
-}
-
 StepExecutor::StepExecutor(ExecutionBuilder* executionBuilder, const ModelBuilder* model,
                            std::shared_ptr<Device> device,
-                           std::shared_ptr<VersionedIPreparedModel> preparedModel)
+                           std::shared_ptr<PreparedModel> preparedModel)
     : mExecutionBuilder(executionBuilder),
       mModel(model),
       mDevice(device),
@@ -794,7 +676,7 @@ static void logArguments(const char* kind, const std::vector<ModelArgumentInfo>&
 }
 
 bool StepExecutor::isCpu() const {
-    return mDevice->getInterface() == nullptr;
+    return mDevice == DeviceManager::getCpuDevice();
 }
 
 int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback,
@@ -803,243 +685,34 @@ int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback,
         logArguments("input", mInputs);
         logArguments("output", mOutputs);
     }
-    if (isCpu()) {
-        return startComputeOnCpu(synchronizationCallback);
-    } else {
-        return startComputeOnDevice(synchronizationCallback, burstController);
-    }
-}
-
-int StepExecutor::startComputeOnDevice(
-        sp<ExecutionCallback>* synchronizationCallback,
-        const std::shared_ptr<ExecutionBurstController>& burstController) {
-    CHECK(!isCpu());
 
     // Initialize timing information in case we take an error path to exit.
     mExecutionBuilder->reportTiming(kNoTiming);
 
-    *synchronizationCallback = nullptr;
+    CHECK(mPreparedModel != nullptr);
+    NN_RETURN_IF_ERROR(mPreparedModel->execute(burstController, measureTiming(mExecutionBuilder),
+                                               &mInputs, &mOutputs, &mMemories,
+                                               synchronizationCallback));
 
-    NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "StepExecutor::startComputeOnDevice");
-    // We separate the input & output pools so that we reduce the copying done if we
-    // do an eventual remoting (hidl_memory->update()).  We could also use it to set
-    // protection on read only memory but that's not currently done.
-    Memory inputPointerArguments;
-    Memory outputPointerArguments;
-
-    // Layout the input and output data
-    int n = allocatePointerArgumentsToPool(&mInputs, &inputPointerArguments);
-    if (n != ANEURALNETWORKS_NO_ERROR) {
-        return n;
+    if (*synchronizationCallback != nullptr) {
+        mExecutionBuilder->reportTiming((*synchronizationCallback)->getTiming());
     }
-    n = allocatePointerArgumentsToPool(&mOutputs, &outputPointerArguments);
-    if (n != ANEURALNETWORKS_NO_ERROR) {
-        return n;
-    }
-
-    // Copy the input data that was specified via a pointer.
-    // inputPointerArguments.update();
-    for (auto& info : mInputs) {
-        if (info.state == ModelArgumentInfo::POINTER) {
-            DataLocation& loc = info.locationAndLength;
-            uint8_t* data = nullptr;
-            int n = inputPointerArguments.getPointer(&data);
-            if (n != ANEURALNETWORKS_NO_ERROR) {
-                return n;
-            }
-            memcpy(data + loc.offset, info.buffer, loc.length);
-        }
-    }
-    // TODO: Add inputPointerArguments.commit() and .update() at all the right places
-
-    Request request;
-    setRequestArgumentArray(mInputs, &request.inputs);
-    setRequestArgumentArray(mOutputs, &request.outputs);
-    uint32_t count = mMemories.size();
-    request.pools.resize(count);
-    for (uint32_t i = 0; i < count; i++) {
-        request.pools[i] = mMemories[i]->getHidlMemory();
-    }
-
-    NNTRACE_FULL_SWITCH(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
-                        "StepExecutor::startComputeOnDevice::execute");
-
-    // Prepare the callback for asynchronous execution. sp<ExecutionCallback>
-    // object is returned when the execution has been successfully launched,
-    // otherwise a nullptr is returned. The executionCallback is abstracted in
-    // the NN API as an "event".
-    //
-    // The sp is used for ref-counting purposes. Without it, the HIDL service
-    // could attempt to communicate with a dead callback object.
-    //
-    // TODO: Explain the "dead callback" problem further, either here or
-    // in the design document.
-    sp<ExecutionCallback> executionCallback = new ExecutionCallback();
-
-    // compute using burst if present
-    const bool burstCompute = (burstController != nullptr);
-    bool burstFallback = false;
-    if (burstCompute) {
-        std::vector<intptr_t> memoryIds;
-        memoryIds.reserve(mMemories.size());
-        for (const Memory* memory : mMemories) {
-            memory->usedBy(burstController);
-            memoryIds.push_back(memory->getKey());
-        }
-
-        VLOG(EXECUTION) << "Before ExecutionBurstController->tryCompute() "
-                        << SHOW_IF_DEBUG(toString(request));
-        auto [status, outputShapes, timing, fallback] =
-                burstController->tryCompute(request, measureTiming(mExecutionBuilder), memoryIds);
-
-        burstFallback = fallback;
-        if (!fallback) {
-            executionCallback->notify(status, outputShapes, timing);
-        }
-    }
-
-    // compute from IPreparedModel if either:
-    // (1) burst was not supplied, or
-    // (2) the burst execution failed and requested a fallback execution
-    if (!burstCompute || burstFallback) {
-        if (DeviceManager::get()->syncExecHal()) {
-            VLOG(EXECUTION) << "Before mPreparedModel->executeSynchronously() "
-                            << SHOW_IF_DEBUG(toString(request));
-            auto syncExecuteResult =
-                    mPreparedModel->executeSynchronously(request, measureTiming(mExecutionBuilder));
-            executionCallback->notify(std::get<0>(syncExecuteResult),
-                                      std::get<1>(syncExecuteResult),
-                                      std::get<2>(syncExecuteResult));
-        } else {
-            VLOG(EXECUTION) << "Before mPreparedModel->execute() "
-                            << SHOW_IF_DEBUG(toString(request));
-            // Execute.
-            // TODO: What happens to the Callback if the service dies abnormally
-            // -- won't that keep the Callback live forever, because the service
-            // never has the opportunity to bump the reference count down? Or
-            // maybe the HIDL infrastructure handles this magically? At worst,
-            // it seems like this is a small memory leak, if the Callback stays
-            // alive forever.
-            Return<ErrorStatus> executeStatus = mPreparedModel->execute(
-                    request, measureTiming(mExecutionBuilder), executionCallback);
-            if (!executeStatus.isOk() || executeStatus != ErrorStatus::NONE) {
-                VLOG(EXECUTION) << "**Execute launch failed**";
-                return executeStatus.isOk() ? convertErrorStatusToResultCode(executeStatus)
-                                            : ANEURALNETWORKS_OP_FAILED;
-            }
-        }
-    }
-
-    // TODO: Remove this synchronization point when the block of code below is
-    // removed.
-    executionCallback->wait();
-    NNTRACE_FULL_SWITCH(NNTRACE_LAYER_RUNTIME, NNTRACE_PHASE_EXECUTION,
-                        "StepExecutor::startComputeOnDevice::waited");
-    Return<ErrorStatus> callbackStatus = executionCallback->getStatus();
-    if (!callbackStatus.isOk() || callbackStatus != ErrorStatus::NONE) {
-        VLOG(EXECUTION) << "**Execution failed**";
-        if (callbackStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
-            *synchronizationCallback = executionCallback;
-            return ANEURALNETWORKS_NO_ERROR;
-        }
-        return callbackStatus.isOk() ? convertErrorStatusToResultCode(callbackStatus)
-                                     : ANEURALNETWORKS_OP_FAILED;
-    }
-
-    mExecutionBuilder->reportTiming(executionCallback->getTiming());
-
-    // Copy the output data from shared memory to the output buffers.
-    // TODO: Move this block of code somewhere else. It should not be in the
-    // startCompute function.
-    // TODO: outputMemory->update(); outputMemory->commit()
-    NNTRACE_RT_SWITCH(NNTRACE_PHASE_RESULTS, "StepExecutor::startComputeOnDevice");
-    for (auto& info : mOutputs) {
-        if (info.state == ModelArgumentInfo::POINTER) {
-            DataLocation& loc = info.locationAndLength;
-            uint8_t* data = nullptr;
-            int n = outputPointerArguments.getPointer(&data);
-            if (n != ANEURALNETWORKS_NO_ERROR) {
-                return n;
-            }
-            memcpy(info.buffer, data + loc.offset, loc.length);
-        }
-    }
-    VLOG(EXECUTION) << "StepExecutor::startComputeOnDevice completed";
-
-    *synchronizationCallback = executionCallback;
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-static void computeOnCpu(const Model& model, const Request& request,
-                         const std::vector<RunTimePoolInfo>& modelPoolInfos,
-                         const std::vector<RunTimePoolInfo>& requestPoolInfos,
-                         const sp<IExecutionCallback>& executionCallback) {
-    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "computeOnCpu");
-    CpuExecutor executor;
-    int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
-    const auto& outputShapes = executor.getOutputShapes();
-    executionCallback->notify_1_2(convertResultCodeToErrorStatus(err), outputShapes, kNoTiming);
-}
-
-int StepExecutor::startComputeOnCpu(sp<ExecutionCallback>* synchronizationCallback) {
-    // TODO: use a thread pool
-    // TODO(mikie): this could have NNTRACE so we could measure the overhead of
-    //              spinning up a new thread.
-
+// For cpuFallback{Partial,Full}, recompile the model on CPU and then start compute.
+int StepExecutor::startComputeOnCpuFallback(sp<ExecutionCallback>* synchronizationCallback) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "StepExecutor::startComputeOnCpuFallback");
+    VLOG(EXECUTION) << "Re-compile the model on CPU";
     const Model model = mModel->makeHidlModel();
-
-    // Prepare the callback for asynchronous execution. sp<ExecutionCallback>
-    // object is returned when the execution has been successfully launched,
-    // otherwise a nullptr is returned. The executionCallback is abstracted in
-    // the NN API as an "event".
-    sp<ExecutionCallback> executionCallback = new ExecutionCallback();
-    *synchronizationCallback = nullptr;
-
-    std::vector<RunTimePoolInfo> modelPoolInfos;
-    if (!setRunTimePoolInfosFromHidlMemories(&modelPoolInfos, model.pools)) {
-        return ANEURALNETWORKS_UNMAPPABLE;
-    }
-
-    std::vector<RunTimePoolInfo> requestPoolInfos;
-    requestPoolInfos.reserve(mMemories.size());
-    for (const Memory* mem : mMemories) {
-        if (std::optional<RunTimePoolInfo> poolInfo =
-                    RunTimePoolInfo::createFromHidlMemory(mem->getHidlMemory())) {
-            requestPoolInfos.emplace_back(*poolInfo);
-        } else {
-            return ANEURALNETWORKS_UNMAPPABLE;
-        }
-    }
-    // Create as many pools as there are input / output.
-    auto fixPointerArguments = [&requestPoolInfos](std::vector<ModelArgumentInfo>& argumentInfos) {
-        for (ModelArgumentInfo& argumentInfo : argumentInfos) {
-            if (argumentInfo.state == ModelArgumentInfo::POINTER) {
-                argumentInfo.locationAndLength.poolIndex =
-                        static_cast<uint32_t>(requestPoolInfos.size());
-                argumentInfo.locationAndLength.offset = 0;
-                requestPoolInfos.emplace_back(RunTimePoolInfo::createFromExistingBuffer(
-                        static_cast<uint8_t*>(argumentInfo.buffer)));
-            }
-        }
-    };
-    fixPointerArguments(mInputs);
-    fixPointerArguments(mOutputs);
-
-    Request request;
-    setRequestArgumentArray(mInputs, &request.inputs);
-    setRequestArgumentArray(mOutputs, &request.outputs);
-
-    if (DeviceManager::get()->syncExecCpu()) {
-        computeOnCpu(model, request, modelPoolInfos, requestPoolInfos, executionCallback);
-    } else {
-        // TODO: should model be moved with a std::cref?
-        std::thread thread(computeOnCpu, model, std::move(request), std::move(modelPoolInfos),
-                           std::move(requestPoolInfos), executionCallback);
-        executionCallback->bindThread(std::move(thread));
-    }
-
-    *synchronizationCallback = executionCallback;
-    return ANEURALNETWORKS_NO_ERROR;
+    mDevice = DeviceManager::getCpuDevice();
+    mPreparedModel = nullptr;
+    // TODO: Propagate user preference to this point instead of using default value of
+    // ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER.
+    ExecutionPreference preference =
+            static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
+    NN_RETURN_IF_ERROR(mDevice->prepareModel(model, preference, {}, {}, {}, &mPreparedModel));
+    return startCompute(synchronizationCallback, /*burstController=*/nullptr);
 }
 
 }  // namespace nn

@@ -19,20 +19,23 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_PLAN_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_PLAN_H
 
+#include <openssl/sha.h>
+
+#include <map>
+#include <memory>
+#include <ostream>
+#include <set>
+#include <string>
+#include <unordered_map>
+#include <utility>
+#include <vector>
+
 #include "HalInterfaces.h"
 #include "Memory.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
 #include "TokenHasher.h"
 #include "Utils.h"
-#include "VersionedInterfaces.h"
-
-#include <openssl/sha.h>
-
-#include <ostream>
-#include <set>
-#include <string>
-#include <vector>
 
 namespace android {
 namespace nn {
@@ -44,6 +47,7 @@ class ExecutionBuilder;
 class ExecutionPlan;
 class ExecutionBurstController;
 class Memory;
+class PreparedModel;
 class StepExecutor;
 
 class ExecutionStep {
@@ -97,9 +101,7 @@ public:
     std::shared_ptr<Device> getDevice() const { return mDevice; }
 
     // only available after calling finishSubModel()
-    std::shared_ptr<VersionedIPreparedModel> getPreparedSubModel() const {
-        return mPreparedSubModel;
-    }
+    std::shared_ptr<PreparedModel> getPreparedSubModel() const { return mPreparedSubModel; }
 
     // Map inputs and outputs from ExecutionBuilder to StepExecutor.
     void mapInputsAndOutputs(std::shared_ptr<StepExecutor> stepExecutor) const;
@@ -120,7 +122,7 @@ public:
     uint32_t mIndex;  // index of step within plan
     ModelBuilder mSubModel;
     std::shared_ptr<Device> mDevice;
-    std::shared_ptr<VersionedIPreparedModel> mPreparedSubModel;  // not used for CPU
+    std::shared_ptr<PreparedModel> mPreparedSubModel;
 
     // Inputs of original model that are also inputs of this submodel:
     //     (fromModel index, subModel index)
@@ -284,7 +286,7 @@ public:
 
         std::shared_ptr<Device> mDevice;
         const ModelBuilder* mModel;
-        std::shared_ptr<VersionedIPreparedModel> mPreparedModel;  // not used for CPU
+        std::shared_ptr<PreparedModel> mPreparedModel;
 
         const std::string* mCacheDir;
         TokenHasher mToken;
