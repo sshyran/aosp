@@ -55,8 +55,9 @@ cc_defaults {
     srcs: [
         // Subset of tests that rely only on public functionality.
         //
-        // Changes to this list must be reflected in cts/tests/tests/neuralnetworks/Android.mk
-        // to ensure CTS tests coverage.
+        // Changes to this list must be reflected in the "CtsNNAPITests_static"
+        // library to ensure CTS tests coverage.
+        "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
         "TestOperandExtraParams.cpp",
@@ -254,6 +255,7 @@ cc_test {
 cc_library_static {
     name: "CtsNNAPITests_static",
     srcs: [
+        "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
         "TestNeuralNetworksWrapper.cpp",
