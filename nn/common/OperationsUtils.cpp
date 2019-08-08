@@ -122,8 +122,7 @@ uint32_t getNumberOfElements(const Shape& shape) {
     return count;
 }
 
-uint32_t getNumberOfElements(const Shape& shape,
-                             size_t firstAxisInclusive,
+uint32_t getNumberOfElements(const Shape& shape, size_t firstAxisInclusive,
                              size_t lastAxisExclusive) {
     nnAssert(0 <= firstAxisInclusive);
     nnAssert(firstAxisInclusive <= lastAxisExclusive);
@@ -170,8 +169,7 @@ bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier,
     return true;
 }
 
-bool QuantizeMultiplierSmallerThanOne(double double_multiplier,
-                                      int32_t* quantized_multiplier,
+bool QuantizeMultiplierSmallerThanOne(double double_multiplier, int32_t* quantized_multiplier,
                                       int32_t* right_shift) {
     NN_OPS_CHECK(double_multiplier >= 0.);
     NN_OPS_CHECK(double_multiplier < 1.);
@@ -195,8 +193,7 @@ bool QuantizeMultiplierSmallerThanOne(double double_multiplier,
     return true;
 }
 
-bool QuantizeMultiplierGreaterThanOne(double double_multiplier,
-                                      int32_t* quantized_multiplier,
+bool QuantizeMultiplierGreaterThanOne(double double_multiplier, int32_t* quantized_multiplier,
                                       int* left_shift) {
     NN_OPS_CHECK(double_multiplier > 1.);
     const double q = std::frexp(double_multiplier, left_shift);
@@ -221,15 +218,13 @@ bool GetQuantizedConvolutionMultipler(const Shape& inputShape, const Shape& filt
 
     // The following conditions must be guaranteed by the training pipeline.
     NN_OPS_CHECK(std::abs(input_product_scale - bias_scale) <=
-              1e-6 * std::min(input_product_scale, bias_scale));
+                 1e-6 * std::min(input_product_scale, bias_scale));
     NN_OPS_CHECK(input_product_scale >= 0);
     *multiplier = input_product_scale / outputShape.scale;
     return true;
 }
 
-void CalculateActivationRangeUint8(int32_t activation,
-                                   const Shape& outputShape,
-                                   int32_t* act_min,
+void CalculateActivationRangeUint8(int32_t activation, const Shape& outputShape, int32_t* act_min,
                                    int32_t* act_max) {
     const int32_t qmin = std::numeric_limits<uint8_t>::min();
     const int32_t qmax = std::numeric_limits<uint8_t>::max();
@@ -250,7 +245,7 @@ void CalculateActivationRangeUint8(int32_t activation,
     } else if (activation == kActivationRelu1) {
         *act_min = std::max(qmin, quantize(-1.0));
         *act_max = std::min(qmax, quantize(1.0));
-    } else if (activation == kActivationNone){
+    } else if (activation == kActivationNone) {
         *act_min = qmin;
         *act_max = qmax;
     } else {
@@ -258,8 +253,7 @@ void CalculateActivationRangeUint8(int32_t activation,
     }
 }
 
-void CalculateActivationRangeFloat(int32_t activation,
-                                   float* activation_min,
+void CalculateActivationRangeFloat(int32_t activation, float* activation_min,
                                    float* activation_max) {
     if (activation == kActivationRelu) {
         *activation_min = 0.f;
@@ -270,7 +264,7 @@ void CalculateActivationRangeFloat(int32_t activation,
     } else if (activation == kActivationRelu1) {
         *activation_min = -1.f;
         *activation_max = 1.f;
-    } else if (activation == kActivationNone){
+    } else if (activation == kActivationNone) {
         *activation_min = std::numeric_limits<float>::lowest();
         *activation_max = std::numeric_limits<float>::max();
     } else {
@@ -372,11 +366,11 @@ bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& 
 
     uint32_t channels_out = getSizeOfDimension(filter, 3);
     uint32_t channels_in = getSizeOfDimension(input, 3);
-    uint32_t width        = getSizeOfDimension(input, 2);
-    uint32_t height       = getSizeOfDimension(input, 1);
-    uint32_t filterWidth  = getSizeOfDimension(filter, 2);
+    uint32_t width = getSizeOfDimension(input, 2);
+    uint32_t height = getSizeOfDimension(input, 1);
+    uint32_t filterWidth = getSizeOfDimension(filter, 2);
     uint32_t filterHeight = getSizeOfDimension(filter, 1);
-    uint32_t batches      = getSizeOfDimension(input, 0);
+    uint32_t batches = getSizeOfDimension(input, 0);
 
     NN_OPS_CHECK(depth_multiplier * channels_in == channels_out);
     int32_t effectiveFilterWidth = (filterWidth - 1) * dilation_width_factor + 1;
@@ -396,8 +390,7 @@ bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& 
     return true;
 }
 
-bool genericActivationPrepare(const Shape& input,
-                              Shape* output) {
+bool genericActivationPrepare(const Shape& input, Shape* output) {
     NN_OPS_CHECK(getNumberOfDimensions(input) <= 4);
     return SetShape(input, output);
 }
@@ -406,15 +399,13 @@ bool genericNormalizationPrepare(const Shape& input, Shape* output) {
     return SetShape(input, output);
 }
 
-bool reshapePrepare(const Shape& input,
-                    const int32_t* targetDims,
-                    const int32_t targetDimsSize,
+bool reshapePrepare(const Shape& input, const int32_t* targetDims, const int32_t targetDimsSize,
                     Shape* output) {
     // Reshape allows one of the targetDims components to have the
     // special -1 value, meaning it will be calculated automatically based on the
     // input. Here we calculate what that dimension should be so that the number
     // of output elements in the same as the number of input elements.
-    int32_t numInputElements = (int32_t) getNumberOfElements(input);
+    int32_t numInputElements = (int32_t)getNumberOfElements(input);
 
     std::vector<uint32_t> outDims(targetDimsSize);
     int32_t numOutputElements = 1;
@@ -431,7 +422,7 @@ bool reshapePrepare(const Shape& input,
     }
     if (strechDim != -1) {
         int32_t strechValue = numInputElements / numOutputElements;
-        outDims[strechDim] = (uint32_t) strechValue;
+        outDims[strechDim] = (uint32_t)strechValue;
         numOutputElements *= strechValue;
     }
 
@@ -445,22 +436,18 @@ bool reshapePrepare(const Shape& input,
     return true;
 }
 
-bool depthToSpacePrepare(const Shape& input,
-                         int32_t blockSize,
-                         Shape* output) {
+bool depthToSpacePrepare(const Shape& input, int32_t blockSize, Shape* output) {
     NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
     NN_OPS_CHECK(blockSize > 0);
 
-    uint32_t batches  = getSizeOfDimension(input, 0);
-    uint32_t height   = getSizeOfDimension(input, 1);
-    uint32_t width    = getSizeOfDimension(input, 2);
+    uint32_t batches = getSizeOfDimension(input, 0);
+    uint32_t height = getSizeOfDimension(input, 1);
+    uint32_t width = getSizeOfDimension(input, 2);
     uint32_t channels = getSizeOfDimension(input, 3);
 
     NN_OPS_CHECK(channels % (blockSize * blockSize) == 0);
     output->type = input.type;
-    output->dimensions = {batches,
-                          height * blockSize,
-                          width * blockSize,
+    output->dimensions = {batches, height * blockSize, width * blockSize,
                           channels / (blockSize * blockSize)};
     output->offset = input.offset;
     output->scale = input.scale;
@@ -468,24 +455,20 @@ bool depthToSpacePrepare(const Shape& input,
     return true;
 }
 
-bool spaceToDepthPrepare(const Shape& input,
-                         int32_t blockSize,
-                         Shape* output) {
+bool spaceToDepthPrepare(const Shape& input, int32_t blockSize, Shape* output) {
     NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
     NN_OPS_CHECK(blockSize > 0);
 
-    uint32_t batches  = getSizeOfDimension(input, 0);
-    uint32_t height   = getSizeOfDimension(input, 1);
-    uint32_t width    = getSizeOfDimension(input, 2);
+    uint32_t batches = getSizeOfDimension(input, 0);
+    uint32_t height = getSizeOfDimension(input, 1);
+    uint32_t width = getSizeOfDimension(input, 2);
     uint32_t channels = getSizeOfDimension(input, 3);
 
     NN_OPS_CHECK(height % blockSize == 0);
     NN_OPS_CHECK(width % blockSize == 0);
 
     output->type = input.type;
-    output->dimensions = {batches,
-                          height / blockSize,
-                          width / blockSize,
+    output->dimensions = {batches, height / blockSize, width / blockSize,
                           channels * (blockSize * blockSize)};
     output->offset = input.offset;
     output->scale = input.scale;
@@ -493,19 +476,17 @@ bool spaceToDepthPrepare(const Shape& input,
     return true;
 }
 
-bool embeddingLookupPrepare(const Shape &valueShape,
-                            const Shape &lookupShape,
-                            Shape *outputShape) {
+bool embeddingLookupPrepare(const Shape& valueShape, const Shape& lookupShape, Shape* outputShape) {
     NN_OPS_CHECK(getNumberOfDimensions(valueShape) >= 2);
     NN_OPS_CHECK(getNumberOfDimensions(lookupShape) == 1);
 
-    const uint32_t rows     = getSizeOfDimension(valueShape, 0);
-    const uint32_t columns  = getSizeOfDimension(valueShape, 1);
+    const uint32_t rows = getSizeOfDimension(valueShape, 0);
+    const uint32_t columns = getSizeOfDimension(valueShape, 1);
 
-    const uint32_t lookups  = getSizeOfDimension(lookupShape, 0);
+    const uint32_t lookups = getSizeOfDimension(lookupShape, 0);
 
     outputShape->type = valueShape.type;
-    outputShape->dimensions = { lookups, columns };
+    outputShape->dimensions = {lookups, columns};
     for (uint32_t i = 2; i < getNumberOfDimensions(valueShape); i++) {
         outputShape->dimensions.push_back(getSizeOfDimension(valueShape, i));
     }
@@ -515,20 +496,17 @@ bool embeddingLookupPrepare(const Shape &valueShape,
     return true;
 }
 
-bool hashtableLookupPrepare(const Shape &lookupShape,
-                            const Shape &keyShape,
-                            const Shape &valueShape,
-                            Shape *outputShape,
-                            Shape *hitShape) {
+bool hashtableLookupPrepare(const Shape& lookupShape, const Shape& keyShape,
+                            const Shape& valueShape, Shape* outputShape, Shape* hitShape) {
     NN_OPS_CHECK(getNumberOfDimensions(lookupShape) == 1);
     NN_OPS_CHECK(getNumberOfDimensions(keyShape) == 1);
     NN_OPS_CHECK(getNumberOfDimensions(valueShape) >= 1);
 
-    const uint32_t lookups  = getSizeOfDimension(lookupShape, 0);
-    const uint32_t keys     = getSizeOfDimension(keyShape, 0);
-    const uint32_t rows     = getSizeOfDimension(valueShape, 0);
+    const uint32_t lookups = getSizeOfDimension(lookupShape, 0);
+    const uint32_t keys = getSizeOfDimension(keyShape, 0);
+    const uint32_t rows = getSizeOfDimension(valueShape, 0);
     outputShape->type = valueShape.type;
-    outputShape->dimensions = { lookups };
+    outputShape->dimensions = {lookups};
     for (uint32_t i = 1; i < getNumberOfDimensions(valueShape); i++) {
         outputShape->dimensions.push_back(getSizeOfDimension(valueShape, i));
     }
@@ -536,16 +514,14 @@ bool hashtableLookupPrepare(const Shape &lookupShape,
     outputShape->scale = valueShape.scale;
 
     hitShape->type = OperandType::TENSOR_QUANT8_ASYMM;
-    hitShape->dimensions = { lookups };
+    hitShape->dimensions = {lookups};
     hitShape->offset = 0;
     hitShape->scale = 1.f;
 
     return true;
 }
 
-bool padPrepare(const Shape& input,
-                const int32_t* paddingsData,
-                const Shape& paddingsShape,
+bool padPrepare(const Shape& input, const int32_t* paddingsData, const Shape& paddingsShape,
                 Shape* output) {
     uint32_t numInputDims = getNumberOfDimensions(input);
 
@@ -571,10 +547,8 @@ bool padPrepare(const Shape& input,
     return true;
 }
 
-bool batchToSpacePrepare(const Shape& input,
-                         const int32_t* blockSizeData,
-                         const Shape& blockSizeShape,
-                         Shape* output) {
+bool batchToSpacePrepare(const Shape& input, const int32_t* blockSizeData,
+                         const Shape& blockSizeShape, Shape* output) {
     // Only 4D NHWC tensors are supported.
     NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
 
@@ -584,29 +558,24 @@ bool batchToSpacePrepare(const Shape& input,
     // Only applies to spatial dimensions.
     NN_OPS_CHECK(getSizeOfDimension(blockSizeShape, 0) == 2);
 
-    uint32_t batches  = getSizeOfDimension(input, 0);
-    uint32_t height   = getSizeOfDimension(input, 1);
-    uint32_t width    = getSizeOfDimension(input, 2);
+    uint32_t batches = getSizeOfDimension(input, 0);
+    uint32_t height = getSizeOfDimension(input, 1);
+    uint32_t width = getSizeOfDimension(input, 2);
     uint32_t channels = getSizeOfDimension(input, 3);
 
     NN_OPS_CHECK(batches % (blockSizeData[0] * blockSizeData[1]) == 0);
     output->type = input.type;
     output->dimensions = {batches / (blockSizeData[0] * blockSizeData[1]),
-                          height * blockSizeData[0],
-                          width * blockSizeData[1],
-                          channels};
+                          height * blockSizeData[0], width * blockSizeData[1], channels};
     output->offset = input.offset;
     output->scale = input.scale;
 
     return true;
 }
 
-bool spaceToBatchPrepare(const Shape& input,
-                         const int32_t* blockSizeData,
-                         const Shape& blockSizeShape,
-                         const int32_t* paddingsData,
-                         const Shape& paddingsShape,
-                         Shape* output) {
+bool spaceToBatchPrepare(const Shape& input, const int32_t* blockSizeData,
+                         const Shape& blockSizeShape, const int32_t* paddingsData,
+                         const Shape& paddingsShape, Shape* output) {
     // Only 4D NHWC tensors are supported.
     NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
 
@@ -622,9 +591,9 @@ bool spaceToBatchPrepare(const Shape& input,
     NN_OPS_CHECK(getSizeOfDimension(paddingsShape, 0) == 2);
     NN_OPS_CHECK(getSizeOfDimension(paddingsShape, 1) == 2);
 
-    uint32_t batches  = getSizeOfDimension(input, 0);
-    uint32_t height   = getSizeOfDimension(input, 1);
-    uint32_t width    = getSizeOfDimension(input, 2);
+    uint32_t batches = getSizeOfDimension(input, 0);
+    uint32_t height = getSizeOfDimension(input, 1);
+    uint32_t width = getSizeOfDimension(input, 2);
     uint32_t channels = getSizeOfDimension(input, 3);
 
     uint32_t paddedHeight = paddingsData[0] + height + paddingsData[1];
@@ -635,8 +604,7 @@ bool spaceToBatchPrepare(const Shape& input,
 
     output->type = input.type;
     output->dimensions = {batches * (blockSizeData[0] * blockSizeData[1]),
-                          paddedHeight / blockSizeData[0],
-                          paddedWidth / blockSizeData[1],
+                          paddedHeight / blockSizeData[0], paddedWidth / blockSizeData[1],
                           channels};
     output->offset = input.offset;
     output->scale = input.scale;
@@ -644,9 +612,7 @@ bool spaceToBatchPrepare(const Shape& input,
     return true;
 }
 
-bool squeezePrepare(const Shape& input,
-                    const int32_t* squeezeDims,
-                    const Shape& squeezeDimsShape,
+bool squeezePrepare(const Shape& input, const int32_t* squeezeDims, const Shape& squeezeDimsShape,
                     Shape* output) {
     int32_t numInputDims = static_cast<int32_t>(getNumberOfDimensions(input));
 
@@ -668,13 +634,13 @@ bool squeezePrepare(const Shape& input,
         }
     } else {
         for (int32_t idx = 0; idx < squeezeDimsSize; ++idx) {
-            int32_t current = squeezeDims[idx] < 0 ? squeezeDims[idx] + numInputDims
-                                               : squeezeDims[idx];
+            int32_t current =
+                    squeezeDims[idx] < 0 ? squeezeDims[idx] + numInputDims : squeezeDims[idx];
             NN_OPS_CHECK(current >= 0 && current < numInputDims &&
                          getSizeOfDimension(input, current) == 1);
             if (!shouldSqueeze[current]) ++numDimsSqueezed;
             shouldSqueeze[current] = true;
-      }
+        }
     }
 
     // Sets output dimensions.
@@ -693,12 +659,8 @@ bool squeezePrepare(const Shape& input,
     return true;
 }
 
-bool meanPrepare(const Shape& input,
-                 const int32_t* axisData,
-                 const Shape& axisShape,
-                 bool keepDims,
+bool meanPrepare(const Shape& input, const int32_t* axisData, const Shape& axisShape, bool keepDims,
                  Shape* output) {
-
     // perm need to be provided as a 1-D int32 tensor.
     NN_OPS_CHECK(axisShape.type == OperandType::TENSOR_INT32);
     NN_OPS_CHECK(getNumberOfDimensions(axisShape) == 1);
@@ -770,12 +732,10 @@ bool meanPrepare(const Shape& input,
     return true;
 }
 
-bool stridedSlicePrepare(const Shape& input,
-                         const int32_t* beginData, const Shape& beginShape,
-                         const int32_t* endData, const Shape& endShape,
-                         const int32_t* stridesData, const Shape& stridesShape,
-                         int32_t beginMask, int32_t endMask, int32_t shrinkAxisMask,
-                         Shape* output) {
+bool stridedSlicePrepare(const Shape& input, const int32_t* beginData, const Shape& beginShape,
+                         const int32_t* endData, const Shape& endShape, const int32_t* stridesData,
+                         const Shape& stridesShape, int32_t beginMask, int32_t endMask,
+                         int32_t shrinkAxisMask, Shape* output) {
     uint32_t numInputDims = getNumberOfDimensions(input);
     // StridedSlice op only supports 1D-4D input arrays.
     NN_OPS_CHECK(numInputDims <= 4);
@@ -795,30 +755,28 @@ bool stridedSlicePrepare(const Shape& input,
     // Determine size of output tensor and map indices
     std::vector<uint32_t> outDims;
     for (int32_t idx = 0; idx < static_cast<int32_t>(numInputDims); idx++) {
-      int32_t dim = static_cast<int32_t>(getSizeOfDimension(input, idx));
-      int32_t stride = stridesData[idx];
-      // stride value has to be non-zero
-      NN_OPS_CHECK(stride != 0);
-      bool positiveStride = stride > 0;
+        int32_t dim = static_cast<int32_t>(getSizeOfDimension(input, idx));
+        int32_t stride = stridesData[idx];
+        // stride value has to be non-zero
+        NN_OPS_CHECK(stride != 0);
+        bool positiveStride = stride > 0;
 
-      int32_t begin = beginMask & (1 << idx)
-              ? positiveStride ? 0 : dim - 1
-              : ClampedIndex(beginData[idx], dim, positiveStride);
-      int32_t end = endMask & (1 << idx)
-              ? positiveStride ? dim : -1
-              : ClampedIndex(endData[idx], dim, positiveStride);
+        int32_t begin = beginMask & (1 << idx) ? positiveStride ? 0 : dim - 1
+                                               : ClampedIndex(beginData[idx], dim, positiveStride);
+        int32_t end = endMask & (1 << idx) ? positiveStride ? dim : -1
+                                           : ClampedIndex(endData[idx], dim, positiveStride);
 
-      // This is valid for both positive and negative strides
-      int32_t outDim = ceil((end - begin) / static_cast<float>(stride));
-      outDim = outDim < 0 ? 0 : static_cast<uint32_t>(outDim);
-      if (!(shrinkAxisMask & (1 << idx))) {
-          outDims.push_back(outDim);
-      } else {
-          if (outDim != 1) {
-              LOG(ERROR) << "Outdim " << idx << " is " << outDim << ", expected 1";
-              NN_OPS_CHECK(outDim == 1);
-          }
-      }
+        // This is valid for both positive and negative strides
+        int32_t outDim = ceil((end - begin) / static_cast<float>(stride));
+        outDim = outDim < 0 ? 0 : static_cast<uint32_t>(outDim);
+        if (!(shrinkAxisMask & (1 << idx))) {
+            outDims.push_back(outDim);
+        } else {
+            if (outDim != 1) {
+                LOG(ERROR) << "Outdim " << idx << " is " << outDim << ", expected 1";
+                NN_OPS_CHECK(outDim == 1);
+            }
+        }
     }
 
     output->type = input.type;
@@ -837,11 +795,9 @@ bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output) {
     // Copy the input dimensions, omitting the axis dimension.
     output->dimensions.clear();
     output->dimensions.reserve(getNumberOfDimensions(input) - 1);
-    output->dimensions.insert(output->dimensions.end(),
-                              input.dimensions.begin(),
+    output->dimensions.insert(output->dimensions.end(), input.dimensions.begin(),
                               input.dimensions.begin() + axis);
-    output->dimensions.insert(output->dimensions.end(),
-                              input.dimensions.begin() + axis + 1,
+    output->dimensions.insert(output->dimensions.end(), input.dimensions.begin() + axis + 1,
                               input.dimensions.end());
 
     return true;
@@ -910,5 +866,5 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
     return true;
 }
 
-} // namespace nn
-} // namespace android
+}  // namespace nn
+}  // namespace android

@@ -29,61 +29,55 @@ namespace nn {
 
 using namespace hal;
 
-RNN::RNN(const Operation& operation,
-         std::vector<RunTimeOperandInfo>& operands) {
-  NNTRACE_TRANS("RNN::RNN");
-  input_ = GetInput(operation, operands, kInputTensor);
-  weights_ = GetInput(operation, operands, kWeightsTensor);
-  recurrent_weights_ = GetInput(operation, operands, kRecurrentWeightsTensor);
-  hidden_state_in_ = GetInput(operation, operands, kHiddenStateInTensor);
-  bias_ = GetInput(operation, operands, kBiasTensor);
+RNN::RNN(const Operation& operation, std::vector<RunTimeOperandInfo>& operands) {
+    NNTRACE_TRANS("RNN::RNN");
+    input_ = GetInput(operation, operands, kInputTensor);
+    weights_ = GetInput(operation, operands, kWeightsTensor);
+    recurrent_weights_ = GetInput(operation, operands, kRecurrentWeightsTensor);
+    hidden_state_in_ = GetInput(operation, operands, kHiddenStateInTensor);
+    bias_ = GetInput(operation, operands, kBiasTensor);
 
-  activation_ = static_cast<ActivationFn>(
-      getScalarData<int32_t>(operands[operation.inputs[kActivationParam]]));
+    activation_ = static_cast<ActivationFn>(
+            getScalarData<int32_t>(operands[operation.inputs[kActivationParam]]));
 
-  hidden_state_out_ = GetOutput(operation, operands, kHiddenStateOutTensor);
-  output_ = GetOutput(operation, operands, kOutputTensor);
+    hidden_state_out_ = GetOutput(operation, operands, kHiddenStateOutTensor);
+    output_ = GetOutput(operation, operands, kOutputTensor);
 }
 
-bool RNN::Prepare(const Operation &operation,
-                  std::vector<RunTimeOperandInfo> &operands,
-                  Shape *hiddenStateShape,
-                  Shape *outputShape) {
-  NNTRACE_TRANS("RNN::Prepare");
-  // Check we have all the inputs and outputs we need.
-  const int num_inputs = NumInputsWithValues(operation, operands);
-  NN_CHECK(num_inputs == 5 || num_inputs == 6);
-  NN_CHECK_EQ(NumOutputs(operation), 2);
+bool RNN::Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+                  Shape* hiddenStateShape, Shape* outputShape) {
+    NNTRACE_TRANS("RNN::Prepare");
+    // Check we have all the inputs and outputs we need.
+    const int num_inputs = NumInputsWithValues(operation, operands);
+    NN_CHECK(num_inputs == 5 || num_inputs == 6);
+    NN_CHECK_EQ(NumOutputs(operation), 2);
 
-  const RunTimeOperandInfo *input =
-      GetInput(operation, operands, kInputTensor);
-  const RunTimeOperandInfo *input_weights =
-      GetInput(operation, operands, kWeightsTensor);
-  const RunTimeOperandInfo *recurrent_weights =
-      GetInput(operation, operands, kRecurrentWeightsTensor);
-  const RunTimeOperandInfo *bias =
-      GetInput(operation, operands, kBiasTensor);
+    const RunTimeOperandInfo* input = GetInput(operation, operands, kInputTensor);
+    const RunTimeOperandInfo* input_weights = GetInput(operation, operands, kWeightsTensor);
+    const RunTimeOperandInfo* recurrent_weights =
+            GetInput(operation, operands, kRecurrentWeightsTensor);
+    const RunTimeOperandInfo* bias = GetInput(operation, operands, kBiasTensor);
 
-  // Check all the parameters of tensor match within themselves and match the
-  // input configuration.
-  const uint32_t batch_size = SizeOfDimension(input, 0);
-  const uint32_t num_units = SizeOfDimension(input_weights, 0);
-  NN_CHECK_EQ(SizeOfDimension(input, 1), SizeOfDimension(input_weights, 1));
-  NN_CHECK_EQ(SizeOfDimension(input_weights, 0), SizeOfDimension(bias, 0));
-  NN_CHECK_EQ(SizeOfDimension(recurrent_weights, 0), SizeOfDimension(bias, 0));
-  NN_CHECK_EQ(SizeOfDimension(recurrent_weights, 1), SizeOfDimension(bias, 0));
+    // Check all the parameters of tensor match within themselves and match the
+    // input configuration.
+    const uint32_t batch_size = SizeOfDimension(input, 0);
+    const uint32_t num_units = SizeOfDimension(input_weights, 0);
+    NN_CHECK_EQ(SizeOfDimension(input, 1), SizeOfDimension(input_weights, 1));
+    NN_CHECK_EQ(SizeOfDimension(input_weights, 0), SizeOfDimension(bias, 0));
+    NN_CHECK_EQ(SizeOfDimension(recurrent_weights, 0), SizeOfDimension(bias, 0));
+    NN_CHECK_EQ(SizeOfDimension(recurrent_weights, 1), SizeOfDimension(bias, 0));
 
-  const Shape &inputShape = input->shape();
+    const Shape& inputShape = input->shape();
 
-  // Resize state.
-  hiddenStateShape->type = inputShape.type;
-  hiddenStateShape->dimensions = { batch_size, num_units };
+    // Resize state.
+    hiddenStateShape->type = inputShape.type;
+    hiddenStateShape->dimensions = {batch_size, num_units};
 
-  // Resize output.
-  outputShape->type = inputShape.type;
-  outputShape->dimensions = { batch_size, num_units };
+    // Resize output.
+    outputShape->type = inputShape.type;
+    outputShape->dimensions = {batch_size, num_units};
 
-  return true;
+    return true;
 }
 
 bool RNN::Eval() {
