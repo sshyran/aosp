@@ -5038,6 +5038,15 @@ enum { ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN = 32 };
  * of the element type byte size, e.g., a tensor with
  * {@link ANEURALNETWORKS_TENSOR_FLOAT32} type must be aligned on 4-byte boundary.
  *
+ * It is the application's responsibility to ensure that there are no uses of
+ * the memory after calling {@link ANeuralNetworksMemory_free}. This includes
+ * any model which references this memory because of a call to
+ * {@link ANeuralNetworksModel_setOperandValueFromMemory}, any compilation
+ * created using such a model, any execution object or burst object created
+ * using such a compilation, or any execution which references this memory
+ * because of a call to {@link ANeuralNetworksExecution_setInputFromMemory} or
+ * {@link ANeuralNetworksExecution_setOutputFromMemory}.
+ *
  * Available since API level 27.
  */
 typedef struct ANeuralNetworksMemory ANeuralNetworksMemory;
@@ -5157,6 +5166,13 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  * <p>It is the application's responsibility to make sure that only one thread
  * modifies an execution at a given time. It is however safe for more than one
  * thread to use {@link ANeuralNetworksEvent_wait} at the same time.</p>
+ *
+ * <p>It is also the application's responsibility to ensure that the execution
+ * either has never been scheduled or has completed (i.e., that
+ * {@link ANeuralNetworksExecution_burstCompute},
+ * {@link ANeuralNetworksExecution_compute}, or
+ * {@link ANeuralNetworksEvent_wait} has returned) before calling
+ * {@link ANeuralNetworksExecution_free}.</p>.
  *
  * <p>It is also the application's responsibility to ensure that there are no other
  * uses of the execution after calling {@link ANeuralNetworksExecution_free}.</p>
@@ -5768,7 +5784,8 @@ int ANeuralNetworksMemory_createFromFd(size_t size, int protect, int fd, size_t 
  *
  * Available since API level 27.
  *
- * @param memory The memory object to be freed.
+ * @param memory The memory object to be freed. Passing NULL is acceptable and
+ *               results in no operation.
  */
 void ANeuralNetworksMemory_free(ANeuralNetworksMemory* memory) __INTRODUCED_IN(27);
 
@@ -6110,7 +6127,7 @@ int ANeuralNetworksCompilation_create(ANeuralNetworksModel* model,
  * Destroy a compilation.
  *
  * The compilation need not have been finished by a call to
- * {@link ANeuralNetworksModel_finish}.
+ * {@link ANeuralNetworksCompilation_finish}.
  *
  * See {@link ANeuralNetworksCompilation} for information on multithreaded usage.
  *
@@ -6183,12 +6200,15 @@ int ANeuralNetworksExecution_create(ANeuralNetworksCompilation* compilation,
 /**
  * Destroy an execution.
  *
- * <p>If called on an execution for which
- * {@link ANeuralNetworksExecution_startCompute} has been called, the
- * function will return immediately but will mark the execution to be deleted
- * once the computation completes. The related {@link ANeuralNetworksEvent}
- * will be signaled and the {@link ANeuralNetworksEvent_wait} will return
- * ANEURALNETWORKS_ERROR_DELETED.
+ * <p>The execution need not have been scheduled by a call to
+ * {@link ANeuralNetworksExecution_burstCompute},
+ * {@link ANeuralNetworksExecution_compute}, or
+ * {@link ANeuralNetworksExecution_startCompute}; but if it has been scheduled,
+ * then the application must not call {@link ANeuralNetworksExecution_free}
+ * until the execution has completed (i.e.,
+ * {@link ANeuralNetworksExecution_burstCompute},
+ * {@link ANeuralNetworksExecution_compute}, or
+ * {@link ANeuralNetworksEvent_wait} has returned).
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
@@ -6438,6 +6458,9 @@ int ANeuralNetworksEvent_wait(ANeuralNetworksEvent* event) __INTRODUCED_IN(27);
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
  * Available since API level 27.
+ *
+ * @param event The event object to be destroyed. Passing NULL is acceptable and
+ *              results in no operation.
  */
 void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) __INTRODUCED_IN(27);
 

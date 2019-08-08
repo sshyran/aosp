@@ -108,6 +108,8 @@ public:
     hal::ErrorStatus finish(hal::ErrorStatus error,
                             const std::vector<hal::OutputShape>& outputShapes);
 
+    bool inFlight() const { return mStarted && !mFinished; }
+
    private:
     // If a callback is provided, then this is asynchronous. If a callback is
     // not provided (i.e., is nullptr), then this is synchronous.
