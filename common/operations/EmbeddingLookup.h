@@ -27,22 +27,22 @@ namespace nn {
 struct RunTimeOperandInfo;
 
 class EmbeddingLookup {
- public:
-  EmbeddingLookup(const hardware::neuralnetworks::V1_2::Operation& operation,
-                  std::vector<RunTimeOperandInfo>& operands);
+   public:
+    EmbeddingLookup(const hardware::neuralnetworks::V1_2::Operation& operation,
+                    std::vector<RunTimeOperandInfo>& operands);
 
-  bool Eval();
+    bool Eval();
 
-  static constexpr int kLookupTensor = 0;
-  static constexpr int kValueTensor = 1;
+    static constexpr int kLookupTensor = 0;
+    static constexpr int kValueTensor = 1;
 
-  static constexpr int kOutputTensor = 0;
+    static constexpr int kOutputTensor = 0;
 
- private:
-  const RunTimeOperandInfo *value_;
-  const RunTimeOperandInfo *lookup_;
+   private:
+    const RunTimeOperandInfo* value_;
+    const RunTimeOperandInfo* lookup_;
 
-  RunTimeOperandInfo *output_;
+    RunTimeOperandInfo* output_;
 };
 
 }  // namespace nn

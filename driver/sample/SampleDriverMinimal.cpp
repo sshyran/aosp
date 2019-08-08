@@ -34,7 +34,7 @@ namespace sample_driver {
 using namespace hal;
 
 class SampleDriverMinimal : public SampleDriver {
-public:
+   public:
     SampleDriverMinimal() : SampleDriver("sample-minimal") {}
     Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
     Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
@@ -90,12 +90,12 @@ Return<void> SampleDriverMinimal::getSupportedOperations_1_2(const V1_2::Model& 
     return Void();
 }
 
-} // namespace sample_driver
-} // namespace nn
-} // namespace android
+}  // namespace sample_driver
+}  // namespace nn
+}  // namespace android
 
-using android::nn::sample_driver::SampleDriverMinimal;
 using android::sp;
+using android::nn::sample_driver::SampleDriverMinimal;
 
 int main() {
     sp<SampleDriverMinimal> driver(new SampleDriverMinimal());

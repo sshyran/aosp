@@ -46,8 +46,8 @@ using namespace hal;
 //
 namespace {
 class Dumper {
-public:
-    Dumper(std::ostream* outStream) : mStream(outStream) { }
+   public:
+    Dumper(std::ostream* outStream) : mStream(outStream) {}
 
     Dumper(const Dumper&) = delete;
     void operator=(const Dumper&) = delete;
@@ -58,7 +58,7 @@ public:
         return *this;
     }
 
-    class EndlType { };
+    class EndlType {};
 
     Dumper& operator<<(EndlType) {
         if (mStream) {
@@ -81,27 +81,36 @@ public:
     }
 
     static const EndlType endl;
-private:
+
+   private:
     std::ostream* mStream;
     std::ostringstream mStringStream;
 };
 
 const Dumper::EndlType Dumper::endl;
-}
-
+}  // namespace
 
 // Provide short name for OperandType value.
 static std::string translate(OperandType type) {
     switch (type) {
-        case OperandType::FLOAT32:             return "F32";
-        case OperandType::INT32:               return "I32";
-        case OperandType::UINT32:              return "U32";
-        case OperandType::TENSOR_FLOAT32:      return "TF32";
-        case OperandType::TENSOR_INT32:        return "TI32";
-        case OperandType::TENSOR_QUANT8_ASYMM: return "TQ8A";
-        case OperandType::OEM:                 return "OEM";
-        case OperandType::TENSOR_OEM_BYTE:     return "TOEMB";
-        default:                               return toString(type);
+        case OperandType::FLOAT32:
+            return "F32";
+        case OperandType::INT32:
+            return "I32";
+        case OperandType::UINT32:
+            return "U32";
+        case OperandType::TENSOR_FLOAT32:
+            return "TF32";
+        case OperandType::TENSOR_INT32:
+            return "TI32";
+        case OperandType::TENSOR_QUANT8_ASYMM:
+            return "TQ8A";
+        case OperandType::OEM:
+            return "OEM";
+        case OperandType::TENSOR_OEM_BYTE:
+            return "TOEMB";
+        default:
+            return toString(type);
     }
 }
 
@@ -110,10 +119,9 @@ static std::string translate(OperandType type) {
 // OperandLifeTime::CONSTANT_COPY, then write the Operand's value to
 // the Dumper.
 namespace {
-template<OperandType nnType, typename cppType>
+template <OperandType nnType, typename cppType>
 void tryValueDump(Dumper& dump, const Model& model, const Operand& opnd) {
-    if (opnd.type != nnType ||
-        opnd.lifetime != OperandLifeTime::CONSTANT_COPY ||
+    if (opnd.type != nnType || opnd.lifetime != OperandLifeTime::CONSTANT_COPY ||
         opnd.location.length != sizeof(cppType)) {
         return;
     }
@@ -122,7 +130,7 @@ void tryValueDump(Dumper& dump, const Model& model, const Operand& opnd) {
     memcpy(&val, &model.operandValues[opnd.location.offset], sizeof(cppType));
     dump << " = " << val;
 }
-}
+}  // namespace
 
 void graphDump(const char* name, const Model& model, std::ostream* outStream) {
     // Operand nodes are named "d" (operanD) followed by operand index.
@@ -182,8 +190,8 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
             dump << ": " << kind;
         }
         dump << "\\n" << translate(opnd.type);
-        tryValueDump<OperandType::FLOAT32,   float>(dump, model, opnd);
-        tryValueDump<OperandType::INT32,       int>(dump, model, opnd);
+        tryValueDump<OperandType::FLOAT32, float>(dump, model, opnd);
+        tryValueDump<OperandType::INT32, int>(dump, model, opnd);
         tryValueDump<OperandType::UINT32, unsigned>(dump, model, opnd);
         if (opnd.dimensions.size()) {
             dump << "(";
@@ -210,8 +218,7 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
                 dump << " ordering=out";
             }
         }
-        dump << " label=\"" << i << ": "
-             << toString(operation.type) << "\"]" << Dumper::endl;
+        dump << " label=\"" << i << ": " << toString(operation.type) << "\"]" << Dumper::endl;
         {
             // operation inputs
             for (unsigned in = 0, inE = operation.inputs.size(); in < inE; in++) {

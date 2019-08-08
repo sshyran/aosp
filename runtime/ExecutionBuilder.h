@@ -44,7 +44,8 @@ class StepExecutor;
 
 class ExecutionBuilder {
     friend class StepExecutor;
-public:
+
+   public:
     ExecutionBuilder(const CompilationBuilder* compilation);
 
     int setInput(uint32_t index, const ANeuralNetworksOperandType* type, const void* buffer,
@@ -171,21 +172,18 @@ class StepExecutor {
         mapInputOrOutput(mExecutionBuilder->mOutputs[builderIndex], &mOutputs[executorIndex]);
     }
     void mapOutputToInput(uint32_t builderIndex, uint32_t executorIndex) {
-        mapInputOrOutput(mExecutionBuilder->mOutputs[builderIndex],
-                         &mInputs[executorIndex]);
+        mapInputOrOutput(mExecutionBuilder->mOutputs[builderIndex], &mInputs[executorIndex]);
     }
 
     // The input or output is assumed to have the size of the
     // corresponding operand.
     int setInputFromTemporaryMemory(uint32_t inputIndex, const Memory* memory, uint32_t offset) {
-        return setInputOrOutputFromTemporaryMemory(mModel->getInputOperand(inputIndex),
-                                                   memory, offset,
-                                                   &mInputs.at(inputIndex));
+        return setInputOrOutputFromTemporaryMemory(mModel->getInputOperand(inputIndex), memory,
+                                                   offset, &mInputs.at(inputIndex));
     }
     int setOutputFromTemporaryMemory(uint32_t outputIndex, const Memory* memory, uint32_t offset) {
-        return setInputOrOutputFromTemporaryMemory(mModel->getOutputOperand(outputIndex),
-                                                   memory, offset,
-                                                   &mOutputs.at(outputIndex));
+        return setInputOrOutputFromTemporaryMemory(mModel->getOutputOperand(outputIndex), memory,
+                                                   offset, &mOutputs.at(outputIndex));
     }
 
     // Executes using the (driver, preparedModel) specified at construction time.
@@ -238,7 +236,7 @@ class StepExecutor {
     MemoryTracker mMemories;
 };
 
-} // namespace nn
-} // namespace android
+}  // namespace nn
+}  // namespace android
 
 #endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_BUILDER_H
