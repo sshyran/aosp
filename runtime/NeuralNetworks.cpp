@@ -582,7 +582,7 @@ int ANeuralNetworksDevice_getName(const ANeuralNetworksDevice* device, const cha
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
     const Device* d = reinterpret_cast<const Device*>(device);
-    *name = d->getName();
+    *name = d->getName().c_str();
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -592,7 +592,7 @@ int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const 
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
     const Device* d = reinterpret_cast<const Device*>(device);
-    *version = d->getVersionString();
+    *version = d->getVersionString().c_str();
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -1186,16 +1186,12 @@ int ANeuralNetworksDevice_getExtensionSupport(const ANeuralNetworksDevice* devic
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
 
-    Device* d = reinterpret_cast<Device*>(const_cast<ANeuralNetworksDevice*>(device));
-    hidl_vec<Extension> supportedExtensions = d->getSupportedExtensions();
-
-    *isExtensionSupported = false;
-    for (const Extension& supportedExtension : supportedExtensions) {
-        if (supportedExtension.name == extensionName) {
-            *isExtensionSupported = true;
-            break;
-        }
-    }
+    const Device* d = reinterpret_cast<const Device*>(device);
+    const auto& supportedExtensions = d->getSupportedExtensions();
+    *isExtensionSupported = std::any_of(supportedExtensions.begin(), supportedExtensions.end(),
+                                        [extensionName](const auto& supportedExtension) {
+                                            return supportedExtension.name == extensionName;
+                                        });
 
     return ANEURALNETWORKS_NO_ERROR;
 }
