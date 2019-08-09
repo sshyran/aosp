@@ -3,363 +3,185 @@
 // clang-format off
 #include "TestHarness.h"
 
+using namespace test_helper;
+
 namespace generated_tests::reduce_all {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples() {
-static std::vector<::test_helper::MixedTypedExample> examples = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {false}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {false}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
+const TestModel& get_test_model() {
+    static TestModel model = {
+        .expectedMultinomialDistributionTolerance = 0,
+        .inputIndexes = {0},
+        .isRelaxed = false,
+        .operands = {{
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<bool8>({false}),
+                .dimensions = {1},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_BOOL8,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {1},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<bool8>({true}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::BOOL,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<bool8>({false}),
+                .dimensions = {1},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_OUTPUT,
+                .numberOfConsumers = 0,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_BOOL8,
+                .zeroPoint = 0
+            }},
+        .operations = {{
+                .inputs = {0, 1, 2},
+                .outputs = {3},
+                .type = TestOperationType::REDUCE_ALL
+            }},
+        .outputIndexes = {3}
+    };
+    return model;
 }
-},
-}, // End of an example
-};
-return examples;
-};
 
-} // namespace generated_tests::reduce_all
+}  // namespace generated_tests::reduce_all
+
 namespace generated_tests::reduce_all {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {false}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {false}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
+const TestModel& get_test_model_2() {
+    static TestModel model = {
+        .expectedMultinomialDistributionTolerance = 0,
+        .inputIndexes = {0},
+        .isRelaxed = false,
+        .operands = {{
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<bool8>({true, true, true, true, true, false, true, true, true, true, true, true}),
+                .dimensions = {2, 3, 2},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_BOOL8,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({1, 0, -3, -3}),
+                .dimensions = {4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<bool8>({false}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::BOOL,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<bool8>({true, false}),
+                .dimensions = {2},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_OUTPUT,
+                .numberOfConsumers = 0,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_BOOL8,
+                .zeroPoint = 0
+            }},
+        .operations = {{
+                .inputs = {0, 1, 2},
+                .outputs = {3},
+                .type = TestOperationType::REDUCE_ALL
+            }},
+        .outputIndexes = {3}
+    };
+    return model;
 }
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape;
-};
 
-} // namespace generated_tests::reduce_all
+}  // namespace generated_tests::reduce_all
+
 namespace generated_tests::reduce_all {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_2() {
-static std::vector<::test_helper::MixedTypedExample> examples_2 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {2, 3, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {true, true, true, true, true, false, true, true, true, true, true, true}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {true, false}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
+const TestModel& get_test_model_3() {
+    static TestModel model = {
+        .expectedMultinomialDistributionTolerance = 0,
+        .inputIndexes = {0},
+        .isRelaxed = false,
+        .operands = {{
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<bool8>({true, true, true, true, true, true, true, true, false, true, true, true}),
+                .dimensions = {2, 3, 2},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_BOOL8,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0, 2}),
+                .dimensions = {2},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<bool8>({true}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::BOOL,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<bool8>({true, false, true}),
+                .dimensions = {1, 3, 1},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_OUTPUT,
+                .numberOfConsumers = 0,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_BOOL8,
+                .zeroPoint = 0
+            }},
+        .operations = {{
+                .inputs = {0, 1, 2},
+                .outputs = {3},
+                .type = TestOperationType::REDUCE_ALL
+            }},
+        .outputIndexes = {3}
+    };
+    return model;
 }
-},
-}, // End of an example
-};
-return examples_2;
-};
 
-} // namespace generated_tests::reduce_all
-namespace generated_tests::reduce_all {
+}  // namespace generated_tests::reduce_all
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_2() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_2 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {2, 3, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {true, true, true, true, true, false, true, true, true, true, true, true}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {true, false}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_2;
-};
-
-} // namespace generated_tests::reduce_all
-namespace generated_tests::reduce_all {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_3() {
-static std::vector<::test_helper::MixedTypedExample> examples_3 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {2, 3, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {true, true, true, true, true, true, true, true, false, true, true, true}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 3, 1}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {true, false, true}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_3;
-};
-
-} // namespace generated_tests::reduce_all
-namespace generated_tests::reduce_all {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_3() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_3 = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {2, 3, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {true, true, true, true, true, true, true, true, false, true, true, true}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 3, 1}}},
-  // int -> FLOAT32 map
-  .float32Operands = {},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {{0, {true, false, true}}},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape_3;
-};
-
-} // namespace generated_tests::reduce_all
