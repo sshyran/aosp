@@ -3,158 +3,77 @@
 // clang-format off
 #include "GeneratedTests.h"
 
+
 namespace generated_tests::sqrt {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples();
+const ::test_helper::TestModel& get_test_model();
 
 } // namespace generated_tests::sqrt
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt {
 
-Model createTestModel();
-bool is_ignored(int);
+TEST_F(GeneratedTest, sqrt) {
+    Execute(device, ::generated_tests::sqrt::get_test_model());
+}
 
-TEST_F(NeuralnetworksHidlTest, sqrt) {
-  Execute(device,
-          createTestModel,
-          is_ignored,
-          ::generated_tests::sqrt::get_examples());
+TEST_F(DynamicOutputShapeTest, sqrt) {
+    Execute(device, ::generated_tests::sqrt::get_test_model(), true);
 }
 
 TEST_F(ValidationTest, sqrt) {
-  const Model model = createTestModel();
-  const std::vector<Request> requests = createRequests(::generated_tests::sqrt::get_examples());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sqrt::get_test_model());
+    const Request request = createRequest(::generated_tests::sqrt::get_test_model());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt
 
+
 namespace generated_tests::sqrt {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_relaxed();
 
 } // namespace generated_tests::sqrt
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt {
 
-Model createTestModel_dynamic_output_shape();
-bool is_ignored_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sqrt_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_dynamic_output_shape,
-          is_ignored_dynamic_output_shape,
-          ::generated_tests::sqrt::get_examples_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sqrt_relaxed) {
+    Execute(device, ::generated_tests::sqrt::get_test_model_relaxed());
 }
 
-TEST_F(ValidationTest, sqrt_dynamic_output_shape) {
-  const Model model = createTestModel_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sqrt::get_examples_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt
-
-namespace generated_tests::sqrt {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed();
-
-} // namespace generated_tests::sqrt
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt {
-
-Model createTestModel_relaxed();
-bool is_ignored_relaxed(int);
-
-TEST_F(NeuralnetworksHidlTest, sqrt_relaxed) {
-  Execute(device,
-          createTestModel_relaxed,
-          is_ignored_relaxed,
-          ::generated_tests::sqrt::get_examples_relaxed());
+TEST_F(DynamicOutputShapeTest, sqrt_relaxed) {
+    Execute(device, ::generated_tests::sqrt::get_test_model_relaxed(), true);
 }
 
 TEST_F(ValidationTest, sqrt_relaxed) {
-  const Model model = createTestModel_relaxed();
-  const std::vector<Request> requests = createRequests(::generated_tests::sqrt::get_examples_relaxed());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sqrt::get_test_model_relaxed());
+    const Request request = createRequest(::generated_tests::sqrt::get_test_model_relaxed());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt
 
+
 namespace generated_tests::sqrt {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_float16();
 
 } // namespace generated_tests::sqrt
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt {
 
-Model createTestModel_relaxed_dynamic_output_shape();
-bool is_ignored_relaxed_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sqrt_relaxed_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_relaxed_dynamic_output_shape,
-          is_ignored_relaxed_dynamic_output_shape,
-          ::generated_tests::sqrt::get_examples_relaxed_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sqrt_float16) {
+    Execute(device, ::generated_tests::sqrt::get_test_model_float16());
 }
 
-TEST_F(ValidationTest, sqrt_relaxed_dynamic_output_shape) {
-  const Model model = createTestModel_relaxed_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sqrt::get_examples_relaxed_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt
-
-namespace generated_tests::sqrt {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16();
-
-} // namespace generated_tests::sqrt
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt {
-
-Model createTestModel_float16();
-bool is_ignored_float16(int);
-
-TEST_F(NeuralnetworksHidlTest, sqrt_float16) {
-  Execute(device,
-          createTestModel_float16,
-          is_ignored_float16,
-          ::generated_tests::sqrt::get_examples_float16());
+TEST_F(DynamicOutputShapeTest, sqrt_float16) {
+    Execute(device, ::generated_tests::sqrt::get_test_model_float16(), true);
 }
 
 TEST_F(ValidationTest, sqrt_float16) {
-  const Model model = createTestModel_float16();
-  const std::vector<Request> requests = createRequests(::generated_tests::sqrt::get_examples_float16());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt
-
-namespace generated_tests::sqrt {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_dynamic_output_shape();
-
-} // namespace generated_tests::sqrt
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt {
-
-Model createTestModel_float16_dynamic_output_shape();
-bool is_ignored_float16_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sqrt_float16_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_float16_dynamic_output_shape,
-          is_ignored_float16_dynamic_output_shape,
-          ::generated_tests::sqrt::get_examples_float16_dynamic_output_shape(), true);
-}
-
-TEST_F(ValidationTest, sqrt_float16_dynamic_output_shape) {
-  const Model model = createTestModel_float16_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sqrt::get_examples_float16_dynamic_output_shape());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sqrt::get_test_model_float16());
+    const Request request = createRequest(::generated_tests::sqrt::get_test_model_float16());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sqrt
