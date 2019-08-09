@@ -181,7 +181,7 @@ bool TypeManager::isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
 
 void TypeManager::findAvailableExtensions() {
     for (const std::shared_ptr<Device>& device : mDeviceManager->getDrivers()) {
-        for (const Extension extension : device->getSupportedExtensions()) {
+        for (const Extension& extension : device->getSupportedExtensions()) {
             registerExtension(extension, device->getName());
         }
     }

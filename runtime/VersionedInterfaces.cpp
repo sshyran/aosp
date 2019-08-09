@@ -306,6 +306,8 @@ std::shared_ptr<ExecutionBurstController> VersionedIPreparedModel::configureExec
 
 std::shared_ptr<VersionedIDevice> VersionedIDevice::create(std::string serviceName,
                                                            sp<V1_0::IDevice> device) {
+    CHECK(device != nullptr) << "VersionedIDevice::create passed invalid device object.";
+
     auto core = Core::create(std::move(device));
     if (!core.has_value()) {
         LOG(ERROR) << "VersionedIDevice::create failed to create Core.";
@@ -320,7 +322,6 @@ VersionedIDevice::VersionedIDevice(std::string serviceName, Core core)
     : mServiceName(std::move(serviceName)), mCore(std::move(core)) {}
 
 std::optional<VersionedIDevice::Core> VersionedIDevice::Core::create(sp<V1_0::IDevice> device) {
-    // verify input
     CHECK(device != nullptr) << "VersionedIDevice::Core::create passed invalid device object.";
 
     // create death handler object
