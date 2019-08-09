@@ -71,8 +71,9 @@ int compile(const Device& device, const ModelBuilder& model, int executionPrefer
     *preparedModel = nullptr;
 
     std::optional<CacheToken> cacheToken;
-    if (device.isCachingSupported() && token->ok() && token->updateFromString(device.getName()) &&
-        token->updateFromString(device.getVersionString()) &&
+    if (device.isCachingSupported() && token->ok() &&
+        token->updateFromString(device.getName().c_str()) &&
+        token->updateFromString(device.getVersionString().c_str()) &&
         token->update(&executionPreference, sizeof(executionPreference)) && token->finish()) {
         cacheToken.emplace(token->getCacheToken());
     }
