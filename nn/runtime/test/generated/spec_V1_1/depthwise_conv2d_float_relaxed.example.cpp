@@ -3,483 +3,541 @@
 // clang-format off
 #include "TestHarness.h"
 
+using namespace test_helper;
+
 namespace generated_tests::depthwise_conv2d_float_relaxed {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples() {
-static std::vector<::test_helper::MixedTypedExample> examples = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 3, 3, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
+const TestModel& get_test_model() {
+    static TestModel model = {
+        .expectedMultinomialDistributionTolerance = 0,
+        .inputIndexes = {0},
+        .isRelaxed = true,
+        .operands = {{
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
+                .dimensions = {1, 3, 3, 2},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
+                .dimensions = {1, 2, 2, 4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
+                .dimensions = {4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 4,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({1}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 2,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({2}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
+                .dimensions = {1, 2, 2, 4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_OUTPUT,
+                .numberOfConsumers = 0,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }},
+        .operations = {{
+                .inputs = {0, 1, 2, 3, 3, 3, 3, 4, 4, 5, 6},
+                .outputs = {7},
+                .type = TestOperationType::DEPTHWISE_CONV_2D
+            }},
+        .outputIndexes = {7}
+    };
+    return model;
 }
-},
-}, // End of an example
-};
-return examples;
-};
 
-} // namespace generated_tests::depthwise_conv2d_float_relaxed
+}  // namespace generated_tests::depthwise_conv2d_float_relaxed
+
 namespace generated_tests::depthwise_conv2d_float_relaxed {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
-static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 3, 3, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
+const TestModel& get_test_model_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectedMultinomialDistributionTolerance = 0,
+        .inputIndexes = {8},
+        .isRelaxed = true,
+        .operands = {{
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({}),
+                .dimensions = {1, 3, 3, 2},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
+                .dimensions = {1, 2, 2, 4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
+                .dimensions = {4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 4,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({1}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 2,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({2}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
+                .dimensions = {1, 2, 2, 4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_OUTPUT,
+                .numberOfConsumers = 0,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
+                .dimensions = {1, 3, 3, 2},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({0.0f}),
+                .dimensions = {1},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }},
+        .operations = {{
+                .inputs = {8, 9, 10},
+                .outputs = {0},
+                .type = TestOperationType::ADD
+            }, {
+                .inputs = {0, 1, 2, 3, 3, 3, 3, 4, 4, 5, 6},
+                .outputs = {7},
+                .type = TestOperationType::DEPTHWISE_CONV_2D
+            }},
+        .outputIndexes = {7}
+    };
+    return model;
 }
-},
-}, // End of an example
-};
-return examples_dynamic_output_shape;
-};
 
-} // namespace generated_tests::depthwise_conv2d_float_relaxed
+}  // namespace generated_tests::depthwise_conv2d_float_relaxed
+
 namespace generated_tests::depthwise_conv2d_float_relaxed {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_all_inputs_as_internal() {
-static std::vector<::test_helper::MixedTypedExample> examples_all_inputs_as_internal = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 3, 3, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
+const TestModel& get_test_model_all_tensors_as_inputs() {
+    static TestModel model = {
+        .expectedMultinomialDistributionTolerance = 0,
+        .inputIndexes = {0, 1, 2},
+        .isRelaxed = true,
+        .operands = {{
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
+                .dimensions = {1, 3, 3, 2},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
+                .dimensions = {1, 2, 2, 4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
+                .dimensions = {4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 4,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({1}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 2,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({2}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
+                .dimensions = {1, 2, 2, 4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_OUTPUT,
+                .numberOfConsumers = 0,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }},
+        .operations = {{
+                .inputs = {0, 1, 2, 3, 3, 3, 3, 4, 4, 5, 6},
+                .outputs = {7},
+                .type = TestOperationType::DEPTHWISE_CONV_2D
+            }},
+        .outputIndexes = {7}
+    };
+    return model;
 }
-},
-}, // End of an example
-};
-return examples_all_inputs_as_internal;
-};
 
-} // namespace generated_tests::depthwise_conv2d_float_relaxed
+}  // namespace generated_tests::depthwise_conv2d_float_relaxed
+
 namespace generated_tests::depthwise_conv2d_float_relaxed {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_all_inputs_as_internal_dynamic_output_shape() {
-static std::vector<::test_helper::MixedTypedExample> examples_all_inputs_as_internal_dynamic_output_shape = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 3, 3, 2}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
+const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectedMultinomialDistributionTolerance = 0,
+        .inputIndexes = {8, 11, 14},
+        .isRelaxed = true,
+        .operands = {{
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({}),
+                .dimensions = {1, 3, 3, 2},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({}),
+                .dimensions = {1, 2, 2, 4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({}),
+                .dimensions = {4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 4,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({1}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 2,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({2}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
+                .dimensions = {1, 2, 2, 4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_OUTPUT,
+                .numberOfConsumers = 0,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
+                .dimensions = {1, 3, 3, 2},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({0.0f}),
+                .dimensions = {1},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
+                .dimensions = {1, 2, 2, 4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({0.0f}),
+                .dimensions = {1},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
+                .dimensions = {4},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::MODEL_INPUT,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<float>({0.0f}),
+                .dimensions = {1},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::TENSOR_FLOAT32,
+                .zeroPoint = 0
+            }, {
+                .channelQuant = {},
+                .data = TestBuffer::createFromVector<int32_t>({0}),
+                .dimensions = {},
+                .isIgnored = false,
+                .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                .numberOfConsumers = 1,
+                .scale = 0.0f,
+                .type = TestOperandType::INT32,
+                .zeroPoint = 0
+            }},
+        .operations = {{
+                .inputs = {8, 9, 10},
+                .outputs = {0},
+                .type = TestOperationType::ADD
+            }, {
+                .inputs = {11, 12, 13},
+                .outputs = {1},
+                .type = TestOperationType::ADD
+            }, {
+                .inputs = {14, 15, 16},
+                .outputs = {2},
+                .type = TestOperationType::ADD
+            }, {
+                .inputs = {0, 1, 2, 3, 3, 3, 3, 4, 4, 5, 6},
+                .outputs = {7},
+                .type = TestOperationType::DEPTHWISE_CONV_2D
+            }},
+        .outputIndexes = {7}
+    };
+    return model;
 }
-},
-}, // End of an example
-};
-return examples_all_inputs_as_internal_dynamic_output_shape;
-};
 
-} // namespace generated_tests::depthwise_conv2d_float_relaxed
-namespace generated_tests::depthwise_conv2d_float_relaxed {
+}  // namespace generated_tests::depthwise_conv2d_float_relaxed
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_all_tensors_as_inputs() {
-static std::vector<::test_helper::MixedTypedExample> examples_all_tensors_as_inputs = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 3, 3, 2}}, {1, {1, 2, 2, 4}}, {2, {4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}}, {1, {0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}}, {2, {1.0f, 2.0f, 3.0f, 4.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_all_tensors_as_inputs;
-};
-
-} // namespace generated_tests::depthwise_conv2d_float_relaxed
-namespace generated_tests::depthwise_conv2d_float_relaxed {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_all_tensors_as_inputs_dynamic_output_shape() {
-static std::vector<::test_helper::MixedTypedExample> examples_all_tensors_as_inputs_dynamic_output_shape = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 3, 3, 2}}, {1, {1, 2, 2, 4}}, {2, {4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}}, {1, {0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}}, {2, {1.0f, 2.0f, 3.0f, 4.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_all_tensors_as_inputs_dynamic_output_shape;
-};
-
-} // namespace generated_tests::depthwise_conv2d_float_relaxed
-namespace generated_tests::depthwise_conv2d_float_relaxed {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_all_tensors_as_inputs_all_inputs_as_internal() {
-static std::vector<::test_helper::MixedTypedExample> examples_all_tensors_as_inputs_all_inputs_as_internal = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 3, 3, 2}}, {1, {1, 2, 2, 4}}, {2, {4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}}, {1, {0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}}, {2, {1.0f, 2.0f, 3.0f, 4.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_all_tensors_as_inputs_all_inputs_as_internal;
-};
-
-} // namespace generated_tests::depthwise_conv2d_float_relaxed
-namespace generated_tests::depthwise_conv2d_float_relaxed {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape() {
-static std::vector<::test_helper::MixedTypedExample> examples_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape = {
-// Begin of an example
-{
-.operands = {
-//Input(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 3, 3, 2}}, {1, {1, 2, 2, 4}}, {2, {4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}}, {1, {0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}}, {2, {1.0f, 2.0f, 3.0f, 4.0f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-},
-//Output(s)
-{ // See tools/test_generator/include/TestHarness.h:MixedTyped
-  // int -> Dimensions map
-  .operandDimensions = {{0, {1, 2, 2, 4}}},
-  // int -> FLOAT32 map
-  .float32Operands = {{0, {11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}}},
-  // int -> INT32 map
-  .int32Operands = {},
-  // int -> QUANT8_ASYMM map
-  .quant8AsymmOperands = {},
-  // int -> QUANT16_SYMM map
-  .quant16SymmOperands = {},
-  // int -> FLOAT16 map
-  .float16Operands = {},
-  // int -> BOOL8 map
-  .bool8Operands = {},
-  // int -> QUANT8_SYMM_PER_CHANNEL map
-  .quant8ChannelOperands = {},
-  // int -> QUANT16_ASYMM map
-  .quant16AsymmOperands = {},
-  // int -> QUANT8_SYMM map
-  .quant8SymmOperands = {},
-}
-},
-}, // End of an example
-};
-return examples_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape;
-};
-
-} // namespace generated_tests::depthwise_conv2d_float_relaxed
