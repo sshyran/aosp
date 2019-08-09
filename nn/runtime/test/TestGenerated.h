@@ -71,9 +71,9 @@ class GeneratedTests : public GENERATED_TESTS_BASE {
     std::optional<Compilation> compileModel(const Model* model);
     void executeWithCompilation(const Model* model, Compilation* compilation,
                                 std::function<bool(int)> isIgnored,
-                                std::vector<MixedTypedExample>& examples, std::string dumpFile);
+                                std::vector<MixedTypedExample>& examples);
     void executeOnce(const Model* model, std::function<bool(int)> isIgnored,
-                     std::vector<MixedTypedExample>& examples, std::string dumpFile);
+                     std::vector<MixedTypedExample>& examples);
     void executeMultithreadedOwnCompilation(const Model* model, std::function<bool(int)> isIgnored,
                                             std::vector<MixedTypedExample>& examples);
     void executeMultithreadedSharedCompilation(const Model* model,
@@ -81,7 +81,7 @@ class GeneratedTests : public GENERATED_TESTS_BASE {
                                                std::vector<MixedTypedExample>& examples);
     // Test driver for those generated from ml/nn/runtime/test/spec
     void execute(std::function<void(Model*)> createModel, std::function<bool(int)> isIgnored,
-                 std::vector<MixedTypedExample>& examples, std::string dumpFile = "");
+                 std::vector<MixedTypedExample>& examples);
 
     std::string mCacheDir;
     std::vector<uint8_t> mToken;
