@@ -68,11 +68,11 @@ class Device {
     virtual ~Device() = default;
 
     // Introspection methods returning device information
-    virtual const char* getName() const = 0;
-    virtual const char* getVersionString() const = 0;
+    virtual const std::string& getName() const = 0;
+    virtual const std::string& getVersionString() const = 0;
     virtual int64_t getFeatureLevel() const = 0;
     virtual int32_t getType() const = 0;
-    virtual hal::hidl_vec<hal::Extension> getSupportedExtensions() const = 0;
+    virtual const std::vector<hal::Extension>& getSupportedExtensions() const = 0;
 
     // See the MetaModel class in MetaModel.h for more details.
     virtual void getSupportedOperations(const MetaModel& metaModel,
@@ -142,7 +142,7 @@ class DeviceManager {
     }
 
     // Register a test device.
-    void forTest_registerDevice(const char* name, const sp<hal::V1_0::IDevice>& device) {
+    void forTest_registerDevice(const std::string& name, const sp<hal::V1_0::IDevice>& device) {
         registerDevice(name, device);
     }
 
@@ -166,7 +166,7 @@ class DeviceManager {
     DeviceManager();
 
     // Adds a device for the manager to use.
-    void registerDevice(const char* name, const sp<hal::V1_0::IDevice>& device);
+    void registerDevice(const std::string& name, const sp<hal::V1_0::IDevice>& device);
 
     void findAvailableDevices();
 
