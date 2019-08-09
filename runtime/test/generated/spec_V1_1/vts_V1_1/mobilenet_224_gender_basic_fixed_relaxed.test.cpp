@@ -3,28 +3,23 @@
 // clang-format off
 #include "GeneratedTests.h"
 
+
 namespace generated_tests::mobilenet_224_gender_basic_fixed_relaxed {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples();
+const ::test_helper::TestModel& get_test_model();
 
 } // namespace generated_tests::mobilenet_224_gender_basic_fixed_relaxed
 
 namespace android::hardware::neuralnetworks::V1_1::generated_tests::mobilenet_224_gender_basic_fixed_relaxed {
 
-Model createTestModel();
-bool is_ignored(int);
-
-TEST_F(NeuralnetworksHidlTest, mobilenet_224_gender_basic_fixed_relaxed) {
-  Execute(device,
-          createTestModel,
-          is_ignored,
-          ::generated_tests::mobilenet_224_gender_basic_fixed_relaxed::get_examples());
+TEST_F(GeneratedTest, mobilenet_224_gender_basic_fixed_relaxed) {
+    Execute(device, ::generated_tests::mobilenet_224_gender_basic_fixed_relaxed::get_test_model());
 }
 
 TEST_F(ValidationTest, mobilenet_224_gender_basic_fixed_relaxed) {
-  const Model model = createTestModel();
-  const std::vector<Request> requests = createRequests(::generated_tests::mobilenet_224_gender_basic_fixed_relaxed::get_examples());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::mobilenet_224_gender_basic_fixed_relaxed::get_test_model());
+    const Request request = createRequest(::generated_tests::mobilenet_224_gender_basic_fixed_relaxed::get_test_model());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_1::generated_tests::mobilenet_224_gender_basic_fixed_relaxed
