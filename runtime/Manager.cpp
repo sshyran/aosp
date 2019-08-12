@@ -427,13 +427,8 @@ int DriverPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
     // object is returned when the execution has been successfully launched,
     // otherwise a nullptr is returned. The executionCallback is abstracted in
     // the NN API as an "event".
-    //
-    // The sp is used for ref-counting purposes. Without it, the HIDL service
-    // could attempt to communicate with a dead callback object.
-    //
-    // TODO: Explain the "dead callback" problem further, either here or
-    // in the design document.
     sp<ExecutionCallback> executionCallback = new ExecutionCallback();
+    ErrorStatus executionStatus = ErrorStatus::GENERAL_FAILURE;
 
     // compute using burst if present
     const bool burstCompute = (burstController != nullptr);
@@ -451,61 +446,35 @@ int DriverPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
         auto [status, outputShapes, timing, fallback] =
                 burstController->tryCompute(request, measure, memoryIds);
 
-        burstFallback = fallback;
         if (!fallback) {
-            executionCallback->notify(status, outputShapes, timing);
+            executionCallback->notify(status, std::move(outputShapes), timing);
         }
+
+        burstFallback = fallback;
+        executionStatus = status;
     }
 
     // compute from IPreparedModel if either:
     // (1) burst was not supplied, or
     // (2) the burst execution failed and requested a fallback execution
     if (!burstCompute || burstFallback) {
-        if (DeviceManager::get()->syncExecHal()) {
-            VLOG(EXECUTION) << "Before mPreparedModel->executeSynchronously() "
-                            << SHOW_IF_DEBUG(toString(request));
-            auto syncExecuteResult = mPreparedModel->executeSynchronously(request, measure);
-            executionCallback->notify(std::get<0>(syncExecuteResult),
-                                      std::get<1>(syncExecuteResult),
-                                      std::get<2>(syncExecuteResult));
-        } else {
-            VLOG(EXECUTION) << "Before mPreparedModel->execute() "
-                            << SHOW_IF_DEBUG(toString(request));
-            // Execute.
-            // TODO: What happens to the Callback if the service dies abnormally
-            // -- won't that keep the Callback live forever, because the service
-            // never has the opportunity to bump the reference count down? Or
-            // maybe the HIDL infrastructure handles this magically? At worst,
-            // it seems like this is a small memory leak, if the Callback stays
-            // alive forever.
-            Return<ErrorStatus> executeStatus =
-                    mPreparedModel->execute(request, measure, executionCallback);
-            if (!executeStatus.isOk() || executeStatus != ErrorStatus::NONE) {
-                VLOG(EXECUTION) << "**Execute launch failed**";
-                return executeStatus.isOk() ? convertErrorStatusToResultCode(executeStatus)
-                                            : ANEURALNETWORKS_OP_FAILED;
-            }
-        }
+        const bool preferSynchronous = DeviceManager::get()->syncExecHal();
+        auto [status, outputShapes, timing] =
+                mPreparedModel->execute(request, measure, preferSynchronous);
+        executionCallback->notify(status, std::move(outputShapes), timing);
+        executionStatus = status;
     }
 
-    // TODO: Remove this synchronization point when the block of code below is removed.
-    executionCallback->wait();
-    NNTRACE_FULL_SWITCH(NNTRACE_LAYER_RUNTIME, NNTRACE_PHASE_EXECUTION,
-                        "DriverPreparedModel::execute::waited");
-    Return<ErrorStatus> callbackStatus = executionCallback->getStatus();
-    if (!callbackStatus.isOk() || callbackStatus != ErrorStatus::NONE) {
+    if (executionStatus != ErrorStatus::NONE) {
         VLOG(EXECUTION) << "**Execution failed**";
-        if (callbackStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+        if (executionStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
             *synchronizationCallback = executionCallback;
             return ANEURALNETWORKS_NO_ERROR;
         }
-        return callbackStatus.isOk() ? convertErrorStatusToResultCode(callbackStatus)
-                                     : ANEURALNETWORKS_OP_FAILED;
+        return convertErrorStatusToResultCode(executionStatus);
     }
 
     // Copy the output data from shared memory to the output buffers.
-    // TODO: Move this block of code somewhere else. It should not be in the
-    // startCompute function.
     NNTRACE_RT_SWITCH(NNTRACE_PHASE_RESULTS, "DriverPreparedModel::execute");
     if (outputPtrArgsMemory != nullptr) {
         uint32_t ptrOutputIndex = 0;
