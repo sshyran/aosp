@@ -19,6 +19,7 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_PLAN_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_PLAN_H
 
+#include <android-base/logging.h>
 #include <openssl/sha.h>
 
 #include <map>
@@ -237,6 +238,8 @@ class ExecutionPlan {
     void reset();
 
     bool isValid() const { return mState != EMPTY && mBody != nullptr && mBody->mSuccessfulFinish; }
+    bool isSimple() const { return mState == SIMPLE; }
+    bool isSimpleCpu() const;
 
     void setCaching(const std::string* cacheDir, const uint8_t* token) {
         mCacheDir = cacheDir;
@@ -312,12 +315,24 @@ class ExecutionPlan {
 
     enum { EMPTY, SIMPLE, COMPOUND } mState = EMPTY;
     Body* mBody = nullptr;
+    SimpleBody* simple() {
+        CHECK(mState == SIMPLE);
+        CHECK(mBody != nullptr);
+        return static_cast<SimpleBody*>(mBody);
+    }
+    const SimpleBody* simple() const {
+        CHECK(mState == SIMPLE);
+        CHECK(mBody != nullptr);
+        return static_cast<const SimpleBody*>(mBody);
+    }
     CompoundBody* compound() {
-        nnAssert(mState == COMPOUND);
+        CHECK(mState == COMPOUND);
+        CHECK(mBody != nullptr);
         return static_cast<CompoundBody*>(mBody);
     }
     const CompoundBody* compound() const {
-        nnAssert(mState == COMPOUND);
+        CHECK(mState == COMPOUND);
+        CHECK(mBody != nullptr);
         return static_cast<const CompoundBody*>(mBody);
     }
 
