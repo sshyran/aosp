@@ -17,7 +17,7 @@ bool is_ignored(int);
 TEST_F(ValidationTest, strided_slice_invalid_output_dims) {
   const Model model = createTestModel();
   const std::vector<Request> requests = createRequests(::generated_tests::strided_slice_invalid_output_dims::get_examples());
-  validateEverything(model, requests);
+  validateFailure(model, requests);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::strided_slice_invalid_output_dims
@@ -36,7 +36,7 @@ bool is_ignored_dynamic_output_shape(int);
 TEST_F(ValidationTest, strided_slice_invalid_output_dims_dynamic_output_shape) {
   const Model model = createTestModel_dynamic_output_shape();
   const std::vector<Request> requests = createRequests(::generated_tests::strided_slice_invalid_output_dims::get_examples_dynamic_output_shape());
-  validateEverything(model, requests);
+  validateFailure(model, requests);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::strided_slice_invalid_output_dims

@@ -279,7 +279,7 @@ TEST_F({test_case_name}, {test_name}) {{
 TEST_F(ValidationTest, {test_name}) {{
   const Model model = {create_model_name}();
   const std::vector<Request> requests = createRequests(::{generated_cts_namespace}::get_{examples_name}());
-  validateEverything(model, requests);
+  {validation_method}(model, requests);
 }}
 
 }} // namespace {generated_vts_namespace}
