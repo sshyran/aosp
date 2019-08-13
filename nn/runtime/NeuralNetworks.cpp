@@ -993,6 +993,7 @@ int ANeuralNetworksCompilation_create(ANeuralNetworksModel* model,
 void ANeuralNetworksCompilation_free(ANeuralNetworksCompilation* compilation) {
     NNTRACE_RT(NNTRACE_PHASE_TERMINATION, "ANeuralNetworksCompilation_free");
     // No validation.  Free of nullptr is valid.
+    // TODO specification says that a compilation-in-flight can be deleted
     CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(compilation);
     delete c;
 }
@@ -1046,13 +1047,9 @@ int ANeuralNetworksExecution_create(ANeuralNetworksCompilation* compilation,
 
 void ANeuralNetworksExecution_free(ANeuralNetworksExecution* execution) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_free");
-    // Free of nullptr is valid.
+    // TODO specification says that an execution-in-flight can be deleted
+    // No validation.  Free of nullptr is valid.
     ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
-    if (r && r->inFlight()) {
-        LOG(ERROR) << "ANeuralNetworksExecution_free passed an in-flight ANeuralNetworksExecution"
-                   << " and is therefore ignored";
-        return;
-    }
     delete r;
 }
 
