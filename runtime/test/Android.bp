@@ -60,7 +60,6 @@ cc_defaults {
         // Changes to this list must be reflected in cts/tests/tests/neuralnetworks/Android.mk
         // to ensure CTS tests coverage.
         "generated/tests/*.cpp",
-        "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
         "TestOperandExtraParams.cpp",
