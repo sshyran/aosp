@@ -1,7 +1,12 @@
+// Generated from instance_normalization.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: instance_normalization.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_nhwc() {
-static std::vector<MixedTypedExample> examples_nhwc = {
+#include "TestHarness.h"
+
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_nhwc = {
 return examples_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_nhwc_relaxed() {
-static std::vector<MixedTypedExample> examples_nhwc_relaxed = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_nhwc_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed = {
 return examples_nhwc_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_nhwc_float16() {
-static std::vector<MixedTypedExample> examples_nhwc_float16 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_nhwc_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_nhwc_float16 = {
 return examples_nhwc_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_nchw() {
-static std::vector<MixedTypedExample> examples_nchw = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_nchw = {
 return examples_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_nchw_relaxed() {
-static std::vector<MixedTypedExample> examples_nchw_relaxed = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_nchw_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed = {
 return examples_nchw_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_nchw_float16() {
-static std::vector<MixedTypedExample> examples_nchw_float16 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_nchw_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_nchw_float16 = {
 return examples_nchw_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nhwc() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc = {
 return examples_dynamic_output_shape_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -456,8 +482,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
 return examples_dynamic_output_shape_nhwc_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nhwc_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -513,8 +542,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
 return examples_dynamic_output_shape_nhwc_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nchw() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -570,8 +602,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw = {
 return examples_dynamic_output_shape_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nchw_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -627,8 +662,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
 return examples_dynamic_output_shape_nchw_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nchw_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nchw_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -684,8 +722,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
 return examples_dynamic_output_shape_nchw_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_nhwc_2() {
-static std::vector<MixedTypedExample> examples_nhwc_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_nhwc_2 = {
 // Begin of an example
 {
 .operands = {
@@ -741,8 +782,11 @@ static std::vector<MixedTypedExample> examples_nhwc_2 = {
 return examples_nhwc_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_nhwc_relaxed_2() {
-static std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_nhwc_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -798,8 +842,11 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
 return examples_nhwc_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_nhwc_float16_2() {
-static std::vector<MixedTypedExample> examples_nhwc_float16_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_nhwc_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -855,8 +902,11 @@ static std::vector<MixedTypedExample> examples_nhwc_float16_2 = {
 return examples_nhwc_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_nchw_2() {
-static std::vector<MixedTypedExample> examples_nchw_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_nchw_2 = {
 // Begin of an example
 {
 .operands = {
@@ -912,8 +962,11 @@ static std::vector<MixedTypedExample> examples_nchw_2 = {
 return examples_nchw_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_nchw_relaxed_2() {
-static std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_nchw_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -969,8 +1022,11 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
 return examples_nchw_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_nchw_float16_2() {
-static std::vector<MixedTypedExample> examples_nchw_float16_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_nchw_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -1026,8 +1082,11 @@ static std::vector<MixedTypedExample> examples_nchw_float16_2 = {
 return examples_nchw_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_2() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nhwc_2 = {
 // Begin of an example
 {
 .operands = {
@@ -1083,8 +1142,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_2 = {
 return examples_dynamic_output_shape_nhwc_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_relaxed_2() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -1140,8 +1202,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
 return examples_dynamic_output_shape_nhwc_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_float16_2() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nhwc_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -1197,8 +1262,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
 return examples_dynamic_output_shape_nhwc_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nchw_2() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nchw_2 = {
 // Begin of an example
 {
 .operands = {
@@ -1254,8 +1322,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_2 = {
 return examples_dynamic_output_shape_nchw_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nchw_relaxed_2() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -1311,8 +1382,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
 return examples_dynamic_output_shape_nchw_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_nchw_float16_2() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16_2 = {
+} // namespace generated_tests::instance_normalization
+namespace generated_tests::instance_normalization {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_nchw_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -1368,3 +1442,4 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
 return examples_dynamic_output_shape_nchw_float16_2;
 };
 
+} // namespace generated_tests::instance_normalization

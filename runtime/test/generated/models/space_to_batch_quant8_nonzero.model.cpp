@@ -1,5 +1,10 @@
+// Generated from space_to_batch_quant8_nonzero.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: space_to_batch_quant8_nonzero.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::space_to_batch_quant8_nonzero {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 5, 2, 1}, 1.0f, 9);
   OperandType type1(Type::TENSOR_INT32, {2});
@@ -23,10 +28,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::space_to_batch_quant8_nonzero
+namespace generated_tests::space_to_batch_quant8_nonzero {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 5, 2, 1}, 1.0f, 9);
@@ -51,8 +59,9 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::space_to_batch_quant8_nonzero

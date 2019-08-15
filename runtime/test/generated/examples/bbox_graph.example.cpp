@@ -1,7 +1,12 @@
+// Generated from bbox_graph.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: bbox_graph.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_zero_sized() {
-static std::vector<MixedTypedExample> examples_zero_sized = {
+#include "TestHarness.h"
+
+namespace generated_tests::bbox_graph {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_zero_sized = {
 return examples_zero_sized;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_relaxed() {
-static std::vector<MixedTypedExample> examples_zero_sized_relaxed = {
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_relaxed = {
 return examples_zero_sized_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_float16() {
-static std::vector<MixedTypedExample> examples_zero_sized_float16 = {
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_float16 = {
 return examples_zero_sized_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_quant8() {
-static std::vector<MixedTypedExample> examples_zero_sized_quant8 = {
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_quant8 = {
 return examples_zero_sized_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape = {
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape =
 return examples_zero_sized_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_r
 return examples_zero_sized_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_float16 = {
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_f
 return examples_zero_sized_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_quant8() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_quant8 = {
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -456,3 +482,4 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_q
 return examples_zero_sized_dynamic_output_shape_quant8;
 };
 
+} // namespace generated_tests::bbox_graph

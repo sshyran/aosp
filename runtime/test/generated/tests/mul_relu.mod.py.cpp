@@ -1,24 +1,34 @@
+// Generated from mul_relu.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: mul_relu.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace mul_relu {
-// Generated mul_relu test
-#include "generated/examples/mul_relu.example.cpp"
-// Generated model constructor
-#include "generated/models/mul_relu.model.cpp"
-} // namespace mul_relu
+namespace generated_tests::mul_relu {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, mul_relu) {
-    execute(mul_relu::CreateModel,
-            mul_relu::is_ignored,
-            mul_relu::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, mul_relu, mul_relu::CreateModel)
+
+} // namespace generated_tests::mul_relu
+TEST_AVAILABLE_SINCE(V1_0, mul_relu, generated_tests::mul_relu::CreateModel)
+
+namespace generated_tests::mul_relu {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, mul_relu_dynamic_output_shape) {
-    execute(mul_relu::CreateModel_dynamic_output_shape,
-            mul_relu::is_ignored_dynamic_output_shape,
-            mul_relu::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::mul_relu
 

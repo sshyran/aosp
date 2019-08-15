@@ -1,75 +1,149 @@
+// Generated from div_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: div_v1_2.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace div_v1_2 {
-// Generated div_v1_2 test
-#include "generated/examples/div_v1_2.example.cpp"
-// Generated model constructor
-#include "generated/models/div_v1_2.model.cpp"
-} // namespace div_v1_2
+namespace generated_tests::div_v1_2 {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, div_v1_2) {
-    execute(div_v1_2::CreateModel,
-            div_v1_2::is_ignored,
-            div_v1_2::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, div_v1_2, div_v1_2::CreateModel)
+
+} // namespace generated_tests::div_v1_2
+TEST_AVAILABLE_SINCE(V1_2, div_v1_2, generated_tests::div_v1_2::CreateModel)
+
+namespace generated_tests::div_v1_2 {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, div_v1_2_dynamic_output_shape) {
-    execute(div_v1_2::CreateModel_dynamic_output_shape,
-            div_v1_2::is_ignored_dynamic_output_shape,
-            div_v1_2::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::div_v1_2
+
+namespace generated_tests::div_v1_2 {
+
+void CreateModel_2(Model *model);
+bool is_ignored_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_2();
 
 TEST_F(GeneratedTests, div_v1_2_2) {
-    execute(div_v1_2::CreateModel_2,
-            div_v1_2::is_ignored_2,
-            div_v1_2::get_examples_2());
+    execute(CreateModel_2,
+            is_ignored_2,
+            get_examples_2());
 }
-TEST_AVAILABLE_SINCE(V1_2, div_v1_2_2, div_v1_2::CreateModel_2)
+
+} // namespace generated_tests::div_v1_2
+TEST_AVAILABLE_SINCE(V1_2, div_v1_2_2, generated_tests::div_v1_2::CreateModel_2)
+
+namespace generated_tests::div_v1_2 {
+
+void CreateModel_dynamic_output_shape_2(Model *model);
+bool is_ignored_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_2();
 
 TEST_F(DynamicOutputShapeTest, div_v1_2_dynamic_output_shape_2) {
-    execute(div_v1_2::CreateModel_dynamic_output_shape_2,
-            div_v1_2::is_ignored_dynamic_output_shape_2,
-            div_v1_2::get_examples_dynamic_output_shape_2());
+    execute(CreateModel_dynamic_output_shape_2,
+            is_ignored_dynamic_output_shape_2,
+            get_examples_dynamic_output_shape_2());
 }
+
+} // namespace generated_tests::div_v1_2
+
+namespace generated_tests::div_v1_2 {
+
+void CreateModel_zero_sized(Model *model);
+bool is_ignored_zero_sized(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized();
 
 TEST_F(GeneratedTests, div_v1_2_zero_sized) {
-    execute(div_v1_2::CreateModel_zero_sized,
-            div_v1_2::is_ignored_zero_sized,
-            div_v1_2::get_examples_zero_sized());
+    execute(CreateModel_zero_sized,
+            is_ignored_zero_sized,
+            get_examples_zero_sized());
 }
-TEST_AVAILABLE_SINCE(V1_2, div_v1_2_zero_sized, div_v1_2::CreateModel_zero_sized)
+
+} // namespace generated_tests::div_v1_2
+TEST_AVAILABLE_SINCE(V1_2, div_v1_2_zero_sized, generated_tests::div_v1_2::CreateModel_zero_sized)
+
+namespace generated_tests::div_v1_2 {
+
+void CreateModel_zero_sized_relaxed(Model *model);
+bool is_ignored_zero_sized_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_relaxed();
 
 TEST_F(GeneratedTests, div_v1_2_zero_sized_relaxed) {
-    execute(div_v1_2::CreateModel_zero_sized_relaxed,
-            div_v1_2::is_ignored_zero_sized_relaxed,
-            div_v1_2::get_examples_zero_sized_relaxed());
+    execute(CreateModel_zero_sized_relaxed,
+            is_ignored_zero_sized_relaxed,
+            get_examples_zero_sized_relaxed());
 }
+
+} // namespace generated_tests::div_v1_2
+
+namespace generated_tests::div_v1_2 {
+
+void CreateModel_zero_sized_float16(Model *model);
+bool is_ignored_zero_sized_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_float16();
 
 TEST_F(GeneratedTests, div_v1_2_zero_sized_float16) {
-    execute(div_v1_2::CreateModel_zero_sized_float16,
-            div_v1_2::is_ignored_zero_sized_float16,
-            div_v1_2::get_examples_zero_sized_float16());
+    execute(CreateModel_zero_sized_float16,
+            is_ignored_zero_sized_float16,
+            get_examples_zero_sized_float16());
 }
-TEST_AVAILABLE_SINCE(V1_2, div_v1_2_zero_sized_float16, div_v1_2::CreateModel_zero_sized_float16)
+
+} // namespace generated_tests::div_v1_2
+TEST_AVAILABLE_SINCE(V1_2, div_v1_2_zero_sized_float16, generated_tests::div_v1_2::CreateModel_zero_sized_float16)
+
+namespace generated_tests::div_v1_2 {
+
+void CreateModel_zero_sized_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, div_v1_2_zero_sized_dynamic_output_shape) {
-    execute(div_v1_2::CreateModel_zero_sized_dynamic_output_shape,
-            div_v1_2::is_ignored_zero_sized_dynamic_output_shape,
-            div_v1_2::get_examples_zero_sized_dynamic_output_shape());
+    execute(CreateModel_zero_sized_dynamic_output_shape,
+            is_ignored_zero_sized_dynamic_output_shape,
+            get_examples_zero_sized_dynamic_output_shape());
 }
+
+} // namespace generated_tests::div_v1_2
+
+namespace generated_tests::div_v1_2 {
+
+void CreateModel_zero_sized_dynamic_output_shape_relaxed(Model *model);
+bool is_ignored_zero_sized_dynamic_output_shape_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_relaxed();
 
 TEST_F(DynamicOutputShapeTest, div_v1_2_zero_sized_dynamic_output_shape_relaxed) {
-    execute(div_v1_2::CreateModel_zero_sized_dynamic_output_shape_relaxed,
-            div_v1_2::is_ignored_zero_sized_dynamic_output_shape_relaxed,
-            div_v1_2::get_examples_zero_sized_dynamic_output_shape_relaxed());
+    execute(CreateModel_zero_sized_dynamic_output_shape_relaxed,
+            is_ignored_zero_sized_dynamic_output_shape_relaxed,
+            get_examples_zero_sized_dynamic_output_shape_relaxed());
 }
 
+} // namespace generated_tests::div_v1_2
+
+namespace generated_tests::div_v1_2 {
+
+void CreateModel_zero_sized_dynamic_output_shape_float16(Model *model);
+bool is_ignored_zero_sized_dynamic_output_shape_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_float16();
+
 TEST_F(DynamicOutputShapeTest, div_v1_2_zero_sized_dynamic_output_shape_float16) {
-    execute(div_v1_2::CreateModel_zero_sized_dynamic_output_shape_float16,
-            div_v1_2::is_ignored_zero_sized_dynamic_output_shape_float16,
-            div_v1_2::get_examples_zero_sized_dynamic_output_shape_float16());
+    execute(CreateModel_zero_sized_dynamic_output_shape_float16,
+            is_ignored_zero_sized_dynamic_output_shape_float16,
+            get_examples_zero_sized_dynamic_output_shape_float16());
 }
+
+} // namespace generated_tests::div_v1_2
 

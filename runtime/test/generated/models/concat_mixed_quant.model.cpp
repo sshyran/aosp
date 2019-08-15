@@ -1,5 +1,10 @@
+// Generated from concat_mixed_quant.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: concat_mixed_quant.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::concat_mixed_quant {
+
 void CreateModel_quant8(Model *model) {
   OperandType type2(Type::INT32, {});
   OperandType type3(Type::TENSOR_QUANT8_ASYMM, {2, 1, 2}, 0.084f, 127);
@@ -25,10 +30,13 @@ void CreateModel_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8(int i) {
+bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::concat_mixed_quant
+namespace generated_tests::concat_mixed_quant {
 
 void CreateModel_dynamic_output_shape_quant8(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -55,10 +63,13 @@ void CreateModel_dynamic_output_shape_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8(int i) {
+bool is_ignored_dynamic_output_shape_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::concat_mixed_quant
+namespace generated_tests::concat_mixed_quant {
 
 void CreateModel_quant8_2(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -85,10 +96,13 @@ void CreateModel_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_2(int i) {
+bool is_ignored_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::concat_mixed_quant
+namespace generated_tests::concat_mixed_quant {
 
 void CreateModel_dynamic_output_shape_quant8_2(Model *model) {
   OperandType type10(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0}, 0.0078125f, 127);
@@ -115,8 +129,9 @@ void CreateModel_dynamic_output_shape_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_2(int i) {
+bool is_ignored_dynamic_output_shape_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::concat_mixed_quant

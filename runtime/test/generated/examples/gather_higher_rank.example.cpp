@@ -1,7 +1,12 @@
+// Generated from gather_higher_rank.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: gather_higher_rank.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples() {
-static std::vector<MixedTypedExample> examples = {
+#include "TestHarness.h"
+
+namespace generated_tests::gather_higher_rank {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples() {
+static std::vector<::test_helper::MixedTypedExample> examples = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples = {
 return examples;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed() {
-static std::vector<MixedTypedExample> examples_relaxed = {
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_relaxed = {
 return examples_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_quant8() {
-static std::vector<MixedTypedExample> examples_quant8 = {
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_quant8 = {
 return examples_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_int32() {
-static std::vector<MixedTypedExample> examples_int32 = {
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_int32() {
+static std::vector<::test_helper::MixedTypedExample> examples_int32 = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_int32 = {
 return examples_int32;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
 return examples_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed = {
 return examples_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8 = {
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8 = {
 return examples_dynamic_output_shape_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_int32() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_int32 = {
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_int32() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_int32 = {
 // Begin of an example
 {
 .operands = {
@@ -456,3 +482,4 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_int32 = {
 return examples_dynamic_output_shape_int32;
 };
 
+} // namespace generated_tests::gather_higher_rank

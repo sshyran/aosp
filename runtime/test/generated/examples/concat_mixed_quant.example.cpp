@@ -1,7 +1,12 @@
+// Generated from concat_mixed_quant.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: concat_mixed_quant.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_quant8() {
-static std::vector<MixedTypedExample> examples_quant8 = {
+#include "TestHarness.h"
+
+namespace generated_tests::concat_mixed_quant {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_quant8 = {
 return examples_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8 = {
+} // namespace generated_tests::concat_mixed_quant
+namespace generated_tests::concat_mixed_quant {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8 = {
 return examples_dynamic_output_shape_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_quant8_2() {
-static std::vector<MixedTypedExample> examples_quant8_2 = {
+} // namespace generated_tests::concat_mixed_quant
+namespace generated_tests::concat_mixed_quant {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_quant8_2 = {
 return examples_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8_2() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_2 = {
+} // namespace generated_tests::concat_mixed_quant
+namespace generated_tests::concat_mixed_quant {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -228,3 +242,4 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_2 = {
 return examples_dynamic_output_shape_quant8_2;
 };
 
+} // namespace generated_tests::concat_mixed_quant

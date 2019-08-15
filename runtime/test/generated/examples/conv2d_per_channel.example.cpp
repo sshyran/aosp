@@ -1,7 +1,12 @@
+// Generated from conv2d_per_channel.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: conv2d_per_channel.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples() {
-static std::vector<MixedTypedExample> examples = {
+#include "TestHarness.h"
+
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples() {
+static std::vector<::test_helper::MixedTypedExample> examples = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples = {
 return examples;
 };
 
-std::vector<MixedTypedExample>& get_examples_weight_as_input() {
-static std::vector<MixedTypedExample> examples_weight_as_input = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_weight_as_input() {
+static std::vector<::test_helper::MixedTypedExample> examples_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_weight_as_input = {
 return examples_weight_as_input;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
 return examples_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_weight_as_input() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_weight_as_input = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_weight_as_input() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_weight_as_in
 return examples_dynamic_output_shape_weight_as_input;
 };
 
-std::vector<MixedTypedExample>& get_examples_layouts_nhwc() {
-static std::vector<MixedTypedExample> examples_layouts_nhwc = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layouts_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_layouts_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_layouts_nhwc = {
 return examples_layouts_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_layouts_nhwc_weight_as_input() {
-static std::vector<MixedTypedExample> examples_layouts_nhwc_weight_as_input = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layouts_nhwc_weight_as_input() {
+static std::vector<::test_helper::MixedTypedExample> examples_layouts_nhwc_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_layouts_nhwc_weight_as_input = {
 return examples_layouts_nhwc_weight_as_input;
 };
 
-std::vector<MixedTypedExample>& get_examples_layouts_nchw() {
-static std::vector<MixedTypedExample> examples_layouts_nchw = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layouts_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_layouts_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_layouts_nchw = {
 return examples_layouts_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_layouts_nchw_weight_as_input() {
-static std::vector<MixedTypedExample> examples_layouts_nchw_weight_as_input = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layouts_nchw_weight_as_input() {
+static std::vector<::test_helper::MixedTypedExample> examples_layouts_nchw_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -456,8 +482,11 @@ static std::vector<MixedTypedExample> examples_layouts_nchw_weight_as_input = {
 return examples_layouts_nchw_weight_as_input;
 };
 
-std::vector<MixedTypedExample>& get_examples_layouts_dynamic_output_shape_nhwc() {
-static std::vector<MixedTypedExample> examples_layouts_dynamic_output_shape_nhwc = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layouts_dynamic_output_shape_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_layouts_dynamic_output_shape_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -513,8 +542,11 @@ static std::vector<MixedTypedExample> examples_layouts_dynamic_output_shape_nhwc
 return examples_layouts_dynamic_output_shape_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_layouts_dynamic_output_shape_nhwc_weight_as_input() {
-static std::vector<MixedTypedExample> examples_layouts_dynamic_output_shape_nhwc_weight_as_input = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layouts_dynamic_output_shape_nhwc_weight_as_input() {
+static std::vector<::test_helper::MixedTypedExample> examples_layouts_dynamic_output_shape_nhwc_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -570,8 +602,11 @@ static std::vector<MixedTypedExample> examples_layouts_dynamic_output_shape_nhwc
 return examples_layouts_dynamic_output_shape_nhwc_weight_as_input;
 };
 
-std::vector<MixedTypedExample>& get_examples_layouts_dynamic_output_shape_nchw() {
-static std::vector<MixedTypedExample> examples_layouts_dynamic_output_shape_nchw = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layouts_dynamic_output_shape_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_layouts_dynamic_output_shape_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -627,8 +662,11 @@ static std::vector<MixedTypedExample> examples_layouts_dynamic_output_shape_nchw
 return examples_layouts_dynamic_output_shape_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_layouts_dynamic_output_shape_nchw_weight_as_input() {
-static std::vector<MixedTypedExample> examples_layouts_dynamic_output_shape_nchw_weight_as_input = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_layouts_dynamic_output_shape_nchw_weight_as_input() {
+static std::vector<::test_helper::MixedTypedExample> examples_layouts_dynamic_output_shape_nchw_weight_as_input = {
 // Begin of an example
 {
 .operands = {
@@ -684,8 +722,11 @@ static std::vector<MixedTypedExample> examples_layouts_dynamic_output_shape_nchw
 return examples_layouts_dynamic_output_shape_nchw_weight_as_input;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nhwc() {
-static std::vector<MixedTypedExample> examples_zero_sized_nhwc = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -741,8 +782,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nhwc = {
 return examples_zero_sized_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nchw() {
-static std::vector<MixedTypedExample> examples_zero_sized_nchw = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -798,8 +842,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nchw = {
 return examples_zero_sized_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -855,8 +902,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw = {
+} // namespace generated_tests::conv2d_per_channel
+namespace generated_tests::conv2d_per_channel {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -912,3 +962,4 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nchw;
 };
 
+} // namespace generated_tests::conv2d_per_channel

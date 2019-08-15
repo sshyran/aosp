@@ -1,24 +1,34 @@
+// Generated from strided_slice_float16.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: strided_slice_float16.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace strided_slice_float16 {
-// Generated strided_slice_float16 test
-#include "generated/examples/strided_slice_float16.example.cpp"
-// Generated model constructor
-#include "generated/models/strided_slice_float16.model.cpp"
-} // namespace strided_slice_float16
+namespace generated_tests::strided_slice_float16 {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, strided_slice_float16) {
-    execute(strided_slice_float16::CreateModel,
-            strided_slice_float16::is_ignored,
-            strided_slice_float16::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, strided_slice_float16, strided_slice_float16::CreateModel)
+
+} // namespace generated_tests::strided_slice_float16
+TEST_AVAILABLE_SINCE(V1_2, strided_slice_float16, generated_tests::strided_slice_float16::CreateModel)
+
+namespace generated_tests::strided_slice_float16 {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, strided_slice_float16_dynamic_output_shape) {
-    execute(strided_slice_float16::CreateModel_dynamic_output_shape,
-            strided_slice_float16::is_ignored_dynamic_output_shape,
-            strided_slice_float16::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::strided_slice_float16
 
