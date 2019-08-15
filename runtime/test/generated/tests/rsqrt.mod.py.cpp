@@ -1,49 +1,91 @@
+// Generated from rsqrt.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: rsqrt.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace rsqrt {
-// Generated rsqrt test
-#include "generated/examples/rsqrt.example.cpp"
-// Generated model constructor
-#include "generated/models/rsqrt.model.cpp"
-} // namespace rsqrt
+namespace generated_tests::rsqrt {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, rsqrt) {
-    execute(rsqrt::CreateModel,
-            rsqrt::is_ignored,
-            rsqrt::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, rsqrt, rsqrt::CreateModel)
+
+} // namespace generated_tests::rsqrt
+TEST_AVAILABLE_SINCE(V1_2, rsqrt, generated_tests::rsqrt::CreateModel)
+
+namespace generated_tests::rsqrt {
+
+void CreateModel_relaxed(Model *model);
+bool is_ignored_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed();
 
 TEST_F(GeneratedTests, rsqrt_relaxed) {
-    execute(rsqrt::CreateModel_relaxed,
-            rsqrt::is_ignored_relaxed,
-            rsqrt::get_examples_relaxed());
+    execute(CreateModel_relaxed,
+            is_ignored_relaxed,
+            get_examples_relaxed());
 }
+
+} // namespace generated_tests::rsqrt
+
+namespace generated_tests::rsqrt {
+
+void CreateModel_float16(Model *model);
+bool is_ignored_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16();
 
 TEST_F(GeneratedTests, rsqrt_float16) {
-    execute(rsqrt::CreateModel_float16,
-            rsqrt::is_ignored_float16,
-            rsqrt::get_examples_float16());
+    execute(CreateModel_float16,
+            is_ignored_float16,
+            get_examples_float16());
 }
-TEST_AVAILABLE_SINCE(V1_2, rsqrt_float16, rsqrt::CreateModel_float16)
+
+} // namespace generated_tests::rsqrt
+TEST_AVAILABLE_SINCE(V1_2, rsqrt_float16, generated_tests::rsqrt::CreateModel_float16)
+
+namespace generated_tests::rsqrt {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, rsqrt_dynamic_output_shape) {
-    execute(rsqrt::CreateModel_dynamic_output_shape,
-            rsqrt::is_ignored_dynamic_output_shape,
-            rsqrt::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::rsqrt
+
+namespace generated_tests::rsqrt {
+
+void CreateModel_dynamic_output_shape_relaxed(Model *model);
+bool is_ignored_dynamic_output_shape_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed();
 
 TEST_F(DynamicOutputShapeTest, rsqrt_dynamic_output_shape_relaxed) {
-    execute(rsqrt::CreateModel_dynamic_output_shape_relaxed,
-            rsqrt::is_ignored_dynamic_output_shape_relaxed,
-            rsqrt::get_examples_dynamic_output_shape_relaxed());
+    execute(CreateModel_dynamic_output_shape_relaxed,
+            is_ignored_dynamic_output_shape_relaxed,
+            get_examples_dynamic_output_shape_relaxed());
 }
 
+} // namespace generated_tests::rsqrt
+
+namespace generated_tests::rsqrt {
+
+void CreateModel_dynamic_output_shape_float16(Model *model);
+bool is_ignored_dynamic_output_shape_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16();
+
 TEST_F(DynamicOutputShapeTest, rsqrt_dynamic_output_shape_float16) {
-    execute(rsqrt::CreateModel_dynamic_output_shape_float16,
-            rsqrt::is_ignored_dynamic_output_shape_float16,
-            rsqrt::get_examples_dynamic_output_shape_float16());
+    execute(CreateModel_dynamic_output_shape_float16,
+            is_ignored_dynamic_output_shape_float16,
+            get_examples_dynamic_output_shape_float16());
 }
+
+} // namespace generated_tests::rsqrt
 

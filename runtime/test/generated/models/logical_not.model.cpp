@@ -1,5 +1,10 @@
+// Generated from logical_not.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: logical_not.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::logical_not {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_BOOL8, {1, 1, 4, 1, 1});
   // Phase 1, operands
@@ -14,10 +19,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::logical_not
+namespace generated_tests::logical_not {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_BOOL8, {1, 1, 4, 1, 1});
@@ -34,8 +42,9 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::logical_not

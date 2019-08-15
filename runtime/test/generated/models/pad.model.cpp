@@ -1,5 +1,10 @@
+// Generated from pad.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: pad.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::pad {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
   OperandType type1(Type::TENSOR_INT32, {4, 2});
@@ -19,10 +24,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pad
+namespace generated_tests::pad {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2, 2, 1});
@@ -43,8 +51,9 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::pad

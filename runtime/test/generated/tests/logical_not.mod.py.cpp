@@ -1,24 +1,34 @@
+// Generated from logical_not.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: logical_not.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace logical_not {
-// Generated logical_not test
-#include "generated/examples/logical_not.example.cpp"
-// Generated model constructor
-#include "generated/models/logical_not.model.cpp"
-} // namespace logical_not
+namespace generated_tests::logical_not {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, logical_not) {
-    execute(logical_not::CreateModel,
-            logical_not::is_ignored,
-            logical_not::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, logical_not, logical_not::CreateModel)
+
+} // namespace generated_tests::logical_not
+TEST_AVAILABLE_SINCE(V1_2, logical_not, generated_tests::logical_not::CreateModel)
+
+namespace generated_tests::logical_not {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, logical_not_dynamic_output_shape) {
-    execute(logical_not::CreateModel_dynamic_output_shape,
-            logical_not::is_ignored_dynamic_output_shape,
-            logical_not::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::logical_not
 

@@ -1,24 +1,34 @@
+// Generated from local_response_norm_float_4.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: local_response_norm_float_4.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace local_response_norm_float_4 {
-// Generated local_response_norm_float_4 test
-#include "generated/examples/local_response_norm_float_4.example.cpp"
-// Generated model constructor
-#include "generated/models/local_response_norm_float_4.model.cpp"
-} // namespace local_response_norm_float_4
+namespace generated_tests::local_response_norm_float_4 {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, local_response_norm_float_4) {
-    execute(local_response_norm_float_4::CreateModel,
-            local_response_norm_float_4::is_ignored,
-            local_response_norm_float_4::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, local_response_norm_float_4, local_response_norm_float_4::CreateModel)
+
+} // namespace generated_tests::local_response_norm_float_4
+TEST_AVAILABLE_SINCE(V1_0, local_response_norm_float_4, generated_tests::local_response_norm_float_4::CreateModel)
+
+namespace generated_tests::local_response_norm_float_4 {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, local_response_norm_float_4_dynamic_output_shape) {
-    execute(local_response_norm_float_4::CreateModel_dynamic_output_shape,
-            local_response_norm_float_4::is_ignored_dynamic_output_shape,
-            local_response_norm_float_4::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::local_response_norm_float_4
 

@@ -1,5 +1,10 @@
+// Generated from sub_quantized_different_scales.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: sub_quantized_different_scales.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::sub_quantized_different_scales {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
   OperandType type1(Type::INT32, {});
@@ -19,10 +24,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -44,10 +52,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_2(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -69,10 +80,13 @@ void CreateModel_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_2(int i) {
+bool is_ignored_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_2(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -94,10 +108,13 @@ void CreateModel_dynamic_output_shape_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_2(int i) {
+bool is_ignored_dynamic_output_shape_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_3(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -119,10 +136,13 @@ void CreateModel_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3(int i) {
+bool is_ignored_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_3(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -144,10 +164,13 @@ void CreateModel_dynamic_output_shape_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_3(int i) {
+bool is_ignored_dynamic_output_shape_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_4(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -169,10 +192,13 @@ void CreateModel_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_4(int i) {
+bool is_ignored_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_4(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -194,10 +220,13 @@ void CreateModel_dynamic_output_shape_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_4(int i) {
+bool is_ignored_dynamic_output_shape_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_5(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -219,10 +248,13 @@ void CreateModel_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_5(int i) {
+bool is_ignored_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_5(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -245,10 +277,13 @@ void CreateModel_dynamic_output_shape_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_5(int i) {
+bool is_ignored_dynamic_output_shape_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_6(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -270,10 +305,13 @@ void CreateModel_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_6(int i) {
+bool is_ignored_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_6(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -296,10 +334,13 @@ void CreateModel_dynamic_output_shape_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_6(int i) {
+bool is_ignored_dynamic_output_shape_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_7(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -322,10 +363,13 @@ void CreateModel_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_7(int i) {
+bool is_ignored_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_7(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -348,10 +392,13 @@ void CreateModel_dynamic_output_shape_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_7(int i) {
+bool is_ignored_dynamic_output_shape_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_8(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -374,10 +421,13 @@ void CreateModel_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_8(int i) {
+bool is_ignored_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_8(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -400,10 +450,13 @@ void CreateModel_dynamic_output_shape_8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_8(int i) {
+bool is_ignored_dynamic_output_shape_8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_9(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -425,10 +478,13 @@ void CreateModel_9(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_9(int i) {
+bool is_ignored_9(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_9(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -451,10 +507,13 @@ void CreateModel_dynamic_output_shape_9(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_9(int i) {
+bool is_ignored_dynamic_output_shape_9(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_10(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -477,10 +536,13 @@ void CreateModel_10(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_10(int i) {
+bool is_ignored_10(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_10(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -503,10 +565,13 @@ void CreateModel_dynamic_output_shape_10(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_10(int i) {
+bool is_ignored_dynamic_output_shape_10(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_11(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -528,10 +593,13 @@ void CreateModel_11(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_11(int i) {
+bool is_ignored_11(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_11(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -554,10 +622,13 @@ void CreateModel_dynamic_output_shape_11(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_11(int i) {
+bool is_ignored_dynamic_output_shape_11(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_12(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -580,10 +651,13 @@ void CreateModel_12(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_12(int i) {
+bool is_ignored_12(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_12(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -606,10 +680,13 @@ void CreateModel_dynamic_output_shape_12(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_12(int i) {
+bool is_ignored_dynamic_output_shape_12(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_13(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -631,10 +708,13 @@ void CreateModel_13(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_13(int i) {
+bool is_ignored_13(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_13(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -657,10 +737,13 @@ void CreateModel_dynamic_output_shape_13(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_13(int i) {
+bool is_ignored_dynamic_output_shape_13(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_14(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -683,10 +766,13 @@ void CreateModel_14(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_14(int i) {
+bool is_ignored_14(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_14(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -709,10 +795,13 @@ void CreateModel_dynamic_output_shape_14(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_14(int i) {
+bool is_ignored_dynamic_output_shape_14(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_15(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -735,10 +824,13 @@ void CreateModel_15(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_15(int i) {
+bool is_ignored_15(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_15(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -761,10 +853,13 @@ void CreateModel_dynamic_output_shape_15(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_15(int i) {
+bool is_ignored_dynamic_output_shape_15(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_16(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -786,10 +881,13 @@ void CreateModel_16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_16(int i) {
+bool is_ignored_16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_16(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -812,10 +910,13 @@ void CreateModel_dynamic_output_shape_16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_16(int i) {
+bool is_ignored_dynamic_output_shape_16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_17(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -837,10 +938,13 @@ void CreateModel_17(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_17(int i) {
+bool is_ignored_17(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_17(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -863,10 +967,13 @@ void CreateModel_dynamic_output_shape_17(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_17(int i) {
+bool is_ignored_dynamic_output_shape_17(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_18(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -888,10 +995,13 @@ void CreateModel_18(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_18(int i) {
+bool is_ignored_18(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_18(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -914,10 +1024,13 @@ void CreateModel_dynamic_output_shape_18(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_18(int i) {
+bool is_ignored_dynamic_output_shape_18(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_19(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -940,10 +1053,13 @@ void CreateModel_19(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_19(int i) {
+bool is_ignored_19(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_19(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -966,10 +1082,13 @@ void CreateModel_dynamic_output_shape_19(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_19(int i) {
+bool is_ignored_dynamic_output_shape_19(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_20(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -992,10 +1111,13 @@ void CreateModel_20(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_20(int i) {
+bool is_ignored_20(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_20(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1018,10 +1140,13 @@ void CreateModel_dynamic_output_shape_20(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_20(int i) {
+bool is_ignored_dynamic_output_shape_20(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_21(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1043,10 +1168,13 @@ void CreateModel_21(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_21(int i) {
+bool is_ignored_21(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_21(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1068,10 +1196,13 @@ void CreateModel_dynamic_output_shape_21(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_21(int i) {
+bool is_ignored_dynamic_output_shape_21(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_22(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1092,10 +1223,13 @@ void CreateModel_22(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_22(int i) {
+bool is_ignored_22(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_22(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1117,10 +1251,13 @@ void CreateModel_dynamic_output_shape_22(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_22(int i) {
+bool is_ignored_dynamic_output_shape_22(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_23(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1142,10 +1279,13 @@ void CreateModel_23(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_23(int i) {
+bool is_ignored_23(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_23(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1167,10 +1307,13 @@ void CreateModel_dynamic_output_shape_23(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_23(int i) {
+bool is_ignored_dynamic_output_shape_23(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_24(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1192,10 +1335,13 @@ void CreateModel_24(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_24(int i) {
+bool is_ignored_24(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_24(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1217,10 +1363,13 @@ void CreateModel_dynamic_output_shape_24(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_24(int i) {
+bool is_ignored_dynamic_output_shape_24(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_25(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1243,10 +1392,13 @@ void CreateModel_25(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_25(int i) {
+bool is_ignored_25(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_25(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1269,10 +1421,13 @@ void CreateModel_dynamic_output_shape_25(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_25(int i) {
+bool is_ignored_dynamic_output_shape_25(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_26(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1294,10 +1449,13 @@ void CreateModel_26(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_26(int i) {
+bool is_ignored_26(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_26(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1320,10 +1478,13 @@ void CreateModel_dynamic_output_shape_26(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_26(int i) {
+bool is_ignored_dynamic_output_shape_26(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_27(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1345,10 +1506,13 @@ void CreateModel_27(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_27(int i) {
+bool is_ignored_27(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_27(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1371,10 +1535,13 @@ void CreateModel_dynamic_output_shape_27(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_27(int i) {
+bool is_ignored_dynamic_output_shape_27(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_28(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1397,10 +1564,13 @@ void CreateModel_28(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_28(int i) {
+bool is_ignored_28(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_28(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1423,10 +1593,13 @@ void CreateModel_dynamic_output_shape_28(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_28(int i) {
+bool is_ignored_dynamic_output_shape_28(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_29(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1449,10 +1622,13 @@ void CreateModel_29(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_29(int i) {
+bool is_ignored_29(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_29(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1475,10 +1651,13 @@ void CreateModel_dynamic_output_shape_29(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_29(int i) {
+bool is_ignored_dynamic_output_shape_29(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_30(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1500,10 +1679,13 @@ void CreateModel_30(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_30(int i) {
+bool is_ignored_30(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_30(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1526,10 +1708,13 @@ void CreateModel_dynamic_output_shape_30(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_30(int i) {
+bool is_ignored_dynamic_output_shape_30(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_31(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1552,10 +1737,13 @@ void CreateModel_31(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_31(int i) {
+bool is_ignored_31(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_31(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1578,10 +1766,13 @@ void CreateModel_dynamic_output_shape_31(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_31(int i) {
+bool is_ignored_dynamic_output_shape_31(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_32(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1603,10 +1794,13 @@ void CreateModel_32(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_32(int i) {
+bool is_ignored_32(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_32(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1629,10 +1823,13 @@ void CreateModel_dynamic_output_shape_32(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_32(int i) {
+bool is_ignored_dynamic_output_shape_32(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_33(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1654,10 +1851,13 @@ void CreateModel_33(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_33(int i) {
+bool is_ignored_33(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_33(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1680,10 +1880,13 @@ void CreateModel_dynamic_output_shape_33(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_33(int i) {
+bool is_ignored_dynamic_output_shape_33(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_34(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1706,10 +1909,13 @@ void CreateModel_34(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_34(int i) {
+bool is_ignored_34(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_34(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1732,10 +1938,13 @@ void CreateModel_dynamic_output_shape_34(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_34(int i) {
+bool is_ignored_dynamic_output_shape_34(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_35(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1757,10 +1966,13 @@ void CreateModel_35(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_35(int i) {
+bool is_ignored_35(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_35(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1783,10 +1995,13 @@ void CreateModel_dynamic_output_shape_35(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_35(int i) {
+bool is_ignored_dynamic_output_shape_35(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_36(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1809,10 +2024,13 @@ void CreateModel_36(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_36(int i) {
+bool is_ignored_36(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_36(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1835,10 +2053,13 @@ void CreateModel_dynamic_output_shape_36(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_36(int i) {
+bool is_ignored_dynamic_output_shape_36(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_37(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -1861,10 +2082,13 @@ void CreateModel_37(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_37(int i) {
+bool is_ignored_37(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_37(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1887,10 +2111,13 @@ void CreateModel_dynamic_output_shape_37(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_37(int i) {
+bool is_ignored_dynamic_output_shape_37(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_38(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1912,10 +2139,13 @@ void CreateModel_38(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_38(int i) {
+bool is_ignored_38(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_38(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1938,10 +2168,13 @@ void CreateModel_dynamic_output_shape_38(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_38(int i) {
+bool is_ignored_dynamic_output_shape_38(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_39(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1963,10 +2196,13 @@ void CreateModel_39(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_39(int i) {
+bool is_ignored_39(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_39(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1989,10 +2225,13 @@ void CreateModel_dynamic_output_shape_39(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_39(int i) {
+bool is_ignored_dynamic_output_shape_39(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_40(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2015,10 +2254,13 @@ void CreateModel_40(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_40(int i) {
+bool is_ignored_40(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_40(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2041,10 +2283,13 @@ void CreateModel_dynamic_output_shape_40(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_40(int i) {
+bool is_ignored_dynamic_output_shape_40(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_41(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2066,10 +2311,13 @@ void CreateModel_41(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_41(int i) {
+bool is_ignored_41(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_41(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2091,10 +2339,13 @@ void CreateModel_dynamic_output_shape_41(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_41(int i) {
+bool is_ignored_dynamic_output_shape_41(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_42(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2116,10 +2367,13 @@ void CreateModel_42(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_42(int i) {
+bool is_ignored_42(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_42(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2141,10 +2395,13 @@ void CreateModel_dynamic_output_shape_42(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_42(int i) {
+bool is_ignored_dynamic_output_shape_42(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_43(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2165,10 +2422,13 @@ void CreateModel_43(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_43(int i) {
+bool is_ignored_43(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_43(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2190,10 +2450,13 @@ void CreateModel_dynamic_output_shape_43(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_43(int i) {
+bool is_ignored_dynamic_output_shape_43(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_44(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2215,10 +2478,13 @@ void CreateModel_44(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_44(int i) {
+bool is_ignored_44(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_44(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2240,10 +2506,13 @@ void CreateModel_dynamic_output_shape_44(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_44(int i) {
+bool is_ignored_dynamic_output_shape_44(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_45(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2266,10 +2535,13 @@ void CreateModel_45(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_45(int i) {
+bool is_ignored_45(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_45(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2292,10 +2564,13 @@ void CreateModel_dynamic_output_shape_45(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_45(int i) {
+bool is_ignored_dynamic_output_shape_45(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_46(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2318,10 +2593,13 @@ void CreateModel_46(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_46(int i) {
+bool is_ignored_46(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_46(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2344,10 +2622,13 @@ void CreateModel_dynamic_output_shape_46(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_46(int i) {
+bool is_ignored_dynamic_output_shape_46(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_47(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2369,10 +2650,13 @@ void CreateModel_47(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_47(int i) {
+bool is_ignored_47(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_47(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2395,10 +2679,13 @@ void CreateModel_dynamic_output_shape_47(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_47(int i) {
+bool is_ignored_dynamic_output_shape_47(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_48(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2420,10 +2707,13 @@ void CreateModel_48(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_48(int i) {
+bool is_ignored_48(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_48(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2446,10 +2736,13 @@ void CreateModel_dynamic_output_shape_48(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_48(int i) {
+bool is_ignored_dynamic_output_shape_48(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_49(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2471,10 +2764,13 @@ void CreateModel_49(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_49(int i) {
+bool is_ignored_49(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_49(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2497,10 +2793,13 @@ void CreateModel_dynamic_output_shape_49(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_49(int i) {
+bool is_ignored_dynamic_output_shape_49(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_50(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2523,10 +2822,13 @@ void CreateModel_50(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_50(int i) {
+bool is_ignored_50(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_50(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2549,10 +2851,13 @@ void CreateModel_dynamic_output_shape_50(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_50(int i) {
+bool is_ignored_dynamic_output_shape_50(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_51(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2575,10 +2880,13 @@ void CreateModel_51(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_51(int i) {
+bool is_ignored_51(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_51(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2601,10 +2909,13 @@ void CreateModel_dynamic_output_shape_51(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_51(int i) {
+bool is_ignored_dynamic_output_shape_51(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_52(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2626,10 +2937,13 @@ void CreateModel_52(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_52(int i) {
+bool is_ignored_52(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_52(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2652,10 +2966,13 @@ void CreateModel_dynamic_output_shape_52(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_52(int i) {
+bool is_ignored_dynamic_output_shape_52(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_53(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2678,10 +2995,13 @@ void CreateModel_53(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_53(int i) {
+bool is_ignored_53(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_53(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2704,10 +3024,13 @@ void CreateModel_dynamic_output_shape_53(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_53(int i) {
+bool is_ignored_dynamic_output_shape_53(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_54(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2729,10 +3052,13 @@ void CreateModel_54(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_54(int i) {
+bool is_ignored_54(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_54(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2755,10 +3081,13 @@ void CreateModel_dynamic_output_shape_54(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_54(int i) {
+bool is_ignored_dynamic_output_shape_54(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_55(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2781,10 +3110,13 @@ void CreateModel_55(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_55(int i) {
+bool is_ignored_55(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_55(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2807,10 +3139,13 @@ void CreateModel_dynamic_output_shape_55(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_55(int i) {
+bool is_ignored_dynamic_output_shape_55(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_56(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2832,10 +3167,13 @@ void CreateModel_56(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_56(int i) {
+bool is_ignored_56(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_56(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2858,10 +3196,13 @@ void CreateModel_dynamic_output_shape_56(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_56(int i) {
+bool is_ignored_dynamic_output_shape_56(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_57(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -2884,10 +3225,13 @@ void CreateModel_57(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_57(int i) {
+bool is_ignored_57(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_57(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2910,10 +3254,13 @@ void CreateModel_dynamic_output_shape_57(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_57(int i) {
+bool is_ignored_dynamic_output_shape_57(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_58(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2936,10 +3283,13 @@ void CreateModel_58(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_58(int i) {
+bool is_ignored_58(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_58(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2962,10 +3312,13 @@ void CreateModel_dynamic_output_shape_58(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_58(int i) {
+bool is_ignored_dynamic_output_shape_58(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_59(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2987,10 +3340,13 @@ void CreateModel_59(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_59(int i) {
+bool is_ignored_59(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_59(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3013,10 +3369,13 @@ void CreateModel_dynamic_output_shape_59(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_59(int i) {
+bool is_ignored_dynamic_output_shape_59(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_60(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3038,10 +3397,13 @@ void CreateModel_60(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_60(int i) {
+bool is_ignored_60(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_60(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3064,10 +3426,13 @@ void CreateModel_dynamic_output_shape_60(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_60(int i) {
+bool is_ignored_dynamic_output_shape_60(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_61(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {144}, 1.0f, 0);
@@ -3089,10 +3454,13 @@ void CreateModel_61(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_61(int i) {
+bool is_ignored_61(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_61(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3114,10 +3482,13 @@ void CreateModel_dynamic_output_shape_61(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_61(int i) {
+bool is_ignored_dynamic_output_shape_61(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_62(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3139,10 +3510,13 @@ void CreateModel_62(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_62(int i) {
+bool is_ignored_62(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_62(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3164,10 +3538,13 @@ void CreateModel_dynamic_output_shape_62(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_62(int i) {
+bool is_ignored_dynamic_output_shape_62(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_63(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3189,10 +3566,13 @@ void CreateModel_63(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_63(int i) {
+bool is_ignored_63(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_63(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3214,10 +3594,13 @@ void CreateModel_dynamic_output_shape_63(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_63(int i) {
+bool is_ignored_dynamic_output_shape_63(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_64(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3238,10 +3621,13 @@ void CreateModel_64(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_64(int i) {
+bool is_ignored_64(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_quantized_different_scales
+namespace generated_tests::sub_quantized_different_scales {
 
 void CreateModel_dynamic_output_shape_64(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3263,8 +3649,9 @@ void CreateModel_dynamic_output_shape_64(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_64(int i) {
+bool is_ignored_dynamic_output_shape_64(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::sub_quantized_different_scales

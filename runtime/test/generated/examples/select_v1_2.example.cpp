@@ -1,7 +1,12 @@
+// Generated from select_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: select_v1_2.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_one_dim() {
-static std::vector<MixedTypedExample> examples_one_dim = {
+#include "TestHarness.h"
+
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim() {
+static std::vector<::test_helper::MixedTypedExample> examples_one_dim = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_one_dim = {
 return examples_one_dim;
 };
 
-std::vector<MixedTypedExample>& get_examples_one_dim_int32() {
-static std::vector<MixedTypedExample> examples_one_dim_int32 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_int32() {
+static std::vector<::test_helper::MixedTypedExample> examples_one_dim_int32 = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_one_dim_int32 = {
 return examples_one_dim_int32;
 };
 
-std::vector<MixedTypedExample>& get_examples_one_dim_float16() {
-static std::vector<MixedTypedExample> examples_one_dim_float16 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_one_dim_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_one_dim_float16 = {
 return examples_one_dim_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_one_dim_relaxed() {
-static std::vector<MixedTypedExample> examples_one_dim_relaxed = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_one_dim_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_one_dim_relaxed = {
 return examples_one_dim_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_one_dim_quant8() {
-static std::vector<MixedTypedExample> examples_one_dim_quant8 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_one_dim_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_one_dim_quant8 = {
 return examples_one_dim_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_one_dim_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_one_dim_dynamic_output_shape = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_one_dim_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_one_dim_dynamic_output_shape = {
 return examples_one_dim_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_int32() {
-static std::vector<MixedTypedExample> examples_one_dim_dynamic_output_shape_int32 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_int32() {
+static std::vector<::test_helper::MixedTypedExample> examples_one_dim_dynamic_output_shape_int32 = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_one_dim_dynamic_output_shape_int3
 return examples_one_dim_dynamic_output_shape_int32;
 };
 
-std::vector<MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_one_dim_dynamic_output_shape_float16 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_one_dim_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -456,8 +482,11 @@ static std::vector<MixedTypedExample> examples_one_dim_dynamic_output_shape_floa
 return examples_one_dim_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_one_dim_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_one_dim_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -513,8 +542,11 @@ static std::vector<MixedTypedExample> examples_one_dim_dynamic_output_shape_rela
 return examples_one_dim_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_quant8() {
-static std::vector<MixedTypedExample> examples_one_dim_dynamic_output_shape_quant8 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_one_dim_dynamic_output_shape_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_one_dim_dynamic_output_shape_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -570,8 +602,11 @@ static std::vector<MixedTypedExample> examples_one_dim_dynamic_output_shape_quan
 return examples_one_dim_dynamic_output_shape_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_two_dim() {
-static std::vector<MixedTypedExample> examples_two_dim = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim() {
+static std::vector<::test_helper::MixedTypedExample> examples_two_dim = {
 // Begin of an example
 {
 .operands = {
@@ -627,8 +662,11 @@ static std::vector<MixedTypedExample> examples_two_dim = {
 return examples_two_dim;
 };
 
-std::vector<MixedTypedExample>& get_examples_two_dim_int32() {
-static std::vector<MixedTypedExample> examples_two_dim_int32 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_int32() {
+static std::vector<::test_helper::MixedTypedExample> examples_two_dim_int32 = {
 // Begin of an example
 {
 .operands = {
@@ -684,8 +722,11 @@ static std::vector<MixedTypedExample> examples_two_dim_int32 = {
 return examples_two_dim_int32;
 };
 
-std::vector<MixedTypedExample>& get_examples_two_dim_float16() {
-static std::vector<MixedTypedExample> examples_two_dim_float16 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_two_dim_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -741,8 +782,11 @@ static std::vector<MixedTypedExample> examples_two_dim_float16 = {
 return examples_two_dim_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_two_dim_relaxed() {
-static std::vector<MixedTypedExample> examples_two_dim_relaxed = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_two_dim_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -798,8 +842,11 @@ static std::vector<MixedTypedExample> examples_two_dim_relaxed = {
 return examples_two_dim_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_two_dim_quant8() {
-static std::vector<MixedTypedExample> examples_two_dim_quant8 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_two_dim_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -855,8 +902,11 @@ static std::vector<MixedTypedExample> examples_two_dim_quant8 = {
 return examples_two_dim_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_two_dim_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_two_dim_dynamic_output_shape = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_two_dim_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -912,8 +962,11 @@ static std::vector<MixedTypedExample> examples_two_dim_dynamic_output_shape = {
 return examples_two_dim_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_int32() {
-static std::vector<MixedTypedExample> examples_two_dim_dynamic_output_shape_int32 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_int32() {
+static std::vector<::test_helper::MixedTypedExample> examples_two_dim_dynamic_output_shape_int32 = {
 // Begin of an example
 {
 .operands = {
@@ -969,8 +1022,11 @@ static std::vector<MixedTypedExample> examples_two_dim_dynamic_output_shape_int3
 return examples_two_dim_dynamic_output_shape_int32;
 };
 
-std::vector<MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_two_dim_dynamic_output_shape_float16 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_two_dim_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1026,8 +1082,11 @@ static std::vector<MixedTypedExample> examples_two_dim_dynamic_output_shape_floa
 return examples_two_dim_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_two_dim_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_two_dim_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1083,8 +1142,11 @@ static std::vector<MixedTypedExample> examples_two_dim_dynamic_output_shape_rela
 return examples_two_dim_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_quant8() {
-static std::vector<MixedTypedExample> examples_two_dim_dynamic_output_shape_quant8 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_two_dim_dynamic_output_shape_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_two_dim_dynamic_output_shape_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1140,8 +1202,11 @@ static std::vector<MixedTypedExample> examples_two_dim_dynamic_output_shape_quan
 return examples_two_dim_dynamic_output_shape_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_five_dim() {
-static std::vector<MixedTypedExample> examples_five_dim = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim() {
+static std::vector<::test_helper::MixedTypedExample> examples_five_dim = {
 // Begin of an example
 {
 .operands = {
@@ -1197,8 +1262,11 @@ static std::vector<MixedTypedExample> examples_five_dim = {
 return examples_five_dim;
 };
 
-std::vector<MixedTypedExample>& get_examples_five_dim_int32() {
-static std::vector<MixedTypedExample> examples_five_dim_int32 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_int32() {
+static std::vector<::test_helper::MixedTypedExample> examples_five_dim_int32 = {
 // Begin of an example
 {
 .operands = {
@@ -1254,8 +1322,11 @@ static std::vector<MixedTypedExample> examples_five_dim_int32 = {
 return examples_five_dim_int32;
 };
 
-std::vector<MixedTypedExample>& get_examples_five_dim_float16() {
-static std::vector<MixedTypedExample> examples_five_dim_float16 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_five_dim_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1311,8 +1382,11 @@ static std::vector<MixedTypedExample> examples_five_dim_float16 = {
 return examples_five_dim_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_five_dim_relaxed() {
-static std::vector<MixedTypedExample> examples_five_dim_relaxed = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_five_dim_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1368,8 +1442,11 @@ static std::vector<MixedTypedExample> examples_five_dim_relaxed = {
 return examples_five_dim_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_five_dim_quant8() {
-static std::vector<MixedTypedExample> examples_five_dim_quant8 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_five_dim_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1425,8 +1502,11 @@ static std::vector<MixedTypedExample> examples_five_dim_quant8 = {
 return examples_five_dim_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_five_dim_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_five_dim_dynamic_output_shape = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_five_dim_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -1482,8 +1562,11 @@ static std::vector<MixedTypedExample> examples_five_dim_dynamic_output_shape = {
 return examples_five_dim_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_int32() {
-static std::vector<MixedTypedExample> examples_five_dim_dynamic_output_shape_int32 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_int32() {
+static std::vector<::test_helper::MixedTypedExample> examples_five_dim_dynamic_output_shape_int32 = {
 // Begin of an example
 {
 .operands = {
@@ -1539,8 +1622,11 @@ static std::vector<MixedTypedExample> examples_five_dim_dynamic_output_shape_int
 return examples_five_dim_dynamic_output_shape_int32;
 };
 
-std::vector<MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_five_dim_dynamic_output_shape_float16 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_five_dim_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1596,8 +1682,11 @@ static std::vector<MixedTypedExample> examples_five_dim_dynamic_output_shape_flo
 return examples_five_dim_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_five_dim_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_five_dim_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1653,8 +1742,11 @@ static std::vector<MixedTypedExample> examples_five_dim_dynamic_output_shape_rel
 return examples_five_dim_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_quant8() {
-static std::vector<MixedTypedExample> examples_five_dim_dynamic_output_shape_quant8 = {
+} // namespace generated_tests::select_v1_2
+namespace generated_tests::select_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_five_dim_dynamic_output_shape_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_five_dim_dynamic_output_shape_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1710,3 +1802,4 @@ static std::vector<MixedTypedExample> examples_five_dim_dynamic_output_shape_qua
 return examples_five_dim_dynamic_output_shape_quant8;
 };
 
+} // namespace generated_tests::select_v1_2

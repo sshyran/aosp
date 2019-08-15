@@ -1,5 +1,10 @@
+// Generated from random_multinomial_float16.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: random_multinomial_float16.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::random_multinomial_float16 {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT16, {1, 1024});
   OperandType type1(Type::INT32, {});
@@ -23,10 +28,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::random_multinomial_float16
+namespace generated_tests::random_multinomial_float16 {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT16, {1, 1024});
@@ -51,8 +59,9 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {0};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::random_multinomial_float16
