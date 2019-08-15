@@ -1,5 +1,10 @@
+// Generated from sub_v1_2_broadcast.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: sub_v1_2_broadcast.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::sub_v1_2_broadcast {
+
 void CreateModel_none(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2});
   OperandType type1(Type::TENSOR_FLOAT32, {2, 2});
@@ -20,10 +25,13 @@ void CreateModel_none(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_none(int i) {
+bool is_ignored_none(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_relu(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2});
@@ -45,10 +53,13 @@ void CreateModel_relu(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relu(int i) {
+bool is_ignored_relu(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_relu1(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2});
@@ -70,10 +81,13 @@ void CreateModel_relu1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relu1(int i) {
+bool is_ignored_relu1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_relu6(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2});
@@ -95,10 +109,13 @@ void CreateModel_relu6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relu6(int i) {
+bool is_ignored_relu6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_float16_none(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -120,10 +137,13 @@ void CreateModel_float16_none(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_none(int i) {
+bool is_ignored_float16_none(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_float16_relu(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -145,10 +165,13 @@ void CreateModel_float16_relu(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_relu(int i) {
+bool is_ignored_float16_relu(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_float16_relu1(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -170,10 +193,13 @@ void CreateModel_float16_relu1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_relu1(int i) {
+bool is_ignored_float16_relu1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_float16_relu6(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -195,10 +221,13 @@ void CreateModel_float16_relu6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_relu6(int i) {
+bool is_ignored_float16_relu6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_dynamic_output_shape_none(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2});
@@ -221,10 +250,13 @@ void CreateModel_dynamic_output_shape_none(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_none(int i) {
+bool is_ignored_dynamic_output_shape_none(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_dynamic_output_shape_relu(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2});
@@ -247,10 +279,13 @@ void CreateModel_dynamic_output_shape_relu(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relu(int i) {
+bool is_ignored_dynamic_output_shape_relu(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_dynamic_output_shape_relu1(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2});
@@ -273,10 +308,13 @@ void CreateModel_dynamic_output_shape_relu1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relu1(int i) {
+bool is_ignored_dynamic_output_shape_relu1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_dynamic_output_shape_relu6(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 2});
@@ -299,10 +337,13 @@ void CreateModel_dynamic_output_shape_relu6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relu6(int i) {
+bool is_ignored_dynamic_output_shape_relu6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_dynamic_output_shape_float16_none(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -325,10 +366,13 @@ void CreateModel_dynamic_output_shape_float16_none(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_none(int i) {
+bool is_ignored_dynamic_output_shape_float16_none(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_dynamic_output_shape_float16_relu(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -351,10 +395,13 @@ void CreateModel_dynamic_output_shape_float16_relu(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_relu(int i) {
+bool is_ignored_dynamic_output_shape_float16_relu(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_dynamic_output_shape_float16_relu1(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -377,10 +424,13 @@ void CreateModel_dynamic_output_shape_float16_relu1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_relu1(int i) {
+bool is_ignored_dynamic_output_shape_float16_relu1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_dynamic_output_shape_float16_relu6(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -403,10 +453,13 @@ void CreateModel_dynamic_output_shape_float16_relu6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_relu6(int i) {
+bool is_ignored_dynamic_output_shape_float16_relu6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_quant8(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -428,10 +481,13 @@ void CreateModel_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8(int i) {
+bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::sub_v1_2_broadcast
+namespace generated_tests::sub_v1_2_broadcast {
 
 void CreateModel_quant8_dynamic_output_shape(Model *model) {
   OperandType type2(Type::INT32, {});
@@ -454,8 +510,9 @@ void CreateModel_quant8_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_dynamic_output_shape(int i) {
+bool is_ignored_quant8_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::sub_v1_2_broadcast

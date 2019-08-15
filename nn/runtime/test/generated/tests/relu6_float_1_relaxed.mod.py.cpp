@@ -1,23 +1,33 @@
+// Generated from relu6_float_1_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: relu6_float_1_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace relu6_float_1_relaxed {
-// Generated relu6_float_1_relaxed test
-#include "generated/examples/relu6_float_1_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/relu6_float_1_relaxed.model.cpp"
-} // namespace relu6_float_1_relaxed
+namespace generated_tests::relu6_float_1_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, relu6_float_1_relaxed) {
-    execute(relu6_float_1_relaxed::CreateModel,
-            relu6_float_1_relaxed::is_ignored,
-            relu6_float_1_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::relu6_float_1_relaxed
+
+namespace generated_tests::relu6_float_1_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, relu6_float_1_relaxed_dynamic_output_shape) {
-    execute(relu6_float_1_relaxed::CreateModel_dynamic_output_shape,
-            relu6_float_1_relaxed::is_ignored_dynamic_output_shape,
-            relu6_float_1_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::relu6_float_1_relaxed
 

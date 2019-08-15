@@ -1,49 +1,91 @@
+// Generated from abs.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: abs.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace abs {
-// Generated abs test
-#include "generated/examples/abs.example.cpp"
-// Generated model constructor
-#include "generated/models/abs.model.cpp"
-} // namespace abs
+namespace generated_tests::abs {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, abs) {
-    execute(abs::CreateModel,
-            abs::is_ignored,
-            abs::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, abs, abs::CreateModel)
+
+} // namespace generated_tests::abs
+TEST_AVAILABLE_SINCE(V1_2, abs, generated_tests::abs::CreateModel)
+
+namespace generated_tests::abs {
+
+void CreateModel_relaxed(Model *model);
+bool is_ignored_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed();
 
 TEST_F(GeneratedTests, abs_relaxed) {
-    execute(abs::CreateModel_relaxed,
-            abs::is_ignored_relaxed,
-            abs::get_examples_relaxed());
+    execute(CreateModel_relaxed,
+            is_ignored_relaxed,
+            get_examples_relaxed());
 }
+
+} // namespace generated_tests::abs
+
+namespace generated_tests::abs {
+
+void CreateModel_float16(Model *model);
+bool is_ignored_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16();
 
 TEST_F(GeneratedTests, abs_float16) {
-    execute(abs::CreateModel_float16,
-            abs::is_ignored_float16,
-            abs::get_examples_float16());
+    execute(CreateModel_float16,
+            is_ignored_float16,
+            get_examples_float16());
 }
-TEST_AVAILABLE_SINCE(V1_2, abs_float16, abs::CreateModel_float16)
+
+} // namespace generated_tests::abs
+TEST_AVAILABLE_SINCE(V1_2, abs_float16, generated_tests::abs::CreateModel_float16)
+
+namespace generated_tests::abs {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, abs_dynamic_output_shape) {
-    execute(abs::CreateModel_dynamic_output_shape,
-            abs::is_ignored_dynamic_output_shape,
-            abs::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::abs
+
+namespace generated_tests::abs {
+
+void CreateModel_dynamic_output_shape_relaxed(Model *model);
+bool is_ignored_dynamic_output_shape_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed();
 
 TEST_F(DynamicOutputShapeTest, abs_dynamic_output_shape_relaxed) {
-    execute(abs::CreateModel_dynamic_output_shape_relaxed,
-            abs::is_ignored_dynamic_output_shape_relaxed,
-            abs::get_examples_dynamic_output_shape_relaxed());
+    execute(CreateModel_dynamic_output_shape_relaxed,
+            is_ignored_dynamic_output_shape_relaxed,
+            get_examples_dynamic_output_shape_relaxed());
 }
 
+} // namespace generated_tests::abs
+
+namespace generated_tests::abs {
+
+void CreateModel_dynamic_output_shape_float16(Model *model);
+bool is_ignored_dynamic_output_shape_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16();
+
 TEST_F(DynamicOutputShapeTest, abs_dynamic_output_shape_float16) {
-    execute(abs::CreateModel_dynamic_output_shape_float16,
-            abs::is_ignored_dynamic_output_shape_float16,
-            abs::get_examples_dynamic_output_shape_float16());
+    execute(CreateModel_dynamic_output_shape_float16,
+            is_ignored_dynamic_output_shape_float16,
+            get_examples_dynamic_output_shape_float16());
 }
+
+} // namespace generated_tests::abs
 

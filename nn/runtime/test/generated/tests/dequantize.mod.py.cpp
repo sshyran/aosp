@@ -1,24 +1,34 @@
+// Generated from dequantize.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: dequantize.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace dequantize {
-// Generated dequantize test
-#include "generated/examples/dequantize.example.cpp"
-// Generated model constructor
-#include "generated/models/dequantize.model.cpp"
-} // namespace dequantize
+namespace generated_tests::dequantize {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, dequantize) {
-    execute(dequantize::CreateModel,
-            dequantize::is_ignored,
-            dequantize::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, dequantize, dequantize::CreateModel)
+
+} // namespace generated_tests::dequantize
+TEST_AVAILABLE_SINCE(V1_0, dequantize, generated_tests::dequantize::CreateModel)
+
+namespace generated_tests::dequantize {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, dequantize_dynamic_output_shape) {
-    execute(dequantize::CreateModel_dynamic_output_shape,
-            dequantize::is_ignored_dynamic_output_shape,
-            dequantize::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::dequantize
 
