@@ -1,7 +1,12 @@
+// Generated from pad_v2_all_dims.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: pad_v2_all_dims.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples() {
-static std::vector<MixedTypedExample> examples = {
+#include "TestHarness.h"
+
+namespace generated_tests::pad_v2_all_dims {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples() {
+static std::vector<::test_helper::MixedTypedExample> examples = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples = {
 return examples;
 };
 
-std::vector<MixedTypedExample>& get_examples_float16() {
-static std::vector<MixedTypedExample> examples_float16 = {
+} // namespace generated_tests::pad_v2_all_dims
+namespace generated_tests::pad_v2_all_dims {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_float16 = {
 return examples_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed() {
-static std::vector<MixedTypedExample> examples_relaxed = {
+} // namespace generated_tests::pad_v2_all_dims
+namespace generated_tests::pad_v2_all_dims {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_relaxed = {
 return examples_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
+} // namespace generated_tests::pad_v2_all_dims
+namespace generated_tests::pad_v2_all_dims {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape = {
 return examples_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_float16 = {
+} // namespace generated_tests::pad_v2_all_dims
+namespace generated_tests::pad_v2_all_dims {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_float16 = {
 return examples_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::pad_v2_all_dims
+namespace generated_tests::pad_v2_all_dims {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -342,3 +362,4 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed = {
 return examples_dynamic_output_shape_relaxed;
 };
 
+} // namespace generated_tests::pad_v2_all_dims

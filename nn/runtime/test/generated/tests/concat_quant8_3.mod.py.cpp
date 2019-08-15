@@ -1,24 +1,34 @@
+// Generated from concat_quant8_3.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: concat_quant8_3.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace concat_quant8_3 {
-// Generated concat_quant8_3 test
-#include "generated/examples/concat_quant8_3.example.cpp"
-// Generated model constructor
-#include "generated/models/concat_quant8_3.model.cpp"
-} // namespace concat_quant8_3
+namespace generated_tests::concat_quant8_3 {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, concat_quant8_3) {
-    execute(concat_quant8_3::CreateModel,
-            concat_quant8_3::is_ignored,
-            concat_quant8_3::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, concat_quant8_3, concat_quant8_3::CreateModel)
+
+} // namespace generated_tests::concat_quant8_3
+TEST_AVAILABLE_SINCE(V1_0, concat_quant8_3, generated_tests::concat_quant8_3::CreateModel)
+
+namespace generated_tests::concat_quant8_3 {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, concat_quant8_3_dynamic_output_shape) {
-    execute(concat_quant8_3::CreateModel_dynamic_output_shape,
-            concat_quant8_3::is_ignored_dynamic_output_shape,
-            concat_quant8_3::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::concat_quant8_3
 

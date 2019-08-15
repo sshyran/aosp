@@ -20,6 +20,8 @@
 #include <gtest/gtest.h>
 
 #include <optional>
+#include <string>
+#include <vector>
 
 #include "TestCompliance.h"
 #include "TestHarness.h"
@@ -104,7 +106,5 @@ class GeneratedValidationTests : public GeneratedTests {
 };
 
 }  // namespace generated_tests
-
-using namespace generated_tests;
 
 #endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TEST_GENERATED_H

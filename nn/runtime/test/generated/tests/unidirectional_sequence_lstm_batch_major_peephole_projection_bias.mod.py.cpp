@@ -1,24 +1,34 @@
+// Generated from unidirectional_sequence_lstm_batch_major_peephole_projection_bias.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: unidirectional_sequence_lstm_batch_major_peephole_projection_bias.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace unidirectional_sequence_lstm_batch_major_peephole_projection_bias {
-// Generated unidirectional_sequence_lstm_batch_major_peephole_projection_bias test
-#include "generated/examples/unidirectional_sequence_lstm_batch_major_peephole_projection_bias.example.cpp"
-// Generated model constructor
-#include "generated/models/unidirectional_sequence_lstm_batch_major_peephole_projection_bias.model.cpp"
-} // namespace unidirectional_sequence_lstm_batch_major_peephole_projection_bias
+namespace generated_tests::unidirectional_sequence_lstm_batch_major_peephole_projection_bias {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, unidirectional_sequence_lstm_batch_major_peephole_projection_bias) {
-    execute(unidirectional_sequence_lstm_batch_major_peephole_projection_bias::CreateModel,
-            unidirectional_sequence_lstm_batch_major_peephole_projection_bias::is_ignored,
-            unidirectional_sequence_lstm_batch_major_peephole_projection_bias::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_batch_major_peephole_projection_bias, unidirectional_sequence_lstm_batch_major_peephole_projection_bias::CreateModel)
+
+} // namespace generated_tests::unidirectional_sequence_lstm_batch_major_peephole_projection_bias
+TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_batch_major_peephole_projection_bias, generated_tests::unidirectional_sequence_lstm_batch_major_peephole_projection_bias::CreateModel)
+
+namespace generated_tests::unidirectional_sequence_lstm_batch_major_peephole_projection_bias {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_batch_major_peephole_projection_bias_dynamic_output_shape) {
-    execute(unidirectional_sequence_lstm_batch_major_peephole_projection_bias::CreateModel_dynamic_output_shape,
-            unidirectional_sequence_lstm_batch_major_peephole_projection_bias::is_ignored_dynamic_output_shape,
-            unidirectional_sequence_lstm_batch_major_peephole_projection_bias::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::unidirectional_sequence_lstm_batch_major_peephole_projection_bias
 

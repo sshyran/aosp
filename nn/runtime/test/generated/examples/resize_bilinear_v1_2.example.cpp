@@ -1,7 +1,12 @@
+// Generated from resize_bilinear_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: resize_bilinear_v1_2.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_shape_nhwc() {
-static std::vector<MixedTypedExample> examples_shape_nhwc = {
+#include "TestHarness.h"
+
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_shape_nhwc = {
 return examples_shape_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nhwc_relaxed() {
-static std::vector<MixedTypedExample> examples_shape_nhwc_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nhwc_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_shape_nhwc_relaxed = {
 return examples_shape_nhwc_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nhwc_float16() {
-static std::vector<MixedTypedExample> examples_shape_nhwc_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nhwc_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_shape_nhwc_float16 = {
 return examples_shape_nhwc_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nhwc_quant8() {
-static std::vector<MixedTypedExample> examples_shape_nhwc_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nhwc_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_shape_nhwc_quant8 = {
 return examples_shape_nhwc_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nchw() {
-static std::vector<MixedTypedExample> examples_shape_nchw = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_shape_nchw = {
 return examples_shape_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nchw_relaxed() {
-static std::vector<MixedTypedExample> examples_shape_nchw_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nchw_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_shape_nchw_relaxed = {
 return examples_shape_nchw_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nchw_float16() {
-static std::vector<MixedTypedExample> examples_shape_nchw_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nchw_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_shape_nchw_float16 = {
 return examples_shape_nchw_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nchw_quant8() {
-static std::vector<MixedTypedExample> examples_shape_nchw_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nchw_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -456,8 +482,11 @@ static std::vector<MixedTypedExample> examples_shape_nchw_quant8 = {
 return examples_shape_nchw_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -513,8 +542,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc =
 return examples_shape_dynamic_output_shape_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -570,8 +602,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_r
 return examples_shape_dynamic_output_shape_nhwc_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -627,8 +662,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_f
 return examples_shape_dynamic_output_shape_nhwc_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -684,8 +722,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_q
 return examples_shape_dynamic_output_shape_nhwc_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -741,8 +782,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw =
 return examples_shape_dynamic_output_shape_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nchw_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -798,8 +842,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_r
 return examples_shape_dynamic_output_shape_nchw_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nchw_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -855,8 +902,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_f
 return examples_shape_dynamic_output_shape_nchw_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nchw_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -912,8 +962,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_q
 return examples_shape_dynamic_output_shape_nchw_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nhwc() {
-static std::vector<MixedTypedExample> examples_scale_nhwc = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -969,8 +1022,11 @@ static std::vector<MixedTypedExample> examples_scale_nhwc = {
 return examples_scale_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nhwc_relaxed() {
-static std::vector<MixedTypedExample> examples_scale_nhwc_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nhwc_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1026,8 +1082,11 @@ static std::vector<MixedTypedExample> examples_scale_nhwc_relaxed = {
 return examples_scale_nhwc_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nhwc_float16() {
-static std::vector<MixedTypedExample> examples_scale_nhwc_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nhwc_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1083,8 +1142,11 @@ static std::vector<MixedTypedExample> examples_scale_nhwc_float16 = {
 return examples_scale_nhwc_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nhwc_quant8() {
-static std::vector<MixedTypedExample> examples_scale_nhwc_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nhwc_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1140,8 +1202,11 @@ static std::vector<MixedTypedExample> examples_scale_nhwc_quant8 = {
 return examples_scale_nhwc_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nchw() {
-static std::vector<MixedTypedExample> examples_scale_nchw = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -1197,8 +1262,11 @@ static std::vector<MixedTypedExample> examples_scale_nchw = {
 return examples_scale_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nchw_relaxed() {
-static std::vector<MixedTypedExample> examples_scale_nchw_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nchw_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1254,8 +1322,11 @@ static std::vector<MixedTypedExample> examples_scale_nchw_relaxed = {
 return examples_scale_nchw_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nchw_float16() {
-static std::vector<MixedTypedExample> examples_scale_nchw_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nchw_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1311,8 +1382,11 @@ static std::vector<MixedTypedExample> examples_scale_nchw_float16 = {
 return examples_scale_nchw_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nchw_quant8() {
-static std::vector<MixedTypedExample> examples_scale_nchw_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nchw_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1368,8 +1442,11 @@ static std::vector<MixedTypedExample> examples_scale_nchw_quant8 = {
 return examples_scale_nchw_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -1425,8 +1502,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc =
 return examples_scale_dynamic_output_shape_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1482,8 +1562,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_r
 return examples_scale_dynamic_output_shape_nhwc_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1539,8 +1622,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_f
 return examples_scale_dynamic_output_shape_nhwc_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1596,8 +1682,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_q
 return examples_scale_dynamic_output_shape_nhwc_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -1653,8 +1742,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw =
 return examples_scale_dynamic_output_shape_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nchw_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1710,8 +1802,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_r
 return examples_scale_dynamic_output_shape_nchw_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nchw_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1767,8 +1862,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_f
 return examples_scale_dynamic_output_shape_nchw_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nchw_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1824,8 +1922,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_q
 return examples_scale_dynamic_output_shape_nchw_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nhwc_2() {
-static std::vector<MixedTypedExample> examples_shape_nhwc_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nhwc_2 = {
 // Begin of an example
 {
 .operands = {
@@ -1881,8 +1982,11 @@ static std::vector<MixedTypedExample> examples_shape_nhwc_2 = {
 return examples_shape_nhwc_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nhwc_relaxed_2() {
-static std::vector<MixedTypedExample> examples_shape_nhwc_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nhwc_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -1938,8 +2042,11 @@ static std::vector<MixedTypedExample> examples_shape_nhwc_relaxed_2 = {
 return examples_shape_nhwc_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nhwc_float16_2() {
-static std::vector<MixedTypedExample> examples_shape_nhwc_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nhwc_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -1995,8 +2102,11 @@ static std::vector<MixedTypedExample> examples_shape_nhwc_float16_2 = {
 return examples_shape_nhwc_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nhwc_quant8_2() {
-static std::vector<MixedTypedExample> examples_shape_nhwc_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nhwc_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2052,8 +2162,11 @@ static std::vector<MixedTypedExample> examples_shape_nhwc_quant8_2 = {
 return examples_shape_nhwc_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nchw_2() {
-static std::vector<MixedTypedExample> examples_shape_nchw_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nchw_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2109,8 +2222,11 @@ static std::vector<MixedTypedExample> examples_shape_nchw_2 = {
 return examples_shape_nchw_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nchw_relaxed_2() {
-static std::vector<MixedTypedExample> examples_shape_nchw_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nchw_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2166,8 +2282,11 @@ static std::vector<MixedTypedExample> examples_shape_nchw_relaxed_2 = {
 return examples_shape_nchw_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nchw_float16_2() {
-static std::vector<MixedTypedExample> examples_shape_nchw_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nchw_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2223,8 +2342,11 @@ static std::vector<MixedTypedExample> examples_shape_nchw_float16_2 = {
 return examples_shape_nchw_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_nchw_quant8_2() {
-static std::vector<MixedTypedExample> examples_shape_nchw_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_nchw_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2280,8 +2402,11 @@ static std::vector<MixedTypedExample> examples_shape_nchw_quant8_2 = {
 return examples_shape_nchw_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_2() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2337,8 +2462,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_2
 return examples_shape_dynamic_output_shape_nhwc_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed_2() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2394,8 +2522,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_r
 return examples_shape_dynamic_output_shape_nhwc_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16_2() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2451,8 +2582,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_f
 return examples_shape_dynamic_output_shape_nhwc_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8_2() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2508,8 +2642,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nhwc_q
 return examples_shape_dynamic_output_shape_nhwc_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_2() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nchw_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2565,8 +2702,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_2
 return examples_shape_dynamic_output_shape_nchw_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed_2() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nchw_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2622,8 +2762,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_r
 return examples_shape_dynamic_output_shape_nchw_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16_2() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nchw_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2679,8 +2822,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_f
 return examples_shape_dynamic_output_shape_nchw_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8_2() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_nchw_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2736,8 +2882,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_nchw_q
 return examples_shape_dynamic_output_shape_nchw_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nhwc_2() {
-static std::vector<MixedTypedExample> examples_scale_nhwc_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nhwc_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2793,8 +2942,11 @@ static std::vector<MixedTypedExample> examples_scale_nhwc_2 = {
 return examples_scale_nhwc_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nhwc_relaxed_2() {
-static std::vector<MixedTypedExample> examples_scale_nhwc_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nhwc_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2850,8 +3002,11 @@ static std::vector<MixedTypedExample> examples_scale_nhwc_relaxed_2 = {
 return examples_scale_nhwc_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nhwc_float16_2() {
-static std::vector<MixedTypedExample> examples_scale_nhwc_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nhwc_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2907,8 +3062,11 @@ static std::vector<MixedTypedExample> examples_scale_nhwc_float16_2 = {
 return examples_scale_nhwc_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nhwc_quant8_2() {
-static std::vector<MixedTypedExample> examples_scale_nhwc_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nhwc_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -2964,8 +3122,11 @@ static std::vector<MixedTypedExample> examples_scale_nhwc_quant8_2 = {
 return examples_scale_nhwc_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nchw_2() {
-static std::vector<MixedTypedExample> examples_scale_nchw_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nchw_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3021,8 +3182,11 @@ static std::vector<MixedTypedExample> examples_scale_nchw_2 = {
 return examples_scale_nchw_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nchw_relaxed_2() {
-static std::vector<MixedTypedExample> examples_scale_nchw_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nchw_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3078,8 +3242,11 @@ static std::vector<MixedTypedExample> examples_scale_nchw_relaxed_2 = {
 return examples_scale_nchw_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nchw_float16_2() {
-static std::vector<MixedTypedExample> examples_scale_nchw_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nchw_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3135,8 +3302,11 @@ static std::vector<MixedTypedExample> examples_scale_nchw_float16_2 = {
 return examples_scale_nchw_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_nchw_quant8_2() {
-static std::vector<MixedTypedExample> examples_scale_nchw_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_nchw_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3192,8 +3362,11 @@ static std::vector<MixedTypedExample> examples_scale_nchw_quant8_2 = {
 return examples_scale_nchw_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_2() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3249,8 +3422,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_2
 return examples_scale_dynamic_output_shape_nhwc_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed_2() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3306,8 +3482,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_r
 return examples_scale_dynamic_output_shape_nhwc_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16_2() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3363,8 +3542,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_f
 return examples_scale_dynamic_output_shape_nhwc_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8_2() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3420,8 +3602,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nhwc_q
 return examples_scale_dynamic_output_shape_nhwc_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_2() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nchw_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3477,8 +3662,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_2
 return examples_scale_dynamic_output_shape_nchw_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed_2() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nchw_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3534,8 +3722,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_r
 return examples_scale_dynamic_output_shape_nchw_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16_2() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nchw_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3591,8 +3782,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_f
 return examples_scale_dynamic_output_shape_nchw_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8_2() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_nchw_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -3648,8 +3842,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_nchw_q
 return examples_scale_dynamic_output_shape_nchw_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_float16() {
-static std::vector<MixedTypedExample> examples_shape_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -3705,8 +3902,11 @@ static std::vector<MixedTypedExample> examples_shape_float16 = {
 return examples_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_quant8() {
-static std::vector<MixedTypedExample> examples_shape_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -3762,8 +3962,11 @@ static std::vector<MixedTypedExample> examples_shape_quant8 = {
 return examples_shape_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -3819,8 +4022,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_float1
 return examples_shape_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_shape_dynamic_output_shape_quant8() {
-static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_shape_dynamic_output_shape_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -3876,8 +4082,11 @@ static std::vector<MixedTypedExample> examples_shape_dynamic_output_shape_quant8
 return examples_shape_dynamic_output_shape_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_float16() {
-static std::vector<MixedTypedExample> examples_scale_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -3933,8 +4142,11 @@ static std::vector<MixedTypedExample> examples_scale_float16 = {
 return examples_scale_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_quant8() {
-static std::vector<MixedTypedExample> examples_scale_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -3990,8 +4202,11 @@ static std::vector<MixedTypedExample> examples_scale_quant8 = {
 return examples_scale_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -4047,8 +4262,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_float1
 return examples_scale_dynamic_output_shape_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_scale_dynamic_output_shape_quant8() {
-static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_scale_dynamic_output_shape_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -4104,8 +4322,11 @@ static std::vector<MixedTypedExample> examples_scale_dynamic_output_shape_quant8
 return examples_scale_dynamic_output_shape_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nhwc() {
-static std::vector<MixedTypedExample> examples_zero_sized_nhwc = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -4161,8 +4382,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nhwc = {
 return examples_zero_sized_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed() {
-static std::vector<MixedTypedExample> examples_zero_sized_nhwc_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nhwc_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -4218,8 +4442,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nhwc_relaxed = {
 return examples_zero_sized_nhwc_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nhwc_quant8() {
-static std::vector<MixedTypedExample> examples_zero_sized_nhwc_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nhwc_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -4275,8 +4502,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nhwc_quant8 = {
 return examples_zero_sized_nhwc_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nhwc_float16() {
-static std::vector<MixedTypedExample> examples_zero_sized_nhwc_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nhwc_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -4332,8 +4562,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nhwc_float16 = {
 return examples_zero_sized_nhwc_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nchw() {
-static std::vector<MixedTypedExample> examples_zero_sized_nchw = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -4389,8 +4622,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nchw = {
 return examples_zero_sized_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nchw_relaxed() {
-static std::vector<MixedTypedExample> examples_zero_sized_nchw_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nchw_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -4446,8 +4682,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nchw_relaxed = {
 return examples_zero_sized_nchw_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nchw_quant8() {
-static std::vector<MixedTypedExample> examples_zero_sized_nchw_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nchw_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -4503,8 +4742,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nchw_quant8 = {
 return examples_zero_sized_nchw_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nchw_float16() {
-static std::vector<MixedTypedExample> examples_zero_sized_nchw_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nchw_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -4560,8 +4802,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nchw_float16 = {
 return examples_zero_sized_nchw_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc = {
 // Begin of an example
 {
 .operands = {
@@ -4617,8 +4862,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nhwc;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -4674,8 +4922,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nhwc_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_quant8() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -4731,8 +4982,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nhwc_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_float16() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -4788,8 +5042,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nhwc_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw = {
 // Begin of an example
 {
 .operands = {
@@ -4845,8 +5102,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nchw;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_relaxed() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_relaxed = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -4902,8 +5162,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nchw_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_quant8() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_quant8 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -4959,8 +5222,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nchw_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_float16() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_float16 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -5016,8 +5282,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nchw_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nhwc_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_nhwc_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nhwc_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5073,8 +5342,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nhwc_2 = {
 return examples_zero_sized_nhwc_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_nhwc_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nhwc_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5130,8 +5402,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nhwc_relaxed_2 = {
 return examples_zero_sized_nhwc_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nhwc_quant8_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_nhwc_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nhwc_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5187,8 +5462,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nhwc_quant8_2 = {
 return examples_zero_sized_nhwc_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nhwc_float16_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_nhwc_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nhwc_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5244,8 +5522,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nhwc_float16_2 = {
 return examples_zero_sized_nhwc_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nchw_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_nchw_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nchw_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5301,8 +5582,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nchw_2 = {
 return examples_zero_sized_nchw_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nchw_relaxed_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_nchw_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nchw_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5358,8 +5642,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nchw_relaxed_2 = {
 return examples_zero_sized_nchw_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nchw_quant8_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_nchw_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nchw_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5415,8 +5702,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nchw_quant8_2 = {
 return examples_zero_sized_nchw_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_nchw_float16_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_nchw_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_nchw_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5472,8 +5762,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_nchw_float16_2 = {
 return examples_zero_sized_nchw_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5529,8 +5822,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nhwc_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5586,8 +5882,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_quant8_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5643,8 +5942,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nhwc_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_float16_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nhwc_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5700,8 +6002,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nhwc_float16_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5757,8 +6062,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nchw_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_relaxed_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_relaxed_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_relaxed_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_relaxed_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5814,8 +6122,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nchw_relaxed_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_quant8_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_quant8_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5871,8 +6182,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nchw_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_float16_2() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_float16_2 = {
+} // namespace generated_tests::resize_bilinear_v1_2
+namespace generated_tests::resize_bilinear_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_float16_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_nchw_float16_2 = {
 // Begin of an example
 {
 .operands = {
@@ -5928,3 +6242,4 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_n
 return examples_zero_sized_dynamic_output_shape_nchw_float16_2;
 };
 
+} // namespace generated_tests::resize_bilinear_v1_2

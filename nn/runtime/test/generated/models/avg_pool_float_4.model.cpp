@@ -1,5 +1,10 @@
+// Generated from avg_pool_float_4.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: avg_pool_float_4.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::avg_pool_float_4 {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {5, 52, 60, 3});
   OperandType type1(Type::INT32, {});
@@ -28,10 +33,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::avg_pool_float_4
+namespace generated_tests::avg_pool_float_4 {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {5, 52, 60, 3});
@@ -61,8 +69,9 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::avg_pool_float_4
