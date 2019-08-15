@@ -1,24 +1,34 @@
+// Generated from batch_to_space.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: batch_to_space.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace batch_to_space {
-// Generated batch_to_space test
-#include "generated/examples/batch_to_space.example.cpp"
-// Generated model constructor
-#include "generated/models/batch_to_space.model.cpp"
-} // namespace batch_to_space
+namespace generated_tests::batch_to_space {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, batch_to_space) {
-    execute(batch_to_space::CreateModel,
-            batch_to_space::is_ignored,
-            batch_to_space::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_1, batch_to_space, batch_to_space::CreateModel)
+
+} // namespace generated_tests::batch_to_space
+TEST_AVAILABLE_SINCE(V1_1, batch_to_space, generated_tests::batch_to_space::CreateModel)
+
+namespace generated_tests::batch_to_space {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, batch_to_space_dynamic_output_shape) {
-    execute(batch_to_space::CreateModel_dynamic_output_shape,
-            batch_to_space::is_ignored_dynamic_output_shape,
-            batch_to_space::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::batch_to_space
 

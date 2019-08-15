@@ -1,24 +1,34 @@
+// Generated from tanh.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: tanh.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace tanh {
-// Generated tanh test
-#include "generated/examples/tanh.example.cpp"
-// Generated model constructor
-#include "generated/models/tanh.model.cpp"
-} // namespace tanh
+namespace generated_tests::tanh {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, tanh) {
-    execute(tanh::CreateModel,
-            tanh::is_ignored,
-            tanh::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, tanh, tanh::CreateModel)
+
+} // namespace generated_tests::tanh
+TEST_AVAILABLE_SINCE(V1_0, tanh, generated_tests::tanh::CreateModel)
+
+namespace generated_tests::tanh {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, tanh_dynamic_output_shape) {
-    execute(tanh::CreateModel_dynamic_output_shape,
-            tanh::is_ignored_dynamic_output_shape,
-            tanh::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::tanh
 

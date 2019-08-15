@@ -1,5 +1,10 @@
+// Generated from fully_connected_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: fully_connected_v1_2.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::fully_connected_v1_2 {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 1});
@@ -26,10 +31,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1});
@@ -59,10 +67,13 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_float16(Model *model) {
   OperandType type16(Type::TENSOR_FLOAT16, {1});
@@ -90,10 +101,13 @@ void CreateModel_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16(int i) {
+bool is_ignored_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_quant8_mult_gt_1(Model *model) {
   OperandType type19(Type::TENSOR_INT32, {1}, 0.25f, 0);
@@ -122,10 +136,13 @@ void CreateModel_quant8_mult_gt_1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_mult_gt_1(int i) {
+bool is_ignored_quant8_mult_gt_1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1});
@@ -154,10 +171,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1});
@@ -188,10 +208,13 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16(Model *model) {
   OperandType type16(Type::TENSOR_FLOAT16, {1});
@@ -220,10 +243,13 @@ void CreateModel_dynamic_output_shape_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16(int i) {
+bool is_ignored_dynamic_output_shape_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_dynamic_output_shape_quant8_mult_gt_1(Model *model) {
   OperandType type19(Type::TENSOR_INT32, {1}, 0.25f, 0);
@@ -252,10 +278,13 @@ void CreateModel_dynamic_output_shape_quant8_mult_gt_1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_mult_gt_1(int i) {
+bool is_ignored_dynamic_output_shape_quant8_mult_gt_1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_nhwc(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -348,10 +377,13 @@ void CreateModel_zero_sized_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc(int i) {
+bool is_ignored_zero_sized_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_nhwc_relaxed(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -446,10 +478,13 @@ void CreateModel_zero_sized_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_relaxed(int i) {
+bool is_ignored_zero_sized_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_nhwc_quant8(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -542,10 +577,13 @@ void CreateModel_zero_sized_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_quant8(int i) {
+bool is_ignored_zero_sized_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_nhwc_float16(Model *model) {
   OperandType type11(Type::BOOL, {});
@@ -638,10 +676,13 @@ void CreateModel_zero_sized_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nhwc_float16(int i) {
+bool is_ignored_zero_sized_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_nchw(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -734,10 +775,13 @@ void CreateModel_zero_sized_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw(int i) {
+bool is_ignored_zero_sized_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_nchw_relaxed(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -832,10 +876,13 @@ void CreateModel_zero_sized_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_relaxed(int i) {
+bool is_ignored_zero_sized_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_nchw_quant8(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -928,10 +975,13 @@ void CreateModel_zero_sized_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_quant8(int i) {
+bool is_ignored_zero_sized_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_nchw_float16(Model *model) {
   OperandType type11(Type::BOOL, {});
@@ -1024,10 +1074,13 @@ void CreateModel_zero_sized_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_nchw_float16(int i) {
+bool is_ignored_zero_sized_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -1120,10 +1173,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -1218,10 +1274,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -1314,10 +1373,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16(Model *model) {
   OperandType type11(Type::BOOL, {});
@@ -1410,10 +1472,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -1506,10 +1571,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -1604,10 +1672,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8(Model *model) {
   OperandType type10(Type::FLOAT32, {});
@@ -1700,10 +1771,13 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_v1_2
+namespace generated_tests::fully_connected_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_nchw_float16(Model *model) {
   OperandType type11(Type::BOOL, {});
@@ -1796,8 +1870,9 @@ void CreateModel_zero_sized_dynamic_output_shape_nchw_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::fully_connected_v1_2

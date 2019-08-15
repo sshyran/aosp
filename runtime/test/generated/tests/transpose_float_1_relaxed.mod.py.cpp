@@ -1,23 +1,33 @@
+// Generated from transpose_float_1_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: transpose_float_1_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace transpose_float_1_relaxed {
-// Generated transpose_float_1_relaxed test
-#include "generated/examples/transpose_float_1_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/transpose_float_1_relaxed.model.cpp"
-} // namespace transpose_float_1_relaxed
+namespace generated_tests::transpose_float_1_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, transpose_float_1_relaxed) {
-    execute(transpose_float_1_relaxed::CreateModel,
-            transpose_float_1_relaxed::is_ignored,
-            transpose_float_1_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::transpose_float_1_relaxed
+
+namespace generated_tests::transpose_float_1_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, transpose_float_1_relaxed_dynamic_output_shape) {
-    execute(transpose_float_1_relaxed::CreateModel_dynamic_output_shape,
-            transpose_float_1_relaxed::is_ignored_dynamic_output_shape,
-            transpose_float_1_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::transpose_float_1_relaxed
 

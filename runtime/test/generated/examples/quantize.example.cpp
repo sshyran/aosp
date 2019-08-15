@@ -1,7 +1,12 @@
+// Generated from quantize.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: quantize.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_quant8() {
-static std::vector<MixedTypedExample> examples_quant8 = {
+#include "TestHarness.h"
+
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_quant8 = {
 return examples_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8 = {
 return examples_dynamic_output_shape_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_quant8_2() {
-static std::vector<MixedTypedExample> examples_quant8_2 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_quant8_2 = {
 return examples_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8_2() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_2 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8_2 = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_2 = {
 return examples_dynamic_output_shape_quant8_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_quant8_3() {
-static std::vector<MixedTypedExample> examples_quant8_3 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_3() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8_3 = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_quant8_3 = {
 return examples_quant8_3;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8_3() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_3 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8_3() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8_3 = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_3 = {
 return examples_dynamic_output_shape_quant8_3;
 };
 
-std::vector<MixedTypedExample>& get_examples_quant8_4() {
-static std::vector<MixedTypedExample> examples_quant8_4 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_4() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8_4 = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_quant8_4 = {
 return examples_quant8_4;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8_4() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_4 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8_4() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8_4 = {
 // Begin of an example
 {
 .operands = {
@@ -456,8 +482,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_4 = {
 return examples_dynamic_output_shape_quant8_4;
 };
 
-std::vector<MixedTypedExample>& get_examples_quant8_5() {
-static std::vector<MixedTypedExample> examples_quant8_5 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_5() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8_5 = {
 // Begin of an example
 {
 .operands = {
@@ -513,8 +542,11 @@ static std::vector<MixedTypedExample> examples_quant8_5 = {
 return examples_quant8_5;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8_5() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_5 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8_5() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8_5 = {
 // Begin of an example
 {
 .operands = {
@@ -570,8 +602,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_5 = {
 return examples_dynamic_output_shape_quant8_5;
 };
 
-std::vector<MixedTypedExample>& get_examples_quant8_6() {
-static std::vector<MixedTypedExample> examples_quant8_6 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_6() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8_6 = {
 // Begin of an example
 {
 .operands = {
@@ -627,8 +662,11 @@ static std::vector<MixedTypedExample> examples_quant8_6 = {
 return examples_quant8_6;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8_6() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_6 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8_6() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8_6 = {
 // Begin of an example
 {
 .operands = {
@@ -684,8 +722,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_6 = {
 return examples_dynamic_output_shape_quant8_6;
 };
 
-std::vector<MixedTypedExample>& get_examples_quant8_7() {
-static std::vector<MixedTypedExample> examples_quant8_7 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_7() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8_7 = {
 // Begin of an example
 {
 .operands = {
@@ -741,8 +782,11 @@ static std::vector<MixedTypedExample> examples_quant8_7 = {
 return examples_quant8_7;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8_7() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_7 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8_7() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8_7 = {
 // Begin of an example
 {
 .operands = {
@@ -798,8 +842,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_7 = {
 return examples_dynamic_output_shape_quant8_7;
 };
 
-std::vector<MixedTypedExample>& get_examples_quant8_8() {
-static std::vector<MixedTypedExample> examples_quant8_8 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_8() {
+static std::vector<::test_helper::MixedTypedExample> examples_quant8_8 = {
 // Begin of an example
 {
 .operands = {
@@ -855,8 +902,11 @@ static std::vector<MixedTypedExample> examples_quant8_8 = {
 return examples_quant8_8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_quant8_8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_8 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_quant8_8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_quant8_8 = {
 // Begin of an example
 {
 .operands = {
@@ -912,8 +962,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_quant8_8 = {
 return examples_dynamic_output_shape_quant8_8;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized() {
-static std::vector<MixedTypedExample> examples_zero_sized = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized = {
 // Begin of an example
 {
 .operands = {
@@ -969,8 +1022,11 @@ static std::vector<MixedTypedExample> examples_zero_sized = {
 return examples_zero_sized;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_relaxed() {
-static std::vector<MixedTypedExample> examples_zero_sized_relaxed = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1026,8 +1082,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_relaxed = {
 return examples_zero_sized_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_float16() {
-static std::vector<MixedTypedExample> examples_zero_sized_float16 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1083,8 +1142,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_float16 = {
 return examples_zero_sized_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -1140,8 +1202,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape =
 return examples_zero_sized_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_relaxed() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_relaxed = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1197,8 +1262,11 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_r
 return examples_zero_sized_dynamic_output_shape_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_float16() {
-static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_float16 = {
+} // namespace generated_tests::quantize
+namespace generated_tests::quantize {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_zero_sized_dynamic_output_shape_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1254,3 +1322,4 @@ static std::vector<MixedTypedExample> examples_zero_sized_dynamic_output_shape_f
 return examples_zero_sized_dynamic_output_shape_float16;
 };
 
+} // namespace generated_tests::quantize

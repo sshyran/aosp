@@ -1,5 +1,10 @@
+// Generated from conv_float_channels.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: conv_float_channels.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::conv_float_channels {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 1, 1, 3});
   OperandType type1(Type::TENSOR_FLOAT32, {3, 1, 1, 3});
@@ -32,10 +37,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::conv_float_channels
+namespace generated_tests::conv_float_channels {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 1, 1, 3});
@@ -70,8 +78,9 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::conv_float_channels
